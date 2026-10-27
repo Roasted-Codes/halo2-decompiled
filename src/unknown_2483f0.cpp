@@ -212,38 +212,8 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
-// score 6 (was 13): the frame-count load is still hoisted above the float stores. Retail keeps it
-// below them as if g_4ba034's address were taken (with it taken this function matches), but takes
-// no address there; it takes 0x4ba074's (the flag table, in 0x30e30 and 0x30ed0), so 0x4ba034 is
-// likely a field of that struct. Its users across files would read it as that field.
-// Round 72: the three volatile casts dropped 6 (kept: they only stood in for that alias); the
-// frame count stored after the random byte 9; 1c before 2c 5 (by position only); the frame
-// count stored first 6; the random byte stored before the floats 40.
-// Earlier: pool local 13; byte-offset record 13; native vector assignment 13; function-scope record 13;
-// Frame-count/seed and float-store scheduling remains.
-// Earlier: the frame-count load is still hoisted above the float stores;
-// the frame-count load is still hoisted above the float stores;
-// pool local 13; byte-offset record 13; native vector assignment 13; function-scope record 13;
-// unsigned location 13; link array loop 5 (plain 5); plain frame store 6; frame-count local 5;
-// plain float stores 6.
-// tried native record receiver 14f; shared position setter 45f; shared vector setter 47f; both shared setters 49f;
-// scalars before copies 33f; links reverse order 14f; allocation failure return 48f; origin value 61f;
-// immutable allocation index 14f; seed input lifetime 14f.
-// Earlier link-store base and seed/constant scheduling:
-// link assignment chain 13; forward link chain 13; native link fill 50; shared origin pointer
-// 13; position memcpy 13; vector memcpy 13; both copies 13; native fill and both copies 50.
-// Without the three volatile casts 14 (the frame-count load and store move above the two float
-// stores; a pool data pointer local with indexed link stores 20; the data pointer before the
-// location pointer 14; the frame count stored first 14; 1c before 2c 13 by position only). The
-// frame counter defined in a /GL- file changes nothing. Retail keeps that load after the float
-// stores but hoists the random-seed pointer above them.
-// With link loop and ordinary scalar stores: pool field at each output 103; datum array and
-// repeated ordinal 55; datum array and shared ordinal 55; field-ordered pool observations 103;
-// field-ordered datum array 55; field-ordered shared ordinal 55; pool observations and native
-// origin 88; datum array and native origin 51. All restored.
-// Late seed/count scheduling remains. Ordinary scalar stores with short/word/signed-byte/byte
-// link ordinals 51/51/51/51; unsigned ordinal 6; bounded/sentinel link pointers 66/57;
-// block-scope native ordinal 6. All executable trials restored.
+// Matches once g_4ba034 is treated as address-taken (0x117dd0 reads it through its address, as retail
+// reloads it there): the frame-count load then stays below the float stores.
 // @retail 0x248620
 long function_248620()
 {

@@ -42,9 +42,13 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 321 (was 350): Aligned frame 0x1d4 agrees; the sample count now matches (retail's
+// score 321 (was 321): Aligned frame 0x1d4 agrees; the sample count now matches (retail's
 // setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack); optional input
 // registers (esi/edi swapped), scalar homes and selective helper expansion remain.
+// Round 8 (lane 10): noinline redeclaration of 0x11bed0 here 321 (ignored); a separate noinline
+// declaration in 0x11bed0's own file 337 (called as retail, but 0x11bed0 and its caller 0x168f40 stop
+// matching); bounds coordinate as a named local 360; table direction pointer for both samples 321;
+// excluded index declared first, its test braced 323.
 // Earlier: Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Earlier 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Frame 0x1d4 agrees; optional input registers, scalar homes and selective location/release expansion remain.

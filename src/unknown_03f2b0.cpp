@@ -1381,6 +1381,11 @@ struct s_batch_cache_4b5d0
 struct s_133f70;
 
 // score 213 (was 213): Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result homes remain.
+// Round 8 (lane 10, all plain; the reduced image builds this frame differently): bool built 325 (after
+// the 0x4c190 call the code is retail's, shifted one instruction by the unfolded record addresses);
+// with an inline record getter for g_509434 325 (still folds to one lea); drawn object reused for
+// the cache touch, bool/long built 331/224; level pointer typed before the field offset 325 (folds).
+// Retail alone among this pool's readers (0x4c640 folds) adds the record and the offset in two steps.
 // distance load, nullable-entry address and cache/level scheduling differ;
 // distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
 // frame 0x33f8 agrees; distance load and cache/result scheduling differ.
