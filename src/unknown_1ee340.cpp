@@ -189,6 +189,12 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // original terms restored. Normal/ray/hit and polygon homes remain.
 // Full shared normalization with cross/point/plain-loop combinations 253/250/253/250/258/261/258/261. Three-
 // point 250 forms restored; frame is now 0x7c versus 0x90.
+// Round 64: retail's extra 0x14 bytes are the edge vectors' homes (first.i and second.i are spilled
+// into them, the hit point later shares second's) and two loop spills: retail keeps origin.x/y in
+// xmm6/xmm7 until the offset, ours reloads all of origin from the shape, so no edge spills. Origin
+// as a vertex pointer 278 (aligned 194 vs 203); destination and vertex pointers in the loop 328 (not
+// unrolled); per-vertex row pointer 293; origin copied after the direction 248; that with the
+// direction from ray->start 245.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

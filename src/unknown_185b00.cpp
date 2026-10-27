@@ -713,7 +713,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 172 (was 172): Frame 0xac versus 0xa8; pitch-bound and remaining scalar homes differ.
+// score 52 (was 172): only the frame (0xac versus 0xa8) and the order of two join stubs differ. Retail
+// packs the atan2 temp and range into the direction vector's first dword and puts settings above the
+// vector; ours gives range and settings their own dwords below it (a spilled scalar never shares a vector's
+// home in VC7.1, so retail's yaw/range home may be a memory local of some kind).
 // Round 141: retail packs the yaw block's spilled turn differences into the direction vector's slots
 // (range with direction.i) and keeps maximum/minimum at 0x10/0x14 (ours: to_upper, maximum, minimum,
 // range, settings, then direction). Direction declared in the camera block / at the top 172/172;
@@ -784,6 +787,11 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Round 252: Role names inside periodic/pin/direction/periodic+pin/periodic+direction/pin+direction/all
 // three/all plus approach inline expansions 172 each. Original helper names restored; extra frame dword
 // and scalar homes remain.
+// Round 64: the one-use difference local dropped 172 -> 122 and the pitch update written in both rate
+// arms (the shared difference is hoisted into target's register) 122 -> 52, both kept; direction in a
+// forceinline angle helper 176; seat clamp helper 180; difference named before amount/before rate
+// 172/172; named target test 153; atan2 at both uses 87; settings between the bounds (retail's store
+// order) 52; in-place positive-range helper 52.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
@@ -845,10 +853,17 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		if (target != 0.0f || entry->value30)
 		{
 			real amount = (real)fabs(entry->facing.pitch - target) * 0.63661975f;
-			real delta = target - entry->facing.pitch;
 			real movement = magnitude3d(&unit->field_88) * g_510c54->rate;
-			real rate = target != 0.0f ? movement * amount * 0.08f : *(real *)(settings + 0x5c) * movement * amount;
-			entry->facing.pitch += control_pitch_pin(delta, -rate, rate);
+			if (target != 0.0f)
+			{
+				real rate = movement * amount * 0.08f;
+				entry->facing.pitch += control_pitch_pin(target - entry->facing.pitch, -rate, rate);
+			}
+			else
+			{
+				real rate = *(real *)(settings + 0x5c) * movement * amount;
+				entry->facing.pitch += control_pitch_pin(target - entry->facing.pitch, -rate, rate);
+			}
 		}
 	}
 	seat_pitch_approach_187510(&entry->minimum_pitch, minimum);

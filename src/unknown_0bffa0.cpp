@@ -958,7 +958,7 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
     result->y = scale * y;
 }
 
-// score 539 (was 621): the entry pointer's base (+0x4c), the direction cursor and the table stores
+// score 513 (was 539): the entry pointer's base (+0x4c), the direction cursor and the table stores
 // now agree; retail stores the +radius vertex group first (so 1.0 lands in XMM2, not XMM1) and
 // computes each projection's forward row first. Kept: the file's cross helper for both crosses
 // (it sets the +0x4c base; the shared cross3f for the forward one gives +0x50), normalize3d for
@@ -966,6 +966,14 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
 // dot helpers with a plane3f for the plane, one negate helper for both up vectors. Tried: term
 // and row orders in the projection (identical); y stored before x with each component
 // declaration order 551-571; the radius field at each table use 645; a named negative radius 574.
+// Round 64: the face table declared before the direction table 513 (kept; retail stores the rest of the
+// faces before the directions). The projection helper through a local vector (rows forward, left, up)
+// 511 with retail's x-first rows, -1.0 in XMM7 and the +radius vertex group first (the top matches to
+// the first cross product); with y stored first 511; also the left.i product reversed 511; parenthesised
+// rows 576; y first with parentheses 579; normalize_inline for the left vector 581 (alone), 586/587
+// with the local vector; the shared cross3f for the left vector 570, 528 with the local vector; the
+// other table orders 549-568. Next: the local vector plus retail's cross-product loads (up loaded into
+// registers, up.i twice) and the normalize's i, k, j product order.
 // @retail 0xc1d90
 void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab const *shape, s_light_projection_ab *entries, short *count)
 {
@@ -984,13 +992,13 @@ void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab co
                 { radius, radius, radius }, { -radius, radius, radius },
                 { -radius, -radius, radius }, { radius, -radius, radius }
             };
-            vector3f directions[6] = {
-                { 0, 0, -1 }, { 1, 0, 0 }, { 0, 1, 0 },
-                { -1, 0, 0 }, { 0, -1, 0 }, { 0, 0, 1 }
-            };
             long faces[6][4] = {
                 { 0, 1, 2, 3 }, { 0, 3, 7, 4 }, { 0, 4, 5, 1 },
                 { 1, 5, 6, 2 }, { 2, 6, 7, 3 }, { 4, 7, 6, 5 }
+            };
+            vector3f directions[6] = {
+                { 0, 0, -1 }, { 1, 0, 0 }, { 0, 1, 0 },
+                { -1, 0, 0 }, { 0, -1, 0 }, { 0, 0, 1 }
             };
             entry->depth = shape->sphere_render.radius;
             entry->orthogonal = false;

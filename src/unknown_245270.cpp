@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "unknown_0259d0.h"
 #include <math.h>
+#include "vector_products.h"
 
 // @flags /O2 /arch:SSE /Gr
 
@@ -366,6 +367,10 @@ void function_245400(s_source_245400 const *source, long index,
 // each with the material table read at every use 217/213/209; complete at-use
 // graph with signed/unsigned native low-word fields 209/209. Surface-only
 // grows four bytes; no qualifying gain. Original receivers and observations restored.
+// Round 64: second surface's plane read first 205 (repeats round 62); both surfaces through record
+// pointers 204; early return on equal planes 204; facing arms swapped 204; plane codes as dword
+// (shr side bits, still fused into one xor at the compare) 204; the shared cross3f for the plane
+// cross product 204 (kept: it was that helper's body by hand); dot3f either order 206.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
@@ -392,9 +397,7 @@ void function_245540(long arg_0, s_source_245400 const *arg_1,
 		if ((local_2 & 0x7fff) != (local_3 & 0x7fff))
 		{
 			vector3f local_12;
-			local_12.i = local_8->j * local_9->k - local_8->k * local_9->j;
-			local_12.j = local_8->k * local_9->i - local_8->i * local_9->k;
-			local_12.k = local_8->i * local_9->j - local_8->j * local_9->i;
+			cross3f(&local_8->n, &local_9->n, &local_12);
 			real local_13 = local_12.k * local_6.k + local_12.j * local_6.j + local_12.i * local_6.i;
 			if (local_10 == local_11)
 			{
