@@ -576,6 +576,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // location in ESI, so ESI cannot hold the datum and the definition pointer spills (frame 0x84). Without
 // that call (diagnostic) the frame is 0x80 with retail's ESI datum / EBP definition. Failure byte in a
 // function-scope char shared with the audibility output 293; address-taken failure flag 293.
+// Round 208: existing output bit members 2/3/4/5/6 individually, all five,
+// with bit 10, and with bits 10/0 all 293. Original output masks and complete
+// body restored; frame 0x84, datum/tag homes and root-location convention remain.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

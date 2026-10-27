@@ -1516,6 +1516,10 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // Round 347: uniform live squad admission with returned cursor/output index/both 78/76/78;
 // with library point copy alone/cursor/index/all 76/78/76/78; later minimum lifetime 76.
 // Prefix recovered through +0x54, but later pointer/register ownership still regresses; opening body restored.
+// Round 60: squad getter at each use 76 (entry code exact through +0x54; the loop's entry add then
+// splits around its first load); with the entry expression at each use 154; point per arm 69; point
+// at each use 69; first test through the entry expression 70; entry operand order, inline palette,
+// entries-base local, typed location record and an entry declared before the loop 76 each.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {

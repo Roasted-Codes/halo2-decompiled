@@ -121,12 +121,18 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // outputs `axis * projection + vector * cosine - cross * sine`. Scalar helper forms all give frame 0x114
 // (four bytes short): the 0x194a10 form 234, the 0x2551f0 form 237, cross orders jki 234 (both output orders),
 // ijk 237, kji 234; a cross3f struct with scalar outputs keeps 0x11c, 213 (both output orders).
+// Round 59: ours keeps the vector's zero k in a register through the cross terms (retail reloads it as
+// a constant after the dot, so it spills one value fewer); helper locals named by role 186; the
+// existing 0x210850 called for the point output 352 (not inlined); zero component stored first 186;
+// forward copy before the two draws 256; axis term first in the output sums 186.
 // Round 192: reused orientation flags/source index/both 257/186/257; existing pooled-data
 // result initialized before its test 186, with flags/source/both 257/186/257; combined metadata
 // and conditional getter result 268. Original body/helpers restored; frame 0x11c versus 0x118 remains.
 // DL round 156: per-component add/sub 233; two vector passes 225; native sums with
 // loop/aggregate input and loop/scalar output 225/229/229/225; parallel scalar sums
 // mutable/const 227/227. All increase the frame to 0x120; original helper restored.
+// Round 210: Native heading aggregate/zero-first with forward publication after draws,
+// before draws, between draws and after axis: 186/256/251/196 each. Original restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

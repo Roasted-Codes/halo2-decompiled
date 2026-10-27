@@ -189,8 +189,11 @@ bool __stdcall function_25dd30(long a, long b)
 	return a == b;
 }
 
-// score 94 (was 94): Frame 0x30 and retail length agree; early count/offset/segment scheduling,
-// protected geometry-call registers and score adds remain.
+// score 36 (was 82): frame 0x30 agrees, 1747 bytes against 1746. What differs: the 0x5b block's
+// object-pool load (retail hoists it above the index select), its delta component order (retail z, x, y)
+// and its score add (retail folds the field into the add). Round 77 (kept): 0x11e000/0x11e130 take the
+// point/segment arguments in retail's order (both bodies read the point from EDX and the origin from ECX)
+// and the first loop's index is short: 82 -> 36.
 // Earlier: vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
 // first vector schedule, geometry registers and score adds remain;
 // vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
@@ -266,13 +269,8 @@ bool __stdcall function_25dd30(long a, long b)
 // Round 345: Native unsigned-short first/permission/cone/reference ordinals on the indexed
 // graph 453/442/240/252; first+permission/cone/reference/all 367/474/473/390. Original signed
 // comparisons and 94 body restored; all eight regress.
-// frame 0x30 and retail's length agree. What differs: the 0x11e000 and 0x11e130
-// argument registers (the actor points in ECX/EDX, the vectors in EAX/ESI), which follow those
-// callees' own unmatched bodies (BLOCKED-BY 0x11e000, BLOCKED-BY 0x11e130); the first loop's long
-// index (retail's `test cx, cx` / `movzx` head is a short index, but with the blocked call setups a
-// short index lands the sphere loop on an alignment jump: 310, aligned 50; with the segment first
-// 298, aligned 30); one `score += bonus` add commuted; the 0x5b block's object-pool load (retail
-// hoists it above the index select) and its delta's register order.
+// Before round 77 the two geometry calls passed their point arguments the other way round, which
+// looked like a callee convention; a short index alone then gave 310 (aligned 50).
 // Tried (f = fast): sphere bonus branches 311f; signed mask snapshot 310f; distance-root local 310f;
 // global optimization off 830f; minimum conditional 175; shared displacement/geometry
 // displacement/bonus result 310/310/313; geometry/sphere/cone score observations 337/310/310, all
@@ -309,6 +307,12 @@ bool __stdcall function_25dd30(long a, long b)
 // reach, offset with the short index 313; `score = score + bonus` 82; the bonus declared before the
 // distance 415; the brace block around the first loop dropped 82 (kept); origin declared before the
 // object 82; delta and squared distance declarations swapped 82.
+// Round 77 on the 36 body: object lookup written in both arms 127 (pool load hoisted as retail, but
+// the first block's add folds), arms reversed 127, through an index local 69; bonus added in each arm
+// 242; bonus with an explicit else 83; scale through an if 46; bonus adjusted in place 135/153;
+// distance by dot3f/explicit sum 36/36; origin declared first 36; object looked up after the origin
+// call 108; `score = bonus + score` 36; delta declared outside the loop 36; squared distance as an
+// initializer 36; position through the array 36; first-block margin test nested under a 20 default 140.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -318,7 +322,7 @@ void __stdcall function_25dd50(
 {
 	s_actor_firing_view *actor = (s_actor_firing_view *)actor_get(actor_index);
 
-	for (long position_index = 0; position_index < count; position_index++)
+	for (short position_index = 0; position_index < count; position_index++)
 	{
 		s_type_b36ac5 *position = &positions[position_index];
 
@@ -352,7 +356,7 @@ void __stdcall function_25dd50(
 
 				if ((real)sqrt(length_sq3f(&segment)) > 0.f)
 				{
-					distance = function_11e000(&actor->unknown370, &position->position, &segment);
+					distance = function_11e000(&position->position, &actor->unknown370, &segment);
 				}
 				else
 				{
@@ -388,7 +392,7 @@ void __stdcall function_25dd50(
 			{
 				real radius = actor->unknown36c;
 
-				if (function_11e000(&actor->unknown370, &actor->position, &segment) > radius * radius)
+				if (function_11e000(&actor->position, &actor->unknown370, &segment) > radius * radius)
 				{
 					vector3f movement;
 
@@ -397,7 +401,7 @@ void __stdcall function_25dd50(
 					{
 						real movement_radius = actor->unknown36c;
 
-						if (function_11e130(&actor->unknown370, &segment, &actor->position, &movement) <
+						if (function_11e130(&actor->position, &movement, &actor->unknown370, &segment) <
 							movement_radius * movement_radius)
 						{
 							position->unknown4d = true;
