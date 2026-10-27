@@ -203,6 +203,12 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // original terms restored. Normal/ray/hit and polygon homes remain.
 // Full shared normalization with cross/point/plain-loop combinations 253/250/253/250/258/261/258/261. Three-
 // point 250 forms restored; frame is now 0x7c versus 0x90.
+// Round 64: retail's extra 0x14 bytes are the edge vectors' homes (first.i and second.i are spilled
+// into them, the hit point later shares second's) and two loop spills: retail keeps origin.x/y in
+// xmm6/xmm7 until the offset, ours reloads all of origin from the shape, so no edge spills. Origin
+// as a vertex pointer 278 (aligned 194 vs 203); destination and vertex pointers in the loop 328 (not
+// unrolled); per-vertex row pointer 293; origin copied after the direction 248; that with the
+// direction from ray->start 245.
 // Lane 9 r23: retail's homes (frame offsets) are fraction 0, plane 4, direction 0x14, ray start
 // 0x20, hit point 0x2c, hit byte 0x38, spills 0x3c..0x4f, polygon 0x50; ours are size-ordered (hit
 // byte 3, fraction 4, direction 8, ray start 0x14, point 0x20, plane 0x2c, polygon 0x3c). Hit point
