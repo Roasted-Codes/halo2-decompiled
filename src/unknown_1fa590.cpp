@@ -569,52 +569,59 @@ PRIVATE __forceinline void motion_cross(vector3f const &a, vector3f const &b, ve
     result->k = a.i * b.j - a.j * b.i;
 }
 
-// score 117 (was 178): the zero-angle test is negated, which keeps the store at the end
-// of the branch like retail's; the angle is still duplicated on the x87 stack instead of
-// reloaded for the sine, and our angle and cosine slots are swapped against retail's.
+// score 214 (was 251): frame 0x28 agrees; trig homes and projection registers differ;
+// shared trig scope 254; sine declared first 251; forward projection loop 235;
+// rotation loop 246; idle base loop 235; projection plus base loops 235; all loops 246.
+// pointer scale loop 239; fixed do scale 237; idle reconstruction loop 235;
+// two-component idle projection loop 235; native bounds pair 235.
+// global optimization off 721; size optimization 409; inline depth zero 362;
+// active rotation scope 235; idle sine after scaling 235.
+// active/idle/both real trig 233/235/233; shared weighted axis 214 plain kept;
+// weighted cross 218; both weights 258; output cosine scale 235; real trig plus axis 226.
+// score 214 (was 214): Frame 0x28 agrees; angle/trig homes and projection scheduling remain. Active angle
+// name 214; external up reference 212; forward reference 216; both output references
+// 178 (held: reference aliases of the two parameters); external velocity reference 214.
 // @retail 0x1faa20
 void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *ticks)
 {
-    vector3f *up_output = up;
-    vector3f *forward_output = forward;
     if (*ticks > 0)
     {
-        *up_output = *(vector3f const *)(state + 0x100);
-        *forward_output = *(vector3f const *)(state + 0xf4);
+        *up = *(vector3f const *)(state + 0x100);
+        *forward = *(vector3f const *)(state + 0xf4);
         byte *settings = *(byte **)(state + 8);
         real limits[4] = { -3.1415927410125732f, 3.1415927410125732f, -3.1415927410125732f, 3.1415927410125732f };
         vector3f *velocity = (vector3f *)(ticks + 1);
-        function_c7840(g_4687b0, up_output, NULL, g_510c54->rate, velocity, limits,
+        function_c7840(g_4687b0, up, NULL, g_510c54->rate, velocity, limits,
             *(real *)(settings + 0x88), *(real *)(settings + 0x8c));
         vector3f axis = *velocity;
         real angle = function_30bf0(&axis) * g_510c54->rate;
         real cosine = (real)cos(angle);
         real sine = (real)sin(angle);
-        real dot = (up_output->j * axis.j + up_output->k * axis.k + up_output->i * axis.i) * (1.0f - cosine);
+        real dot = (up->j * axis.j + up->k * axis.k + up->i * axis.i) * (1.0f - cosine);
         vector3f cross;
-        motion_cross(*up_output, axis, &cross);
+        motion_cross(*up, axis, &cross);
         vector3f_scale(&axis, dot, &axis);
-        up_output->i = up_output->i * cosine + axis.i - cross.i * sine;
-        up_output->j = up_output->j * cosine + axis.j - cross.j * sine;
-        up_output->k = up_output->k * cosine + axis.k - cross.k * sine;
-        real projection = up_output->k * forward_output->k + up_output->j * forward_output->j + forward_output->i * up_output->i;
-        forward_output->i -= up_output->i * projection;
-        forward_output->j -= up_output->j * projection;
-        forward_output->k -= up_output->k * projection;
-        if (function_30bf0(forward_output) == 0.0f)
+        up->i = up->i * cosine + axis.i - cross.i * sine;
+        up->j = up->j * cosine + axis.j - cross.j * sine;
+        up->k = up->k * cosine + axis.k - cross.k * sine;
+        real projection = up->k * forward->k + up->j * forward->j + forward->i * up->i;
+        forward->i -= up->i * projection;
+        forward->j -= up->j * projection;
+        forward->k -= up->k * projection;
+        if (function_30bf0(forward) == 0.0f)
         {
-            *up_output = *g_4687b0;
-            *forward_output = *g_4687a8;
+            *up = *g_4687b0;
+            *forward = *g_4687a8;
         }
-        if (!(angle != 0.0f))
+        if (angle == 0.0f)
             *ticks = 0;
     }
     else
     {
         vector3f axis;
-        motion_cross(*forward_output, *g_4687b0, &axis);
+        motion_cross(*forward, *g_4687b0, &axis);
         vector3f base;
-        motion_cross(axis, *forward_output, &base);
+        motion_cross(axis, *forward, &base);
         if (function_30bf0(&base) == 0.0f)
         {
             base = *g_4687a8;
@@ -626,14 +633,14 @@ void function_1faa20(vector3f *up, byte const *state, vector3f *forward, long *t
         for (long component = 0; component < 3; ++component)
             base.n[component] *= cosine;
         function_30bf0(&axis);
-        up_output->i = axis.i * sine + base.i;
-        up_output->j = axis.j * sine + base.j;
-        up_output->k = axis.k * sine + base.k;
-        function_30bf0(forward_output);
-        real projection = up_output->k * forward_output->k + up_output->j * forward_output->j + forward_output->i * up_output->i;
-        up_output->i -= forward_output->i * projection;
-        up_output->j -= projection * forward_output->j;
-        up_output->k -= projection * forward_output->k;
-        function_30bf0(up_output);
+        up->i = axis.i * sine + base.i;
+        up->j = axis.j * sine + base.j;
+        up->k = axis.k * sine + base.k;
+        function_30bf0(forward);
+        real projection = up->k * forward->k + up->j * forward->j + forward->i * up->i;
+        up->i -= forward->i * projection;
+        up->j -= projection * forward->j;
+        up->k -= projection * forward->k;
+        function_30bf0(up);
     }
 }
