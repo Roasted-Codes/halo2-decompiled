@@ -1306,6 +1306,10 @@ struct s_unit_state_c6ef0
 	s_unit_state_tail tail;
 };
 
+// score 2 (was 2): the name store and shared NONE setup are exchanged; name
+// after NONE 7, name before the zero 2, zero after NONE 2, zero removed 46,
+// cached default pointer 6, later default pointer 2, tail NONE grouped 45,
+// first vector early 16, zero floats swapped 4.
 // @retail 0xc6ef0
 void function_c6ef0(s_unit_state_c6ef0 *state)
 {
