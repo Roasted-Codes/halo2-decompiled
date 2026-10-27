@@ -1816,6 +1816,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 347: consistent live squad/definition/both roots 491/451/576;
 // those roots with multi-use point-getter result 496/453/572; joint displacement names 576,
 // with returned point 572. Root/home allocation and lengths regress; original complete body restored.
+// Round 198: Direct real entry fields 257; palette/area/both lookup field references
+// 284/286/280; consideration palette field reference alone/with palette/area/both
+// lookup references 271/271/273/273. Original value inputs and helper contracts restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2581,6 +2584,9 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // Round 180: Separate pending predicate/result with admitted/default-result arms: word task
 // and long output 110/110; wide task 168/168; word task and short output 109/109; both widths
 // 168/168. A read-once, two-use pending word and separate admitted result is 109 plain, kept.
+// Round 198: On the retained pending-result graph, direct inputs/dword predicate/both
+// 109/109/109; shared actor step alone/with direct inputs/predicate/both 132 each;
+// signed pending/result pair 109. Original input views, predicate and actor walk restored.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
@@ -2961,6 +2967,8 @@ void function_2011f0(long arg_0);
 // Round 347: first cached native squad receiver 336/1328; with native squad word 391/1292,
 // promoted difficulty 334/1328, both 389/1292. Request/mask/chain home names repeat
 // 336/391/334/389 at the same lengths. Gains of two/four are below threshold; body restored.
+// Round 198: Placement/prior-object lookup declarations, ordinary/inline/noinline
+// in all eight non-original pairs, 338 each. Frame 0x134 agrees; original boundaries restored.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

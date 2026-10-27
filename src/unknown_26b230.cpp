@@ -2006,7 +2006,9 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
-// score 89 (was 89): frame 0x24 agrees; category-byte homes, removal completion and pool carriers remain.
+// score 89 (was 89): frame 0x24 agrees; category-byte homes and deletion completion differ.
+// Earlier: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
+// frame 0x24 agrees; category-byte homes, removal completion and pool carriers remain.
 // Earlier rejected pointer-clear diagnostic: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
 // flag, kept only on a match; build/r74/26b230.best3.cpp in lane 5): there only the two pool registers
 // differ: retail keeps the prop pool in edi and the node pool in ebp; ours swaps them. Start there.
@@ -2044,6 +2046,9 @@ void function_269250(long clump_index, long actor_index)
 // Current-member identity before lookup 204; successor published on continuation 200;
 // original-object accessor at every use 262; identity/successor, identity/accessor, successor/accessor,
 // all three 200/261/262/262; all with conditional unit admission 263. Original body restored.
+// Round 211: change-result gate before each prop lookup, on the shared-member/frame-0x24 body,
+// with original/reversed category declarations and native node/getter subsets: 111 four times /
+// 109 four times; both reach 741 bytes. Original traversal and completion tests restored.
 // DL159: single iteration-completion label 3; separate completion guards 3; reversed category declarations 5; category name/native node datum/node iterator/both iterator names 3/3/3/3; native node with reversed categories 5. Labels rejected as branch layout.
 // Structured unit continuation, with separate completion guards and native byte unit/change domains in all eight combinations, 89 each. Original body restored.
 // @retail 0x26ae30
@@ -2168,7 +2173,8 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 296 (was 296): frame 0x6a4 agrees; visibility-row scheduling, marking and selection/cleanup differ.
+// score 283 (was 296): frame 0x6a4 and length agree; the early reset-word load,
+// visibility/marking registers and selection/cleanup allocation still differ.
 // Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
@@ -2208,6 +2214,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 353: on the shared marking walk, reset snapshots short/long/word
 // 357/356/357; short/long with chained sentinels 357/356; short/long
 // with long actor cluster 359/362; all three 359. Original observations restored.
+// Native word dispatch zero-first/direct field 283/283; one-first 354; unsigned
+// eligibility 342. Early state result with those forms 323/323/325/329. Guarded
+// nonzero word dispatch 283 retained; original state-result lifetime kept.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
@@ -2318,30 +2327,25 @@ void function_269870(long clump_index)
                 if (existing->type != candidate->type)
                 {
                     s_type_5cfb45 *state = NULL;
-                    switch (g_470f10[candidate->type].unknown4)
+                    short operation = g_470f10[candidate->type].unknown4;
+                    if (operation != 0)
                     {
-                    case 0:
-                        break;
-                    case 1:
+                        if (operation != 1)
+                            goto type_ready;
+                        s_iterator nodes;
+                        nodes.next = ((s_clump_prop *)prop_get(candidate->prop_index))->first_node;
+                        s_clump_node *node;
+                        while ((node = clump_next_node(&nodes)) != NULL)
                         {
-                            s_iterator nodes;
-                            nodes.next = ((s_clump_prop *)prop_get(candidate->prop_index))->first_node;
-                            s_clump_node *node;
-                            while ((node = clump_next_node(&nodes)) != NULL)
+                            if (node->state >= 1)
                             {
-                                if (node->state >= 1)
-                                {
-                                    if (*(long *)((byte *)node + 0x14) != NONE)
-                                        state = function_25d690((s_prop_datum *)node);
-                                    break;
-                                }
+                                if (*(long *)((byte *)node + 0x14) != NONE)
+                                    state = function_25d690((s_prop_datum *)node);
+                                break;
                             }
-                            if (!node)
-                                goto type_ready;
                         }
-                        break;
-                    default:
-                        goto type_ready;
+                        if (!node)
+                            goto type_ready;
                     }
                     existing->state = 1;
                     if (state)
