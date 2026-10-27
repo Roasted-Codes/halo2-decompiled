@@ -309,7 +309,7 @@ void function_245400(s_source_245400 const *source, long index,
 // a separate rotation output vector copied into the direction scores 193 but adds 19 bytes (one-use
 // staging copy, not kept).
 
-// Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
+// score 204 (was 238): Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
 // Round 74: plane table declared as a source field and read at each use 204; plane codes declared
 // before the edge vector 203; source parameter declared last (definition, declaration and the one
 // call) 204, still edx; material pointer for the final call (as 0x245400) 204; transformed point
@@ -382,6 +382,12 @@ void function_245400(s_source_245400 const *source, long index,
 // each with the material table read at every use 217/213/209; complete at-use
 // graph with signed/unsigned native low-word fields 209/209. Surface-only
 // grows four bytes; no qualifying gain. Original receivers and observations restored.
+// Lane 9 r23: retail reads the second material's index (+0xa) before forming the surface pointer
+// and keeps a dead lea of its material record; the source arrives in ECX (copied to ESI), which
+// also costs 0x245aa0 its 3 points. Material table first 205; second material declared first 207;
+// second material record pointer 204 (folded, same code); table and second material ahead of the
+// first index 205 (+0xa read first, material registers exchanged); that order with the first
+// material declared ahead and assigned later 205 (same code).
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

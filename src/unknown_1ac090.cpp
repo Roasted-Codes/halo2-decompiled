@@ -199,6 +199,11 @@ void function_265bb0(long actor_index);
 // recover the conversion homes or the mode register; original body restored.
 // Y346: timer input/output order, scalar names and complete delay-product boundaries 60 (seven forms);
 // all with the second input named at computation 60.
+// Lane 9 r23: both conversions through forceinline real_to_long 92, with a unit-index local 70
+// (slot read per arm, so its home is live at the first conversion and a frame slot is used);
+// existing pointer helpers for both with the pointer parameter first 85 (zero frame, first
+// conversion homes as retail; slot still loaded in the arm, mode compared in memory); with field
+// reads for the unit index 94 (367 bytes, three pushes); result after mode 83.
 // @retail 0x1ac100
 short __stdcall function_1ac100(long actor_index, s_slot *slot, s_slot *next)
 {

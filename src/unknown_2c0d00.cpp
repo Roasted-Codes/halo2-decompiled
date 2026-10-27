@@ -1057,6 +1057,10 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // second angular endpoint reuse 373; second distance endpoint reuse 360.
 // Round 54: first/second directions initialised directly 376 (x87 forwarding matches, y preload
 // missing), through normalize_local2d_2c 342/376, out-of-line normalize2d 414, plain first side 374.
+// Lane 9 r23: shared normalize2d_fast for the side directions/the direction 172/172 (same code);
+// volatile on the second side instead of the first 397; normal as two scalars 236; second side
+// computed before the first 392. Retail keeps the first direction's y in XMM0 from its subtraction
+// (fst/movss) and stores the second side through memory, the first side in the direction's slot.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
