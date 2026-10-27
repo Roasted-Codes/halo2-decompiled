@@ -1420,6 +1420,9 @@ struct s_133f70;
 // (all eight 356 fast). Original record access and body restored.
 // Round 330: Query/builder/output-query/lighting inline and noinline declarations: eight at 356f, matching
 // reduced control (frame 0x3400), versus full 213. All declarations restored; no reduced-only candidate.
+// Round 215: Complete per-entry mutable/const frame/view captures 372/372, function-entry
+// captures 384/384; shared two-use stamp on those scopes 361/361/383/383 (control 213).
+// All introduce a frame difference; complete original observations and body restored.
 // Round 139: Shared cache-index homes at level+batch, level+usage, batch+usage and all three
 // boundaries each 213; those four with the uninitialized builder result declared at loop entry each
 // 213. Broad unchanged control also 213; reduced 0x31590 discrepancy already present. Full frame

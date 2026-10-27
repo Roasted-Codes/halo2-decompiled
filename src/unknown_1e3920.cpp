@@ -1633,6 +1633,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
 // Round 206: Shared unit receiver 270; with entry weapon/ammunition/both output lifetimes 270/270/270;
 // both output lifetimes 270; shared unit with entry grenade receiver, weapon/grenade or all workspaces 270 each.
+// Round 212: Consistent actor getter observations 352; with long ordinal 327; fixed-two for 352;
+// long ordinal with for 327; output initializer 351; initializer with long/for/both 327/351/327.
 // Round 145: Both ammunition bounds captured, lower/upper/ordinal short-short-short 326, short-
 // short-long 339, long-short-short 333, long-short-long 347, short-long-short 332, short-long-long
 // 340, long-long-short 334, long-long-long 348; all restored.

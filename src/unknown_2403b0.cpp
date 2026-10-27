@@ -87,6 +87,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // all eight restored, one-point gains below threshold.
 // noinline 101280 190; noinline 15b2f0 190; noinline 138880 190; noinline 138860 190; noinline 15fe70 190;
 // noinline 244680 190; noinline 197210 190; noinline 242660 190. All restored.
+// Round 215: Complete slot-table owner, mutable/const first-consumer captures 200/200,
+// entry captures 245/245; long existing predicate on those graphs 199/199/244/244
+// (control 190). Original global observations, helper, events and body restored.
 // Round 167: Plain descending notification-mask loop 187 (three-point gain dropped);
 // with completion initialization between bits / preparation before the second bit /
 // initialization before both bits 240/251/240; independent event buffers 193, with
