@@ -575,6 +575,8 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // both one-use input aliases removed, or both 183/183/180; common normalization result alone,
 // with complement, with alias removal, or all 183/180/180/288. Two-point best rejected;
 // matched caller preserved. Direct-dot displacement bytes and rotation SIMD lifetimes remain.
+// Round 155: Existing flag predicate: forced bool shift/mask, ordinary byte, ordinary bool
+// shift/mask, forced word/long/signed byte: 182/182/182/182/182/182/299/182. Original byte predicate and complete vector body restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
