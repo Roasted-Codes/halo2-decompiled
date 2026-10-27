@@ -581,6 +581,9 @@ struct s_item_collision_bsp
 // Round 188: Paired final linear/angular rows ijk/ikj/jik/jki/kij/kji, then angular-first
 // paired rows ijk/kji:
 // 249,249,248,248,249,249,249,249 fast; reduced control 249, full 249. Original executable source restored.
+// Round 208: six uniform normal-column operand combinations, native cross-product
+// operands, and joint complete normal/distance products all 249. Sum trees,
+// plane inputs, random draws and the whole original body restored.
 // @retail 0x10cf80
 void function_10cf80(vector3f const *impulse, long item_index, bool trigger_effect)
 {
