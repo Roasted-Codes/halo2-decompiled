@@ -24,6 +24,8 @@ bool function_212ec0(s_game_variant *arg_0, long arg_1);
 // AC338: case seven/two/four last 388/442/443; high pair exchanged 385; nine before high pair 302 (sequence worse); entry output 386.
 // Round 121: Two/four exchanged 384; five before two/four 384; seven before four 386; eight before five 385; seven/eight after one 383; five/four/two tail 384; high pair with five/two/four or five/four/two 384/385. Original switch kept.
 // Case orders 2415789/2451789/2457189/2457819/1452789/1257489/1724589/1824579 417/417/416/418/389/387/386/384.
+// Round 142: separate noinline declarations for create/normalize/save/dispose,
+// each alone and create-dispose/normalize-save/save-dispose/all, all 386.
 // @retail 0x212380
 long function_212380(long arg_0, long arg_1, byte *arg_2)
 {

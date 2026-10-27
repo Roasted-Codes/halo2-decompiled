@@ -5163,7 +5163,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 153 (was 153): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
+// score 144 (was 153): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5198,6 +5198,9 @@ void __stdcall function_d6bc0(long object_index);
 // 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
 // Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
 // all five call boundaries inline/noinline: all 153; every declaration restored.
+// Round 142: scheduling-scoped timer 148; eligibility-scoped timer 153; wide reset
+// with those timer scopes 188/191; scheduling-scoped word/bool schedule 144/167;
+// scheduling-scoped positive reset bool/long 201/198.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5210,7 +5213,6 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
     {
         byte *placement = *(byte **)(scenario + 0x124) + i * 0x90;
         if (i % arg_642c39 != g_510c54->game_time % arg_642c39) continue;
-        short *timer = &entries[i].value04;
         long type = NONE;
         c_engine_peer *engine = game_engine_get();
         if (engine)
@@ -5238,12 +5240,13 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                 }
                 if (!reset) ++entries[i].value06;
                 else entries[i].value06 = 0;
-                if (entries[i].value06 > *(short *)(placement + 0x10)) *timer = 1;
+                if (entries[i].value06 > *(short *)(placement + 0x10)) entries[i].value04 = 1;
             }
         }
+        short *timer = &entries[i].value04;
         if (*timer == 0)
         {
-            long schedule = entries[i].index == NONE;
+            short schedule = entries[i].index == NONE;
             if (entries[i].index != NONE)
             {
                 switch (*(short *)(placement + 0x12))

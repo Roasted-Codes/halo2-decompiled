@@ -110,6 +110,9 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // Native real vector/point/both roots 399/401/395; exact-factor shared scale 414, with both real roots 412
 // (sibling 59 in both); all-row axis/input/both terms 401/394/389. Original helpers and bodies restored; early
 // J and magnitude/yaw homes remain.
+// Round 142: shared XY magnitude for vector/point/both 389/389/389;
+// with common numeric results 405/389/405; equivalent ordered epsilon tests
+// on shared vector/both magnitudes 389/389. Early J and magnitude/yaw homes remain.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)
