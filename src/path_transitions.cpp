@@ -225,7 +225,11 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
     return true;
 }
 
-// score 20 (was 108): retail passes the marker flags to 0x26fbf0 as a 16-bit argument
+// score 20 (was 20): Flags promotion and marker-query/loop-entry scheduling remain; protected helper interface unchanged.
+// Alignment pointer snapshot 55; actor point snapshot 131; direct marker indexing 20;
+// selected marker memcpy 20; unsigned-word ordinal 111; long best index 76;
+// entry best sentinel 46; both vector observations 114.
+// retail passes the marker flags to 0x26fbf0 as a 16-bit argument
 // (`xor edx, edx; mov dx, [eax + 0x1c]`); declaring that parameter `word` gives 4 and keeps
 // 0x26fbf0 matched, but its other prototypes are in src/unknown_2c0d00.cpp. The squared distance
 // through vector3d_from_points3d/length_sq3f 30; difference orders xzy/yzx/zxy/zyx 24/26/26/24;
