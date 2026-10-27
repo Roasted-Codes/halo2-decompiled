@@ -74,7 +74,7 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 132 (was 153): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
+// score 132 (was 132): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
@@ -145,6 +145,8 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Published entry-field lvalue 132; pass field 153; range field 294; entry/pass 132;
 // entry/range and all fields 290; pass/range 294; published table-field lvalue 153.
 // Minimal entry-field form kept after ordinary confirmation at retail length 972.
+// Existing updater inline declarations 16f60/17000/189a0, their three pairs/all,
+// and all three noinline declarations 132 each. Original declarations and body restored.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

@@ -1179,6 +1179,8 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 187 selected/emitted point receivers and both 469/472/530; existing world-point
 // conversion helper alone/selected/emitted/both 515/526/492/505; full form with
 // actual selected-element reference 505. All original receivers and conversions restored.
+// Existing tangent/candidate/corner inline declarations, their pairs/all, and all
+// three noinline declarations 453 each. Original declarations and body restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

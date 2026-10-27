@@ -89,6 +89,8 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // Round 187 advance result carried through roster/count/member-readiness test outcomes,
 // each nonempty combination 459; full combination with native reset byte 465.
 // Exact-match-only decision forms; all restored to the complementary waiting graph.
+// Existing lookup/ratings/transition inline declarations, all three pairs and all three
+// 439 each; all three noinline declarations 439. Original declarations and body restored.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {
