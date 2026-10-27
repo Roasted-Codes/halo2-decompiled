@@ -275,6 +275,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // forced native camera/output/both expansion [443, 287, 456]. Original helper and body restored.
 // Round 327: corresponding two-product sums at each row 259; all partial sums before stores in
 // xyz/xzy/yxz/yzx/zxy/zyx order 259 each; partial rows with shared scale 279.
+// DL round 156: uniform final projection products, all/origin/displaced/const 195 each;
+// projected origin/displaced/both aggregate/both component inputs 197/196/197/197.
+// Frame 0x30 and original transform, inverse defaults and expression trees restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

@@ -301,6 +301,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // restored.
 // Round 333: Eligible source-point return with section/block inputs and aggregate/CRT caller copies 266 each; validity assigned only on failure with those four input/copy forms 192 each. Defined failures, original helper and call tuples restored; BSP/section and range/plane homes remain.
 // Round 153: native-byte geometry, metadata/ordinal, query/triangle workspace and part-output lexical homes 185 each; geometry with metadata, workspaces, outputs and all groups 185 each. Original complete body and defined vertex failures restored.
+// DL round 156: coherent part/residency/transform provider inline contracts, singles,
+// pairs, all and all with separate noinline declarations 185 each. Original declarations
+// restored; transform forms lose reduced controls 0x31590/0x168d60 (also 0x23d030 without noinline).
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

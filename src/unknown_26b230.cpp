@@ -2195,6 +2195,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 183: Backward visibility source/destination/both pointer induction 331/322/358;
 // four default-position permutations 296/296/296/296; both pointers with default first 358.
 // Original merge and dispatch restored; reset-word SI and later cursor/selection homes remain.
+// DL round 156: native member/object generation ordinals word-word, word-long, long-word,
+// long-long, dword-long, long-dword, dword-word, word-dword
+// 311/323/323/299/299/299/323/323. Shared walk and original observations restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
