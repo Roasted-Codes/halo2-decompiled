@@ -2932,6 +2932,8 @@ struct s_voice_route_choice
 // masks 384/391; cursor with talker/player 390/409; both masks 379; cursor with both 401;
 // one mode observation 405 (callers 57960/56df0 lose to 22/18). Original loop restored;
 // frame 0x54 and scalar homes agree, entry saves and unrolled cursor bias remain.
+// Complementary radio decision alone/choice receiver/native descriptor/both, with
+// four mixer pairs 364/395/374/378; three mixer pairs 375/390/374/386; all restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

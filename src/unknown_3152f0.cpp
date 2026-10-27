@@ -27,6 +27,8 @@ struct lane_a_mass_restore
 // per-product scale, input and result locals 14.
 // Scalar member/index accessors, their compound and forced forms 6 each;
 // read-only record and record/member form 6 each.
+// Shared four-component loop, value/reference scale, both argument orders and
+// pointer/array inputs 56/48/56/48/56/48/56/48; original body restored.
 // @retail 0x315280
 void __cdecl lane_a_scale_masses(void *, lane_a_mass_restore *record)
 {

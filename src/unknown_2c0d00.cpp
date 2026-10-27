@@ -1137,11 +1137,12 @@ bool __stdcall function_26ccb0(s_pathfinding_data const *pathfinding, s_obstacle
 bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
-// score 453 (was 453): Frame 0x10c and exact extent agree; radius, persistent zero and metadata/endpoint homes remain.
+// score 444 (was 453): Frame 0x11c versus 0x10c; radius, zero and metadata/endpoint homes still differ.
+// Earlier at 453: Frame 0x10c and exact extent agree; radius, persistent zero and metadata/endpoint homes remain.
 // Earlier: Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
 // Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
 
-// score 469 (was 469): Frame 0x104 versus 0x10c, radius/metadata/index homes still differ.
+// Earlier at 469: Frame 0x104 versus 0x10c, radius/metadata/index homes still differ.
 // Earlier: Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
 // Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
 // word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
@@ -1176,6 +1177,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 132 on the shared next-entry graph: entry fallback/used/both zero lifetimes 453/453/453;
 // native word outer 490, with entry fallback/used/both 485/491/491; dword fallback state 448;
 // with entry fallback/used/both 451/453/451. Five-point reduction rejected above 30.
+// Current/selected/both native record values 461/464/469; with word outer index
+// 444/461/454; ordinary output index with current/selected value 462/461. Current
+// record value and word outer index 444 plain kept, 1740/1746 bytes; other forms restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
@@ -1197,15 +1201,15 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
             long sector = points[0].node_index;
             short used = 0;
             bool copied_last = false;
-            for (long index = 0; index < count; )
+            for (short index = 0; index < count; )
             {
-                s_path_step_view const *entry = &points[index];
+                s_path_step_view const entry = points[index];
                 s_path_step_view *out = &result[used];
                 short next = NONE;
                 long edge = 0xffff;
                 bool found = false;
                 volatile short output_index;
-                if (entry->type != NONE)
+                if (entry.type != NONE)
                     next = index;
                 else
                 {
@@ -1296,14 +1300,14 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                 out->node_index = sector;
                 out->point.point.x = origin.x;
                 out->point.point.y = origin.y;
-                out->point.point.z = entry->point.point.z;
+                out->point.point.z = entry.point.point.z;
                 out->point.output_index = output_index;
-                out->unknown02 = entry->unknown02;
+                out->unknown02 = entry.unknown02;
                 ++used;
-                if (entry->type != NONE)
+                if (entry.type != NONE)
                 {
-                    out->type = entry->type;
-                    out->link_index = entry->link_index;
+                    out->type = entry.type;
+                    out->link_index = entry.link_index;
                 }
                 else
                 {

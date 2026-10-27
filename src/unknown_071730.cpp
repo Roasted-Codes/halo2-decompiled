@@ -86,6 +86,9 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // balance bool/byte 458/458; paired bool/byte 476/476. All eight widths restored.
 // Complementary waiting carrier signed byte/byte 439/439, short/word 450/450, long/dword 454/454; paired
 // waiting/final short 450, paired long 443. All restored.
+// Consistent live primary/secondary/both/owner receivers 462/463/468/470; primary,
+// secondary or both with live owner 461/456/466; all with direct state tests 466.
+// All restored; three combined forms report reduced-image callee caveats.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {
