@@ -213,13 +213,6 @@ real function_1f8050(long actor_index, bool *fast)
 	return result;
 }
 
-static inline void vector3d_set(vector3f *vector, real i, real j, real k)
-{
-	vector->i = i;
-	vector->j = j;
-	vector->k = k;
-}
-
 /* takes the pending facing (+0x622) unless the actor rides a vehicle */
 // @retail 0x1f5560
 bool function_1f5560(long actor_index, vector3f *facing)
@@ -227,7 +220,7 @@ bool function_1f5560(long actor_index, vector3f *facing)
 	s_actor_moving *actor = actor_moving_get(actor_index);
 
 	if (actor->unknown26c == NONE && actor->unknown622)
-		vector3d_set(facing, actor->unknown624 * actor->unknown62c, actor->unknown628 * actor->unknown62c, actor->unknown630);
+		vector3f_assign(facing, actor->unknown624 * actor->unknown62c, actor->unknown628 * actor->unknown62c, actor->unknown630);
 	actor->unknown622 = false;
 	return true;
 }

@@ -894,6 +894,10 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Input-record field orders 0-2-1-3/3-0-1-2/3-2-1-0/1-2-3-0/2-3-0-1/0-3-2-1/
 // 2-1-0-3/1-0-3-2 give 212/213/215/216/213/212/215/216 (mode/class/type/set = 0/1/2/3).
 // Complete publication schedules do not recover the identifier homes; original order restored.
+// Round 143: the blend flag's 0x6e update after the 0x200 test (retail threads that test straight to
+// one shared clear) 337 (1110 bytes); blend declared before the transition ID 211; the animation ID
+// declared first 210; transition_set declared with the blend ID 213; frame position read into a
+// local before the frame-count test 287 (1133 bytes).
 // Round 212: success byte before/after the prior-loop result 274/275; before offset-valid
 // query/before loop-flag publication 271/271; the same four with byte combined loop state
 // 274/275/271/271. Original late success, identifiers and protected query restored.

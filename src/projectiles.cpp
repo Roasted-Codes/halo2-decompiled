@@ -676,7 +676,7 @@ void function_fcdd0(long definition_index, point3f const *point, vector3f const 
 /* a projectile's detonation (or impact) effect at a point, facing out of
    the surface it hit */
 // @retail 0xfcbc0
-void function_fcbc0(point3f const *point, vector3f const *normal, long definition_index,
+void function_fcbc0(long definition_index, point3f const *point, vector3f const *normal,
 	s_effect_owner const *owner, bool attached, bool airburst)
 {
 	s_projectile_definition *definition = PROJECTILE_DEFINITION_GET(definition_index);
@@ -848,7 +848,14 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 266 (was 266): retail takes target/origin/direction in EAX/ECX/ESI and the time-scale pointer on
+// score 266 (was 266): retail passes the time-scale pointer on the stack and takes only the
+// target (eax), origin (ecx) and direction (esi) in registers; ours also takes the time scale in
+// edx. Retail loads the gravity pointer into edx at entry and rounds the horizontal length to a
+// float before the gravity tests; ours loads the pointer into ebx and keeps the length on the
+// x87 stack, computing it after those tests. Tried: the high-arc flag or the time-scale pointer
+// read once through its address 266/269; horizontal tests with the constant first 266; the
+// horizontal length computed after the gravity value 266; the gravity operands swapped 266.
+// retail takes target/origin/direction in EAX/ECX/ESI and the time-scale pointer on
 // the stack (`ret 0x2c`); ours also takes it in EDX (retail's EDX holds the gravity pointer at entry and EDI
 // the distance output; ours keeps the forced-speed pointer in EDI). Retail evaluates the horizontal root in
 // the entry block and divides by two_a twice in x87; ours sinks the root below the gravity tests and
@@ -1762,7 +1769,7 @@ void __stdcall function_fc330(long projectile_index, bool detach_contrail, real 
 	if (effect_index != NONE)
 	{
 		effect_flags |= attached ? 2 : 1;
-		function_fcbc0(&position, &forward, projectile->tag_index, &owner, attached, airburst);
+		function_fcbc0(projectile->tag_index, &position, &forward, &owner, attached, airburst);
 	}
 	if (*(long *)(definition_bytes + 0x124) != NONE)
 		effect_flags |= 8;

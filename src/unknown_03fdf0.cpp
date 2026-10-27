@@ -96,17 +96,14 @@ void function_4a1e0(s_view_source *source, s_view_camera *camera, long resource_
     s_view_flags *flags, real unused_scale, bool enabled, real scale);
 
 // score 54 (was 54): retail multiplies the index into edx and clears the globals before the
-// loop, ours computes the index in eax and stores the table pointer later.
-// The block indexed at each use (no block pointer) takes the index in edx
-// and lines up the loop slots, but keeps the entries in esi rather than edx
-// and drops two moves: 144 (492 bytes); entries indexed by the counter 164;
-// separate cursor pointer 54; block pointer declared inside the count test 151.
-// score 54 (was 54): without the block pointer (count and entries indexed at each
-// use) the head is retail's (scaled index in edx, spilled), but count lands in
-// edx and first in eax, and the inner loop reloads the cursor on every path; 144
-// (count through the metadata view or the block, 492 bytes); with the current
-// stored first 140; block pointer declared inside the if 151; index head with the
-// block pointer only for the loop 155.
+// loop, ours computes the index in eax and stores the table pointer later. Without the block
+// pointer (count and entries indexed at each use) the head is retail's (scaled index in edx,
+// spilled) and so is the loop tail, but
+// count lands in cx/edx (retail ax/eax, zero in ecx) and first stays in eax where retail
+// spills it across the inline memcpy; 144 (count through the metadata view or the block,
+// 492 bytes); entries indexed by the counter 164; separate cursor pointer 54; with the
+// current stored first 140; block pointer declared inside the if 151; index head with the
+// block pointer only for the loop 155; count read once into a short local 177 (480 bytes).
 // @retail 0x402b0
 void function_402b0(long cache_index, long mode)
 {
@@ -262,6 +259,13 @@ void function_402b0(long cache_index, long mode)
 // inlined (same file); our LTCG keeps both out of line: the reset as a 0x4a780 call 305 (828 bytes), with
 // a forceinline declaration 305; 0x402b0 parameters (mode, cache_index) 182 (still EAX); flags assigned to
 // g_4ba014 directly 182 (identical); flag arms swapped by a negated test 182 (same layout).
+// Lane 9 r23 (plain): retail's four passes are 0x44370's body inlined with the mode constant and
+// its mode table folded (mode 14's target 1, the culling argument's dead g_485898 load, case 11's
+// `enabled = true` re-store, the stack enable byte at +0x13): BLOCKED-BY 0x44370, which sits in a
+// /Ob1 contributor file with a writable table. Calls to 0x44370 607 (569 bytes, not inlined), with
+// a forceinline declaration here 607 (ignored); passes written as the folded inline 231 (frame 0x88
+// and the stack byte agree, 0x496f0 inlines, 980 bytes); 0x402b0 with its block indexed at each use
+// takes the cache index in EDX as retail's call does, 182 (0x402b0 itself 144).
 // @retail 0x404b0
 bool function_404b0(long mode)
 {

@@ -60,22 +60,20 @@ struct s_equipment_definition_view
 void __stdcall function_b9b90(long object_index, bool disable);
 long function_1896c0(real scale, long tag_index);
 
-// score 16 (was 29): object stores still merge and the item store is branchless; two extra bytes;
-// word set/clear 39; byte set/clear 37; word assignment 22; raw object word/byte arms 39/37;
-// raw item arms 37; chained object flags 39; positive acceleration arms 39;
-// reused object flags with byte/word assignment 28/16, with word arms 34.
 // @retail 0xf8090
 void __stdcall function_f8090(long equipment_index, s_scenario_equipment_view *placement)
 {
 	s_equipment_object_view *equipment = EQUIPMENT_GET(equipment_index);
 
 	function_b9b90(equipment_index, TEST_FIELD_BIT(placement->flags.created_at_rest));
-	dword object_flags = equipment->object_flag_bits;
-	object_flags |= 0x8000;
-	equipment->object_flag_bits = object_flags;
-	object_flags |= 0x10000;
-	equipment->object_flag_bits = object_flags;
-	equipment->item_flags.does_not_accelerate = !TEST_FIELD_BIT(placement->flags.does_accelerate);
+	dword *flags = &equipment->object_flag_bits;
+	*flags |= 0x8000;
+	equipment->object_flag_bits |= 0x10000;
+	bool does_not_accelerate = !placement->flags.does_accelerate;
+	if (does_not_accelerate)
+		equipment->item_flags.does_not_accelerate = true;
+	else
+		equipment->item_flags.does_not_accelerate = false;
 
 	if (!TEST_FIELD_BIT(placement->flags.created_at_rest))
 		equipment->field_x86bef3 += 0.05f;

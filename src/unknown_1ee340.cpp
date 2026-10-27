@@ -195,6 +195,11 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // as a vertex pointer 278 (aligned 194 vs 203); destination and vertex pointers in the loop 328 (not
 // unrolled); per-vertex row pointer 293; origin copied after the direction 248; that with the
 // direction from ray->start 245.
+// Lane 9 r23: retail's homes (frame offsets) are fraction 0, plane 4, direction 0x14, ray start
+// 0x20, hit point 0x2c, hit byte 0x38, spills 0x3c..0x4f, polygon 0x50; ours are size-ordered (hit
+// byte 3, fraction 4, direction 8, ray start 0x14, point 0x20, plane 0x2c, polygon 0x3c). Hit point
+// or direction renamed to change name order 247/247 (same code); fraction as a ternary 249;
+// plane d cleared before normalizing 252; clamp as if/else 250.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
