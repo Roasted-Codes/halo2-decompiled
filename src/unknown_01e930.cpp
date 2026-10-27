@@ -357,6 +357,9 @@ bool function_156ab0(void)
 }
 
 /* the Bink sound callback: a track's volume */
+// score 19 (was 19): retail uses a float stack slot with SSE stores and an x87 return;
+// conditional float 19; early returns 19; double result 19; double conditional 19;
+// SSE zero store 30; selected store 38; both stores 43; native SSE result 35; SSE code-generation diagnostic 0 (restored).
 // @retail 0x156b30
 real __stdcall function_156b30(long track, long type)
 {
