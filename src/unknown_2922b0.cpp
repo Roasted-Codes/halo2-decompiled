@@ -70,7 +70,7 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 629 (was 641): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
+// score 629 (was 629): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes differ.
@@ -126,6 +126,8 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Original result, hit arrays and all in-place math snapshots restored.
 // Hit aggregate 641; length aggregate 629 kept; later success 661; hit/length
 // 642, hit/later success 661, length/later success 650, all 662; success after copy 652.
+// Input, hit flags, range, minimum, basis, origins, lengths and distances names each 629;
+// original workspace names restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

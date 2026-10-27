@@ -242,6 +242,8 @@ bool __stdcall function_25dd30(long a, long b)
 // Independent clearance/movement reaches: separate native lifetimes 310; point-of-computation
 // declarations 310; read-only values 310; role names 310; first home before vectors 310;
 // paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
+// Offset and segment workspace names, their combinations, and declaration order
+// each 175; original vector declarations restored.
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,

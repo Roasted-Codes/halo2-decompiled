@@ -1029,6 +1029,8 @@ struct s_game_engine_globals_connections_view
 // Round 71 (full relink; --fast builds this one differently): width declarations in any order and
 // width sums written with score_width first compile identically; icon if/else storing 1 or
 // `dim ? 2 : 0` +4; nested icon ternary +9 (1226 bytes); score_width-first sums with the if/else +4.
+// Inverted/nested/completed/negative/conditional-positive/conditional-negative/dim-scoped/
+// dim-branch icon selection 184/184/203/203/203/203/184/197. Original body restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
