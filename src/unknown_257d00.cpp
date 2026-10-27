@@ -1638,6 +1638,9 @@ void function_b7360(long object_index);
 // Round 145: Native counted character table, promoted lookup result, repeated command index reads
 // and both 466 each; corresponding actual-record table forms 466/466/466/466. Original type and
 // body restored.
+// Round 151: Shared success return with explicit default failure, empty arms plus complete
+// orientation/motion/point payload masks 0-7, all 466/1812. No result carrier added; original returns and
+// complete dispatch restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

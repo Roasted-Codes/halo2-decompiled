@@ -1349,6 +1349,9 @@ bool function_1e1de0(long arg_0);
 // activity zero at entry 265, after object lookup 251, with behavior first 268.
 // Round 147: Library first point/position/location/facing 165 each; both points/first-point-
 // facing/location-facing/all four 165 each in the current default-output graph.
+// Round 151: Coordinated motion/marker inline and separate out-of-line declaration pairs
+// (1,0)/(0,1)/(1,1)/(2,0)/(0,2)/(2,1)/(1,2)/(2,2), all 165/841. Every provider declaration and body
+// restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
