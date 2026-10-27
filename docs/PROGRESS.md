@@ -2,6 +2,17 @@
 
 The newest entry comes first.
 
+## 2026-10-26: 9705 functions match
+
+```
+matched 9705 of 11326 game functions (1569273 of 2786206 bytes, 56.32%)
+matched 969 of 1436 Havok functions (139357 of 290362 bytes, 47.99%)
+```
+
+No new matches; owners corrected:
+- The 400 unlabelled library rows between `0x2d6fc0` and `0x3202bb`, and `0x372300`, are Havok: decompiling shows they build without link-time code generation and use the standard calling conventions. Their 34 matched functions now count as Havok.
+- `0x183910` and the allocator functions `0x22c390`, `0x22c3e0`, `0x22cb00` and `0x22cb90` are the game's: they build with link-time code generation and use its register conventions. All five were already matched.
+
 ## 2026-10-26: 9700 functions match
 
 ```
