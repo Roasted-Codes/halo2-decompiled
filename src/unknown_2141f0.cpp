@@ -111,6 +111,8 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // destination states first 451; path summary with completion-first states 491 (fast).
 // Priority word/byte 506/516; retained-cursor do 469; operation-group/reverse cases 479/504;
 // sole time-array traversal 415; staged size result on cursor body 448; checksum state first 367.
+// Complete failure result bool/byte/short/long 661/661/654/657;
+// the same result initialized first 661/661/654/657. Original success restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {

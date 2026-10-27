@@ -2430,6 +2430,10 @@ dword __cdecl function_131fc0(real alpha);
 // Round 164: Common initial alpha packing with ternary/conditional-update/complete
 // raw-result/shared-clamp producers 435/435/431/435; function-entry workspace
 // 435/435/431/435. All regress against fast control 335; original shader graph restored.
+// Late unconditional destination/source defaults 432/334; both destination-first/source-first
+// construction with destination selection first 433/439; source selection first 439/433;
+// source construction before conditional destination 331 (four-point fast gain rejected);
+// conditional source then unconditional destination 427, against fast control 335.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2729,6 +2733,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // separate output plus trig scopes 351; exact stage terminator 348.
 // Round 147: native pair result 479; output pointer result 348; common-factor-first products 348; y-first
 // stores 363; zero-safe results 348; ordinal scope 348; reverse scale updates 350; later first buffer 348.
+// Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
+// address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
+// 1262/1261. Original eleven sampler statements and helpers restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, long first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
