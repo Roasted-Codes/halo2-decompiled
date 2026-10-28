@@ -498,11 +498,15 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 	actor_looking_rotate_in_place(vector, axis, sine, cosine);
 }
 
-// score 335 (was 386): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
+// score 335 (was 335): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
 // Tried: direct collision Boolean 355; initial best vector before normalization 356; result declared first 354;
 // long sample counter 355; axis/sample/range names 355; shared normalizer 330 (sum order changed, restored);
 // shared random-range helper 360; one result return 377; paired span names 355; names plus one return 377;
 // those plus initial best vector first 356; startup values before axis initialization 335 (kept).
+// Early sample ordinal 358; distinct pitch/yaw vector results 383 (frame 0xb4);
+// both 404; entry ray with complete vector setter 338 (retail length); entry
+// collision result 335; split results with entry ray/collision 386/383; split
+// results with one return 404. Restored.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -588,11 +592,15 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 397 (was 445): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
+// score 336 (was 397): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
 // test results plus flag name 397; Boolean declarations reversed 414; tests plus reversed declarations 395 (restored).
+// Chained Boolean defaults 395 (+0x3a first); with case 2 first 399; entry marker
+// workspace 397, with chained defaults 395; complete point setters 336 (kept,
+// retail length); with chained defaults 334 (extra two-point gain restored);
+// those plus case order 339, plus entry marker 339.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -662,9 +670,15 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 				}
 				s_object_marker marker;
 				if (actor->target_marker && function_b8d30(object_index, actor->target_marker, &marker, 1, false))
-					point = marker.matrix.position;
+					real_point3d_set(&point,
+						(marker.matrix.position).x,
+						(marker.matrix.position).y,
+						(marker.matrix.position).z);
 				else
-					point = *(point3f *)((byte *)state + 0x10);
+					real_point3d_set(&point,
+						(*(point3f *)((byte *)state + 0x10)).x,
+						(*(point3f *)((byte *)state + 0x10)).y,
+						(*(point3f *)((byte *)state + 0x10)).z);
 				goto aim_at_point;
 			}
 			long object_index = reference->object_index;
@@ -672,13 +686,19 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 			if (((1 << object->type) & 3) && object->player_index != NONE)
 				function_cafc0(object_index, &point);
 			else
-				point = *(point3f *)((byte *)state + 0x30);
+				real_point3d_set(&point,
+					(*(point3f *)((byte *)state + 0x30)).x,
+					(*(point3f *)((byte *)state + 0x30)).y,
+					(*(point3f *)((byte *)state + 0x30)).z);
 			goto direction_from_actor;
 		}
 		goto remembered_prop;
 
 	case 3:
-		point = specification->point;
+		real_point3d_set(&point,
+			(specification->point).x,
+			(specification->point).y,
+			(specification->point).z);
 		point_valid = true;
 		goto aim_at_point;
 
@@ -689,7 +709,10 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	case 5:
 		if (actor->attention_state <= 0)
 			goto done;
-		point = actor->attention_point;
+		real_point3d_set(&point,
+			(actor->attention_point).x,
+			(actor->attention_point).y,
+			(actor->attention_point).z);
 		point_valid = true;
 		goto aim_at_point;
 

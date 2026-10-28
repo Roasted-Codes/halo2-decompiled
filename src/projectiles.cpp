@@ -358,6 +358,9 @@ bool __stdcall function_fa9a0(long *value)
 // Shared point producer 81; shared inline normalize 84; shared scale-normalize 86;
 // point producer with those normalizers 78/80; conditional seconds with private/inline/scale
 // normalization 80/80/83. Shared arithmetic regrouping is exact-match-only; restored.
+// Same-arithmetic private normalizer: one magnitude exit 86; separate result 93;
+// native failure guard 87; direct complete-vector output with those 122/116/122,
+// alone 122; one magnitude exit with local home names 86. Restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -837,6 +840,9 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // native fields/conditional seconds 73.
 // Two-use parent owner after its native type guard 72; with chained child zero
 // stores 74, named flags 72/74, complete seconds arms 73/75/73/75. Restored.
+// Early attachment counter 109; native while cursor 72; both 109; parent declaration
+// at entry 72; parent/tag names 72; incoming operand names 72; all-use parent
+// observations 72; those with early counter 109. Restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)
@@ -903,7 +909,7 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 244 (was 237): the convention now agrees with retail (target EAX, origin ECX, direction
+// score 244 (was 244): the convention now agrees with retail (target EAX, origin ECX, direction
 // ESI, the rest on the stack, `ret 0x2c`): the forced-speed and time-scale pointers are each read
 // once through their addresses, which keeps them on the stack as retail reads them at their uses
 // and matches the callers 0xfa6a0, 0x1f8100, 0x26f150 and 0x2900b0 (each passed the time scale in
@@ -922,6 +928,9 @@ real function_30bf0(vector3f *v);
 // delta.k after the gravity product 236; the time scale read once into a value (`time_scale ?
 // *time_scale : 0.0f`) 262; both pointers through their addresses 244 (kept, see above), with
 // the forced-speed read before the minimum-speed store 244.
+// Entry velocity workspace 244; reversed entry vector declarations 244; output-first
+// vector names 244/244; shared complete delta producer 245; common result exit 258;
+// that with entry velocity 258; result-first with entry velocity 266 (frame 0x2c). Restored.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
