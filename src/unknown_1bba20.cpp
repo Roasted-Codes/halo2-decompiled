@@ -93,7 +93,9 @@ static __forceinline long real_to_long(real value);
 // where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
 // player vehicle 77; the actor looked up at each store 45; separate conversion
 // locals in the loop 15; the loop product passed straight to the conversion
-// 8; the block locals in two other orders 8.
+// 8; the block locals in two other orders 8. Separately, from the 44 form: the clock
+// local moved into the player block with the slot local declared first, 8 (the same
+// lines); pointer, type, scope, direct-store and helper forms on it give the same bytes.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {

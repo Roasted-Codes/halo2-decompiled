@@ -438,6 +438,9 @@ bool function_22acb4(long player_index);
 // Original scalar masks restored; extra second-mask spill and persistent constants remain.
 // Round 210: First-mask high-byte orders 2134/1324/1243/4123/4321/3412/2341/3142
 // all 165; original producers restored, extra second-mask spill remains.
+// Round 60, on the 232 ordered control: long/short first 290/290;
+// long first with short/long second 268/299; long third/fourth 229/229;
+// fourth before second 261; third before second 265. Original 165 body restored.
 // Round 86 (fast, aligned counts in brackets): retail's block order rebuilt 232 [37]; with a short second 283
 // [20: 1 in EDI as retail; only the second mask in ECX with its own slot, from 0xFFFD taking EBX, remains, and
 // that extra slot shifts every lockstep line]; on it the second as (short)(char)/(char)(x & 1)/(signed char)/

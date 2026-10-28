@@ -160,6 +160,10 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Round 233, on the recovered range-reference/native-mask graph: published table reference 47;
 // native word range/entry field references 47/47; published pass/table-plus-pass references 47/47;
 // packed entry accessor 47; entry-reference consumption scope 47; unsigned native mask index 47.
+// Round 60: entry reference after its store 293; range reference after its store 61;
+// direct sampler record 47; separate restored packed/next/both words 47/47/47;
+// direct first updater 149; direct second updater 47; entry word at chain 47;
+// direct published entry 294. Original body restored.
 // Round 235: published table snapshot after entry/before entry/after packed 151/231/151; after-entry with distinct packed/chain/both/pass/all restore receivers 151/151/151/151/151.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
