@@ -2604,7 +2604,10 @@ PRIVATE __forceinline void function_2417a1(s_marker_entry const *arg_0, long arg
 // team read through the event's index 12, the initializer and cause helpers called 178..212, the
 // players' data or the cause pointer read before the last change call 63/122 (before the flag store
 // 63/140), a named cause team stored after the effect team 14, the cause team before the cause index
-// 145, a word-cast index 156. Permuter (600 s, 15 tries): nothing below 12.
+// 145, a word-cast index 156. Permuter (600 s, 15 tries): nothing below 12. Also tried on 12: an inline
+// cause-player setter 12, the existing out-of-line setter called 178 (565 B, not inlined), a chained
+// inline initializer returning the event with the inline setter 12, the event at function scope 12,
+// typed player-array indexing for the cause team 12.
 // @retail 0x242ba0
 void function_242ba0(long marker_index, long object_index, long player_index)
 {

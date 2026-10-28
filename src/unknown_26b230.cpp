@@ -2006,7 +2006,10 @@ void function_269250(long clump_index, long actor_index)
 	g_4de2f8 = false;
 }
 
-// score 89 (was 89): frame 0x24 agrees; category-byte homes and deletion completion differ.
+// score 89 (was 89): frame 0x24 agrees; category-byte homes and deletion completion differ. With the removed
+// prop cleared and tested (3) only the hoisted prop/node pool registers differ: retail loads the prop pool
+// first into edi, ours always loads the node pool first; an extra prop lookup (93) or an index node loop (76)
+// gives retail's registers but keeps the node-first load order.
 // Earlier: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
 // frame 0x24 agrees; category-byte homes, removal completion and pool carriers remain.
 // Earlier rejected pointer-clear diagnostic: The 3 form clears the removed prop and tests it before the node scan (a set-and-test
@@ -2051,6 +2054,9 @@ void function_269250(long clump_index, long actor_index)
 // 109 four times; both reach 741 bytes. Original traversal and completion tests restored.
 // DL159: single iteration-completion label 3; separate completion guards 3; reversed category declarations 5; category name/native node datum/node iterator/both iterator names 3/3/3/3; native node with reversed categories 5. Labels rejected as branch layout.
 // Structured unit continuation, with separate completion guards and native byte unit/change domains in all eight combinations, 89 each. Original body restored.
+// Round 104, on the 3 form: group flag before the cleared prop 185; a removed flag for the cleared prop 3;
+// prop step defined before the node step 3; pool struct fields swapped (diagnostic) 3; prop-loop body
+// reading the prop at its top 136; 600 s permuter, 66 tries, none below 3. Original body restored.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

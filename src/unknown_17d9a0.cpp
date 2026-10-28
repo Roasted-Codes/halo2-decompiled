@@ -518,11 +518,19 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 587 (was 650): frame 0x21dc and the definition/output registers agree with the pivot offset
+// score 587 (was 587): frame 0x21dc and the definition/output registers agree with the pivot offset
 // rotated in place, the mode read at each use and the plane flip tested as bit 15; 3615 bytes against
 // 3647. Retail increments the first loop's index before its call; the count and plane spill slots
 // sit in a different order; the axis length is summed i, k, j without keeping k on the x87 stack and
 // its j/k components are preloaded for the scale; the rotation schedule differs after that.
+// Round 12 (lane 10): retail computes the pivot offset straight into the matrix position (and
+// copies only the i/j components it still needs), rotates it there in place, writes the forward/left/up
+// rotations directly into the matrix and adds the start point last. The offset in the matrix position
+// with the rotate helper copying its input vector first, then the start added in place: 588 at 3647
+// bytes and frame 0x21dc (plain; slot order and the inner zero register XMM1/XMM2 then differ; our
+// aggregate copy goes through integer registers where retail forwards the float values). Direct
+// writes with the offset kept separate 763 (3455 bytes, frame 0x21ac); the input copied by component
+// 700, into scalar locals 776; min/max stored before the end copy 587 (same code). All restored.
 // Round 10 (lane 10): rotated position kept in its own vector 650 (frame 0x21ec); rotate helper
 // writing its output directly 894 (frame 0x21c4); offset in place alone 717, with the mode at each
 // use 762 (frame 0x21dc), plus the bit-15 flip 593, plus the counts declared after faces[0] 587

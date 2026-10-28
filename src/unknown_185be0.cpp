@@ -142,7 +142,8 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 790 (was 875): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// score 790 (was 790): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
 // Round 9 (lane 10): retail clamps the range fraction in place (division result and clamp share its slot)
 // and threads every repeated flag test (one test, both stores per arm), testing the selected input as a
 // dword. Fraction computed then clamped into itself 790 (same code); fraction declared before its bounds
@@ -215,6 +216,11 @@ union s_185be7
 // between bound and range 793; clamp helper as a ternary 970; byte input with raw values 790; action
 // input in a byte local 790. Retail tests a repeated condition once for consecutive flags; ours
 // re-tests it, and retail places the clamp's upper arms after the hot path.
+// Round 66 (fast): input record copied before the two turn rates (stores after the copy as retail) 789;
+// a re-evaluating PIN macro on the two settings-field clamps (retail re-reads those fields in each arm)
+// 934, on every clamp but the magnitude one 971; the selected input byte as a long (retail's movzx edx /
+// test edx / setg / jle) 790, aligned 289 -> 281, the repeated test still not threaded; long input plus
+// early copy 789. Retail also reads the two selector bytes as one dword (EBX, then BL/BH).
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

@@ -92,7 +92,14 @@ bool function_1cb920(void *data, long label);
 // unit copies 27; shared headers 24; result ternary 27; entry unit 61; direct lookups
 // 64 (the type test's lookup and the call's two in their own blocks, 153 bytes);
 // delayed lookup 24; declaration swaps 27; split result 27; unit header 30; object
-// header 27; three lookups declared in reverse 22; early-return guards 46.
+// header 27; three lookups declared in reverse 22; early-return guards 46; a
+// forced-inline helper (unit index, definition, seat) doing the type test and the
+// call 24 (retail's prologue and convention through +0x34, but the type test jumps
+// to a shared true return and the label is read after the offset); its variants:
+// seat definition pointer argument 45, label local 47, `||` return 33, own result
+// 33, inverted test 24, call-only helper 109; a forced-inline unit or type getter
+// 24; the label read in the call 26; a 600 s permuter run on the helper form,
+// best 23 (steering casts).
 // @retail 0xc8200
 bool function_c8200(long object_index, short seat_index, long unit_index)
 {

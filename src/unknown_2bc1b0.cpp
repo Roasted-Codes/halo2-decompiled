@@ -136,7 +136,8 @@ struct s_placement_2bc1
 	byte field_28[0xc4 - 0x28];
 };
 
-// score 16 (was 16): placement argument EAX/ECX transfer and event-store scheduling differ from +0x6d.
+// score 5 (was 16): the placement pointer copied for the creation call uses ECX where retail uses
+// EAX, and the game options pointer read for the mode test uses EDX where retail uses ECX.
 // Existing initializer 89; initializer result 89; initializer before mode 88; paired helpers 88;
 // event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90.
 // Unconditional event with options pointer 32; byte mode before event 31; mode against event type 31;
@@ -164,13 +165,11 @@ void function_2bc1f0(long team)
 				if (object_index != NONE)
 				{
 					function_15e050(object_index, (short)team);
-					if (g_4e6948->mode != 4)
 					{
 						s_event event;
 
 						game_engine_event_initialize_inline(&event, 4, 1);
-						function_a7c50(&event);
-						function_19eb30(&event);
+						game_engine_event_send_inline(&event);
 					}
 					function_a7870(object_index);
 				}
