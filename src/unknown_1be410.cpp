@@ -44,9 +44,11 @@ bool function_1be410(long actor_index, long object_index, point3f *point);
 point3f *function_b9dd0(long object_index, point3f *result);
 bool function_1f8100(long actor_index, point3f const *origin, point3f const *target);
 
-// score 74 (was 74): the three position components are loaded into different
-// SSE registers
-// here and the copies on the stack sit at different offsets.
+// score 10 (was 23): the path call reuses ESI for its point argument where retail loads the object
+// index first and recomputes the point address; ours is two bytes shorter.
+// x/y/z declarations 21; last terms swapped 21; y/x/z declarations 21; successive z/x/y sum 10;
+// call object index 10; nested distance test 10; returned point pointer 121; point setter copy 76;
+// scoped call result 10; call-only point pointer 10; two-call point pointer 10.
 // @retail 0x1be4b0
 short __stdcall function_1be4b0(long actor_index)
 {
@@ -58,10 +60,13 @@ short __stdcall function_1be4b0(long actor_index)
 		if (object_get(actor->unknown018)->type == 0)
 		{
 			function_b9dd0(actor->unknown348, &geometry.point);
-			real z = actor->position.z - geometry.point.z;
 			real x = actor->position.x - geometry.point.x;
 			real y = actor->position.y - geometry.point.y;
-			if (z * z + x * x + y * y < 16.0f && function_1be410(actor_index, actor->unknown348, &geometry.point))
+			real z = actor->position.z - geometry.point.z;
+			real distance = z * z;
+			distance += x * x;
+			distance += y * y;
+			if (distance < 16.0f && function_1be410(actor_index, actor->unknown348, &geometry.point))
 			{
 				geometry.origin = geometry.point;
 				geometry.origin.x -= object_get(actor->unknown348)->unknown03c;
