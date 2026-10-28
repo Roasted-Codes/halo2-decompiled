@@ -535,29 +535,41 @@ done:
 	return result;
 }
 
-static inline long track_sound_next(s_record_pool *data, long first, long index, long *count)
+/* walks a track's ring of playing sounds once, from its first sound */
+struct s_track_sound_iterator
 {
-	if (*count > 0 && index != NONE)
+	long first;
+	long index;
+	long count;
+};
+
+static inline void track_sound_iterator_new(s_track_sound_iterator *iterator, long first)
+{
+	iterator->first = first;
+	iterator->index = first;
+	iterator->count = 0;
+}
+
+static inline long track_sound_iterator_next(s_track_sound_iterator *iterator)
+{
+	if (iterator->count > 0 && iterator->index != NONE)
 	{
-		s_looping_track_links *links = &track_sound_get(data, index)->loop;
-		index = links->next_sound_index;
-		if (index == first)
-			index = NONE;
+		s_looping_track_links *links = &track_sound_get(g_4e637c, iterator->index)->loop;
+		iterator->index = links->next_sound_index != iterator->first ? links->next_sound_index : NONE;
 	}
-	++*count;
-	return index;
+	iterator->count++;
+	return iterator->index;
 }
 
 // @retail 0x21b870
 long looping_sound_find_sound(long looping_sound_index, long definition_index, long pitch_range_index, short track_index)
 {
-	long first = looping_track_get(looping_sound_index, track_index)->sound_index;
-	s_record_pool *data = g_4e637c;
-	long index = first;
-	long count = 0;
-	while ((index = track_sound_next(data, first, index, &count)) != NONE)
+	s_track_sound_iterator iterator;
+	long index;
+	track_sound_iterator_new(&iterator, looping_track_get(looping_sound_index, track_index)->sound_index);
+	while ((index = track_sound_iterator_next(&iterator)) != NONE)
 	{
-		s_looping_track_sound *sound = track_sound_get(data, index);
+		s_looping_track_sound *sound = track_sound_get(g_4e637c, index);
 		if (sound->definition_index == definition_index &&
 			(pitch_range_index == NONE || sound->pitch_range_index == pitch_range_index))
 			return index;
@@ -879,18 +891,25 @@ void function_219560(s_packed_value *value, s_animation_ref *ref, dword data);
 void function_2192b0(s_animation_state *state, s_animation_ref *ref, byte value);
 long function_219370(s_animation_state *state, s_animation_ref *ref);
 
+// score 10 (was 16): fallback argument scheduling and final alignment byte differ;
+// common result 10; sound/playback reorder 16, with common result 10; fallback guard 16;
+// reordered direct fields 16, reused track 22, common direct fields 10; named range sum 10; set pointer 10;
+// long set-index local 10; fallback arm first with common result 10; inline set accessor 10;
+// function_2194c0 parameters as (ref, value) at its definition and every call 0 (callee not ours, held).
 // @retail 0x21cb90
 dword looping_sound_get_permutations(s_type_5ef569 *sound, looping_sound_definition *definition, s_looping_playback_definition *playback, long track_index, short arg_58ecd0, bool clear)
 {
+	dword result;
 	if ((definition->flags & 0x30) && sound->controller_index != NONE)
 	{
 		dword *permutations = &((s_type_06b94f *)sound->track_storage)[track_index].permutations;
-		dword result = *permutations;
+		result = *permutations;
 		if (clear)
 			*permutations = 0;
-		return result;
 	}
-	return function_2194c0((s_packed_value *)&g_51ebd4->sets[playback->pitch_range_base + arg_58ecd0], (s_animation_ref *)playback);
+	else
+		result = function_2194c0((s_packed_value *)&g_51ebd4->sets[playback->pitch_range_base + arg_58ecd0], (s_animation_ref *)playback);
+	return result;
 }
 
 // @retail 0x21cbe0
@@ -1059,10 +1078,12 @@ struct s_looping_promotion_table
 	s_looping_promotion *entries;
 };
 
-// score 72 (was 72): four-byte frame versus twelve; iterator and curve homes differ;
+// score 52 (was 72): frame and loop head now retail's; the body's element and definition registers differ;
 // short curve 76; long curve 80; count renamed 72; table snapshot 72; pool snapshot 76;
 // count first 74; plain for 74; flag mask 72; shared lookup 72; short curve and lookup 76;
-// bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65.
+// bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65;
+// shared iterator helper reading the next link at each use 69; the shared iterator record
+// (first, index, count; next link read at each use) 52 (kept).
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {
@@ -1070,9 +1091,10 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	real const *reference = &duration;
 	if (first_sound_index != NONE)
 	{
-		long index = first_sound_index;
-		long count = 0;
-		while ((index = track_sound_next(g_4e637c, first_sound_index, index, &count)) != NONE)
+		s_track_sound_iterator iterator;
+		long index;
+		track_sound_iterator_new(&iterator, first_sound_index);
+		while ((index = track_sound_iterator_next(&iterator)) != NONE)
 		{
 			s_looping_track_sound *playing = track_sound_get(g_4e637c, index);
 			s_looping_playback_definition *definition = (s_looping_playback_definition *)g_4e3b44[playing->definition_index & 0xffff].bytes;
@@ -1089,18 +1111,21 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	}
 }
 
-// score 66 (was 66): missing twelve-byte frame, first-index convention and count home;
+// score 35 (was 66): frame and loop head now retail's; the body's element pointer (ours ESI, retail EDX) differs;
 // pool at each use 66; count declared first 66; count renamed 66; state guard 66;
-// plain for 66; iterator record 66; count-first iterator record 66; flag mask 66.
+// plain for 66; iterator record 66; count-first iterator record 66; flag mask 66;
+// shared iterator helper reading the next link at each use 64; the shared iterator record
+// (first, index, count; next link read at each use) 35 (kept).
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {
 	if (first_sound_index != NONE)
 	{
 		s_record_pool *data = g_4e637c;
-		long index = first_sound_index;
-		long count = 0;
-		while ((index = track_sound_next(data, first_sound_index, index, &count)) != NONE)
+		s_track_sound_iterator iterator;
+		long index;
+		track_sound_iterator_new(&iterator, first_sound_index);
+		while ((index = track_sound_iterator_next(&iterator)) != NONE)
 		{
 			s_looping_track_sound *playing = track_sound_get(data, index);
 			if (playing->state == 2)
@@ -1182,7 +1207,7 @@ bool looping_sound_prepare_detail(s_type_a82d9f const *detail, long looping_soun
 			long player = players_first_active_local_player();
 			while (skip > 0)
 			{
-				player = function_14de10(player);
+				player = local_player_next_inline(player);
 				--skip;
 			}
 			source->audible = 1;
@@ -1410,11 +1435,11 @@ void function_21b0e0(bool update)
 						long sounds[9] = { NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE };
 						long gains[9] = { 0xc2800000, 0xc2800000, 0xc2800000, 0xc2800000, 0xc2800000, 0xc2800000, 0xc2800000, 0xc2800000, 0xc2800000 };
 						dword active_mask = 0;
-						long first = track->sound_index;
-						long current = first;
-						long count = 0;
+						s_track_sound_iterator iterator;
+						long current;
 						s_record_pool *playing_sounds = g_4e637c;
-						while ((current = track_sound_next(playing_sounds, first, current, &count)) != NONE)
+						track_sound_iterator_new(&iterator, track->sound_index);
+						while ((current = track_sound_iterator_next(&iterator)) != NONE)
 						{
 							s_looping_track_sound *entry = track_sound_get(playing_sounds, current);
 							if (entry->definition_index == definition_index && entry->state == 2)

@@ -437,6 +437,24 @@ real function_30bf0(vector3f *vector);
 // restored; result/range homes and SIMD allocation remain.
 // Round 196: Normalizer inline/noinline/combined/forceinline declarations, each with original
 // and post-normalization up lifetime, 184 each. Original declarations and body restored.
+// Round 28 (m3 lane 12): retail returns a short (`mov ax, word ptr [esp + 8]`) through separate result
+// exits; the 3/2 choice as if/else stores gives those exits and moves result toward retail's +0 slot
+// (241, 1327 bytes); with a short return 245 (needs 0x25c9d0's declaration changed too). Motion declared
+// before delta 184; result before the references 184; maxima as conditionals 184; a/b beside the maxima 184.
+// Ours also keeps secondary/primary in xmm registers across the seat loop; retail compares them in memory.
+// Lane 9 r25: retail returns a short (`mov ax, word ptr [esp + 8]` at each exit) from a long result
+// slot; the prototype in src/unknown_25d690.cpp (another lane's file this round) keeps the return
+// long. Result renamed level 184 and secondary/primary renamed 184 (identical code: names do not
+// move these slots); range read after delta 184; primary declared before secondary 184.
+// Round 30 (m3 lane 12): retail's frame swaps result and range (result at frame 0x0, range at 0x20 above the
+// motion vector; ours the other way), and range comes in xmm0 with delta in xmm5-7 (ours delta xmm2-4, range
+// xmm5). Range renamed to sort after result 184 (identical); range declared at function scope before/after
+// result 184/184; range read after the delta 184; delta declared before range 184.
+// Round 84: retail's `mov ax, word ptr` exits need a short return, and 0x264b50's declaration sits in
+// a file another lane holds this round; in the seat loop retail compares and stores secondary/primary
+// in memory (`comiss xmm0, [mem]`) where ours copies them through xmm1/xmm2. a/b at the seat-loop top
+// 184; secondary/primary at function scope 184; delta at function scope 184; indexed seats instead of
+// the cursor 211; seat array at the facing-block scope 184.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1659,6 +1677,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 // combinations and full-width player slot on that graph 682/704/682/707/685/707/710/706. Best 682 gains only
 // two, frame 0x74 versus 0x80; all original vectors, observations, result widths, ordinal lifetimes and input
 // access restored.
+// Round 354: shared dot at absolute/relative/facing/absolute-relative/absolute-facing/relative-facing/all
+// scoring sites 684 each; all with native signed-word maximum 707. Original complete body restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

@@ -484,9 +484,9 @@ struct s_decal_projection_17fd20
 
 PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh, long face_index, plane3f *plane)
 {
-	short index = mesh->faces[face_index].plane_index;
+	long index = mesh->faces[face_index].plane_index;
 	plane3f const *source = &mesh->planes[index & 0x7fff];
-	if (index < 0)
+	if (index & 0x8000)
 	{
 		plane->n.i = 0.0f - source->n.i;
 		plane->n.j = 0.0f - source->n.j;
@@ -499,11 +499,11 @@ PRIVATE __forceinline void decal_face_plane_17fd20(s_decal_mesh_view const *mesh
 
 PRIVATE __forceinline real decal_normal_angle_17fd20(vector3f const *a, vector3f const *b)
 {
-	vector3f first_vector;
-	memcpy(&first_vector, a, sizeof(first_vector));
-	if (!memcmp(&first_vector, b, sizeof(first_vector)))
+	if (*(dword const *)&a->i == *(dword const *)&b->i &&
+		*(dword const *)&a->j == *(dword const *)&b->j &&
+		*(dword const *)&a->k == *(dword const *)&b->k)
 		return 0.0f;
-	real cosine = first_vector.i * b->i + first_vector.k * b->k + first_vector.j * b->j;
+	real cosine = a->i * b->i + a->k * b->k + a->j * b->j;
 	cosine = cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine;
 	return (real)acos(cosine < -1.0f ? -1.0f : cosine > 1.0f ? 1.0f : cosine);
 }
@@ -518,7 +518,32 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 749 (was 749): Self-aligned frame 0x2204 versus 0x21dc, definition/output carriers and angle equality homes remain.
+// score 587 (was 587): frame 0x21dc and the definition/output registers agree with the pivot offset
+// rotated in place, the mode read at each use and the plane flip tested as bit 15; 3615 bytes against
+// 3647. Retail increments the first loop's index before its call; the count and plane spill slots
+// sit in a different order; the axis length is summed i, k, j without keeping k on the x87 stack and
+// its j/k components are preloaded for the scale; the rotation schedule differs after that.
+// Round 12 (lane 10): retail computes the pivot offset straight into the matrix position (and
+// copies only the i/j components it still needs), rotates it there in place, writes the forward/left/up
+// rotations directly into the matrix and adds the start point last. The offset in the matrix position
+// with the rotate helper copying its input vector first, then the start added in place: 588 at 3647
+// bytes and frame 0x21dc (plain; slot order and the inner zero register XMM1/XMM2 then differ; our
+// aggregate copy goes through integer registers where retail forwards the float values). Direct
+// writes with the offset kept separate 763 (3455 bytes, frame 0x21ac); the input copied by component
+// 700, into scalar locals 776; min/max stored before the end copy 587 (same code). All restored.
+// Round 10 (lane 10): rotated position kept in its own vector 650 (frame 0x21ec); rotate helper
+// writing its output directly 894 (frame 0x21c4); offset in place alone 717, with the mode at each
+// use 762 (frame 0x21dc), plus the bit-15 flip 593, plus the counts declared after faces[0] 587
+// (kept; either order); the bit-15 flip alone 761; grouping plane in its own block 650 (same code);
+// count locals renamed 587 (slots unchanged); first loop as `while` with `faces[i++]` 574 (not kept:
+// a respelled loop); the axis through normalize3d 712, plus vector3d_from_points3d 667.
+// Round 8 (lane 10): counts set after faces[0] 716; float component equality 762 (ucomiss, but the
+// cosine products then follow retail's order); dword component equality without the copy 650 (kept);
+// short plane index 698 (test cx); mode read from the definition at each use 705 (registers, loop
+// entry jump and final call as retail, rest worse; retail does read it at each use); rotation in the
+// sine-axis/t*j*i/t*k shape 731 (x87 product as retail), its square and sine-product statement orders
+// 731-740; with the mode at each use 717; matrix local renamed a_/z_ 650/650 (slot unchanged).
+// Earlier: Self-aligned frame 0x2204 versus 0x21dc, definition/output carriers and angle equality homes remain.
 // Earlier: frame 0x2204 versus 0x21dc; definition/output carriers still differ.
 // Group word 866; remaining long 871; first input only 825; second only 878; unsigned plane 891; first plus group 774; first plus remaining 843.
 // From 774: group-first test 753; in-place offset 779; vector return 800; deferred angle copy 808; word edge indices 776.
@@ -551,33 +576,28 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Round 180 alias-free scalar names: selected distances, candidate distances, endpoint distances, axis,
 // rotation, angle cosine, all distances, all scalars; scores 796/796/796/796/796/796/796/796 (fast); all
 // restored.
+// Round 354, without inherited parameter-address aliases: promoted signed plane index 788;
+// mode field at every use 796; both 806; shared pivot-offset difference 753; promoted index plus
+// shared offset 716 (kept, plain); mode plus offset 783; all three 787; all with shared normalizer 775.
+// Retain the signed index promotion and existing offset helper; frame 0x2204 and entry carriers remain.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
 {
-	s_decal_mesh_view const *const *mesh_reference = &mesh;
-	long const *tag_index_alias = &tag_index;
-	s_decal_output_17dd80 *const *output_reference = &output;
-	s_decal_projection_17fd20 *const *projection_reference = &projection;
-	mesh = *mesh_reference;
-	tag_index = *tag_index_alias;
-	output = *output_reference;
-	projection = *projection_reference;
 	long faces[1024];
 	long secondary[1024];
-	short secondary_count = 0;
-	short face_count = 1;
 	byte const *definition = g_4e3b44[tag_index & 0xffff].bytes;
 	output->polygon_count = 0;
 	output->vertex_count = 0;
 	faces[0] = placement->unknown50;
+	short secondary_count = 0;
+	short face_count = 1;
 	for (short i = 0; i < face_count; ++i)
 	{
 		function_17dd80(mesh, &projection->quad, output, faces[i], true, projection->radius,
 			*(short const *)(definition + 2), faces, &face_count, secondary, &secondary_count);
 	}
-	short mode = *(short const *)(definition + 2);
-	if ((byte)g_444a38[mode].flags && secondary_count > 0)
+	if ((byte)g_444a38[*(short const *)(definition + 2)].flags && secondary_count > 0)
 	{
 		short remaining = secondary_count;
 		do
@@ -599,7 +619,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 					{
 						plane3f plane;
 						decal_face_plane_17fd20(mesh, face, &plane);
-						if (g_444a38[mode].maximum_angle * 0.017453292f >= decal_normal_angle_17fd20(&first_plane.n, &plane.n) &&
+						if (g_444a38[*(short const *)(definition + 2)].maximum_angle * 0.017453292f >= decal_normal_angle_17fd20(&first_plane.n, &plane.n) &&
 							projection->radius * 0.05f > function_17d900(mesh, face, &first_plane) &&
 							projection->radius * 0.05f > function_17d900(mesh, first_face, &plane))
 						{
@@ -683,17 +703,15 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 					up.j = one_minus_cosine * axis.k * axis.j - axis.i * sine;
 					up.k = axis.k * axis.k + (1.0f - axis.k * axis.k) * cosine;
 					transform4x3f matrix;
-					vector3f offset, position;
-					offset.i = projection->matrix.position.x - start.x;
-					offset.j = projection->matrix.position.y - start.y;
-					offset.k = projection->matrix.position.z - start.z;
-					decal_rotate_vector_17fd20(&forward, &left, &up, &offset, &position);
+					vector3f offset;
+					vector3d_from_points3d(&start, &projection->matrix.position, &offset);
+					decal_rotate_vector_17fd20(&forward, &left, &up, &offset, &offset);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.forward, &matrix.forward);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.left, &matrix.left);
 					decal_rotate_vector_17fd20(&forward, &left, &up, &projection->matrix.up, &matrix.up);
-					matrix.position.x = position.i + start.x;
-					matrix.position.y = position.j + start.y;
-					matrix.position.z = position.k + start.z;
+					matrix.position.x = offset.i + start.x;
+					matrix.position.y = offset.j + start.y;
+					matrix.position.z = offset.k + start.z;
 					matrix.scale = 1.0f;
 					function_17d9a0(&matrix, (real const *)&projection->bounds, &quad);
 					for (long k = 0; k < 3; ++k)
@@ -708,7 +726,7 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 				for (short j = 0; j < group_count; ++j)
 				{
 					function_17dd80(mesh, &quad, output, faces[j], false, projection->radius,
-						mode, 0, 0, 0, 0);
+						*(short const *)(definition + 2), 0, 0, 0, 0);
 				}
 				remaining -= group_count;
 			}

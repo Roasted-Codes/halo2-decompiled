@@ -114,8 +114,22 @@ void function_7f930(void);
 void pending_messages_reset(void);
 void function_53210(void);
 void function_8dd70(void);
+// Lane 10 r11 (forms reverted: reading globals through casts of their own addresses is not kept
+// without a match): message pointer read through its address 231; noinline 0x662f0 in its header
+// 266, with 0xb2cc0 too 321 (calls pair with retail's); all seven network pointers (0x510560..
+// 0x510578) read once through their addresses 207 at 892 bytes, each one alone dropped 226-276.
+// Retail reloads them after every call and pointer store, as LTCG does for address-taken globals:
+// find the original code that takes their addresses (a dispose or setup passing &g) rather than
+// casting at the reads. Entry flag: retail's sete/cmp not produced by a negated or explicit test.
 
 // score 230 (was 230): entry predicate, helper boundaries and global reloads differ;
+// Round 9 (lane 11, fast): a noinline declaration of 0x662f0 in this file (before or after its header)
+// leaves it inlined 231/231; in include/unknown_0662e0.h it stays out of line 286; with 0xb2cc0 noinline in
+// network_message_types.h too 379 (728 bytes, every registration called as in retail); plus one
+// `*(c_type_659ceb *const *)&g_510564` read (diagnostic) 321: that one address-take makes LTCG reload
+// the pointer before all nine registration calls exactly as retail does. Left: the prologue (retail keeps
+// EBX zero, `push ecx` for a stacked link byte, `sete al; cmp al, bl` entry test), short versus
+// materialized bool readiness, frame. All restored.
 // short readiness/list value initialization 230; short readiness/list memset 230;
 // session construction loop 352; separate session results 231; list/direct observer result 248.
 // readiness homes, repeated pointer loads and out-of-line calls differ;
@@ -180,6 +194,9 @@ void function_8dd70(void);
 // after every store through a pointer, as when these globals are address-taken.
 // Entry constant homes with failed link/observer/link-observer/session/link-session/observer-session/all
 // stages 232/230/235/225/231/229/235; all failed stages with immutable link 235. All restored.
+// Round 356: Native handler tail clear 249; gateway pointer/byte tail clear 251;
+// complete list clear 230; both tails 248; handler/list 249; gateway/list 251;
+// all three and native message-table extent 248/248. Original clear boundaries restored.
 // Complete link/search/scalar/gateway/ready publication orders 0-1-2-3-4, 1-0-2-3-4,
 // 0-2-1-3-4, 0-2-3-1-4, 3-0-1-2-4, 0-4-1-2-3, 1-2-0-3-4 and 2-3-0-4-1 each 230.
 // Each search reset clears before both sentinels; original complete publication order restored.

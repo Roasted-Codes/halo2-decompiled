@@ -675,7 +675,16 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 282 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// score 277 (was 277): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// Round 141: the memory loop is the existing joint_decline (0x26ed40) inlined in retail (test through the
+// cached actor, body re-derived, participant index re-read per store), BLOCKED-BY 0x26ed40: its /Ob1
+// file keeps it out of line (a call there 317/343). The tail block (flag 9 clear, as 0x1c7bb0/0x1e3920
+// write it) takes one fresh actor lookup as retail does: 277 (a shared helper in slot_handler.h gives
+// the same, but any new inline function there costs 0x73360). `value` is a bool in retail (pushed
+// through to 0x203ed0 unconverted, tested as a byte): 275 with it, but src/unknown_1bba20.cpp declares
+// the parameter long (MiniMax file).
+// Round 139's actor local + walk helpers with the bool and the shared tail 306 (942 bytes, aligned 114),
+// with the memory test through the local 299 (974 bytes) or re-derived and per-store reads 304.
 // Round 139: retail keeps the actor pointer in EBP from the entry (slot loop, current store, 0xa/0x7c
 // tests, prop-list clear, iterator compare, 0x3f4/7/0x1c/0x18/0x54 reads) and re-derives it from the
 // pool and the saved offset only in the memory-slot body, the prop walk start, the inlined 0x1e1250,
@@ -727,6 +736,19 @@ void swarm_leader_detach(long actor_index);
 // Round 344: phase-specific stop/memory receivers 304/286; shared cleanup/terminal ordinal 282;
 // stop/memory pair 293; stop/memory with shared ordinal 304/286; both with ordinal 293;
 // both with byte shared ordinal 293. All phase snapshots and ordinal changes restored.
+// Round 143: 0x26ed40 is open now, but its file is another lane's this round; the bool parameter
+// still needs src/unknown_1bba20.cpp. Short memory index 277 (identical); the memory loop as a for
+// loop 565 (1204 bytes); the counts loop as a for loop 309; both 565; the `current` store as a plain
+// `= NONE` 277 (identical, kept: the word cast was not needed).
+// Round 26 (lane 9): a __forceinline declaration of 0x26ed40 in this file with the memory loop calling
+// it 324 (917 bytes; it stays a call, so the helper's own file must allow inlining); flag test as a bool
+// cast 291; actor local in the slot loop 309; memory test without the entry pointer 277; prop view index
+// re-derived 278. Still BLOCKED-BY 0x26ed40 (src/unknown_26e370.cpp) and the bool parameter
+// (src/unknown_1bba20.cpp).
+// Round 31: still BLOCKED-BY 0x26ed40 (lane file) and the bool parameter (src/unknown_1bba20.cpp).
+// Prop walk through 0x26be00/0x26be30 alone (fresh pool reads after the callback) 298 (996 bytes);
+// tail read per use 282; prop record re-derived per use 278; named bool for the definition bit 277;
+// the bit test as `(bool)((x >> 3) & 1)` 291 (retail: shr/and al, stored in the dead index slot).
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
@@ -736,7 +758,7 @@ void __stdcall function_1e1a00(long actor_index, long value)
 		if (stop)
 			stop(actor_index, slot_index < 4 ? &actor_get(actor_index)->slots[slot_index] : NULL);
 	}
-	*(word *)&actor_get(actor_index)->current = 0xffff;
+	actor_get(actor_index)->current = NONE;
 	function_258600(actor_index);
 	long memory_index = 0;
 	do
@@ -826,10 +848,11 @@ void __stdcall function_1e1a00(long actor_index, long value)
 			}
 		} while (++i < 3);
 	}
-	if (actor_get(actor_index)->unknown009)
+	s_actor_view *actor = actor_get(actor_index);
+	if (actor->unknown009)
 	{
-		actor_get(actor_index)->unknown009 = false;
-		*(long *)((byte *)actor_get(actor_index) + 0x10) = g_510c54->game_time;
+		actor->unknown009 = false;
+		*(long *)((byte *)actor + 0x10) = g_510c54->game_time;
 		--*(short *)((byte *)g_4f55d0 + 0x36a);
 	}
 	record_pool_release(g_4f55f0, actor_index);

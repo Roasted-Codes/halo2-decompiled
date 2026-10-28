@@ -62,18 +62,6 @@ extern s_unknown_485a88 g_unknown_485a88;
 #define g_485a8a (g_unknown_485a88.rects)
 byte g_4c1a18;
 
-/* the head of a Bink movie (HBINK) */
-struct s_bink_movie
-{
-	dword width;
-	dword height;
-	dword frames;
-	dword frame_number;
-	dword last_frame_number;
-	dword frame_rate;
-	dword frame_rate_divisor;
-};
-
 struct s_bink_vertex
 {
 	real x;
@@ -82,16 +70,6 @@ struct s_bink_vertex
 	real v;
 	dword color;
 };
-
-/* per-track sound settings for the Bink sound callback */
-struct s_bink_sound_track
-{
-	dword unknown00;
-	real volume;
-	byte unknown08[0x18];
-};
-
-s_bink_sound_track g_4e9300[8];
 
 /* the texture cache's physical memory (unknown_12c0d0.cpp) */
 extern s_physical_object *g_4e6464;
@@ -318,38 +296,6 @@ void __stdcall function_156810(void *block)
 	bink_update_memory_available();
 }
 
-// score 32 (was 47): SSE arithmetic, entry scheduling and conversion homes still differ;
-// split products 32; branch result 42; branch result and split products 39;
-// explicit division bound 47; frame fields at each use 44; total-time numerator 47;
-// null exit 32; conversion local names 39; null exit and split products 39;
-// split products with result first 32; named seconds and ticks 32.
-// @retail 0x1564e0
-long bink_playback_ticks_remaining(void)
-{
-	s_bink_movie *movie = (s_bink_movie *)g_4e9188.movie;
-	long result = 0;
-
-	if (movie)
-	{
-		dword frames = movie->frames;
-		dword remaining = frames - movie->frame_number;
-		dword milliseconds = movie->frame_rate_divisor * frames * 1000 / movie->frame_rate;
-		real seconds;
-		real ticks;
-
-		milliseconds = milliseconds * remaining / (frames > 1 ? frames : 1);
-		seconds = (long)milliseconds * 0.001f;
-		ticks = seconds * 30.0f;
-		__asm
-		{
-			fld ticks
-			fistp result
-		}
-		result = result > 0 ? result : 0;
-	}
-	return result;
-}
-
 // @retail 0x156ab0
 bool function_156ab0(void)
 {
@@ -364,17 +310,6 @@ bool function_156ab0(void)
 			break;
 		}
 	}
-	return result;
-}
-
-/* the Bink sound callback: a track's volume */
-// @retail 0x156b30
-real __stdcall function_156b30(long track, long type)
-{
-	real result = 0.0f;
-
-	if (type == 0x3000577)
-		result = g_4e9300[track].volume;
 	return result;
 }
 

@@ -964,6 +964,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 /* the out-of-band messages: those that arrive from an address rather than on
    an established channel */
 // score 193 (was 193): selector/message/address convention and dispatch root remain. Round 76: with the
+// Round 9 (lane 10, fast control 191): free function in retail's register order (type, address, handler,
+// message) on the two-switch body, call site updated, 191 (type still ECX, message on the stack);
+// case-scoped connection index 191; direct cases 0,2,3,4 196; residual cases in numeric order 191;
+// first switch without its default 191. All restored.
 // unified retail-order switch and the address read once through its address, the address goes on the stack
 // as in retail and only type/message are swapped (ecx/eax for retail eax/ecx); the 24 missing bytes are
 // exactly retail's edi copy of the address and its three-pop exits, so that body matches once the convention does.
@@ -1071,9 +1075,22 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 5,23,6,24,7,22 / 24,5,23,6,22,7; connection/query interleaves 5,8,6,9,7,10 /
 // 8,5,9,6,10,7 / 5,9,6,10,7,8 / 10,5,9,6,8,7:
 // 193,192,193,192,195,194,195,195 fast; reduced control 191, full 193. Original executable source restored.
+// Lane 4 r98 (fast control 191): retail takes the selector in eax, the message in ecx (kept in ebx) and
+// this in edx with the address on the stack (edi); ours the selector in ecx, the address in eax and the
+// message on the stack. One numeric-order switch with returns, as 0x93aa0, 208 (432 bytes, same
+// convention); an unused message size parameter after the type (dropped by the link) 191; formals
+// (type, message, address) 191, same convention; direct cases 0,2,3,4 196; connection cases after 11 205.
 // Round 224: Residual connection/free-case interleaves 5,11,6,18,7,8 / 11,5,18,6,8,7 /
 // 5,18,6,8,7,11 / 18,5,8,6,11,7 / 5,11,18,6,8,7 / 11,18,5,8,6,7 /
 // 18,11,5,6,8,7 / 8,5,11,6,18,7 195/194/195/194/195/192/192/194 fast. Original phases and handler tuples restored.
+// Round 28 (m3 lane 12): single retail-order switch 218 fast (type ecx, address eax, message stack); with
+// type/message/address declared 218 (identical); one read of the address through its address 220 (address
+// on the stack as retail, type ecx/message eax, retail eax/ecx); that with type/message/address 219 (message
+// also on the stack, 0x7afd0 3 -> 35), with type/address/message 220. Declared order does not move type to eax.
+// Round 50: unified retail-order slot reads 220/220; sender reference 218; full sender value 242
+// (484 bytes, ret 0x14, caller 76); pointer reference 221. Four-byte aggregate with const,
+// register, declaration-swapped or per-case-result pointer forms 242 each (484 bytes, caller MATCH).
+// All restored; selector/message/address convention and repeated sender loads remain.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

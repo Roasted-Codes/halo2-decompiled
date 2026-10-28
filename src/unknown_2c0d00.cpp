@@ -233,6 +233,8 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // 866. Fast scores 927/916/927/916/916; full control 866.
 // Separate first/second/third marker ordinals long 913f/934f/916f; object ordinal alone
 // 897f/924 plain; only marker counts long 914f (control 916f). Original bounded traversals restored.
+// Direction dot operand order 916f; single expression 928f; both 928f;
+// range read order 916f; alignment test order 916f; predicate declarations 916f.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -1029,9 +1031,15 @@ __declspec(noinline) real normalize2d(point2f *v);
 
 real function_11cc90(vector2f const *a, vector2f const *b);
 
-// score 172 (was 342): frame 0x34 and the first 0x3e bytes agree; retail keeps the shared return-true block
+// score 172 (was 172): frame 0x34 and the first 0x3e bytes agree; retail keeps the shared return-true block
 // after the length test (both final compares jump back to it), forwards x87 values in the direction
 // normalizations, and rounds the second side through memory before its clamp.
+// Round 144: VC keeps the last of the merged `return true` blocks; with both final compares as
+// `return a < b;` the early block sits after the length test as retail's (al 85 against 88) but the
+// tail becomes `mov eax, 1` / `xor eax, eax` returns, 371; distance compare alone 254, angle alone 254;
+// one `result` assigned from each compare, returned once 172 (identical); `result = false; if (c) result
+// = true;` in each 226; length test `<= 0.0f` / `0.0f >=` 172/172; body under `if (length > 0)` with
+// `return true` last 243.
 // Round 76: signed angles through the existing function_11cc90 (single-result form there) 419, masked 90;
 // with explicit true/false distance return 332; distance compare first < second 407; angle compare
 // first sum < negated second sum 270; with both explicit returns 240; distance sums target first 172
@@ -1057,6 +1065,26 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // second angular endpoint reuse 373; second distance endpoint reuse 360.
 // Round 54: first/second directions initialised directly 376 (x87 forwarding matches, y preload
 // missing), through normalize_local2d_2c 342/376, out-of-line normalize2d 414, plain first side 374.
+// Lane 9 r23: shared normalize2d_fast for the side directions/the direction 172/172 (same code);
+// volatile on the second side instead of the first 397; normal as two scalars 236; second side
+// computed before the first 392. Retail keeps the first direction's y in XMM0 from its subtraction
+// (fst/movss) and stores the second side through memory, the first side in the direction's slot.
+// Lane 9 r25: `<= 0.0f` length test and `>= 0.0f` side test 172 (retail's comiss operand order, but the
+// merged return-true block still sits at the end); both results returned as comparisons 370 (the
+// return-true block moves to retail's place but the results widen to eax), angle or distance result
+// alone 254/254; one result assigned in both branches 172; `if (!(a < b)) return false; return true;`
+// at both ends 171 (retail's final `ja`); nested body with one return true 243; result = true with
+// false assignments 424.
+// Round 10 (lane 10): y-first squared length for the side directions and swapped cross operands
+// in 0x11cc90 give identical code; final compares as `c ? true : false` identical. Lead: side dots
+// through dot_product2d with no volatile, if-form clamps and the SECOND side computed first 350
+// (1465 bytes, frame 0x34, the first side shares the direction slot, aligned 22); plus length
+// test `<= 0.0f` and side test `>= 0.0f` (retail's comiss orders) 349 (aligned 19); plus both
+// final compares `return a < b;` 339 (early true block in place, aligned 13: left are the 32-bit
+// return values that no longer merge into it and the second normalization's hoisted x load).
+// On that lead: `(bool)` returns 349; one value return only 373; `if (!(c)) return false` 349;
+// nested body with final `return true` 362; shared `return false` after an if/else 361;
+// single-exit result 376; explicit y-first side expressions 358.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1139,11 +1167,16 @@ bool __stdcall function_26ccb0(s_pathfinding_data const *pathfinding, s_obstacle
 bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
     s_path_trace_result *trace, s_pathfinding_data *pathfinding,
     long sector_index, long target_sector_index, long location);
-// score 444 (was 444): Frame 0x11c versus 0x10c; radius, zero and metadata/endpoint homes still differ.
+// score 444 (was 444): frame 0x11c versus 0x10c, 1740 bytes against 1746. Ours copies the whole step
+// (`rep movsd`) where retail reads it through a pointer and keeps only its type and link in stack slots;
+// retail places the count <= 1 arm at the end, keeps 0 in EBX for the whole function, compares the
+// loop indexes against the count on the stack (ours holds it in bx) and forms the output element at
+// the emit point. The distance test is retail's inlined expansion (one shared (z*z + y*y) + x*x sum),
+// not 0x210a30, whose two branches sum differently.
+// Frame 0x11c versus 0x10c; radius, zero and metadata/endpoint homes still differ.
 // Earlier at 453: Frame 0x10c and exact extent agree; radius, persistent zero and metadata/endpoint homes remain.
 // Earlier: Frame 0x10c and 1746-byte extent agree; source-radius, metadata/index and endpoint homes remain.
 // Earlier unsigned outer word 493; default data result 478; expanded-radius name 478; native origin fields 493; early
-
 // Earlier 469 (was 469): Frame 0x104 versus 0x10c, radius/metadata/index homes still differ.
 // Earlier at 469: Frame 0x104 versus 0x10c, radius/metadata/index homes still differ.
 // Earlier: Frame 0x104 versus 0x10c and radius/metadata homes remain. Unsigned outer
@@ -1216,11 +1249,30 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 93 (fast base 453): `count > 1` arm first 466 (retail's branch placement); with a short loop
 // index 475; with the source pointer formed before the loop 466; all three 475; output element
 // formed at the emit point 518 (1692 bytes; aligned differences 604 -> 532).
+// Round 62: the distance test through 0x210a30 730 (called, not inlined: 1478 bytes); with a
+// forceinline declaration here 730; with `inline` on its definition 541 (inlined, but 0x1f45c0 then
+// inlines it too and stops matching; 0x210850 stays called); data as default plus if 444; the step
+// as a const reference 490 (aligned 443 -> 342, query in ecx and frame 0x104 as retail's entry); plus
+// the count > 1 arm first 475 (aligned 339); plus the output element at the emit point 506 (aligned
+// 318); plus a plain output index 551 (aligned 316). The reference form is the lead: it needs retail's
+// saved type/link slots and the stack-compared count to recover the length.
 // Round 227: Mutable current record, iteration assignment/CRT, traversal assignment/CRT,
 // immutable current-step home and traversal current-step assignment/CRT 444/444/444/444/444/444/444/444. All restored.
 // Final source/emitted/both native coordinate values 476/484/557;
 // with existing point difference 492/484/557; both values emitted first
 // without/with point difference 557/557. All restored; original current record retained.
+// Lane 9 r25: retail keeps two NONE-initialised shorts at +0x6c/+0x74 (set to the step's type and link
+// when its type is not NONE, tested at the emit, which reads the type itself through the step pointer).
+// Step pointer plus those two locals 461 (frame 0x10c as retail's); plus the count > 1 arm first 483;
+// plus the output element at the emit point 505; used/copied-last at function scope 476; the two
+// locals on the copied step 493. Retail's zero in EBX from the data test is still missing.
+// Round 10 (lane 10): retail reads the step through a pointer (it loads the step's unknown02 after
+// storing the output element) and keeps type/link values, NONE unless the step has a type, in two
+// stack slots for the emit test. Step pointer with type/link locals set in the typed-step branch 463
+// (frame 0x10c as retail, 1752 bytes); with the emit copying the type through the pointer 461 (1749
+// bytes); plus the output count declared at the top 473; plus the count > 1 arm first 478; count at
+// the top alone 444 (same code); plus the output element formed at the emit point 509/505 (with arm).
+// Retail's EBX is a zero register from entry to the loop (data tests, index/count/flag stores).
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
