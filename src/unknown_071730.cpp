@@ -134,6 +134,8 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // Round 201: signed/unsigned outstanding roster counts 463/463; missing counts 447/447;
 // direct lookup-result accumulation 469/469; bool/byte all-found results 443/443 (exact-only).
 // Original complete lookup count and signed zero/negative admission restored.
+// Round 226: Property/balance defaults before count observation 457/439; both 457; each/both
+// with Boolean reset 472/469/472; property with Boolean balance 462; all with both Booleans 479. All restored.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

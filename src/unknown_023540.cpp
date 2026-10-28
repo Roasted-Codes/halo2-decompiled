@@ -2791,6 +2791,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Round 201: split flag/tag rejection, positive flag-first admission, nested flag-first admission and
 // nested flag rejection 334 each; tag-first split/positive/nested/mixed admission 370 each (2023 bytes).
 // Original guard and all sampler, packing, scale, rotation and vertex operations restored.
+// Signed integral corner inputs char/short/int/long in the existing rotation helper
+// 334/334/334/334; each with native coordinate outputs
+// 334/334/334/334. Original helper and all eight calls restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

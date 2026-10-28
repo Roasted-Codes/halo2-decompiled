@@ -370,6 +370,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 219: early texture outputs, output names, timestamp names and both names
 // 287 each; earlier large decision 286 (rejected); earlier size plus decision 295;
 // common void exit 287; SSE ownership original/Boolean 287/266, restored.
+// Round 223: two-use sound-interface value 274; allocation-size branches 256;
+// both 274; consistent movie-global reads 256; sound/movie 274; size/movie 256;
+// all three 274; per-branch volume arrays before channel arrays 256. All restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

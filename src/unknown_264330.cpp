@@ -473,6 +473,11 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // with success at consumption 434/430/438/434. Byte states recover frame 0xa0 and 1616 bytes.
 // Complementary run-wide availability bool/byte/short/long 424/424/422/443;
 // per-node skip/defer/both 429/424/433; all three complements 436 at retail length. All restored.
+// Round 223: original independent admission flags with a separate query-completion
+// bool/byte/short/long at its consumer 418/418/430/438; at node entry 433/433/449/457.
+// Two-point forms and added phase flags rejected without a match; all restored.
+// Round 226: Consumption scopes for update, tracking and each real view, all seven subsets
+// 420 each; all scopes with run-wide constant initialization before actor lookup 420. All restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
