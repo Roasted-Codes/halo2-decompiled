@@ -1546,6 +1546,8 @@ struct s_camera_clip_reference_16ebf0
 // 209/209/209/209/209/209/209/209.
 // Original-position pointer before view queries: scalar/native directions, word truth, both
 // 252/260/248/271; those four with entry matrix declaration 252/260/248/271. All restored.
+// Round 227: Shared vector setters at input/basis/composition transfers, all subsets, then publication 209/216/219/226/229/237/240/289.
+// Original body and all helpers restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

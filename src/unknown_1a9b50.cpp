@@ -660,7 +660,7 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 386 (was 386): Frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// score 384 (was 384): Frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
 // Lane 6 r85: retail lays the early false exit (`xor al, al; pop ebp; add esp, 0x58; ret 8`) right after the
 // `goto local_7` jump; ours puts it last. `bool local_2 = !f13 && !f14 && !f2d; if (local_2) {...} return
 // local_2;` (and the same with an if/else setting the flag) lands it where retail does, but arg_0 then takes
@@ -728,6 +728,8 @@ static __forceinline long real_to_long(real value);
 // with every-use object producer 506; all three 430; all with wide eligibility 493. Original restored.
 // Round 193: Existing metadata providers ordinary-inline singly, all pairs and all,
 // then separate noinline declarations on all three: 386/386/386/386/386/386/386/386. Original restored.
+// Round 227: Prediction/facing/query fallback vector setters, all subsets, then early distance default 382/466/467/484/485/491/492/494.
+// Original body and all helpers restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

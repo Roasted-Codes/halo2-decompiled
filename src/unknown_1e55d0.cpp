@@ -91,6 +91,8 @@ static __forceinline long real_to_long(real value);
 // Round 203: native vector setter for orientation, velocity, both, support/reset, orientation/support,
 // velocity/support and all transfers 377/353/380/371/398/374/395; all with final point setter 395.
 // All keep plain frame 0x8c and grow the code; every transfer and original body restored.
+// Round 227: Capsule/intermediate-base destruction, each with immutable binding and earlier matrix combinations 355/353/355/353/355/353/355/353.
+// Original body and all helpers restored.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {
