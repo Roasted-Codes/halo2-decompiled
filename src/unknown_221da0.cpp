@@ -802,6 +802,9 @@ real function_18cac0(long arg_0);
 // Round 195: Outer, inner and batch induction-zero lifetimes independently [241, 230, 247]; paired/joint
 // lifetimes [236, 263, 256, 254]; entry declarations with per-door inner reset 257. Original zeros,
 // clears and loop domains restored; scalar and mask/result homes remain.
+// Round 201: Per-door camera cluster captured after mask query in long/short, alone, with complete
+// role names, with an outer maximum workspace, and with both: 250 each (eight forms, 785 bytes).
+// Original direct field observations and inner result lifetime restored; frame/home and max joins remain.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

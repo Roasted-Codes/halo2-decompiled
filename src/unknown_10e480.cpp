@@ -196,6 +196,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Round 195: Native channel copy initialization and default-assigned identifier subsets [215, 215, 215,
 // 215, 215, 215, 215]; joint construction with sample zero before getter 285. Original independent
 // constructors restored; frame, destination/ordinal homes and weighted getter expansion remain.
+// Round 201: A single frame/weight-array cursor with paired index and char frame gives 248 each
+// with either end test; long frames give 227 each, recovering frame 0x2c but growing to 966 bytes.
+// On that recovered-frame graph, shared/separate weighted identifiers, each with either countdown
+// arm order, give 244/244/244/244. Original index loop, identifiers and constructors restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

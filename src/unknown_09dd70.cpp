@@ -458,6 +458,9 @@ static __forceinline byte *function_9d952(long arg_0)
 
 // score 12 (was 101): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
 // object lookup gives 4, kept out: one use) and copies field_f4 at the end through EAX (ours ECX).
+// Lane 10 r15: 0xd0e00 arm first 37; camo arm as a (unit, flag) inline helper 12; final store
+// indexed from the +0x2b0 field 12; field_f4 read through the parameter 12; field_92 local with a
+// dword field_f4 copy 4 (the tail stays ECX).
 // Round 84: 0xd09c0's own body now keeps its unit index in EBX, so it takes it there as retail (with the
 // field_92 local 93 -> 11); a loop-top element pointer for every slot field gives retail's +0xb8 cursor
 // (11 -> 4 with that local, 12 without); a field_c pointer 11, a field_6 pointer 11 (+0xb2). Final

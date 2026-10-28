@@ -874,6 +874,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 195: Input-level-first scalar schedules [227, 228, 239, 238]; offset-first and selector/gain
 // schedules [239, 239, 245, 228]. Original observations and three local qualifications restored; frame,
 // mode/input and tail homes remain.
+// Round 201: Const send-input parameter, const receiver method, both, immutable scalar carriers,
+// each contract with those carriers, both contracts/carriers, and coherent scalar names: 224 each.
+// All eight tie; original signatures, selector inputs, scalar lifetimes and dispatcher retained.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

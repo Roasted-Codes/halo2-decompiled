@@ -78,7 +78,7 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
     return (real)sqrt(local_2 * local_2 + local_1 * local_1 + local_0 * local_0);
 }
 
-// score 406 (was 416): table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
+// score 406 (was 406): table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
 // Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
 // squared-distance second point by value 430; conditional table pointer initialization 416.
 // Group-table field at each use 457; native long overall result 445; bounded output for 420; same-group pretested while 416; positive nearest-point scope 416.
@@ -92,6 +92,11 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // Round 146: short group index/pass counter/best indices (kept) 406; the three alone 409/416/512;
 // distance index at top of the inner while 416; long search result 415, on the kept form 428;
 // long point bounds 456; long last point 424; long nearest point 396 (word compares in retail, not kept).
+// Round 148: the visited bits through the existing bit_vector_test/bit_vector_set (include/bit_vector.h)
+// 416 at 1577 bytes, but difflib-aligned 378 -> 338: retail's separate test and set (word address and
+// mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a
+// long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
+// bit helpers; same code).
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)
