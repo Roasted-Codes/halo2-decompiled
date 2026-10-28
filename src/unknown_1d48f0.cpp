@@ -102,6 +102,11 @@ const dword g_455978[81] = {
 // Then: volatile casts dropped from the radial length 388 (before the count change); length terms
 // swapped 320; component index as a ternary 427; k cleared before the length, with or without its
 // term 321/321; named lower/upper pointers in the bounds loop 321.
+// Shared radial producers on the accepted count graph: in-place radius scale 321; complete blend setter 321.
+// both shared producers 321; blend factor before normalization 331.
+// factor with radius scale 331; factor with blend setter 331.
+// all three producers 331; complete normalized-vector setter 321.
+// All executable forms restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

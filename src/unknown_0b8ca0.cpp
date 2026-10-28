@@ -1668,7 +1668,13 @@ void function_b8840(long index);
 long function_baf80(long index);
 void function_bba20(long index);
 
-// score 319 (was 319): Frame 0x64 agrees; pool/permission homes, parent/header lifetimes and SIMD scheduling differ.
+// score 305 (was 306): the frame (0x64) and the body length (1236) agree with retail.
+// What still differs: retail keeps the pool pointer in EBX and re-derives pool->data from it,
+// ours keeps the pool in ECX and pool->data in EDI, so retail holds -1 in EAX and the object's
+// parent link in ECX where ours holds them in EBX and EAX.
+// Retail also shift-tests the object's flag bit 7 where ours masks it, takes the parent pointer
+// before the calls for the child-list link and again afterwards for the node matrix where ours
+// takes it once, and keeps the attachment point's x, y and z in different SIMD registers.
 // native point snapshot 385; native orientation snapshots 341; all snapshots 362; inverse
 // workspace scope 319; spatial workspace names 319. byte permission 319; byte activity 319; both
 // byte carriers 319; vector transforms before point 385; byte permission with vectors first 385.
@@ -1691,21 +1697,23 @@ void __stdcall function_b93b0(long parent_index, volatile long index, volatile s
     s_record_pool *pool = g_4e0300;
     long offset = (index & 0xffff) * 12;
     byte *object = *(byte **)(pool->data + offset + 8);
-    bool allowed = *(long *)(object + 0x14) == NONE && *(long *)(object + 0xc) == NONE;
+    bool allowed = true;
+    if (*(long *)(object + 0x14) != NONE) allowed = false;
+    else if (*(long *)(object + 0xc) != NONE) allowed = false;
     if (((1 << object[0xaa]) & 0x1c) && (object[0x12c] & 1) && *(long *)(object + 0x154) != parent_index) allowed = false;
     for (long ancestor = parent_index; ancestor != NONE; ancestor = *(long *)(*(byte **)(pool->data + (ancestor & 0xffff) * 12 + 8) + 0x14))
         if (ancestor == index) return;
     if (!allowed) return;
+    byte *parent = (byte *)OBJECT_GET(parent_index);
     s_object_header_view *header = (s_object_header_view *)(pool->data + offset);
     volatile bool was_active = (bool)((header->flags >> 2) & 1);
-    byte *parent = (byte *)OBJECT_GET(parent_index);
     if (*(dword *)(object + 4) & 0x80)
     {
         *(dword *)(object + 4) &= ~0x80;
         if (!(*(dword *)(object + 4) & 0x100) && g_4de2f4 && *(byte *)g_4de2f4) function_b8600(index, 0);
     }
     function_b7300(index);
-    if (*(dword *)(object + 4) & 0x100) function_b87b0(index);
+    if ((bool)((*(dword *)(object + 4) >> 8) & 1)) function_b87b0(index);
     if ((object[0xc0] & 0x40) && header->type != 7) function_b8840(index);
     parent = (byte *)OBJECT_GET(parent_index);
     transform4x3f *nodes = (transform4x3f *)(parent + *(short *)(parent + 0x116));

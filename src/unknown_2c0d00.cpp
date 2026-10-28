@@ -233,6 +233,8 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // 866. Fast scores 927/916/927/916/916; full control 866.
 // Separate first/second/third marker ordinals long 913f/934f/916f; object ordinal alone
 // 897f/924 plain; only marker counts long 914f (control 916f). Original bounded traversals restored.
+// Direction dot operand order 916f; single expression 928f; both 928f;
+// range read order 916f; alignment test order 916f; predicate declarations 916f.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -1032,6 +1034,12 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // score 172 (was 172): frame 0x34 and the first 0x3e bytes agree; retail keeps the shared return-true block
 // after the length test (both final compares jump back to it), forwards x87 values in the direction
 // normalizations, and rounds the second side through memory before its clamp.
+// Round 144: VC keeps the last of the merged `return true` blocks; with both final compares as
+// `return a < b;` the early block sits after the length test as retail's (al 85 against 88) but the
+// tail becomes `mov eax, 1` / `xor eax, eax` returns, 371; distance compare alone 254, angle alone 254;
+// one `result` assigned from each compare, returned once 172 (identical); `result = false; if (c) result
+// = true;` in each 226; length test `<= 0.0f` / `0.0f >=` 172/172; body under `if (length > 0)` with
+// `return true` last 243.
 // Round 76: signed angles through the existing function_11cc90 (single-result form there) 419, masked 90;
 // with explicit true/false distance return 332; distance compare first < second 407; angle compare
 // first sum < negated second sum 270; with both explicit returns 240; distance sums target first 172
@@ -1061,6 +1069,12 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // volatile on the second side instead of the first 397; normal as two scalars 236; second side
 // computed before the first 392. Retail keeps the first direction's y in XMM0 from its subtraction
 // (fst/movss) and stores the second side through memory, the first side in the direction's slot.
+// Lane 9 r25: `<= 0.0f` length test and `>= 0.0f` side test 172 (retail's comiss operand order, but the
+// merged return-true block still sits at the end); both results returned as comparisons 370 (the
+// return-true block moves to retail's place but the results widen to eax), angle or distance result
+// alone 254/254; one result assigned in both branches 172; `if (!(a < b)) return false; return true;`
+// at both ends 171 (retail's final `ja`); nested body with one return true 243; result = true with
+// false assignments 424.
 // Round 10 (lane 10): y-first squared length for the side directions and swapped cross operands
 // in 0x11cc90 give identical code; final compares as `c ? true : false` identical. Lead: side dots
 // through dot_product2d with no volatile, if-form clamps and the SECOND side computed first 350
@@ -1247,6 +1261,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Final source/emitted/both native coordinate values 476/484/557;
 // with existing point difference 492/484/557; both values emitted first
 // without/with point difference 557/557. All restored; original current record retained.
+// Lane 9 r25: retail keeps two NONE-initialised shorts at +0x6c/+0x74 (set to the step's type and link
+// when its type is not NONE, tested at the emit, which reads the type itself through the step pointer).
+// Step pointer plus those two locals 461 (frame 0x10c as retail's); plus the count > 1 arm first 483;
+// plus the output element at the emit point 505; used/copied-last at function scope 476; the two
+// locals on the copied step 493. Retail's zero in EBX from the data test is still missing.
 // Round 10 (lane 10): retail reads the step through a pointer (it loads the step's unknown02 after
 // storing the output element) and keeps type/link values, NONE unless the step has a type, in two
 // stack slots for the emit test. Step pointer with type/link locals set in the typed-step branch 463

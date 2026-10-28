@@ -433,6 +433,11 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 }
 
 // score 223 (was 223): Frame 0x14c versus 0x148, BSP/camera/query homes and duration spill remain.
+// Lane 8 r64 (fast; two callees build differently in the reduced image): existing 0x14ddc0 listener
+// test 295 (aligned 150 against 159: retail's `cmp iv, -0x48; setne`); existing first-local-player
+// helper alone 235; default-first transition re-read from the definition alone 267; all three 277;
+// those with the camera taken after the first-player compare 289 (aligned 142; retail computes the
+// camera after the scan). Retail keeps the BSP in esi from entry and listener/stride in ebx/edi.
 // Transition result 235; unsigned listener 264; byte listener 319; angle lifetime 264; separate request indices 264.
 // Request transition field 263; bounded listener result 223 plain; separate fill guard 255;
 // depth one 235; size optimization 441; direct search returns 254.

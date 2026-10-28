@@ -123,6 +123,13 @@ void function_8dd70(void);
 // casting at the reads. Entry flag: retail's sete/cmp not produced by a negated or explicit test.
 
 // score 230 (was 230): entry predicate, helper boundaries and global reloads differ;
+// Round 9 (lane 11, fast): a noinline declaration of 0x662f0 in this file (before or after its header)
+// leaves it inlined 231/231; in include/unknown_0662e0.h it stays out of line 286; with 0xb2cc0 noinline in
+// network_message_types.h too 379 (728 bytes, every registration called as in retail); plus one
+// `*(c_type_659ceb *const *)&g_510564` read (diagnostic) 321: that one address-take makes LTCG reload
+// the pointer before all nine registration calls exactly as retail does. Left: the prologue (retail keeps
+// EBX zero, `push ecx` for a stacked link byte, `sete al; cmp al, bl` entry test), short versus
+// materialized bool readiness, frame. All restored.
 // short readiness/list value initialization 230; short readiness/list memset 230;
 // session construction loop 352; separate session results 231; list/direct observer result 248.
 // readiness homes, repeated pointer loads and out-of-line calls differ;

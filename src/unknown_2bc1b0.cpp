@@ -122,7 +122,7 @@ void function_2bc340(long team)
 	}
 }
 
-void function_23ba10(long type, s_spawn_influence_list *list, point3f const *point);
+void function_23ba10(long type, point3f const *point, s_spawn_influence_list *list);
 
 struct s_effect_owner;
 void function_b7930(void *data, long tag_index, long object_index, s_effect_owner const *owner);
@@ -203,8 +203,8 @@ void c_game_engine_45c7a8::v2(long unused, long list_pointer)
 			long object_index = *entry;
 			s_item_position_2bc1 *object = (s_item_position_2bc1 *)((s_object_header_2bc1 *)g_4e0300->data)[object_index & 0xffff].object;
 
-			function_23ba10(6, (s_spawn_influence_list *)list_pointer, &object->position);
-			function_23ba10(5, (s_spawn_influence_list *)list_pointer, &object->position);
+			function_23ba10(6, &object->position, (s_spawn_influence_list *)list_pointer);
+			function_23ba10(5, &object->position, (s_spawn_influence_list *)list_pointer);
 		}
 	}
 }

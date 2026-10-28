@@ -191,6 +191,14 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // retail's subtraction from the zero register and retail's length (1265) but 221 fast; with function-scope
 // rotation (frame 0xc4, rotation at +0xac) 232; with one integration loop 221; acceleration folded into the
 // angular loop 270; inverse-mass products reversed 221 (no change). Float register allocation then differs.
+// Lane 9 r25: rotation declared in a block around the inertia query and assigned after it 221 (frame
+// 0xc4, raw inertia +0x70, rotation +0xac as retail's; first difference +0xfd: retail loads the motion
+// before the reciprocal and scales each component in place, ours copies the scalar); with the
+// reciprocal before the motion 221; with `-(braking / dt)` 232; with `x = x * s` mass products and an
+// angular brake copied then scaled 267; with the limiter's products as `*=` 221.
+// Round 30 (m3 lane 12): inverse-mass products as `x = x * inverse_mass`, reciprocal before the motion pointer,
+// force sum as `+=`, reciprocal written at each use 184 each (identical code: the reciprocal stays the
+// product destination); function-scope rotation 221 (frame 0xc4, rotation +0xac, float registers rename).
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

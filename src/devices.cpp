@@ -1269,6 +1269,9 @@ bool function_0b6760(s_index_pair const *pair);
 // Round 352: next-tick value, elapsed product and both 303; one shared previous power velocity
 // alone and with next-tick/elapsed/both 368; all with long next-tick 365. Frame remains 0x1c;
 // original delay, velocity observations, acceleration producers and inherited qualifiers restored.
+// Round 23: distinct phase/block/channel previous owners 307/307/303; short first/second/both
+// completion 387/335/408; phase plus first short 388; channel plus both shorts 408.
+// Frame stays 0x1c versus 0x20; original scalar lifetimes and bool completions restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

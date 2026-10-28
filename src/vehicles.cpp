@@ -1742,36 +1742,36 @@ struct s_vehicle_gear
    lines up with the first point */
 // @retail 0xf1380
 void __stdcall function_f1380(vector3f *velocity, vector3f const *a, vector3f const *b, real aligned_limit,
-	real limit, real dt)
+	real limit, real value)
 {
 	real scale;
 	real dot;
-	real maximum;
 	real length_squared;
 
 	velocity->i = a->i - b->i;
 	velocity->j = a->j - b->j;
 	velocity->k = a->k - b->k;
-	scale = 1.0f / dt;
+	scale = 1.0f / value;
 	velocity->i *= scale;
+	value = velocity->i;
 	velocity->j *= scale;
 	velocity->k *= scale;
 	dot = a->j * velocity->j + a->k * velocity->k + a->i * velocity->i;
 	if (dot > 0.0001f)
 	{
-		maximum = dot * dot / (velocity->k * velocity->k + velocity->j * velocity->j + velocity->i * velocity->i) /
+		aligned_limit = dot * dot / (velocity->k * velocity->k + velocity->j * velocity->j + velocity->i * velocity->i) /
 			(a->j * a->j + a->k * a->k + a->i * a->i) * (aligned_limit - limit) + limit;
 	}
 	else
 	{
-		maximum = limit;
+		aligned_limit = limit;
 	}
 	length_squared = velocity->k * velocity->k + velocity->j * velocity->j + velocity->i * velocity->i;
-	if (length_squared > maximum * maximum)
+	if (length_squared > aligned_limit * aligned_limit)
 	{
-		real factor = maximum / (real)sqrt(length_squared);
+		real factor = aligned_limit / (real)sqrt(length_squared);
 
-		velocity->i *= factor;
+		velocity->i = value * factor;
 		velocity->j *= factor;
 		velocity->k *= factor;
 	}
