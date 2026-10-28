@@ -1379,7 +1379,7 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 232 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal differ.
+// score 232 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal remain.
 // Earlier 241 from 241: frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
@@ -1476,6 +1476,11 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // 386/234/386/234/386/234/386; combined role names 386 (fast control 234, full baseline 232).
 // Original pair types, scopes, names and every smoothing input restored. Frame 0x28 versus 0x2c,
 // unit/mode homes and shared look reciprocal remain.
+// Round 373 (fast control 234): Structured overlay continuation, with callback/active/both
+// choices 234/234/392/392; reusable no-overlay decision with those four forms
+// 421/421/403/403. Original body and every smoothing input restored.
+// Round 246: complementary activity bool/byte/short/long 424/424/423/425; the same with
+// callback selection at update 424/424/423/425 (fast). Original activity and callback restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

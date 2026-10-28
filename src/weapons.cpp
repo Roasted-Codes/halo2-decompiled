@@ -3583,6 +3583,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // hold/press-hold/all orders 1447/1450/1430/1421/1427/1465/1447; word-input/result with hold/all
 // and word-input hold 1433/1449/1425. Original fields, result, cases and every inline
 // specification restored; frame 0x3c versus 0x38 and pool/dual homes remain.
+// Round 246: complementary activity result bool/byte/short/long 1440/1440/1459/1459; the same
+// with entry declaration 1440/1440/1459/1459. Original persistent result restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

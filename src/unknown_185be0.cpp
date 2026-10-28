@@ -233,6 +233,9 @@ union s_185be7
 // 934, on every clamp but the magnitude one 971; the selected input byte as a long (retail's movzx edx /
 // test edx / setg / jle) 790, aligned 289 -> 281, the repeated test still not threaded; long input plus
 // early copy 789. Retail also reads the two selector bytes as one dword (EBX, then BL/BH).
+// Round 209: Caller-local inline declarations for magnitude/curve/response, all seven nonempty subsets, and
+// all three with separate noinline declarations: 780 each. All restored; frame/state/output agree, but
+// control-root reload, NONE/settings/zero homes and repeated flag tests remain.
 // Round 241: Shared clamp formal orders (0,2,1)/(1,0,2)/(1,2,0)/(2,0,1)/(2,1,0): 780/780/780/780/780;
 // independent result with orders (0,2,1)/(1,0,2)/(2,0,1): 926/926/926. Original helper, calls and body
 // restored.
@@ -241,6 +244,9 @@ union s_185be7
 // Round 164: shared retained-response weight 926; paired bounded contributions staged
 // before blending 932; both 932; paired interpolated rates 780; rates with weight/
 // contributions/both 926/932/934; existing native forward-vector setter 920. All restored.
+// Round 235: Native output flag dword/analog field/trailing bytes, paired and complete layouts
+// 780/780/778/780/778/778/778; complete trailing dword 812. Two-point leads rejected; original output layout
+// and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

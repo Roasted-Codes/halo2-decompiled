@@ -382,6 +382,8 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 165: Skip-result byte/short/long/dword at original scope 244/274/274/274; entry true
 // initialization 258/287/287/287. SSE policy diagnostic 250, restored. Frame 0x3c versus 0x40
 // and clock/output homes remain; original body, helpers and flags restored.
+// Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
+// parameter-derived decision at entry 306/306/305/298. Original large decision restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

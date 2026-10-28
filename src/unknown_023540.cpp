@@ -2450,6 +2450,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 204: Tag/bitmap producer, late fallback/draw arrays and paired shader-alpha workspace
 // scopes, masks 1-7: 251/251/251/255/255/255/255; all with coherent dimension/reciprocal names
 // 255. Full-stack transport retained; original scopes, observations, arrays and equations restored.
+// Round 235: Direct enum-range address/filter/disabled-state loops, seven subsets and complete while form
+// [926, 883, 685, 1104, 1159, 1089, 1240, 681] fast. Runtime SDK setter specialization grows the body; all
+// original ordered direct calls, arrays, fields, directives and body restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -3147,6 +3150,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // 1185/934/980; short-input with byte-alpha 935; unsigned-input with byte-alpha 934.
 // Byte alpha selector alone kept plain at 934; its only values remain 4 and 24.
 // Round 366: blend/depth/both indexed state tables 1395/1417/1484; shared sampler 1223; sampler with blend/depth/both tables 1413/1410/1550; all with Boolean capabilities 1448. All restored.
+// Test-defined rescale state, canonical permission-width pairs and negative-
+// permission failure-first combinations 1216, 1205, 1208, 933, 1186, 1184, 1180, 1183 fast.
 // Round 159: Upper/lower/both byte channels 1119/1202/1178; upper/lower/both word channels
 // 1161/1202/1231; rounded result read once 1375; read once with byte channels 1325. All restored.
 // Round 232: native mode-one/two/three input layouts, all seven subsets 934;

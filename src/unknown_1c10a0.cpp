@@ -220,9 +220,17 @@ short __stdcall function_1c10a0(long actor_index)
 }
 
 // score 2 (was 2): the pool pointer is loaded into ECX here and into EDX in
+// retail, the rest of the function matches.
+// This round: plain slot read 28; plain index read 4; plain index with
+// const pool/data/slot/actor, swapped local names or early mask 4 each;
+// original with const pool/data/actor/slot or swapped local names 2 each.
 // retail, the rest of the function matches. An ordinary pool read puts the
 // pointer in EDX but lets the data load fold into the final add, and a
 // volatile data read keeps the load apart but moves the pointer to ECX.
+// Typed actor-array base 2; direct typed slot snapshot 2; actor-zero chain 6;
+// missing-index chain 4; both chains 8; mutable pool with byte/actor base 2/2;
+// typed actor base with direct index parameter 4. Original body restored.
+// Single typed/byte actor cursors advanced after the slot snapshot 17/2. Restored.
 // @retail 0x1c10f0
 bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 {
