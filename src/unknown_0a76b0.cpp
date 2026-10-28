@@ -404,7 +404,7 @@ void function_e6b00(long unit_index, long name, long *state_name, long *action_n
 
 	if (name == 0x6000007)
 	{
-		long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), false);
+		long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 0);
 
 		if (weapon_index != NONE &&
 			*(short *)(g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes + 0x292) == 3)
@@ -4140,21 +4140,27 @@ void *function_1e4f90(long actor_index);
 
 /* a flinch: its time, then the weapon dropped (or swapped for the actor's
    spare weapon) */
+// score 65 (was 82): retail keeps no result local (ours puts it in bl and a stack byte) and still
+// leaves through two exits. A single exit through a result local 65-68; the hand helper's short slot
+// index gives retail's movsx (80); gotos to a final return false for some or all paths 80.
 // @retail 0xed910
 bool __stdcall function_ed910(long unit_index, long type)
 {
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 
+	bool result = true;
+
 	if (--actions->flinch_ticks > 0)
-		return true;
+		goto done;
+	result = false;
 
 	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), false);
 
 	if (weapon_index == NONE)
-		return false;
+		goto done;
 	if (g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes[0x12f] & 1)
-		return false;
+		goto done;
 
 	long actor_index = unit->unknown12c;
 
@@ -4173,7 +4179,7 @@ bool __stdcall function_ed910(long unit_index, long type)
 			if (new_weapon_index != NONE)
 			{
 				function_cd0c0(unit_index, new_weapon_index, 4);
-				return false;
+				goto done;
 			}
 		}
 	}
@@ -4183,7 +4189,8 @@ bool __stdcall function_ed910(long unit_index, long type)
 	drop.type = 9;
 	*((bool *)&drop + 4) = true;
 	unit_action_drop_weapon(unit_index, &drop);
-	return false;
+done:
+	return result;
 }
 
 /* a unit's taunt (type 52) */
