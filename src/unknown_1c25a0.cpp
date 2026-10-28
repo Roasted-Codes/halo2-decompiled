@@ -855,7 +855,10 @@ void function_1c54b0(char const *variants, long object_index)
 // entity_index 4; local names count to flagged_entities, island_index to group_index 4;
 // local names island_index to island_ordinal, entity_count to entity_total, count to
 // accepted_count, i to entity_index 4; all named loop state with flag after discard 18;
-// named loop state, flag after discard, native int entity counts 18.
+// named loop state, flag after discard, native int entity counts 18. Round 87, all with the flag
+// after the discard call: entity_count renamed total/size/a_count, i renamed entity_index/j, count
+// renamed matched, island renamed group, removed renamed discarded: 18 each (names never move the
+// ebx/ebp swap).
 // @retail 0x1c50c0
 void function_1c50c0(void)
 {

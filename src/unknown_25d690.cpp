@@ -1291,7 +1291,8 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
-// score 165 (was 165): frame 0x84 agrees; early ESI, result byte and actor/motion homes differ.
+// matches retail: the flag local_10 is a bool (retail stores it raw), and the actor-index test is an
+// explicit if/else whose branch order matches retail's layout.
 // Earlier: Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
 // Round 75: retail's shape is `bool updated = true;` first, `if (unknown00 == time) updated = false;
 // else { body }`, the activity result a bool, and one actor-index test at the end (NONE arm false,
@@ -1416,99 +1417,108 @@ bool function_1e1de0(long arg_0);
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
+	bool updated = true;
 	long local_1 = g_510c54->game_time;
-	bool updated = arg_0->unknown00 != local_1;
-	if (!updated)
-		return updated;
-	s_slot_object_view *local_2 = object_get(arg_1);
-	s_slot_object_view *local_3 = NULL;
-	long local_4 = NONE;
-	if ((1 << local_2->type) & 3)
-	{
-		long local_12 = local_2->actor_index;
-		local_3 = local_2;
-		if (local_12 != NONE)
-			local_4 = local_12;
-	}
-	union
-	{
-		s_2640c0 field_0;
-		s_object_marker field_1;
-	} local_5;
-	if (!arg_3)
-	{
-		function_2640c0(arg_1, (s_object_motion_view *)&local_5.field_0);
-		arg_3 = &local_5.field_0;
-	}
-	*(point3f *)((byte *)arg_0 + 0x30) = arg_3->field_0;
-	arg_0->position = arg_3->field_c;
-	*(s_location *)((byte *)arg_0 + 0x28) = arg_3->field_24;
-	*(vector3f *)((byte *)arg_0 + 0x1c) = arg_3->field_2c;
-	if (local_3)
-	{
-		function_b8d30(arg_1, 0x40000bd, &local_5.field_1, 1, false);
-		*(point3f *)((byte *)arg_0 + 0x10) = local_5.field_1.matrix.position;
-		arg_0->unknown67 = ((*(dword *)((byte *)local_3 + 0x134) >> 8) & 1) != 0;
-	}
+	if (arg_0->unknown00 == local_1)
+		updated = false;
 	else
 	{
-		*(point3f *)((byte *)arg_0 + 0x10) = arg_0->position;
-	}
-	arg_0->unknown69 = function_11c120((s_location *)((byte *)arg_0 + 0x28), (point3f *)((byte *)arg_0 + 0x10), NULL);
-	arg_0->unknown3c = NONE;
-	arg_0->unknown65 = false;
-	arg_0->unknown66 = false;
-	arg_0->unknown40 = NONE;
-	arg_0->unknown63 = arg_2 == 1;
-	if (local_2->parent_index != NONE)
-	{
-		s_slot_object_view *local_7 = object_get(local_2->parent_index);
-		if (local_3 && local_7->type == 1)
+		s_slot_object_view *local_2 = object_get(arg_1);
+		long local_3 = 0;
+		long local_4 = NONE;
+		if ((1 << local_2->type) & 3)
 		{
-			arg_0->unknown3c = function_1caa10(local_3->parent_index);
-			arg_0->unknown65 = *(long *)((byte *)local_7 + 0x24c) == arg_1 || local_3->type == 15;
-			arg_0->unknown66 = *(long *)((byte *)local_7 + 0x248) == arg_1 && function_f0f90(arg_0->unknown3c);
+			long local_12 = local_2->actor_index;
+			local_3 = (long)local_2;
+			if (local_2->actor_index != NONE)
+				local_4 = local_2->actor_index;
 		}
-		else if ((1 << local_7->type) & 3)
+		union
 		{
-			arg_0->unknown40 = local_2->parent_index;
+			s_2640c0 field_0;
+			s_object_marker field_1;
+		} local_5;
+		if (!arg_3)
+		{
+			function_2640c0(arg_1, (s_object_motion_view *)&local_5.field_0);
+			arg_3 = &local_5.field_0;
 		}
+		*(point3f *)((byte *)arg_0 + 0x30) = arg_3->field_0;
+		arg_0->position = arg_3->field_c;
+		*(s_location *)((byte *)arg_0 + 0x28) = arg_3->field_24;
+		*(vector3f *)((byte *)arg_0 + 0x1c) = arg_3->field_2c;
+		if (local_3)
+		{
+			function_b8d30(arg_1, 0x40000bd, &local_5.field_1, 1, false);
+			*(point3f *)((byte *)arg_0 + 0x10) = local_5.field_1.matrix.position;
+			arg_0->unknown67 = ((*(dword *)((byte *)local_3 + 0x134) >> 8) & 1) != 0;
+		}
+		else
+		{
+			*(point3f *)((byte *)arg_0 + 0x10) = arg_0->position;
+		}
+		arg_0->unknown69 = function_11c120((s_location *)((byte *)arg_0 + 0x28), (point3f *)((byte *)arg_0 + 0x10), NULL);
+		arg_0->unknown3c = NONE;
+		arg_0->unknown65 = false;
+		arg_0->unknown66 = false;
+		arg_0->unknown40 = NONE;
+		arg_0->unknown63 = arg_2 == 1;
+		if (local_2->parent_index != NONE)
+		{
+			s_slot_object_view *local_7 = object_get(local_2->parent_index);
+			if (local_3 && local_7->type == 1)
+			{
+				arg_0->unknown3c = function_1caa10(((s_slot_object_view *)local_3)->parent_index);
+				arg_0->unknown65 = *(long *)((byte *)local_7 + 0x24c) == arg_1 || ((s_slot_object_view *)local_3)->type == 15;
+				arg_0->unknown66 = *(long *)((byte *)local_7 + 0x248) == arg_1 && function_f0f90(arg_0->unknown3c);
+			}
+			else if ((1 << local_7->type) & 3)
+			{
+				arg_0->unknown40 = local_2->parent_index;
+			}
+		}
+		if (function_26bf10(arg_1))
+			function_26c240(arg_1, (s_location_target_view *)arg_0);
+		else
+			arg_0->unknown58 = false;
+		s_slot_object_view *local_8 = object_get(function_baf80(arg_1));
+		switch ((char)local_8->type)
+		{
+		case 0:
+			arg_0->unknown64 = *((byte *)local_8 + 0x3dc) == 2;
+			break;
+		case 1:
+			arg_0->unknown64 = ((*(dword *)(g_4e3b44[local_8->tag_index & 0xffff].bytes + 0x1ec) >> 12) & 1) != 0;
+			break;
+		case 12:
+			arg_0->unknown64 = *((byte *)local_8 + 0x17c) == 2;
+			break;
+		default:
+			arg_0->unknown64 = false;
+			break;
+		}
+		bool local_9 = ((*((byte *)local_2 + 0x10a) >> 2) & 1) != 0;
+		arg_0->unknown5f = local_9 && arg_0->unknown5e == 0;
+		arg_0->unknown5e = local_9;
+		bool local_6 = false;
+		bool local_10;
+		bool local_11;
+		if (local_4 == NONE)
+		{
+			local_10 = false;
+			local_11 = !local_9;
+		}
+		else
+		{
+			local_6 = actor_get(local_4)->unknown084 < 4;
+			local_10 = function_1e1de0(local_4);
+			local_11 = actor_behavior_find_level(local_4, 14) != NONE;
+		}
+		arg_0->unknown60 = local_6;
+		arg_0->unknown62 = local_11;
+		arg_0->unknown61 = local_10;
+		arg_0->unknown00 = local_1;
 	}
-	if (function_26bf10(arg_1))
-		function_26c240(arg_1, (s_location_target_view *)arg_0);
-	else
-		arg_0->unknown58 = false;
-	s_slot_object_view *local_8 = object_get(function_baf80(arg_1));
-	switch ((char)local_8->type)
-	{
-	case 0:
-		arg_0->unknown64 = *((byte *)local_8 + 0x3dc) == 2;
-		break;
-	case 1:
-		arg_0->unknown64 = ((*(dword *)(g_4e3b44[local_8->tag_index & 0xffff].bytes + 0x1ec) >> 12) & 1) != 0;
-		break;
-	case 12:
-		arg_0->unknown64 = *((byte *)local_8 + 0x17c) == 2;
-		break;
-	default:
-		arg_0->unknown64 = false;
-		break;
-	}
-	bool local_9 = ((*((byte *)local_2 + 0x10a) >> 2) & 1) != 0;
-	arg_0->unknown5f = local_9 && !arg_0->unknown5e;
-	arg_0->unknown5e = local_9;
-	bool local_6 = local_4 != NONE && actor_get(local_4)->unknown084 < 4;
-	long local_10 = false;
-	bool local_11 = !local_9;
-	if (local_4 != NONE)
-	{
-		local_10 = function_1e1de0(local_4);
-		local_11 = actor_behavior_find_level(local_4, 14) != NONE;
-	}
-	arg_0->unknown60 = local_6;
-	arg_0->unknown62 = local_11;
-	arg_0->unknown61 = local_10;
-	arg_0->unknown00 = local_1;
 	return updated;
 }
 

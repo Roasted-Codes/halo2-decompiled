@@ -123,6 +123,9 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // Round 373: All-row sine-cross parts, with rounded reciprocal, input parts,
 // input+reciprocal, axis parts, axis+reciprocal, all parts, all+reciprocal
 // 395/393/389/400/398/404/395/393. Reciprocal forms lose the matched sibling; all restored.
+// Round 211: Caller-side CRT copies for first/second/rotation inputs, all seven combinations, 389
+// each; all three plus planar input copy 404/1696. Original copies and helpers restored; early J
+// and magnitude/yaw home reuse remain. All three matched controls survived.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

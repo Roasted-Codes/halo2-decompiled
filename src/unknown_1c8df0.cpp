@@ -23,8 +23,8 @@ real function_30bf0(vector3f *v);
 real magnitude3d(vector3f const *v);
 extern vector3f *g_4687bc;
 
-__declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
- void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
+__declspec(noinline) short __stdcall function_1c8df0(short arg_3, short arg_2, point3f const *arg_4,
+ long arg_0, void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
 
 // score 170 (was 170): Frame 0x8c/0x94, raw secondary-result home and common probe tail remain.
 // Round 75 (all match-only, restored): clear state bool, one bool probe result for the mode-1/mode-2
@@ -144,7 +144,7 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // positive rows in z, x, y / y, z, x order 21/20. Ours always loads the x centre ahead of the first
 // row's multiply. All match-only; restored.
 // @retail 0x1c8df0
-short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
+short __stdcall function_1c8df0(short arg_3, short arg_2, point3f const *arg_4, long arg_0,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)
 {
  long category;

@@ -177,12 +177,19 @@ struct s_object_flags_256bd0
 // Noinline initializer plus ordinary step reaches frame 0x110 at 194/1070;
 // seven-point form restored. Original declarations, bodies and calls restored;
 // activity spill remains.
+// Round 245: overlap-safe selected-position/direction/both transfers 280/256/279;
+// placement transfer alone/with position/with direction/all three 280/282/283/283;
+// fallback-direction transfer alone 208. Original copies and iterator restored.
 // Round 208: actual entry-result output through pointer/reference, each formal order and bool/byte
 // success, 201 each. All original step and caller contracts restored; frame 0x114/0x110, cached
 // activity and geometry/selection homes remain.
 // Round 377: real datum-member storage, byte/native entry 201/201;
 // separate actual cursor/index outputs 202/202; conditional-entry byte/native
 // and split outputs 274/274/274/274. All helper/header/body changes restored; activity spill remains.
+// Round 211: Placement constructed before marker/after position/after direction 219/210/210; each
+// with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
+// placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and
+// iterator restored; activity spill and native geometry homes remain.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

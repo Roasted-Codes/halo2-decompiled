@@ -1742,7 +1742,7 @@ bool (__stdcall *g_comparator)(long, long, void *) = function_2600e0;
 void function_1e3b00(long object_index, long mode, point3f const *reference,
 	void const *unknown0, void const *unknown1, point3f *position);
 short __stdcall function_272af0(s_match_globals *arg_0, point3f const *arg_1);
-short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
+short __stdcall function_1c8df0(short arg_3, short arg_2, point3f const *arg_4, long arg_0,
 	void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
 real normalize2d(point2f *v);
 
@@ -1910,8 +1910,8 @@ void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *
 			local_23 = function_272af0(g_4e0348, &local_21);
 		else
 			local_23 = arg_2->definition->unknown12;
-		arg_2->type = function_1c8df0(*(long *)((byte *)arg_1 + 0x648), (point3f const *)((byte *)arg_1 + 0x638),
-			*(short *)((byte *)arg_1 + 0x660), local_23, &local_21, local_14, true,
-			local_0->unknown26c != NONE, local_22, NULL);
+		arg_2->type = function_1c8df0(*(short *)((byte *)arg_1 + 0x660), local_23,
+			(point3f const *)((byte *)arg_1 + 0x638), *(long *)((byte *)arg_1 + 0x648), &local_21,
+			local_14, true, local_0->unknown26c != NONE, local_22, NULL);
 	}
 }
