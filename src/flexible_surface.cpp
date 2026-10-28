@@ -256,6 +256,11 @@ bool function_1173e0(long object_index, long index)
 	return result;
 }
 
+// score 165 (was 165): frame 0x10 agrees; vector construction, normalization and accumulation differ.
+// Shared point differences 169; differences and cross product 108 (dropped, full); shared
+// scale normalization 166, with differences/cross 130 (dropped, full); normalize_inline 123; reversed edge
+// production 132 (dropped, full); named edges/readonly definition 130/130; cross only 165; normal-first
+// accumulation 108; out-of-line normalization 305.
 // @retail 0x117510
 void function_117510(long index)
 {
@@ -488,6 +493,8 @@ void __stdcall function_118430(long index)
 extern s_record_pool *g_509434;
 long __stdcall function_3ddd0(long);
 void function_1cf50();
+void function_1ccb0(long);
+void function_1cd90();
 byte *g_485a80;
 // Render-state storage read by the two external state helpers.
 // Attribute pairs terminated by 255, as consumed by the retail state helper.
@@ -507,6 +514,10 @@ public:
 static inline byte *surface_tag(long index) { return g_4e3b44[index & 0xffff].bytes; }
 static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)(base + offset); }
 
+// score 473 (was 526): frame 0x44 versus 0x2c; attribute scans and D3D call expansion differ.
+// Integer orientation 529; null-first lighting 522; per-scan results 530; real type
+// cursors 574; existing format/state helpers 473 (kept, full); cursors/orientation
+// 573; helpers/orientation 471 (two-point addition dropped); all three 516.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {
@@ -544,11 +555,8 @@ void __stdcall function_116b00(long tag_index, long unused, long group, long var
 	for (long i = 0; i < count; ++i) if (types[i] == 3) { uv = i; break; }
 	DWORD old_cull;
 	D3DDevice_GetRenderState(D3DRS_CULLMODE, &old_cull);
-	function_1c6b0(g_51f0f0);
-	*(byte **)(g_51f0f0 + 0x8c) = g_43f8df;
-	if (*(byte **)(g_51f0f0 + 0xcc) != g_43f8df) g_51f0f0[0x20c] = 1;
-	function_1c710(g_51f0f0);
-	function_1c710(g_51f0f0);
+	function_1ccb0(59);
+	function_1cd90();
 	function_1cf50();
 	for (long side = 0; side < 2; ++side)
 	{

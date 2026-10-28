@@ -2176,6 +2176,11 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // `add ebp, 0x214`. memcmp for that test gives retail's loads and compare but no add
 // 193; with memcpy for the copy 193; with a named source pointer used for both 193;
 // with a four-byte struct copy 193; the unit pointer through OBJECT() 168 (identical).
+// Round 30 (fast): 0x400 block's flag set between its two stores (retail's order) 169; the 0x2000
+// update through a file-local pointer helper 168 (identical); its value named once for the test and
+// the store 168; the unit through the header-array index 168 (SIB order unchanged); the 0xee field and
+// its new value as bool 168 (retail loads the field into DL before the compare and keeps both float
+// flags in stack bytes; ours compares memory and keeps the first flag in DL).
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

@@ -133,6 +133,12 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // 27; z rows through local_3 20 (the z row then loads the centre as retail; only the x row's fold is
 // left, our centre-x load hoisted above the product, 1176 bytes); on that, x row product first 20;
 // x and z rows through local_3 26. Match-only (added result byte, mixed centre reads); restored.
+// Round 30 (plain) on the rebuilt five-difference body: positive-point centre reads through local_3
+// for y 20, x 27, x and y 5, y and z 5; z/x/y written product first 5/5/5 (source order of each sum
+// has no effect); the side vector's centre reads through the cast parameter for both/j/i 33/26/33 (j
+// fixes the mode-1 z row but the 0.1 block then folds its z); x+ centre read as a real array element 5;
+// positive rows in z, x, y / y, z, x order 21/20. Ours always loads the x centre ahead of the first
+// row's multiply. All match-only; restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)
