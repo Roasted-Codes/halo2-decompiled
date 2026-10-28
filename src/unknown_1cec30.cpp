@@ -2714,6 +2714,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 197: Readonly private linear/angular/both getter inputs 135 each; native signed-int
 // ordinal alone/with each input pair 135 each; readonly pair with common double scale 135.
 // Original native state-zero graph, helpers and ordinal restored.
+// Round 201: Private linear/angular/both per-use body receivers 135/135/196; readonly pair 135;
+// mixed per-use/readonly receivers 135/135; fixed-first pair 151 and per-use fixed-first pair 202
+// (both fixed-first forms lose matched users). Original helpers and body restored; frame/save homes remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
