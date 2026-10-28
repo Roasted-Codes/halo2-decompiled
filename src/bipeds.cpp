@@ -13,6 +13,7 @@ files; 0xdc370, at the start of the range, is c_a's destructor
 #include "globals.h"
 #include "data_array.h"
 #include "unknown_0259d0.h"
+#include "vector_products.h"
 #include "unknown_1cec30.h"
 #include "object_markers.h"
 #include "slot_handler.h"
@@ -1326,6 +1327,13 @@ void function_b75a0(long object_index, point3f const *point, vector3f const *for
 /* a biped's response to a damage impulse: it starts flinching or falling,
    a hard one knocks it over (and a ragdoll gets a random spin), and on
    the ground it turns to face away from the hit */
+// score 223 (was 246): Frame 0x28 and entry saves agree; tag/flag carriers,
+// strong-result home, spin scaling and late call/output scheduling still differ.
+// Direct up reads 245; test-produced strong 246, both 245; shared vector producers 241;
+// complete away copy with direct up 247; linear result with direct up 223 (plain), all forms 253;
+// workspace identities 245; linear result alone 241; long strong/spin/both 221/251/245;
+// mode-overridden linear result 231; shared real random 223; linear plus vector helpers 218.
+// The last five-point increment and long-strong two-point increment are not retained.
 // @retail 0xde620
 void __stdcall function_de620(long arg_159e6d, vector3f const *impulse)
 {
@@ -1338,7 +1346,6 @@ void __stdcall function_de620(long arg_159e6d, vector3f const *impulse)
 		bool spinning = false;
 		vector3f velocity = *impulse;
 		vector3f spin = *g_4687a4;
-		vector3f const *up = g_4687b0;
 
 		if (!(TEST_FIELD_BIT((biped->flags_10a >> 2) & 1)))
 		{
@@ -1353,9 +1360,9 @@ void __stdcall function_de620(long arg_159e6d, vector3f const *impulse)
 			real magnitude;
 			real angle;
 
-			axis.i = up->j * velocity.k - up->k * velocity.j;
-			axis.j = up->k * velocity.i - up->i * velocity.k;
-			axis.k = up->i * velocity.j - up->j * velocity.i;
+			axis.i = g_4687b0->j * velocity.k - g_4687b0->k * velocity.j;
+			axis.j = g_4687b0->k * velocity.i - g_4687b0->i * velocity.k;
+			axis.k = g_4687b0->i * velocity.j - g_4687b0->j * velocity.i;
 			function_30bf0(&axis);
 			magnitude = (real)sqrt(velocity.j * velocity.j + velocity.k * velocity.k + velocity.i * velocity.i);
 			angle = (real)random_next(&g_4e7408->unknown0) * 1.5259022e-05f * magnitude * 1.5707964f;
@@ -1380,10 +1387,10 @@ void __stdcall function_de620(long arg_159e6d, vector3f const *impulse)
 			}
 		}
 apply:
-		if (biped->physics_mode != 3 || strong || spinning)
+		bool linear = biped->physics_mode != 3 || strong;
+		if (linear || spinning)
 		{
 			point3f position;
-			bool linear = biped->physics_mode != 3 || strong;
 
 			function_b9dd0(arg_159e6d, &position);
 			function_b7880(arg_159e6d, NONE, &position, linear ? &velocity : NULL, spinning ? &spin : NULL);
@@ -1399,7 +1406,7 @@ apply:
 			away.k = 0.0f;
 			if (function_30bf0(&away) > 0.0f)
 			{
-				function_b75a0(arg_159e6d, NULL, &away, up, NULL, false);
+				function_b75a0(arg_159e6d, NULL, &away, g_4687b0, NULL, false);
 			}
 		}
 	}
@@ -2084,6 +2091,12 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 	long rigid_body_index, bool started);
 
 /* places the biped's ragdoll bodies, from its root rigid body outward */
+// score 91 (was 134): frame 0x114 versus 0x110; escaped result byte, zero/save staging and root admission differ.
+// Native one-word visited mask 91 kept; root clamp 143, with native mask 100; common result 123;
+// declaration-time zero 100, with common result 123; result first 100, with common result 123.
+// Lookup/output scope 86 (five-point incremental gain, 11 extra bytes; restored); with root clamp 101;
+// mask initialized after admission 96; output-only Boolean 103; result after first placement 122;
+// output-only after placement 103. Native mask body retained.
 // @retail 0xe1b60
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 {
@@ -2099,7 +2112,7 @@ bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 
 		if (root >= 0 && root <= count - 1)
 		{
-			dword visited[8];
+			dword visited[1];
 			bool started;
 
 			memset(visited, 0, sizeof(visited));
@@ -3344,19 +3357,22 @@ PRIVATE inline void biped_rotate_about(vector3f *v, vector3f const *axis, real s
 {
 	real dot = (v->i * axis->i + v->k * axis->k + v->j * axis->j) * (1.0f - cosine);
 	vector3f cross;
-	vector3f result;
 
-	cross.i = axis->j * v->k - axis->k * v->j;
-	cross.j = axis->k * v->i - axis->i * v->k;
-	cross.k = axis->i * v->j - axis->j * v->i;
-	result.i = v->i * cosine + axis->i * dot + cross.i * sine;
-	result.j = v->j * cosine + axis->j * dot + cross.j * sine;
-	result.k = v->k * cosine + axis->k * dot + cross.k * sine;
-	*v = result;
+	cross3f(axis, v, &cross);
+	v->i = v->i * cosine + axis->i * dot + cross.i * sine;
+	v->j = v->j * cosine + axis->j * dot + cross.j * sine;
+	v->k = v->k * cosine + axis->k * dot + cross.k * sine;
 }
 
 /* turns a tumbling biped by its angular velocity over a tick, keeping its
    facing and up square */
+// score 184 (was 355): Frame 0x24 and entry saves agree; axis copy/norm order,
+// early normalization loads and rotation/basis SSE carriers still differ.
+// Direct rotation output 235; scalar cross terms 246; all shared cross producers 184 (plain);
+// shared normalizer 240 (restored grouping); explicit rotation output 251; weighted producers 265;
+// scaled-first normalization 234; native axis value 288; vector identities 235;
+// opposite cross/subtraction 235 (restored); on shared crosses: norm squares 210,
+// scaled-first 184, shared normalization scale 213, all three 208, sine first 220, complement 209.
 // @retail 0xe3910
 void function_e3910(long arg_159e6d)
 {
@@ -3388,12 +3404,8 @@ void function_e3910(long arg_159e6d)
 	function_30bf0(&biped->forward);
 	up = biped->up;
 	biped_rotate_about(&up, &axis, sine, cosine);
-	side.i = up.j * biped->forward.k - up.k * biped->forward.j;
-	side.j = up.k * biped->forward.i - up.i * biped->forward.k;
-	side.k = up.i * biped->forward.j - up.j * biped->forward.i;
-	biped->up.i = biped->forward.j * side.k - biped->forward.k * side.j;
-	biped->up.j = biped->forward.k * side.i - biped->forward.i * side.k;
-	biped->up.k = biped->forward.i * side.j - biped->forward.j * side.i;
+	cross3f(&up, &biped->forward, &side);
+	cross3f(&biped->forward, &side, &biped->up);
 	if (function_30bf0(&biped->up) == 0.0f)
 	{
 		biped->forward = *g_4687a8;
@@ -3757,6 +3769,10 @@ bool function_1f5560(long actor_index, vector3f *facing);
 /* jumps: an upward kick to the definition's jump speed (less for a tired
    player), relative to what the biped stands on; an actor may refuse.
    Retail keeps the biped on the stack (ret 4): its address is taken */
+// score 224 (was 224): frame 0x24 versus 0x28; ground/result homes, entry saves and state observations differ.
+// Natural parameter 239; late success 221 (subthreshold), shared vector producers 224; CRT relative
+// copy 224; common result exit 222 (subthreshold); all velocity names 224; late/shared 221;
+// natural parameter/common result/shared/CRT 234. All executable forms restored.
 // @retail 0xe4770
 bool __stdcall function_e4770(long arg_159e6d)
 {

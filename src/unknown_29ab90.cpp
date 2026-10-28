@@ -139,6 +139,11 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // successive original K/J/I sum with those carriers 383; first-declared epsilon result on the
 // product graph 439. All helper/body text restored; frame 0x5c/0x64, actor/input transport and x87
 // homes remain.
+// Round 368: settings-only magnitude 390; in-place epsilon result 454; separate turn/speed 385;
+// scope/result 388; scope/separate 384; result/separate 448; all and native length names 382/382 (one-point
+// gain rejected).
+// Round 370: complete/default sign results with homogeneous planar multiplier placement and
+// widened reciprocal carrier 383/383/441/441/383/383/441/441; original body and helpers restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

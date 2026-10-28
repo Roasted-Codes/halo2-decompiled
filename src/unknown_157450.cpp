@@ -3882,6 +3882,10 @@ static __forceinline long nonnegative_15ce70(long value)
 // Complementary category bool/byte/short/long 470/470/477/550; with self-player result
 // 470, opposing-team result 526, both 526, word category with both 480. Original
 // category, decision bytes and all event/timing work restored; extra frame dword remains.
+// Round 239: actual penalty/ticks/both field references 469/470/469; existing
+// nonnegative helper with positive selection 518, with penalty/ticks/both references
+// 521/518/521; all with award after engine admission 522. One-point gain dropped;
+// original fields, helpers, shared award update and body restored.
 // Round 225: chained award/subtype defaults at entry, admission and victim lookup 549/548/548;
 // award/message 470, all three at entry 549, subtype/message 549; all three
 // after admission/lookup 548/548. Original result defaults and complete body restored.
@@ -4147,6 +4151,8 @@ struct s_score_zone_view
 // both texts 534/440/536; score publication inside both text scopes 464; copy forms with
 // those scopes 534/440/536; team copy plus team publication scope 534. Keep only the
 // individual own-text bounded-copy call (plain 440, 2688 B); extra scopes restored.
+// Round 241: Consistently retained team-mode result bool/byte/short/long at selection and at team entry:
+// 771/771/745/770/771/771/745/770. Original field reads, output store and complete body restored.
 // Round 207: seven color-helper inline-declaration subsets and all noinline 440 each.
 // Complete returned color values: rival/own/both team, held/free/both zones,
 // all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result

@@ -142,10 +142,17 @@ const dword g_455978[81] = {
 // three identity combinations 307; presence object identity 306. Coordinated range-helper
 // inline 419, plus shared planar normalization 416; both lose matched controls and are
 // restored. Original executable body and every external declaration retained.
+// CRT input samples/ray origin/both 306/306/306; native body pose 374, with samples/origin/both
+// 374/374/374; all inputs plus query pose 422. All restored.
 // Shared setters for all three native basis rows, with early/late scale publication, entry/local
 // input-output matrix declarations and native/library point publication: all eight 306. All restored.
 // Round 206: Optional bounds/exclusion initialization after control-word setup [315, 315, 315];
 // after SSE setup [315, 315, 315]; early presence construction alone/with late optional state [467, 458]. All restored.
+// Round 228: optional-state/descriptor/receiver storage identity subsets 306 each;
+// all three plus immutable body binding 306. First +0x21 optional-state homes remain; all restored.
+// Round 232: shared affine candidate alone/radius/blend/both 306 each;
+// with planar normalization on the same four graphs 307/307/307/304.
+// Two-point gain rejected; original producers and all helper contracts restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

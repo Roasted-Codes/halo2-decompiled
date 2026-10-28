@@ -758,6 +758,7 @@ void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
 // score 155 (was 155): frame 0x8ac agrees; camera/gain-view allocation and maximum-tail registers differ.
+// frame 0x8ac agrees; persistent camera/gain and scalar homes differ.
 // Earlier: Frame 0x8ac agrees; camera ESI/EBP, table-view and side homes remain.
 // Earlier: aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes differed.
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
@@ -820,6 +821,10 @@ real function_18cac0(long arg_0);
 // Round 210: On the shared membership graph: door-default maximum 216; conditional expression/complete
 // result arms 230/230; branch publication 541; outer maximum workspace 155; indexed
 // element pointer with table-default/door-default/complete-arm results 155/216/230. All restored.
+// Round 368: persistent camera/structure/gain names alone and in all combinations 155 each; coherent array
+// names with all three 155. Original executable body restored.
+// Round 370: consistent camera-provider observations with native table, default-first side and
+// after-clear structure interactions 253/253/270/269/253/253/270/269; restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

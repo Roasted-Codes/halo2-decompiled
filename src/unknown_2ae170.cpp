@@ -754,6 +754,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Round 365: actual selected primary-field pointer with native destinations, special input
 // snapshot and native routing domains: 453/461/441/455/447/461/438/454. The 438 plain
 // form loses the dispatcher; input snapshots change the entry roles. All restored.
+// Round 241: Paired selected-setting decision, rear/front first, with independent destinations, live
+// routing field, and paired true/false-first destinations: 449/449/449/449/473/473/473/473. All
+// selected-field observations and original body restored.
 // Round 207: native two-gain field array, uniform at-use gain reads and plain paired
 // front/rear/front+rear/tail/front+tail/rear+tail/all loops 466/474/475/497/490/492/507;
 // all plus the repeated buffer send loop 523. Every loop uses a real channel/gain
