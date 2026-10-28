@@ -405,7 +405,7 @@ void function_e6b00(long unit_index, long name, long *state_name, long *action_n
 
 	if (name == 0x6000007)
 	{
-		long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 0);
+		long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), false);
 
 		if (weapon_index != NONE &&
 			*(short *)(g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes + 0x292) == 3)

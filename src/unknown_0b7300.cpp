@@ -543,8 +543,7 @@ void function_d52b0(long object_index)
 
 	if (persistent)
 	{
-		// retail reloads the object array here
-		s_placement_object *current = ((s_placement_object_header *)((s_record_pool volatile *)g_4e0300)->data)[object_index & 0xffff].object;
+		s_placement_object *current = PLACEMENT_OBJECT(object_index);
 
 		function_b7300(object_index);
 		if (TEST_FIELD_BIT(current->flags.unknown8))

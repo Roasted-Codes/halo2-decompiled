@@ -5561,9 +5561,9 @@ bool __stdcall function_c4410(long unit_index, void const *creation, bool *out_o
    (4 also changing weapons), 5 to 7 into the second hand beside a
    matching first (6 lowering it first, 7 readying it); tells the player
    code */
-// score 294 (was 325): Frame 0x50 and extent agree; incoming unit, return byte and ready home differ.
+// score 279 (was 325): Frame 0x50 and extent agree; incoming unit, return byte and ready home differ.
+// Object flag 7 read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift (294 -> 279).
 // Two request homes 313; result first 313; shared exit 301; secondary modes first 294; branch-local requests 314.
-// score 279 (was 294): object flag 7 read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0xcd0c0
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 {
