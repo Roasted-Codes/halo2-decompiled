@@ -189,6 +189,8 @@ PRIVATE void game_time_set_speed_internal(real speed);
 
 /* advances the game time by a frame: the speed ramp, then the whole ticks
    due, the fraction carried to the next frame */
+// score 1: the asynchronous path uses a conditional branch where retail jumps
+// to the shared tick-limit test. Retry baseline: 476 bytes, as in retail.
 // @retail 0x146660
 void function_146660(real seconds, real *elapsed, long *ticks_due)
 {
