@@ -140,6 +140,10 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 // Actor is held in ESI after the global lookup; retail masks its stack index first and uses EBX.
 // Tail advance after selection 96; shared direction setter 96; selected-result gate 97,
 // with setter 97; actor read at every use 85, with setter 84; both 85, with setter 84.
+// Round 86: the walk through function_26be00/function_26be30 gives retail's unrotated loop and
+// index-first actor lookup, but NONE stays an immediate (retail keeps it in EAX, the actor in
+// EBX): 97, with separate true/false returns 95, + position pointer 94, three declaration
+// orders 95/94/95; a private copy of the prop iterator 99, with separate returns 96.
 // @retail 0x1c1d50
 bool __stdcall function_1c1d50(long actor_index, s_type_f17a25 *path)
 {
