@@ -108,7 +108,7 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 	out->up.k = inertia.m_col2(2);
 }
 
-// score 1 (was 184): only the linear brake's zero k product differs: ours multiplies the double scale by a
+// score 1 (was 1): only the linear brake's zero k product differs: ours multiplies the double scale by a
 // double 0.0 constant (`fmul qword`), retail by the float 0.0f (`fmul dword`).
 // Earlier: Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
 // Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
@@ -210,6 +210,12 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // aggregate initializer or real_point3d_set, `= 0`, zero k first 1/1/1/1/4; double-scale local 7; real
 // scale into the double helper 1; limit inline/no inline keyword 1/1; the existing 0xa75d0 for both/linear
 // only 72/2 (float scale: retail's zero constant but not its reload order); explicit double conversions 7.
+// Existing double-scale force-inline declaration 1
+// complete limiter split pointer/reference outputs 1/1
+// native value input with pointer/reference outputs 325/325
+// complete native returns from value/reference inputs 345/283
+// returned output pointer 1. Zero product remains wide
+// original limiter and shared-helper declaration restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
