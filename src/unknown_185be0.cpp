@@ -106,8 +106,8 @@ void player_control_update_action_flags(s_player_action *arg_0, s_player_action_
 
 __forceinline real function_185be1(real arg_0, real arg_1, real arg_2)
 {
-    if (arg_0 < arg_1) return arg_1;
-    if (arg_0 > arg_2) return arg_2;
+    if (arg_0 < arg_1) arg_0 = arg_1;
+    else if (arg_0 > arg_2) arg_0 = arg_2;
     return arg_0;
 }
 __forceinline byte *function_185be2(long arg_0)
@@ -118,10 +118,12 @@ __forceinline bool function_185be3(long arg_0)
 {
     return arg_0 != NONE && ((1 << g_4e0300->data[(arg_0 & 0xffff) * 12 + 3]) & 1);
 }
-__forceinline void function_185be4(dword *arg_0, dword arg_1, bool arg_2)
+__forceinline void function_185be4(dword *flags, dword mask, bool enabled)
 {
-    dword flags = arg_2 ? (*arg_0 | arg_1) : (*arg_0 & ~arg_1);
-    *arg_0 = flags;
+    if (enabled)
+        *flags |= mask;
+    else
+        *flags &= ~mask;
 }
 __forceinline void function_185be5(s_186ab2 *arg_0)
 {
@@ -140,8 +142,32 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 985 (was 985): Frame 0xe4 versus 0xe0; state/output carriers and flag schedules differ.
-// frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
+// score 780 (was 780): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Round 86 (fast, aligned counts in brackets, 383 at the start): turn rates assigned in both arms (retail loads
+// the stored rates on the else path) 788 [367] and the attachment index NONE per path (retail sets it on each
+// failure path) 780 [356], both kept; on 780: selected input as long (retail movzx/test edx/setg) 779 [348];
+// both selector bytes in byte locals identical; SET_FLAG(flags, bit, value) as 0x187b30 uses, in place of the
+// mask helper 922 at 3740 bytes [310: the repeated tests thread as retail, flag section now retail's length,
+// homes shifted 4]; PIN on the two settings clamps 934/951 (retail's field re-reads, lockstep worse); named
+// clamped rates 789 [401]; magnitude sum terms swapped identical.
+// Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Retail gives EBX to NONE for its seven early uses (the input test, the three clears, the two index tests and
+// the short `cmp dx, bx`) because it re-reads the control global at the flag test; ours keeps the global
+// there from entry. Round 30 (fast): the flag read through a file-local forceinline accessor 790 (still
+// held); powf 790; settings pointer read after the clears 799; the global named in a local before its test
+// 790; magnitude3d (0x24590) defined inline in its file 821 (still held; 0x24590 matches either way).
+// Round 9 (lane 10): retail clamps the range fraction in place (division result and clamp share its slot)
+// and threads every repeated flag test (one test, both stores per arm), testing the selected input as a
+// dword. Fraction computed then clamped into itself 790 (same code); fraction declared before its bounds
+// 793; descriptive fraction/minimum/range names 790 (slots unchanged); selected input as long 790 (dword
+// test, still unthreaded); flag helper as a conditional expression 789. Retail reloads the control
+// global after the magnitude call (0x24590, another lane's file) as if that call could write memory.
+// Retail re-reads the player-control global before its flag test, after the conditional magnitude/pow
+// calls, and keeps NONE in EBX; ours keeps the global in EBX from entry (LTCG trusts those callees here;
+// retail's address is never taken). Round 73: settings pointer after the clears 959; state entry after the
+// clears 957; state entry first 941 at 3779 bytes (entry loads out of retail's order); clears swapped 949;
+// if/else output pointer 986.
+// Earlier: frame 0xe4 versus 0xe0; state/output carriers and mask/flag schedules still differ.
 // Previous 1082 to 1023; counted running mask 1059; copy running mask 1130; matrix/vector scopes 1082; native pairs 1082; indexed mask 1068.
 // Selected-mask groups 1180; action-mask group 1179; paired-input mask 1140.
 // Input memcpy/reset inline 1059; selected byte 1063; separate masks 1059; counted word mask 1032;
@@ -171,6 +197,53 @@ union s_185be7
 // Round 166: Native actual settings record with cached/live roots, mutable/const
 // receivers and forced/ordinary existing object getter 991/1022/991/1022/991/1022/991/1022
 // fast. Original settings observations, getter declaration and complete body restored.
+// Flag-value producer with shared curve count/pointer/both/values-first 979 each; long count 978;
+// native pairs with short/long inputs 979/978; shared short inputs and complete clamp result 969.
+// Complete clamp alone 978; flag-value plus complete clamp 969 plain (kept); curve inputs plus clamp 978.
+// Shared curve locals and native-pair trials restored; original game-call expressions unchanged.
+// Round 337: signed controller slot short/long 969/997; snapshot before turns 969;
+// existing turn/response/both pair aggregate initialization 969 each;
+// long slot with early snapshot/with both pair initializers 997/997. All restored.
+// Clear-and-select flag result 947 kept, native long predicate 944 (extra three points dropped);
+// clear-first/set-first results with bool 1002/982, with long 1005/985;
+// named selected-mask result bool/long 947/944. Original Boolean helper input retained.
+// Round 97: the global defined in a non-LTCG file 947 (still held in EBX); clamp helper with early
+// returns/result variable/ternary 952/973/952; the flag test through a const pointer to the global
+// 884 (reloads it as retail, NONE then misses EBX) but its taken address moves 0x185ab0's store and
+// loses 0x187b30, so retail did not treat the global as address-taken. Reverted.
+// Round 221: recovered-frame settings/scalar/workspace names and active declarations,
+// eight forms 947 each; cached/state-live/settings-live/both roots with native names
+// 947/985/1004/1036/947/985/1004/1036. Original observations and body restored.
+// Consistent parent-control pointer snapshots with original/native entry addresses,
+// mutable/const pointers and either pre-clear acquisition order 947 each (eight forms).
+// Original root observations, entry calculation, helpers and complete body restored.
+// Ordinary inline clamp/flag/both 947/947/947; state predicate alone and all
+// combinations plus all-private inline producers 968 each. Original force-inline helpers and body restored.
+// DH round 189: Range-result default before lower/range/tag/parent reads 950 each, before initial object 966;
+// conditional/exhaustive positive-first/negative-first results 875/875/963. Exhaustive positive-first
+// retained after ordinary full validation; frame/root/settings and later flag schedules remain.
+// Round 7: pointer flag helper with if/else 890 (frame 0xe4); with its inputs tested directly instead
+// of through bool locals 817 (kept); long input 820, with raw values 820; ternary store 1023; clamp as a
+// re-evaluating macro 1014; range result defaulted before its test 790 (kept); declared first 793,
+// between bound and range 793; clamp helper as a ternary 970; byte input with raw values 790; action
+// input in a byte local 790. Retail tests a repeated condition once for consecutive flags; ours
+// re-tests it, and retail places the clamp's upper arms after the hot path.
+// Round 66 (fast): input record copied before the two turn rates (stores after the copy as retail) 789;
+// a re-evaluating PIN macro on the two settings-field clamps (retail re-reads those fields in each arm)
+// 934, on every clamp but the magnitude one 971; the selected input byte as a long (retail's movzx edx /
+// test edx / setg / jle) 790, aligned 289 -> 281, the repeated test still not threaded; long input plus
+// early copy 789. Retail also reads the two selector bytes as one dword (EBX, then BL/BH).
+// Round 209: Caller-local inline declarations for magnitude/curve/response, all seven nonempty subsets, and
+// all three with separate noinline declarations: 780 each. All restored; frame/state/output agree, but
+// control-root reload, NONE/settings/zero homes and repeated flag tests remain.
+// Round 241: Shared clamp formal orders (0,2,1)/(1,0,2)/(1,2,0)/(2,0,1)/(2,1,0): 780/780/780/780/780;
+// independent result with orders (0,2,1)/(1,0,2)/(2,0,1): 926/926/926. Original helper, calls and body
+// restored.
+// Round 243: Native latch fields 88/8e/8f/90/93, paired 8e+8f/88+90 and all five:
+// 780/780/780/780/777/780/780/777. Three-point nonmatch gains rejected; original byte fields restored.
+// Round 235: Native output flag dword/analog field/trailing bytes, paired and complete layouts
+// 780/780/778/780/778/778/778; complete trailing dword 812. Two-point leads rejected; original output layout
+// and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
@@ -263,8 +336,8 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             vector3f local_15;
             function_1a4900(arg_1, &arg_5->field_28, &local_15);
             local_1->field_68 = local_15.k > 0.0f;
-            real local_16 = local_13.field_0[0];
-            real local_17 = local_13.field_0[1];
+            real local_16;
+            real local_17;
             if (local_1->field_68 && arg_2 > 0.0f && (fabs(local_13.field_0[0]) > 0.0001f || fabs(local_13.field_0[1]) > 0.0001f ||
                 fabs(arg_5->field_0) > 0.0001f || fabs(arg_5->field_4) > 0.0001f))
             {
@@ -273,6 +346,11 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
                 real local_20 = function_185be1(*(real *)(local_0 + 4), 0.0f, 1.0f) * local_15.k;
                 local_16 = function_185be1(local_15.i * local_18, -3.1415927410125732f, 3.1415927410125732f) * local_20 + (1.0f - local_19) * local_13.field_0[0];
                 local_17 = function_185be1(local_15.j * local_18, -1.5707963705062866f, 1.5707963705062866f) * local_20 + (1.0f - local_19) * local_13.field_0[1];
+            }
+            else
+            {
+                local_16 = local_13.field_0[0];
+                local_17 = local_13.field_0[1];
             }
             arg_5->field_10 = local_16 * arg_2;
             arg_5->field_14 = local_17 * arg_2;
@@ -337,13 +415,14 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         bool local_10 = local_3[11] == 1;
         if (local_10 && local_1->field_2e == NONE && arg_4->field_0)
         {
-            long local_11 = NONE;
+            long local_11;
             if (local_1->field_0 != NONE)
             {
                 byte *local_12 = function_185be2(local_1->field_0);
                 short local_13 = *(char *)(local_12 + 0x212);
-                if (local_13 != NONE) local_11 = *(long *)(local_12 + local_13 * 4 + 0x218);
+                local_11 = local_13 != NONE ? *(long *)(local_12 + local_13 * 4 + 0x218) : NONE;
             }
+            else local_11 = NONE;
             if (((byte *)arg_4->field_0)[6] > 0x7f || ((byte *)arg_4->field_0)[7] > 0x7f) local_10 = false;
             if (local_11 != NONE && !function_100f70(local_11) && local_2.field_44 * local_2.field_44 + local_2.field_40 * local_2.field_40 > 0.64000004529953f) local_10 = false;
         }
@@ -371,26 +450,23 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             if (local_11 > 0) { local_11 = 0; *local_12 = 0; }
             else local_1->field_90 = 0;
         }
-        bool selected_active = local_11 != 0;
-        bool input_7_active = local_3[7] != 0;
-        function_185be4(&arg_5->field_18, 0x10000, input_7_active);
-        function_185be4(&arg_5->field_18, 0x200000, selected_active);
-        function_185be4(&arg_5->field_18, 0x20000, selected_active);
+        function_185be4(&arg_5->field_18, 0x10000, local_3[7] != 0);
+        function_185be4(&arg_5->field_18, 0x200000, local_11 != 0);
+        function_185be4(&arg_5->field_18, 0x20000, local_11 != 0);
         if (g_4e6948->state != 2) function_185be4(&arg_5->field_18, 0x20000000, local_3[local_2.field_4d] != 0);
-        function_185be4(&arg_5->field_18, 0x800, selected_active);
-        function_185be4(&arg_5->field_18, 0x4000, selected_active);
+        function_185be4(&arg_5->field_18, 0x800, local_11 != 0);
+        function_185be4(&arg_5->field_18, 0x4000, local_11 != 0);
         function_185be4(&arg_5->field_18, 0x4000000, local_3[6] != 0);
         function_185be4(&arg_5->field_18, 0x80, local_3[12] != 0);
         function_185be4(&arg_5->field_18, 0x100, local_3[13] != 0);
-        bool action_active = local_3[5] != 0;
-        function_185be4(&arg_5->field_18, 4, action_active);
-        function_185be4(&arg_5->field_18, 0x100000, action_active);
-        function_185be4(&arg_5->field_18, 0x2000000, action_active);
+        function_185be4(&arg_5->field_18, 4, local_3[5] != 0);
+        function_185be4(&arg_5->field_18, 0x100000, local_3[5] != 0);
+        function_185be4(&arg_5->field_18, 0x2000000, local_3[5] != 0);
         local_1->field_93 = local_3[0] && ((g_510c50 && ((byte *)g_510c50)[5]) || local_1->field_93);
         function_185be4(&arg_5->field_18, 2, local_3[0] && !local_1->field_93);
         function_185be4(&arg_5->field_18, 0x10, local_3[4] != 0);
         function_185be4(&arg_5->field_18, 0x20, local_3[4] != 0);
-        function_185be4(&arg_5->field_18, 0x40, input_7_active);
+        function_185be4(&arg_5->field_18, 0x40, local_3[7] != 0);
         function_185be4((dword *)&arg_5->field_1c, 2, local_3[1] == 1);
         function_185be4((dword *)&arg_5->field_1c, 0x10, local_3[14] != 0);
         function_185be4((dword *)&arg_5->field_1c, 0x20, local_3[15] != 0);

@@ -536,7 +536,9 @@ void function_118e80(long object_index, vector3f *forward);
 real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
-// score 273 (was 273): frame 0x8c versus 0x90, early NONE and held-direction byte home remain.
+
+// score 192 (was 273): the frame size and the held-direction byte home match; the plane index
+// compare uses a resident -1 instead of an immediate and the point copy loads in a different order.
 // frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
 // direct actor receiver 371; forward scalar names 371; sampled radius 371;
@@ -552,10 +554,32 @@ real function_267370(long volatile object_index);
 // motion-direction reference 277; up reference 273 (plain).
 // Flag-range memset 441; movement-mode branches 369; named activity time 371;
 // per-use geometry fields 371; predicate/index role names 371 (fast control 371).
+// Held-direction pointer/reference 386/386; complete explicit plane-result arms 418;
+// true-first plane result 371; explicit arms with pointer/reference 425/425;
+// true-first result with pointer/reference 386/386 (fast control 371). All restored.
 // Round 167: Plane products, complete forward product terms, and both 371 each;
 // uniform four-use movement flags alone/with plane/with forward/with both 428 each;
 // complete named plane distance 371. Fast control 371; full baseline 273.
 // Original arithmetic, repeated flag observations and protected interfaces restored.
+// Early held-bit flag at function/active scope: bool 362/362, byte 362/362,
+// short 319/319, long 368/368 (fast control 371, callee caveat); all exact-only and restored.
+// Round 375: Complete native plane value, mutable/const plane with mutable/const point,
+// 452 each; the same four graphs with the shared plane-distance helper 452 each.
+// Native snapshot expands the frame; every form and the original float tree restored.
+// Round 377: Type-gated held-direction result bool/byte/short/long 367/367/385/382;
+// default-first producers 362/362/369/368 (fast control 371). Guarded bool restores
+// frame 0x90 but plain 267 gains only six, rejected; second cross helper 367 fast;
+// recovered-frame signed plane key 233 fast/373 plain. All executable forms restored.
+// Round 176: Shifted held bit on the retained first-cross graph 319 fast/272 plain;
+// complete inverse bool/byte/short/long 319 each; staged inverse bool/byte/short
+// 368/368/388 (fast control 371). Missing frame dword persists; all forms restored.
+// Round 351: native carrier control/held bit/both/seat/control-seat/held-seat/all
+// 273/272/272/273/273/272/272; complete readonly metadata 272. One-point gains rejected;
+// original external record observations restored; missing frame dword and held-bit byte remain.
+// Round 250: Entry receiver declarations, ordinal/type declarations, marker/point/predicate
+// declarations, each paired group, all groups, and all groups with phase-role names: 273 each. Every
+// value birth and original phase declaration restored. Frame 0x8c/0x90, early NONE and held-direction
+// byte home remain.
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -593,7 +617,7 @@ void function_1e3b60(long actor_index)
 					else
 					{
 						plane3f *plane = (plane3f *)(entry + 4);
-						if (plane->i * point.x + plane->k * point.z + plane->j * point.y - plane->d < 0.0f)
+						if (point.x * plane->i + plane->k * point.z + plane->j * point.y - plane->d < 0.0f)
 							below_plane = true;
 					}
 				}
@@ -637,7 +661,7 @@ void function_1e3b60(long actor_index)
 						else
 						{
 							short mode = *(short *)(definition + 0x1f0);
-							if (mode == 0 || mode == 1 || mode == 2)
+							if (mode == 1 || mode == 0 || mode == 2)
 								*(short *)(actor_bytes + 0x270) = 5;
 						}
 					}
@@ -697,7 +721,10 @@ void function_1e3b60(long actor_index)
 			long held_index = actor->unknown274;
 			s_moving_object_header *header = &((s_moving_object_header *)g_4e0300->data)[held_index & 0xffff];
 			byte *held = header->object;
-			if (header->type == 1 && (*(dword *)(g_4e3b44[*(long *)held & 0xffff].bytes + 0x1ec) & 0x100))
+			byte held_bit = 0;
+			if (header->type == 1)
+				held_bit = (byte)((*(dword *)(g_4e3b44[*(long *)held & 0xffff].bytes + 0x1ec) >> 8) & 1);
+			if (held_bit)
 				function_118e80(held_index, (vector3f *)(actor_bytes + 0x29c));
 			else
 				*(vector3f *)(actor_bytes + 0x29c) = *(vector3f *)(held + 0x168);
@@ -765,6 +792,9 @@ bool function_1a8220(long index, short a, short b, long unknown, short c, short 
 // the unit field read twice through the actor pointer fixed the type-11 block (32 -> 17); left: the amount block loads the pool base into ESI and adds where retail loads ECX and forms `lea esi, [ecx+ebx]` after the comparison. Actor inside the amount block 241/239 (frame 8); typed-pointer getter 17; separate refreshed actor 17; `0.0f < amount` 17; 600 s permuter 37 tries, none below 17.
 // Previous timestamp 17; event unit 17; both 17; recent timestamp test 17; snapshot recent test 17;
 // early event unit 98; early unit and timestamp 98; complete interval predicate 22.
+// Shared actor offset 67; amount actor offset 17; amount pool record 17;
+// delayed actor formation 241; prop-view getter 17; amount snapshot 17;
+// actor-index snapshot 17; amount parameter pointer 17.
 // @retail 0x1e2570
 void __stdcall function_1e2570(long actor_index, word type, long object_index, real amount, long direction)
 {
@@ -963,7 +993,7 @@ long function_1e4990(long character_index);
 void function_d5c90(long unit_index, real *body, real *shield);
 void __stdcall function_ccff0(long unit_index);
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode);
-short function_cccd0(long unit_index, short type, char count);
+short function_cccd0(long unit_index, short type, short count);
 struct s_effect_owner;
 void function_b7930(void *data, long tag_index, long object_index, s_effect_owner const *owner);
 long __stdcall function_b7b40(void *creation);
@@ -991,6 +1021,7 @@ bool function_e6900(long unit_index, s_unit_request *request);
 void function_a7b30(long index);
 void __stdcall swarm_delete(long perception_index);
 void function_1e04a0(long primary_tag, long character_index, long unit_index, long secondary_tag, short grenade_type);
+
 
 // score 320 (was 320): Frame 0x118 agrees; sentinel EDI/ESI, squad/substitution homes and success layout remain.
 // Earlier 345 (was 364): frame 0x11c versus 0x118; sentinel and success blocks differ.
@@ -1036,6 +1067,24 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Separate actor/unit/perception creation producers from persistent outputs 320/320/320;
 // actor-unit/actor-perception/unit-perception/all producer splits 320/320/320/320;
 // all splits with delayed cleanup publication 331. Original output and cleanup ownership restored.
+// Round 377: Complete clear-mode bool/byte/short/long results 358/358/337/320;
+// guarded producers 349/349/345/328 (fast control 320). Both creation-call values
+// preserved; polarity does not recover sentinel or squad homes. All forms restored.
+// Native creation/request/both payloads 320/320/320; direct variant field alone/with
+// creation/with request/with both 339/339/339/339; direct variant with entry placement view 339.
+// Round 176: Complementary substitution result bool/byte/short/long, guarded
+// producer 362/362/364/363; complete conditional producer 372/372/375/374.
+// Frame 0x118 agrees; sentinel and query-result homes persist. All forms restored.
+// Lane 5 r77: retail's substitution loop is top-tested and not rotated (its jmp only skips the
+// head's padding), computes the result as `forced ? 0x203900(...) : enabled`, keeps the flag as a
+// byte `(flags >> 10) & 1` in the squad pointer's slot, tests grenade indices as ints and reads the
+// palette count at each use. Each alone: int grenade tests 349 (frame changes), count at each use
+// 336, byte shifted flag 359, ternary result 358 (its block then matches retail); all four 379
+// (aligned 233 against 243). All restored.
+// Round 149: Substitution producer/test ordinary inline, noinline, paired and mixed contracts [320, 320,
+// 320, 320, 320, 320, 320, 320]; all restored.
+// Round 196: Initial definition/cleanup/squad/lookup observation schedules
+// [331, 333, 368, 342, 368, 342, 336, 348]; original observation order and all mutable work restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -1586,7 +1635,9 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
-// score 270 (was 270): Frame 0x14 and actor ESI agree; index/pool roles and scalar/ammunition homes remain.
+// score 263 (was 270): Frame 0x14 and actor ESI agree; the probability and delay clamps now match
+// retail's code; the actor index stays in EDI instead of EBX and the object pool is reloaded instead
+// of kept in a register.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
@@ -1608,6 +1659,28 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // remain.
 // Round 226: Actual weapon/grenade/both metadata 270/270/270; native unit fields 270;
 // unit fields with weapon/grenade/both metadata 270/270/270; complete readonly metadata 270.
+// Round 206: Shared unit receiver 270; with entry weapon/ammunition/both output lifetimes 270/270/270;
+// both output lifetimes 270; shared unit with entry grenade receiver, weapon/grenade or all workspaces 270 each.
+// Round 212: Consistent actor getter observations 352; with long ordinal 327; fixed-two for 352;
+// long ordinal with for 327; output initializer 351; initializer with long/for/both 327/351/327.
+// Round 145: Both ammunition bounds captured, lower/upper/ordinal short-short-short 326, short-
+// short-long 339, long-short-short 333, long-short-long 347, short-long-short 332, short-long-long
+// 340, long-long-short 334, long-long-long 348; all restored.
+// Round 230: Actor after weapon/settings queries 277/308; shared current/secondary/both
+// slot queries 329/317/349; both queries with later actor 352/308; direct shared queries 279.
+// Uninitialized probability/delay at entry 270/270; constant probability at entry/after query 295/286;
+// with the other scalar workspaces 295/286; scalar-role names with early constant 295,
+// with uninitialized entry workspaces 270. Original declarations, initializers and names restored.
+// Scalar-home names for probability, fraction, delay, ticks, minimum and loop index,
+// plus both grouped renames: 270 each.
+// Round 351: bounded equipment for, actual pair initializer, early constant ordinal and
+// their four combinations 270/270/270/270/270/270/270; complete graph with word ordinal 270. All restored.
+// Round 250: Conditional-result query record inputs: current/secondary/both/both const 270/270/270/270;
+// both with long slots mutable/const 293/293; both with signed-byte slots mutable/const 268/268 (fast
+// control 270). Two-point gain rejected; original scalar-index inputs and short slots restored. Frame
+// 0x14 agrees; index/pool roles and scalar/ammunition homes remain.
+// Round 22: existing object/header/moving/nested-object accessors 263 each; actor-index
+// address read 263; split/reversed entry declarations 263/263; const actor index 263.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
@@ -1623,28 +1696,29 @@ void function_1e2a90(long actor_index)
 			(function_cbd50(actor->unknown018, ai_object_get(actor->unknown018)->current_weapon) != NONE ||
 			function_cbd50(actor->unknown018, *((signed char *)ai_object_get(actor->unknown018) + 0x213)) != NONE))
 		{
-			real probability = 0.1f;
+			real probability;
 			if (weapon_options)
 			{
 				probability = *(real *)(weapon_options + 0x58) < 0.1f ? 0.1f :
 					(*(real *)(weapon_options + 0x58) > 0.6f ? 0.6f : *(real *)(weapon_options + 0x58));
 			}
+			else
+				probability = 0.1f;
 			if (actor->unknown225 || (*(short *)((byte *)actor + 0x722) > 0 &&
 				*(real *)((byte *)actor + 0x764) < 3.0f))
 			{
 				real increased = probability * 4.0f;
 				if (increased > 0.6f)
 					increased = 0.6f;
-				if (probability <= increased)
-					probability = increased;
+				probability = probability > increased ? probability : increased;
 			}
 			if (probability > function_259a0(&g_4e7408->unknown0))
 			{
 				real delay;
 				if (weapon_options && *(real *)(weapon_options + 0x5c) != 0.0f)
 				{
-					real value = *(real *)(weapon_options + 0x5c);
-					delay = value < 0.8f ? 0.8f : (value > 1.3f ? 1.3f : value);
+					delay = *(real *)(weapon_options + 0x5c) < 0.8f ? 0.8f :
+						(*(real *)(weapon_options + 0x5c) > 1.3f ? 1.3f : *(real *)(weapon_options + 0x5c));
 				}
 				else
 					delay = function_259d0(&g_4e7408->unknown0, NULL, 0, 0.8f, 1.3f);

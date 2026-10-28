@@ -7,6 +7,7 @@
 #include <xtl.h>
 #include "unknown_122870.h"
 #include <string.h>
+#include "map_file_path.h"
 
 /* the open cache files (0x804 bytes each) and the current one */
 struct s_cache_file
@@ -85,33 +86,16 @@ long function_213760(dword location, long size, void *buffer, dword *bytes_read,
 	return function_1a0f10(handle, buffer, size, location & 0x3fffffff, type, priority, bytes_read, done);
 }
 
-void map_file_path_get(char const *map_name, char *path);
 bool cache_header_verify(s_cache_header const *header);
 
-// score 4 (was 4): Frame agrees; the file path address reuses EBX instead of being formed again from ESP.
-// Tried result addressability 4; read count first 4; read count outer 4; result after path 70; result after
-// open 72; test derived result 44; nested read tests 4; invalid handle exit 33.
-// post-normalization path address reuses EBX; retail forms it again.
-// Fast: empty path value 82; normalizer-owned path 54; initialized read count 33;
-// success before read 16; result in each outcome 60; immutable handle 4;
-// file-path observation 4; native read result 4.
-// Post-call path address still reuses EBX. Library empty string/buffer address/both fast 4/4/4;
-// verification result 38; staged read/transfer results 25/36; verification-failure exit 26;
-// native transfer result with verification assignment 38; all new scores reduced.
-// Path helper inline, noinline and both 4/4/4; scoped path value 4; open sequencing 4;
-// open-condition assignment 4; handle before the call and before the path 4/4;
-// header-first parameters 4; without the result address-take 4 (identical code, dropped);
-// header-size transfer counts 4; scoped handle 4; result as the read condition 44;
-// this body ahead of the path helper in the helper's file 4; inline printf helper 4.
-// Every retail caller of 0x214db0 forms its ebx argument again after the call.
 // @retail 0x213800
 bool function_213800(char const *map_name, s_cache_header *header)
 {
-	char path[256];
-	path[0] = 0;
+	s_map_file_path path;
+	path.text[0] = 0;
 	bool result = false;
-	map_file_path_get(map_name, path);
-	HANDLE file = CreateFile(path, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
+	path.get(map_name);
+	HANDLE file = CreateFile(path.text, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
 	if (file != INVALID_HANDLE_VALUE)
 	{
 		DWORD bytes_read;
@@ -1172,7 +1156,11 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x1bc] = 0;
 }
 
-// score 112 (was 112): frame 0x1144 and extent agree; file displacement, request-copy and validity joins remain.
+// score 104 (was 104): frame 0x1144 and extent agree; file displacement, request-copy, the first read
+// call's handle copy and the write-success join remain.
+// frame 0x1144 and extent agree; file displacement (retail's product in ECX
+// and `lea ebp`), the task zeroing/path/counter registers, the first read call's handle copy, the
+// write-success join and retail's 1 held in ESI for two unmerged slot-range compares remain.
 // Earlier: frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
 // Frame 0x1144 and length agree; file-displacement, task-copy and by-value I/O setup remain.
 // frame 0x1144 agrees; displacement, request-copy and by-value I/O setup remain.
@@ -1229,6 +1217,28 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // Round 187 direct-options context: indexed output/values/both 180/180/180; indexed metadata
 // alone/output/values/both 198/198/198/198; native four-use acquired handle 211 (fast).
 // All restored; temporary displacement ECX and request/completion/I-O scheduling remain.
+// Round 135: a dependency whose type is no longer valid clears the result (retail loads the
+// type byte into AL as the result) 154 as `&&`, 110 as a separate test (kept); false validity
+// guarded by the handle test 104 (kept, plain); with the write success set by its own test
+// 166 (914 bytes; aligned 54: the joins match but the first read call copies the handle and
+// loop padding shifts); handle as an s_file_handle member 104; on the kept form: completion flag
+// declared first 104; size limit before the path 249; file pointer after the path 106;
+// validity declared at the loop top 104.
+// Round 187 actual handle-field reference at request/value/test groups, every nonempty
+// combination 104 each; full reference with immutable size limit 104. All restored.
+// Round 93: write success set by its own test 166 (914 bytes: every join matches; what is left is
+// retail's 1 held in ESI for two unmerged slot-range compares and the later slot test, and the
+// handle copy at the close call instead of the size query); that with the range test joined to
+// the validity test 166, with the handle declared s_file_handle 166; nested close test 104; long
+// expected size 104. A one-case switch 413; bounds from a const table or a type-to-slot switch
+// fold early and merge the compares (166).
+// Round 95: the inner slot test as `index != cache_file_slot_from_type(1) && index !=
+// cache_file_slot_from_type(2)` 104 (inlined and folded, identical code); the file pointer as
+// `g_557c90 + index` 104; the range joined to the validity test 104; the inner validity and slot
+// tests nested 104. Diagnostic: the range taken from a struct returned by value from an inline
+// type-to-range switch keeps the two compares apart (against ECX/EDX copies of 1, index in ESI),
+// with the write success set by its own test 161 (918 bytes); plain locals, enums, a local struct,
+// const tables and one-entry table loops all fold to one compare.
 // @retail 0x213970
 void function_213970(void)
 {
@@ -1254,15 +1264,14 @@ void function_213970(void)
         bool volatile done;
         function_120ba0(6, &task, 0, function_1a08f0, &done);
         cache_wait_for_completion(&done);
-        bool valid = file->handle != INVALID_HANDLE_VALUE;
-        if (valid)
+        bool valid = false;
+        if (file->handle != INVALID_HANDLE_VALUE)
         {
             dword size;
             function_1a15f0(*(s_file_handle *)&file->handle, 0, 6, &size, &done);
             cache_wait_for_completion(&done);
             if (size != expected_size)
             {
-                valid = false;
                 if (remove_later)
                 {
                     function_2138f0(index + 1, 6);
@@ -1304,11 +1313,13 @@ void function_213970(void)
                         {
                             for (long type = 0; type < 3; type++)
                             {
-                                if (*((byte *)file + 0x178 + type) && valid_types[type])
+                                if (*((byte *)file + 0x178 + type))
                                 {
                                     FILETIME const *current = (FILETIME const *)((byte *)cache_file_from_type(type) + 0x17c);
                                     FILETIME const *stored = (FILETIME const *)((byte *)file + 0x184 + type * 8);
-                                    valid = CompareFileTime(current, stored) == 0;
+                                    valid = valid_types[type];
+                                    if (valid)
+                                        valid = CompareFileTime(current, stored) == 0;
                                 }
                             }
                         }

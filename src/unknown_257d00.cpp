@@ -1585,12 +1585,18 @@ struct s_258cf0
 struct s_named_entry_owner;
 short named_entry_find(s_named_entry_owner const *owner, char const *name);
 void *function_1e5380(long actor_index);
-short function_cccd0(long unit_index, short grenade_type, char delta);
+short function_cccd0(long unit_index, short grenade_type, short delta);
 bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 476 (was 476): Actor/output registers, dispatch layout and rounding homes still differ.
+// score 471 (was 471): the body is 40 bytes short; retail loads the actor and cs-datum
+// table globals before the actor index and keeps the actor base in EBX, ours loads the
+// index first and keeps the actor base in ESI.
+// Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output registers, dispatch layout and rounding homes still differ.
+// Actor/output registers, dispatch layout and rounding homes still differ.
+// No frame; actor/output entry carriers, dispatch layout and rounding homes remain.
 // Actor/output registers, dispatch layout and rounding homes still differ.
 // Actor/pool/output entry carriers and rounding homes still differ; selection case result retained.
 // Earlier: Actor/output registers, dispatch layout and rounding homes still differ.
@@ -1635,6 +1641,34 @@ void function_b7360(long object_index);
 // 466 plain (kept), without a shared function exit. Validity initialized before selection 536; native selection
 // outcome 466; both 536; selection outcome begun after dispatch 467. Entry carriers and rounding homes remain.
 // Round 161: movement/selection/recording completion 533/528/529; paired movement-selection/movement-recording/selection-recording 524/523/533; all outcome completion 528; orientation branch store 525. All restored.
+// Round 145: Native counted character table, promoted lookup result, repeated command index reads
+// and both 466 each; corresponding actual-record table forms 466/466/466/466. Original type and
+// body restored.
+// Round 151: Shared success return with explicit default failure, empty arms plus complete
+// orientation/motion/point payload masks 0-7, all 466/1812. No result carrier added; original returns and
+// complete dispatch restored.
+// Round 240: complementary query result bool/byte/short/long 520/520/469/525;
+// with complete complementary locomotion at the same widths 520/520/470/525. All restored.
+// Round 138: shared rounded-tick outputs moving-direct/moving-point/direct-point/all
+// 468/468/468/466; shared all tick products 474; all products and outputs 470;
+// moving-only/other-case products 466/466. Original scratch declarations restored;
+// pool/actor/output acquisition, dispatch layout and conversion homes remain.
+// Consistent actor-object field reads 530; one point-selector publication 472; both 532;
+// shared object-update notification 466; field reads/notification 530, point/notification 472,
+// all three 532; field reads with positive point-production admission 530. Original body restored.
+// Complete core-group orders ACB/BAC/BCA/CAB/CBA 474/544/534/478/532;
+// B/A with point case before/between/after the groups 522/546/549. All original case bodies restored.
+// Round 223: shared initial truncation 509; complete direction assignment helper 477;
+// both 509; named-entry inline declaration 471; with truncation/direction/both
+// 509/477/509; separate named-entry noinline declaration 471. All restored.
+// Cross-case same-object comparison result bool/byte/short/long 536/536/527/532;
+// complete complementary result at the same widths 536/536/527/532. Added storage
+// regresses acquisition and dispatch; original comparison observations restored.
+// Round 226: Per-use actor pool/getter 501/501; command pool/getter 786/787; both direct/getters 798/793;
+// mixed direct/getter acquisitions 798/793. All original acquisitions and body restored.
+// Round 159: Nine/eleven action tables with range admission 656/695 and switch dispatch 646/690;
+// notification membership table 534; membership with eleven/nine ranged action tables 772/738 and eleven
+// switched actions 771. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2030,7 +2064,10 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 	return 1;
 }
 
-// score 478 (was 478): Frame 0x1c agrees; actor/state registers and the first point home remain.
+// score 478 (was 478): the frame agrees at 0x1c; retail computes the actor base in EBX
+// and spills it at [esp+0x10] before the type dispatch, ours computes it in EDI just
+// before its use and reuses EBX for the state pointer. The body is 2400 bytes against
+// retail's 2396.
 // Earlier 478 (was 478): Frame 0x1c agrees; actor/state registers and first point home still differ; eight scope trials restored.
 // Earlier: frame 28 agrees; actor/state registers and first point home still differ.
 // Short completion 531; iterator name 505; first point name 505; short countdown snapshots 505;
@@ -2053,6 +2090,21 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // separate/composite forms 478 each; constant-first distance admission 478. Original body restored;
 // actor/state registers and first point home remain.
 // Position/distance/motion/alternate-motion helper inline and noinline declarations 478 each.
+// Shared point/displacement/both workspaces 479/478/479; point or displacement
+// with shared planar direction 479/478, all three 479; case-twenty point or
+// displacement sharing 478/478. Opening workspaces and every call restored.
+// Round 377: Complete pending-result bool/byte/short/long 603/603/637/632;
+// entry-initialized pending results 605/605/636/631 (fast control 478). Boolean
+// forms reach retail length but preserve actor/state reversal and regress.
+// All result producers, iterator, facing value and original update graph restored.
+// Single-bit equality tests across dispatch/clear/tail, separately and combined,
+// and one shared case flag observation: eight forms all 478. Original body restored.
+// Round 237: native state bit updates 488; actor/command/both at uses 1149/940/1417;
+// actor-state/command-state/all receivers 1149/940/1417; both getters with bit updates 1438
+// (fast control 491; full 478). Actor/state and first-point homes remain; all restored.
+// Round 240: Internal turning-result byte/short/long 491/491/491; facing-completion
+// byte/short/long 491/583/584; both short/long 583/584 (fast control 491, full 478).
+// Actor/state ownership and first point home persist; original predicates restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

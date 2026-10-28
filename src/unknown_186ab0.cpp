@@ -150,7 +150,8 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 158 (was 231): frame 0x54 agrees; selector input, count width, cold clear and output/angle scheduling differ.
+// score 135 (was 135): BLOCKED-BY 0xcfe40 (its index arrives in eax, retail ecx); frame 0x54 agrees;
+// selector input, count width, cold clear and output/angle scheduling differ.
 // frame 0x54 agrees; request/choice carriers, protected input convention and cyclic alignment differ.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
@@ -180,8 +181,25 @@ void player_action_initialize(s_player_action *arg_0);
 // Round 185 late complete flags byte/word/short/signed byte with bool permission 158/319/319/158;
 // with short permission 279/246/246/288 (fast). Native unsigned byte flags with bool permission
 // kept at 158 plain; every value, observation boundary and call tuple unchanged.
+// Round 189 pulse-latch combined/release-first guards with union/two masks 181/177/165/169;
+// test-derived latch publication 135, with two masks 175; two-use pulse plus publication
+// with union/two masks 172/175. Keep direct latch publication; protected input, count,
+// cold clear and output/angle scheduling remain.
 // Direct selection fallback 327; cyclic result/start/both at long width 289/327/326; high-first
 // saturation 316; logical availability 279; fallback/result 323; cyclic/saturation/availability 331.
+// Native orientation vector 135; coherent unit source 185; source/vector 185; existing state query 304;
+// query/source 310, query/vector 304, all three 310; complete native orientation value 220.
+// Original fields, pointer observations and query guard restored.
+// Round 56: object pointer local in the angle block 185 (retail's esi there; the tail's scratch
+// registers rotate); nested 0x40 latch with the 0x60 and 0x4630200 masks tested apart 164, its
+// latch store first 162, else-first latch 169, with float stores for field_20/24 158 at retail's
+// 1515 bytes. The nested latch and float stores are retail's code (aligned 58 -> 54), but retail
+// puts the `field_92 = false` arm after the return; bool/byte/held locals, store orders and
+// a ternary toggle all leave that arm inline, so the lockstep count shifts.
+// Complete toggle result in bool/byte, union invalidation, early publication 181/184;
+// split masks 182/183; publication after action update 143/184, split masks 185/184.
+// Round 342: Complete inclination squared-product pairs, reversed pairs and named sum 148 each; squared accumulator 150;
+// with symmetric named angle shifts 148/148/148/150. All enlarge the frame to 0x5c; original expressions restored.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {
@@ -311,16 +329,9 @@ void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_acti
             local_1->field_30 = false;
         if ((byte *)g_4e6948 + 8 && ((byte *)g_4e6948)[0xd] != 3)
         {
-            if (request_flags & 0x40)
-            {
-                if (!local_1->field_92)
-                {
-                    local_1->field_92 = true;
-                    local_1->field_91 = !local_1->field_91;
-                }
-            }
-            else
-                local_1->field_92 = false;
+            if ((request_flags & 0x40) && !local_1->field_92)
+                local_1->field_91 = !local_1->field_91;
+            local_1->field_92 = (request_flags & 0x40) != 0;
             if (local_3.field_18 & 0x4630260)
                 local_1->field_91 = false;
             if (local_1->field_91 && local_4->field_14 == NONE)

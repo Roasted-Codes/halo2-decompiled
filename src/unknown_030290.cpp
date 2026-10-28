@@ -71,72 +71,34 @@ void __stdcall function_31f50(long index, point3f const *origin, vector3f const 
 byte *g_4858c4;
 long g_4ba134;
 
-// score 86 (was 86): Frame 0x34 and half-box homes agree; horizontal/depth XMM roles
-// and vertical tangent scheduling still differ.
-// Frame 0x34 and viewport homes agree; horizontal/depth XMM roles and vertical tangent scheduling differ.
-// Frame 0x34 and viewport homes agree; horizontal/depth XMM0/XMM1 carriers remain exchanged.
-// Earlier: frame 0x34 agrees; coordinate XMM roles and coefficient/viewport/tangent homes differ.
-// coordinate XMM0/XMM1 and coefficient/viewport/tangent homes differ.
-// Earlier forms: coefficient names 209; viewport names 209; vertical coordinate first 211;
-// only an XMM0/XMM1 colouring swap remains (retail keeps the horizontal
-// coordinate in XMM0 and the depth in XMM1, ours the other way round, through the whole body).
-// The half-viewport values as a local box2f 86 (kept: retail keeps them in four adjacent
-// slots, left/right/top/bottom); then depth first 85; r2 inline 86; coefficients after the box
-// 109; ratio before root 101; coordinates as a vector3f 86; cy/cz/cx order 117; a forceinline
-// per-axis helper 118; a 600 s permuter run, none below 86. No-link screens of every operand
-// and term order, names, vector locals and displacement forms keep the same colouring.
-// Earlier forms (164/112): coefficient names 209; viewport names 209; vertical coordinate first 211;
-// tangent names 209; shared root/ratio/tangent workspaces 209.
-// In-place displacements 257; depth-radius product 233; deferred second
-// tangents 164; near-plane early exit 240; shared depth square 209.
-// Direct radius 193; paired horizontal viewport observations 195; interleaved
-// first viewport observation 203; guarded second coordinates 193; invalid-depth
-// arms first 182. These forms retain the delayed second tangent calculations.
-// Direct-radius failed-discriminant arms first 185; behind-plane arm first
-// 213; named tangent quotients 193; ratio before root 193; earlier radius
-// square 193; shared root products 212.
-// Earlier: viewport conversion/XMM and tangent homes still differ, frame 0x34 agrees.
-// Native viewport snapshot 216; horizontal half-edge pair 166; interleaved first half-edge 174;
-// eager first tangent coordinates 164; in-place tangent projection 164.
-// Split viewport conversions 164; viewport conversions first 176; horizontal tangent scope 164;
-// tangent blend weights 164; horizontal root name 164.
-// Second depths early 197; second coordinates early 232; second pairs early 209;
-// horizontal pair early 247; vertical pair early 241; coordinate-before-depth pairs 112;
-// early depths with guarded coordinates 197; inline first coordinates 209.
-// On early coordinate/depth pairs: direct radius 205; coordinate role names 112.
-// Early-pair context: vertical coefficient names 112; vertical edge names 112; vertical-first coefficients 118;
-// coefficient fields at use 252; viewport first 130; later vertical viewport 217; later vertical coefficients 180; both later 217.
-// Coordinate accumulator x/depth/all 112 each; horizontal/depth/all leading products 112 each;
-// shared camera scale 245; branch-defined scaled components 137.
-// entry projection declarations 112; shared tangent declarations 149; both declarations 149; radial
-// values first 222; both radial squares first 227; viewport after discriminant 214; coefficients after
-// discriminant 137; shared difference helper 112.
-// Shared displacement 86; scaled difference 239; both differences 252; native row dots
-// either operand order 307; difference plus dots 293; real roots 86; real roots plus dots 307.
-// Round 157: Native half-box frame: shared depth square 86; depth-radius 251; parallel lateral-radius
-// 154; parallel root products 123; all radius products 221; all tangent products 233; coordinate
-// declarations first 86; displacement declaration lifetimes 86.
-// Round 155: tangent default/complete results 171/186; axis complete/default results 168/261;
-// full output results 276; full/tangent results 185; axis/visible default publication 224/219.
+/* the vector scaled and rotated into the camera's frame (no translation) */
+__inline void transform_vector(s_camera const *camera, vector3f const *v, vector3f *out)
+{
+	real x = v->i, y = v->j, z = v->k;
+	if (camera->scale != 1.f)
+	{
+		x = camera->scale * x;
+		y = camera->scale * y;
+		z = camera->scale * z;
+	}
+	out->i = camera->right.i * x + camera->up.i * y + camera->forward.i * z;
+	out->j = camera->right.j * x + camera->up.j * y + camera->forward.j * z;
+	out->k = camera->right.k * x + camera->up.k * y + camera->forward.k * z;
+}
+
+/* the screen bounds of a sphere (centre p, radius) seen through the camera:
+   the tangents to it in the horizontal and vertical planes, projected */
 // @retail 0x30290
 void function_30290(point3f const *p, s_view const *view, s_camera const *camera, real radius, box2f *bounds)
 {
+	/* read through its address, so the radius stays in its stack slot as in retail */
 	real const *radius_home = &radius;
 	real const &radius_value = *radius_home;
-	real dx = p->x - view->position.x;
-	real dy = p->y - view->position.y;
-	real dz = p->z - view->position.z;
-	real sx = dx, sy = dy, sz = dz;
-	if (camera->scale != 1.f)
-	{
-		sx = camera->scale * dx;
-		sy = camera->scale * dy;
-		sz = camera->scale * dz;
-	}
-
-	real cx = camera->forward.i * sz + camera->up.i * sy + camera->right.i * sx;
-	real cy = camera->forward.j * sz + camera->up.j * sy + camera->right.j * sx;
-	real cz = (camera->forward.k * sz + camera->up.k * sy + camera->right.k * sx) * -1.f;
+	vector3f delta;
+	vector3d_from_points3d(&view->position, p, &delta);
+	transform_vector(camera, &delta, &delta);
+	real cy = delta.j;
+	real cz = delta.k * -1.f;
 
 	if (cz + radius_value > 0.01f)
 	{
@@ -150,19 +112,19 @@ void function_30290(point3f const *p, s_view const *view, s_camera const *camera
 		half.x1 = view->bounds.right * 0.5f;
 		half.y1 = view->bounds.bottom * 0.5f;
 
-		real xz = cx * cx + cz * cz;
+		real xz = delta.i * delta.i + cz * cz;
 		real r2 = radius_value * radius_value;
 		real disc = xz - r2;
 		if (disc > k_real_epsilon)
 		{
 			real root = (real)sqrt(disc);
 			real k = radius_value / xz;
-			real za = cz - (cz * radius_value + root * cx) * k;
-			real xb = cx - (cx * radius_value - root * cz) * k;
-			real zb = cz - (cz * radius_value - root * cx) * k;
+			real za = cz - (cz * radius_value + root * delta.i) * k;
+			real xb = delta.i - (delta.i * radius_value - root * cz) * k;
+			real zb = cz - (cz * radius_value - root * delta.i) * k;
 			if (za > 0.01f)
 			{
-				real xa = cx - (cx * radius_value + root * cz) * k;
+				real xa = delta.i - (delta.i * radius_value + root * cz) * k;
 				real n = xa / za * m78 + m98;
 				bounds->x0 = (1.f - n) * half.x0 + (n + 1.f) * half.x1;
 			}
@@ -264,14 +226,11 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 	out->z = camera->right.k * x + camera->up.k * y + camera->forward.k * z + camera->position.z;
 }
 
-// score 195 (was 195): Frame 0x30 versus 0x2c and inverse/point/factor homes remain.
-// Frame 0x30 versus 0x2c; inverse defaults, displaced depth and factor spills remain.
-// Earlier: Frame 0x30 versus 0x2c and inverse/point homes remain.
-// Earlier 195 from 195: Frame 0x30 versus 0x2c; inverse defaults and point/factor homes remain.
-// frame 0x30 versus 0x2c and inverse-depth/point homes
-// frame 0x30 versus 0x2c and inverse-depth/point homes remain.
-// Earlier: frame 0x30 versus 0x2c and inverse-depth/point homes
-// remain. In-place displaced transform 263; later displaced input 270;
+// score 195 (was 195): Frame 0x30 versus 0x2c. Ours gives the dead scale slot to the second inverse
+// depth and spills the second transform's x and z (x into the frame); retail keeps both inverse
+// defaults at [esp+4]/[esp+8], keeps that transform's x/y in xmm7/xmm6 (ours swaps x and z) and spills
+// only z, into the scale slot. Also differ: the displaced point's load order and our camera-space
+// origin point above the displaced one. In-place displaced transform 263; later displaced input 270;
 // perspective-only inverse locals 261; zero-factor early exit 195; both
 // displaced transforms in place 263.
 // Later second inverse 259; later first inverse 271; later second output
@@ -289,7 +248,7 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // native floating factor admission 195. Complete original body restored.
 // Origin-depth snapshot 195; displaced-depth snapshot 195; paired depths 195;
 // y-first displaced construction 218; scale shared through existing helper 235.
-// Earlier: frame 0x30 versus 0x2c remains; initial/reversed/both
+// frame 0x30 versus 0x2c remains; initial/reversed/both
 // component loops 195/195/195; forced existing transform with no/initial/reversed/
 // both loops 195/195/195/195; component loops with displaced storage reused 195.
 // Shared point transform at origin/displaced/both/reversed/origin plus reversed/displaced plus reversed/all
@@ -313,6 +272,37 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // forced native camera/output/both expansion [443, 287, 456]. Original helper and body restored.
 // Round 327: corresponding two-product sums at each row 259; all partial sums before stores in
 // xyz/xzy/yxz/yzx/zxy/zyx order 259 each; partial rows with shared scale 279.
+// Round 59: the displaced point's sum operands follow parameter order, not text: d-first text 195
+// (same code); `d` declared before `a` gives retail's operand order with the same registers, 193
+// (diagnostic, through a forwarder: both callers, 0x4f7e0 and 0x4ff50, are in contributor files).
+// Reverse displacement written into the same point 195 (same code: the slots were already
+// shared); transformed points declared tb, ta 195; inverse defaults declared b, a 195. Retail keeps
+// the second transform's x in the register b.x was built in and spills only z (to the dead
+// scale slot); ours moves x and spills x and z to two frame slots.
+// Round 192: five other internal transform pointer-parameter orders 195 each; reverse order
+// with actual camera/point/both reference inputs 195 each. Every definition/call binding,
+// original snapshots and full body restored; frame 0x30 versus 0x2c remains.
+// DL round 156: uniform final projection products, all/origin/displaced/const 195 each;
+// projected origin/displaced/both aggregate/both component inputs 197/196/197/197.
+// Frame 0x30 and original transform, inverse defaults and expression trees restored.
+// Round 58: transform helper locals renamed 195; inverse locals renamed 195; both 195 (identical code:
+// names do not move these slots); transformed points declared tb before ta 195; displaced point declared
+// after the transformed points 195. Ours also stores ta above tb (retail: ta below tb).
+// Round 61 (lane 7): both inverses as one `real[2]` 195 (in the frame, but the second transform still
+// spills into it); with retail's displaced-sum operand order 195 (identical code); camera-space points
+// as `point3f[2]` 195 (origin point below as retail, homes otherwise unchanged); transform helper
+// locals declared z, y, x 228; second inverse declared first 195.
+// Round 151: Native right/up/right+up/forward/right+forward/up+forward/all/all+translation captures 261/257/690/257/690/690/690/690; forced pair/pair/pair/all expansion 476/471/476/639. Singles recover frame 0x2c but change input ownership; combined unforced helper outlines. All restored.
+// Original frame 0x30 versus 0x2c and inverse/point/factor homes remain; native basis captures do not qualify.
+// Round 28 (m3 lane 12): the inverses used directly, without fa/fb copies (non-perspective path sets both
+// to 1), gives retail's registers for the whole inverse/zero/output tail and 974 bytes, but 207; with b.y
+// computed before b.x the displaced point also takes retail's xmm7/xmm6, 206 (971 bytes); z, y, x order 201
+// (registers wrong); ta/tb declared first 206. Left: b at +0x10 (retail +0xc, frame 0x30 v 0x2c) and the second
+// inlined transform spilling two scaled components where retail spills one. Retail-order sum operands 195
+// (same code); a `d`-first parameter order needs callers in contributor files.
+// Round 14: forced shared transform 718; helper camera home 234 (frame 0x2c); with snapshots
+// y,x,z / x,z,y / y,z,x / z,x,y / z,y,x 234/207/204/231/227; best plus outer reversed point 204;
+// outer reversed point 195; pointer-returning helper with it 195. All restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
@@ -625,6 +615,7 @@ static __forceinline void index_state_flags_update_31660(s_index_state_31660 *st
 // edi); short flags in the second-group pass only 62 (that pass then matches; not kept, the two
 // passes would differ in type). A short flag word gives retail's group-loop code but widens the
 // constant 0x20000 pass's mask (retail 0xdfff), so the constant and runtime passes may not share code.
+// score 77 (was 98): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x31660
 void function_31660(long index, long tag, s_index_state_31660 *state,
     long first_group, long second_group, bool skip, bool *output)
@@ -644,7 +635,7 @@ void function_31660(long index, long tag, s_index_state_31660 *state,
         byte flag13 = (flag12_source | flag13_source) & 1;
         index_state_flags_update_31660(state, true, first_group, second_group, false, flag13 != 0, flag12 != 0);
     }
-    if (state->first->count > 0 && (*definition & 4) && state->first->count > 1)
+    if (state->first->count > 0 && TEST_FIELD_BIT((*definition >> 2) & 1) && state->first->count > 1)
     {
         *(real *)((byte *)entry + 0xf8) = 1.0f;
         // Retail's final store is reached only with a null output argument.

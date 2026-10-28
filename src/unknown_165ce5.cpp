@@ -1379,23 +1379,104 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// score 232 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal remain.
+// Earlier 241 from 241: frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// restoring them at the loop exit), the two shared spill slots 0x18/0x1c swapped, and the look rates'
+// shared reciprocal (retail divides twice and reloads the time global) differ.
+// Round 139: the look rates as one s_view_angles local give retail's 0x2c/0x28 homes 237 (a local-
+// grouping struct, kept only on a match; a point2f gives the same code; a bare block changes nothing). Fast previews (kept body
+// 239 fast): rates written through an inline helper's pointer 239; through a pointer local 493; mode
+// declared before the unit 239; early return for a missing unit 239; springs as an array/two pairs
+// 256/258 (frame 0x38/0x30, before the kept change); mode renamed (spill slots are not name-ordered)
+// 243 (before). Active preset false with the inner `!155760 && b6780` assignment, with or without
+// the right-first callback, 381 (2195 bytes): its
+// sequence-aligned difference count is 63 against 68 for the kept body, so it is the closer shape
+// once the remaining length differences (look reciprocal, movzx flag test, channel rate store through
+// the weapon, overlay flag pushes) are fixed together.
+// Earlier 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
-// frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
+// frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
+// reloading the time globals) and esi/edi saved before the unit test (retail after it) differ.
+// frame 0x28 vs 0x2c, unit/mode and look-output homes differ; the look
+// reciprocal (retail divides twice, reloading the time globals) and esi/edi saved before the unit
+// test (retail after it) differ.
+// Round 55 kept: the speed (5th argument) and acceleration limits passed in retail's roles (15/6 speed,
+// 72/27 acceleration), defaults in retail's store order, each look angle clamped in one statement.
+// Not kept (each lowers the aligned differences but shifts every later instruction): active preset
+// false then the `!155760 && b6780` assignment 385; first-weapon callback test `== 0 ? right : left` 385;
+// clear test without the redundant `zoomed &&` 396; channel98 rate/overlay read through the weapon 387;
+// overlay mismatch as a ternary 383 (setcc); look angles in an s_view_angles 239 fast (frame 0x30);
+// mode looked up before the unit 574; springs renamed speed/acceleration 243 (slots unchanged).
+// Word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
 // Entry unit capture 252; const unit/primary weapon/weapon object/look receivers 252 each;
 // look interval capture 417; combined readers 252; readers plus interval 417 (fast base 252).
-// frame 0x28 versus 0x2c, unit/mode and look-output homes differ.
 // Single spring overrides 548/542/536/542; first/second pairs 559/550; all four 553;
 // all four plus yaw/pitch delta inputs 559 (fast; unchanged preview 252).
-// Frame 0x28 versus 0x2c and unit/mode/look homes remain.
-// Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407; all
-// receivers/direct velocity 617/617 (fast preview 252).
-// frame 0x28/0x2c and unit/mode/look homes remain.
-// External user/unit/weapon records and user-unit pair 252 each; native dword
-// index/mode, callback at update, and unit-weapon-index combination 252 each (fast base 252).
+// Velocity/float-buffer/indices/animation receivers 572/605/252/407; input pair 608; weapon pair 407;
+// all receivers/direct velocity 617/617 (fast preview 252).
+// External user/unit/weapon records and user-unit pair 252 each; native dword index/mode, callback at
+// update, and unit-weapon-index combination 252 each (fast base 252).
+// Indexed user-record reads at every access 550; with live flags 544; direct channels 560;
+// both 538; complete coefficient selection with those four forms 550/544/560/538.
 // Complete entry spring phase, override-only receiver, entry look outputs and both 250 each;
 // narrower aiming pair within that phase, with the same four storage combinations, 254 each
 // (fast control 250, full baseline 248). Original phase scopes and all five smoothing calls restored.
+// Explicit empty-unit return with the user receiver before/after admission and scoped
+// bool/byte/short/long storage 243/243/434/429 and 555/555/558/549 (fast control 243).
+// Original entry guard, receiver and state types restored.
+// Round 187 paired normalized expression parts 243; yaw consumed before pitch production
+// alone/with named parts 496/496; fresh view fields alone/with parts 442/442;
+// interleaved fresh fields with/without parts 510/510; all plus signed flags 510
+// (fast control 243, full baseline 241). All original expressions and calls restored.
+// narrower aiming pair within that phase, with the same four storage combinations, 254 each.
+// Original phase scopes and all five smoothing calls restored.
+// Round 93 (fast base 243): look angles as a two-element local 239 (retail's -0x2c/-0x28 homes,
+// frame 0x30, reciprocal still shared; a grouping, not kept); mode renamed past unit 243 (slots
+// unchanged). Combined: active preset, channel98 rate/set read through the weapon, the overlay call
+// and save in each arm (scoped / else if zoomed), the clear test without `zoomed &&`, callback
+// `== 0 ? right : left` and the set read once into a named local: 378 positional but 49 aligned
+// differences (82 before; 577 of retail's 578 instructions). The one instruction short is retail's
+// `movzx eax, byte [edi+0x19]; test al, 0xa` after the update call, where ours folds `test byte`
+// (`!= 0`, two bit tests, a bool local, bitfield/word/shift views and a bool cast all fold).
+// Apply that set once the movzx form is found.
+// Round 257 (fast base 243): Active int/byte/signed-byte carriers 418/417/417;
+// each with complete idle-settings observations at uses 414/413/413; original bool with
+// those observations 270; int active with read-only idle settings 418. Original body restored.
+// Lane 5 r77 (fast base 243): the movzx is the only `movzx; test al, imm` in retail; casts, `> 0`,
+// `!!`, shifted bit pairs, TEST_FLAG pair, byte/word/dword bitfield and dword-shift views, ternary
+// and `&` bool forms, and the test in another file's non-inline function (LTCG-inlined) all fold to
+// `test byte`. Look angles through a pointer clamp helper 246 (inlined away; slots and shared
+// reciprocal kept); if/else clamps 246; mode declared before unit 243; look angles declared before
+// the springs 243; the round 93 combined set re-measured 378 (aligned 49, one instruction short).
+// Round 231: Aiming/look/paired field references 574/248/572; animation reference 400; aiming-
+// animation/look-animation/all receiver references 550/405/548; all plus user-flag field 421.
+// Original body restored.
+// Round 262 (fast control 243, full 241): complementary scoped bool/byte/short/long
+// 242/242/447/457; both zoom/scoped complements 234/234/440/450. Dual bool gives 232 plain;
+// direct short-circuit scope complement also 234 fast / 232 plain, kept. Frame 0x28,
+// unit/mode homes and shared look reciprocal remain; every smoothing input is unchanged.
+// Round 360 (fast base 243): native double aiming-limit/look-limit/look-rate
+// pairs, combinations and all three 574/543/259/584/574/531/584; native 64-bit
+// user flags 388. Original scalar widths and every smoothing input restored.
+// Round 25 (fast control 234, full 232): early return 234; view-named look outputs 234;
+// active-result preset 425; look/flags declarations at assignment 234; const first-assignment
+// look outputs 234; per-weapon scalar/channel declarations at assignment 234;
+// outer active/zoom declarations 234/234. Original body restored.
+// Round 225 (fast control 234, full 232): direct negative overlay result 414;
+// complete scope-first rate selection 416; native countdown store/test 234;
+// overlay/rate, overlay/countdown, rate/countdown and all three 422/414/416/422;
+// all plus primary-pointer admission 587. Original complementary states and all calls restored.
+// Round 370 (fast control 234): scope-factored clear decision with active-default, callback
+// and member-rate interactions 434/410/434/410/401/397/401/397; original body restored.
+// Round 373 (fast control 234): Structured overlay continuation, with callback/active/both
+// choices 234/234/392/392; reusable no-overlay decision with those four forms
+// 421/421/403/403. Original body and every smoothing input restored.
+// Round 246: complementary activity bool/byte/short/long 424/424/423/425; the same with
+// callback selection at update 424/424/423/425 (fast). Original activity and callback restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1405,10 +1486,10 @@ void __stdcall function_166d75(long user_index)
 	{
 		s_166d75_unit *unit = (s_166d75_unit *)first_person_object_get(user->unit_index);
 		long mode = first_person_weapon_mode_name(user_index);
-		real spring_b = 15.0f;
 		real spring_a = 72.0f;
-		real spring_d = 6.0f;
+		real spring_b = 15.0f;
 		real spring_c = 27.0f;
+		real spring_d = 6.0f;
 		s_first_person_weapon *first_weapon = &user->weapons[0];
 		real look_yaw;
 		real look_pitch;
@@ -1438,14 +1519,12 @@ void __stdcall function_166d75(long user_index)
 				spring_d = definition->unknown2ec;
 			}
 		}
-		function_11eed0((real *)&user->unknown2030[0x0], (real *)&user->unknown2030[0x8], unit->aiming_velocity.i, g_510c54->rate, spring_a, spring_b, false, -1.0f, 1.0f);
-		function_11eed0((real *)&user->unknown2030[0x4], (real *)&user->unknown2030[0xc], unit->aiming_velocity.j, g_510c54->rate, spring_a, spring_b, false, -1.0f, 1.0f);
-		look_yaw = *(real *)&user->unknown2030[0x28] / g_510c54->rate;
-		look_yaw = PIN(look_yaw, -1.0f, 1.0f);
-		look_pitch = -1.0f / g_510c54->rate * *(real *)&user->unknown2030[0x2c];
-		look_pitch = PIN(look_pitch, -1.0f, 1.0f);
-		function_11eed0((real *)&user->unknown2030[0x10], (real *)&user->unknown2030[0x18], look_yaw, g_510c54->rate, spring_c, spring_d, false, -1.0f, 1.0f);
-		function_11eed0((real *)&user->unknown2030[0x14], (real *)&user->unknown2030[0x1c], look_pitch, g_510c54->rate, spring_c, spring_d, false, -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x0], (real *)&user->unknown2030[0x8], unit->aiming_velocity.i, g_510c54->rate, spring_b, spring_a, false, -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x4], (real *)&user->unknown2030[0xc], unit->aiming_velocity.j, g_510c54->rate, spring_b, spring_a, false, -1.0f, 1.0f);
+		look_yaw = PIN(*(real *)&user->unknown2030[0x28] / g_510c54->rate, -1.0f, 1.0f);
+		look_pitch = PIN(-1.0f / g_510c54->rate * *(real *)&user->unknown2030[0x2c], -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x10], (real *)&user->unknown2030[0x18], look_yaw, g_510c54->rate, spring_d, spring_c, false, -1.0f, 1.0f);
+		function_11eed0((real *)&user->unknown2030[0x14], (real *)&user->unknown2030[0x1c], look_pitch, g_510c54->rate, spring_d, spring_c, false, -1.0f, 1.0f);
 
 		look = (point2f *)&g_4ed284->entries[user_index].yaw;
 		flags = user->flags;
@@ -1482,8 +1561,8 @@ void __stdcall function_166d75(long user_index)
 				animation_event_callback callback = field_x11c898 ? (animation_event_callback)first_person_weapon_sound_event_left :
 					(animation_event_callback)first_person_weapon_sound_event_right;
 				real zoom;
-				bool zoomed;
-				bool scoped;
+				bool no_zoom;
+				bool no_scope;
 				c_animation_channel *channel;
 
 				if (weapon->animation.update(callback, user_index, weapon->orientation_count,
@@ -1493,28 +1572,28 @@ void __stdcall function_166d75(long user_index)
 					first_person_weapon_animation_finished(user_index, field_x11c898);
 				}
 				zoom = magnitude3d(&unit->aiming_velocity);
-				zoomed = zoom > 0.1f;
-				scoped = zoomed && function_c8a10(user->unit_index);
+				no_zoom = !(zoom > 0.1f);
+				no_scope = no_zoom || !function_c8a10(user->unit_index);
 				if (function_d03b0(user->unit_index))
 				{
-					zoomed = false;
-					scoped = false;
+					no_zoom = true;
+					no_scope = true;
 				}
-				if (scoped)
+				if (!no_scope)
 				{
 					c_type_709360 animation_id = weapon->animation.overlay_get(0x60000d8);
 
 					if (animation_id.index == NONE)
 					{
-						scoped = false;
+						no_scope = true;
 					}
 				}
 				channel = &weapon->channel98;
 				if (function_0b6760((s_index_pair *)channel))
 				{
-					if (zoomed)
+					if (!no_zoom)
 					{
-						if (!scoped)
+						if (no_scope)
 						{
 							channel->rate = PIN(zoom, 0.5f, 1.0f);
 						}
@@ -1523,17 +1602,17 @@ void __stdcall function_166d75(long user_index)
 							channel->rate = 1.0f;
 						}
 					}
-					else if (scoped)
+					else if (!no_scope)
 					{
 						channel->rate = 1.0f;
 					}
 					weapon->animation.channel_update(channel, NULL, 0);
-					if (!zoomed && !scoped ||
-						scoped && channel->unknown08 != 0x60000d8 ||
-						zoomed && !scoped && channel->unknown08 == 0x60000d8)
+					if (no_zoom && no_scope ||
+						!no_scope && channel->unknown08 != 0x60000d8 ||
+						!no_zoom && no_scope && channel->unknown08 == 0x60000d8)
 					{
 						channel->clear();
-						if (!zoomed && !scoped)
+						if (no_zoom && no_scope)
 						{
 							if (weapon->animation.animation_name != 0x400000c)
 							{
@@ -1543,12 +1622,12 @@ void __stdcall function_166d75(long user_index)
 						}
 					}
 				}
-				if ((zoomed || scoped) && !function_0b6760((s_index_pair *)channel))
+				if ((!no_zoom || !no_scope) && !function_0b6760((s_index_pair *)channel))
 				{
 					long set;
 					dword channel_flags;
 
-					if (scoped)
+					if (!no_scope)
 					{
 						channel_flags = 0x3f;
 						set = 0x60000d8;
@@ -1788,7 +1867,22 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // byte-logical-query-eligibility 422; byte-compound-query-eligibility 430.
 // word-logical-query-eligibility 448; word-compound-query-eligibility 448.
 // long-logical-query-eligibility 451; long-compound-query-eligibility 446.
+// Round 373: native quaternion-transform sway output, forced last/first 411/410;
+// ordinary inline last/first 769/768. Native orientation output gives the same
+// four scores. Reduced control 411/2166; full baseline 410/2154. All restored.
 // Native packed animation flags, logical result at bool/byte/word/long width 411/411/443/443; conditional result 446/446/442/443 (fast control 411/2166; full 410/2154). Frame 0x78 agrees; early blend byte and later receiver/sway homes remain.
+// Round 158: Early aiming default at two boundaries with bool/byte/short/long storage, then a complete
+// query-produced result at four widths and early bool/byte defaults (fast control 411; plain baseline 410).
+// Scores [393, 393, 426, 428, 411, 411, 434, 435, 441, 441, 471, 470, 441, 441]. Original executable body
+// restored.
+// Signed-char blend consumer 411; uninitialized blend result at entry 411; full user/weapon/both
+// receivers at each use 599/603/796; with signed-char consumer 599/603/796 (fast control 411/2166).
+// All eight forms restored; ordinary baseline remains 410/2154.
+// Blend-producer scope, paired Boolean role names, duration/query names and their combinations
+// 411 each; reversed declarations with all scope/names 411 (fast control 411; full 410).
+// Round 243: Owner-mediated state, handle at every use, both, buffer root at every use,
+// state/buffer, handle/buffer, all three and state with immutable buffer snapshot:
+// 497/529/494/743/742/775/767/497 (fast control 411/2166). Complete original body restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
@@ -2022,10 +2116,6 @@ void function_1421b0(transform4x3f *out, point3f const *position, quaternionf co
 void function_1dd7a0(long *reference);
 
 /* attaches the arms to the weapon's markers while the unit's aiming blends */
-// score 9 (was 9): the object pointer and the entry index are kept in swapped registers in the
-// second lookup (retail builds the arms marker group in the index's register, ecx; ours in the base's,
-// edx). The arguments arrive as in retail (eax and two stack words, ret 8), so the caller is not the
-// cause. Tried: a weapon definition local like the arms one (9), the group as index + pointer (9).
 // @retail 0x168644
 void function_168644(long user_index, s_first_person_model *arms, s_first_person_model *arg_2f82bc)
 {
@@ -2074,7 +2164,11 @@ void function_168644(long user_index, s_first_person_model *arms, s_first_person
 								s_168644_marker_group *weapon_group = &((s_168644_render_model *)
 									g_4e3b44[weapon_render_model_index & 0xffff].bytes)->marker_groups[weapon_group_index];
 
-								if (arms_group->marker_count > 0 && weapon_group->marker_count > 0)
+								/* read once through the pointer: retail builds the arms group in the
+								   index's register (ecx) and reads its count from there */
+								long arms_marker_count = *(volatile long *)&arms_group->marker_count;
+
+								if (arms_marker_count > 0 && weapon_group->marker_count > 0)
 								{
 									s_168644_marker *weapon_marker = weapon_group->markers;
 									s_168644_marker *arms_marker = arms_group->markers;

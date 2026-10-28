@@ -250,11 +250,21 @@ bool __stdcall function_1aa990(long actor_index, s_slot *slot)
 	return result;
 }
 
-// score 17 (was 17): retail loads the prop pool pointer into EAX, one byte
-// shorter than our ECX, and passes entry->unknown24 in ECX where we pass it in
-// EDX; the one-byte difference moves every later jump target.
+// score 11 (was 11): extent now agrees at 352 bytes; the pool pointer still uses ECX
+// instead of EAX, the fraction uses EDX instead of ECX, and the shared range-value
+// load/compare schedule differs.
 // Tried (r35): prop_ref_get and the real record types 17; the state assigned after declaration 17;
 // prop_node_state 17; the reversed probability comparison 35; const entry, state, or actor/unit 17.
+// Guarded state/value/both observations 59/11/57; probability result conditional 105;
+// three-first rejection 42; four-first selection 97; both observations with the
+// conditional/four-first result 91/94. Keep the twice-used range value after the prop guard.
+// Round 268 on the two-use range graph: long result 11; entry range declaration 11;
+// entry prop/state declarations 11; unsigned result 11; long result plus entry range 11;
+// entry range/receivers 11; unsigned result plus entry receivers 11; split entry acquisition
+// with unsigned result 11. Loads and call tuples stayed at their original boundaries.
+// Upper-first range with original/full role names 14/14; complete role names 11;
+// byte selection alone/upper-first/names/both 41/44/41/44; signed-byte selection 41
+// (fast control 11). Pool/fraction carriers and conditional range loads remain; all restored.
 // @retail 0x1aa9f0
 short __stdcall function_1aa9f0(long actor_index)
 {
@@ -270,12 +280,17 @@ short __stdcall function_1aa9f0(long actor_index)
 	{
 		s_prop_datum_view *prop = (s_prop_datum_view *)prop_node_get(actor->prop_index);
 		s_prop_state_64 *state = (s_prop_state_64 *)function_25d690((s_prop_datum *)prop);
-		if (prop->unknown27 >= 1 && (state->unknown64 || prop->unknown28 > entry->unknown1c) && entry->unknown20 > prop->unknown28)
+		if (prop->unknown27 >= 1)
 		{
-			if (state->unknown64 && !function_1e2030(actor_index))
-				result = 4;
-			else if (function_1c9ee0(entry->unknown24) > function_259a0(&g_4e7408->unknown0))
-				result = 3;
+			real prop_value = prop->unknown28;
+
+			if ((state->unknown64 || prop_value > entry->unknown1c) && entry->unknown20 > prop_value)
+			{
+				if (state->unknown64 && !function_1e2030(actor_index))
+					result = 4;
+				else if (function_1c9ee0(entry->unknown24) > function_259a0(&g_4e7408->unknown0))
+					result = 3;
+			}
 		}
 	}
 	return result;
@@ -408,7 +423,13 @@ real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
-// score 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
+// score 375 (was 375): Frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
+// Lane 6 r85: retail returns constants (`mov al, 1` / `xor al, al`, every push at entry, the early tests
+// jumping to the false exit); `if (...) return true; ... return false;` without the result byte gives that
+// 440 (frame 0x3c); with the actor looked up before the settings call 413 (retail's 0x40 frame and hoisted
+// actor-table load; retail then keeps arg_0/actor/slot/prop in edi/ebp/esi/ebx and the settings pointer at
+// [esp+0x10] only, ours keeps the settings pointer in esi and the prop in arg_1's home); prop pointer at
+// function scope 417; slot pointer declared first 413; early `if (!settings) return false;` 424.
 // Earlier at 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
 // Earlier: frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
@@ -455,9 +476,41 @@ extern point2f *g_468778;
 // state plus rate 403f; all three 401f; actual distance value 403f.
 // Early actor acquisition with the new unit/state/rate/all-three/distance values
 // 395/424/406/410/410f. All native scalar captures and lookup changes restored.
+// Later false default 409; rejected-arm false default 440; admission result 432;
+// complete buffer names 375; direction names 375; earlier magnitude storage/name 375/375;
+// later default with complete buffer names 409. Early actor/settings/prop homes remain.
 // Native memcpy for the facing-test planar initializer 384; with request, actor
 // fallback, both, constant fallback, request/constant, both fallbacks and all
 // three request transfers 384 each. Original planar transfers restored.
+// Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
+// all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
+// Exact-only grouping forms restored; actor/settings/prop carriers remain.
+// Round 341: Successive vector-length storage before prediction, target velocity receiver and actor-first graphs 379/413/394/435; after prediction 379/413/395/437. Original body restored.
+// Round 235: Scaled-displacement producers (O original scalar, H shared scale
+// output, V native velocity value scaled in place), primary/secondary:
+// O/H 389; O/V 420; H/O 389; H/H 403; H/V 448; V/O 406; V/H 406; V/V 376.
+// Actor/settings/prop homes remain; original producers, include set and body restored.
+// Round 140: One immutable request-distance observation with secondary threshold/shared prediction/native
+// result interactions 406/395/440/431/430/421/455/445; original and actor-first lookup under coherent
+// inline/noinline/both settings declarations 375/413/375/413/375/413. Both declarations lose matched 0x265d30
+// in the calibrated peer image; all observations, vectors, result and declarations restored.
+// Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
+// all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
+// Exact-only grouping forms restored; actor/settings/prop carriers remain.
+// Round 158: Complete facing/alignment/prediction product operands commuted independently, in pairs, all
+// three, then with both full prediction producers. Scores [375, 375, 375, 375, 375, 375, 375, 375]. Original
+// executable body restored.
+// Round 184: native admission/active/request byte fields, all seven nonempty
+// groups, and the unsigned bounded request discriminator 375 each. Original
+// Boolean fields, output-pointer contracts and request discriminator restored.
+// Round 226: complete settings native/memcpy values with bool/byte result, original/actor-first
+// acquisition 441, 441, 413, 413, 422, 422, 394, 394. All restored; frame and early carrier homes remain.
+// Round 217: Prop-state inline/noinline, prop-view inline/noinline, both inline/noinline
+// boundaries 375/375/375/375/375/375; state/both inline with actor-first acquisition 413/413
+// fast. Original declarations, acquisitions, pointer homes and complete body restored.
+// Round 205: Complete settings/state/direction getter receiver masks 1/2/3/4/5/6/7
+// 433/487/516/506/574/663/657; all with constant return exits 660. Every original
+// receiver, early distance, request transfer, expression tree and body restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -625,7 +678,12 @@ struct s_1aab51
 
 static __forceinline long real_to_long(real value);
 
-// score 386 (was 386): frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// score 384 (was 384): Frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// Lane 6 r85: retail lays the early false exit (`xor al, al; pop ebp; add esp, 0x58; ret 8`) right after the
+// `goto local_7` jump; ours puts it last. `bool local_2 = !f13 && !f14 && !f2d; if (local_2) {...} return
+// local_2;` (and the same with an if/else setting the flag) lands it where retail does, but arg_0 then takes
+// edi from the settings pointer and the frame drops to 0x54: 517. Inverted test with the false arm first 386
+// (identical code); early `return false` then `bool local_2 = true;` 511; named admission bool 517.
 // Earlier: frame 0x58 and length agree; early rejection and query scalar/object homes remain.
 // Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // frame 0x58 and length agree; early rejection and query scalar/object homes remain.
@@ -664,6 +722,9 @@ static __forceinline long real_to_long(real value);
 // value alone/with distance/with rate/with both 516/575/565/586; complete
 // observations plus paired query names 586. Opening 0x58 frame/body restored;
 // early rejection and magnitude/object/query homes remain.
+// Object velocity before magnitude / after weight / after normalization 384/445/465;
+// initialized distinct query speed / flight output / both outputs 453/452/478;
+// distinct speed or flight output with earlier object receiver 455/455. Two-count gain rejected.
 // Native memcpy: full facing fallbacks 386; actor/constant query fallbacks
 // 386/386; facing-test planar initializer 386; request planar publication 386;
 // request fallbacks 386; queried planar publication 386; all copies 386.
@@ -673,6 +734,20 @@ static __forceinline long real_to_long(real value);
 // Entry/eligibility/final-approach/deadline Boolean reductions 506/493/407/440;
 // all mode reductions 510; entry plus modes 477; early test-derived eligibility
 // on the native velocity receiver 393; entry reduction plus that result 505.
+// Round 177: Shared dot at alignment/backward prediction/both/approach/alignment+approach/
+// backward+approach/all three, then all with opposite helper inputs: 386 each. Exact-only
+// grouping forms restored; early rejection and magnitude/query homes remain.
+// Existing squared-length helper 384; uniform projection products 480; both 460;
+// all prediction products 386; helper/prediction 384; projection/prediction 480;
+// all producers 460; all with target velocity receiver 456. Original restored.
+// Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
+// Round 354: complete shared relative-velocity difference 391; every-use object producer 509;
+// both 484; native request initialization on the recovered frame 472; with shared difference 477;
+// with every-use object producer 506; all three 430; all with wide eligibility 493. Original restored.
+// Round 193: Existing metadata providers ordinary-inline singly, all pairs and all,
+// then separate noinline declarations on all three: 386/386/386/386/386/386/386/386. Original restored.
+// Round 227: Prediction/facing/query fallback vector setters, all subsets, then early distance default 382/466/467/484/485/491/492/494.
+// Original body and all helpers restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

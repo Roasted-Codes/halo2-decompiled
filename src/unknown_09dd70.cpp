@@ -456,7 +456,18 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 196 (was 196): flags/packet/object registers and attachment call conventions differ;
+// score 12 (was 101): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
+// object lookup gives 4, kept out: one use) and copies field_f4 at the end through EAX (ours ECX).
+// Lane 10 r15: 0xd0e00 arm first 37; camo arm as a (unit, flag) inline helper 12; final store
+// indexed from the +0x2b0 field 12; field_f4 read through the parameter 12; field_92 local with a
+// dword field_f4 copy 4 (the tail stays ECX).
+// Round 84: 0xd09c0's own body now keeps its unit index in EBX, so it takes it there as retail (with the
+// field_92 local 93 -> 11); a loop-top element pointer for every slot field gives retail's +0xb8 cursor
+// (11 -> 4 with that local, 12 without); a field_c pointer 11, a field_6 pointer 11 (+0xb2). Final
+// copy: store in both arms 31, handle read at each use 4, dword copy 4, camo-arm object lookup at each
+// use 39/55.
+// Round 74: mask local for the shared attachment call (as the matched sibling overrides) 196; word slot
+// counter 196; long flags local 196; slot record pointer 224; signed slot loop test 196.
 // retail keeps the flags in ebx (reloaded from the parameter after calls), the weapon-slot loop
 // counter as a 32-bit value (inc/cmp 4/jb, no separate down counter) and the slot bit as the
 // masked flags value (and/test, not setne).
@@ -474,9 +485,39 @@ static __forceinline byte *function_9d952(long arg_0)
 // masked slot bit 228; masked bit with dword counter 246 (804 bytes); flags parameter
 // used directly instead of the local copy 196 (identical code).
 
+// Fixed bits 10/11/12/13/22/23 shifted separately 196 each; lower four and all 196/196.
 // Round 199: Native packed packet cell 196; with word copy ordinal 197; captured low-word publication
 // 223; both 196; unsigned copied cell and the same three combinations 196/197/223/196 (fast). All
 // restored.
+// Round 207: named initial low mask, packet receiver after initial callback, both, shared object
+// workspace across four phases, shared workspace with either/both, and shared final outer receiver
+// all 196. Original observations and protected interfaces restored.
+// Round 214: array-end attachment cursor with pointer-derived short/word ordinal and Boolean/masked
+// selection 221/223/221/223; native long/dword ordinal pairs 227/237/227/237. All restored.
+// Round 148: native object fields at player, parent, packed identity and final-update receivers
+// 196 each; player+parent, packed+final, first three and all four 196 each.
+// Round 240: complementary attachment selection bool/byte/short/long 229/229/240/233;
+// with a native dword slot ordinal 250/250/254/250. All restored; entry register roles remain.
+// Round 179: library two-byte copy with short/long/dword attachment counters 251/252/252;
+// masked slot value with those counters 253/259/259; direct flag observations 251;
+// direct flags plus masked value/dword counter 259. Original byte loop restored.
+// Round 59: the parent through the existing object getter 196 (same code, kept); signed flags 196;
+// player index as a ternary 199 (object index moves to ebp as in retail, first difference +5, but
+// packet/flags take ebx/edi where retail has edi/ebx); with the packet declared first 199; with a
+// dword slot counter 241.
+// Round 192: initial-update, handle-lookup and child-flag provider inline declarations, singly,
+// all pairs and together 196 each; separate noinline declarations on all three 196. All
+// restored; flags/packet/object registers and protected attachment conventions remain.
+// DL round 156: consistent requested handle 228; unsigned player/parent 196/196;
+// requested with player/parent 228/228; both resolved 196; all with signed/unsigned
+// requested handle 228/228. Original observations, handle types and short loop restored.
+// Round 28 (m3 lane 12): retail loads the object-pool global once ahead of the 0x800 parent test and
+// ahead of the 0x400000 test, reusing it in both arms and the next block (ours reloads it per block), and
+// keeps the flags in esi there. Packet declared before the flags 196; datum result at function scope 227;
+// slot shift named once 238; getter plain inline 196; unit index copied to a local 196.
+// Round 14: raw mask 229; raw mask with long counter 178; Boolean with long counter 206;
+// parent/tail/both pool sharing 207/178/207; outer mask 178; second mask reread 101 kept;
+// original helper 101; early field_92 local 169; value cursor 223.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -500,7 +541,7 @@ void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
         short local_8 = local_2->field_98;
         if (local_7 != NONE)
         {
-            byte *local_9 = ((byte *)((s_object_header *)g_4e0300->data)[local_7 & 0xffff].object);
+            byte *local_9 = function_9d952(local_7);
             if (!((1 << local_9[0xaa]) & 3) || local_8 < 0 ||
                 local_8 >= *(long *)(g_4e3b44[*(long *)local_9 & 0xffff].bytes + 0x1c8))
             {
@@ -524,18 +565,20 @@ void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
         *(long *)(local_11 + 0x214) = local_12;
         *(short *)(local_11 + 0x210) = *(short *)(local_11 + 0x214);
     }
-    short local_13 = 0;
+    long local_13 = 0;
+    dword local_14;
     do
     {
-        bool local_14 = (local_1 & (1 << (local_13 + 14))) != 0;
+        s_9d360::s_9d361 const *local_21 = &local_2->field_ac[local_13];
+        local_14 = local_1 & (1 << (local_13 + 14));
         if (local_14)
         {
-            long local_15 = local_2->field_ac[local_13].field_0;
+            long local_15 = local_21->field_0;
             if (local_15 == NONE || function_122c10(0x77656170, local_15))
-                function_d09c0(arg_0, local_13, local_2->field_ac[local_13].field_0, local_2->field_ac[local_13].field_4, (dword const *)&local_2->field_a8);
+                function_d09c0(arg_0, local_13, local_21->field_0, local_21->field_4, (dword const *)&local_2->field_a8);
         }
-        if (local_14 || (local_1 & (1 << (local_13 + 18))))
-            function_d0b70(arg_0, local_2->field_ac[local_13].field_6, local_2->field_ac[local_13].field_8, local_2->field_ac[local_13].field_c, local_13);
+        if ((local_1 & (1 << (local_13 + 14))) || (local_1 & (1 << (local_13 + 18))))
+            function_d0b70(arg_0, local_21->field_6, local_21->field_8, local_21->field_c, local_13);
         ++local_13;
     } while ((dword)local_13 < 4);
     if (local_1 & 0x400000)

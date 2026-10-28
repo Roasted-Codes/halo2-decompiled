@@ -9,6 +9,7 @@
 #include "local_cameras.h"
 #include "unknown_246cd0.h"
 #include <math.h>
+#include "bit_vector.h"
 #include <string.h>
 
 #define PIN(n, floor, ceiling) ((n) < (floor) ? (floor) : ((n) > (ceiling) ? (ceiling) : (n)))
@@ -756,11 +757,13 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
-// score 225 (was 225): Aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes remain.
+// score 155 (was 155): frame 0x8ac agrees; camera/gain-view allocation and maximum-tail registers differ.
+// frame 0x8ac agrees; persistent camera/gain and scalar homes differ.
+// Earlier: Frame 0x8ac agrees; camera ESI/EBP, table-view and side homes remain.
+// Earlier: aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes differed.
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
 // indexed batch-entry pointer 225; previous-gain snapshot 262.
 // Earlier: aligned clear still owns EBP and shifts the scalar homes;
-// aligned clear still owns EBP and shifts the scalar homes;
 // unsigned-word door index 236; unsigned-word cluster index 540; both 523;
 // signed-byte side 246; one door-cluster table 233; selected mask pointer 254;
 // both word indices/signed side 534; mask pointer/native camera index 254.
@@ -772,6 +775,8 @@ real function_18cac0(long arg_0);
 // unsigned membership masks 246; pretested cluster while walk 225.
 // Round 215: unsigned-word selector 229; read-only audibility receiver 225;
 // mask declaration before gain 225; chained small-mask zero 245; branch-derived gain result 229.
+// Flat mask, reversed flat index 225/225; door division 265; cluster division 230;
+// both divisions 269; flat with door/cluster/both divisions 265/230/269.
 // Round 164: Returned gain view ending before final batch 228 (frame 0x8b0);
 // native real table, post-clear BSP and readonly camera combinations 228 each.
 // All eight regress; original clear, gain view and aligned body restored.
@@ -779,6 +784,52 @@ real function_18cac0(long arg_0);
 // default-first admission at those widths 225/229/246/246. Original early continue, selector and whole library clear restored.
 // readonly camera 225; audibility once 233; camera audibility 233; max workspace 225; camera max 225;
 // audibility max 233; camera audibility max 233; double door gain 338.
+// Round 234: Gain-output cursor with original clear, native side, outer maximum
+// workspace and both: 252 each; the same four with the whole library clear return
+// 241 each. Original indexed traversal, native clear, gain result and executable
+// body restored at 225; aligned frame and scalar homes remain.
+// Round 140: our build aligns the frame for the 0x800-byte clear (compile-only too: any
+// memset of a local of 128 bytes or more aligns there); retail does not. The clear through
+// a helper in another file (LTCG inlines it) 225 (still aligned); batch count read once
+// 237 (812 bytes); door clusters through the cached audibility pointer 233 (812 bytes); gain
+// loop bound read once 225; door count read once 237.
+// Lane 8 r58: max as a ternary store 229; table value first with negated test 254; real
+// table type 225; batch count read once 237; with real table 237. The alignment needs the
+// memset and a frame over 0x800: a table of 0x1c0 dwords or no memset gives the plain frame.
+// Round 180: Indexed gain-element pointer inside/before admission 225/225; complete result
+// arms 229/229; two-use old gain 262/262; old gain with complete arms 254/254.
+// Round 196: Whole clear return/direct camera, side long/short/signed-byte/byte 248/248/250/250;
+// with audibility at each bound 223/245/223/223. On long 223, after-clear BSP/native real/both
+// 235/223/235; small-mask memset alone/with after-clear BSP/native real/both 216 each.
+// Whole clear return, direct camera/audibility and library mask clear kept at 216 plain (813/812).
+// Round 195: Outer, inner and batch induction-zero lifetimes independently [241, 230, 247]; paired/joint
+// lifetimes [236, 263, 256, 254]; entry declarations with per-door inner reset 257. Original zeros,
+// clears and loop domains restored; scalar and mask/result homes remain.
+// Round 201: Per-door camera cluster captured after mask query in long/short, alone, with complete
+// role names, with an outer maximum workspace, and with both: 250 each (eight forms, 785 bytes).
+// Original direct field observations and inner result lifetime restored; frame/home and max joins remain.
+// Round 360: table-default strict maximum with audibility/camera/batch-bound
+// interactions 207/209/257/261/228/222/241/243. Table-default result kept at 207
+// plain, 813 bytes; unordered/equal values still select the door gain. Original
+// scalar observations and both library clears retained; camera/BSP homes remain.
+// Round 364: shared Boolean mask tests 155, kept plain; native batch countdown 209;
+// both 157; camera guard 207; mask/guard 155; countdown/guard 209; all 157;
+// all with unsigned side 157. Same two library clears and strict maximum retained.
+// Membership helper at door/camera/inner only 207/155/207; door-camera/door-inner/camera-inner
+// 155/207/155. The camera membership role accounts for the retained change.
+// Round 366: final-array ownership 219; consistent audibility 167; both 239; native per-door camera cluster 155; array/cluster 221; audibility/cluster 167; all 239; direct native array throughout 190. All restored.
+// Native callback-entry record with audibility/direct-array/countdown interactions
+// 155/167/240/190/157/172/237/192; gain/cluster-query/door-query/all inline declarations
+// with separate noinline declarations 155/155/155/155. Original body and declarations restored.
+// Round 210: On the shared membership graph: door-default maximum 216; conditional expression/complete
+// result arms 230/230; branch publication 541; outer maximum workspace 155; indexed
+// element pointer with table-default/door-default/complete-arm results 155/216/230. All restored.
+// Round 368: persistent camera/structure/gain names alone and in all combinations 155 each; coherent array
+// names with all three 155. Original executable body restored.
+// Round 370: consistent camera-provider observations with native table, default-first side and
+// after-clear structure interactions 253/253/270/269/253/253/270/269; restored.
+// Selected-mask address on shared membership with final-array ownership, consistent audibility
+// and native real storage: 266/266/260/260/263/263/266/266; exact-only pointer forms restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
@@ -787,16 +838,15 @@ void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 	{
 		s_structure_bsp_view *local_1 = (s_structure_bsp_view *)g_4e0348;
 		dword local_13[0x200];
-		real *local_2 = (real *)local_13;
-		memset(local_13, 0, sizeof(local_13));
+		real *local_2 = (real *)memset(local_13, 0, sizeof(local_13));
 		if (local_1->audibility_count > 0)
 		{
-			s_structure_audibility *local_3 = local_1->audibility;
-			dword local_4[4] = {0};
+			dword local_4[4];
+			memset(local_4, 0, sizeof(local_4));
 			function_249d10(local_1, local_4, local_0->index);
-			for (long local_5 = 0; local_5 < local_3->door_count; local_5++)
+			for (long local_5 = 0; local_5 < local_1->audibility->door_count; local_5++)
 			{
-				if (local_4[local_5 >> 5] & (1 << (local_5 & 31)))
+				if (bit_vector_test(local_4, local_5))
 				{
 					long local_6 = local_1->audibility->clusters[local_5];
 					if (local_6 != NONE)
@@ -806,20 +856,19 @@ void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 						vector_constructor_iterator(local_8, 0x40, 2, function_31bc70);
 						function_249c90(local_8[0], local_1, local_5, local_8[1]);
 						long local_9;
-						long local_10 = local_0->index;
-						if (local_8[0][local_10 >> 5] & (1 << (local_10 & 31)))
+						if (bit_vector_test(local_8[0], local_0->index))
 							local_9 = 1;
-						else if (local_8[1][local_10 >> 5] & (1 << (local_10 & 31)))
+						else if (bit_vector_test(local_8[1], local_0->index))
 							local_9 = 0;
 						else
 							continue;
 						for (long local_11 = 0; local_11 < local_1->cluster_count; local_11++)
 						{
-							if (local_11 != local_10 && (local_8[local_9][local_11 >> 5] & (1 << (local_11 & 31))))
+							if (local_11 != local_0->index && (bit_vector_test(local_8[local_9], local_11)))
 							{
-								real gain = local_7;
-								if (local_2[local_11] > local_7)
-									gain = local_2[local_11];
+								real gain = local_2[local_11];
+								if (!(gain > local_7))
+									gain = local_7;
 								local_2[local_11] = gain;
 							}
 						}

@@ -13,7 +13,17 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 217 (was 217): Frame 0x48 agrees; receiver EDI/EBP and callback/output/blocked homes remain.
+// score 199 (was 199): Frame 0x48 agrees; the blocked flags now sit in the dead output slot and each
+// chain loop has one count test. Left: receiver EDI/EBP (ours keeps the index in ebx, retail spills it
+// and reloads it each iteration), so every callee-saved register rotates.
+// Lane 8 r64 (199 = output cursor local, no `<= 0` guards before the chain loops, `priority = 0.0f`
+// for a blocked active chain, `entries[index].field` in full, for loop with continue): cursor plus
+// guards 220 (output slot reused); plus active `priority = 0.0f` 216 (814 bytes); size as one
+// expression with `(handles_count > 1 ? 2 : 0)` 202 (retail's setle/dec/and, but the cursor gets a
+// +4 bias); output indexed by count 207 (same bias); `out = cursor++` per entry 239, declared before
+// the loop 236 (aligned 134: no bias, cursor at retail's spot, registers rotated); all 23 other
+// orders of the type/count/priority/size declarations 236 (identical code).
+// Earlier baseline: Frame 0x48 agrees; receiver EDI/EBP and callback/output/blocked homes remain.
 // Earlier 217 from 217: Frame 0x48 agrees; receiver and aggregate/blocked homes remain.
 // Earlier 217 from 217: frame 0x48 agrees; receiver EDI/EBP and count,
 // priority, size and blocked homes remain. Both redundant count guards removed
@@ -54,48 +64,119 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Enabled/nonempty count initialization 230/219; narrow pending/active array names
 // 217/217; pending-before-ready/active-before-waiting names 217/217; enabled count
 // with pending-before-ready 230; nonempty count with active-before-waiting 219.
+// Callback priority/size names before handle homes, pending/active combinations
+// and after-handle query names: 217 each; receiver and callback homes remain.
+// Round 234: Native state dispatch, either case order, with original pointers,
+// entry reference, peer reference and both references: 244 each (816 bytes).
+// Original guarded callback/output graph and executable body restored.
+// Native state with direct entry/entry-plus-peer/peer fields 236/238/266; native flags
+// with direct entry/peer 239/229; both snapshots with direct entry/entry-plus-peer/peer
+// 239/239/229. Original entry/peer cursors, field reads and callback/output homes restored.
+// Round 188: Chain-query inline/noinline/forceinline/inline-out-of-line declarations, then each
+// with native word state observed once:
+// 217,217,217,217,217,217,217,217 fast; reduced control 217, full 217. Original executable source restored.
+// Round 191: Native two-use payload mask at active gate, with original/cursor/
+// conditional size/both output forms 217/250/214/244; before state selection,
+// consistently serving applicable callbacks, 217/250/214/244. Three-point best
+// restored; original field observations, output graph and executable body restored.
+// Round 153: Once-computed validity with readiness AND pending/active/both 233/220/240; blocked OR
+// pending/active 249/232; AND-OR/OR-AND 249/251; both readiness byte/long 240/269. Original
+// callback/reduction graph restored.
+// Round 254: shared callback owner after peer/before peer/before handle 262/262/262;
+// entry table alone/with owner 261/242; enabled/nonempty/entry-scope table with owner
+// 246/244/248. Original live pointer observations and executable body restored.
+// Round 193: Private pending/active/both chain maxima; each with private pending size;
+// both maxima with conditional pending publication, without/with private size: 227/240/228/227/218/241/288/235. Original restored.
+// Round 195: Pending/active reversed-relational and conditional-replacement maximum
+// graphs, alone and in all pairs, 217 in eight forms. Equality/unordered choices retained;
+// original body restored, with receiver and callback/output/blocked homes unresolved.
+// Round 104: an entry pointer for the body's reads 216; also driving the loop step 216; size as one
+// expression 202 (aligned count unchanged); count incremented first 209; the `index != NONE` guard that
+// repeated the loop test removed 199 (identical code, kept).
+// Round 31 lead (170 at 814 bytes, not kept: mixed reads and a repeated loop guard): a
+// `s_handle_peers *peers = table;` local for the peer lookup and the three single-handle calls (the
+// chain loops keep `table->`) puts every callee-saved register where retail has it (this EBP,
+// peer/count EDI, table/index ESI, type EBX) 207; the output in 0x8b890's order (`out = cursor;
+// count++; cursor++;`, size as one expression with `(handles_count > 1 ? 2 : 0)`) then gives retail's
+// output block exactly 175; index read inside `if (unknown09)` and the cursor declared under `if
+// (index != NONE)` with a `for (; ...)` loop gives retail's prologue 170. Left: in the first chain
+// loop retail keeps the chain index in ESI, the vtable in EBX and spills type to [esp+0x34] (reloaded
+// before the join); ours keeps type in EBX and spills the index, shifting the cursor/entry/item slots
+// by 4. On that lead: type declared last/at function scope, one shared chain index, the first loop's
+// item locals at block scope, the chain query through the local 170 each; `type = 3` after the loop
+// 249 (782 bytes); type set only on the unblocked exit 228; the local in the loops too 216; a 600 s
+// permuter run 158 only through a volatile read; an entry pointer for the reads 195. Without the local: the sibling output order 234,
+// with the cursor inside the flag test 232; count renamed result 199 (identical).
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
 	long count = 0;
+	s_entry_450c94 *out = (s_entry_450c94 *)output;
 	if (unknown09)
 	{
-		long index = unknown5024;
-		if (index != NONE)
+		for (long index = unknown5024; index != NONE && count < max_count; index = entries[index].unknown0a)
 		{
-			while (index != NONE && count < max_count)
+			if (entries[index].state)
 			{
-				s_handle_entry *entry = &entries[index];
-				if (entry->state)
+				long handle = entries[index].handle;
+				s_handle_peer *peer = &table->peers[handle & 0x3ff];
+				long type;
+				long handles_count;
+				real priority;
+				long size;
+				if (entries[index].state == 1)
 				{
-					long handle = entry->handle;
-					s_handle_peer *peer = &table->peers[handle & 0x3ff];
-					long type;
-					long handles_count;
-					real priority;
-					long size;
-					if (entry->state == 1)
+					if (peer->flags & 8)
+					{
+						long handles[4];
+						bool blocked = false;
+						type = 3;
+						handles_count = replication_table_get_chain(table, handle, handles);
+						priority = 0.0f;
+						size = 0;
+						for (long i = 0; i < handles_count; i++)
+						{
+							real item_priority;
+							long item_size;
+							table->owner->v3(handles[i], entries[handles[i] & 0x3ff].unknown04, a1, &item_priority, &item_size);
+							if (item_priority > 0.0f)
+								priority = priority > item_priority ? priority : item_priority;
+							else
+								blocked = true;
+							size += item_size;
+						}
+						if (blocked)
+							priority = 0.0f;
+					}
+					else
+					{
+						if (peer->flags & 0x10)
+							continue;
+						type = 1;
+						handles_count = 1;
+						table->owner->v3(handle, entries[index].unknown04, a1, &priority, &size);
+					}
+				}
+				else if (entries[index].state == 3)
+				{
+					if (peer->mask & (1 << shift))
 					{
 						if (peer->flags & 8)
 						{
 							long handles[4];
 							bool blocked = false;
-							type = 3;
+							type = 4;
 							handles_count = replication_table_get_chain(table, handle, handles);
 							priority = 0.0f;
 							size = 0;
-							if (handles_count <= 0)
-								goto next;
 							for (long i = 0; i < handles_count; i++)
 							{
 								real item_priority;
-								long item_size;
-								table->owner->v3(handles[i], entries[handles[i] & 0x3ff].unknown04, a1, &item_priority, &item_size);
+								table->owner->v9(handles[i], a1, &item_priority);
 								if (item_priority > 0.0f)
 									priority = priority > item_priority ? priority : item_priority;
 								else
 									blocked = true;
-								size += item_size;
 							}
 							if (blocked)
 								priority = 0.0f;
@@ -103,75 +184,37 @@ long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 						else
 						{
 							if (peer->flags & 0x10)
-								goto next;
-							type = 1;
+								continue;
+							type = 2;
 							handles_count = 1;
-							table->owner->v3(handle, entry->unknown04, a1, &priority, &size);
-						}
-					}
-					else if (entry->state == 3)
-					{
-						if (peer->mask & (1 << shift))
-						{
-							if (peer->flags & 8)
-							{
-								long handles[4];
-								bool blocked = false;
-								type = 4;
-								handles_count = replication_table_get_chain(table, handle, handles);
-								priority = 0.0f;
-								size = 0;
-								if (handles_count <= 0)
-									goto next;
-								for (long i = 0; i < handles_count; i++)
-								{
-									real item_priority;
-									table->owner->v9(handles[i], a1, &item_priority);
-									if (item_priority > 0.0f)
-										priority = priority > item_priority ? priority : item_priority;
-									else
-										blocked = true;
-								}
-								if (blocked)
-									goto next;
-							}
-							else
-							{
-								if (peer->flags & 0x10)
-									goto next;
-								type = 2;
-								handles_count = 1;
-								table->owner->v9(handle, a1, &priority);
-								size = 0;
-							}
-						}
-						else
-						{
-							if (!entry->unknown04)
-								goto next;
-							type = 5;
-							handles_count = 1;
-							table->owner->v8(handle, entry->unknown04, entry->unknown0c, a1, &priority, &size);
+							table->owner->v9(handle, a1, &priority);
+							size = 0;
 						}
 					}
 					else
-						goto next;
-					if (priority > 0.0f)
 					{
-						s_entry_450c94 *out = (s_entry_450c94 *)output;
-						out->unknown00 = *(long *)unknown04;
-						out->index = index;
-						out->unknown04 = priority;
-						out->unknown0c = type;
-						out->size = size + 14 * handles_count + 3;
-						if (handles_count > 1)
-							out->size += 2;
-						output = out + 1;
-						count++;
+						if (!entries[index].unknown04)
+							continue;
+						type = 5;
+						handles_count = 1;
+						table->owner->v8(handle, entries[index].unknown04, entries[index].unknown0c, a1, &priority,
+							&size);
 					}
 				}
-			next:
-				index = entry->unknown0a;
+				else
+					continue;
+				if (priority > 0.0f)
+				{
+					out->unknown00 = *(long *)unknown04;
+					out->index = index;
+					out->unknown04 = priority;
+					out->unknown0c = type;
+					out->size = size + 14 * handles_count + 3;
+					if (handles_count > 1)
+						out->size += 2;
+					out++;
+					count++;
+				}
 			}
 		}
 	}
@@ -225,10 +268,7 @@ static inline void free_block(void *block)
 	long info;
 	if (!g_4d87f8->allocator->get_info(block, &info))
 		info = NONE;
-	s_allocator_globals *globals = g_4d87f8;
-	globals->allocator->release(block, NONE);
-	if (block != 0)
-		globals->count--;
+	allocator_globals_release(g_4d87f8, block);
 }
 
 // @retail 0x99820
@@ -767,50 +807,6 @@ void c_handle_table_450cd0::v8(long handle, bool flag)
 		node = *link;
 	}
 }
-// score 185 (was 185): frame 0x98 agrees; count/receiver/native-kind and callback homes remain.
-
-// score 185 (was 185): Frame 0x98 agrees; count/receiver stack homes, decoded-kind width and callback setup remain.
-// Frame 0x98 agrees; total/receiver/callback-index homes and native kind remain different.
-// Frame 0x98 agrees; total at +0x10 versus +0xc, kind width and callback homes remain.
-// Native kind 211; role-named scalars 204; shared callback arm 222;
-// library descriptor/payload copies 204; pretested item while 220.
-// Unsigned native item total 204; joint count/error item guard 220; direct local output cursor 211;
-// pair-pointer cleanup 206; payload-before-info declaration 204.
-// Round 132: count after block publication 193 plain kept (688/692 bytes); frame 0x98,
-// count/kind/callback homes still differ. Entry decision/common exit/path results 271/248/206;
-// native-kind pairs 271/236/223; native kind plus count publication 204; both cursors after
-// publication 208; indexed post-publication output 212.
-// Count-bearing descriptor aggregate 208; update case first 211; persistent descriptor 204;
-// native high nibble 207; total-only lexical order 204.
-// Count-first declarations 205; entry-scope advancing cursor 217; produced before descriptor clear
-// 205; existing release helper 207; native kind with both initialization changes 212.
-// Round 111: Header error recheck removed 206; do-while error continuation 272; persistent native payload 204; persistent produced total 204; update error default first 204.
-// Item cursor 221; paired callback cursors 185 plain kept; all descriptor cursors 193;
-// unsigned error 193; word kind 204; default first 193; reverse cases 211;
-// all cursors with full-width kind 204.
-// Paired cursors with native kind 203; paired/native kind with pretested for 217.
-// Round 157: Range-first byte/native kind 232/198; count-default byte/native 232/218; terminal-test
-// count byte/native 214/219; test-count pretested while byte/native 214/215.
-// High/low cursor names 185; second cursor declared first 185; descriptor zero
-// initializer 186; names/declaration order 185; names/initializer 186;
-// declaration order/initializer 186; all three 186; cursor declarations before scalars 185.
-// Frame 0x98 agrees; running total at +0x10 versus +0xc and kind/callback homes remain.
-// callback-table 251; update-entry 198.
-// callback-table-update-entry 219; count-home-names 185.
-// callback-table-count-home-names 251; update-entry-count-home-names 198.
-// callback-table-update-entry-count-home-names 219; table-before-item-publication 251.
-// Round 199: Descriptor-owned item bound, byte kind with indexed/pretested/item-cursor/both forms
-// 216/203/181/191; native-kind counterparts 208/205/224/195 (fast). All restored.
-// Round 159: Second-only/first-only callback cursors with byte kind 218/218; native kind 219/219;
-// second-plus-item/first-plus-item cursors with byte kind 218/218 and native kind 219/219. All 704/692
-// bytes, frame 0x9c versus 0x98. Original paired cursors, item indexing, copies and cleanup restored.
-// Round 161: Failure-first 193; native kind 208; direct cleanup-array reads 178;
-// native kind plus array reads 202; metadata before copies 181; failure-first metadata
-// 193; failure-first native metadata 208; failure-first descriptor before index 193.
-// Seven/four-point previews rejected by minimum gain; original body restored.
-// Shared item/cleanup ordinal 185; with pretested items 222; case-local index 200;
-// case-local/pretested 266; native kind 203; native/pretested 217; native/case-local
-// 202; all three 217. Opening body restored.
 // @retail 0x98cf0
 long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s_handle_block *blocks, long *count_out)
 {
@@ -823,26 +819,29 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 		s_handle_block *cursor = blocks;
 		do
 		{
-			byte type = (byte)function_1959c0(stream, 3);
+			dword type = function_1959c0(stream, 3);
 			long n;
 			if (type >= 6)
 			{
 				error = 3;
 				break;
 			}
-			if (type == 0)
-				n = 0;
-			else if (type > 2 && type <= 4)
+			if (type != 0)
 			{
-				n = function_1959c0(stream, 2) + 2;
-				if (n < 1 || n > 4)
+				if (type > 2 && type <= 4)
 				{
-					error = 3;
-					break;
+					n = function_1959c0(stream, 2) + 2;
+					if (n < 1 || n > 4)
+					{
+						error = 3;
+						break;
+					}
 				}
+				else
+					n = 1;
 			}
 			else
-				n = 1;
+				n = 0;
 			if (error != 0)
 				break;
 			if (count >= max_blocks && n > 0)
@@ -858,10 +857,7 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 			memset(&info, 0, sizeof(info));
 			info.count = n;
 			long produced = 0;
-			long i = 0;
-			dword *first_cursor = info.b;
-			dword *second_cursor = info.c;
-			do
+			for (long i = 0; i < n; i++)
 			{
 				if (error != 0)
 					break;
@@ -872,18 +868,18 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 				switch (type)
 				{
 				case 1:
-					error = table->owner->v1(item, first_cursor, second_cursor, 8, &produced, data.v, stream);
+				case 3:
+					error = table->owner->v1(item, &info.b[i], &info.c[i], 8, &produced, data.v, stream);
 					break;
 				case 2:
-					break;
-				case 3:
-					error = table->owner->v1(item, first_cursor, second_cursor, 8, &produced, data.v, stream);
-					break;
 				case 4:
 					break;
 				case 5:
 					if (entries[index].handle == (long)item && entries[index].state == 3)
-						error = table->owner->v6(item, info.c, 8, &produced, data.v, stream);
+					{
+						s_handle_peers *peers = table;
+						error = peers->owner->v6(item, info.c, 8, &produced, data.v, stream);
+					}
 					else
 						error = 2;
 					break;
@@ -891,14 +887,11 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 					error = 3;
 					break;
 				}
-				first_cursor++;
-				second_cursor++;
-				i++;
 			}
-			while (i < n);
 
 			if (error == 0)
 			{
+				count++;
 				s_handle_block *block = cursor;
 				cursor++;
 				block->type = type;
@@ -906,16 +899,14 @@ long c_handle_table_450cd0::v5(dword a1, s_bitstream *stream, long max_blocks, s
 				block->info = info;
 				block->count = produced;
 				block->data = data;
-				count++;
 			}
 			else
 			{
 				for (long k = 0; k < produced; k++)
 				{
-					void *object = data.v[k * 2 + 1];
-					if (object != 0)
+					if (data.v[k * 2 + 1] != 0)
 					{
-						free_block(object);
+						free_block(data.v[k * 2 + 1]);
 						data.v[k * 2 + 1] = 0;
 					}
 				}

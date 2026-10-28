@@ -79,7 +79,14 @@ void cache_copy_forget(char const *map_name);
 bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
-// score 367 (was 367): Aligned frame 0x110 agrees; request-source reuse and outgoing write options remain.
+// score 367 (was 367): Aligned frame 0x110 agrees; request-source reuse, dependency bound and write-option scheduling remain.
+// Round 85: retail keeps states 8 and 15 as separate cases (`state = 9;` / `state = 16;`); with them split, the
+// writes' flags as `s_file_write_flags(0)` temporaries, state 6's first test through a named `size_known` bool
+// and the dependency time indexed (`&g_55b4f0.dependency_times[type]`, retail's pointer exit test) the body is
+// retail's length and order (aligned differences 111 -> 53), but the score is 461/434/432/430: the one
+// remaining shift is `mov esi, edi` after the 0x214db0 call where retail re-forms the constant (3 bytes), which
+// adds a loop pad and misaligns every later line. BLOCKED-BY 0x214db0 (callers act as if it had no register
+// summary). The three local forms on the merged-case body 453.
 // Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion
 // states 433.
 // Signed-word dependency index 446; unsigned index 446; explicit existing write flags 453;
@@ -111,6 +118,39 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // destination states first 451; path summary with completion-first states 491 (fast).
 // Priority word/byte 506/516; retained-cursor do 469; operation-group/reverse cases 479/504;
 // sole time-array traversal 415; staged size result on cursor body 448; checksum state first 367.
+// Individual case swaps 1/2, 3/4, 5/6, 7/8, 9/10, 11/12, 13/14,
+// 17/18: 386/390/365/367/367/367/371/381. Original order restored.
+// Round 377: Separate incoming/next-state long/dword/short/byte 367/367/543/524;
+// arm-produced next-state results 528/528/593/530 (fast control 367). Complete
+// transition-result ownership does not recover request-source or write-option
+// scheduling; byte arm results reach retail length but regress. All forms restored.
+// Round 176: Case 19 after 0 / 12 after 4 / 16 after 19: 461/444/431;
+// first+second / first+third / second+third / all: 486/492/447/500;
+// case 18 after 19: 410. All case bodies and original order restored.
+// Defining-unit inline path/checksum/path+checksum/path with separate noinline/clock/path+clock/
+// clock+checksum/all call declarations 367 each; all declarations and bodies restored.
+// Complete failure result bool/byte/short/long 661/661/654/657;
+// the same result initialized first 661/661/654/657. Original success restored.
+// Round 223: Repeated transfer buffer/count/limit/buffer+count/buffer+limit/count+limit/all
+// inputs 366/362/367/362/367/362/362; all with named size 367; count and buffer+count
+// with earlier slot publication 367/367. Five-point exact-length gains restored.
+// Round 148: admission after validation 458; retirement after validation 412; both request cases
+// after validation 502; validation/retirement first 501; publication phases first 498;
+// publication phases after validation 517; header phases first 520;
+// admission/retirement/publication together 492. All executable forms restored.
+// Round 152: Actual inline definitions plus all declarations, path/checksum/both 367/367/367;
+// with separate noinline boundaries 367/367/367; completed-count combinations 362/362.
+// All supporting declarations and the original body restored.
+// Round 23: true-default failure-only handle/size/shared-write 480/400/444; handle+size/
+// handle+write/size+write 464/479/354; all three/four 462/461. The 354 conditional flag
+// form is match-only and rejected. Complete size+write/size/write/nested value producers
+// 426/426/367/426; original completion producers and all observations restored.
+// Round 217: Header-validator inline/noinline/inline-out-of-line declarations 367/367/367;
+// with cursor-end bounds 375/375/375; with repeated completed-count value 362/362
+// fast. Five-point exact-length forms are below the retention threshold; all declarations and body restored.
+// Round 240: One shared full-width priority ordinal, signed/unsigned, with state
+// first and/or constant true result first: eight forms 367. Request source,
+// dependency bound and write options remain; all original input reads restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {

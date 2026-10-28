@@ -1255,6 +1255,35 @@ bool function_0b6760(s_index_pair const *pair);
 // Long activity result/entry-long/ordinary index/ordinary saved pointer/both/header ordinal/both with
 // ordinal/shared notification 307,305,380,378,407,316,421,375. Original frame/index/state/result storage and
 // qualifiers restored.
+// Separate power/position activity bool/long 443/451; phase-local position 373/448;
+// with shared motion completion 443/451, phase-local position 373/448.
+// Original single activity result and completion lifetimes restored.
+// Round 350: selected reached/reversal/both event values 336/336/351; native power-channel
+// admission 385; with reached/reversal/both value selections 379/378/340; all with native
+// repeated channel receiver 347. Frame 0x1c/0x20 and index/header/state/result homes remain.
+// Round 96: retail computes (index & 0xffff) * 12 once at entry, keeps it in EBX and its own frame slot
+// (the extra dword) and reuses it for the final header and datum reads, so its index is not volatile;
+// it also re-reads the animation-state offset after the result/state stores. Plain index 389; plain
+// index and definition 421; plain index with the result declared first 394; plain index with a
+// ternary state 416; result declared first 301 (two-point gain dropped).
+// Round 230: existing state-admission helper with independent tag-pointer name/result-first
+// homes 400/400/400/400; the same four with ordinary index 369/369/370/370. Original
+// admission, index, declarations and scalar homes restored.
+// Round 352: next-tick value, elapsed product and both 303; one shared previous power velocity
+// alone and with next-tick/elapsed/both 368; all with long next-tick 365. Frame remains 0x1c;
+// original delay, velocity observations, acceleration producers and inherited qualifiers restored.
+// Round 23: distinct phase/block/channel previous owners 307/307/303; short first/second/both
+// completion 387/335/408; phase plus first short 388; channel plus both shorts 408.
+// Frame stays 0x1c versus 0x20; original scalar lifetimes and bool completions restored.
+// Round 239: actual power/position/both field references 386/391/373;
+// velocity reference 396, with power/position/both 401/396/414; all references
+// with result initialized before lookup 414. Frame and index/state/result homes
+// remain; original field observations, producers, qualifiers and body restored.
+// Round 84 (lane 5): event ids as a select between two field reads (retail's separate loads)
+// 351; with a plain index 361 (frame 0x20, the index * 12 kept in a register as retail, 394
+// instructions as retail, but index/offset in EDI/ESI where retail has ESI/EBX and the result in
+// a register where retail keeps its byte); also a plain definition 410; with the result declared
+// first 366, the state before the result 361, the state second 360.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

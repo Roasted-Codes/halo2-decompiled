@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "data_array.h"
+#include "data_iterator.h"
 #include "unknown_067e10.h"
 #include <string.h>
 
@@ -118,7 +119,26 @@ void function_14bac0()
 	players_pending_creation_process(iterator_reference);
 }
 
-// score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// score 230 (was 230): Frame 0x44 versus 0x3c; centre/second-iterator slot sharing, readiness homes and the second scan's call remain.
+// Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
+// center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
+// probe point at 0x1c); plus a bare block around the probe/center code 257 (identical code); per-marker
+// probe points with the center call written in both arms 302 (1080 bytes, not merged); first iterator
+// declared in the first block 257; iterator and probe point renamed 257 (identical layout).
+// Round 139: retail's two iterators are separate locals (first loop at frame 0x30, second at 0x1c
+// sharing the marker probe point's slot) and the second loop calls 0x6b380; split iterators with
+// the second through data_datum_iterator_next 257 (frame 0x44), both inline 234; per-marker probe
+// point locals on top 257 (destination 0x10, probe/second iterator 0x1c, alternate 0x2c as in
+// retail; only the df5f0 center stays above at 0x38); a bare block around the probe/center code
+// 257 (link-time code generation ignores it); center/height/radius through an inline helper 257
+// (center joins 0x1c, alternate drops to 0x28, iterator to the top); with the loop as an inline
+// helper too 260; whole marker search as one inline helper 259/255; declaration order 257;
+// alternate/destination renamed 257/257.
+// Round 94 (not kept, gain under 8): first loop through the existing datum iterator 234; plus block-local marker
+// points 231; plus readiness declarations swapped 230. Retail packs its second (16-byte, 0x6b380) iterator with
+// offset, marker points and center at +0x2c and alternate with the first iterator at +0x3c (frame 0x3c). Second loop
+// through its own datum iterator and 0x6b380 257/254/259; stamp-first visit test 230; for-loop spelling 230;
+// marker memcpy 230; marker element pointer 246 (gives retail's add/add marker address, grows the first loop).
 // Existing first/second/both iterator calls 280/247/263; typed request/marker/both records 234/234/234; read-only request record 234; accepted-point memcpy 234.
 // frame 0x34 versus 0x3c, query/iterator homes and visit-counter reloads differ;
 // destination byte 234; alternate byte 234.
@@ -132,6 +152,8 @@ void function_14bac0()
 // names/native recipient 257. Frame, iterator sharing and result homes remain.
 // Round 215: function-scope shared iterator 234; readiness declaration order 233;
 // scenario receiver lexical order 234; function-scope translation 234; both empty probe do/while forms 234.
+// Offset ikj/jik/jki/kij/kji 238/237/239/240/238;
+// position xzy/yxz/yzx 234/233/234.
 // Shared marker query output/pointer-result/reference 332/332/332, each
 // with native recipient 321; native point result 303, with native recipient 280.
 // Forced output/pointer-result/reference 234/234/234, each with native recipient
@@ -142,6 +164,59 @@ void function_14bac0()
 // Round 329: coherent pool/request/scenario observations 240/234/264; pool/request 240;
 // pool/scenario 284; request/scenario 264; all three 284; all three with shared point difference 284.
 // Original receivers and the shared iterator body restored.
+// Round 150: Actual accepted destination/alternate/both pointer results 271/255/278; with native
+// result-tested recipients 261/266/266. Both optional points initialized NULL at request entry 282;
+// with native recipients 289. Pointer domain and iterator combinations do not recover frame or
+// readiness homes; every original body statement restored.
+// Round 210: direct destination/alternate/both query buffers 256/255/272;
+// with native recipient iterator 266/265/281; both with late center 272, native recipient/late center 281.
+// Round 172: Native selected/current/both player receivers 234/234/234; with native recipients
+// 257/257/257; readonly both 234 and with native recipients 257. Original body, iterator graph and
+// include list restored. Frame 0x34 versus 0x3c, point/iterator and readiness homes and
+// visit-counter scheduling remain.
+// Actual ray storage 234; with relocation-point reuse 231; native recipients 257;
+// both 254; reversed readiness with ray/reuse/recipients/all 233/230/262/259.
+// Original storage and iterator restored; frame and readiness homes remain.
+// One shared native datum iterator, called/inlined first scan and native/called second scan:
+// 353/234/421/376; reversed readiness declarations 334/233/421/376. All restored.
+// Round 197: Existing point-query/relocation ordinary-inline-noinline declarations, all eight
+// alternatives, 234 each. Original point/iterator graph and all declarations restored.
+// Round 352: readiness at request entry, alone and with point/bounds/both output declarations,
+// 274 each; early point/bounds/both declarations without readiness 234 each; complete
+// function-entry graph 288. Frame stays 0x34; original storage and observations restored.
+// Marker-test readiness results, destination/alternate/both 237/243/244; with
+// native recipients 262/278/261. Both results plus fallback query result 252;
+// with native recipients 278. Original points, flags and shared iterator restored.
+// Round 62: retail's frame fits two 16-byte datum iterators, the first sharing its slot with the
+// alternate point and the second with the centre and offset. Second loop through the existing
+// datum iterator 257 (frame 0x44; both readiness homes then agree); plus a block scoping the
+// centre 257 (identical under LTCG, 0x38 compile-only); first loop on a datum iterator through an
+// inline next 257 (frame 0x48); readiness declarations swapped 262; centre declared first 257.
+// Lane 10 r11: first iterator scoped to its block with the existing datum iterator for the second
+// loop 257 (frame 0x44); centre/height/radius in their own block 257 (no change); point names
+// sorting as retail's slots 234 (identical code); final scan through an early-return do-while
+// next-index helper 270 (1026 bytes; gives retail's or/inc/js scan exactly); with the datum
+// iterator second loop 270 (1027; retail's call to 0x6b380 exactly). Retail also re-reads the
+// visit counter at each test, where ours keeps it in EBX. Original body restored.
+// Round 80: the visit test through the existing 0xbec70 285 (called, not inlined); the root search in
+// 0xbaf80's own shape (NONE result, plain while) 298; first iterator scoped to its block with the second
+// scan through 0x6b380 257 (frame 0x44); stamp-first comparison 234 (identical); the visit test through
+// 0xbec70's inline stamp-parameter shape 239 (indexed store as retail, but no stamp copy). Retail's
+// `mov edx, ecx` before the stamp store occurs in no other retail function. Original body restored.
+// Lane 10 r13: kept 230: first scan through the existing data_datum_iterator_next_called (retail's
+// 16-byte iterator, data at +4 and index at +0xc, the other stores dropped; frame 0x38, 234), each
+// marker probe in its own block-local point with the centre declared for 0xdf5f0 (231; destination
+// now at retail's 0x20), readiness declarations in the other order (230; the homes stay swapped).
+// Second scan through 0x6b380 on its own iterator 257/259 (frame 0x48, no slot sharing); the centre
+// probing in a bare block 257 (no sharing); second iterator scoped to its block 230 (identical);
+// separate point declarations in five orders 233 each (layout unchanged).
+// Round 245: shared point setter at translation 230; overlap-safe marker inputs 230;
+// both 230; overlap-safe accepted points 241, with translation/marker inputs/both 241/244/244;
+// complete publication graph with native recipient iterator 262. Original source restored.
+// Round 211: On the retained native-first-iterator graph, one point workspace shared with
+// relocation/probes/both 233/233/230; each with native recipients 262/262/259; complete sharing
+// with earlier bounds declarations 230, with native recipients 259. All restored; frame 0x44/0x3c,
+// readiness and recipient storage remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {
@@ -170,12 +245,12 @@ void function_14b6a0()
 			offset.k = destination->z - origin->z;
 			++g_4de2fc;
 			g_4de2f8 = true;
-			iterator.data = players;
-			iterator.index = NONE;
-			byte *current;
-			while ((current = data_iterator_next_calling(&iterator)) != 0)
+			s_data_datum_iterator player_walk;
+			player_walk.data = players;
+			player_walk.index = NONE;
+			while (data_datum_iterator_next_called(&player_walk))
 			{
-				long unit = *(long *)(current + 0x2c);
+				long unit = *(long *)(player_walk.datum + 0x2c);
 				if (unit != NONE)
 				{
 					byte *headers = g_4e0300->data;
@@ -203,26 +278,27 @@ void function_14b6a0()
 		}
 		if (*(long *)g_4e8c20 > 1)
 		{
-			bool have_destination = false;
 			bool have_alternate = false;
-			point3f destination, alternate, center;
+			bool have_destination = false;
+			point3f destination, alternate;
 			short target_marker = *(short *)(record + 0xa);
 			if (target_marker != NONE)
 			{
-				center = *(point3f *)(*(byte **)(scenario + 0x1e4) + target_marker * 0x38 + 0x24);
-				while (function_168f40(0x800005, (s_vehicle_ray const *)&center, NONE, NONE)) {}
+				point3f point = *(point3f *)(*(byte **)(scenario + 0x1e4) + target_marker * 0x38 + 0x24);
+				while (function_168f40(0x800005, (s_vehicle_ray const *)&point, NONE, NONE)) {}
 				have_destination = true;
-				destination = center;
+				destination = point;
 			}
 			short alternate_marker = *(short *)(record + 0xc);
 			if (alternate_marker != NONE)
 			{
-				center = *(point3f *)(*(byte **)(scenario + 0x1e4) + alternate_marker * 0x38 + 0x24);
-				while (function_168f40(0x800005, (s_vehicle_ray const *)&center, NONE, NONE)) {}
-				alternate = center;
+				point3f point = *(point3f *)(*(byte **)(scenario + 0x1e4) + alternate_marker * 0x38 + 0x24);
+				while (function_168f40(0x800005, (s_vehicle_ray const *)&point, NONE, NONE)) {}
+				alternate = point;
 				alternate.z += 1.0f;
 				have_alternate = true;
 			}
+			point3f center;
 			real height, radius;
 			function_df5f0(*(long *)(player + 0x2c), &center, &height, &radius);
 			if (have_destination)

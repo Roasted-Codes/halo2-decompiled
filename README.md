@@ -65,13 +65,13 @@ Analysis, documentation and review do not need it.
 
 ## Status
 
-Decompilation is under way, and 9705 retail functions now match byte for
+Decompilation is under way, and 9895 retail functions now match byte for
 byte. The checker reports:
 
 ```
-matched 9705 of 11326 game functions (1569273 of 2786206 bytes, 56.32%)
-matched 969 of 1436 Havok functions (139357 of 290362 bytes, 47.99%)
-matched 10674 of 17654 functions in scope (1708630 of 3904218 bytes, 43.76%)
+matched 9895 of 11326 game functions (1631501 of 2786206 bytes, 58.56%)
+matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
+matched 11079 of 17654 functions in scope (1790803 of 3904218 bytes, 45.87%)
 ```
 
 Matched code so far includes:
@@ -237,17 +237,28 @@ Thank you to everyone who has contributed to this project so far:
   Python tests on every pull request, and disc-image tests.
 - [@mrv777](https://github.com/mrv777): an analysis of the capture the flag and
   assault objects.
-- [@RWayne93](https://github.com/RWayne93): online messages, and a documented
-  near miss.
-- [@andrewnakas](https://github.com/andrewnakas): the inventory fix that took
-  WMADEC's data tables out of the function list.
+- [@RWayne93](https://github.com/RWayne93): online messages, a documented
+  near miss, and the match of 0x119280, the creature death timer.
+- [@andrewnakas](https://github.com/andrewnakas): the inventory fixes that
+  took WMADEC's data tables and the DSOUND, XNET and D3D section tails out of
+  the function list, and dozens of fixes checked against retail in the render
+  state, sound, AI and camera code, including disabled drafts brought to
+  compile and behave as retail.
 - [@Roasted-Codes](https://github.com/Roasted-Codes): the first contributor
   matches in Havok, the physics library: its collision-pair dispatch and
   child-agent code.
 - [@ccgman123](https://github.com/ccgman123): a careful diagnosis of seven
-  near misses, and the cleanup that removed an in-body pragma from 0x9d1c0.
-- [@marioag0412](https://github.com/marioag0412): the match of 0x1e3480,
-  an object's actor index.
+  near misses, the cleanup that removed an in-body pragma from 0x9d1c0, the
+  match of 0x1f3230, and the tools that keep disabled drafts out of the ready
+  and open-work lists.
+- [@marioag0412](https://github.com/marioag0412): matches across the game,
+  starting with 0x1e3480 (an object's actor index) and taking in the global
+  preferences, network voice, online tasks and AI code, big score cuts in
+  render and tag-function code, and notes on what still differs in a dozen
+  near misses.
+- [@averycpawelek](https://github.com/averycpawelek): matches in the unit
+  code and nearby (0xc7100, 0xe5840, 0xe2d80 and four more), and 32 near
+  misses brought closer.
 
 [@kirklandsig](https://github.com/kirklandsig) maintains the project: runs the
 build, reviews and merges every pull request, and keeps the
@@ -288,16 +299,43 @@ Microsoft; other names and marks belong to their respective owners. See
 
 ## License
 
-The contributors' own work in this repository is released under CC0 1.0.
-Refer to [LICENSE](LICENSE).
+Copyright (C) 2026 the halo2-decompiled contributors. The git history and
+[The community](#the-community) list them.
 
-- CC0 applies only to material the contributors have the right to license.
-- It does not place Halo 2, or any intellectual property of Microsoft,
-  Bungie, 343 Industries, Activision or anyone else, into the public domain.
+The contributors' own work in this repository is licensed under the GNU
+General Public License, version 3 or (at your option) any later version
+(GPL-3.0-or-later). Refer to [LICENSE](LICENSE). Forks and other works based
+on it that are distributed must stay under the GPL, with their source
+available, and must keep the copyright and license notices.
+
+Versions published before this change were released under CC0 1.0, and
+copies of those versions stay under CC0. The GPL applies from the commit that
+introduced this notice, on 2026-10-27, onward.
+
+- The GPL applies only to material the contributors have the right to
+  license.
+- It grants no rights in Halo 2, or in any intellectual property of
+  Microsoft, Bungie, 343 Industries, Activision or anyone else, and the
+  earlier CC0 release did not place any of it into the public domain.
   Halo 2's game content and trademarks remain the property of their owners.
 - The `name` and `object` columns of `config/functions.csv` once came from
   [halo-symbol-atlas](https://github.com/tinkerer-red/halo-symbol-atlas) under
   [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) and were not
-  covered by CC0. That data has been removed (see [PROVENANCE.md](PROVENANCE.md)).
+  covered by the repository's own license. That data has been removed (see
+  [PROVENANCE.md](PROVENANCE.md)).
 
 Details are in [LEGAL.md](LEGAL.md#licence-scope).
+
+### Additional permission for the Xbox Development Kit
+
+The matching build links the libraries of the Microsoft Xbox Development Kit.
+As an additional permission under section 7 of the GPL:
+
+If you modify this program, or any covered work, by linking or combining it
+with the libraries of the Microsoft Xbox Development Kit (or modified versions
+of those libraries), containing parts covered by the terms of their licenses,
+the licensors of this program grant you additional permission to convey the
+resulting work.
+
+This permission covers only those libraries. The project's own code stays
+under the GPL.

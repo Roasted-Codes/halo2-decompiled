@@ -18,7 +18,8 @@ extern byte g_485a47;
 extern real g_485a0c[8];
 extern real g_4c9798[36];
 
-// score 295 (was 295): frame 0x20 versus 0x28; input and rounding scalar homes differ.
+// score 239 (was 252): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
+// frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
 // Earlier form: frame 0x20 versus 0x28; input registers and rounding-call scalar reloads differ.
 // Branch-defined extent 321; two-vector copy loop 311; frame pointer 372; size policy 497; inline depth one 311.
 // Global optimization off 1009; expansion depth zero 349; late mode 350;
@@ -48,12 +49,60 @@ extern real g_4c9798[36];
 // Native width/height/both result arms 295/295/295; shared sizing predicate 331;
 // height limit first 303; complete mode result 295; initial projection/opposite loops 295/295.
 // Shared near/far/both/projection/all scaling 295/295/295/295/295; near/far/both point accumulation 295/295/295.
+// Round 188 complete sizing scope, unsigned-word mode, depth-bound scope, their
+// pairs/all, and signed-word mode with sizing scope: 300/291/295/297/300/291/297/297.
+// All original scalar lifetimes, native mode, geometry and protected interfaces retained.
 // Round 167: Individual or mixed bounded dimension carriers:
 // width short 296; width word 296; height short 324; height word 324;
 // short/word 325; word/short 325; short/int 296; int/word 324.
 // Original native limits, far-normal copy and all protected call interfaces restored.
+// Round 213: direct lower/upper/both depth fields 294/295/294; each with distinct far normal
+// 294/295/294; both with distinct far point 302, with distinct far point and normal 294.
+// One-point gains rejected; original field snapshots and captured far normal restored.
+// Round 194: Native projection/dimension/border-identity row combinations 297/295/297/295/297/295/297; all
+// rows with projection scope 298. Original body restored.
+// Round 375: Complete near/far/shared-pair/distinct-pair plane outputs on the
+// retained far-normal graph 322/335/361/364; CRT copies 322/335/361/364.
+// Frame 0x30 versus 0x28; all exact-only output-record forms restored.
+// Round 139: Repeated ratio/angle inputs captured once separately/together 316/305/316; each with
+// real shared pixel area 321/326/321; joint input home names without/with area 316/321. Frame
+// 0x20/0x28, state/matrix and protected rounding homes remain. Original executable source, every
+// float tree and accepted far-normal copy restored.
+// Round 96: retail takes the camera-like record (read at +8/+0x64/+0x28) in ECX and keeps the source
+// record (origin +0, direction +0x28) in EBX across the calls; ours takes the first in EAX and leaves the
+// second on the stack. The two pointer parameters were named crossed against both callers (kept: now
+// swapped, data flow as retail, 295). Direction/origin fields read at each use 328; tag test as a
+// one-case switch 295; origin/direction references at entry 300.
+// Round 60: maximum width/height written through pointers by an inline helper 295; flag test as
+// a shifted bool, its negated-bool and its compare-with-zero spellings 311/337/295; offset as a
+// ternary 309.
+// Lane 10 r13: kept 252: the first block reads the direction through the record and the direction
+// reference is declared with the origin for the planes (292: the record now arrives in EBX and
+// stays there, with retail's lea/mixed [ebx+0x2c]/[ebp] direction reads); the mode bit tested as
+// (bool)((~(flags >> 10)) & 1) (252: retail's shr/not al/test al,1). Also tried: size clamp as one
+// ternary 295 (identical); !(bool) bit 299; (~flags >> 10) & 1 295; ~(flags >> 10) & 1 253; an
+// inline declaration of 0x48e70 252 (identical); height declared first 252; far plane copied
+// straight into the output 344; depth fields read at each use 253; 0.75 first in the border 252.
+// Retail reloads the size after each 0x48e70 call (ours keeps it in xmm0: LTCG knows the callee
+// leaves xmm alone; BLOCKED-BY 0x48e70, in a file this lane does not edit).
+// ternary 309. Round 103: retail stores 0.0 to a frame slot at entry and loads it as the border's
+// else value: `real border = 0.0f;` at the top (or after the distance/offset) with `if (mode > 0)
+// border = ...` reproduces those entry stores and holds matrix in one register as retail does, but
+// 318 (1489; aligned 223 -> 214), with the origin reference at entry 318, declared after the mode
+// 314. Ours keeps size and aspect in xmm registers across the 0x48e70
+// calls where retail reloads them; the tag test's constant 1 (ecx, reused for mode = 1) puts the state
+// record in esi where retail tests with movsx/dec and passes it in ecx.
+// Round 245: short/word mode with short-width/long-height limits 269/269;
+// with long-width/short-height limits 239/239; both short limits 267/267;
+// both word limits 267/267. Original long mode with short/word height 243/243.
+// Short mode and short height limit kept: 239 plain, 1483/1479 bytes; all call values unchanged.
+// Frame 0x24/0x28, state transport and protected rounding reloads remain.
+// Round 208 on the late-direction/complemented-mode graph: early zero border 322 (frame 0x28);
+// complete bounded-size result 252; reused native pixel area 342; zero+size 322; zero+area 354;
+// size+area 342; all three 354; all with zero declared after mode 353. All restored; state
+// transport, protected rounding reloads and far-plane stores remain.
 // @retail 0x48ee0
-void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
+void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
     real aspect = (real)sqrt(*(real const *)(state + 8));
     real distance = *(real const *)(state + 0x64);
@@ -61,21 +110,20 @@ void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
     if (*(short const *)(tag + 0x8e) == 1)
         offset = *(real const *)(state + 0x28);
     real inverse = distance != 0.0f ? 1.0f / distance : -3.4028234663852886e38f;
-    vector3f const &direction = *(vector3f const *)(matrix + 0x28);
-    g_4c9798[0] = direction.i * inverse;
-    g_4c9798[1] = direction.j * inverse;
-    g_4c9798[2] = direction.k * inverse;
+    g_4c9798[0] = ((vector3f const *)(matrix + 0x28))->i * inverse;
+    g_4c9798[1] = ((vector3f const *)(matrix + 0x28))->j * inverse;
+    g_4c9798[2] = ((vector3f const *)(matrix + 0x28))->k * inverse;
     g_4c9798[3] = 0.0f - inverse * offset;
-    g_4c9798[4] = 0.0f - direction.i;
-    g_4c9798[5] = 0.0f - direction.j;
-    g_4c9798[6] = 0.0f - direction.k;
+    g_4c9798[4] = 0.0f - ((vector3f const *)(matrix + 0x28))->i;
+    g_4c9798[5] = 0.0f - ((vector3f const *)(matrix + 0x28))->j;
+    g_4c9798[6] = 0.0f - ((vector3f const *)(matrix + 0x28))->k;
     g_4c9798[7] = 0.0f;
-    long mode = !(g_4c1a80 & 0x400) ? 2 : g_485a40 > 0.0f && *(short const *)(tag + 0x14) == 0 ? 1 : 0;
+    short mode = (bool)((~(g_4c1a80 >> 10)) & 1) ? 2 : g_485a40 > 0.0f && *(short const *)(tag + 0x14) == 0 ? 1 : 0;
     real extent = *(real const *)(state + 4);
     if (*(real const *)(state + 0xc) > 0.0f)
         extent += (real)tan(*(real const *)(state + 0xc) * 0.5f) * distance * 2.0f;
     long max_width = (bool)((g_4ba014 >> 4) & 1) && !(bool)((g_4ba014 >> 5) & 1) ? 128 : 512;
-    long max_height = (bool)((g_4ba014 >> 4) & 1) && !(bool)((g_4ba014 >> 5) & 1) ? 128 : 512;
+    short max_height = (bool)((g_4ba014 >> 4) & 1) && !(bool)((g_4ba014 >> 5) & 1) ? 128 : 512;
     real maximum = (real)max_width;
     real size = ((real)sqrt(extent * extent * *(real const *)(state + 8)) * 0.33333334f + *(real const *)(tag + 0x10) * 0.125f) *
         (maximum - 128.0f) * g_485a34 + 128.0f;
@@ -117,6 +165,7 @@ void function_48ee0(byte const *state, byte const *matrix, byte const *tag)
     g_4c9798[12] = border + 0.5f;
     g_4c9798[13] = 0.5f - border;
     g_4c9798[15] = 0.0f;
+    vector3f const &direction = *(vector3f const *)(matrix + 0x28);
     point3f const &origin = *(point3f const *)matrix;
     plane3f *plane = (plane3f *)&g_4c9798[16];
     vector3f normal;

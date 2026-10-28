@@ -27,6 +27,24 @@ struct s_slot_64
 	byte unknown30[0x40 - 0x30];
 };
 
+/* the same slot's block after its header (s_slot's unknownc), offsets 0xc
+   lower */
+struct s_slot_64_data
+{
+	long prop_index;
+	short unknown04;
+	short unknown06;
+	byte unknown08[2];
+	bool unknown0a;
+	bool unknown0b;
+	bool unknown0c;
+	bool unknown0d;
+	byte unknown0e[2];
+	s_type_c3b527 unknown10;
+	long unknown20;
+	byte unknown24[0x34 - 0x24];
+};
+
 struct s_slot_66
 {
 	s_slot_header header;
@@ -395,46 +413,28 @@ short __stdcall function_1b3f60(long actor_index, s_slot *slot, bool active)
 	}
 	return result;
 }
-// score 58 (was 58): seed/actor scheduling, folded random scale and slot EBP lifetime remain;
 
-// seed/actor schedule, slot receiver, timer homes and folded range multiply remain.
-// Shared rounding 66; direct scaled rounding 74; separate scaled timer 63; result-first rounding 66;
-// range/fraction/both force-inline declarations 63/63/63; both with shared rounding 66.
-// seed/actor scheduling, folded random scale and slot EBP lifetime remain;
-// duration and timer names, ticks first, timer scope, named ticks first, named
-// timer scope, direct slot and named direct slot each 63. Opening body restored.
-// Accessor receivers 61; distinct scaled input 63; native conversion output 63; entry success with
-// assembly 63; chained resets 63; conversion before publications 61; random before accessor 66;
-// scaled input with accessor receivers 61. Seed/slot allocation and unfolded range remain.
-// Reset flag/pair/property postconditions 63/80/68; notification inline 63;
-// const receivers 63; input names 63; actor clear before timer store/conversion 63/63.
-// Native flag memset/value reset 63/58; late receiver with either 63/58; final-accessor resets
-// 60/64; late final-accessor resets 60/64.
-// Native record clear before slot stores/after zero pair/after property/before tick product
-// 58/58/58/58; those placements with shared conversion 64/61/62/61. Opening body restored.
-// Native flag fields/chain, direct/member receivers at final reset 63/63/63/63;
-// the same complete field resets before tick conversion 63/63/63/63.
 // @retail 0x1b4240
 bool __stdcall function_1b4240(long actor_index, s_slot *slot)
 {
-	s_slot_64 *state = (s_slot_64 *)slot;
 	s_actor_view *actor = actor_get(actor_index);
-	real seconds = slot_random_range(10.0f, 15.0f);
+	s_slot_64_data *state = (s_slot_64_data *)slot->unknownc;
+	real seconds = function_259d0(&g_4e7408->unknown0, NULL, 0, 10.0f, 15.0f);
 	long ticks;
 
 	actor_unit_function_20ba60(actor_index, 0x61);
-	state->unknown10 = 0;
-	state->unknown16 = false;
+	state->unknown04 = 0;
+	state->unknown0a = false;
 	state->prop_index = actor->prop_index;
-	state->unknown19 = false;
+	state->unknown0d = false;
 	seconds = g_510c54->field_2_3 * seconds;
 	__asm
 	{
 		fld seconds
 		fistp ticks
 	}
-	state->unknown12 = (short)ticks;
-	actor->unknown314 = s_actor_flags314();
+	state->unknown06 = (short)ticks;
+	memset(&actor->unknown314, 0, sizeof(actor->unknown314));
 	return true;
 }
 
@@ -602,8 +602,10 @@ long function_1e4a50(long index);
 void function_26c180(long actor_index);
 short actor_behavior_find_level(long owner_index, short type);
 
-// score 140 (was 140): frame 0x84 versus 0x88 and actor/scratch homes differ;
-// source store order 145, movement result 142, positive membership scope 161,
+// score 59 (was 59): the 0x270750 call passes scratch/sector/target in other registers (its own
+// convention; the extra byte also makes the loop's back-edge jump near, +5 bytes), and after the
+// loop the sector and unit loads and the pool/actor registers are scheduled the other way.
+// Earlier (frame 0x84 versus 0x88 and actor/scratch homes): source store order 145, movement result 142, positive membership scope 161,
 // role names 144, native zero initialization 144, combined setup/result 141.
 // frame 0x84 versus 0x88 and actor/scratch/best homes remain.
 // Double best distance 214; failure-default active result 172; inactive success exit 188;
@@ -621,62 +623,79 @@ short actor_behavior_find_level(long owner_index, short type);
 // comparison with admission/buffer/both 166/140/166; native settings initialization 215.
 // Native start/candidate/both/selected location receivers 159/139/161/139;
 // start-selected/candidate-selected/all receivers 158/138/160; all with query-output scope 160.
+// Round 70: element member iterator 142 (frame 0x88); with memset source 144; best index scoped in
+// the found branch 132; NONE test as result = false in an else-if chain 59 (kept). On that: location
+// pointer 62; getter at each use after the loop 88; loop member reused 59; best locals first 59;
+// inverted selection test 59; slot data block view (unknownc) 59.
+// Round 218: Chained source validity with data block/alone 64/64; chained sentinels 61;
+// both chains 66; complete point after sector alone/with either/both chains 86/87/85/86.
+// Data-block form does not apply; original body and source construction restored.
+// Round 144, recovered result-first/iterator frame: native slot data 59f; movement
+// result 154f, with slot 154f; search result 121f; search/movement 145f; selection/
+// movement 137f; all results 154f, with slot 154f. Original body restored.
+// Round 41: selected target-index snapshot 62; source-selected target index 62;
+// all-phase target index 85; candidate-selected target index 85; candidate-selected location 84;
+// all-phase location 84; source-selected location 62; source-selected target pointer 131.
 // @retail 0x1b3fd0
 bool __stdcall function_1b3fd0(long actor_index, s_slot *slot)
 {
 	s_actor_view *actor = actor_get(actor_index);
 	bool result = true;
 	if (actor->unknown07c == NONE)
-		return false;
-	if (actor->unknown040 && !((s_slot_66 *)slot)->unknown0c)
+		result = false;
+	else if (actor->unknown040 && !((s_slot_66 *)slot)->unknown0c)
 	{
 		byte *movement = (byte *)function_1e4a50(actor->unknown054);
 		function_26c180(actor_index);
-		s_path_source source = { *(real *)(movement + 4) };
+		s_path_source source;
+		memset(&source, 0, sizeof(source));
+		source.radius = *(real *)(movement + 4);
 		source.unknown04 = false;
 		source.object_index = NONE;
 		source.unknown0c = NONE;
+		source.unknown4c = 0.0f;
 		source.has_point = true;
 		source.point = *(s_path_point *)&actor->unknown27c.point;
 		source.unknown24 = actor->unknown27c.unknown10;
 		source.unknown45 = true;
 		source.unknown48 = 10.0f;
-		source.unknown4c = 0.0f;
 		s_path_settings settings;
 		function_1f9240(actor_index, &settings);
 		byte *scratch = ai_scratch_buffer_get();
 		function_271300((s_type_f17a25 *)scratch, NULL, &settings, &source, 0);
-		long best_index = NONE;
 		if (function_2715a0(scratch))
 		{
-			long member_index = element_502420_get(actor->unknown07c)->first_actor_index;
+			s_element_502420_member_iterator iterator;
+			s_actor_view *member;
+			iterator.next_index = element_502420_get(actor->unknown07c)->first_actor_index;
+			iterator.index = NONE;
+			long best_index = NONE;
 			real best_distance = 50.0f;
-			while (member_index != NONE)
+			while ((member = element_502420_member_next(&iterator)) != 0)
 			{
-				long current_index = member_index;
-				s_actor_view *member = actor_get(current_index);
-				member_index = member->next_index;
-				if (member != actor && actor_behavior_find_level(current_index, 0x66) == NONE)
+				if (member != actor && actor_behavior_find_level(iterator.index, 0x66) == NONE)
 				{
-					function_26c180(current_index);
+					function_26c180(iterator.index);
 					real distance;
 					if (function_270750(scratch, member->unknown27c.unknown10,
 							(s_actor_point_target const *)&member->unknown27c.point, &distance, 0, 0) && best_distance > distance)
 					{
-						best_index = current_index;
+						best_index = iterator.index;
 						best_distance = distance;
-					}
 					}
 				}
 			}
-		if (best_index != NONE)
-		{
-			s_actor_view *member = actor_get(best_index);
-			if (function_1f4460(actor_index, &member->unknown27c.point, member->unknown27c.unknown10, member->unknown018, false))
+			if (best_index != NONE)
 			{
-				actor->unknown4cc = 1.5f;
-				((s_slot_66 *)slot)->unknown10 = best_index;
-				member->unknown314.bit1 = true;
+				s_actor_view *selected = actor_get(best_index);
+				if (function_1f4460(actor_index, &selected->unknown27c.point, selected->unknown27c.unknown10, selected->unknown018, false))
+				{
+					actor->unknown4cc = 1.5f;
+					((s_slot_66 *)slot)->unknown10 = best_index;
+					selected->unknown314.bit1 = true;
+				}
+				else
+					result = false;
 			}
 			else
 				result = false;

@@ -189,59 +189,6 @@ bool __stdcall function_25dd30(long a, long b)
 	return a == b;
 }
 
-// score 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
-// first vector schedule, geometry registers and score adds remain;
-// shared displacement/geometry displacement/bonus result 310/310/313;
-// geometry/sphere/cone score observations 337/310/310; all score observations 337; actual view reference 310.
-// initial offset schedule, geometry carriers and score adds remain;
-// shared component difference at offset/segment/both/fallback 334/343/343/343;
-// sphere/cone/all displacements 368/277/392; existing magnitude helper 175.
-// initial offset schedule and protected geometry carriers remain;
-// read-only actor 175; self-dot at offset/segment/fallback/movement/sphere/cone
-// 175/175/175/175/175/175; all shared self-dots 313. Original helpers retained.
-// initial vector scheduling and protected geometry carriers remain. Fast trials:
-// signed sphere ordinal 1031; unsigned sphere ordinal 1031; count snapshot 175; snapshot with signed
-// ordinal 1031; snapshot with unsigned ordinal 1031; final unit cap 352; final cap with signed ordinal
-// 1023; final cap with count snapshot 352. All restored.
-// offset-X scheduling and geometry carriers remain; actor-position field 410; native
-// sphere 182; readonly cone 175; required-flags field 325; offset/minimum scopes 175/175; enabled-mask gate
-// 175; position and sphere fields 410.
-// Penalty radius once 325; named margin radius 310; reach square 310; radius+margin 325;
-// radius+reach 326; margin+reach 310; all 326; both reach squares with radius+margin 326. All
-// fast.
-// Later flag/cone/reference pass cursors stepped at use 345/314/340; flag/cone 345;
-// flag/reference 352; cone/reference 342; all 352; separate later short ordinals on the recovered
-// frame 175 (fast).
-// Earlier: first vector schedule, geometry registers and score adds remain;
-// Earlier: initial offset schedule, geometry carriers and score adds remain;
-// Earlier: initial offset schedule and protected geometry carriers remain;
-// Earlier: initial vector scheduling and protected geometry carriers remain. Fast trials:
-// Earlier: offset-X scheduling and geometry carriers remain; actor-position field 410; native
-// Round 165: Whole squared-offset/movement/sphere expression names 310/310/310;
-// paired offset+movement/offset+sphere/movement+sphere 310/310/310; all three 175;
-// all with segment/fallback squared names 175. Original arithmetic and body restored.
-// Frame 0x30 agrees; initial offset/segment schedule and protected geometry carriers remain.
-// Earlier 175 (was 175): vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
-// Earlier 175 (was 175): first vector schedule, geometry registers and score adds remain;
-// Earlier 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
-// Earlier 175 (was 175): initial offset schedule and protected geometry carriers remain;
-// Earlier 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
-// Earlier 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
-// Round 140: repeated segment-origin/actor-position/both receivers 356/311/357; sphere-radius receiver 175;
-// radius plus origin/position/both 356/311/357; all three native references 357. Original executable source
-// restored; earlier stacked notes merged.
-// Frame 0x30 agrees; offset/segment scheduling, geometry carriers, score adds and pool load differ.
-// Earlier: vector scheduling and geometry-call registers remain; sphere bonus branches 311f, signed mask snapshot 310f, distance-root local 310f, global optimization off 830f, minimum conditional 175 plain.
-// Earlier at 175 (was 175): first vector schedule, geometry registers and score adds remain;
-// Earlier at 175 (was 175): initial offset schedule, geometry carriers and score adds remain;
-// Earlier at 175 (was 175): initial offset schedule and protected geometry carriers remain;
-// Earlier at 175 (was 175): initial vector scheduling and protected geometry carriers remain. Fast trials:
-// Earlier at 175 (was 175): offset-X scheduling and geometry carriers remain; actor-position field 410; native
-// Round 229: Object lookup valid-first/conditional calls/selected index/missing-first arms
-// 309/309/310/309; with shared unit input 331/331/254/331. Original body restored.
-// Independent clearance/movement reaches: separate native lifetimes 310; point-of-computation
-// declarations 310; read-only values 310; role names 310; first home before vectors 310;
-// paired guard homes 310; paired iteration homes 310; iteration role names 310 (all fast).
 // @retail 0x25dd50
 void __stdcall function_25dd50(
 	long actor_index,
@@ -250,12 +197,10 @@ void __stdcall function_25dd50(
 	s_type_b36ac5 *positions)
 {
 	s_actor_firing_view *actor = (s_actor_firing_view *)actor_get(actor_index);
-	short i;
 
+	for (short position_index = 0; position_index < count; position_index++)
 	{
-	s_type_b36ac5 *position = positions;
-	for (i = 0; i < count; i++, ++position)
-	{
+		s_type_b36ac5 *position = &positions[position_index];
 
 		if (!position->unknown4c)
 		{
@@ -278,16 +223,16 @@ void __stdcall function_25dd50(
 			vector3f offset;
 			real reach;
 
+			vector3d_from_points3d(&actor->unknown370, &actor->unknown388, &segment);
 			vector3d_from_points3d(&actor->unknown3a0, &position->position, &offset);
 			reach = actor->unknown39c + 2.5f;
-			vector3d_from_points3d(&actor->unknown370, &actor->unknown388, &segment);
 			if (length_sq3f(&offset) < reach * reach)
 			{
 				real distance;
 
 				if ((real)sqrt(length_sq3f(&segment)) > 0.f)
 				{
-					distance = function_11e000(&actor->unknown370, &position->position, &segment);
+					distance = function_11e000(&position->position, &actor->unknown370, &segment);
 				}
 				else
 				{
@@ -323,7 +268,7 @@ void __stdcall function_25dd50(
 			{
 				real radius = actor->unknown36c;
 
-				if (function_11e000(&actor->unknown370, &actor->position, &segment) > radius * radius)
+				if (function_11e000(&actor->position, &actor->unknown370, &segment) > radius * radius)
 				{
 					vector3f movement;
 
@@ -332,7 +277,7 @@ void __stdcall function_25dd50(
 					{
 						real movement_radius = actor->unknown36c;
 
-						if (function_11e130(&actor->unknown370, &segment, &actor->position, &movement) <
+						if (function_11e130(&actor->position, &movement, &actor->unknown370, &segment) <
 							movement_radius * movement_radius)
 						{
 							position->unknown4d = true;
@@ -375,11 +320,9 @@ void __stdcall function_25dd50(
 			position->score += bonus;
 		}
 	}
-
-	}
-	for (i = 0; i < count; i++)
+	for (short position_index_1 = 0; position_index_1 < count; position_index_1++)
 	{
-		s_type_b36ac5 *position = &positions[i];
+		s_type_b36ac5 *position = &positions[position_index_1];
 
 		if (position->unknown4c)
 		{
@@ -397,13 +340,23 @@ void __stdcall function_25dd50(
 
 	if (context->unknown5b)
 	{
-		s_slot_object_view *object = object_get(actor->unknown26c != NONE ? actor->unknown26c : actor->unknown018);
+		s_slot_object_view *object;
+
+		if (actor->unknown26c != NONE)
+		{
+			object = object_get(actor->unknown26c);
+		}
+		else
+		{
+			object = object_get(actor->unknown018);
+		}
+
 		point3f origin;
 
 		function_b9dd0(actor->unknown018, &origin);
-		for (i = 0; i < count; i++)
+		for (short position_index_2 = 0; position_index_2 < count; position_index_2++)
 		{
-			s_type_b36ac5 *position = &positions[i];
+			s_type_b36ac5 *position = &positions[position_index_2];
 
 			if (position->unknown4c)
 			{
@@ -411,12 +364,14 @@ void __stdcall function_25dd50(
 				real distance_squared;
 
 				vector3d_from_points3d(&origin, &position->position, &delta);
-				distance_squared = length_sq3f(&delta);
+				distance_squared = delta.j * delta.j + delta.k * delta.k + delta.i * delta.i;
 				if (!(fabs(distance_squared) < 0.0001f) && 900.f > distance_squared)
 				{
 					real cosine = dot3f(&delta, &object->forward) / (real)sqrt(distance_squared);
 
-					if ((context->unknown5c || length_sq3f(&object->velocity) > 6.25f) &&
+					if ((context->unknown5c ||
+						object->velocity.j * object->velocity.j + object->velocity.k * object->velocity.k +
+						object->velocity.i * object->velocity.i > 6.25f) &&
 						64.f > distance_squared && cosine < 0.70710677f)
 					{
 						position->unknown4d = true;
@@ -446,9 +401,9 @@ void __stdcall function_25dd50(
 
 	if (context->unknown692)
 	{
-		for (i = 0; i < count; i++)
+		for (short position_index_3 = 0; count > position_index_3; position_index_3++)
 		{
-			s_type_b36ac5 *position = &positions[i];
+			s_type_b36ac5 *position = &positions[position_index_3];
 
 			if (*(long *)&position->reference == context->unknown694 && position->unknown4c)
 			{
@@ -1787,7 +1742,7 @@ bool (__stdcall *g_comparator)(long, long, void *) = function_2600e0;
 void function_1e3b00(long object_index, long mode, point3f const *reference,
 	void const *unknown0, void const *unknown1, point3f *position);
 short __stdcall function_272af0(s_match_globals *arg_0, point3f const *arg_1);
-short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
+short __stdcall function_1c8df0(short arg_3, short arg_2, point3f const *arg_4, long arg_0,
 	void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9);
 real normalize2d(point2f *v);
 
@@ -1803,7 +1758,13 @@ struct s_collision_result_25f7b0
 	byte unknown26[0x5c - 0x26];
 };
 
-// score 7 (was 14): the mode local is stored and passed as a dword but retail compares
+// score 4 (was 7): the collision bool's byte home is +0x13 where retail keeps it at +0x10,
+// and the product loads the hit fraction where retail loads the distance.
+// Earlier rounds (7 or worse): byte collision flag, byte allow flag, long initial mode, short
+// collision flag, scoped ray setup/result, guarded collision fraction, hit distance, native
+// collision output, ray/distance endpoints, final query point, projection and displacement
+// workspace forms, product operand swap, flipped comparison, named product local, local_4
+// rename, local declaration orders, uninitialized-early local_22; none beat this score.
 // its low word, so the test reads it as a short (same width pattern as the kept cast in
 // 0x1af5c0); that also cleared the constant/call-address artifacts and the trailing pad.
 // Still differ: the collision bool's byte home (+0x13 against +0x10), the product's load
@@ -1829,7 +1790,6 @@ struct s_collision_result_25f7b0
 // declaration orders, bool declared after the first query call, local_22
 // uninitialized-early, byte-typed local_4: all tie at 7. local_22 initialized before the
 // mode selection 113; the entry type copy reused in the allow test 260.
-// score 7 (was 7): collision byte +0x13/+0x10, product loads and allow-store schedule remain;
 // tried immutable distance 7p; guarded classification 210p; nested hit classification 199p; classification enum 7p;
 // projection first 7p; allow from second type 6p; allow from first type 8p; native query flag 123p.
 // collision byte home, distance product loads and allow store remain;
@@ -1944,16 +1904,14 @@ void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *
 				local_14 = 1;
 			break;
 		}
-		bool local_22 = true;
-		if (*(short *)arg_1 == 2 || *(short *)arg_1 == 1)
-			local_22 = false;
+		bool local_22 = *(short *)arg_1 != 2 && *(short *)arg_1 != 1;
 		short local_23;
 		if (arg_2->definition->flags & 8)
 			local_23 = function_272af0(g_4e0348, &local_21);
 		else
 			local_23 = arg_2->definition->unknown12;
-		arg_2->type = function_1c8df0(*(long *)((byte *)arg_1 + 0x648), (point3f const *)((byte *)arg_1 + 0x638),
-			*(short *)((byte *)arg_1 + 0x660), local_23, &local_21, local_14, true,
-			local_0->unknown26c != NONE, local_22, NULL);
+		arg_2->type = function_1c8df0(*(short *)((byte *)arg_1 + 0x660), local_23,
+			(point3f const *)((byte *)arg_1 + 0x638), *(long *)((byte *)arg_1 + 0x648), &local_21,
+			local_14, true, local_0->unknown26c != NONE, local_22, NULL);
 	}
 }

@@ -644,7 +644,7 @@ void __stdcall function_188ac0(dword flags)
 						record_pool_release(array, datum);
 					else
 					{
-						function_18d290(datum, value);
+						function_18d290(value, datum);
 						array = g_4ed28c;
 					}
 				}

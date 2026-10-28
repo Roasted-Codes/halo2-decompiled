@@ -168,6 +168,11 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 }
 
 // score 627 (was 627): Frame 0x54/type EDX agree; state/player/unit homes remain.
+// Round 134: retail's case layout is 10-14, 2, 4, 15, 18, 0, 1, 31, 17, 30, ...: cases 0/1/31 after 18
+// 656; plain blocked flag 645, both 656; with a plain player pointer too, retail's state edi, player esi,
+// spilled unit index and result at entry, but request_weapon stops inlining: 769, case 2 as an if 785,
+// plus plain blocked 790, plus a plain address-taken result 726; request_weapon forced inline 939
+// (0xcbd50 inlined too, a noinline declaration no help), taking the unit index 658; plain player alone 779.
 // Earlier 631 from 645: frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // frame 0x54/type EDX agree; state/player/unit homes differ, retail length recovered.
 // Earlier 649 from 649: frame 0x54 agrees; state/player/unit homes differ; inline depths 1/2 649, object accessor inline 649, array base 649, player-index first 656.
@@ -209,6 +214,19 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Complemented return with original locals 771; ordinary result/player/both 764/856/832;
 // ordinary blocked/result-blocked/player-blocked/all 781/778/858/844. Original case-two
 // result, case order, local qualifications and complete executable body restored.
+// Shared 25/28, 26/27/29, empty cases, paired groups and all groups
+// 634/634/627/634/634/634/634; all with flag cases after 18 651.
+// Conditional player-index assignment 628; parent, seat, iterator, port, status
+// and target names individually and together 627 each.
+// Flag-case order permutations 627/627/627/626/628; individual moves after case 18 609/646/643.
+// The 609 form worsens executable differing rows 552 to 561; restored.
+// Case pairs 10/11, 12/13, 15/18, 17/30, 20/23, 22/21, 5/6 and 7/8
+// reversed individually 627/629/625/627/627/630/633/636 (fast); original order restored.
+// Round 78 (fast; aligned rows in brackets, baseline 450): plain player 779 [280] (helper out of line);
+// with request_weapon forced inline 981 (0xcbd50 inlined too); with request_weapon taking the unit index
+// 665 [413] (inlined again); plus cases 0/1/31 after 18 666 [355] (retail's case layout); plus the player
+// index as NONE then an if (retail's or/cmp/je shape) 667 [361]. Register roles (retail: state EDI,
+// player ESI, unit index spilled, unit EBX, headers EBP) still differ in all of them.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

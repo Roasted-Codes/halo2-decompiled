@@ -7,6 +7,7 @@
 #include "globals.h"
 #include "unknown_1cec30.h"
 #include "unknown_1428b0.h"
+#include "vector_products.h"
 #include <math.h>
 
 struct s_vehicle_physics_state;
@@ -84,10 +85,7 @@ PRIVATE __forceinline void vector_limit_length(vector3f *v, real maximum)
 	real length_squared = v->k * v->k + v->j * v->j + v->i * v->i;
 	if (length_squared > maximum * maximum)
 	{
-		real scale = (real)(maximum / sqrt(length_squared));
-		v->i = (real)(v->i * scale);
-		v->j = (real)(v->j * scale);
-		v->k = (real)(v->k * scale);
+		scale_vector_by_double(v, maximum / sqrt(length_squared), v);
 	}
 }
 
@@ -110,7 +108,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 	out->up.k = inertia.m_col2(2);
 }
 
-// score 184 (was 184): Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
+// score 1 (was 1): only the linear brake's zero k product differs: ours multiplies the double scale by a
+// double 0.0 constant (`fmul qword`), retail by the float 0.0f (`fmul dword`).
+// Earlier: Frame 0x94 versus 0xc4; query/rotation overlap, motion/reciprocal and product/brake allocation remain.
 // Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
 // aligned query/rotation overlap, motion/reciprocal and cap-result allocation remain.
 // Earlier: Aligned frame remains 0x94 versus retail 0xc4; motion/reciprocal, product and braking scheduling still differ.
@@ -148,6 +148,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Query-source-only matrix with early/late world declarations 213/213; broad rotation 216;
 // distinct first world output 194; completed transpose alone/with first output 277/240;
 // late world and broad rotation 216; first world and broad rotation 194. All restored.
+// Shared double-factor cap scaling in place/through completed output 227/302 fast;
+// with broad rotation 235/310, first matrix output 239/314, completed transpose 240/315.
+// Query/rotation frame fixes still worsen cap scheduling; original helpers and matrices restored.
 // Round 160: Complete force products, linear integration results, angular integration results, both
 // result sets, norm squares, squared cap, all cap products and force-plus-cap products all 184. Every
 // expression tree, input observation, existing helper, matrix role and signed contact loop restored.
@@ -159,8 +162,63 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Virtual output pointer/mutable receiver/both 184/184/184; uniform angular terms alone/with
 // pointer/receiver/both 184 each; new query/product contract with distinct first result 194.
 // Aligned query/rotation overlap remains.
+// Wide rotation with query publication columns 021/102/120/201/210 219/221/221/219/221;
+// rows 012/021/102 221/219/217. Frame recovers but scores regress; original retained.
+// Coordinated body-scalar/limiter-scalar/query-output names and combinations
+// 184/184/184/184/184/184/184/184; last form also makes repeated body scalars const. All restored.
 // Round 168: Complete native converted matrix by fields/aggregate 270/270; with broad rotation
 // 268/268, distinct first product 290/290, both 273/273. Converter and body restored.
+// Combined scale/cap ownership: pointer forced/ordinary, reference and native inputs
+// 292/292/292/241; with broad rotation 274/274/274/256. Original limiter and scopes restored.
+// Round 333: Ordinary limiter/cap-first/both contracts 184/184/184; cap-first/both with broad rotation 221/221; ordinary limiter/cap-first/both with ordinary query expansion 184/184/184. Broad forms recover frame 0xc4 but regress; all original helpers, matrix scopes and calls restored.
+// Complete world-inertia producer with matrix/state pointer/reference inputs, forced 233 each;
+// ordinary matrix/state pointer/reference 462/468/462/468. Original query boundary restored.
+// Round 153: native virtual query value/const-value initialization 184/184; assignment 275/275; each with broad rotation 221/287/221/287. Initializers retain the 0x94 frame; broad initialization recovers 0xc4 but regresses. Original virtual output, helpers and scoped rotation restored.
+// Round 76: existing vector3f_scale for the inverse mass, the angular brake, both 184/184/184 (identical
+// code: the reciprocal stays the product destination); angular product as three rows 221, with component
+// locals 221, with that and the brake helper 221. Aligned difference 143 of 289 (frame and float schedule).
+// Round 155: Native inverse-inertia/rotation matrix alignments 16/4,4/16,16/16,8/4,
+// 4/8,8/8,16/8,8/16: 240/224/240/241/224/241/240/241. Original native matrix alignments and scoped rotation restored.
+// Lane 4 r98: `0.0f - braking / dt` builds as braking * (-1 / dt); `-(braking / dt)` gives retail's
+// zero-minus-quotient and its 1265 bytes but 221. With broad rotation 232 (frame 0xc4, first difference
+// +0xfd); with it, divisions by the mass, reciprocal-first products and an inline vector-scale helper for
+// the mass and angular-brake products 232 each: the products still copy the scalar where retail scales
+// the component in place.
+// Round 224: Existing query producer owns preceding inverse-mass scaling; scalar/state inputs
+// and vector pointer/reference 184/184/184/184; broad-rotation counterparts 221/221/221/221. Original boundary and scopes restored.
+// Round 28 (m3 lane 12): `0.0f - braking / dt` compiles to a product with -1/dt; `-(braking / dt)` gives
+// retail's subtraction from the zero register and retail's length (1265) but 221 fast; with function-scope
+// rotation (frame 0xc4, rotation at +0xac) 232; with one integration loop 221; acceleration folded into the
+// angular loop 270; inverse-mass products reversed 221 (no change). Float register allocation then differs.
+// Round 66 (fast): the inverse-mass products follow definition order: with the reciprocal defined before the
+// force block they scale each component in place as retail and every later SSE register then agrees (aligned
+// 105 -> 58) but 170 is not kept (it moves a memory read past a call, and retail divides late, after the motion
+// load); defined at the top 263 (spilled across the state query); before the velocity call 200; before the
+// motion load 184; written at each use 184; `x = x * reciprocal` 184; `+=` force/torque adds 184.
+// Lane 9 r25: rotation declared in a block around the inertia query and assigned after it 221 (frame
+// 0xc4, raw inertia +0x70, rotation +0xac as retail's; first difference +0xfd: retail loads the motion
+// before the reciprocal and scales each component in place, ours copies the scalar); with the
+// reciprocal before the motion 221; with `-(braking / dt)` 232; with `x = x * s` mass products and an
+// angular brake copied then scaled 267; with the limiter's products as `*=` 221.
+// Round 30 (m3 lane 12): inverse-mass products as `x = x * inverse_mass`, reciprocal before the motion pointer,
+// force sum as `+=`, reciprocal written at each use 184 each (identical code: the reciprocal stays the
+// product destination); function-scope rotation 221 (frame 0xc4, rotation +0xac, float registers rename).
+// Lane 4 r106: the force/torque sums and the four velocity integrations through pointer helpers
+// (vector3f_add, vector3f_add_scaled) give retail's division after the motion load and the in-place
+// products (184 -> 123 -> 72 with function-scope rotation and `-(braking / dt)`); the limit's scaling
+// through scale_vector_by_double 1. For the last difference: brake vectors through vector3f_scale, an
+// aggregate initializer or real_point3d_set, `= 0`, zero k first 1/1/1/1/4; double-scale local 7; real
+// scale into the double helper 1; limit inline/no inline keyword 1/1; the existing 0xa75d0 for both/linear
+// only 72/2 (float scale: retail's zero constant but not its reload order); explicit double conversions 7.
+// Round 272: CRT planar/both brake initialization 172/172; complete velocity copy 190;
+// both native vector setters 1; consumed limiter output 146, explicit input/output 146;
+// native k-j-i norm loop 149; CRT planar zero with consumed limiter 183. All restored; zero-product width remains.
+// Existing double-scale force-inline declaration 1
+// complete limiter split pointer/reference outputs 1/1
+// native value input with pointer/reference outputs 325/325
+// complete native returns from value/reference inputs 345/283
+// returned output pointer 1. Zero product remains wide
+// original limiter and shared-helper declaration restored.
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)
@@ -174,17 +232,9 @@ void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *stat
 	if (!function_206090(state, &linear_change, &angular_change))
 		braking = 0.0f;
 	if (force)
-	{
-		linear_change.i = force->i + linear_change.i;
-		linear_change.j = force->j + linear_change.j;
-		linear_change.k = force->k + linear_change.k;
-	}
+		vector3f_add(force, &linear_change, &linear_change);
 	if (torque)
-	{
-		angular_change.i = torque->i + angular_change.i;
-		angular_change.j = torque->j + angular_change.j;
-		angular_change.k = torque->k + angular_change.k;
-	}
+		vector3f_add(torque, &angular_change, &angular_change);
 	vector3f linear_velocity;
 	vector3f angular_velocity;
 	function_ba1d0(vehicle_index, &linear_velocity, &angular_velocity);
@@ -195,24 +245,18 @@ void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *stat
 	linear_change.k *= inverse_mass;
 	matrix3x3 inverse_inertia;
 	motion_inverse_inertia_local(motion, &inverse_inertia);
-	{
-		matrix3x3 rotation = step->rotation;
-		function_142eb0(&rotation, &inverse_inertia, &inverse_inertia);
-		function_142eb0(&inverse_inertia, function_142b80(&rotation, &rotation), &inverse_inertia);
-	}
+	matrix3x3 rotation = step->rotation;
+	function_142eb0(&rotation, &inverse_inertia, &inverse_inertia);
+	function_142eb0(&inverse_inertia, function_142b80(&rotation, &rotation), &inverse_inertia);
 	vector3f local_461a4b_2;
 	for (long axis = 0; axis < 3; axis++)
 		local_461a4b_2.n[axis] = inverse_inertia.up.n[axis] * angular_change.k +
 			inverse_inertia.left.n[axis] * angular_change.j + inverse_inertia.forward.n[axis] * angular_change.i;
-	linear_velocity.i += linear_change.i * dt;
-	linear_velocity.j += linear_change.j * dt;
-	linear_velocity.k += linear_change.k * dt;
-	angular_velocity.i += local_461a4b_2.i * dt;
-	angular_velocity.j += local_461a4b_2.j * dt;
-	angular_velocity.k += local_461a4b_2.k * dt;
+	vector3f_add_scaled(&linear_velocity, &linear_change, dt, &linear_velocity);
+	vector3f_add_scaled(&angular_velocity, &local_461a4b_2, dt, &angular_velocity);
 	if (braking > 0.0f)
 	{
-		real scale = 0.0f - braking / dt;
+		real scale = -(braking / dt);
 		vector3f linear_brake;
 		linear_brake.i = linear_velocity.i * scale;
 		linear_brake.j = linear_velocity.j * scale;
@@ -223,12 +267,8 @@ void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *stat
 		angular_brake.j = angular_velocity.j * scale;
 		angular_brake.k = angular_velocity.k * scale;
 		vector_limit_length(&angular_brake, 18.0f);
-		linear_velocity.i += linear_brake.i * dt;
-		linear_velocity.j += linear_brake.j * dt;
-		linear_velocity.k += linear_brake.k * dt;
-		angular_velocity.i += angular_brake.i * dt;
-		angular_velocity.j += angular_brake.j * dt;
-		angular_velocity.k += angular_brake.k * dt;
+		vector3f_add_scaled(&linear_velocity, &linear_brake, dt, &linear_velocity);
+		vector3f_add_scaled(&angular_velocity, &angular_brake, dt, &angular_velocity);
 	}
 	function_b77d0(vehicle_index, &linear_velocity, &angular_velocity);
 	vehicle->contact_flags = 0;

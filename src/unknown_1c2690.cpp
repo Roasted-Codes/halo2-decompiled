@@ -22,9 +22,9 @@ public:
  virtual void function_a9ef0(void *arg_0);
 };
 void __cdecl function_2d8780();
-void __cdecl function_2d7f00();
+int __cdecl function_2d7f00();
 void (__cdecl *g_461df0)() = function_2d8780;
-void (__cdecl *g_461df4)() = function_2d7f00;
+int (__cdecl *g_461df4)() = function_2d7f00;
 byte g_510c58;
 extern long g_47f04c;
 extern long g_47f050;
@@ -86,6 +86,17 @@ void function_1c2690()
 // score 4 (was 4): retail loads the three pointers before the two writes of
 // the valid flag and pushes the deleted one after both writes, ours pushes it
 // between them.
+// Library byte clears first/second/both 4/4/4; implicit null-safe interface deletion
+// alone/first-clear/second-clear/both-clear 4/4/4/4; both clears with saved byte 4.
+// void listener local before the stores, first pool reference, both pool references,
+// cleanup tail scope, valid-store scope, split saved flag, const renamed saved flag
+// and subtraction-assignment reference count 4 each.
+// Further trials: complete pointer observations first/second/listener 4; complete pointer
+// observations first/listener/second 4; complete pointer observations
+// second/first/listener 4; complete pointer observations second/listener/first 4; complete
+// pointer observations listener/first/second 4; complete pointer observations
+// listener/second/first 4; both pool pointers before the stores 4; both pool pointers with
+// byte saved entry state 4.
 // @retail 0x1c27a0
 void function_1c27a0()
 {

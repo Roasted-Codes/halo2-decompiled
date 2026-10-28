@@ -133,7 +133,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 	arg_0->field_14 *= 1.0f - arg_2;
 }
 
-// score 616 (was 616): Frame 0x4820 and metadata cursor agree; native palette width and accumulator carriers differ.
+// score 616 (was 616): Frame 0x4820, clears and metadata cursor agree; palette and accumulator carriers remain.
+// Earlier: Frame 0x4820 and metadata cursor agree; native palette width and accumulator carriers differ.
+// Frame, clear prefix and metadata cursor agree; palette/cluster carriers and accumulator scheduling remain.
 // Frame 0x4820, clears and metadata cursor agree; cluster-index EDI, palette carriers and helper update scheduling differ.
 // Earlier: Frame 0x4820 and clear scheduling agree; output cursor +0x10 versus +8 and palette/cluster homes remain.
 // Earlier: Frame 0x4820 agrees; output cursor +0x10 versus +8 and palette/cluster homes remain.
@@ -172,6 +174,54 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // One-point leads dropped; original complete free-function helpers restored.
 // Separate clamped weight in scalar/merge/color helpers 684/683/683; scalar-merge/scalar-color/merge-color/all 684/684/683/684;
 // normalized contribution before destination stores 742. Original input captures and helper bodies restored.
+// Uniform scalar/merge/scalar-merge/color/scalar-color/merge-color/all contribution product operands; all
+// normalized publication products; then source-first scalar/merge/scalar-merge/color/scalar-color/merge-
+// color/all helper orders and all with output-first normalization:
+// 616/616/616/616/616/616/616/616/615/616/615/617/616/617/616/616 (fast); all restored.
+// Complete source-value copies: scalar RGB/merge accumulator/both/color RGB/scalar-color/merge-color/all
+// 887/818/984/855/989/953/1101; complete publication source 894. Copies grow code/frame; originals restored.
+// No-palette dispatch first, tag/fallback admission with word/byte palette 620/620/712/713;
+// conditional selected-record result on each 620/620/712/713. Original dispatch and word restored.
+// Round 343: Shared caller falloff/contribution/both lifetimes 616/616/617; uncovered contribution 715;
+// radius+uncovered/weight+uncovered/all 716/716/714; all with native byte palette 611 (five-point lead rejected). Original body restored.
+// Round 146: Native reference destinations scalar/merge/both/color/scalar-color/merge-color/all
+// 616/616/616/616/616/616/616; all native accumulator references 616; scalar-
+// field/contribution/both/both-with-destination references 699/617/698/698. Original helper contracts
+// and alias-safe weight capture restored.
+// frame 0x4820, clears and metadata cursor agree; the palette byte, the palette
+// record (EBX in retail), the float constants (zero in XMM7) and the accumulator scheduling differ.
+// Retail reads the palette byte at each use (`mov cl, [esi+0x6f]`, a byte compare with -1, one
+// `movsx ecx, cl`, and a fresh `movsx edx, byte [esi+0x6f]` for the source index), and loads the
+// four colour values of the fog-colour accumulator up front in reverse order (scalar arguments).
+// Tried: redundant weight guard removed 1080; chained remainder defaults 698; merged failed-weight exit
+// 692; const selected record 692; named uncovered fractions 692; interleaved scalar helper 727; the alpha
+// term first 707, with the weight local 713; ordinary output inline 725; ordinary colour inline 725;
+// output-helper output-first parameters 725; native output clear 742; output clear before palette lookup
+// 790; previous index 692; cluster-distance snapshot 762; zero accumulator copies 835; library clear
+// orders 5-6-7-8-10-9/5-6-7-9-8-10/5-6-7-9-10-8/5-6-7-10-8-9/5-6-7-10-9-8/10-5-6-7-8-9/5-6-10-7-8-9/
+// 6-5-7-8-9-10 687/723/720/771/774/729/770/708, final two clears swapped 687; native colour input 692;
+// native six-field output 692, both 692; wide best weight 827; word cluster ordinal 768; colour with wide
+// weight 827; native output with word ordinal 768; wide weight with word ordinal 868; native-source
+// 012/021/102/120/201/210 683/682/694/694/685/685; source-record 012/021 683/682; single-caller source
+// writer 682/681/693/693/684/684, ordinary writer 682/684; cluster-index snapshot/source-record/byte-state
+// and all four combinations 683 each, all three with readonly source record 683; consistent palette slot
+// char/short/long, mutable or readonly record 705/616/713; inverse weighted-state with char/long palette
+// slot 705/713; one signed-short palette observation at all five uses 616; native member scalar/merge/
+// publication operations singly 615/616/615, pairs 617/615/616, all three/four 617/616; separate clamped
+// weight in scalar/merge/colour helpers 684/683/683, pairs 684/684/683, all 684; normalized contribution
+// before destination stores 742; uniform contribution product operands and helper orders (sixteen
+// forms) 615-617; complete source-value copies 887/818/984/855/989/953/1101, publication source 894;
+// no-palette dispatch first, tag/fallback admission with word/byte palette 620/620/712/713, conditional
+// selected-record result on each 620/620/712/713; shared caller falloff/contribution/both lifetimes
+// 616/616/617; uncovered contribution 715; radius+uncovered/weight+uncovered/all 716/716/714, all with
+// native byte palette 611. Round 75: palette byte read at each use 683; fog-colour accumulator with
+// four scalar colour arguments 770 (frame 0x4824: one colour value spills), with its alpha term first
+// 761, with the per-use palette byte 746; named alpha in the pointer helper 698 (3826 bytes, aligned
+// 497 -> 489). Round 78: byte test with a long index at the top of the branch and the field re-read at
+// the source-index store 683 (fast; retail's movsx position); with a named cluster index 683; lookup through
+// the existing entry_at_index getter 612 plain (aligned rows 497 -> 803, ebx/edi/esi roles move), with the
+// long index 612. Retail assigns the NULL record before the table's own NULL test.
+// Round 235: query-table/tag-input/falloff-radius consumption scopes, all seven combinations 616 each; source-selection consumption scope 616.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

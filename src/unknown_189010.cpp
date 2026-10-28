@@ -136,48 +136,65 @@ s_unknown_5c *function_221810(short index);
 long function_18d5b0(long label);
 void function_18d4f0(long object_index, char *audible, long *local_player_index);
 
-static __forceinline long float_to_int_nearest(real value)
+static __forceinline long game_seconds_to_ticks_round(real seconds)
 {
-	long result;
+	real ticks_real = (real)g_510c54->field_2_3 * seconds;
+	long ticks;
 
 	__asm
 	{
-		fld value
-		fistp result
+		fld ticks_real
+		fistp ticks
 	}
-	return result;
+	return ticks;
 }
 
-// score 118 (was 118): Frame 0xa8 agrees; first class lookup expansion and flags/result homes remain.
-// Frame 0xa8 and EAX request agree; first class lookup expansion and flag/result homes remain.
-// Word flags 158; index-order variant guards 134; flag11 field store 134; combined location mask 118 kept
-// plain; original priority observation 133.
-// Earlier 134 (was 149): Frame 0xa8 and request EAX agree; first class lookup expansion and flag/result homes remain.
-// Earlier 149 (was 167): Frame 0xa8 and request EAX agree; first class query still expands and flag/result homes differ.
-// priority arms 182, nested variant tests 182, shared exit 182, marker memcpy 182,
-// base-first flags 178 (caller losses), role names 182, source snapshot 178,
-// object snapshot 183, priority after flags 192.
-// Earlier 167 (was 182): frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
-// Conditional flags then priority 187; deferred flags publication 176; location first with copied
-// audible priority 167 kept (full); location memcpy 182; conditional end-time publications 175.
-// Outer state scope 167; early optional-size default 164 (below threshold); size before marker copy 167; nested class tests 167; platform-flags block first 167; opening 167 restored.
-// Round 113: Platform index snapshot 167; redundant object/platform clears omitted 149 kept; scoped header on clean flags 149; native flag8 conversion 157 (eight caller losses); repeated class index on clean flags 159.
-// Frame agrees; first lookup expansion and flag/result homes remain;
-// location/priority phase after flags/header 188/194; first/shared class receiver 167/167;
-// seconds/ticks terms 167/167; phase with seconds 188; shared receiver with seconds 167.
-// first class lookup expands; flag and result homes differ;
-// frame 0xa8 agrees; first lookup expansion and flag/result homes remain.
-// Earlier 167 (was 167): frame 0xa8 agrees; first class lookup expansion and flag/result homes remain.
-// Late tag receiver 184; branch-assigned result 193; shared marker observation 167;
-// absent-marker-first 165 (below threshold); native short priority and padding memset 176.
-// Round 116: Whole source flags 149; clean state flags 169 (eight caller losses); variant fields before flag 149; audible-first admission 149; post-query marker default 134 kept plain; size conditional 147; looping global reads 130 fast/135 plain rejected; time-global reads 134; size override before copy 134. All 10640 matches preserved by keeper.
-// Earlier 118 (was 134). Whole request/tag/class records and combinations
-// 181/196/228/146/197/215/247; first class record 165. Request/tag copies lose eight callers.
-// Round 124: Consistent variant-pointer field reads 118; disjoint source mask OR 118;
-// conditional optional flags 161 and full flag expression 162 (each loses eight callers, rejected);
-// nested class admission 118; real class-word mask with direct query 135. All body/type trials restored.
-// State/result/flags/both names 118/118/118/118; early object/source/platform/all stores
+// score 110 (was 110): frame 0xa8 and the request in EAX agree; the first class lookup expands
+// where retail calls it (and 0x21d110 takes the tag in EAX where retail passes the state there), so
+// the flag/priority/result homes, push placement and the end-test spill differ. Round 54: the
+// seconds-to-ticks rounding helper with the looping-sound global read at each use 110 kept
+// (helper alone 115); bitfield end tests 137 and on the kept form 122 (each loses eight callers);
+// mask bit 8 with bitfield bit 11 132; renamed rounding temporary 110; priority from the request's
+// audible field 109; that with the location copy after the flags 140. Earlier: word flags 158;
+// index-order variant guards 134; flag11 field store 134; combined location mask 118 kept;
+// original priority observation 133; priority arms 182; nested variant tests 182; shared exit 182;
+// marker memcpy 182; base-first flags 178 (caller losses); role names 182; source snapshot 178;
+// object snapshot 183; priority after flags 192; conditional flags then priority 187; deferred
+// flags publication 176; location first with copied audible priority 167 kept; location memcpy
+// 182; conditional end-time publications 175; outer state scope 167; early optional-size default
+// 164; size before marker copy 167; nested class tests 167; platform-flags block first 167;
+// platform index snapshot 167; redundant object/platform clears omitted 149 kept; scoped header on
+// clean flags 149; native flag8 conversion 157 (eight caller losses); repeated class index on
+// clean flags 159; location/priority phase after flags/header 188/194; first/shared class
+// receiver 167/167; seconds/ticks terms 167/167; phase with seconds 188; shared receiver with
+// seconds 167; late tag receiver 184; branch-assigned result 193; shared marker observation 167;
+// absent-marker-first 165; native short priority and padding memset 176; whole source flags 149;
+// clean state flags 169 (eight caller losses); variant fields before flag 149; audible-first
+// admission 149; post-query marker default 134 kept; size conditional 147; looping global reads
+// 130 fast/135 plain; time-global reads 134; size override before copy 134; whole
+// request/tag/class records and combinations 181/196/228/146/197/215/247 (request/tag copies lose
+// eight callers); first class record 165; consistent variant-pointer field reads 118; disjoint
+// source mask OR 118; conditional optional flags 161 and full flag expression 162 (eight caller
+// losses each); nested class admission 118; real class-word mask with direct query 135;
+// state/result/flags/both names 118/118/118/118; early object/source/platform/all stores
 // 118/135/118/133; swapped object-source/source-platform stores 118/118.
+// Round 187 named duration/source expression parts and both 110/110/110; complete fresh
+// tag lookup alone and with those parts 158 each; all plus signed native flags 158. Restored.
+// Round 93: with 0x21d110 starting its sounds inline (state in EAX; 0x21d110 204 -> 52) the request
+// moves to EDX: 135 at 470 bytes, each caller one line off. A noinline declaration of 0x221810 in
+// this file leaves the first lookup expanded; one ahead of its definition calls both lookups
+// (0x129aa0 101 -> 4) but this function then takes both arguments on the stack (156, 450 bytes;
+// with set-or-clear object/platform flags, the priority read from the request and flag8/flag11
+// end tests 132 at 470 bytes). Those body forms with the inline start alone 153, alone 163.
+// Round 95 (plain checks; --fast builds this function differently): the marker size set in an
+// if/else 135 (475 bytes, aligned 94 from 97); that with the priority and flags formed from the request
+// before the location copy 150 (487 bytes, aligned 74); that with a noinline declaration ahead of
+// 0x221810 149, stack arguments, eight callers lost; with set-or-clear object/platform flags 166 (500
+// bytes, aligned 73); that with flag8/flag11 bitfield end tests 191, stack arguments, eight callers
+// lost. Whenever the body homes the request in EBP, LTCG passes both arguments on the stack; homed
+// in EBX it arrives in EAX (retail). Retail reloads the state flags after the first 0x221810 call (its
+// compiler treats that call as opaque); ours forwards them in a callee-saved register across it,
+// which pushes the request into EBP. BLOCKED-BY 0x21d110 (its tag/state registers) and 0x221810.
 // @retail 0x189fe0
 long function_189fe0(s_sound_request const *request, long tag_index)
 {
@@ -231,14 +248,12 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 			s_sound_class_play_flags *sound_class = (s_sound_class_play_flags *)function_221810(sound->class_index);
 			if (TEST_FIELD_BIT(sound_class->flag1) && TEST_FIELD_BIT(sound_class->flag2))
 			{
-				s_game_time_globals *game_time = g_510c54;
-				long end_time = game_time->game_time + float_to_int_nearest((real)sound->duration * 0.001f * (real)game_time->field_2_3) + 10;
-				s_looping_sound_globals *globals = g_4ed288;
+				long end_time = g_510c54->game_time + game_seconds_to_ticks_round((real)sound->duration * 0.001f) + 10;
 
-				globals->value20 = end_time > globals->value20 ? end_time : globals->value20;
+				g_4ed288->value20 = end_time > g_4ed288->value20 ? end_time : g_4ed288->value20;
 				if ((state.location.flags & 0x900) || !state.location.audible)
 				{
-					globals->value24 = end_time > globals->value24 ? end_time : globals->value24;
+					g_4ed288->value24 = end_time > g_4ed288->value24 ? end_time : g_4ed288->value24;
 				}
 			}
 		}
@@ -555,6 +570,9 @@ long function_1891d0(long object_index, long marker_name, s_sound_label_play con
 // root before marker/point 60/52; entry record with root first 82.
 // Post-marker tag/scale/both 52/63/53; post-compression 52/63/52;
 // post-velocity tag/scale 52/63; all one-use snapshots restored.
+// Play first/middle parameter orders 51/51 (same code); play fields read at entry 54 (play
+// becomes a register argument, in eax). Retail keeps the object in esi and play in edi; ours
+// needs esi for 0xba300's location argument (BLOCKED-BY 0xba300's convention).
 // @retail 0x189210
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play)
 {

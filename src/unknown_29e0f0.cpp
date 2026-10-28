@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "unknown_2626b0.h"
 #include "unknown_20fe20.h"
+#include "slot_handler.h"
 #include <math.h>
 #include <string.h>
 // @flags /O2 /Ob1 /arch:SSE /Gr
@@ -32,9 +33,7 @@ struct s_29e0f8
     long field_4;
     short field_8;
     byte field_a[2];
-    point3f field_c;
-    short field_18;
-    byte field_1a[2];
+    s_type_c3b527 field_c;
 };
 struct s_29e0f9
 {
@@ -65,8 +64,8 @@ PRIVATE __forceinline void function_29e64d(s_29e0f8 *arg_0, point3f const *arg_1
 {
     arg_0->field_0 = NONE;
     arg_0->field_8 = NONE;
-    arg_0->field_c = *arg_1;
-    arg_0->field_18 = NONE;
+    arg_0->field_c.point = *arg_1;
+    arg_0->field_c.output_index = NONE;
     arg_0->field_4 = NONE;
     arg_0->field_2 = 0;
 }
@@ -79,20 +78,60 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
     return (real)sqrt(local_2 * local_2 + local_1 * local_1 + local_0 * local_0);
 }
 
-// score 416 (was 416): Frame 0x6c/0x64, table-pointer roles and bound spill remain; entry bitmap storage 416; output-helper formal order 454; failed-selection common exit 416; ordinary distance inline 416; byte overall result 445.
+// score 406 (was 406): frame 0x68/0x64, induction/endpoint homes and x87 scheduling differ.
+// Earlier: table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
 // Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
 // squared-distance second point by value 430; conditional table pointer initialization 416.
 // Group-table field at each use 457; native long overall result 445; bounded output for 420; same-group pretested while 416; positive nearest-point scope 416.
 // Entry secondary root 417; direct initial root fields 416; native output-point reference 416;
 // native distance references 416; native first squared-distance point 433; unsigned-word fixed pass 416.
 // Round 121: Success set before output fill 440; native first point of length helper 579; signed-byte direction step 416; metadata before point copy 439; signed-byte per-pass result 416. Original helper contracts and complete body restored.
+// Earlier: entry bitmap storage 416; output-helper formal order 454; failed-selection common exit 416; ordinary distance inline 416; byte overall result 445.
+// Round 341: One short direction counter, point payload and long record-index graphs 425/454/431/459; long direction counter 479/453/477/453. Original loops and values restored.
+// Round 350: real outer/inner/both link-element receivers 416/416/416; with read-only
+// link/group/both/point/all views 416 each. Frame 0x6c/0x64, table roles and bound spill remain.
+// Round 146: short group index/pass counter/best indices (kept) 406; the three alone 409/416/512;
+// distance index at top of the inner while 416; long search result 415, on the kept form 428;
+// long point bounds 456; long last point 424; long nearest point 396 (word compares in retail, not kept).
+// Round 86 (fast; aligned counts in brackets, 378 at the start): long group index 513 [313, retail's first-loop
+// registers]; separate output cursor (retail compares the end index with the original start) 416 [357]; both 490
+// [278]; bit_vector_test/bit_vector_set instead of the open-coded bits, identical; else-false result 459 [238];
+// record index set before the pass loop and after each step 446 [189, frame 0x64]; memset group bitmap 437 [185];
+// bit test on the field read ahead of the group-index local 197 [65], with the (point, record) output-helper order
+// 199 [57], x*x + (y*y + z*z) squared sum 190 [48] and the found flag declared first 188 [46] (not kept: a field read
+// beside a local copy needs a match; the same body without it 437). Left on 188: x87 square orders (retail rotates
+// them per call; a vector-local distance with j, k, i terms gives d1/d2 175), arg_0 in EDX with arg_3 kept in ESI
+// at the 0x29de20 call, AL reused for the found flag, the pass latch's lea, the output loop's entry jump.
+// Round 148: the visited bits through the existing bit_vector_test/bit_vector_set (include/bit_vector.h)
+// 416 at 1577 bytes, but difflib-aligned 378 -> 338: retail's separate test and set (word address and
+// mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a
+// long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
+// bit helpers; same code).
+// Round 267: complete parallel square terms in squared-distance/length/both helpers
+// 406/406/406; selected-index role names 406; those names with squared-distance/length/
+// both terms 406/406/406; complete graph with helper-axis names 406. Frame/index and
+// square-input homes remain; original helpers, names, loops and body restored.
+// Round 366: overwritten endpoint initializer removed 417; early group receiver 432; both 440; complete two-leg distance sum 406; with endpoint/receiver/both 417/432/440; all with scoped best-distance default 474. All restored.
+// Round 232: direct-step pretested inner for, alone and with all seven complete
+// link/directional/selected short-workspace identity subsets, 406 each. All restored.
+// Round 234: complete-search link count/base/both 459/438/478; with promoted group
+// domain 452/494/465; count/base with shared bits 462, plus promoted group 465. All restored.
+// Round 368: test-produced final result 440; complementary pass admission 406; search-scoped best distance
+// 457; result/admission 440; result/distance 478; admission/distance 457; all and named result 478/478.
+// Original executable body restored.
+// Round 370: shared point-array base with long group index, captured point count and shared
+// bitmap operations 429/428/410/432/515/515/464/464; body, helpers and original includes restored.
+// Round 163: selected-index chain/per-group index chain/explicit native bitmap
+// defaults, all seven subsets and complete graph with separate bitmap stores:
+// 406 each at 1596 bytes. Frame 0x68/0x64 and bound/endpoint homes remain;
+// original default initializers and every helper restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)
 {
-    long local_0 = NONE;
-    long local_1 = NONE;
-    long local_2 = NONE;
+    short local_0 = NONE;
+    short local_1 = NONE;
+    short local_2 = NONE;
     real best_distance = 3.402823466e38f;
     bool local_4 = false;
     s_29e0f3 *local_5 = (s_29e0f3 *)g_4e0348;
@@ -116,7 +155,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                     dword visited_groups[2] = {0, 0};
                     for (short local_14 = 0; local_14 < local_10->field_80; ++local_14)
                     {
-                        long local_15;
+                        short local_15;
                         local_15 = local_10->field_84[local_14].field_0;
                         if ((visited_groups[local_15 >> 5] & (1 << (local_15 & 31))) || local_15 < 0 || local_15 >= local_11->field_40) continue;
                         visited_groups[local_15 >> 5] |= 1 << (local_15 & 31);
@@ -142,7 +181,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                             if (arg_3->field_0[local_25].field_0 == local_15) { local_20 = local_25; break; }
                         short local_26 = 1;
                         short local_28 = local_19;
-                        for (long local_27 = 0; local_27 < 2; ++local_27)
+                        for (short local_27 = 0; local_27 < 2; ++local_27)
                         {
                             short local_29 = local_19;
                             point3f *local_30 = &local_22->field_4[local_19];
@@ -165,7 +204,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                                     if (best_distance > local_35 && function_29de20(local_33, arg_3, arg_0, arg_1) == 1)
                                     {
                                         best_distance = local_35;
-                                        local_0 = (short)local_15;
+                                        local_0 = local_15;
                                         local_1 = local_28;
                                         local_2 = local_29;
                                         local_32 = true;
@@ -177,16 +216,16 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                             local_28 = local_19 + local_26;
                         }
                     }
-                    if ((short)local_0 != NONE && (short)local_1 != NONE && (short)local_2 != NONE)
+                    if (local_0 != NONE && local_1 != NONE && local_2 != NONE)
                     {
-                        s_29e0f0 *local_36 = &local_11->field_44[(short)local_0];
+                        s_29e0f0 *local_36 = &local_11->field_44[local_0];
                         short local_37 = 0;
                         do
                         {
-                            function_29e64d(&arg_4->field_30[local_37], &local_36->field_4[(short)local_1]);
+                            function_29e64d(&arg_4->field_30[local_37], &local_36->field_4[local_1]);
                             ++local_37;
-                            if ((short)local_1 == (short)local_2) break;
-                            local_1 += (short)local_2 > (short)local_1 ? 1 : -1;
+                            if (local_1 == local_2) break;
+                            local_1 += local_2 > local_1 ? 1 : -1;
                         } while (local_37 < 4);
                         if (local_37 < 4)
                         {
@@ -227,17 +266,6 @@ struct s_29e730
 };
 struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long field_54; };
 
-// score 332 (was 332): frame 0x114 versus 0x10c and stacked request versus EAX remain; metadata lifetimes tie, counter/flag forms regress, shared inline declarations tie.
-// primary index after vector 332; primary index before point 332; extra index before point 332; branch counter
-// result 356; extra flag native width 342; position helper inline 332.
-// Earlier: frame 0x114 versus 0x10c and request stack home remain.
-// Native request/actor/output references 332/332/332; separate extra point/index 333;
-// offset point setter 332; parent/source/origin field references 332/332/332.
-// frame 0x114 versus 0x10c and request convention remain; byte result 338;
-// long result 360; library fallback/output record copies 332/332; unsigned primary index 332;
-// inline out-of-line location declaration 392. Original body and shared declaration kept.
-// Round 212: Word path/extra states 364/350; signed-byte append ordinal 333; real counter field 332; fallback-point library copy 332. Frame, request convention and location expansion remain.
-// Round 214: unsigned-byte extra state 332; signed-byte extra state 332; signed-byte path state 338; unsigned-word append ordinal 332; successful exit before failure counter 332.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,
@@ -252,56 +280,80 @@ bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2
         local_2 = NONE;
     memset(arg_7, 0, sizeof(*arg_7));
     s_type_c3b527 local_3;
-    vector3f local_4;
-    point3f local_5;
     s_type_c3b527 local_6;
-    point3f local_7;
-    vector3f local_8;
-    point3f local_9;
-    s_262b40_result *local_10;
-    if (arg_0->field_0 != 6) goto local_24;
+    if (arg_0->field_0 == 6)
     {
-        if (!function_262a90(arg_0->field_c, &local_5, &local_4)) goto local_20;
-        if (!function_2702a0(arg_1, 0xf000545, 0x5000049, 0x6000542, 0x400000c,
-            &local_5, &local_4, &local_9, NULL, &local_8, NULL)) goto local_20;
-        local_10 = function_262b40(arg_0->field_c);
-        short local_11 = ((s_type_c3b527 *)local_10)->output_index;
-        if (!function_210770(local_11, (vector3f *)&local_5, &local_8)) goto local_20;
-        if (!function_210690(local_11, &local_9, &local_3.point)) goto local_20;
-        local_5.x = local_9.x + local_4.i * 1.5f;
-        local_5.y = local_9.y + local_4.j * 1.5f;
-        local_5.z = local_9.z + local_4.k * 1.5f;
-        local_3.output_index = local_11;
+        vector3f local_4;
+        vector3f local_8;
+        point3f local_9;
+        {
+            point3f local_5;
+            if (!function_262a90(arg_0->field_c, &local_5, &local_4)) goto local_20;
+            if (!function_2702a0(arg_1, 0xf000545, 0x5000049, 0x6000542, 0x400000c,
+                &local_5, &local_4, &local_9, NULL, &local_8, NULL)) goto local_20;
+        }
+        s_262b40_result *local_10 = function_262b40(arg_0->field_c);
+        vector3f local_11;
+        if (!function_210770(((s_type_c3b527 *)local_10)->output_index, &local_8, &local_11)) goto local_20;
+        if (!function_210690(((s_type_c3b527 *)local_10)->output_index, &local_9, &local_3.point)) goto local_20;
+        local_3.output_index = ((s_type_c3b527 *)local_10)->output_index;
+        point3f local_24;
+        local_24.x = local_9.x + local_4.i * 1.5f;
+        local_24.y = local_9.y + local_4.j * 1.5f;
+        local_24.z = local_9.z + local_4.k * 1.5f;
         if (arg_0->field_10)
         {
             arg_0->field_29 = true;
             arg_0->field_2c = local_8;
         }
-        else if (function_210690(local_11, &local_5, &local_6.point))
+        else if (function_210690(((s_type_c3b527 *)local_10)->output_index, &local_24, &local_6.point))
         {
-            local_6.output_index = local_11;
+            local_6.output_index = local_3.output_index;
             local_0 = true;
         }
         goto local_21;
     }
 
+    if (arg_0->field_0 == 4)
+    {
+        long local_12 = function_1e4990(local_1->field_54);
+        if (!local_12 || (*(byte *)local_12 & 2)) goto local_20;
+        s_262b40_result *local_10 = function_262b40(arg_0->field_c);
+        if (!local_10 || !((byte)local_10->flags & 0x40)) goto local_20;
+        vector3f local_4;
+        point3f local_5;
+        vector3f local_8;
+        point3f local_9;
+        if (!function_262af0(arg_0->field_c, &local_5, &local_8)) goto local_20;
+        if (!function_2702a0(arg_1, 0x6000542, 0x400069d, 0x6000542, 0x400000c,
+            &local_5, &local_8, &local_9, NULL, &local_4, NULL)) goto local_20;
+        if (!function_210690(((s_type_c3b527 *)local_10)->output_index, &local_9, &local_3.point)) goto local_20;
+        local_3.output_index = ((s_type_c3b527 *)local_10)->output_index;
+        goto local_21;
+    }
 local_20:
     local_3 = *arg_3;
     local_0 = false;
 local_21:
-    if (local_3.output_index == NONE || !function_2104b0(local_3.output_index, &local_3.point, &local_7))
+    point3f local_7;
+    if (local_3.output_index != NONE)
+    {
+        if (!function_2104b0(local_3.output_index, &local_3.point, &local_7))
+            local_7 = local_3.point;
+    }
+    else
         local_7 = local_3.point;
     arg_7->field_1c = *arg_2;
     arg_7->field_4 = local_3;
-    arg_7->field_14 = NONE;
     arg_7->field_28 = NONE;
+    arg_7->field_14 = NONE;
     arg_7->field_2e = false;
     arg_7->field_18 = 0.0f;
     bool local_13;
     if (function_29dd50(arg_2, &local_7, local_2, arg_6))
     {
-        *(s_type_c3b527 *)&arg_7->field_30[0].field_c = local_3;
         arg_7->field_30[0].field_0 = NONE;
+        arg_7->field_30[0].field_c = local_3;
         arg_7->field_30[0].field_4 = NONE;
         arg_7->field_30[0].field_8 = NONE;
         arg_7->field_2d = 1;
@@ -310,31 +362,31 @@ local_21:
     }
     else
     {
-        s_reference local_14 = g_470fa0;
-        if (*(long *)&arg_4 == *(long *)&local_14 || (arg_4.unknown2 & 0x8000))
+        if (REFERENCE_EQUAL(arg_4, g_470fa0) || (arg_4.unknown2 & 0x8000))
         {
             local_13 = false;
-            goto local_22;
         }
-        s_29de21 local_15;
-        if (!arg_5)
+        else
         {
-            s_262b40_result *local_16 = function_262b40(arg_4);
-            arg_5 = &local_15;
-            local_15.field_b4 = 0;
-            function_29db90((s_29db90 *)&local_15, arg_4.unknown2, local_16->unknown10);
-        }
-        local_13 = function_29e0f0(arg_2, local_2, arg_4, arg_5, arg_7);
-        if (local_13 && arg_7->field_2c && arg_7->field_2d > 0)
-        {
-            s_29e0f8 *local_17 = &arg_7->field_30[arg_7->field_2d - 1];
-            local_17->field_0 = NONE;
-            *(s_type_c3b527 *)&local_17->field_c = local_3;
-            local_17->field_4 = NONE;
-            local_17->field_8 = NONE;
+            s_29de21 local_15;
+            if (!arg_5)
+            {
+                s_262b40_result *range_data = function_262b40(arg_4);
+                arg_5 = &local_15;
+                local_15.field_b4 = 0;
+                function_29db90((s_29db90 *)&local_15, arg_4.unknown2, range_data->unknown10);
+            }
+            local_13 = function_29e0f0(arg_2, local_2, arg_4, arg_5, arg_7);
+            if (local_13 && arg_7->field_2c && arg_7->field_2d > 0)
+            {
+                arg_7->field_30[arg_7->field_2d - 1].field_0 = NONE;
+                arg_7->field_30[arg_7->field_2d - 1].field_c = local_3;
+                arg_7->field_30[arg_7->field_2d - 1].field_4 = NONE;
+                arg_7->field_30[arg_7->field_2d - 1].field_8 = NONE;
+            }
         }
     }
-    if (arg_7->field_2c && local_0)
+    if (local_13 && arg_7->field_2c && local_0)
     {
         short local_18 = arg_7->field_2d - 1;
         if (arg_7->field_2d < 4)
@@ -344,14 +396,12 @@ local_21:
         }
         else arg_7->field_2c = false;
         s_29e0f8 *local_19 = &arg_7->field_30[local_18];
-        local_19->field_c = local_6.point;
         local_19->field_0 = NONE;
         local_19->field_8 = NONE;
-        local_19->field_18 = local_6.output_index;
+        local_19->field_c = local_6;
         local_19->field_4 = NONE;
         local_19->field_2 = 0;
     }
-local_22:
     arg_7->field_0 = local_13;
     if (!local_13)
     {
@@ -359,19 +409,4 @@ local_22:
         if (++*local_23 > 32) *local_23 = 0;
     }
     return arg_7->field_0;
-local_24:
-    if (arg_0->field_0 == 4)
-    {
-        long local_12 = function_1e4990(local_1->field_54);
-        if (!local_12 || (*(byte *)local_12 & 2)) goto local_20;
-        local_10 = function_262b40(arg_0->field_c);
-        if (!local_10 || !((byte)local_10->flags & 0x40)) goto local_20;
-        if (!function_262af0(arg_0->field_c, &local_5, &local_8)) goto local_20;
-        if (!function_2702a0(arg_1, 0x6000542, 0x400069d, 0x6000542, 0x400000c,
-            (point3f *)&local_8, (vector3f *)&local_5, &local_9, NULL, &local_4, NULL)) goto local_20;
-        local_3.output_index = ((s_type_c3b527 *)local_10)->output_index;
-        if (!function_210690(local_3.output_index, &local_9, &local_3.point)) goto local_20;
-        goto local_21;
-    }
-    goto local_20;
 }

@@ -185,14 +185,31 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 	return result;
 }
 
-// score 6 (was 6): the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
+// score 6 (was 6): key is retained in EDI rather than retail EBX; 75/75 bytes.
+// Earlier: the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
+// the key is passed in EDI instead of retail's EBX, rotating the entry saves and loads;
+// key pointer before globals 6; direct index construction 6; delayed globals assignment 6;
+// read-only key pointer 6; global at each use 6; read-only index result 6;
+// direct key address 29; read-only key parameter 6.
+// the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
 // 0x1885f0's entry-live result body (key compared first, break) both match unless the caller 0x1eb020
 // is 16-byte self-aligned (with a frame pointer but no alignment, or a double buffer, both match), and
 // only while 0x1885f0 returns its index class through memory (a short result keeps the key in a register).
 // Key as a by-value class 6 (0x1eb020 copies it through eax); that class with the entry-live body 7;
 // an explicit short out pointer 25; key read through a volatile own-parameter cast 8; the entry-live
 // body with 0x1eb020 not taking &material_index/buffer declared after result 7/7; the search as a
+// constructor of the index class 10 (key still on the stack). With the current search body the key
+// travels in edi (ours) where retail uses ebx. With the entry-live body: the search as a const member
+// of the block view 9 (search 42); the getter applied to the call's result 9; a const globals pointer
+// 7; __fastcall search 7; an unsigned key 7; the file without /arch:SSE 7 (diagnostic). The reduced
+// image holds no 0xec4f0 and still keeps the key off ebx, so 0x1eb020's caller is not the cause.
+// BLOCKED-BY 0x1eb020
 // constructor of the index class 10 (key still on the stack). BLOCKED-BY 0x1eb020
+// Further trials: saved-key/search convention remains EDI rather than EBX; aligned upstream edge unchanged.
+// existing index construction 9; returned-index bridge 6.
+// default index/member assignment 9; default index/value assignment 9.
+// read-only block/construction 9; read-only block/bridge 6.
+// read-only block/member assignment 9; read-only block/value assignment 9.
 // @retail 0x188640
 s_globals_element *function_188640(long key)
 {
@@ -478,6 +495,12 @@ bool function_172750(long mode, point3f const *point, real radius);
 // branches 151.
 // Round 186 initial/fallback/both conditional lookup results 162/118/162; guarded payload
 // selection alone/with initial/with fallback/with both 219/230/219/230; shared getter force-inline 118.
+// Round 135: the entry index read once through its address 128 (no register parameter left,
+// ret 0x34), with the element index too 128, passed from its address 128; the entry index
+// read once into a short local 118; first index after the output defaults 165. With the
+// existing material class for the 4th/5th parameters (and 0x1882d0's) it matches (fast;
+// tag index in EBX, first index on the stack): BLOCKED-BY the declarations in src/impacts.cpp
+// and src/projectiles.cpp, which name the old parameter types.
 // @retail 0x1883e0
 void function_1883e0(long tag_index, bool ignore_distance, point3f const *point, short element_index, long entry_element_index, long index, long variant,
 	long *first_value04, long *second_value04, long *first_value, long *second_value, long *first_value0c, long *second_value0c)

@@ -178,6 +178,29 @@ static inline long game_seconds_to_ticks_round(real seconds)
 	return result;
 }
 
+/* a flag field read as word bits: retail reads these flags with a load, a
+   shift and a test of the low bit */
+struct s_flag_word_bits
+{
+	word bit0 : 1;
+	word bit1 : 1;
+	word bit2 : 1;
+	word bit3 : 1;
+	word bit4 : 1;
+	word bit5 : 1;
+	word bit6 : 1;
+	word bit7 : 1;
+	word bit8 : 1;
+	word bit9 : 1;
+	word bit10 : 1;
+	word bit11 : 1;
+	word bit12 : 1;
+	word bit13 : 1;
+	word bit14 : 1;
+	word bit15 : 1;
+};
+
+// score 114 (was 124): flag 4 read through a word bitfield view gives retail's load-and-shift; the rest still differs.
 // @retail 0x151ea0
 void function_151ea0(long player_index, long object_index)
 {
@@ -189,7 +212,7 @@ void function_151ea0(long player_index, long object_index)
 	byte *definition = g_4e3b44[*(long *)object & 0xffff].bytes;
 	long ticks = game_seconds_to_ticks_round(*(real *)(definition + 0x130));
 	bool unavailable = false;
-	if (header->flags & 0x10)
+	if (TEST_FIELD_BIT(((s_flag_word_bits *)&header->flags)->bit4))
 		unavailable = true;
 	if ((short)ticks > 0 && !unavailable)
 	{
@@ -1671,13 +1694,15 @@ bool function_cb810(long unit_index, vector3f *vector);
 void function_1505f0(long player_index, long unit_index, byte const *input)
 {
     (void)&unit_index; (void)&input;
+    s_tail_player *player = tail_player_get(player_index);
+    long unit = player->unit_index;
+    long current_unit = player->unit_index;
     real cos_second_angle = (real)cos(*(real const *)(input + 8));
     vector3f facing;
     facing.i = (real)(cos(*(real const *)(input + 4)) * cos_second_angle);
     facing.j = (real)(sin(*(real const *)(input + 4)) * cos_second_angle);
     facing.k = (real)sin(*(real const *)(input + 8));
-    s_tail_player *player = tail_player_get(player_index);
-    if (player->unit_index != NONE) function_cb810(player->unit_index, &facing);
+    if (current_unit != NONE) function_cb810(unit, &facing);
     vector3f forward_copy, projected_movement;
     function_150400(player_index, &facing, (vector3f const *)(input + 0xc), &forward_copy, &projected_movement);
     byte control[0x7c];
@@ -1768,6 +1793,9 @@ void function_15e8e0(long object_index, long player_index);
 void __stdcall function_191ec4(long definition_index, long player_index, short count);
 void __stdcall function_191e51(long definition_index, long player_index);
 
+// score 202 (was 202): the prologue's registers differ: retail keeps the player base in ebx
+// and the object index*12 in ebp, ours gives ebp to the player and spills the index; the
+// argument convention of the callee 0xccba0 (src/unit_object_type.cpp) decides this.
 // @retail 0x150e30
 void __stdcall function_150e30(long player_index, long object_index)
 {

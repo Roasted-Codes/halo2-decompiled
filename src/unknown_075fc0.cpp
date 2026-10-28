@@ -55,7 +55,6 @@ static __forceinline long function_75fc1(real arg_0)
 	return local_0;
 }
 
-#pragma optimize("g", off)
 static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
 {
     long local_0 = NONE;
@@ -70,13 +69,36 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
     }
     return local_0;
 }
-#pragma optimize("", on)
 
-// score 415 (was 443): frame 0x38/0x34; entry saves and channel/result homes remain.
+// score 408 (was 408): frame 0x38/0x34; channel/result homes and the counter copy remain.
 // Native channel 434; primary/both counter products 448/419; native products 446/423;
 // native live flag/callback/both 441/439/432; direct counter product 419;
 // both/primary word concatenation 423/431; native both/primary concatenation 415/441.
 // Native both concatenation plain 415 at 1350/1369 bytes; products add a call and are restored.
+// Output name 415; counter name 415; paired output names 415; later channel 430;
+// flag test order 416; output declaration first 415 (fast).
+// Search direct returns/earlier result 415; indexed search fields and combinations 419; identity-first test 415. Return byte/short/long 421/409/414; common exit on current channel/counter graph 426. Six-point short gain excluded; original helper, result and exits restored.
+// Lane 9 r23: result as a volatile stack byte 419 (search, its jmp/found block and the result's
+// argument home follow retail); with `if (local_6 < 48) return` 406; store-only-where-retail
+// for all three result updates 435 (449 without volatile); `local_23 < local_13` test 407, both
+// tests 416, `!(local_23 >= local_13)` 416; fields through channels[index] 410 at 1369 bytes (retail's
+// [esi+0x520] displacements), 423 without volatile; window factor as if 413, with the field form 417. Not kept: the volatile result
+// (a volatile local steers the allocator; volatiles are kept only with a byte match). Body unchanged.
+// Lane 9 r26: the search helper's `#pragma optimize("g", off)` removed 415 (identical code, kept);
+// every `return result` through one exit 408 (kept: retail's entry pushes all four registers before the
+// search and keeps the result in the first parameter's slot); counter snapshot through the existing
+// union 441, with the reset from it 432; channel fields through channels[index] 415; host flag set in
+// the host test's arm 431; the window factor as if/else 408 at 1369 bytes (retail's byte test and
+// branch; no gain, not kept); with the union snapshot 439 (frame 0x34 as retail), plus the host-flag
+// arm 433.
+// Round 148 (counts, then difflib-aligned differences with the baseline at 427): snapshot as the existing
+// union copy 445/425; plus the reset as a struct copy of the counter through a union member of field_478
+// 459/417; window factor if/else 430/432; channel fields through channels[index] 415/257; index + union
+// snapshot + struct reset 440/241; that plus the window if/else 425/230 (frame 0x34, `this` in EDI and the
+// search's own channel pointer as retail; left: NONE/index/zero registers, the has-host flag set in its
+// test (retail stores false first, 436/226), the 0xe4/0xe8 pick, the 0.0 early exit, the reliable-bytes
+// tail); on that, window as `= 0; if` 440/226; 0xe4/0xe8 as if/else 438/237; the 0.0 exit as its own
+// return 444/334. Body unchanged.
 // @retail 0x75fc0
 bool s_network_observer::connection_v05(long arg_1,
 	bool arg_2, bool arg_3, bool arg_4, bool *arg_5, bool *arg_6,
@@ -86,7 +108,7 @@ bool s_network_observer::connection_v05(long arg_1,
 	long local_0 = function_75fc3(arg_0, arg_1);
 	bool local_2 = false;
 	if (local_0 == NONE)
-		return local_2;
+		goto done;
 	s_link_connection *local_3 = link_connection_get(arg_1);
 	s_75fc0 *local_4 = (s_75fc0 *)&arg_0->channels[local_0];
 	long local_5 = NONE;
@@ -168,10 +190,10 @@ bool s_network_observer::connection_v05(long arg_1,
 		local_13 = function_75fc1((real)local_24 / local_17);
 		local_2 = local_23 >= local_13;
 		if (!local_2)
-			return local_2;
+			goto done;
 	}
 	else if (local_17 == 0.0f)
-		return local_2;
+		goto done;
 	long local_26 = NONE;
 	if (local_18 >= 0)
 	{
@@ -179,7 +201,7 @@ bool s_network_observer::connection_v05(long arg_1,
 		local_6 = local_26 - 45;
 		local_2 = local_6 >= 48;
 		if (!local_2)
-			return local_2;
+			goto done;
 	}
 	if (local_13 >= 0)
 	{
@@ -204,7 +226,7 @@ bool s_network_observer::connection_v05(long arg_1,
 			if (local_4->field_48c)
 				local_4->field_4a2 = true;
 			if (!local_2)
-				return local_2;
+				goto done;
 		}
 	}
 	long local_30;
@@ -243,5 +265,6 @@ bool s_network_observer::connection_v05(long arg_1,
 	*arg_8 = local_30;
 	*arg_5 = arg_4;
 	*arg_6 = local_7;
+done:
 	return local_2;
 }
