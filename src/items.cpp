@@ -1034,6 +1034,9 @@ struct s_item_flags_view_10b850
 // Rotation cross-term declaration orders ikj/jik/jki/kij/kji 814/813/813/814/814;
 // cross-first orders jki/kij/kji 814/815/815. Frame 0x154/0x12c and Boolean/native
 // rotation homes remain. Original complete body and all helpers restored.
+// Round 219: Independent motion-copy/gravity-update/floor-speed observation order masks 1-7; all
+// with projection role names; existing direct-output side cross helper:
+// 812/813/812/863/862/863/862/862/921. Original body restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
@@ -1331,6 +1334,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // 183/183; native/const/library paired values 190/190/190. All one-use snapshots restored; matrix
 // gain only three, despite retail length. Original helper, contact/event code and includes
 // retained.
+// Round 259: Complete contact/event/owner/impulse workspace-name families, eight
+// lexical home orders 154 each. Original helper and all workspaces restored; release
+// byte RMW/tail and event-point homes remain.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {

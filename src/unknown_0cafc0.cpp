@@ -187,6 +187,10 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // under the keep bar, restored); height accumulator 192; reversed point products 192; point setter 192;
 // collision-first comparison 193; separate backward vector 192; collision scoped to displacement 296;
 // outer definition through the unit 281; fraction at point scope 192; difference vectors swapped 192.
+// Round 195: Common collision result, query/final/both point-set calls [211, 211, 211, 211]; original
+// output with query/final/both point-set calls [199, 199, 199]; common result, both setters and
+// collision-first comparison 211. Original queries and output graph restored; tag-table retention and
+// fraction component reuse remain.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

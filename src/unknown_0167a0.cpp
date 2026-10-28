@@ -74,7 +74,8 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 95 (was 132): frame four, the logarithm and the tail agree; left are the restore block (retail reloads
+// score 47 (was 47): restore entry-load order and the protected sampler convention differ.
+// Earlier 95 from 132: frame four, the logarithm and the tail agree; left are the restore block (retail reloads
 // the range field before each call; ours keeps it in a register) and BLOCKED-BY 0x18a90, which retail passes
 // the state in ebx (ours pushes it).
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
@@ -153,6 +154,12 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Round 104: logarithm product in float 131 (retail's dword factor); with the record read from its field at
 // every use after it is stored (retail reloads it after 0x18900) 95, kept. On it: both range calls reading the range field 177 (978 B); with the entry stored from its local 191;
 // entry, pass and range written and read through their fields 177; plus global-first unions 177.
+// Round 231: range-field reference 164; with dirty-word cursor 164; first/second/both native mask
+// loops 156/47/47; cursor plus first/second/both loops 156/47/47; second loop alone 181. Minimal
+// reference plus second loop retained.
+// Round 233, on the recovered range-reference/native-mask graph: published table reference 47;
+// native word range/entry field references 47/47; published pass/table-plus-pass references 47/47;
+// packed entry accessor 47; entry-reference consumption scope 47; unsigned native mask index 47.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -194,12 +201,12 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
         next = ((word *)*(byte **)(*(byte **)(state + 0x10) + 0xc))[(packed & 0x1ff) + second];
         pass = *(byte **)(*(byte **)(state + 0x10) + 0x14) + ((next & 0x1ff) + third) * 10;
         *(byte **)(state + 0x18) = pass;
-        byte *range = *(byte **)(*(byte **)(state + 0x10) + 0x1c) + ((*(word *)(pass + 8) & 0x1ff) + fourth) * 6;
-        *(byte **)(state + 0x1c) = range;
+        byte *&range = *(byte **)(state + 0x1c);
+        range = *(byte **)(*(byte **)(state + 0x10) + 0x1c) + ((*(word *)(pass + 8) & 0x1ff) + fourth) * 6;
         *(dword *)(state + 0x30) |= g_485058.v6c[0];
         *(dword *)(state + 0x34) |= g_485058.v6c[1];
-        *(dword *)(state + 0x38) |= g_485058.v9c[0];
-        *(dword *)(state + 0x3c) |= g_485058.v9c[1];
+        for (long mask_index = 0; mask_index < 2; ++mask_index)
+            ((dword *)(state + 0x38))[mask_index] |= g_485058.v9c[mask_index];
         *(dword *)(state + 0x40) |= g_485058.v5c;
         function_16f60(state, (word const *)range);
         function_17000(state, (word const *)(range + 4));

@@ -84,6 +84,11 @@ void __stdcall function_1d24a0(s_havok_component *component, real position);
 // score 6 (was 77): ours folds the cleared flags into the first set (`mov dword ptr [edi+0x12c], 2`)
 // where retail keeps `or dword ptr [edi+0x12c], 2`. Tried: the bit as a dword bitfield sharing the
 // word 6; the clear as memset 54 (EDI becomes a field pointer); the crate read at each use 70; a
+// flags pointer local 42; the field as long 6.
+// Library clear with first result / first model workspace / both 54/54/54; repeated receiver
+// lookup 54; receiver acquired after clear 81; genuine body cursor 51;
+// complete positive body-classification result 54; exhaustive final result with library clear 88.
+// Original body and include restored.
 // flags pointer local 42; the field as long 6; shared object getter 6; tag helper inline/forceinline
 // 6/6; shared setter inline/forceinline 6/6; definition at function scope 6; a 32-bit flags bitfield 6;
 // definition flag bitfield 6; crate re-read at the first set 75.
