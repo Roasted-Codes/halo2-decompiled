@@ -279,11 +279,17 @@ struct s_pending_message_storage : s_pending_message_header
 // first counter's slot, ours packs the retry count there); after it 14; before the if 17.
 // Inner external inline 14; outer and both external inline 287 each (out of line);
 // long, byte and const allocation 14 each; nested guards 14; allocation scope 14; role names 14.
+// Round 107: retail gives start's home the first time stamp's slot (as in 0x862e0) and the pump
+// counter its own; ours places start's home last. Unchanged layout (14) with: helper local names
+// (pumps, start, time stamp) renamed; pumps declared at the top, after start, initialised at the top 105;
+// non-volatile time stamp 123 (stores dropped); start as a helper parameter, last or middle 14/14;
+// start assigned after its declaration, unsigned start, unsigned time stamp, named second reading 14
+// each; capacity read from the request at each use 14. The unused &capacity pointer was dropped
+// (identical bytes).
 // @retail 0x80e10
 bool function_80e10(s_pending_message_storage *request, void **output, long *size)
 {
  long capacity = request->capacity;
- long const *local_0 = &capacity;
  bool result = false;
  if ((dword)capacity >= 16 && !request->data)
  {

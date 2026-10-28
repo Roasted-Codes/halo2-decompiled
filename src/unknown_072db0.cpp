@@ -1641,6 +1641,11 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // cursor with the same pairs 737/760 each. Original bound and accumulation restored.
 // Round 219: Initial user/value/slot uninitialized declarations at function scope, masks 1-7 and
 // all with role names: 737/737/737/737/737/737/737/737. Original body restored.
+// Round 107: retail tests each task poll as `if (state < 0 || state > 1) { if (state == 2) ... else ... }`
+// (jl to the failure arm, jle out, jne to failure); that shape for the write task / read task / both
+// 738/737/738 (retail's block order there, aligned count 359 -> 353, positional unchanged); retail's
+// cmovne in the slot helper implies /arch:SSE (file is /O2 /Gr); identity read through a named xuid
+// pointer also used by the later copy 737 (identical); identity copied with memcpy 737 (identical).
 // @retail 0x74aa0
 void function_074aa0(void)
 {

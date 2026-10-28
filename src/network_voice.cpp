@@ -2688,6 +2688,10 @@ finish:
 // Round 196: query-carrier names singly/paired, comparison-input names singly/paired,
 // comparison ordinal and copy ordinal names [2, 2, 2, 2, 2, 2, 2, 2]; original source restored.
 // Round 198: read-only mask/source/both 2/2/2; unsigned/signed-word/unsigned-word copy ordinal 123/318/318; unsigned comparison/both ordinals 162/186. Opening body restored.
+// Round 107 (plain checks: --fast shows 2 even for a full-build match): this body matched in the full
+// build of lane 5 round 82 and network_voice.cpp has not changed since, so the reload order follows the
+// rest of the image. Mask declared first, logging call inside the loop, empty declared first, reason
+// declared first, `if (changed) log; else return;`: 2 each, same pair swapped.
 // @retail 0x54590
 void function_54590(void)
 {
