@@ -1989,13 +1989,15 @@ void function_d0e60(long unit_index, real amount, real limit)
 	}
 	unit->unknown2b8 = limit;
 	unit->unknown2b0 -= amount;
-	if ((unit->flags_134 >> 3) & 1 && 0.05f > unit->unknown2b0)
+	if (TEST_FIELD_BIT((unit->flags_134 >> 3) & 1) && 0.05f > unit->unknown2b0)
 	{
 		unit->unknown2b0 = 0.05f;
 	}
-	if (UNIT_GET(unit_index)->unknown0d4 != NONE)
+	s_unit *current = UNIT_GET(unit_index);
+
+	if (current->unknown0d4 != NONE)
 	{
-		function_b58c0(UNIT_GET(unit_index)->unknown0d4, 0x800000);
+		function_b58c0(current->unknown0d4, 0x800000);
 	}
 }
 
