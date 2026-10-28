@@ -2935,7 +2935,11 @@ void __stdcall function_e2e90(long arg_159e6d, long *field_7c, long *state_name,
 
 /* starts the biped's landing: its landing time, and for one that can
    collapse, a ragdoll for a random part of it */
-// score 27 (was 39): retail widens the halved landing time to 16 bits (`movzx cx, al`) before the seed step and sign-extends it at the multiply, ours folds both into `movzx edx, al` (seed then in ecx, not eax); tried: `(short)half` as the argument 27, a named seed pointer 28, `x = x + random_index(...)` 27, a one-use `short` range local 27, a file-local `__forceinline` short-parameter copy of the helper 27.
+// score 4 (was 27): the range is widened in CX, but ours tests CL before the seed pointer; retail
+// tests AL, then loads the seed pointer before widening CX. A signed range also deriving the byte
+// test 4; an independent byte 8; an unsigned range 4; explicit byte narrowing 4; a two-view union 4;
+// range assigned inside/before the byte test 27/27; long/dword range 16/16; a low-byte mask 4.
+// Earlier: retail widens the halved landing time to 16 bits (`movzx cx, al`) before the seed step and sign-extends it at the multiply, ours folds both into `movzx edx, al` (seed then in ecx, not eax); tried: `(short)half` as the argument 27, a named seed pointer 28, `x = x + random_index(...)` 27, a one-use `short` range local 27, a file-local `__forceinline` short-parameter copy of the helper 27.
 // @retail 0xe3f00
 void function_e3f00(long arg_159e6d)
 {
@@ -2946,11 +2950,12 @@ void function_e3f00(long arg_159e6d)
 	function_114b60(NONE, 0x14, arg_159e6d, 0xd, 0);
 	if (biped->unknown39d > 1 && TEST_FIELD_BIT((*(dword *)(definition + 0x1f0) >> 10) & 1) && biped->physics_mode != 3)
 	{
-		byte half = biped->unknown39d >> 1;
+		short range = biped->unknown39d >> 1;
+		byte half = range;
 
 		if (half > 0)
 		{
-			biped->unknown39d += (byte)random_index(&g_4e7408->unknown0, half);
+			biped->unknown39d += (byte)random_index(&g_4e7408->unknown0, range);
 		}
 		function_b9b90(arg_159e6d, false);
 		function_1e54d0(&biped->physics_mode, 3);

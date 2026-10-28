@@ -2605,6 +2605,9 @@ PRIVATE __forceinline void function_2417a1(s_marker_entry const *arg_0, long arg
 // players' data or the cause pointer read before the last change call 63/122 (before the flag store
 // 63/140), a named cause team stored after the effect team 14, the cause team before the cause index
 // 145, a word-cast index 156. Permuter (600 s, 15 tries): nothing below 12.
+// The existing cause setter / initializer / sender forced inline 178/181/107; the player getter forced
+// inline 12; the file-local player accessor 12; an event pointer 12; post-initializer player pointers
+// through either accessor 12/12.
 // @retail 0x242ba0
 void function_242ba0(long marker_index, long object_index, long player_index)
 {
