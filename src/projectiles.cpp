@@ -1169,6 +1169,9 @@ extern vector3f *g_4687ac;
 // Original-producer all-ray vector reuse 163; side/query workspace reuse 163; complete
 // vector reuse 166 (756 bytes, frame 0x3c); with shared inputs 165, radius reads 179,
 // both 189; complete reuse with early admission 183, plus shared inputs 186. Restored.
+// Round 279: all four endpoints through existing point setters, with query-vector reuse
+// and result-first exit combinations 163/184/163/183; existing scaled-vector sums on the
+// same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
