@@ -407,7 +407,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 144 (was 177): Frame 0x14 agrees; request/count registers, projection and cross scheduling remain.
+// score 144 (was 144): Frame 0x14 agrees; request/count registers, projection and cross scheduling remain.
 // Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
@@ -452,6 +452,8 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // 144; only selected helpers with direct outputs 144 (989/977 bytes, plain confirmed and kept).
 // First-only/zero-only/other-only helper with direct outputs 178/178/175; averaging-only support
 // declaration 144; both average values directly published 221. Original average result join retained.
+// Round 202: Paired projection multiplication operand orders i/k/ik/j/ij/kj/all, then all with average-dot-first evaluation 144/144/144/144/144/144/144/144 fast.
+// Original executable source restored. Frame 0x14 agrees; request/count homes, initial cross and selected cross/projection scheduling remain.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)

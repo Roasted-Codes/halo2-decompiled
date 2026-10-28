@@ -93,7 +93,7 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 	return result;
 }
 
-// score 107 (was 122): entry saves, fresh unit reload and sentinel carriers still differ.
+// score 107 (was 107): entry saves, fresh unit reload and sentinel carriers still differ.
 // BLOCKED-BY 0xbadc0: retail re-fetches the unit after its two calls, ours reuses the entry
 // fetch (our link knows the callee writes no memory).
 // entry saves, fresh unit reload and sentinel carriers still differ.
@@ -117,6 +117,9 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 // On the 107 body: long user index 111; reset entry in full 109; weapon flag as if/else 111; zoom
 // test as !(keep && zoomed) 107; sound index as one ternary 107.
 // BLOCKED-BY 0xbadc0 (the re-fetch after its calls).
+// Round 202: Prior-state long/short/byte storage, eligibility long/short/byte storage, and both long/both short 106/105/107/103/97/107/102/96 fast.
+// Short eligibility 97/376 plain; both short 96/376 fast add word tests and padding; aligned instructions worsen.
+// Original executable source restored. Entry register saves, the fresh unit lookup and sentinel/result homes remain.
 // @retail 0xc86e0
 void function_c86e0(long unit_index, bool keep_weapon_zoom)
 {
