@@ -2976,13 +2976,6 @@ real function_f4250(long vehicle_index)
 }
 
 /* whether the vehicle is flipping */
-// score 8 (was 33): pointer/flip-kind registers, the shared outer kind test and final false lifetime differ;
-// reversed comparison 33; duration local before/after elapsed 33/33; direct returns 31;
-// result first 36; direct comparison assignment 31; combined/nested conditions 33/33;
-// force-inline duration helper 33; product operands swapped 33; const vehicle 33; byte result 30.
-// retail reads the tick count into eax (clobbering the false
-// result, which it zeroes again on the false path) and loads the time globals
-// after the flip type test; ours uses edx and keeps al. Tried: direct returns 30.
 // @retail 0xf42f0
 bool function_f42f0(long vehicle_index)
 {
@@ -2993,10 +2986,7 @@ bool function_f42f0(long vehicle_index)
 	{
 		real elapsed = vehicle->unknown351 * g_510c54->rate;
 
-		if (vehicle_flip_duration(vehicle_index) > elapsed)
-		{
-			result = true;
-		}
+		result = vehicle_flip_duration(vehicle_index) > elapsed;
 	}
 	return result;
 }
@@ -3636,6 +3626,12 @@ PRIVATE __forceinline real vehicle_larger(real a, real b)
 /* one of the vehicle definition's limits: its forward and reverse speeds
    (0, 1, the larger 2), its left and right turn speeds (3, 4, 5) and its
    steering angles in degrees (6, 7, 8) */
+// score 109 (was 109): retail returns in xmm0 (`fstp [esp + 8]; movss xmm0, [esp + 8]` in each case),
+// which only one `return result;` gives; it then cross-jumps case 6 into case 7's `fmul` and
+// keeps cases 2 and 5 as their own `jbe` diamonds. Tried: single exit 123 (xmm0 as retail, but
+// cases 2 and 5 jump into case 8 and 6/7 stay apart); returns in cases 6/7 161 (x87 again);
+// the larger as if/else 119; a radians inline for 6/7 123; case 2 with block locals 123;
+// double fabs in 6/7 123; cases 6/7 sharing one body 138; a shared angle local for 6/7 123.
 // @retail 0xf78e0
 real __stdcall function_f78e0(long vehicle_index, long limit)
 {

@@ -119,12 +119,22 @@ bool function_a7670(long object_index);
 // Round 55: swapped count declarations 181; counts before the body-count snapshot 181;
 // retry before that snapshot 181; a fresh indexed cleanup counter 196; outer selector declared
 // after the arrays 181; scan-wide body pointer 181; existing header getter 181; const body count 181.
+// Retry-head body-count snapshot before/after the local resets, with original/first/second/both
+// list-count declarations at function scope: eight at 181. Original snapshot and scopes restored.
 // Round 262: function-entry selector/index/island storage, all seven combinations, 181 each;
 // all three with entry body-count storage 181. Every initializer stayed at its original use;
 // original declarations restored. Scratch phase, scalar homes and indexed cleanup remain.
 // Round 218: First/second scratch arrays at island/function, function/island, island/island,
 // list/function, function/list, list/list, island/list and list/island scopes:
 // 181/181/181/181/181/181/181/181 (fast control 181). Original restored.
+// Round 368: first/second scratch counts long/short, long/word, short/long, short/short, short/word,
+// word/long, word/short, word/word 245/245/280/272/272/280/272/272. Original count domains and executable
+// body restored.
+// Round 24: shared processing ordinal 183; island membership ordinal 181; both at function
+// scope 183; eager second scan 181; eager first/both scans 259/259; staged category 259;
+// direct body-pointer countdown 237. Original restored.
+// Round 206: Chained initial list-count/list-and-retry resets, with separate/chained retry resets
+// [181, 273, 181, 273]; flat entry rejection on the same four graphs [181, 273, 181, 273]. All restored.
 // @retail 0x278f00
 void function_278f00()
 {

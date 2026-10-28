@@ -1941,6 +1941,9 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // system in EDI, retail ESI; color B in EBX, retail EDI; tinted spilled, retail BL); its colors named
 // to sort after location_index 177; parameters reordered 177; colors read from the effect inside 177;
 // const color parameters 177.
+// Round 222: native-long cluster 139; word/dword zone 151/151; native cluster with
+// word/dword zone 157/157; all point-first products 130, with native cluster 139, with word zone 151.
+// Original zone producer and complete body restored; color/query frame remains 0x40 versus 0x44.
 // Round 198: register-only scale formal in five source positions 130 each; read-only descriptor/original scale/scale last/scale middle 130/130/130. All definitions, declarations and both calls restored.
 // Round 204: complete zone distance/products 133/133; forced zone expansion 130; signed-byte/native-long result 152/168; forced distance/products 133/133; long result plus distance 168. Whole original helper and body restored.
 // @retail 0x178c80

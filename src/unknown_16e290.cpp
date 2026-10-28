@@ -1424,6 +1424,8 @@ void function_170630(long player_index);
 // and three others) 7 each and byte-identical to the inline form, the command pointer as a
 // local 7, the state pointer from the observer element 7: the compiler always prepares the
 // three addresses in the argument-register order, while retail prepares out, first, second.
+// Native observer timer/channel fields 7/7/7; full typed receiver 7; timer end pointer
+// with byte/typed receiver 23/23; word/byte countdown 7/7.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {
@@ -1544,8 +1546,19 @@ struct s_camera_clip_reference_16ebf0
 // 222; split scalar values with entry output declarations 209. All restored.
 // Individual direction, matrix, adjustment, point, fraction, location and position local names
 // 209/209/209/209/209/209/209/209.
+// Round P208: distinct native composition output, scalar/native inputs and native/library
+// output copies 257/276/257/276; the same four with entry output declaration 257/276/257/276.
+// All frames 0xcc versus 0x98; original alias-safe composition and native homes restored.
 // Original-position pointer before view queries: scalar/native directions, word truth, both
 // 252/260/248/271; those four with entry matrix declaration 252/260/248/271. All restored.
+// Round 227: Shared vector setters at input/basis/composition transfers, all subsets, then publication 209/216/219/226/229/237/240/289.
+// Original body and all helpers restored.
+// Round 202: Existing saved-state lifetime after view/basis/composition/output-copy/validation
+// phases 239/239/239/239/256; view/composition/validation with entry fraction 239/239/256.
+// Original saved-state initialization, qualifier and fraction lifetime restored.
+// Typed state/saved-state/both field receivers 209/209/209; each with native
+// directions 221/221/221; both with native position 232, with complete native
+// direction/position copies 204 (five-point gain dropped). Original types and body restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

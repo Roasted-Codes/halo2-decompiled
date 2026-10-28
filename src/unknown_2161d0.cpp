@@ -74,6 +74,8 @@ bool function_2161d0(long file_index, void *buffer, long size)
 // (0x217a80); a `do {} while (false)` join after the append 10; path built in an inline helper
 // returning the path 10; result set inside `if (read)` 34; chained done/success assignment 11;
 // a volatile done store (diagnostic only, reverted) 10.
+// Short/long/byte/signed-char completion 96/93/110/110; done/success result chains 19/10;
+// bounded-index statements 10, with long completion 93; size guard first 75; shared upper bound 104.
 // @retail 0x2162b0
 bool function_2162b0(long file_index, void *buffer, long size, s_saved_game_file_task *task)
 {
