@@ -1477,6 +1477,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // 421/421/403/403. Original body and every smoothing input restored.
 // Round 246: complementary activity bool/byte/short/long 424/424/423/425; the same with
 // callback selection at update 424/424/423/425 (fast). Original activity and callback restored.
+// Round 251 (fast control 234): loop-scoped orientation byte-offset/ordinal/base/cursor
+// 410/234/409/254; the four at entry 561/234/576/558. Ordinal forms keep frame
+// 0x28; the other forms grow it to 0x30. Original buffer lifetime and body restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

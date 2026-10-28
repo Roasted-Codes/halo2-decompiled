@@ -381,6 +381,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // all three 274; per-branch volume arrays before channel arrays 256. All restored.
 // Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
 // parameter-derived decision at entry 306/306/305/298. Original large decision restored.
+// Round 251: bounded retry short/word/byte/dword carriers 263/263/259/245;
+// the same four with a scoped timeout else phase 263/263/259/245. Frame stays
+// 0x3c; original ordinal, continue graph and full executable body restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

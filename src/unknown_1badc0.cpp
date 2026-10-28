@@ -77,6 +77,9 @@ real normalize2d(point2f *arg_0);
 // Round 249: Native object receiver retaining output access with original/early radius
 // and aggregate/CRT center copies 220/215/220/215; all four with read-only actor
 // 220/215/220/215. Five-point radius lead below gate; original body restored.
+// Round 251: Multi-use actor-position receiver with original/entry point storage and
+// radius-order combinations 299/299/299/299; consistent current actor-position lookups
+// with those combinations 307/307/306/306. Original receiver and full body restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)
