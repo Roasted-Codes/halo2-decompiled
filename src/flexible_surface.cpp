@@ -429,12 +429,15 @@ void function_117dd0(long index, vector3f *wind)
 	wind->i = (real)(g_55ecd4.i * strength); wind->j = (real)(g_55ecd4.j * strength); wind->k = (real)(g_55ecd4.k * strength);
 }
 
-// score 109 (was 152): the loop's vertex cursor points at the normal's j (retail: k), so the dot product,
+// score 109 (was 109): the loop's vertex cursor points at the normal's j (retail: k), so the dot product,
 // tangent and position sums load and schedule in another order; retail adds the acceleration and the force
 // as first operands. Weights stored after the acceleration (retail stores them first, with the current
 // weight above the previous). Tried: dot sums i,j,k / k,i,j / j,k,i 109 each; dot3f either argument order
 // 117 (744 bytes); weights before the acceleration 109; previous weight declared first 113, before the
 // acceleration 113; current weight renamed 109; acceleration and force as first addends 116 (744 bytes).
+// Shared tangent scale 109; previous point first 122; outer vertex declaration 109; native scaling loop
+// 120; scale helper/previous first 122; native additions 116; scaling/additions 154, with helper 151.
+// All restored.
 // @retail 0x118140
 void function_118140(long index)
 {

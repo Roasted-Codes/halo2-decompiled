@@ -391,11 +391,14 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
-// score 372 (was 386): the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
+// score 372 (was 372): the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
 // Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
 // all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
 // point-difference helpers alone/everywhere 398/398; depth-indexed step fields 385; direct data and step fields 372 (kept);
 // that with a short initialization count 402; separate clearing loops 394; both 384.
+// Signed/unsigned Boolean bit 380/372; capped word on unsigned/signed graphs 401/398; signed word/CRT
+// clear 376; signed/CRT clear 393; entry counts 376; origin/target names 380; promoted cap 398, with CRT
+// clear 377. All restored.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,
@@ -534,11 +537,14 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	return count;
 }
 
-// score 239 (was 356): the 0x5ac ESP frame and initial actor sequence now agree; avoidance-flag conversion and tail layout differ.
+// score 168 (was 239): frame 0x5ac, actor lookup and direct avoidance-byte copy agree; retry-mask reload and tail layout differ.
 // Tried: one result exit 308; stage array names 356; both 308; reversed arrays 356; named destination fields 360;
 // direct reconstruction count 357; full avoidance if/else 354; success first 362; shared rounding helper 363; helper plus one exit 314.
 // With direct data/step fields in the callee: original parent 353; original with actor NULL before the index test 350;
 // one exit plus actor NULL before the index test 239 (kept). The callee form alone moved the earlier parent from 308 to 349.
+// Boolean field alone 239; byte local with Boolean/original field 200/200; separate retry increment 239;
+// byte/increment 200; complete final-count selection 239; direct Boolean field 168 (kept, plain), with
+// separate increment 168.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {
@@ -583,7 +589,7 @@ bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view 
 			}
 			else
 			{
-				bool avoid = state->unknownac != 0;
+				bool avoid = state->unknownac;
 				long object_index = NONE, type = NONE;
 				if (!avoid && result->location.flags > 0)
 					avoid = (result->location.flags / (1 << (byte)result->location.count)) % 2 == 1;

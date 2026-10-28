@@ -564,13 +564,15 @@ bool __stdcall function_1152e0(long machine_index)
 }
 
 /* whether any cluster on either side of a machine's portals is set */
-// score 41 (was 58): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
+// score 41 (was 41): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
 // Found return 45; empty return 69; native count 58; native first 62; structure receiver 52;
 // reject unset portals 58; result first 53; admitted result 61; result/found 41 (kept, gain 17);
 // structure/found 60; result/structure 45; native receivers/found 56; shared bit tests 58;
 // structure/shared 52; count/shared 58; result/shared 53; object getter 58; getter/structure 52;
 // getter/shared 58; getter/structure/shared 52; count before false/found 45; count before false 58;
 // result/count/found 41; result/count/structure/found 56.
+// Entry index/end/both declarations 41/41/41; word/long result 61/60; bound fields at use 41; plain
+// ordinal 100, with long result 98. All restored.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {
