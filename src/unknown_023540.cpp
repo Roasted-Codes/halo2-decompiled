@@ -2781,6 +2781,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // complete tag/bitmap observations at use: eight forms 334 each. Original receivers restored.
 // Complete alpha parameter results, ternary/else-if/independent clamps 353 each; native rectangle
 // field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
+// Round 219: Normalized first/second/maximum scalar role-name masks 1-7 and all plus both trig
+// names: 334/334/334/334/334/334/334/334. Original body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
