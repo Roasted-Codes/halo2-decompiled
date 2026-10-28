@@ -3291,6 +3291,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Complete native tag-reference arrays with short/long/byte/word mode, raw/native interval
 // fields: 637/637, 639/639, 632/632, 637/637 (fast control 637). Five-point gains rejected;
 // original effect type, fields, body, parameter aliases and local qualification restored.
+// Chained tag/scale/both defaults 637/637/637; chained admission-failure alone/with
+// tags/with scales/with both 636 each; all reverse chains 637 (fast control 637).
+// One-point gain rejected; original initialization graph and body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {

@@ -1128,6 +1128,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Return object after the class guard, with native iterator/post-lookup candidate/guaranteed
 // mode-write combinations: 988/1001/999/1001/989/1000/999/1001 (2825 bytes, first +0).
 // Original constructor timing, iterator, candidate, output order and resource requests restored.
+// Partial traversal-zero subsets before requested keys (step/mode-entry/both/class-entry/
+// step-class/both-entry) 828/827/828/828/828/827; interleaved key/zero stores 828/828
+// (fast control 828). Small gains rejected; original initialization and body restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

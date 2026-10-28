@@ -250,7 +250,7 @@ bool __stdcall function_1aa990(long actor_index, s_slot *slot)
 	return result;
 }
 
-// score 11 (was 17): extent now agrees at 352 bytes; the pool pointer still uses ECX
+// score 11 (was 11): extent now agrees at 352 bytes; the pool pointer still uses ECX
 // instead of EAX, the fraction uses EDX instead of ECX, and the shared range-value
 // load/compare schedule differs.
 // Tried (r35): prop_ref_get and the real record types 17; the state assigned after declaration 17;
@@ -262,6 +262,9 @@ bool __stdcall function_1aa990(long actor_index, s_slot *slot)
 // entry prop/state declarations 11; unsigned result 11; long result plus entry range 11;
 // entry range/receivers 11; unsigned result plus entry receivers 11; split entry acquisition
 // with unsigned result 11. Loads and call tuples stayed at their original boundaries.
+// Upper-first range with original/full role names 14/14; complete role names 11;
+// byte selection alone/upper-first/names/both 41/44/41/44; signed-byte selection 41
+// (fast control 11). Pool/fraction carriers and conditional range loads remain; all restored.
 // @retail 0x1aa9f0
 short __stdcall function_1aa9f0(long actor_index)
 {
