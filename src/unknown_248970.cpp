@@ -140,6 +140,12 @@ public:
 // Round 195: Queued-function inline/noinline/combined/forceinline declarations 215 each;
 // each with closed coordinate-double lifetime 215. Original boundary and body restored;
 // frame and activation/location transport remain.
+// Lane 10 r11: retail takes the activation in AL with the location as the first stack
+// argument (ours: location in EBX, activation on the stack). Activation-first parameter
+// order with a forwarding definition for the caller 215 (location still in EBX, forwarder
+// not inlined); location read once through its address 233 (both on the stack, ret 0x18);
+// both 233; activation store after the getter and position copy 251 (724 bytes); with the
+// activation-first order 251. Original order and body restored.
 // Round 81: retail's child link is the existing 0x2483f0 inlined (salt from the element, ordinal from
 // the pointer difference); calling it keeps a call in this /Ob1 file: alone 303, with the entry
 // reordered as below 299, inline/forceinline declarations 299/299; field_4 read before the getter

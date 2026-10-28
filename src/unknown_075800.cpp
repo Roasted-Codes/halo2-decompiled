@@ -1087,6 +1087,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // type/message/address declared 218 (identical); one read of the address through its address 220 (address
 // on the stack as retail, type ecx/message eax, retail eax/ecx); that with type/message/address 219 (message
 // also on the stack, 0x7afd0 3 -> 35), with type/address/message 220. Declared order does not move type to eax.
+// Round 50: unified retail-order slot reads 220/220; sender reference 218; full sender value 242
+// (484 bytes, ret 0x14, caller 76); pointer reference 221. Four-byte aggregate with const,
+// register, declaration-swapped or per-case-result pointer forms 242 each (484 bytes, caller MATCH).
+// All restored; selector/message/address convention and repeated sender loads remain.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
