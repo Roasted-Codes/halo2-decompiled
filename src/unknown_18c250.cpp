@@ -596,6 +596,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Failure flag from the bit test, then from the call 333.
 // Round 231: spatial/cluster/both/flags/spatial-flags/cluster-flags/all field references and all
 // plus pooled-datum reference each 280. Original body restored.
+// Round 233: cluster/spatial/both receivers bounded to their consuming kind phases 309/293/311;
+// marker declared at object-phase entry 280; marker plus those receivers 309/293/311;
+// audible output declared at object-phase entry, initialized at its query 280. All restored.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

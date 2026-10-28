@@ -74,7 +74,7 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 47 (was 95): restore entry-load order and the protected sampler convention differ.
+// score 47 (was 47): restore entry-load order and the protected sampler convention differ.
 // Earlier 95 from 132: frame four, the logarithm and the tail agree; left are the restore block (retail reloads
 // the range field before each call; ours keeps it in a register) and BLOCKED-BY 0x18a90, which retail passes
 // the state in ebx (ours pushes it).
@@ -157,6 +157,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Round 231: range-field reference 164; with dirty-word cursor 164; first/second/both native mask
 // loops 156/47/47; cursor plus first/second/both loops 156/47/47; second loop alone 181. Minimal
 // reference plus second loop retained.
+// Round 233, on the recovered range-reference/native-mask graph: published table reference 47;
+// native word range/entry field references 47/47; published pass/table-plus-pass references 47/47;
+// packed entry accessor 47; entry-reference consumption scope 47; unsigned native mask index 47.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

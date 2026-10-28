@@ -1477,6 +1477,11 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
+// score 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
+// Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
+// shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
+// complete spherical direction 401; early index-only salt 377 (five-point gain dropped); target-distance
+// name 382; shared normalizer 382; dot after trigonometry 382; early salt plus field reads 387.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -1628,6 +1633,11 @@ vector3f const g_45326c[1] = { { 0.0f, 0.0f, -1.0f } };
 /* detonates a projectile: (once) its sound, contrail, direct and area
    damage, impact or airburst effects, and the effects of the material
    under it */
+// score 527 (was 527): Frame 0x184 agrees; header-offset home, cached flags and probe/material homes differ.
+// Native definition bit 533; projectile/child flag bits 527; definition bit plus parent field reads 527;
+// common exit 527; saved-position role name 527; distinct direct/area damage names 527;
+// probe-table pointer loop 530; probe declarations reversed 527; all native flag tests/stores 533;
+// unsigned table index 539; material declared at entry 527; parent/Boolean declarations first 527.
 // @retail 0xfc330
 void __stdcall function_fc330(long projectile_index, bool detach_contrail, real contrail_time)
 {
