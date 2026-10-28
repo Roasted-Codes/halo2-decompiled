@@ -1091,6 +1091,9 @@ struct s_actor_looking_turn_request
 // out-of-line predicate plus explicit stores 532 fast, 527 plain (restored). Unchanged preview 546 fast.
 // Separate noinline declarations in caller and callee units 570 fast, 590 plain at 1952/2020 (restored);
 // this removes the expansion and recovers the 0xc8 frame, but later scheduling/layout regress.
+// Distinct aiming/looking vector lifetimes, with explicit looking stores,
+// nested aiming validation and case-set looking result 546, 534, 546, 534, 546, 534, 546, 534 fast.
+// Disjoint outputs with explicit looking publication 525 plain at 2020/2020; restored.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

@@ -3140,6 +3140,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // 1185/934/980; short-input with byte-alpha 935; unsigned-input with byte-alpha 934.
 // Byte alpha selector alone kept plain at 934; its only values remain 4 and 24.
 // Round 366: blend/depth/both indexed state tables 1395/1417/1484; shared sampler 1223; sampler with blend/depth/both tables 1413/1410/1550; all with Boolean capabilities 1448. All restored.
+// Test-defined rescale state, canonical permission-width pairs and negative-
+// permission failure-first combinations 1216, 1205, 1208, 933, 1186, 1184, 1180, 1183 fast.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
