@@ -925,6 +925,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // 1133 bytes, but the set moves to the stack and every argument slot shifts); only at
 // transition_find 309; only at transition_lookup/the transition channel 223/223 (set stacked);
 // a set local copied after the lookup 210 (identical, read back from names.set).
+// Round P208: native library name-record publication 210; with aggregate input 318;
+// with logical change join 244; with both 320; the same four with forced existing
+// clear helper 210/318/244/320. Original record publication, identifiers and helper restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

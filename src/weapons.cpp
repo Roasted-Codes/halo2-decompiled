@@ -3550,6 +3550,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Branch-owned three query outputs 1436; direct barrel selectors 1537; direct input selector 1448;
 // all direct tag selectors 1542; integer input tables 1457; branch outputs/all selectors 1540;
 // unsigned-byte effect decisions 1436; branch outputs/integer tables 1457. Original body restored.
+// Round P208: ordinary inline request/reset/visible-owner helpers 1503/1436/1436;
+// request-reset/request-owner/reset-owner/all inline 1503/1503/1436/1503;
+// direct native input-table initialization 1436. Original helper declarations and body restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

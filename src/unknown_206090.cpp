@@ -190,6 +190,9 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // the pointer 1570 (frame 0x590) [1449]; normalizer only through the pointer 1480 (0x5b4)
 // [1460]; cross product without the scalar captures 1423 [1463]; both pointer forms 1585
 // (0x590) [1442]; contact arrays declared at function scope 1402 [1470].
+// Round P208: complete magnitude/cross/second-normalizer product terms 1471/1429/1410;
+// magnitude-cross/magnitude-normalizer/cross-normalizer/all terms 1452/1435/1404/1461;
+// library copy of repeated magnitude input 1402. All original producer bodies restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {

@@ -1507,6 +1507,9 @@ struct s_camera_clip_reference_16ebf0
 // 222; split scalar values with entry output declarations 209. All restored.
 // Individual direction, matrix, adjustment, point, fraction, location and position local names
 // 209/209/209/209/209/209/209/209.
+// Round P208: distinct native composition output, scalar/native inputs and native/library
+// output copies 257/276/257/276; the same four with entry output declaration 257/276/257/276.
+// All frames 0xcc versus 0x98; original alias-safe composition and native homes restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
