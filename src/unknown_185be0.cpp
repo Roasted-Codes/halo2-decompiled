@@ -142,8 +142,14 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 790 (was 790): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
-// Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// score 780 (was 790): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Round 86 (fast, aligned counts in brackets, 383 at the start): turn rates assigned in both arms (retail loads
+// the stored rates on the else path) 788 [367] and the attachment index NONE per path (retail sets it on each
+// failure path) 780 [356], both kept; on 780: selected input as long (retail movzx/test edx/setg) 779 [348];
+// both selector bytes in byte locals identical; SET_FLAG(flags, bit, value) as 0x187b30 uses, in place of the
+// mask helper 922 at 3740 bytes [310: the repeated tests thread as retail, flag section now retail's length,
+// homes shifted 4]; PIN on the two settings clamps 934/951 (retail's field re-reads, lockstep worse); named
+// clamped rates 789 [401]; magnitude sum terms swapped identical.
 // Round 9 (lane 10): retail clamps the range fraction in place (division result and clamp share its slot)
 // and threads every repeated flag test (one test, both stores per arm), testing the selected input as a
 // dword. Fraction computed then clamped into itself 790 (same code); fraction declared before its bounds
@@ -313,8 +319,8 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
             vector3f local_15;
             function_1a4900(arg_1, &arg_5->field_28, &local_15);
             local_1->field_68 = local_15.k > 0.0f;
-            real local_16 = local_13.field_0[0];
-            real local_17 = local_13.field_0[1];
+            real local_16;
+            real local_17;
             if (local_1->field_68 && arg_2 > 0.0f && (fabs(local_13.field_0[0]) > 0.0001f || fabs(local_13.field_0[1]) > 0.0001f ||
                 fabs(arg_5->field_0) > 0.0001f || fabs(arg_5->field_4) > 0.0001f))
             {
@@ -323,6 +329,11 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
                 real local_20 = function_185be1(*(real *)(local_0 + 4), 0.0f, 1.0f) * local_15.k;
                 local_16 = function_185be1(local_15.i * local_18, -3.1415927410125732f, 3.1415927410125732f) * local_20 + (1.0f - local_19) * local_13.field_0[0];
                 local_17 = function_185be1(local_15.j * local_18, -1.5707963705062866f, 1.5707963705062866f) * local_20 + (1.0f - local_19) * local_13.field_0[1];
+            }
+            else
+            {
+                local_16 = local_13.field_0[0];
+                local_17 = local_13.field_0[1];
             }
             arg_5->field_10 = local_16 * arg_2;
             arg_5->field_14 = local_17 * arg_2;
@@ -387,13 +398,14 @@ void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s
         bool local_10 = local_3[11] == 1;
         if (local_10 && local_1->field_2e == NONE && arg_4->field_0)
         {
-            long local_11 = NONE;
+            long local_11;
             if (local_1->field_0 != NONE)
             {
                 byte *local_12 = function_185be2(local_1->field_0);
                 short local_13 = *(char *)(local_12 + 0x212);
-                if (local_13 != NONE) local_11 = *(long *)(local_12 + local_13 * 4 + 0x218);
+                local_11 = local_13 != NONE ? *(long *)(local_12 + local_13 * 4 + 0x218) : NONE;
             }
+            else local_11 = NONE;
             if (((byte *)arg_4->field_0)[6] > 0x7f || ((byte *)arg_4->field_0)[7] > 0x7f) local_10 = false;
             if (local_11 != NONE && !function_100f70(local_11) && local_2.field_44 * local_2.field_44 + local_2.field_40 * local_2.field_40 > 0.64000004529953f) local_10 = false;
         }

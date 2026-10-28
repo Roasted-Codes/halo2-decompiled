@@ -133,6 +133,10 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // 27; z rows through local_3 20 (the z row then loads the centre as retail; only the x row's fold is
 // left, our centre-x load hoisted above the product, 1176 bytes); on that, x row product first 20;
 // x and z rows through local_3 26. Match-only (added result byte, mixed centre reads); restored.
+// Round 86 (plain): the probe kept out of line by a noinline declaration in its own file (0x16a040) in place
+// of the in-body inline_depth pragma, 170 (kept; same code); on that, the round-81 five-difference body 5 (same
+// x/z row folds), its plus rows through a point-along-vector helper 5 (identical), every centre read through
+// local_3 26; short category on the kept body 234.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)
@@ -179,8 +183,6 @@ short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, s
    if (function_30bf0(&local_8) == 0.0f)
     local_8 = *g_4687a8;
    local_4 |= 0x10000000;
-   /* retail calls the probe test at each of these */
-#pragma inline_depth(0)
    if ((short)arg_5 == 1)
    {
     point3f local_9;
@@ -241,7 +243,6 @@ short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, s
    {
     goto local_14;
    }
-#pragma inline_depth()
   }
   if (local_7)
    category = 0;

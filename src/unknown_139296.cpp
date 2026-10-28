@@ -435,6 +435,11 @@ bool function_22acb4(long player_index);
 // The second-enum byte form recovers the one-slot prologue, but later operations regress; body restored.
 // Round 210: First-mask high-byte orders 2134/1324/1243/4123/4321/3412/2341/3142
 // all 165; original producers restored, extra second-mask spill remains.
+// Round 86 (fast, aligned counts in brackets): retail's block order rebuilt 232 [37]; with a short second 283
+// [20: 1 in EDI as retail; only the second mask in ECX with its own slot, from 0xFFFD taking EBX, remains, and
+// that extra slot shifts every lockstep line]; on it the second as (short)(char)/(char)(x & 1)/(signed char)/
+// & (short)1/1 & (char) 283 [20] each, without the char cast 287 [19]; word second stored then masked 232
+// (as the rebuilt order; retail's `and ebx, 0xfffd` says word). Original body restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
