@@ -635,6 +635,10 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // 417/400/428/447; corresponding three pairwise object reuses 417/400/428;
 // all scopes with both repeated levels 500. All scopes reach frame 0xa0;
 // conversion reuse and the twelve-byte excess frame remain; original body restored.
+// Round 203: descriptor lexical orders first-second-third, first-third-second, second-first-third,
+// second-third-first, third-first-second and third-second-first 378 each (fast control 378/967);
+// fourth order with both repeated levels 416; fourth order with existing raw append 390.
+// Current inlined submission scratch still gives frame 0x130; every body form restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -1122,6 +1126,10 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 194: Native byte/short/word/dword channel masks with retained rear samples
 // 200/198/198/199; with entry level sum 209/209/209/212. Small gains rejected;
 // original scalar captures, channel decision, helpers and sum grouping restored.
+// Round 203: qualified raw sends front/rear/all 196/198/194; with early level sum 209/211/207;
+// native channel bit with all raw sends, late/early sum 194/207. Short-complement interactions
+// front/rear/all 188/192/188; front plain full 188/592, all matches preserved, but word tests
+// and aligned instruction changes regress (110/120 to 121/128). All executable forms restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

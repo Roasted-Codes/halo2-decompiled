@@ -793,7 +793,7 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 
-// score 331 (was 351): the tracking view is cleared before the tracking test, so the
+// score 331 (was 331): the tracking view is cleared before the tracking test, so the
 // pointer is zeroed where retail zeroes it instead of being assigned in an else
 // branch. Retail holds the actor in EBX and spills it at [esp+8] right after the
 // actor[9] test where ours holds it in ESI and spills it at [esp+0x14]; retail keeps
@@ -826,6 +826,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // Ordinary object-type/suppression/current orders 012/021/102/120/201/210
 // 366/366/351/355/369/388; coordinated priority names 341; names with 210 order 388
 // (fast control 341; full baseline 358).
+// Round 203: native squad flag with squad-index, tracking-index and masked actor-slot producer
+// combinations 372 each in all eight fast trials (control 372/1260, full 331/1251).
+// Actor ESI and saved/squad homes remain; all native views, handles and temporary include restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
