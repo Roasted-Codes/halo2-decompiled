@@ -273,6 +273,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // ESI save and a 4-byte pad come from 0x11f0d0's double locals (angle, s) once the caller 0x118700 is
 // in the image: with both real, --fast with the caller gives retail's late ESI. `real angle` keeps
 // 0x11f0d0 identical; `real s` or the quotient written per component fold its last multiply (2 -> 89).
+// Lane 9 r29 (plain): `real angle` in 0x11f0d0 220 (identical); `real s` there 220 here
+// (--fast showed 200 with the late ESI, a reduced-image artifact; 0x11f0d0 2 -> 89), also as
+// `step / (real)sqrt(dist2)`; the four basis vectors declared in reverse 220; position renamed 220.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -1020,6 +1023,17 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // each (identical code); sweep before the query 283 (now the start through the call matches; the
 // sweep stores land at 0x3c not retail's 0x48 and the candidate loop gains a jump over its alignment),
 // with quotient-first products 283. The zero register (retail XMM3) decides the response arm.
+// Lane 9 r29 (fast): role names for every local 156 and names flipping the 12-byte/8-byte
+// alphabetical order 156 (identical code); sweep before the query with the captures declared
+// first 292 (1329 bytes); sweep declared beside the scale 156; separate response vector 156.
+// Round 12 (lane 10): sweep before the query with the maximum-fraction constant declared after it 283
+// (the constant's early load and slot then as retail; the extra count is our loop entry jumping over
+// 7 bytes of alignment where retail pads 6 and falls through, shifting every later line: retail
+// computes and stores the sweep one component at a time in one register, j and k loaded then
+// multiplied, where ours folds j/k as q*j/q*k); on that, component-first products 283 (same code),
+// point declared ahead of the sweep 283 (same code). On the current body: the sweep renamed to sort
+// before the point 156 and declared at the top of the block 156 (same code and homes: neither the
+// name nor the declaration order moves these slots). All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

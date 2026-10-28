@@ -127,6 +127,12 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // entry zero/native/direct clear 397; entry zero/short/direct clear 414.
 // admitted zero/native/direct clear 408; admitted zero/short/direct clear 425.
 // All executable forms restored.
+// Round 12 (lane 10, plain) on the rebuilt five-difference body (short category, bool clear state,
+// one bool probe result with `category = 1` on a hit, mode-1 centre read through the cast
+// parameter; 5 at 1175 bytes): named per-row offsets in all three rows 36; x rows through local_3
+// 27; z rows through local_3 20 (the z row then loads the centre as retail; only the x row's fold is
+// left, our centre-x load hoisted above the product, 1176 bytes); on that, x row product first 20;
+// x and z rows through local_3 26. Match-only (added result byte, mixed centre reads); restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

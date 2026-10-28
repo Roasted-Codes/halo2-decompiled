@@ -519,33 +519,40 @@ void function_1e54d0(void *state, long a);
 
 /* starts the biped toward an object to grab (+0x390), switching its
    physics to mode 6; NONE clears it */
+// score 40 (was 57): target/physics registers, visibility-call target convention and facing/flag store order still differ.
+// Positive target 62; positive eligibility 57; both 62; Boolean flag 58; word flags 67; vector helper 70; memcpy 57; positive/Boolean 65;
+// one target-address read 61; that read with positive flow and native flags 33 (exact-match-only, rejected); natural positive flow/native flags 40, kept.
 // @retail 0xdee60
 void function_dee60(long arg_159e6d, long target_index, bool flag)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
 
-	if (target_index == NONE)
+	if (target_index != NONE)
+	{
+		if (biped->physics_mode != 6)
+		{
+			biped->flags_348 &= ~0x2000;
+			biped->unknown3aa = 0;
+			if (flag || biped->unknown13c == NONE || function_de9d0(arg_159e6d, target_index))
+			{
+				biped->unknown390 = target_index;
+				function_1e54d0(&biped->physics_mode, 6);
+				biped->unknown444 = biped->unknown168;
+				biped->unknown3f8 = flag;
+				if (flag && !TEST_FIELD_BIT((biped->flags_134 >> 23) & 1))
+				{
+					biped->flags_348 |= 0x2000;
+				}
+			}
+			else
+			{
+				biped->unknown390 = NONE;
+			}
+		}
+	}
+	else
 	{
 		biped->unknown390 = NONE;
-		return;
-	}
-	if (biped->physics_mode != 6)
-	{
-		*((byte *)&biped->flags_348 + 1) &= ~0x20;
-		biped->unknown3aa = 0;
-		if (!flag && biped->unknown13c != NONE && !function_de9d0(arg_159e6d, target_index))
-		{
-			biped->unknown390 = NONE;
-			return;
-		}
-		biped->unknown390 = target_index;
-		function_1e54d0(&biped->physics_mode, 6);
-		biped->unknown444 = biped->unknown168;
-		biped->unknown3f8 = flag;
-		if (flag && !((biped->flags_134 >> 23) & 1))
-		{
-			*((byte *)&biped->flags_348 + 1) |= 0x20;
-		}
 	}
 }
 
@@ -1987,6 +1994,9 @@ real function_1d1230(long rigid_body_index, s_havok_component *component);
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value);
 
 /* starts a fallen biped's ragdoll from its main rigid body */
+// score 2 (was 61): only argument preparation before the extent call differs: mov ecx,esi precedes mov eax,ebx.
+// Shared main-index helper with short 34, with long 31; long ternary 76; shared point setter 52; long helper/setter 24;
+// typed body getter 61; short helper/setter 27; both typed body helpers/setter 24; typed three-use point source 2, kept; earlier uninitialized index declaration 2.
 // @retail 0xe1a80
 void function_e1a80(long arg_159e6d)
 {
@@ -1995,15 +2005,14 @@ void function_e1a80(long arg_159e6d)
 	if (biped->unknown34b == 1 && biped->havok_component_index != NONE)
 	{
 		s_havok_component *component = havok_component_get(biped->havok_component_index);
-		char body = *((char *)component + 0x18);
-		short rigid_body = body >= 0 && body < component->rigid_bodies.size ? body : NONE;
+		long rigid_body = havok_component_main_rigid_body_index_get(component);
 
 		if ((TEST_FIELD_BIT((component->unknown04 >> 11) & 1)) && rigid_body != NONE)
 		{
 			real value = function_1d1230(rigid_body, component);
-			byte *motion = *(byte **)(*(byte **)((byte *)component->rigid_bodies.data + rigid_body * 0x60 + 0x40) +
-				0x3c);
-			point3f point = *(point3f *)(motion + 0x70);
+			point3f const *position = (point3f const *)((byte *)havok_component_rigid_body_get(rigid_body, component)->m_motion + 0x70);
+			point3f point;
+			real_point3d_set(&point, position->x, position->y, position->z);
 
 			function_e1b60(arg_159e6d, &point, value);
 		}
@@ -3839,7 +3848,8 @@ void function_e4c50(long arg_159e6d)
 
 		if (timed)
 		{
-			scale = PIN((char)biped->unknown39f * 0.007874016f, 0.0f, 1.0f);
+			scale = (char)biped->unknown39f * 0.007874016f;
+			scale = PIN(scale, 0.0f, 1.0f);
 		}
 		function_e4d90(arg_159e6d, 3, scale, 2);
 		biped->unknown39f = 0;

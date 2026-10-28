@@ -550,7 +550,8 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 	location->spatial.compressed_forward = vector3d_compress(g_4687b0);
 }
 
-// score 280 (was 293): Frame 0x8c versus 0x80; datum/tag and protected root-location convention remain.
+// score 280 (was 280): Frame 0x8c versus 0x80; datum/tag and protected root-location convention remain. BLOCKED-BY 0xba300.
+// Frame 0x8c versus 0x80; datum/tag and protected root-location convention remain.
 // Round 9 (lane 10): retail's case-3 failure byte is a dead store into the slot the audibility output
 // reuses. Forward vector at function scope 280; cluster flag as a word mask 280; case-0 fields read
 // without the type test 307; one function-scope status byte for failure and audibility 280 (no store);
@@ -588,6 +589,10 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Round 208: existing output bit members 2/3/4/5/6 individually, all five,
 // with bit 10, and with bits 10/0 all 293. Original output masks and complete
 // body restored; frame 0x84, datum/tag homes and root-location convention remain.
+// Round 66: addresses written at each use (no spatial/location pointers) 293; without the root-location call
+// (diagnostic) that form gives retail's ESI datum and EBP definition (frame 0x84), the pointer pair does not
+// (frame 0x88): retail passes 0xba300 the object in ECX and the location in EAX, ours the location in ESI.
+// Failure flag from the bit test, then from the call 333.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
