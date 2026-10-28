@@ -488,9 +488,13 @@ long function_243b10(long key_b, bool team_only, long *second)
 // score 173 (was 173): frame 0x40 against retail's 0x44. Retail keeps the slot table in EBP through
 // the inner loop (re-reading g_51ec80 when EBP is borrowed, and in the marker select's else arm) and
 // keeps the inner index on the stack; ours re-reads the table at its use and keeps the index in EAX.
+// Retail's x87 distance squares dx first and pops it there; ours squares dy first.
 // Round 77 (plain): no table local 200; the select's else arm through the global 200; the result index
 // named first 173; the marker position through function_2417a1 (moved above, retail's y-first copy
 // shape) 172; the index declared in the for 173; the count named result_count 173.
+// Round 8 (plain, on the function_2417a1 copy): the distance through magnitude2d 172; the other
+// position read at each use 223 (666 B); the table local at the loop top 169 / 180 (the slot moves to
+// the stack, caller 0x240160 lost); the marker select as if/else 188; the index declared first 172.
 // @retail 0x243c00
 void function_243c00(long slot)
 {
@@ -2583,21 +2587,24 @@ bool c_game_engine_markers::v46(dword flags, long, s_marker_update *update)
 }
 void function_15e360(point3f const *point, long object_index);
 
-// score 141 (was 136): retail keeps the player in EBP and the marker in EDI and spills the slot to the
-// player's argument home; ours keeps the slot in EBP, the marker in ESI and the player in EDI, and spills
-// the masked player index. Tried: the stored scale read back for its zero test 140 (retail's test-ax
-// form, registers unmoved); a named scale 140; that test without the player reference 145; without the
-// masked-index local 140; the team through the masked index 135 (603 B); the masked index at entry 136;
-// read through the player reference 140. Round 59: the player-index reference removed (two reads, no
-// match) 136 -> 141. Found: the marker entry through an element pointer (`entry = &...marker_entries
-// [marker_index]; point3f point = entry->position;`) 32 (retail's registers throughout), with the
-// stored scale read back 12 at retail's length: only the player-data load sits after the event's
-// initializing stores where retail loads it before them. Tried on 12: the players' data pointer read
-// before the initializer 13 (data/team registers swap EAX/EDX), the cause player's pointer before it
-// 149, the cause team before it 158, the team stored first 144, the effect team first 32, the event
-// declared at its use 12, the cause team read through the event's index 12, the initializer and cause
-// helpers called 178..212, the players' data or the cause pointer read before the last change call
-// 63/122 (before the flag store 63/140). The element pointer needs a match, so it is not kept.
+PRIVATE __forceinline void function_2417a1(s_marker_entry const *arg_0, long arg_1, point3f *arg_2);
+
+// score 12 (was 141): only the players' data pointer is loaded after the event's initializing stores
+// (retail loads it into EDX before them). The marker position goes through the existing y-first copy
+// helper function_2417a1 (retail's registers and argument convention throughout, the stored scale read
+// back for its zero test). Before: retail kept the player in EBP and the marker in EDI and spilled the
+// slot to the player's argument home; ours kept the slot in EBP, the marker in ESI and the player in
+// EDI. Tried: the stored scale read back 140; a named scale 140; that test without the player reference
+// 145; without the masked-index local 140; the team through the masked index 135 (603 B); the masked
+// index at entry 136; read through the player reference 140; the player-index reference removed 141.
+// An element pointer for the marker entry gave 32, 12 with the stored scale. Tried on 12: the players'
+// data pointer read before the initializer 13 (data/team registers swap EAX/EDX; also declared at the
+// block top, or const, 13), the cause player's pointer before it 149, the cause team before it 158,
+// the team stored first 144, the effect team first 32/42, the event declared at its use 12, the cause
+// team read through the event's index 12, the initializer and cause helpers called 178..212, the
+// players' data or the cause pointer read before the last change call 63/122 (before the flag store
+// 63/140), a named cause team stored after the effect team 14, the cause team before the cause index
+// 145, a word-cast index 156. Permuter (600 s, 15 tries): nothing below 12.
 // @retail 0x242ba0
 void function_242ba0(long marker_index, long object_index, long player_index)
 {
@@ -2617,11 +2624,12 @@ void function_242ba0(long marker_index, long object_index, long player_index)
 
 		if (marker_index != NONE)
 		{
-			point3f point = *marker_position(marker_index);
+			point3f point;
 			s_slot_table *g;
 			s_event event;
 			s_slot_object *object;
 
+			function_2417a1(g_4e0350->marker_entries, marker_index, &point);
 			g_51ec80->w204 |= 1;
 			function_15e360(&point, object_index);
 			g = g_51ec80;
@@ -2629,7 +2637,7 @@ void function_242ba0(long marker_index, long object_index, long player_index)
 			g->carriers[slot] = player_index;
 			ctf_globals_changed(0x400);
 			g->d[slot] = ctf_options()->scale_b;
-			if (!ctf_options()->scale_b)
+			if (!g->d[slot])
 				g->d[slot] = 10;
 			g->times[slot] = g_510c54->field_2_3;
 			ctf_globals_changed(0x80);

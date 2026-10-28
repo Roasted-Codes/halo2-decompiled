@@ -20,7 +20,7 @@ struct s_transition_settings
 {
     byte unknown00[0x80];
     real speeds[6];
-    real maximum_rises[6];
+    real maximum_drops[6];
     real_bounds type_bounds[3];
     byte unknownc8[0xe0 - 0xc8];
     real_bounds mode_bounds[2];
@@ -59,9 +59,15 @@ struct s_transition_collision
     byte unknown4c[0x10];
 };
 
-// score 15 (was 32): Direct global observations recover type/settings homes; endpoint inputs and call setup remain.
+// score 9 (was 15): only the two calls' setup differs, BLOCKED-BY 0xfa1a0: ours passes the time-scale pointer
+// in EDX (`xor edx, edx`) where retail pushes it (one more push, ret 0x2c).
 // Existing speed getter 126; direct globals 15; reused alternate rise 32; entry result/shared exit 108;
 // early rise 38; common widened index 82; direction at entry 32; entry result plus alternate rise 108.
+// Round 144: the drop tests and the second call in retail's direction (start above end; the alternate
+// pair passed start first, as 0x272020 passes start on the stack and end in ECX) 15 -> 9 (kept: it
+// fixes the values, not just the bytes); both calls' ends swapped instead 33. On 0xfa1a0 (all
+// reverted, the pointer stays in EDX): scale read once 262, delta.k with i/j 247, gravity operands
+// swapped 266.
 // @retail 0x26f150
 bool function_26f150(short type, point3f const *start, point3f const *end,
     point3f const *alternate_start, point3f const *alternate_end)
@@ -69,22 +75,22 @@ bool function_26f150(short type, point3f const *start, point3f const *end,
     real speed = 0.f;
     if (type >= 0 && type < 6 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
         speed = ((s_transition_globals *)g_4e034c)->settings->speeds[type];
-    if (end->z > start->z || (alternate_start && alternate_end && alternate_start->z > alternate_end->z))
+    if (start->z > end->z || (alternate_start && alternate_end && alternate_start->z > alternate_end->z))
     {
         real maximum = 0.f;
         if (type >= 0 && type < 6 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
-            maximum = ((s_transition_globals *)g_4e034c)->settings->maximum_rises[type];
-        real rise = end->z - start->z;
-        if (alternate_start && alternate_end && !(rise > alternate_start->z - alternate_end->z))
-            rise = alternate_start->z - alternate_end->z;
-        if (maximum != 0.f && !(maximum > rise))
+            maximum = ((s_transition_globals *)g_4e034c)->settings->maximum_drops[type];
+        real drop = start->z - end->z;
+        if (alternate_start && alternate_end && !(drop > alternate_start->z - alternate_end->z))
+            drop = alternate_start->z - alternate_end->z;
+        if (maximum != 0.f && !(maximum > drop))
             return false;
     }
     vector3f direction;
     bool result = function_fa1a0(speed, 1.f, start, end, NULL, NULL, NULL, true,
         &direction, NULL, NULL, NULL, NULL, NULL);
     if (result && alternate_start && alternate_end)
-        result = function_fa1a0(speed, 1.f, alternate_end, alternate_start, NULL, NULL, NULL,
+        result = function_fa1a0(speed, 1.f, alternate_start, alternate_end, NULL, NULL, NULL,
             true, &direction, NULL, NULL, NULL, NULL, NULL);
     return result;
 }
@@ -99,11 +105,6 @@ real function_26f290(short type)
     return result;
 }
 
-// score 20 (was 43): Direct globals, entry result and actual bounds receiver recover the prologue; bound/height loads remain.
-// Actual bounds copy 80; bounds pointer 33; entry result 42; full-width result 50;
-// nested admission/bound-first comparisons/success arm 43/43/43; direct globals 35;
-// pointer plus entry result 32; same with unsigned flags 32; pointer/result/direct globals 20.
-// Shared predicate with scalar/value/reference/pointer bounds 32/80/20/20; all removed.
 // @retail 0x26f2d0
 bool function_26f2d0(s_path_settings const *settings, point3f const *start, point3f const *end)
 {
@@ -113,19 +114,16 @@ bool function_26f2d0(s_path_settings const *settings, point3f const *start, poin
     {
         if ((flags & (1 << i)) && i >= 0 && i < 3 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
         {
-            real_bounds const *bounds = &((s_transition_globals *)g_4e034c)->settings->type_bounds[i];
+            real_bounds bounds = { ((s_transition_globals *)g_4e034c)->settings->type_bounds[i].lo,
+                ((s_transition_globals *)g_4e034c)->settings->type_bounds[i].hi };
             real height = end->z - start->z;
-            result = height >= bounds->lo && height <= bounds->hi;
+            result = height >= bounds.lo && height <= bounds.hi;
             if (result) break;
         }
     }
     return result;
 }
 
-// score 20 (was 35): Entry result and actual bounds receiver recover the prologue; bound/height loads remain.
-// Actual bounds copy 68; bounds pointer 23; entry result 32; full-width result 42;
-// nested admission/bound-first comparisons/success arm/direct globals 35/35/35/35; pointer plus entry result 20.
-// Shared predicate with scalar/value/reference/pointer bounds 32/69/20/20; all removed.
 // @retail 0x26f360
 bool function_26f360(s_path_settings const *settings, point3f const *start, point3f const *end)
 {
@@ -136,9 +134,9 @@ bool function_26f360(s_path_settings const *settings, point3f const *start, poin
     {
         if ((flags & (1 << i)) && i >= 0 && i < 2 && globals && globals->count > 0)
         {
-            real_bounds const *bounds = &globals->settings->mode_bounds[i];
+            real_bounds bounds = { globals->settings->mode_bounds[i].lo, globals->settings->mode_bounds[i].hi };
             real height = end->z - start->z;
-            result = height >= bounds->lo && height <= bounds->hi;
+            result = height >= bounds.lo && height <= bounds.hi;
             if (result) break;
         }
     }
@@ -225,12 +223,17 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
     return true;
 }
 
-// score 20 (was 108): retail passes the marker flags to 0x26fbf0 as a 16-bit argument
+// score 20 (was 20): Flags promotion and marker-query/loop-entry scheduling remain; protected helper interface unchanged.
+// Alignment pointer snapshot 55; actor point snapshot 131; direct marker indexing 20;
+// selected marker memcpy 20; unsigned-word ordinal 111; long best index 76;
+// entry best sentinel 46; both vector observations 114.
+// retail passes the marker flags to 0x26fbf0 as a 16-bit argument
 // (`xor edx, edx; mov dx, [eax + 0x1c]`); declaring that parameter `word` gives 4 and keeps
-// 0x26fbf0 matched, but its other prototypes are in src/unknown_2c0d00.cpp. The squared distance
+// 0x26fbf0 matched, but 0x26fbf0 is contributor code: BLOCKED-BY 0x26fbf0. The squared distance
 // through vector3d_from_points3d/length_sq3f 30; difference orders xzy/yzx/zxy/zyx 24/26/26/24;
 // best before best_distance 20; the marker query before both 99; dot3f alignment 26; sum
-// x + y + z 20; nested point test 20.
+// x + y + z 20; nested point test 20; flags through a word local 22; alignment k + i + j 20;
+// the markers array after best 20; long count 111; const character 20.
 // @retail 0x26fc80
 bool function_26fc80(long actor_index, long object_index, real distance, void *path, point3f *point)
 {
@@ -328,9 +331,13 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
+// score 167 (was 199): entry and loop register allocation differ; single exit 167;
+// long best 199; long loop index 202; point names 199; vector helper 202;
+// single exit with long best 181.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {
+    bool result = false;
     s_actor_view *actor = actor_get(actor_index);
     s_transition_character *character = (s_transition_character *)function_1e4a50(actor->unknown054);
     if (character)
@@ -376,10 +383,10 @@ bool function_26f990(long actor_index, long object_index, real distance, s_objec
         {
             *out = markers[best];
             if (point) *point = best_point;
-            return true;
+            result = true;
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x270240
@@ -478,6 +485,9 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
+// score 299 (was 299): entry register convention and floating-point scheduling differ;
+// result first 299; surface first 299; vector names 299; vector helper 299;
+// case order 300; separate vector declarations 299.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,

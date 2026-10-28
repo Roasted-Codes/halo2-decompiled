@@ -1384,10 +1384,19 @@ bool function_1e1de0(long arg_0);
 // Round 76 on the round-75 shape (218, aligned 12): actor arm first 218 (aligned 21); owner after the index
 // test 220; actor-index local in the actor arm 218. Retail gives the index local its call register (ecx) at the
 // definition and spills it there; ours stores it straight from the load.
+// Round 81 on the round-75 shape (218): separate motion pointer local instead of the reassigned
+// parameter 93 (843 bytes); actor-index if/else with a repeated NONE arm 37 (847 bytes, redundant
+// store); local declared without initializer, NONE before the type test 218; per-path NONE in both
+// arms, either test sense 224/224 (fast). The first point copy keeps eax/ecx swapped in all. Restored.
 // Round 7 (lane 10): round-75 shape rebuilt 220; with `updated` declared before the time read 218
 // (entry exact; only the `mov ecx, eax` shift and the point-copy eax/ecx swap remain); on that,
 // index local as dword 218, actor index declared first 243; one end actor-index test alone on the
 // current body 248 (842 bytes). All restored.
+// On the single-exit body with shared actor outputs: observed-point setter 218; position setter 230.
+// both point setters 234; facing setter 218.
+// observed/facing setters 222; position/facing setters 234.
+// all three setters 256; four library transfers 218.
+// All executable forms restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

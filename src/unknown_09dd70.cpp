@@ -456,10 +456,9 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 196 (was 196): Flags/packet/object registers and protected attachment call conventions remain.
-// BLOCKED-BY 0xd09c0 and 0xd0b70 (contributor code, unmatched): retail passes 0xd09c0's first argument in
-// ebx (ours pushes it) and 0xd0b70's two shorts in esi/edi (ours ecx/edx), so the slot loop's registers
-// and the parameter reloads around it cannot follow retail from this body.
+// score 101 (was 229): player field_92 scheduling, the attachment record base and final update layout remain.
+// BLOCKED-BY 0xd09c0 (contributor code, unmatched): retail passes its first argument in ebx while ours pushes it,
+// so the attachment call's setup and record cursor still differ.
 // Round 74: mask local for the shared attachment call (as the matched sibling overrides) 196; word slot
 // counter 196; long flags local 196; slot record pointer 224; signed slot loop test 196.
 // retail keeps the flags in ebx (reloaded from the parameter after calls), the weapon-slot loop
@@ -509,6 +508,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // ahead of the 0x400000 test, reusing it in both arms and the next block (ours reloads it per block), and
 // keeps the flags in esi there. Packet declared before the flags 196; datum result at function scope 227;
 // slot shift named once 238; getter plain inline 196; unit index copied to a local 196.
+// Round 14: raw mask 229; raw mask with long counter 178; Boolean with long counter 206;
+// parent/tail/both pool sharing 207/178/207; outer mask 178; second mask reread 101 kept;
+// original helper 101; early field_92 local 169; value cursor 223.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -556,17 +558,18 @@ void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
         *(long *)(local_11 + 0x214) = local_12;
         *(short *)(local_11 + 0x210) = *(short *)(local_11 + 0x214);
     }
-    short local_13 = 0;
+    long local_13 = 0;
+    dword local_14;
     do
     {
-        bool local_14 = (local_1 & (1 << (local_13 + 14))) != 0;
+        local_14 = local_1 & (1 << (local_13 + 14));
         if (local_14)
         {
             long local_15 = local_2->field_ac[local_13].field_0;
             if (local_15 == NONE || function_122c10(0x77656170, local_15))
                 function_d09c0(arg_0, local_13, local_2->field_ac[local_13].field_0, local_2->field_ac[local_13].field_4, (dword const *)&local_2->field_a8);
         }
-        if (local_14 || (local_1 & (1 << (local_13 + 18))))
+        if ((local_1 & (1 << (local_13 + 14))) || (local_1 & (1 << (local_13 + 18))))
             function_d0b70(arg_0, local_2->field_ac[local_13].field_6, local_2->field_ac[local_13].field_8, local_2->field_ac[local_13].field_c, local_13);
         ++local_13;
     } while ((dword)local_13 < 4);

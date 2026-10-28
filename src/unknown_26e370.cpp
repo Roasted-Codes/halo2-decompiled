@@ -180,6 +180,13 @@ bool joint_decline(long actor_index, short invitation_index)
 	return true;
 }
 
+// score 79 (was 79): retail reads the game-time pointer inside the loop and keeps the actor in ESI and
+// the lowest index in EBP; ours hoists the game-time pointer and keeps the actor in ECX (15 bytes longer
+// with the loop-top padding). Tried: the joint through a named pointer 79; the invitation fields read
+// through the actor 95; the declarations reordered (three orders) 79; a long result 79; the index
+// declared before the loop 79; the two exit tests joined with || 115; the time test reversed 79;
+// else-if arms 79; no actor local 78; an invitations pointer 68 (folds the +0x194); the priority read
+// at each use 79; the loop ending on the result, no breaks, 77 (actor in ESI as retail, time hoisted).
 // @retail 0x26ea10
 short function_26ea10(long actor_index, short priority)
 {

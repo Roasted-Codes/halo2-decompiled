@@ -2809,6 +2809,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     frame->m_translation = position;
 }
 // score 206 (was 206): Frame 0xb4 and extent agree; body base/stride and protected relative-call input registers remain.
+// BLOCKED-BY 0x1d83e0 (contributor code): retail passes the component to it in EAX and loads the
+// component into EAX at entry; ours passes it in ECX, and the EAX/ECX roles swap from the first body.
 // Earlier baseline: Frame 0xb4 and exact extent agree; stride/base and protected relative-call input registers remain.
 // Earlier: Frame 0xb4 agrees; stride/base and relative-call input registers remain.
 // Earlier: body/stride registers and relative-call input differ;
@@ -2839,6 +2841,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 153: Consistent requested-node snapshots first/second/both 367/254/400; count fields at
 // every use first/second/both 316/337/358; corresponding snapshot/bound pairs and all 369/369/419.
 // All restored.
+// Round 8: index through if/else 313; a body-link table local 209; the child search as a while with
+// the compound test 206 (same code); the second index assigned in plain statements (no embedded
+// assignment, same code, kept) 206; the child counter declared first 208 (plain scores).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
@@ -2865,9 +2870,10 @@ void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
         component_matrix_frame(&pair->frame_a, frame_a);
     *body_a = component->rigid_bodies.data[index_a].rigid_body;
     long node_b = pair->node_b;
-    long index_b;
-    if (pair->node_b != NONE &&
-        (index_b = node_b == NONE ? mapping->fallback : mapping->bodies[node_b]) != NONE)
+    long index_b = NONE;
+    if (pair->node_b != NONE)
+        index_b = node_b == NONE ? mapping->fallback : mapping->bodies[node_b];
+    if (index_b != NONE)
     {
         long other_node_count = component->rigid_bodies.data[index_b].node_count;
         s_component_node_body_link *other_first = &owner->physics->bodies[component->rigid_bodies.data[index_b].nodes[0]];
