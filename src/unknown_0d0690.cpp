@@ -100,6 +100,10 @@ PRIVATE __forceinline real pinned_real(real const &value, real minimum, real max
 // Round 193: Scenario/data/both/value/data+value/scenario+value/all source pointers
 // read at each use, then all plus light table: 213/192/192/213/231/213/231/247.
 // Data-only plain 192 adds reloads and has a farther aligned sequence; original restored.
+// Round 215: native light cursor 224; cursor with const light/value views 224;
+// cursor with positive-light strength lifetime, mutable/const views 223/223;
+// plain count with cursor, const views, scoped strength or both 233 each.
+// Original indexed traversal, strength lifetime and inherited count qualifier restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
