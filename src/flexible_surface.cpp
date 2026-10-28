@@ -6,6 +6,7 @@
 #include "data_array.h"
 #include "object_markers.h"
 #include "effects.h"
+#include "vector_products.h"
 #include <math.h>
 #include <xtl.h>
 
@@ -390,8 +391,12 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 195 (was 209): frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
+// score 168 (was 195): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
+// Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
+// three named cross terms 195; named variation 195; scalar declarations first 195;
+// projection before shared cross 182. Shared cross product 168 fast/plain, 880/880 bytes.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -410,10 +415,12 @@ void function_117dd0(long index, vector3f *wind)
 		real sine = (real)sin(angle), cosine = (real)cos(angle);
 		vector3f axis = g_4417f0[(short)((surface_random() * 1026) >> 16)];
 		vector3f old = g_55ecd4;
+		vector3f cross;
+		cross3f(&old, &axis, &cross);
 		real projection = (axis.k*old.k + axis.j*old.j + axis.i*old.i) * (1.0f-cosine);
-		g_55ecd4.i = old.i*cosine + axis.i*projection - (axis.k*old.j-axis.j*old.k)*sine;
-		g_55ecd4.j = old.j*cosine + axis.j*projection - (axis.i*old.k-axis.k*old.i)*sine;
-		g_55ecd4.k = old.k*cosine + axis.k*projection - (axis.j*old.i-axis.i*old.j)*sine;
+		g_55ecd4.i = old.i*cosine + axis.i*projection - cross.i*sine;
+		g_55ecd4.j = old.j*cosine + axis.j*projection - cross.j*sine;
+		g_55ecd4.k = old.k*cosine + axis.k*projection - cross.k*sine;
 		function_117c80(&g_55ecd4, &g_55ecd4, 0.34906584f);
 		/* retail reloads the frame count after the call, as for an address-taken global (0x4a7c0, 0x248620) */
 		g_55e710 = *(dword const *)&g_4ba034;
