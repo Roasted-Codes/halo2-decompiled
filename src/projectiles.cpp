@@ -354,6 +354,10 @@ bool __stdcall function_fa9a0(long *value)
 }
 
 /* the direction, distance and time to a target in a straight line */
+// score 87 (was 87): normalizer result lifetime moves the zero carrier before EBP and delays ESI; retail has separate zero/fallback tails.
+// Shared point producer 81; shared inline normalize 84; shared scale-normalize 86;
+// point producer with those normalizers 78/80; conditional seconds with private/inline/scale
+// normalization 80/80/83. Shared arithmetic regrouping is exact-match-only; restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -573,21 +577,27 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
-// score 69 (was 69): Material index/pointer and response cursor registers differ; both aligned loop entries are missing.
+// score 34 (was 69): Input index load width, loop entry alignment and response cursor calculation differ.
 // Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
 // direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
 // native current ancestry index 69; entry result/current index 67.
+// Native table-end traversal: cached count / result-gated 54/36, relational 54/36;
+// per-use count 60/65/60/65; result-gated ordinal 57/55, nullable material 57/55;
+// indexed producer/result-first/current-short combinations 58/56/58/56;
+// direct table bound 36, with result first 34; without unused parameter reference 49/49.
+// Kept direct table bound/result-first 34 (147/145 bytes), plain confirmed;
+// input index width, loop entries and cursor arithmetic remain.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
 {
+	s_projectile_material_response *result = NULL;
 	/* retail keeps material_index on the stack */
 	short const *reference = &material_index;
 	long response_count = definition->material_response_count;
 	byte *materials = (byte *)g_4e034c;
-	s_projectile_material_response *result = NULL;
 
-	while (material_index != NONE && material_index >= 0 &&
+	while (!result && material_index != NONE && material_index >= 0 &&
 		material_index < *(long *)(materials + 0x150))
 	{
 		byte *material = *(byte **)(materials + 0x154) + material_index * 0xb4;
@@ -595,19 +605,21 @@ s_projectile_material_response *__stdcall projectile_get_material_response(s_pro
 		if (!material)
 			break;
 
-		s_projectile_material_response *response = (s_projectile_material_response *)definition->material_responses;
-
-		for (long i = 0; i < response_count; i++, response++)
+		if (response_count > 0)
 		{
-			if (response->material_index == material_index)
+			s_projectile_material_response *response = (s_projectile_material_response *)definition->material_responses;
+
+			while (response != (s_projectile_material_response *)definition->material_responses + response_count)
 			{
-				result = response;
-				break;
+				if (response->material_index == material_index)
+				{
+					result = response;
+					break;
+				}
+				++response;
 			}
 		}
 		material_index = *(short *)(material + 8);
-		if (result)
-			return result;
 	}
 	if (!result)
 		result = &g_547660;
@@ -821,6 +833,8 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // Native real fields 72; named flag stores 72; conditional seconds 73; entry seconds 128;
 // seconds-first product 72; direct maximum reads 72; direct definition reads 219;
 // native fields/conditional seconds 73.
+// Two-use parent owner after its native type guard 72; with chained child zero
+// stores 74, named flags 72/74, complete seconds arms 73/75/73/75. Restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)
