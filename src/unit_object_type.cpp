@@ -3289,13 +3289,15 @@ bool __stdcall function_cc460(long object_index)
 /* the unit's team (+0x138): its player's, else its actor's, else for a
    vehicle the team its riders share (riders in seats with bit 11 count
    apart; any disagreement leaves it NONE) */
-// score 111 (was 118): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
+// score 14 (was 118): retail lays the final team test out with the team == NONE store first; the
+// tests nested or reordered stay at 14. Flag 2 of +0x10a through the word bitfield view 14 (the
+// earlier TEST_FIELD_BIT on it 111); flag 11 of the seat as a field bit.
 // @retail 0xc6990
 void function_c6990(long unit_index)
 {
 	s_unit *unit = UNIT_GET(unit_index);
 
-	if ((unit->flags_10a >> 2) & 1)
+	if (TEST_FIELD_BIT(((s_unit_flags_10a_view *)&unit->flags_10a)->bit2))
 	{
 		return;
 	}
