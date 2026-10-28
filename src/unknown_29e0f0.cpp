@@ -99,6 +99,9 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
 // bit helpers; same code).
 // Round 366: overwritten endpoint initializer removed 417; early group receiver 432; both 440; complete two-leg distance sum 406; with endpoint/receiver/both 417/432/440; all with scoped best-distance default 474. All restored.
+// Round 368: test-produced final result 440; complementary pass admission 406; search-scoped best distance
+// 457; result/admission 440; result/distance 478; admission/distance 457; all and named result 478/478.
+// Original executable body restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

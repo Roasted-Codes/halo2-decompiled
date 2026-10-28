@@ -130,6 +130,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Named ratio numerator 395; both complete turn factors 389; both forms together 383 kept.
 // All three computed parts retain the original floating grouping and operands; frame/input homes remain.
 // Round 366: returned position producer 408; shared scale 383; both 408; full vector setter 399; position/setter 426; scale/setter 399; all 426; all with earlier reused magnitude 413. All restored.
+// Round 368: settings-only magnitude 390; in-place epsilon result 454; separate turn/speed 385;
+// scope/result 388; scope/separate 384; result/separate 448; all and native length names 382/382 (one-point
+// gain rejected).
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
