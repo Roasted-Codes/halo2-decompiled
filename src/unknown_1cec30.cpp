@@ -1840,13 +1840,8 @@ public:
     void set_strength(real strength);
 };
 
-// score 10 (was 10): the component arrives in eax and the constraint index in ecx,
-// retail the reverse (BLOCKED-BY 0xe0e00: its declaration and call need the
-// (component, constraint_index, scale) order); the rest matches. Tried: constraint
-// pointer after the lookups 23, just before the override loop 23, as data + index 10,
-// object lookup first 10, object index read into a local first 10.
 // @retail 0x1d35d0
-void function_1d35d0(long constraint_index, s_havok_component *component, real scale)
+void function_1d35d0(s_havok_component *component, long constraint_index, real scale)
 {
     s_havok_component_element0c *constraint = &component->unknown7c.data[constraint_index];
     s_component_object_transform_view *object = (s_component_object_transform_view *)havok_object_get(component->object_index);
@@ -2671,7 +2666,9 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 135 (was 135): Frame 0x30 agrees; save staging and paired fixed/zero homes remain.
+// score 114 (was 114): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
+// retail stages them (the reduced image stages them as retail), and the getters keep the fixed byte
+// and zero-vector pointer in other registers.
 // Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
 // staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
@@ -2714,6 +2711,19 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 197: Readonly private linear/angular/both getter inputs 135 each; native signed-int
 // ordinal alone/with each input pair 135 each; readonly pair with common double scale 135.
 // Original native state-zero graph, helpers and ordinal restored.
+// Round 201: Private linear/angular/both per-use body receivers 135/135/196; readonly pair 135;
+// mixed per-use/readonly receivers 135/135; fixed-first pair 151 and per-use fixed-first pair 202
+// (both fixed-first forms lose matched users). Original helpers and body restored; frame/save homes remain.
+// Round 63: kept the loop's bit-2 test as TEST_FIELD_BIT(flag2) (retail's shr/test) 135 -> 114 and the
+// float numerators 100.0f/50.0f (retail's fdivr dword, aligned -2) 114; the first bit-2 test as the
+// bitfield too (retail's form there as well) 168, alone 174, while the entry saves are staged
+// differently (reduced image with both: aligned 37). Retail reloads g_4687a4 after the linear copy's
+// stores, as if its address were taken somewhere; ours never takes it. The change vector as a brace
+// initializer 114; its zeros chained 114. Round 103 (fast, reduced 92): nested entry tests 92; the
+// kind test as an empty then-arm 92; the type mask as (1 << 1) 92; the flag test as !(x & 4) 92; the
+// change's k component first 99. No function of the linked file is on this function's direct call chain
+// in our image, and its frame-aligning callees align themselves, so the entry staging is not a callee's
+// stack-alignment request.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2739,7 +2749,7 @@ void function_1ced00(s_havok_component *component)
                 speed_squared += linear.i * linear.i;
                 if (speed_squared > 10000.0f)
                 {
-                    double scale = 100.0 / sqrt(speed_squared);
+                    double scale = 100.0f / sqrt(speed_squared);
                     linear.i = (real)(linear.i * scale);
                     linear.j = (real)(linear.j * scale);
                     linear.k = (real)(linear.k * scale);
@@ -2750,7 +2760,7 @@ void function_1ced00(s_havok_component *component)
                 angular_squared += angular.i * angular.i;
                 if (angular_squared > 2500.0f)
                 {
-                    double scale = 50.0 / sqrt(angular_squared);
+                    double scale = 50.0f / sqrt(angular_squared);
                     angular.i = (real)(angular.i * scale);
                     angular.j = (real)(angular.j * scale);
                     angular.k = (real)(angular.k * scale);
@@ -2759,7 +2769,7 @@ void function_1ced00(s_havok_component *component)
             }
             havok_component_rigid_body_state_update(i, component);
             if (havok_component_rigid_body_get(i, component)->body_is_simulating().m_bool &&
-                (component->unknown04 & 4) == 0 &&
+                !TEST_FIELD_BIT(component->flag2) &&
                 havok_component_rigid_body_get(i, component)->m_motion->kind_code() != 6 &&
                 !havok_component_rigid_body_get(i, component)->m_fixed)
                 havok_component_rigid_body_linear_velocity_change(i, component, &change);
@@ -2802,6 +2812,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     frame->m_translation = position;
 }
 // score 206 (was 206): Frame 0xb4 and extent agree; body base/stride and protected relative-call input registers remain.
+// BLOCKED-BY 0x1d83e0 (contributor code): retail passes the component to it in EAX and loads the
+// component into EAX at entry; ours passes it in ECX, and the EAX/ECX roles swap from the first body.
 // Earlier baseline: Frame 0xb4 and exact extent agree; stride/base and protected relative-call input registers remain.
 // Earlier: Frame 0xb4 agrees; stride/base and relative-call input registers remain.
 // Earlier: body/stride registers and relative-call input differ;
@@ -2832,6 +2844,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 153: Consistent requested-node snapshots first/second/both 367/254/400; count fields at
 // every use first/second/both 316/337/358; corresponding snapshot/bound pairs and all 369/369/419.
 // All restored.
+// Round 8: index through if/else 313; a body-link table local 209; the child search as a while with
+// the compound test 206 (same code); the second index assigned in plain statements (no embedded
+// assignment, same code, kept) 206; the child counter declared first 208 (plain scores).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
@@ -2858,9 +2873,10 @@ void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
         component_matrix_frame(&pair->frame_a, frame_a);
     *body_a = component->rigid_bodies.data[index_a].rigid_body;
     long node_b = pair->node_b;
-    long index_b;
-    if (pair->node_b != NONE &&
-        (index_b = node_b == NONE ? mapping->fallback : mapping->bodies[node_b]) != NONE)
+    long index_b = NONE;
+    if (pair->node_b != NONE)
+        index_b = node_b == NONE ? mapping->fallback : mapping->bodies[node_b];
+    if (index_b != NONE)
     {
         long other_node_count = component->rigid_bodies.data[index_b].node_count;
         s_component_node_body_link *other_first = &owner->physics->bodies[component->rigid_bodies.data[index_b].nodes[0]];

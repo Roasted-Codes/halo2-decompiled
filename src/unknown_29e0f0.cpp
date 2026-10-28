@@ -78,7 +78,7 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
     return (real)sqrt(local_2 * local_2 + local_1 * local_1 + local_0 * local_0);
 }
 
-// score 416 (was 416): Frame 0x6c/0x64, table-pointer roles and bound spill remain.
+// score 406 (was 406): table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
 // Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
 // squared-distance second point by value 430; conditional table pointer initialization 416.
 // Group-table field at each use 457; native long overall result 445; bounded output for 420; same-group pretested while 416; positive nearest-point scope 416.
@@ -89,13 +89,21 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // Round 341: One short direction counter, point payload and long record-index graphs 425/454/431/459; long direction counter 479/453/477/453. Original loops and values restored.
 // Round 350: real outer/inner/both link-element receivers 416/416/416; with read-only
 // link/group/both/point/all views 416 each. Frame 0x6c/0x64, table roles and bound spill remain.
+// Round 146: short group index/pass counter/best indices (kept) 406; the three alone 409/416/512;
+// distance index at top of the inner while 416; long search result 415, on the kept form 428;
+// long point bounds 456; long last point 424; long nearest point 396 (word compares in retail, not kept).
+// Round 148: the visited bits through the existing bit_vector_test/bit_vector_set (include/bit_vector.h)
+// 416 at 1577 bytes, but difflib-aligned 378 -> 338: retail's separate test and set (word address and
+// mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a
+// long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
+// bit helpers; same code).
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)
 {
-    long local_0 = NONE;
-    long local_1 = NONE;
-    long local_2 = NONE;
+    short local_0 = NONE;
+    short local_1 = NONE;
+    short local_2 = NONE;
     real best_distance = 3.402823466e38f;
     bool local_4 = false;
     s_29e0f3 *local_5 = (s_29e0f3 *)g_4e0348;
@@ -119,7 +127,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                     dword visited_groups[2] = {0, 0};
                     for (short local_14 = 0; local_14 < local_10->field_80; ++local_14)
                     {
-                        long local_15;
+                        short local_15;
                         local_15 = local_10->field_84[local_14].field_0;
                         if ((visited_groups[local_15 >> 5] & (1 << (local_15 & 31))) || local_15 < 0 || local_15 >= local_11->field_40) continue;
                         visited_groups[local_15 >> 5] |= 1 << (local_15 & 31);
@@ -145,7 +153,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                             if (arg_3->field_0[local_25].field_0 == local_15) { local_20 = local_25; break; }
                         short local_26 = 1;
                         short local_28 = local_19;
-                        for (long local_27 = 0; local_27 < 2; ++local_27)
+                        for (short local_27 = 0; local_27 < 2; ++local_27)
                         {
                             short local_29 = local_19;
                             point3f *local_30 = &local_22->field_4[local_19];
@@ -168,7 +176,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                                     if (best_distance > local_35 && function_29de20(local_33, arg_3, arg_0, arg_1) == 1)
                                     {
                                         best_distance = local_35;
-                                        local_0 = (short)local_15;
+                                        local_0 = local_15;
                                         local_1 = local_28;
                                         local_2 = local_29;
                                         local_32 = true;
@@ -180,16 +188,16 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                             local_28 = local_19 + local_26;
                         }
                     }
-                    if ((short)local_0 != NONE && (short)local_1 != NONE && (short)local_2 != NONE)
+                    if (local_0 != NONE && local_1 != NONE && local_2 != NONE)
                     {
-                        s_29e0f0 *local_36 = &local_11->field_44[(short)local_0];
+                        s_29e0f0 *local_36 = &local_11->field_44[local_0];
                         short local_37 = 0;
                         do
                         {
-                            function_29e64d(&arg_4->field_30[local_37], &local_36->field_4[(short)local_1]);
+                            function_29e64d(&arg_4->field_30[local_37], &local_36->field_4[local_1]);
                             ++local_37;
-                            if ((short)local_1 == (short)local_2) break;
-                            local_1 += (short)local_2 > (short)local_1 ? 1 : -1;
+                            if (local_1 == local_2) break;
+                            local_1 += local_2 > local_1 ? 1 : -1;
                         } while (local_37 < 4);
                         if (local_37 < 4)
                         {

@@ -129,6 +129,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 
 /* the rotation that takes one unit vector to another */
 // score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross spill overlap remain.
+// Lane 6 r85: helper with `s` computed first 302 (s and the doubled scalar hoisted above the matrix copy,
+// the doubled scalar spilled twice as retail, frame 0x20, constants one xmm lower); with vector-first
+// products 302 (identical code); with plain half-angle locals 291; doubled scalar after the cross 301;
+// scalar cross terms 281 (retail's 0x24 frame and first difference +0x71, doubled scalar in the parameter
+// home and [esp+0x10] as retail; quaternion registers permuted); scalar cross with `s` first 306.
 // frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
 // quaternion scale loop 302; shared axis scale loop 294.
 // shared rotation cross 241; shared cross scale loop 294.
@@ -170,12 +175,22 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // parameter's slot. Plain half-angle locals in place of the two-member struct 291 (frame 0x18);
 // transform cross orders jki/kji/jik/kij 286/290/235/284; transform into a result vector 367, with
 // jik 367. Body and helpers restored.
+// Round 356: Existing inline point-rotation producer 272; independent half angles 280;
+// shared axis cross 251; independent halves/shared axis 239; with shared repair crosses
+// the same four forms 272/280/251/239. Original helper, paired halves and both cross phases restored.
 // Round 253: Cosine half owned by the quaternion scalar, cosine/sine-first 291/293;
 // with shared cross 265/267; shared double-factor scale 311/311 (1317 bytes);
 // both shared products 327/327. Original body and helpers restored.
 // Round 210: Scalar crosses with coefficient orders dot/s/w2, w2/dot/s, w2/s/dot,
 // s/dot/w2, s/w2/dot: 274/274/272/306/235; cross-first schedules 282/297/304.
 // Best 235 gains two, rejected; original helper/body restored.
+// Round 80: plain half-angle locals 291 (sine half in the parameter home; frame 0x18). The existing
+// quaternion_rotate_point for the three transforms 272 (1317 bytes, frame 0x20, xmm numbering one
+// lower than retail's from entry: 1.0 in xmm6 not xmm7); with the axis scaled at construction 342;
+// with `0.f > cosine` 272; with rotation.w assigned before the axis 257 (1317 bytes). Original body
+// and helpers restored.
+// Round 82: sine-branch axis k/j/i 327; transform scalars s/w2/dot 289, s/dot/w2 302; w assigned
+// before the axis 302; scale computed before the axis 301. Original body and helpers restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

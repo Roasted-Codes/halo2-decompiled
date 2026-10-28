@@ -209,6 +209,11 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 }
 // score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain;
 // retail also keeps a separate center point (+0x30) beside the sphere query (+0x20).
+// Round 81 (fast): a `visible_word` pointer for the test and both marks 190 (same code); one marking
+// site after the bound branch with `if (!(r * r >= d)) continue;` 210 (the marks become retail's single
+// tail block, word pointer reloaded), with `<` 210; on that a function-scope center copy and the query
+// local to the list branch 211, unaligned 209 (entry then in esi spilled at +0x44 as retail); plus a
+// long index local for the table and call 216/209.
 // frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
 // Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
@@ -280,8 +285,23 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // separate entry-time center point for the loop 221f, and the query in the list branch 221f. All restored.
 // Round 155: Real part-table byte/record cursors, mutable/read-only, each with original
 // or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
+// Lane 4 r98: retail reads the node byte at each of its three uses (bound kept in ebx, geometry
+// reloaded from its slot). Node byte at each use with long casts 219 (frame 0x10a4), without 202 (with a
+// long index local, bound now in ebx as retail); a long index local alone 191 (retail's single movsx
+// pushed for the 0x458d0 call); a function-scope plain center copy beside the branch-scoped aligned query
+// 199 (frame 0x10a4: the query no longer shares the bound position's slot), with the long index 200.
 // Round 224: Uniform node-byte observations with branch/broad count, initialized/filled output
 // and original/success-local transform lifetimes 219/199/223/199/219/199/223/199. Original node snapshot and scopes restored.
+// Round 230: native list count/capacity signedness and readonly release-input metadata,
+// four header forms and their readonly-release pairs, all eight 190. Original types restored.
+// Round 28 (m3 lane 12): retail's frame: query +0x20 shared with the loop's position, function-scope center
+// copy +0x30, loop bit mask +0x3c; its marking block is one tail-merged copy of the two sites. Long index
+// used for table and call 191 (index esi/entry edi, retail the other way); indexed entry at each use 271;
+// function-scope center copy with the query local to the list branch 199 (frame 0x10a4), unaligned 192;
+// one marking site with a `continue` 210 (comparison flips). All restored.
+// Round 30 (m3 lane 12): query declared after entry/geometry 190 (identical); geometry helper taking the
+// index (as the sibling file's) 228, 0x44c90 140; geometry helper with one result exit 188 but 0x44c90 107->132;
+// bound position read at each use 198; transform at function scope 190.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

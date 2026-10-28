@@ -80,6 +80,13 @@ bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
 // score 367 (was 367): Aligned frame 0x110 agrees; request-source reuse, dependency bound and write-option scheduling remain.
+// Round 85: retail keeps states 8 and 15 as separate cases (`state = 9;` / `state = 16;`); with them split, the
+// writes' flags as `s_file_write_flags(0)` temporaries, state 6's first test through a named `size_known` bool
+// and the dependency time indexed (`&g_55b4f0.dependency_times[type]`, retail's pointer exit test) the body is
+// retail's length and order (aligned differences 111 -> 53), but the score is 461/434/432/430: the one
+// remaining shift is `mov esi, edi` after the 0x214db0 call where retail re-forms the constant (3 bytes), which
+// adds a loop pad and misaligns every later line. BLOCKED-BY 0x214db0 (callers act as if it had no register
+// summary). The three local forms on the merged-case body 453.
 // Request library copies 471/471; state increments 471; shared flush states 472; shared write-completion
 // states 433.
 // Signed-word dependency index 446; unsigned index 446; explicit existing write flags 453;
@@ -134,6 +141,10 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // Round 152: Actual inline definitions plus all declarations, path/checksum/both 367/367/367;
 // with separate noinline boundaries 367/367/367; completed-count combinations 362/362.
 // All supporting declarations and the original body restored.
+// Round 23: true-default failure-only handle/size/shared-write 480/400/444; handle+size/
+// handle+write/size+write 464/479/354; all three/four 462/461. The 354 conditional flag
+// form is match-only and rejected. Complete size+write/size/write/nested value producers
+// 426/426/367/426; original completion producers and all observations restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {

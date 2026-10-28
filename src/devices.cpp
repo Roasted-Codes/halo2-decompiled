@@ -1266,9 +1266,15 @@ bool function_0b6760(s_index_pair const *pair);
 // it also re-reads the animation-state offset after the result/state stores. Plain index 389; plain
 // index and definition 421; plain index with the result declared first 394; plain index with a
 // ternary state 416; result declared first 301 (two-point gain dropped).
+// Round 230: existing state-admission helper with independent tag-pointer name/result-first
+// homes 400/400/400/400; the same four with ordinary index 369/369/370/370. Original
+// admission, index, declarations and scalar homes restored.
 // Round 352: next-tick value, elapsed product and both 303; one shared previous power velocity
 // alone and with next-tick/elapsed/both 368; all with long next-tick 365. Frame remains 0x1c;
 // original delay, velocity observations, acceleration producers and inherited qualifiers restored.
+// Round 23: distinct phase/block/channel previous owners 307/307/303; short first/second/both
+// completion 387/335/408; phase plus first short 388; channel plus both shorts 408.
+// Frame stays 0x1c versus 0x20; original scalar lifetimes and bool completions restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

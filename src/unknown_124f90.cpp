@@ -109,14 +109,6 @@ static inline s_sound_class *function_xaa8231(short class_index)
 	return &((s_sound_globals_classes_view *)g_51ebd4)->classes[class_index];
 }
 
-/* gains in decibels are kept as real bits in longs */
-static inline long decibels_add(long a, long b)
-{
-	real result = *(real *)&a + *(real *)&b;
-
-	return *(long *)&result;
-}
-
 static inline long decibels_interpolate(long a, long b, real t)
 {
 	real result = (*(real *)&b - *(real *)&a) * t + *(real *)&a;
@@ -2070,6 +2062,9 @@ static inline void approach_126660(real *value, real delta, real lower, real upp
 /* moves the sound system's two environments toward the two requested:
    each request takes the slot already holding it or a faded-out one and
    fades it in over its transition time; slots no request takes fade out */
+// score 17 (was 17): retail adds the clamped unknown18 step through a copy
+// register and adds the clamped unknown14 step in place; ours does the
+// opposite, so the two sites trade xmm1 and xmm2.
 // @retail 0x126660
 void sound_environments_update(s_sound_environment const *requests)
 {
@@ -3427,12 +3422,25 @@ struct s_128ca0
 // together 234 each; native clear-member addresses 234; chained packet flags 293; upper-first shared pin
 // 234; pin input home name 234. Original fields, clear ranges and helpers restored; protected chunk
 // interface unchanged.
+// Round 356: Native playback-parameter value 311; named pitch span and complete promotion
+// adjustment 234/234; parameter/span 311; parameter/adjustment 311; span/adjustment 234;
+// all three 311; with native pitch-range value 337. Original input pointers and expression parts restored.
 // Round 254: live voice-table fields, alone/with scale/raw-gain-first/both 293/249/277/302;
 // the same four with live pitch-parameter fields 293/249/293/244. All regress;
 // original voice/parameter receivers, scale observations, gain schedule and body restored.
 // Round 195: Processed-gain producer ordinary/noinline/combined declarations 234 each;
 // forceinline 373. With raw gain before pitch 268/268/268/374; the 268 forms use frame
 // 0x494. Both declaring files and original body restored; gain homes and clamp joins remain.
+// Lane 10 r13: the extra frame words are decibels_add's copies of the gain and location fields
+// (retail reads both in place and copies only the gain argument). With the file's decibels_sum:
+// outer and inner 279 (frame 0x494; a field bound through the dword type still gets a copy);
+// inner only 279; outer only 234 (identical); both with the location field cast to long 315;
+// outer (cast) with decibels_add inside 272; both, with the gain argument a dword (so only it is
+// copied, retail's loads and copies) 279: frame 0x494, but retail adds location + inner with the
+// location loaded first and shares one scale load between the pitch and the 0x1251e0 argument,
+// so ours is one instruction short and every later line shifts; that with a scale local shared by
+// the pitch and the call 258 (retail's shared scale load; the location add and the pitch/argument
+// temporaries' slots remain); with decibels_add outside 260. All restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

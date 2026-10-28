@@ -409,6 +409,12 @@ real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
 // score 375 (was 375): Frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
+// Lane 6 r85: retail returns constants (`mov al, 1` / `xor al, al`, every push at entry, the early tests
+// jumping to the false exit); `if (...) return true; ... return false;` without the result byte gives that
+// 440 (frame 0x3c); with the actor looked up before the settings call 413 (retail's 0x40 frame and hoisted
+// actor-table load; retail then keeps arg_0/actor/slot/prop in edi/ebp/esi/ebx and the settings pointer at
+// [esp+0x10] only, ours keeps the settings pointer in esi and the prop in arg_1's home); prop pointer at
+// function scope 417; slot pointer declared first 413; early `if (!settings) return false;` 424.
 // Earlier at 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
 // Earlier: frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
@@ -652,6 +658,11 @@ struct s_1aab51
 static __forceinline long real_to_long(real value);
 
 // score 386 (was 386): Frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// Lane 6 r85: retail lays the early false exit (`xor al, al; pop ebp; add esp, 0x58; ret 8`) right after the
+// `goto local_7` jump; ours puts it last. `bool local_2 = !f13 && !f14 && !f2d; if (local_2) {...} return
+// local_2;` (and the same with an if/else setting the flag) lands it where retail does, but arg_0 then takes
+// edi from the settings pointer and the frame drops to 0x54: 517. Inverted test with the false arm first 386
+// (identical code); early `return false` then `bool local_2 = true;` 511; named admission bool 517.
 // Earlier: frame 0x58 and length agree; early rejection and query scalar/object homes remain.
 // Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // frame 0x58 and length agree; early rejection and query scalar/object homes remain.
@@ -709,6 +720,9 @@ static __forceinline long real_to_long(real value);
 // all prediction products 386; helper/prediction 384; projection/prediction 480;
 // all producers 460; all with target velocity receiver 456. Original restored.
 // Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
+// Round 354: complete shared relative-velocity difference 391; every-use object producer 509;
+// both 484; native request initialization on the recovered frame 472; with shared difference 477;
+// with every-use object producer 506; all three 430; all with wide eligibility 493. Original restored.
 // Round 193: Existing metadata providers ordinary-inline singly, all pairs and all,
 // then separate noinline declarations on all three: 386/386/386/386/386/386/386/386. Original restored.
 // @retail 0x1aab50

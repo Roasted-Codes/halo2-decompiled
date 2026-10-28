@@ -120,8 +120,8 @@ static inline s_actor_looking_view *actor_looking_get(long actor_index)
 // @retail 0x298b60
 bool function_298b60(long actor_index)
 {
-	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	bool result = false;
+	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	if (actor->aiming && actor->aiming_mode >= 2)
 	{
 		if (actor->aiming_direction_type == 2 ||
@@ -134,8 +134,8 @@ bool function_298b60(long actor_index)
 // @retail 0x298bc0
 bool function_298bc0(long actor_index)
 {
-	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	bool result = false;
+	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	if (actor->looking_mode == 0)
 	{
 		if (actor->alert_state >= 3)
@@ -165,8 +165,8 @@ PRIVATE void function_297560(long actor_index)
 	}
 	actor->idle_aiming_timer = (short)rounded_ticks;
 	actor->idle_looking_timer = (short)rounded_ticks;
-	actor->idle_aiming_direction = actor->forward;
 	actor->idle_aiming_direction_type = 4;
+	actor->idle_aiming_direction = actor->forward;
 	actor->idle_looking_direction_type = 4;
 	actor->idle_looking_direction = actor->forward;
 }
@@ -198,14 +198,24 @@ static inline real actor_looking_normalize2d(point2f *vector)
 }
 
 /* A switch selects whether the vertical component is compared. */
+// score 6 (was 40): only the final horizontal products and their result branch differ. Vector parameters
+// swapped, aggregate 2D copies and the 3D result assignment (kept). The aim renamed 40; declarations
+// swapped 39; forceinline/shared first normalization 40/40; a product accumulation 20; a commuted sum 14;
+// the final comparison assigned 25; nested comparison/single product local 6/6; product operands swapped 8;
+// reversed terms and operands 8; helper terms/shared magnitude/named square 8/8/8; squared accumulation 10;
+// dot3f 8; an early final return 83; shared normalization with reversed terms 8; indexed vector2f locals 8;
+// comparison operands reversed 8; an explicit false arm 27; single-product operand swaps 8/8.
 // @retail 0x296d60
-PRIVATE bool function_296d60(real cosine, vector3f const *aim, vector3f const *reference, bool three_dimensional)
+PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
 	bool result = false;
 	if (three_dimensional)
-		return reference->k * aim->k + reference->j * aim->j + reference->i * aim->i > cosine;
-	point2f aim_horizontal = { aim->i, aim->j };
-	point2f reference_horizontal = { reference->i, reference->j };
+	{
+		result = reference->k * aim->k + reference->j * aim->j + reference->i * aim->i > cosine;
+		return result;
+	}
+	point2f aim_horizontal = *(point2f const *)aim;
+	point2f reference_horizontal = *(point2f const *)reference;
 	if (actor_looking_normalize2d(&aim_horizontal) > 0.f &&
 		normalize2d(&reference_horizontal) > 0.f &&
 		reference_horizontal.y * aim_horizontal.y + aim_horizontal.x * reference_horizontal.x > cosine)
@@ -380,8 +390,7 @@ PRIVATE bool function_2973f0(long actor_index, real *looking_cosine, real *aimin
 PRIVATE long function_297c10(long actor_index, bool alternate_range, bool extended)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
-	s_game_time_globals *time = g_510c54;
-	long result = time->field_2_3 * 3;
+	long result = g_510c54->field_2_3 * 3;
 	s_actor_looking_properties *properties = function_1e5160(actor->character_definition_index);
 	if (properties)
 	{
@@ -417,7 +426,7 @@ PRIVATE long function_297c10(long actor_index, bool alternate_range, bool extend
 		/* Keep the sample and seconds-to-ticks product in x87 precision until
 		   retail's store to real immediately before integer rounding. */
 		real random = (real)random_next(&g_4e7408->unknown0) * (1.f / 65535.f);
-		real ticks = (lower + (upper - lower) * random) * time->field_2_3;
+		real ticks = (lower + (upper - lower) * random) * g_510c54->field_2_3;
 		long rounded;
 		__asm
 		{
@@ -739,6 +748,13 @@ output_point:
 	return result;
 }
 
+// score 9 (was 9): only the prologue differs: retail builds the actor offset in EAX
+// (`mov eax, ecx`) and moves the actor to ESI with `lea esi, [eax + edx]`; ours builds it in ESI.
+// Tried: a specification pointer local 9; an if/else chain without the early return 9; the valid
+// flag assigned from the `&&` 22; a valid local stored once 47; the getter as `data + index * size`
+// 9; a temporary caller (its only retail caller 0x1f38c0 is disabled here) 9; a cdecl compile-only
+// build gives ours too; shared actor getter or type 9 each; direct byte-base 9; offset local 9;
+// getter forceinline 9; data-base or slot locals 9 each; nested actor getter 9; a mode pointer 9.
 // @retail 0x296580
 void function_296580(long actor_index)
 {
@@ -774,17 +790,17 @@ PRIVATE bool function_297a50(long actor_index, bool aiming, s_type_952051 *speci
 	if (properties && function_2967b0(actor_index, specification, aiming, &direction, NULL, NULL))
 	{
 		vector3f forward = actor->forward;
-		vector3f horizontal = direction;
 		forward.k = 0.f;
+		vector3f horizontal = direction;
 		horizontal.k = 0.f;
 		if (function_30bf0(&horizontal) != 0.f && function_30bf0(&forward) != 0.f)
 		{
-			real cosine = direction.j * horizontal.j + direction.i * horizontal.i + direction.k * horizontal.k;
+			real cosine = dot3f(&horizontal, &direction);
 			cosine = cosine < -1.f ? -1.f : (cosine > 1.f ? 1.f : cosine);
 			real pitch = function_50650(cosine);
 			if (direction.k < 0.f)
 				pitch = 0.f - pitch;
-			real yaw = function_11cc90((vector2f *)&horizontal, (vector2f *)&forward);
+			real yaw = function_11cc90((vector2f *)&forward, (vector2f *)&horizontal);
 			if (aiming)
 			{
 				if (fabs(yaw) > properties->aiming_yaw + 0.01 || fabs(pitch) > properties->aiming_pitch + 0.01)
@@ -1113,7 +1129,7 @@ void function_298370(long actor_index)
 			}
 		}
 		if (valid && !actor->unrestricted_looking && !forced &&
-			!function_296d60(aiming_cosine, &direction, &actor->forward, actor->unknown229))
+			!function_296d60(aiming_cosine, &actor->forward, &direction, actor->unknown229))
 		{
 			if (allow_turn)
 			{

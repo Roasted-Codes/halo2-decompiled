@@ -261,7 +261,9 @@ void function_264940(long actor_index, long prop_ref_index)
 	}
 }
 
-// score 358 (was 358): Frame 0x24 versus 0x20; cached object index, object/view homes and category-store joins remain.
+// score 353 (was 358): the frame is still 0x24 against retail's 0x20, ours keeps the
+// object in EBP where retail keeps it in EDI, and the prop-index field is still read
+// before the object-index field. The body is 1540 bytes against retail's 1538.
 // Frame 0x24 versus 0x20; object/view allocation and cached object index differ.
 // Full-width unit mask 439; sampled-time reuse 380; deferred tracking view 431; fallback state default 358; inline depth one 358.
 // j92: frame 0x24 versus 0x20 and object/view homes remain; real object/header types and selection inline declarations tie; expiry snapshot regresses.
@@ -284,6 +286,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 337: complete origin point/scalars 419/427; sampled state position 444;
 // origin scalars/point with state position 463/457; const native copies 457;
 // entry origin copy 498; both native inputs with shared difference 457. All restored.
+// Round 358: Shared expiry/buildup/both tick conversions 358/358/358; both with state word/separate
+// current state/both state forms 358/357/357; unit predicate 447; disjoint vectors 358. One-count
+// gains rejected; body restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -293,11 +298,11 @@ void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *
 	s_prop_datum *reference = prop_ref_get(prop_ref_index);
 	byte *object = *(byte **)(g_4e0300->data + (reference->object_index & 0xffff) * 12 + 8);
 	byte *prop = (byte *)prop_get(reference->prop_index);
-	long time = g_510c54->game_time;
 	byte *unit = NULL;
+	bool update = false;
+	long time = g_510c54->game_time;
 	if ((1 << object[0xaa]) & 3)
 		unit = object;
-	bool update = false;
 	if ((reference->state >= 1 && reference->state <= 2) || force ||
 		(reference->state >= 1 && reference->unknown26 > 0))
 		update = true;
@@ -420,7 +425,9 @@ void *function_1e5240(long actor_index);
 real function_2683f0(long actor_index, long node_index, short type);
 void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *sample, s_2640c0 *motion);
 
-// score 420 (was 420): frame 0xa4 versus 0xa0; actor input and workspaces differ.
+// score 420 (was 420): the frame is 0xa4 against retail's 0xa0; retail takes the actor
+// index in EAX where ours loads the argument from the stack. The body is 1624 bytes
+// against retail's 1616.
 // Frame 0xa4 versus 0xa0; stacked actor and node/workspace homes still differ.
 // Earlier at 426 (was 426): frame 0xa4 versus 0xa0; actor input and workspaces differ.
 // Wide prior state and byte sampling flags 426; byte sampled-one 426;
@@ -789,7 +796,12 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 
-// score 358 (was 358): Frame 0x20 agrees; actor ESI versus EBX and saved-actor/flag homes remain.
+// score 331 (was 351): the tracking view is cleared before the tracking test, so the
+// pointer is zeroed where retail zeroes it instead of being assigned in an else
+// branch. Retail holds the actor in EBX and spills it at [esp+8] right after the
+// actor[9] test where ours holds it in ESI and spills it at [esp+0x14]; retail keeps
+// the squad pointer at [esp+0x10] where ours uses [esp+0xc]. The body is 1251 bytes
+// against retail's 1268.
 // Equal-zero reference, equal-four sight, view zero, priority zero, paired defaults, all defaults chains
 // 363/363/363/363/363/363; alternate-view short pair memmove 374; copy field order 363 (control 363).
 // Original stores, body and local pointer qualifier retained; full baseline 358.
@@ -817,6 +829,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // Ordinary object-type/suppression/current orders 012/021/102/120/201/210
 // 366/366/351/355/369/388; coordinated priority names 341; names with 210 order 388
 // (fast control 341; full baseline 358).
+// Round 358: Complete different-target bool/byte/short/long carriers 376/341/376/375; before
+// suppression 376/341/364/366 (preview 341). Exact-length 364 regresses; original current predicate
+// and body restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
@@ -825,19 +840,18 @@ void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *
 	if (!actor[9])
 		return;
 	byte *squad;
-	if (*(long *)(actor + 0x30) != NONE)
-		squad = g_51e9d8->data + (*(long *)(actor + 0x30) & 0xffff) * 0x98;
-	else
+	if (*(long *)(actor + 0x30) == NONE)
 		squad = NULL;
+	else
+		squad = g_51e9d8->data + (*(long *)(actor + 0x30) & 0xffff) * 0x98;
 	s_prop_datum *reference = prop_ref_get(prop_ref_index);
-	s_type_f95cd3 *view;
+	s_type_f95cd3 *view = NULL;
 	if (reference->tracking_index != NONE)
 	{
 		s_type_e5ff81 *tracking = tracking_get(reference->tracking_index);
-		view = tracking ? &tracking->view : NULL;
+		if (tracking)
+			view = &tracking->view;
 	}
-	else
-		view = NULL;
 	byte *prop = (byte *)prop_get(reference->prop_index);
 	long time = g_510c54->game_time;
 	if (*(short *)(actor + 4) == 15 && *(long *)(actor + 0x26c) != NONE)

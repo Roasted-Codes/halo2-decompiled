@@ -24,22 +24,55 @@ struct s_sky_surface_record
     dword color1;
 };
 
-PRIVATE __forceinline long sky_surface_tag(short index)
+/* the tag data of a scenario sky, or NULL when the index or its tag is NONE */
+PRIVATE __forceinline byte *sky_surface_data(short index)
 {
     byte *scenario = (byte *)g_4e0350;
-    long result = NONE;
+    long tag_index = NONE;
     if (index >= 0)
     {
         long count = *(long *)(scenario + 8);
         if (index < count)
-            result = *(long *)(*(byte **)(scenario + 0xc) + index * 8 + 4);
+            tag_index = *(long *)(*(byte **)(scenario + 0xc) + index * 8 + 4);
     }
+    byte *result = NULL;
+    if (tag_index != NONE)
+        result = g_4e3b44[tag_index & 0xffff].bytes;
     return result;
 }
 
 real function_30bf0(vector3f *vector);
 
-// score 213 (was 213): Frame 0x8c agrees; selector/count saves, sentinel join and pending trig/color homes remain.
+/* the value limited to [minimum, maximum] */
+PRIVATE __forceinline real pinned_real(real const &value, real minimum, real maximum)
+{
+	if (value < minimum) return minimum;
+	if (value > maximum) return maximum;
+	return value;
+}
+
+// score 93 (was 150): at retail's length; frame, sky/count homes, trig temporaries, blend registers
+// and the color0 store now match. Left: the three x87 direction adds load the direction first
+// (retail adds it as the memory operand), 0x131c20's `&color` is formed in edi and copied to ecx
+// (retail ecx, then edi), and the collision test's sete.
+// Lane 8 r64 (93 form = count read at each use, lights pointer in the loop, a contribution vector
+// with double products cast once, the blend through the returning clamp, color0 first): three scalar
+// terms 179/184 (sunk into the adds); terms written into the adds 186; contribution renamed/array/
+// declared first, explicit `a = a + b` or `b + a` adds 95; existing direction_from_angles 171;
+// aggregate initializer 162; adds in k/j/i order 109; color declared before direction 99 (frame
+// slots swap); typed light-entry struct 162; strength spelled `entry + strength` or declared first
+// 162/165 (float products); one bool from an `&&` collision test 95; the flag form gives the sete
+// exactly (aligned 9) but 825 bytes, 160.
+// Earlier at 150: the selector join and esi/edi saves match (the sky lookup helper returns the tag
+// data, NULL by default, so the NONE join is not threaded).
+// Lane 5 r77 on the kept form: count without volatile 191 (804 bytes); light contribution vector
+// with fields read at each use 209 (837 bytes), with a plain count 166, plus the lights pointer
+// read in the loop 161, plus the count read from the field at each use 159 (sky/count homes and the
+// temporaries' homes then match retail; the adds still load the direction first, 4 bytes long),
+// plus color0 stored first 160; direction_from_angles for the contribution 173; pin_real for the
+// blend and colors 161 (same code); a pointer add helper and contribution array/initializer/
+// declaration-order forms keep the direction-first adds (screened); color0 first alone 149.
+// Earlier 213: frame 0x8c agrees; selector/count saves, sentinel join and pending trig/color homes remain.
 // Frame 0x8c agrees; selector/count saves, sentinel join and pending trigonometric/color homes remain.
 // Earlier 213 (was 213): frame 0x8c agrees; selector/count saves, sentinel join
 // and pending trigonometric components differ. Native sky fields 213; native
@@ -67,6 +100,10 @@ real function_30bf0(vector3f *vector);
 // Round 193: Scenario/data/both/value/data+value/scenario+value/all source pointers
 // read at each use, then all plus light table: 213/192/192/213/231/213/231/247.
 // Data-only plain 192 adds reloads and has a farther aligned sequence; original restored.
+// Round 215: native light cursor 224; cursor with const light/value views 224;
+// cursor with positive-light strength lifetime, mutable/const views 223/223;
+// plain count with cursor, const views, scoped strength or both 233 each.
+// Original indexed traversal, strength lifetime and inherited count qualifier restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -76,73 +113,67 @@ long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_
     if (g_4b9ee9 && g_4b9eec != NONE)
     {
         long index = g_4b9eec;
-        long sky_index = sky_surface_tag((short)index);
-        if (sky_index != NONE)
+        byte *sky = sky_surface_data((short)index);
+        if (sky != NULL)
         {
-            byte *sky = g_4e3b44[sky_index & 0xffff].bytes;
-            if (sky != NULL)
+            vector3f direction = *g_4687a4;
+            color3f color = *(color3f *)g_468718;
+            real strength = 0.0f;
+            if (*(long *)(sky + 0x78) > 0)
             {
-                vector3f direction = *g_4687a4;
-                color3f color = *(color3f *)g_468718;
-                real strength = 0.0f;
-                long volatile count = *(long *)(sky + 0x78);
-                if (count > 0)
+                for (long i = 0; i < *(long *)(sky + 0x78); ++i)
                 {
-                    byte *lights = *(byte **)(sky + 0x7c);
-                    for (long i = 0; i < count; ++i)
+                    byte *light = *(byte **)(sky + 0x7c) + i * 0x34;
+                    if (*(long *)(light + 0x2c) > 0)
                     {
-                        byte *light = lights + i * 0x34;
-                        if (*(long *)(light + 0x2c) > 0)
+                        byte *entry = *(byte **)(light + 0x30);
+                        vector3f contribution;
+                        contribution.i = (real)(cos(*(real *)(light + 0xc)) * cos(*(real *)(light + 0x10)));
+                        contribution.j = (real)(sin(*(real *)(light + 0xc)) * cos(*(real *)(light + 0x10)));
+                        contribution.k = (real)sin(*(real *)(light + 0x10));
+                        direction.i += contribution.i;
+                        direction.j += contribution.j;
+                        direction.k += contribution.k;
+                        if (i == 0)
                         {
-                            byte *entry = *(byte **)(light + 0x30);
-                            real yaw = *(real *)(light + 0xc);
-                            real pitch = *(real *)(light + 0x10);
-                            real cosine = (real)cos(pitch);
-                            direction.i += (real)cos(yaw) * cosine;
-                            direction.j += (real)sin(yaw) * cosine;
-                            direction.k += (real)sin(pitch);
-                            if (i == 0)
-                            {
-                                color = *(color3f *)(entry + 4);
-                                strength = *(real *)(entry + 0x10);
-                            }
-                            else if (*(real *)(entry + 0x10) > 0.0f)
-                            {
-                                real blend = 1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f);
-                                if (blend < 0.0f) blend = 0.0f;
-                                else if (blend > 1.0f) blend = 1.0f;
-                                function_131c20(&color, (color3f *)(entry + 4), 0, blend, &color);
-                                strength += *(real *)(entry + 0x10);
-                            }
+                            color = *(color3f *)(entry + 4);
+                            strength = *(real *)(entry + 0x10);
+                        }
+                        else if (*(real *)(entry + 0x10) > 0.0f)
+                        {
+                            real blend = pinned_real(1.0f - strength / *(real *)(entry + 0x10) / ((real)i + 2.0f),
+                                0.0f, 1.0f);
+                            function_131c20(&color, (color3f *)(entry + 4), 0, blend, &color);
+                            strength += *(real *)(entry + 0x10);
                         }
                     }
-                    function_30bf0(&direction);
-                    vector3f ray;
-                    ray.i = direction.i * 100.0f;
-                    ray.j = direction.j * 100.0f;
-                    ray.k = direction.k * 100.0f;
-                    bool hit = function_1697c0(0x10000001, point, &ray, ignore_object_index, NONE,
-                        (s_collision_result_1697c0 *)collision);
-                    if (!hit || *(short *)(collision + 0x5a) != NONE)
-                        color = *(color3f *)(sky + 0x34);
                 }
-                else
-                {
+                function_30bf0(&direction);
+                vector3f ray;
+                ray.i = direction.i * 100.0f;
+                ray.j = direction.j * 100.0f;
+                ray.k = direction.k * 100.0f;
+                bool hit = function_1697c0(0x10000001, point, &ray, ignore_object_index, NONE,
+                    (s_collision_result_1697c0 *)collision);
+                if (!hit || *(short *)(collision + 0x5a) != NONE)
                     color = *(color3f *)(sky + 0x34);
-                    direction.i = direction.j = direction.k = -1.0f;
-                    function_30bf0(&direction);
-                }
-                record->direction = direction;
-                record->color0 = 0xff555555;
-                if (color.red < 0.0f) color.red = 0.0f;
-                else if (color.red > 1.0f) color.red = 1.0f;
-                if (color.green < 0.0f) color.green = 0.0f;
-                else if (color.green > 1.0f) color.green = 1.0f;
-                if (color.blue < 0.0f) color.blue = 0.0f;
-                else if (color.blue > 1.0f) color.blue = 1.0f;
-                record->color1 = pack_color3f(&color);
-                result = 0;
             }
+            else
+            {
+                color = *(color3f *)(sky + 0x34);
+                direction.i = direction.j = direction.k = -1.0f;
+                function_30bf0(&direction);
+            }
+            record->color0 = 0xff555555;
+            record->direction = direction;
+            if (color.red < 0.0f) color.red = 0.0f;
+            else if (color.red > 1.0f) color.red = 1.0f;
+            if (color.green < 0.0f) color.green = 0.0f;
+            else if (color.green > 1.0f) color.green = 1.0f;
+            if (color.blue < 0.0f) color.blue = 0.0f;
+            else if (color.blue > 1.0f) color.blue = 1.0f;
+            record->color1 = pack_color3f(&color);
+            result = 0;
         }
     }
     return result;
@@ -243,6 +274,7 @@ struct s_object_header
 #define TAG_FROM_OBJECT(object) ((s_object_tag *)g_4e3b44[(object)->tag_index & 0xffff].bytes)
 
 
+/* advances the child iterator to the next child object of type 0 or 1 */
 // @retail 0xd0690
 bool function_d0690(s_object_child_iterator *iterator)
 {
@@ -257,10 +289,10 @@ bool function_d0690(s_object_child_iterator *iterator)
 			iterator->next = child->next_sibling;
 			if ((1 << child->type) & 3)
 			{
+				result = true;
 				iterator->child_index = index;
 				iterator->child_short = child->value1fc;
 				iterator->child_value = child->value14;
-				result = true;
 				break;
 			}
 		}
@@ -283,9 +315,9 @@ bool function_d0690(s_object_child_iterator *iterator)
 		}
 	}
 
-	if (iterator->root != iterator->current && iterator->current != NONE)
+	if (iterator->root != iterator->current)
 	{
-		do
+		while (iterator->current != NONE)
 		{
 			while (iterator->next != NONE)
 			{
@@ -294,14 +326,15 @@ bool function_d0690(s_object_child_iterator *iterator)
 				iterator->next = child->next_sibling;
 				if ((1 << child->type) & 3)
 				{
+					result = true;
 					iterator->child_index = index;
 					iterator->child_short = child->value1fc;
 					iterator->child_value = child->value14;
-					return true;
+					break;
 				}
 			}
 			if (result)
-				return result;
+				break;
 			long index = OBJECT_FROM_INDEX(iterator->current)->next_sibling;
 			while (index != NONE)
 			{
@@ -316,7 +349,7 @@ bool function_d0690(s_object_child_iterator *iterator)
 			iterator->current = index;
 			if (index != NONE)
 				iterator->next = OBJECT_FROM_INDEX(index)->first_child;
-		} while (iterator->current != NONE);
+		}
 	}
 
 	return result;
@@ -358,16 +391,8 @@ void function_d0b70(long object_index, long a, long b, real value, long slot)
 		{
 			s_object_range *range = tag->ranges;
 
-			if (a < 0)
-				a = 0;
-			else if (a > range->maximum_a)
-				a = range->maximum_a;
-			child->value22c = (short)a;
-			if (b < 0)
-				b = 0;
-			else if (b > range->maximum_b)
-				b = range->maximum_b;
-			child->value22a = (short)b;
+			child->value22c = (short)(a < 0 ? 0 : a > range->maximum_a ? range->maximum_a : a);
+			child->value22a = (short)(b < 0 ? 0 : b > range->maximum_b ? range->maximum_b : b);
 		}
 	}
 }
@@ -414,31 +439,39 @@ real function_d1490(long object_index, long child_index)
 		short slot = object->slot212;
 		long current = NONE;
 		byte counter;
-		real value;
 
 		if (slot != NONE)
 			current = object->children[slot];
 		if (current == child_index)
 		{
 			counter = object->counter1fb;
-			if (counter == 0)
-				return 0.0f;
-			value = (real)counter * g_510c54->rate;
+			if (counter > 0)
+			{
+				real value = (real)counter * g_510c54->rate * (10.0f / 3.0f);
+				if (0.0f > value)
+					result = 0.0f;
+				else if (value > 1.0f)
+					result = 1.0f;
+				else
+					result = value;
+			}
+			else
+				result = 0.0f;
+			return result;
 		}
-		else
+		counter = object->counter1fa;
+		if (counter > 0)
 		{
-			counter = object->counter1fa;
-			if (counter == 0)
-				return 0.0f;
-			value = (real)counter * g_510c54->rate;
+			real value = (real)counter * g_510c54->rate * (10.0f / 3.0f);
+			if (0.0f > value)
+				result = 0.0f;
+			else if (value > 1.0f)
+				result = 1.0f;
+			else
+				result = value;
 		}
-		value *= 10.0f / 3.0f;
-		if (0.0f > value)
-			result = 0.0f;
-		else if (value > 1.0f)
-			result = 1.0f;
 		else
-			result = value;
+			result = 0.0f;
 	}
 	return result;
 }
@@ -703,13 +736,6 @@ static inline void pin_real(real *value, real minimum, real maximum)
         *value = maximum;
 }
 
-PRIVATE __forceinline real uv_coordinate_pin(real const &value, real minimum, real maximum)
-{
-	if (value < minimum) return minimum;
-	if (value > maximum) return maximum;
-	return value;
-}
-
 // @retail 0xd2dc0
 void function_d2dc0(s_mesh *mesh, long triangle_index, real u, real v, real *out_a, real *out_b)
 {
@@ -747,8 +773,8 @@ void function_d2dc0(s_mesh *mesh, long triangle_index, real u, real v, real *out
 		*out_a = (c.x - a.x) * v + (b.x - a.x) * u + a.x;
 		*out_b = (c.y - a.y) * v + (b.y - a.y) * u + a.y;
 	}
-	*out_a = uv_coordinate_pin(*out_a, -1000.0f, 1000.0f);
-	*out_b = uv_coordinate_pin(*out_b, -1000.0f, 1000.0f);
+	*out_a = pinned_real(*out_a, -1000.0f, 1000.0f);
+	*out_b = pinned_real(*out_b, -1000.0f, 1000.0f);
 }
 
 static inline void unpack_normal(dword value, vector3f *vector)
@@ -907,15 +933,18 @@ bool function_d3630(s_vertex_block *block, long triangle_index, s_mesh *mesh, re
 // @retail 0xd0620
 void function_d0620(long object_index, s_object_child_iterator *iterator)
 {
-	s_object *object;
+	s_object *object = OBJECT_FROM_INDEX(object_index);
+	bool done = false;
 
-	for (;;)
+	while (!done)
 	{
-		object = OBJECT_FROM_INDEX(object_index);
-		long parent_index = object->value14;
-		if (parent_index == NONE || !TEST_FIELD_BIT(object->flag26) || !((1 << OBJECT_FROM_INDEX(parent_index)->type) & 3))
-			break;
-		object_index = parent_index;
+		if (object->value14 != NONE && TEST_FIELD_BIT(object->flag26) && ((1 << OBJECT_FROM_INDEX(object->value14)->type) & 3))
+		{
+			object_index = object->value14;
+			object = OBJECT_FROM_INDEX(object_index);
+		}
+		else
+			done = true;
 	}
 
 	iterator->root = object_index;

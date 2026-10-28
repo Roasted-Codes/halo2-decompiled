@@ -1235,6 +1235,11 @@ bool function_c70b0(long unit_index);
 long function_cbd50(long unit_index, short weapon_index);
 
 // score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result
+// Round 141: retail returns the result byte unnormalised (a bool) and keeps the depletion in BL with the
+// interruptibility in memory; round 75's first-sets/second-clears depletion 330, with a bool result
+// 361 (1243 bytes, aligned 132 -> 102: retail's setle and second test, but depleted in memory and
+// interruptible in BL, no unit re-read), with interruptible/depleted/result declaration orders 362/363;
+// controlling read first 164; name before overlay 164.
 // normalization differ. Retail keeps the pool global in EAX and its data in EBP from entry, the state
 // in EDI, re-reads the unit pointer for both held-weapon queries (the second through a fresh data load)
 // and keeps the depletion's initial false in a stack byte (+0x12) beside the result (+0x11) and the
@@ -1263,6 +1268,12 @@ long function_cbd50(long unit_index, short weapon_index);
 // also in 0x1103a0); depletion as `if (first != NONE) depleted = ...; if (second != NONE && count > 0)
 // depleted = false;` 330 (frame four), with a byte depleted 330; without the parameter's volatile
 // re-read at the 0xc70b0 call 322; depletion through an inline helper writing a pointer 330.
+// Round 80: bool result 194 (head unchanged; the exits lose the normalisation but still lack retail's
+// ebp pop); second query as `if (second != NONE && count > 0) depleted = false;` 345 (all four registers
+// at entry, but frame four, depletion in memory, interruptibility in BL, unit kept live); with the
+// overlay read at its switch 331; with cached-unit slot arguments 345; with short slot locals 345.
+// Retail's unit reload at each query (`mov ecx, ebp; mov ecx, [ecx + edx + 8]`) occurs in only one
+// other retail function (0x100130, unmatched). Original body restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1637,7 +1648,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 810 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// score 805 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
 // computes the centred test once with x87 fabs before the blend block, copies the default angles as a
@@ -1671,15 +1682,27 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 187: basis matrix 807; matrix/shared cross 858; matrix pointer/reference/value
 // inputs 807/807/842; aggregate/member basis copies 1102/1102; matrix reference/shared
 // cross 851. The three-count gain is dropped; original independent vectors restored.
+// Round 7: graph looked up right after the state 805 (kept); with the final flags as a ternary 804;
+// final test with its arms swapped 810; activity as a logical and 849; a fresh object pointer for the
+// final test 810; definition first 810; definition before control 805; channel tests through a
+// pointer helper 838; overlay ratio clamp as a ternary 805. Retail inlines the first 0x11df30 call
+// and reads the projection input from the object in place.
+// Round 26 (lane 9): ours inlines 0x1cb490 (and 0x1cb410 below it) in the overlay loop, where retail
+// calls 0x1cb490 and inlines the first 0x11df30 instead (an inliner budget trade; 0x1cb490 can't be
+// noinline: matched 0x105e80/0x1ccae0 inline it). Unused model-tag local for retail's dead entry
+// lookup 805 (eliminated); ratio as 0.5f + x * 0.5f, x / 2.0f + 0.5f, (x + 1.0f) / 2.0f, 0.5f * x + 0.5f
+// 805 each (all compile to (x + 1) * 0.5; retail multiplies first); overlay loop as a for 875 (3338
+// bytes: the first 0x11df30 is then inlined as in retail, 0x1cb490 still inlined in the loop);
+// `++i < 3` / short index 805/805; `active` declared at the top of the aiming block 805.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
 {
 	s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(unit_index);
 	s_animation_state *state = UNIT_ANIMATION_STATE(unit);
+	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	s_unit_animation_control *control = UNIT_ANIMATION_CONTROL(unit);
 	s_unit_animation_definition *definition = (s_unit_animation_definition *)TAG_BYTES(unit->definition_index);
-	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	c_animation_channel channel;
 	if (control->channel_9c.graph_tag_index != NONE && control->channel_9c.animation_id.index != NONE)
 		control->channel_9c.sample(1.0f, node_mask, node_count, transforms);
@@ -2629,7 +2652,7 @@ bool __stdcall function_111650(long arg_0, long *arg_1)
     return active;
 }
 
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *value);
 bool function_e4050(long object_index);
 const long g_4408f8[8] = { NONE, 0, 1, 2, 2, NONE, NONE, 3 };
 const long g_440918[8] = { NONE, NONE, 0x600008c, 0xc000043, 0xc000043, 0xd000042, 0xc000043, 0xc000043 };

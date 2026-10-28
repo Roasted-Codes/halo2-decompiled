@@ -74,7 +74,9 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 132 (was 132): frame four and numeric/reset sequence agree; logarithm factor width and restore pointer/mask homes remain.
+// score 95 (was 132): frame four, the logarithm and the tail agree; left are the restore block (retail reloads
+// the range field before each call; ours keeps it in a register) and BLOCKED-BY 0x18a90, which retail passes
+// the state in ebx (ours pushes it).
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
@@ -148,6 +150,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Existing updater inline declarations 16f60/17000/189a0, their three pairs/all,
 // and all three noinline declarations 132 each. Original declarations and body restored.
 // DL159: coherent updater inline definition/declaration 132; on that graph, global-first complete mask groups 001/010/011/100/101/110/111 all 132. Original provider specifications, exact logarithm and body restored.
+// Round 104: logarithm product in float 131 (retail's dword factor); with the record read from its field at
+// every use after it is stored (retail reloads it after 0x18900) 95, kept. On it: both range calls reading the range field 177 (978 B); with the entry stored from its local 191;
+// entry, pass and range written and read through their fields 177; plus global-first unions 177.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -171,7 +176,7 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
     if (scale > 0.0f) inverse = 1.0f / scale;
     else inverse = 100000.0f;
     *(real *)(state + 0x28) = inverse;
-    *(real *)(state + 0x2c) = (real)(log((double)inverse) * 0.6931471824645996f);
+    *(real *)(state + 0x2c) = (real)log((double)inverse) * 0.6931471824645996f;
     memset(state + 0x58, 0, sizeof(dword));
     state[0x1514] = false;
     *(dword *)(state + 0x1518) = 0;
@@ -205,13 +210,13 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
                 function_18900((s_render_state_source *)state, (word const *)(old + 0x11c));
             *(byte **)(state + 0x24) = record;
             *(byte **)(state + 0x20) = records;
-            *(dword *)(state + 0x44) = *(dword *)(record + 0x10c);
-            *(dword *)(state + 0x48) = *(dword *)(record + 0x110);
-            *(dword *)(state + 0x4c) = *(dword *)(record + 0x104);
-            *(dword *)(state + 0x50) = *(dword *)(record + 0x108);
-            *(dword *)(state + 0x54) = *(dword *)(record + 0x114);
-            function_18900((s_render_state_source *)state, (word const *)(record + 2));
-            function_189a0(state, (word const *)(record + 4));
+            *(dword *)(state + 0x44) = *(dword *)(*(byte **)(state + 0x24) + 0x10c);
+            *(dword *)(state + 0x48) = *(dword *)(*(byte **)(state + 0x24) + 0x110);
+            *(dword *)(state + 0x4c) = *(dword *)(*(byte **)(state + 0x24) + 0x104);
+            *(dword *)(state + 0x50) = *(dword *)(*(byte **)(state + 0x24) + 0x108);
+            *(dword *)(state + 0x54) = *(dword *)(*(byte **)(state + 0x24) + 0x114);
+            function_18900((s_render_state_source *)state, (word const *)(*(byte **)(state + 0x24) + 2));
+            function_189a0(state, (word const *)(*(byte **)(state + 0x24) + 4));
         }
     }
     function_1ae70(state);
@@ -859,7 +864,6 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 }
 
 // score 157 (was 157): frame 0xc versus retail 0x10; entry/value homes and deferred descriptor observations remain.
-// Earlier: Frame 0xc versus 0x10 and deferred descriptor rereads remain.
 // frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
 // alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
@@ -896,6 +900,15 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // DL159: actual direct/mapped/both selector field references 199/177/185; signed source field reference 157, with direct/mapped/both selectors 199/177/185; complete field graph with body cursor steps 185. Original copied fields, dynamic bounds and writer retained.
 // Round 206: Native ordinary/special/dirty output fields, individually, all three pairs and all
 // together 157 each; complete output fields with body cursor steps 155. Two-point gain rejected.
+// Round 30 (fast): retail's direct loop re-reads the entry word after the output store (for the dirty bit),
+// stores through a computed address (lea) and keeps the value table in EBX: that is a store written with
+// the index derived inside from a reference to the entry word, not a precomputed index. A file-local
+// forceinline store taking `word const &packed` for the direct loop alone gives that loop retail's shape
+// 191 (695 bytes; the mapped loop then tests 0x200 twice); with the value masked at the top of it 183, the
+// masked value passed by the caller 183 (both move the state parameter from EAX to EDX); plus the mapped
+// loop in 0x176a0's shape (value/mask locals, the call in both arms, remap byte added first) 226 at frame
+// 0x10 as retail (the direct loop's counter then takes EBX); one counter declared for both loops 226.
+// Match-only (a one-caller helper); original body restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
