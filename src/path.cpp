@@ -636,58 +636,62 @@ PRIVATE bool function_2713f0(s_type_f17a25 *state)
 {
 	s_path_input_view *input = (s_path_input_view *)&state->source;
 	s_path_destination_view *destination = (s_path_destination_view *)state;
-	real distance = 0.0f;
-	long quantized = 0;
+	bool result = false;
 	if (!state->pathfinding)
 	{
 		return false;
 	}
 	long node_count = *(long *)state->pathfinding;
-	if (input->start_node_index < 0 || input->start_node_index >= node_count ||
-		!(input->start.point.z > -1000.0f))
+	if (input->start_node_index >= 0 && input->start_node_index < node_count &&
+		input->start.point.z > -1000.0f)
 	{
-		return false;
-	}
-	if (destination->destination_valid)
-	{
-		real length = function_210970(&input->start, &destination->destination);
-		distance = length;
-		quantized = (long)(length * 10.0f);
-		if (quantized >= 32767)
+		real distance;
+		long quantized;
+		if (destination->destination_valid)
 		{
-			return false;
+			distance = function_210970(&input->start, &destination->destination);
+			quantized = (long)(distance * 10.0f);
+		}
+		else
+		{
+			distance = 0.0f;
+			quantized = 0;
+		}
+		if (quantized < 32767)
+		{
+			s_pathfinding_node *sector = &((s_pathfinding_data *)state->pathfinding)->nodes[input->start_node_index];
+			short index = state->unknownae++;
+			s_path_lookup_view *lookup = (s_path_lookup_view *)state;
+			s_path_node_key_view *node = &lookup->nodes[index];
+			node->parent = NONE;
+			node->unknown04 = NONE;
+			node->node_index = input->start_node_index;
+			node->entry_point = input->start;
+			node->entry_distance = 0.0f;
+			node->path_distance = 0.0f;
+			node->attractor_distance = FLT_MAX;
+			node->cost = 0.0f;
+			node->estimated_distance = distance;
+			node->quantized_cost = (short)quantized;
+			node->depth = 0;
+			node->flag0c = (sector->flags >> 12) & 1;
+			node->flag0d = (sector->flags & 0x3c0) != 0;
+			node->flag0e = false;
+			node->unknown10 = NONE;
+			node->unknown14 = NONE;
+			if (destination->destination_valid)
+			{
+				state->unknown90 = index;
+				*(real *)((byte *)state + 0x94) = distance;
+				*(s_type_c3b527 *)((byte *)state + 0x9c) = input->start;
+				*(real *)((byte *)state + 0x98) = distance;
+			}
+			lookup->hash_table[(node->node_index & 511) * 8] = index;
+			function_271fd0(state, index, (short)quantized);
+			result = true;
 		}
 	}
-	s_pathfinding_node *sector = &((s_pathfinding_data *)state->pathfinding)->nodes[input->start_node_index];
-	short index = state->unknownae++;
-	s_path_lookup_view *lookup = (s_path_lookup_view *)state;
-	s_path_node_key_view *node = &lookup->nodes[index];
-	node->parent = NONE;
-	node->unknown04 = NONE;
-	node->node_index = input->start_node_index;
-	node->entry_point = input->start;
-	node->entry_distance = 0.0f;
-	node->path_distance = 0.0f;
-	node->attractor_distance = FLT_MAX;
-	node->cost = 0.0f;
-	node->estimated_distance = distance;
-	node->quantized_cost = (short)quantized;
-	node->depth = 0;
-	node->flag0c = (sector->flags >> 12) & 1;
-	node->flag0d = (sector->flags & 0x3c0) != 0;
-	node->flag0e = false;
-	node->unknown10 = NONE;
-	node->unknown14 = NONE;
-	if (destination->destination_valid)
-	{
-		state->unknown90 = index;
-		*(real *)((byte *)state + 0x94) = distance;
-		*(real *)((byte *)state + 0x98) = distance;
-		*(s_type_c3b527 *)((byte *)state + 0x9c) = input->start;
-	}
-	lookup->hash_table[(node->node_index & 511) * 8] = index;
-	function_271fd0(state, index, (short)quantized);
-	return true;
+	return result;
 }
 
 // @retail 0x2715a0

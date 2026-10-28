@@ -379,6 +379,10 @@ void function_245400(s_source_245400 const *source, long index,
 // Emitter inline / inline-noinline 204/204; with early narrow sides 207; uniform
 // material-table / primary-index / both observations 207/208/217; native material
 // low word 204; branch-owned planes 223. Original emitter declaration and body restored.
+// Round 16: outer transformed-point workspace 204; native material codes without their later copies 211;
+// second-first 210; first/second alone 211/210; native codes with inner workspace 211; one matrix-address
+// read on that graph 235; signed-byte side carriers on it 211. Native codes move the matrix to ECX, not
+// the source, and give frame 0x28. Original body restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

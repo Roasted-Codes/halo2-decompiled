@@ -654,6 +654,10 @@ long players_first_active_local_player(void)
 	return result;
 }
 
+/* out of line, as retail calls it from 0x1391ed, 0x219ed0 and 0x240820; the callers retail
+   inlines it into use local_player_next_inline (globals.h) */
+__declspec(noinline) long function_14de10(long index);
+
 // @retail 0x14de10
 long function_14de10(long index)
 {

@@ -335,6 +335,12 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Current color/alpha frame: half-span parameter 162; parameter/byte alpha 166.
 // parameter/color pointer 349; parameter/value half-size 162.
 // All executable forms restored.
+// Round 12 (lane 10, fast control 162): parameter address taken (`(void)&arg_1;`) 162; the half
+// size read once through the parameter's address 162 (the product still lands ahead of the third
+// reservation); byte alpha 166; color pointer with the parameter address taken 349 (on the pointer
+// body everything through the second reservation matches; ours then loads the size and computes the
+// half span before the third reservation, retail after its call); color pointer with the lower
+// coordinate first 372. All restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

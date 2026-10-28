@@ -1400,6 +1400,11 @@ bool function_1e1de0(long arg_0);
 // observed/facing setters 222; position/facing setters 234.
 // all three setters 256; four library transfers 218.
 // All executable forms restored.
+// Round 12 (lane 10) on the round-75 shape (rebuilt 218 fast; tail and entry exact, only the
+// `mov ecx, eax` before the actor-index store and the first point copy's eax/ecx swap remain): the
+// index temporary declared in the enclosing block 218; unit pointer set in the type test and the
+// index taken in a separate statement guarded on it 220; actor index initialised before the object
+// lookup 221; the three result flags declared at the top of the block 218. All restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
