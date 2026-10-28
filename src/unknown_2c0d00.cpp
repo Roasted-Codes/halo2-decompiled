@@ -1065,6 +1065,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // second angular endpoint reuse 373; second distance endpoint reuse 360.
 // Round 54: first/second directions initialised directly 376 (x87 forwarding matches, y preload
 // missing), through normalize_local2d_2c 342/376, out-of-line normalize2d 414, plain first side 374.
+// Round 194: shared branch vectors all/targets/endpoints 361/350/342; endpoint-first
+// shared declarations and entry scope 361/361; shared vectors with ordinary first side
+// 374, native result 385, both 387. Original workspaces and qualifier restored.
 // Lane 9 r23: shared normalize2d_fast for the side directions/the direction 172/172 (same code);
 // volatile on the second side instead of the first 397; normal as two scalars 236; second side
 // computed before the first 392. Retail keeps the first direction's y in XMM0 from its subtraction
@@ -1261,6 +1264,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Final source/emitted/both native coordinate values 476/484/557;
 // with existing point difference 492/484/557; both values emitted first
 // without/with point difference 557/557. All restored; original current record retained.
+// Round 194: native output-count/copied-result/found-result widths 505/468/476;
+// both result words 479; wide count with copied/found/both 492/478/473;
+// all native words with found from its bound test 500. Original carriers restored.
 // Lane 9 r25: retail keeps two NONE-initialised shorts at +0x6c/+0x74 (set to the step's type and link
 // when its type is not NONE, tested at the emit, which reads the type itself through the step pointer).
 // Step pointer plus those two locals 461 (frame 0x10c as retail's); plus the count > 1 arm first 483;

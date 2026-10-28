@@ -693,7 +693,7 @@ struct s_looping_spatialization
 {
 	dword flags;
 	byte unknown04[0x24];
-	real listener_gains[4];
+	long listener_gains[4]; /* decibels, as real bits */
 };
 
 long function_2197f0(real gain);
@@ -729,7 +729,7 @@ bool __stdcall looping_sound_track_spatialize(long looping_sound_index, long def
 		{
 			long gain_bits = function_2197f0(sound->listener_gains[i]);
 			long value_bits = function_1251e0(definition, gain_bits, sound->source.scale);
-			output->listener_gains[i] = *(real *)&value_bits + *(real *)&sound->source.unknown08;
+			output->listener_gains[i] = decibels_add(sound->source.unknown08, value_bits);
 		}
 		output->flags |= 0x10;
 		result = true;

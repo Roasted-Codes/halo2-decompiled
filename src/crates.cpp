@@ -89,6 +89,9 @@ void __stdcall function_1d24a0(s_havok_component *component, real position);
 // lookup 54; receiver acquired after clear 81; genuine body cursor 51;
 // complete positive body-classification result 54; exhaustive final result with library clear 88.
 // Original body and include restored.
+// flags pointer local 42; the field as long 6; shared object getter 6; tag helper inline/forceinline
+// 6/6; shared setter inline/forceinline 6/6; definition at function scope 6; a 32-bit flags bitfield 6;
+// definition flag bitfield 6; crate re-read at the first set 75.
 // @retail 0x11bbf0
 bool __stdcall function_11bbf0(long object_index, s_crate_placement_view const *placement, long creation_argument2)
 {

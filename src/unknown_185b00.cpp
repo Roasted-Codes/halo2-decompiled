@@ -795,6 +795,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // arms (the shared difference is hoisted into target's register) 122 -> 52, both kept; direction in a
 // forceinline angle helper 176; seat clamp helper 180; difference named before amount/before rate
 // 172/172; named target test 153; atan2 at both uses 87; settings between the bounds (retail's store
+// order) 52; in-place positive-range helper 52. Round 14 (lane 10, plain): yaw renamed to sort last
+// 52 (names do not move these homes); direction declared in the bounds block 52; amount/movement
+// declared at camera-block scope 52; to_upper/from_lower declared before range 52 (all identical code);
+// direction and the angle in an inline helper 292 (not inlined; frame 0xa0), forceinline 52 (identical).
 // order) 52; in-place positive-range helper 52.
 // Round 66: direction helper returning the vector by value 185 (frame 0xb8); direction and the angle call in
 // a forceinline helper 52; the clamp's two negated tests as nested ifs 52; settings between the bounds with
