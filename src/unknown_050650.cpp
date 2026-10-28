@@ -510,6 +510,9 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 // both 404; entry ray with complete vector setter 338 (retail length); entry
 // collision result 335; split results with entry ray/collision 386/383; split
 // results with one return 404. Restored.
+// Unit-random producer with candidate after/before/between draws 335/336/341;
+// named normalized fractions at those sites 340/341/335 (last retail length).
+// Complete vector-copy setters with early/between candidate 363/363. Restored.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -595,7 +598,7 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 336 (was 397): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
+// score 336 (was 336): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -604,6 +607,9 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // workspace 397, with chained defaults 395; complete point setters 336 (kept,
 // retail length); with chained defaults 334 (extra two-point gain restored);
 // those plus case order 339, plus entry marker 339.
+// Uniform five-point memcpy producers 397; case 2 first 401; chained defaults
+// 395; both 399. Uniform memmove producers with those forms 444/442/442/440.
+// All shorter than retail; original setters, cases and defaults restored.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -1126,6 +1132,12 @@ struct s_actor_looking_turn_request
 // out-of-line predicate plus explicit stores 532 fast, 527 plain (restored). Unchanged preview 546 fast.
 // Separate noinline declarations in caller and callee units 570 fast, 590 plain at 1952/2020 (restored);
 // this removes the expansion and recovers the 0xc8 frame, but later scheduling/layout regress.
+// Distinct aiming/looking vector lifetimes, with explicit looking stores,
+// nested aiming validation and case-set looking result 546, 534, 546, 534, 546, 534, 546, 534 fast.
+// Disjoint outputs with explicit looking publication 525 plain at 2020/2020; restored.
+// Uniform 17 aggregate memcpy producers on disjoint outputs, varied by actual
+// predicate boundary and long animation carrier 534/540/562/563 fast; native
+// memmove variants 624/630/670/671. Best memcpy form 525 plain at 2020/2020; restored.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

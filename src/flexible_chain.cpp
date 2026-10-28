@@ -232,7 +232,7 @@ void __stdcall function_1160c0(real dt)
 	}
 }
 
-// score 179 (was 190): previous/axis homes, segment ownership and rotation scheduling differ;
+// score 179 (was 179): previous/axis homes, segment ownership and rotation scheduling differ;
 // seven local-name sets, declaration reversals and entry/loop scopes 194;
 // shared cross 207, both point differences 286, both helpers 280;
 // scaled difference 212, all vector helpers 285.
@@ -246,6 +246,10 @@ void __stdcall function_1160c0(real dt)
 // combined, 194 each.
 // Round 371: first-node position copied before direction 179, kept; previous-first
 // publication, complete scalar cross/axial terms and their combinations 179 each.
+// Complete previous-position scalars, with complete axis/rest-offset/prediction
+// coordinate sets 345, 335, 332, 323, 345, 335, 332, 323.
+// Native segment index before lookup, explicit last-segment arm, uniform
+// rest-offset fields and invariant reciprocal combinations 179, 179, 336, 336, 189, 189, 338, 338.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

@@ -1089,7 +1089,8 @@ struct s_looping_promotion_table
 	s_looping_promotion *entries;
 };
 
-// score 52 (was 52): frame and loop head now retail's; the body's element and definition registers differ;
+// score 52 (was 52): iterator frame agrees; class load, curve widening and element/definition carriers still differ.
+// Prior: frame and loop head now retail's; the body's element and definition registers differ;
 // short curve 76; long curve 80; count renamed 72; table snapshot 72; pool snapshot 76;
 // count first 74; plain for 74; flag mask 72; shared lookup 72; short curve and lookup 76;
 // bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65;
@@ -1100,6 +1101,8 @@ struct s_looping_promotion_table
 // shared class lookup/one-use short class index 30 (unmatched, restored).
 // Native definition getter 52; both native getters 52; both/short curve 56; composed getters 52.
 // Element/definition registers, class-load position and curve widening remain.
+// Word flag bitfield with byte-cast class: bool curve/direct or shared lookup 52/52, short curve 49/49;
+// with signed class member, bool curve 52/52 and short curve 49/49. Three-point gain at 286 bytes restored.
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {

@@ -101,7 +101,7 @@ inline real distance3d_fast(point3f const *a, point3f const *b)
 	real j = a->y - b->y;
 	real k = a->z - b->z;
 
-	return (real)sqrt(i * i + j * j + k * k);
+	return (real)sqrt(j * j + (i * i + k * k));
 }
 
 void function_26c180(long actor_index);
@@ -162,10 +162,6 @@ short __stdcall function_1bc580(long actor_index, s_slot *slot, bool active)
 }
 
 /* the nearest actor of the actor's group not in a vehicle */
-// score 51 (was 51): our loop tests the index before the body and keeps the
-// test at the loop's end; retail jumps to a test at the loop's head and
-// shares the store of the best distance between the first pass and the
-// update, so its float lands at another stack offset.
 // @retail 0x1bc5d0
 long function_1bc5d0(long actor_index, long ignore_index)
 {
@@ -175,14 +171,13 @@ long function_1bc5d0(long actor_index, long ignore_index)
 	if (actor->unknown07c != NONE)
 	{
 		real best_distance = 3.4028235e38f;
-		long index = element_502420_get(actor->unknown07c)->first_actor_index;
+		s_element_502420_member_iterator iterator;
+		iterator.next_index = element_502420_get(actor->unknown07c)->first_actor_index;
+		s_actor_view *other;
 
-		while (index != NONE)
+		while ((other = element_502420_member_next(&iterator)) != NULL)
 		{
-			long other_index = index;
-			s_actor_view *other = actor_get(other_index);
-
-			index = other->next_index;
+			long other_index = iterator.index;
 			if (other_index != actor_index && other_index != ignore_index && other->unknown26c == NONE)
 			{
 				real distance = distance3d_fast(&actor->position, &other->position);
@@ -343,9 +338,10 @@ bool function_1f8660(long actor_index);
 real function_1f8940(long actor_index);
 real function_1e3920(long actor_index);
 
-// score 46 (was 46): ours copies the argument into EBX before comparing it
-// with the global
-// and reads a different global, retail compares the argument itself.
+// score 46 (was 46): aligned 0x764 frame agrees; actor-index and search-result carriers differ after scratch allocation.
+// Earlier result-first 53; output/reference and failure-cleanup forms did not close the carrier gap.
+// Per-use actor receiver with nested failure-first and output-home names 117/117; early admission 140/140;
+// success-first 116/116; success-first/early admission 138/138. All forms grow to 368 or 372 bytes.
 // @retail 0x1bcab0
 bool __stdcall function_1bcab0(long actor_index, s_slot *slot)
 {

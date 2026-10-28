@@ -1007,9 +1007,10 @@ s_slot_handler_2x g_47e9d0 =
 	1, 10, 1.5f, 0x5b
 };
 
-// score 47 (was 47): g_46fbe4 and g_46fbe8 are read as bytes here but as
-// dwords in retail; they are declared short in include/globals.h, which is not
-// mine to change.
+// score 47 (was 47): pool/status carriers and return scheduling differ; conversion homes agree at 216/212 bytes.
+// Prior narrow status 60 at 212 bytes; retail uses wide status loads while only low words are returned.
+// Slot data block: actor-first long/short status with nested or rejection guards 47/47 and 60/60;
+// block-first long 63/63; block-first short 45/45 at 214/212, a two-point gain restored.
 // @retail 0x1ba4e0
 short __stdcall function_1ba4e0(long actor_index, s_slot *slot, bool active)
 {
