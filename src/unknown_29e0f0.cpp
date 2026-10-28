@@ -106,6 +106,10 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a
 // long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
 // bit helpers; same code).
+// Round 267: complete parallel square terms in squared-distance/length/both helpers
+// 406/406/406; selected-index role names 406; those names with squared-distance/length/
+// both terms 406/406/406; complete graph with helper-axis names 406. Frame/index and
+// square-input homes remain; original helpers, names, loops and body restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

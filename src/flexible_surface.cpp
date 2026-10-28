@@ -118,6 +118,9 @@ void function_117080(long);
 // Round 57: no slot with next before the reload 64; no slot alone 50; next with slot 54;
 // slot at function scope 50; typed record-array base 50; outer for-loop 50; alternate next
 // helper with next 54; record pointer on the pool-local body 50.
+// Round 268: explicit search result 50; unsigned slot 50; word slot 51; unsigned
+// datum handle 50; explicit search result with those three carriers 50/51/50;
+// shared out-of-line datum conversion 102. All original helper and field reads restored.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
