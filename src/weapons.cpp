@@ -3286,6 +3286,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Round 337 (fast control 637): direct short/promoted barrel values 637/634;
 // direct weapon value/both short values 637/637; both promoted values 634;
 // first-use promoted barrel/both/immutable values 634/634/634. Gain 3 rejected; all restored.
+// Complete native tag-reference arrays with short/long/byte/word mode, raw/native interval
+// fields: 637/637, 639/639, 632/632, 637/637 (fast control 637). Five-point gains rejected;
+// original effect type, fields, body, parameter aliases and local qualification restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3553,6 +3556,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Branch-owned three query outputs 1436; direct barrel selectors 1537; direct input selector 1448;
 // all direct tag selectors 1542; integer input tables 1457; branch outputs/all selectors 1540;
 // unsigned-byte effect decisions 1436; branch outputs/integer tables 1457. Original body restored.
+// Round P208: ordinary inline request/reset/visible-owner helpers 1503/1436/1436;
+// request-reset/request-owner/reset-owner/all inline 1503/1503/1436/1503;
+// direct native input-table initialization 1436. Original helper declarations and body restored.
 // Existing visible-owner result, with request guard/reset chain/both 1436/1436/1436/1436;
 // each graph with Boolean activity 1477/1477/1477/1477. All helpers and body restored.
 // Round 202: Solver-owned finished/stopped outputs, barrel/function scope, output role names,

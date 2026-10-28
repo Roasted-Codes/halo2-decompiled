@@ -1125,6 +1125,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // three jointly 828 each; immutable joint pointers 828. All aliases restored.
 // Loop-lived native candidate reset with guaranteed-mode default omitted, condition-scoped
 // lookup, shortened traversal phase, their combinations and traversal-first defaults: 932 each.
+// Return object after the class guard, with native iterator/post-lookup candidate/guaranteed
+// mode-write combinations: 988/1001/999/1001/989/1000/999/1001 (2825 bytes, first +0).
+// Original constructor timing, iterator, candidate, output order and resource requests restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

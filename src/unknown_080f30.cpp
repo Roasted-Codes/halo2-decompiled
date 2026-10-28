@@ -279,6 +279,9 @@ struct s_pending_message_storage : s_pending_message_header
 // first counter's slot, ours packs the retry count there); after it 14; before the if 17.
 // Inner external inline 14; outer and both external inline 287 each (out of line);
 // long, byte and const allocation 14 each; nested guards 14; allocation scope 14; role names 14.
+// Direct capacity field reads 14; storage-first guard 40; full-width unsigned result 92;
+// optimistic result with failure arms 98; request/allocation shared exits 14/14;
+// native int capacity 14; direct capacity with full-width result 92.
 // @retail 0x80e10
 bool function_80e10(s_pending_message_storage *request, void **output, long *size)
 {

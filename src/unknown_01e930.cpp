@@ -200,6 +200,8 @@ void function_155ed0(void)
 // const remaining/mask 9; reversed result-mask operands 9.
 // Further forms: unsigned-mask zero-alignment guard 28; aligned guard 20; flat guards 28;
 // named padding test 9. Signed-mask counterparts 36/45/36/40. Original body restored.
+// Initial base/capacity address ownership also differs. One captured capacity with
+// delta/shared-mask/early-publication combinations: 45/44/54/54/44/44/54/54; restored.
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {

@@ -931,6 +931,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 202: End found-name/primary-ID lookup workspace before name publication, with
 // byte/bool/short/long result: 210/222/226/227 for either bool or byte prior-loop truth.
 // Original workspace, byte result, loop truth and all constructors restored.
+// Round P208: native library name-record publication 210; with aggregate input 318;
+// with logical change join 244; with both 320; the same four with forced existing
+// clear helper 210/318/244/320. Original record publication, identifiers and helper restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
