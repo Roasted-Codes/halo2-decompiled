@@ -187,6 +187,9 @@ struct s_object_flags_256bd0
 // with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
 // placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and
 // iterator restored; activity spill and native geometry homes remain.
+// Round 216: real iterator zero aggregate/full aggregate/CRT clear/index defaults
+// 243/244/242/231; before the flags lookup 247/253/246/223. Original iterator input,
+// initializer and private step restored; frame 0x114/0x110, cached activity and homes remain.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
