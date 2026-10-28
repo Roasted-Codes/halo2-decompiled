@@ -78,7 +78,8 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
     return (real)sqrt(local_2 * local_2 + local_1 * local_1 + local_0 * local_0);
 }
 
-// score 406 (was 406): table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
+// score 406 (was 406): frame 0x68/0x64, induction/endpoint homes and x87 scheduling differ.
+// Earlier: table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
 // Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
 // squared-distance second point by value 430; conditional table pointer initialization 416.
 // Group-table field at each use 457; native long overall result 445; bounded output for 420; same-group pretested while 416; positive nearest-point scope 416.
@@ -92,11 +93,32 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // Round 146: short group index/pass counter/best indices (kept) 406; the three alone 409/416/512;
 // distance index at top of the inner while 416; long search result 415, on the kept form 428;
 // long point bounds 456; long last point 424; long nearest point 396 (word compares in retail, not kept).
+// Round 86 (fast; aligned counts in brackets, 378 at the start): long group index 513 [313, retail's first-loop
+// registers]; separate output cursor (retail compares the end index with the original start) 416 [357]; both 490
+// [278]; bit_vector_test/bit_vector_set instead of the open-coded bits, identical; else-false result 459 [238];
+// record index set before the pass loop and after each step 446 [189, frame 0x64]; memset group bitmap 437 [185];
+// bit test on the field read ahead of the group-index local 197 [65], with the (point, record) output-helper order
+// 199 [57], x*x + (y*y + z*z) squared sum 190 [48] and the found flag declared first 188 [46] (not kept: a field read
+// beside a local copy needs a match; the same body without it 437). Left on 188: x87 square orders (retail rotates
+// them per call; a vector-local distance with j, k, i terms gives d1/d2 175), arg_0 in EDX with arg_3 kept in ESI
+// at the 0x29de20 call, AL reused for the found flag, the pass latch's lea, the output loop's entry jump.
 // Round 148: the visited bits through the existing bit_vector_test/bit_vector_set (include/bit_vector.h)
 // 416 at 1577 bytes, but difflib-aligned 378 -> 338: retail's separate test and set (word address and
 // mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a
 // long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
 // bit helpers; same code).
+// Round 267: complete parallel square terms in squared-distance/length/both helpers
+// 406/406/406; selected-index role names 406; those names with squared-distance/length/
+// both terms 406/406/406; complete graph with helper-axis names 406. Frame/index and
+// square-input homes remain; original helpers, names, loops and body restored.
+// Round 366: overwritten endpoint initializer removed 417; early group receiver 432; both 440; complete two-leg distance sum 406; with endpoint/receiver/both 417/432/440; all with scoped best-distance default 474. All restored.
+// Round 232: direct-step pretested inner for, alone and with all seven complete
+// link/directional/selected short-workspace identity subsets, 406 each. All restored.
+// Round 368: test-produced final result 440; complementary pass admission 406; search-scoped best distance
+// 457; result/admission 440; result/distance 478; admission/distance 457; all and named result 478/478.
+// Original executable body restored.
+// Round 370: shared point-array base with long group index, captured point count and shared
+// bitmap operations 429/428/410/432/515/515/464/464; body, helpers and original includes restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

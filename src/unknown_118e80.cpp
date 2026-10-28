@@ -103,6 +103,8 @@ PRIVATE __forceinline void forward_flags_set(s_forward_flags *flags, word mask, 
 		flags->value &= ~mask;
 }
 
+__declspec(noinline) void function_118fe0(long object_index, bool enabled);
+
 // @retail 0x118fe0
 void function_118fe0(long object_index, bool enabled)
 {
@@ -276,6 +278,10 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Lane 9 r29 (plain): `real angle` in 0x11f0d0 220 (identical); `real s` there 220 here
 // (--fast showed 200 with the late ESI, a reduced-image artifact; 0x11f0d0 2 -> 89), also as
 // `step / (real)sqrt(dist2)`; the four basis vectors declared in reverse 220; position renamed 220.
+// Round 58 (fast, reduced baseline 200 versus plain 220): angle-helper inline declaration 200;
+// static-inline vector position setter 217; world-up position output before/after the up result 206/205;
+// world-up output order 205; position declaration order 205; entry position with inline store 205;
+// scoped temporary velocity with inline position store 205. Original helper and body restored.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
