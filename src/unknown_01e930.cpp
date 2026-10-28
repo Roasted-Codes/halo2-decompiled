@@ -356,7 +356,7 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	__asm rdtsc
 }
 
-// score 287 (was 287): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
+// score 256 (was 287): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
 // Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
 // arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
 // format-size query declaration 287. Original body and declaration restored.
