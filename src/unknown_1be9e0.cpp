@@ -125,6 +125,12 @@ static __forceinline long real_to_long(real value);
 // ours reads a different global before the pool.
 // Round 371: typed slot payload and short counters 88; payload/single exit 88;
 // payload/entry counters 111, with single exit 111. Opening body restored.
+// score 88 (was 88; the 16-bit sum below gives 83, under the keep bar): retail adds the participant count and the accepted count
+// in 16 bits, and it builds the joint pointer in the entry block, so the
+// element pool data dies in ECX and only three registers are pushed; ours
+// sinks that pointer past the loop head, keeps the data in EBP and pushes
+// four. Retail also zeroes the accepted counter at the top of the frame and
+// has two separate returns where ours shares one epilogue.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {

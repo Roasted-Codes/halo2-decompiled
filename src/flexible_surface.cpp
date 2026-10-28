@@ -110,7 +110,7 @@ void function_118140(long);
 void __stdcall function_118430(long);
 void function_117080(long);
 
-// score 50 (was 54): retail adds the pool data to the record offset before the store (`add eax, edx`),
+// score 50 (was 50): retail adds the pool data to the record offset before the store (`add eax, edx`),
 // reloads the pool after the `lea` of the next index, and gives the inlined next-index search other
 // registers (result edx, count edi, bitmap esi). Pool read directly at each use as in 0x1160c0 54 (reload
 // now after the `lea` as retail); with typed record arithmetic 54; with no slot local 54; with record and
@@ -121,6 +121,11 @@ void function_117080(long);
 // Round 268: explicit search result 50; unsigned slot 50; word slot 51; unsigned
 // datum handle 50; explicit search result with those three carriers 50/51/50;
 // shared out-of-line datum conversion 102. All original helper and field reads restored.
+// Round 270: native iterator called/inline 89, with CRT scalar clear 89; called/called
+// 124, with CRT 121; inline/inline 89, with CRT 89; original traversal with CRT
+// scalar clear 76, unsigned slot 76. All restored; record-address and search homes remain.
+// Coupled pool/datum/absolute-slot identities, seven subsets and entry-slot lifetime
+// on the complete role-name graph: 50/50/50/50/50/50/50/50. Original body restored.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -294,7 +299,11 @@ void function_117510(long index)
 		if (surface_normalize(&vertices[i].normal) == 0.0f) vertices[i].normal = *g_4687a8;
 }
 
-// score 139 (was 154): frame 0x1c agrees; link/endpoint carriers, split pin test and correction scheduling differ.
+// score 139 (was 154): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.
+// Shared difference 154; vertex base 155; distinct correction 161, with shared difference 161;
+// both shared scales 154, with difference 154; early rest square 155; all producers/lifetimes 162.
+// All executable forms restored.
+// frame 0x1c agrees; link/endpoint carriers, split pin test and correction scheduling differ.
 // Shared difference/scales 154; vertex base 155; distinct correction 161, with difference 161;
 // early rest square 155; all producer/correction forms 162. Endpoint short snapshots forward 176,
 // reverse 139; extended long 183 in either order; shared pin helper ties each form.
@@ -344,7 +353,7 @@ void __stdcall function_117790(long index)
 	}
 }
 
-// score 67 (was 81): the pool data base sits in ebp where retail has ebx; the shared difference helper gives
+// score 67 (was 67): the pool data base sits in ebp where retail has ebx; the shared difference helper gives
 // another origin/delta schedule, and the attachment walk and copy registers still differ. Earlier: the first loop
 // entered by a jump where retail falls through. Attachment element pointer 103 (retail's walk and reloads, but
 // the copy's registers rotate and the pinned OR splits into load/or/store, 521 bytes); with a vertex local for
@@ -354,6 +363,9 @@ void __stdcall function_117790(long index)
 // vertex-array base 67 kept; loop-lifetime attachment cursor 90; attachment array base 75; aggregate delta
 // with the array base 83; length helper on the best form 83; correction-only difference helper 83;
 // direct vertex reads through the attachment base 91; entry velocity declaration 67.
+// Complete squared displacement terms 81; point/vector/marker role identities 67; both 81;
+// native word attachment ordinal 96; with squares/roles/both 105/96/105; complete graph
+// with displacement declared before point acquisition 105. Original executable body restored.
 // @retail 0x117a80
 void function_117a80(long index)
 {
@@ -454,12 +466,16 @@ void function_117dd0(long index, vector3f *wind)
 	wind->i = (real)(g_55ecd4.i * strength); wind->j = (real)(g_55ecd4.j * strength); wind->k = (real)(g_55ecd4.k * strength);
 }
 
-// score 109 (was 109): frame 0x48 agrees; normal.j versus normal.k cursor and weight/vector scheduling differ.
+// score 109 (was 109): the loop's vertex cursor points at the normal's j (retail: k), so the dot product,
+// frame 0x48 agrees; normal.j versus normal.k cursor and weight/vector scheduling differ.
 // tangent and position sums load and schedule in another order; retail adds the acceleration and the force
 // as first operands. Weights stored after the acceleration (retail stores them first, with the current
 // weight above the previous). Tried: dot sums i,j,k / k,i,j / j,k,i 109 each; dot3f either argument order
 // 117 (744 bytes); weights before the acceleration 109; previous weight declared first 113, before the
 // acceleration 113; current weight renamed 109; acceleration and force as first addends 116 (744 bytes).
+// Shared tangent scale 109; previous point first 122; outer vertex declaration 109; native scaling loop
+// 120; scale helper/previous first 122; native additions 116; scaling/additions 154, with helper 151.
+// All restored.
 // Complete late normal snapshot 189; with symmetric displacement 226, direct drag field 194, both 186;
 // early normal snapshot 192, with displacement 225, direct drag 194, both 186. Snapshots grow the frame.
 // @retail 0x118140

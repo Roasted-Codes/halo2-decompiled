@@ -1043,6 +1043,10 @@ struct s_item_flags_view_10b850
 // Round 373: Reused scalar axis components in ijk order, with sine/cosine/both
 // snapshots 850/894/879/909; kji axis input order with the same four forms
 // 864/845/879/909. Frame remains 0x154; all original helpers and body restored.
+// Round 159: Native attachment fields 813; step field at each use and with attachment fields 893/893;
+// named bounce coefficient and with attachment fields 887/887; step/coefficient and all three 893/893;
+// direct bound selection 813. Native collision location/object-node/material/all layouts 887/863/859/894.
+// All restored. Coefficient and collision layouts reach frame 0x148 without an eligible gain.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
