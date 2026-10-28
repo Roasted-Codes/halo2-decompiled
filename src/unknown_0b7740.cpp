@@ -1148,6 +1148,13 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // at retail's 1394 bytes (left: the esi reload and the g_4e0300 reload; match-only, a one-caller helper);
 // on that, the helper plain inline 222, taking the pool 222, a pool local shared with the current-object
 // lookup 323, the sample mask through an inline address accessor 222, mirrored flag before it 223.
+// Round 150 (fast): this file is /Ob1, so retail's inline parent lookup in the no-model branch is an
+// inline-marked accessor, not 0xb8bd0; retail's render branch keeps the table data in EDI across the
+// 0xb8bd0 call while the no-model branch re-reads it through the pool in ECX. Sample mask typed as the
+// bit vector 234; the empty test through a non-const view 234; render index declared before the model
+// 234; a pool local in the no-model branch 234; the parent read through the entry header pointer 385
+// (1394 bytes; not a real form). The ESI reload after 0xbfed0 is the reverse of 0x14a8e0's case, where
+// retail reuses ESI after a register-argument call that ours re-forms.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {

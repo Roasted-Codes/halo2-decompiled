@@ -1088,6 +1088,13 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // On that lead: `(bool)` returns 349; one value return only 373; `if (!(c)) return false` 349;
 // nested body with final `return true` 362; shared `return false` after an if/else 361;
 // single-exit result 376; explicit y-first side expressions 358.
+// Round 150 (fast): the lead rebuilt (`<=` length test, dot_product2d sides second first, if-form clamps,
+// `>=` side test, both finals `return a < b;`) 339 at 1467 bytes, aligned 13. Its first difference: in both
+// side normalizations ours loads x before the magnitude test and scales it in place (`x * inverse`, no
+// else-arm load) where retail scales `inverse * x[mem]` and loads x in the else arm, as it does in the
+// direction's normalization. On the lead: side directions through normalize_local2d_2c (both/first only)
+// or normalize2d_fast 339/339/339 (identical code); finals as `c ? true : false` 349 (1465 bytes, AL
+// returns but the true block back at the end); first side computed first 354; first clamp first 353.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
