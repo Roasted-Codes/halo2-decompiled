@@ -74,7 +74,13 @@ extern real g_4c9798[36];
 // one-case switch 295; origin/direction references at entry 300.
 // Round 60: maximum width/height written through pointers by an inline helper 295; flag test as
 // a shifted bool, its negated-bool and its compare-with-zero spellings 311/337/295; offset as a
-// ternary 309.
+// ternary 309. Round 103: retail stores 0.0 to a frame slot at entry and loads it as the border's
+// else value: `real border = 0.0f;` at the top (or after the distance/offset) with `if (mode > 0)
+// border = ...` reproduces those entry stores and holds matrix in one register as retail does, but
+// 318 (1489; aligned 223 -> 214), with the origin reference at entry 318, declared after the mode
+// 314. Ours keeps size and aspect in xmm registers across the 0x48e70
+// calls where retail reloads them; the tag test's constant 1 (ecx, reused for mode = 1) puts the state
+// record in esi where retail tests with movsx/dec and passes it in ecx.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

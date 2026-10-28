@@ -2666,7 +2666,7 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 114 (was 135): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
+// score 114 (was 114): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
 // retail stages them (the reduced image stages them as retail), and the getters keep the fixed byte
 // and zero-vector pointer in other registers.
 // Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
@@ -2716,7 +2716,11 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // bitfield too (retail's form there as well) 168, alone 174, while the entry saves are staged
 // differently (reduced image with both: aligned 37). Retail reloads g_4687a4 after the linear copy's
 // stores, as if its address were taken somewhere; ours never takes it. The change vector as a brace
-// initializer 114; its zeros chained 114.
+// initializer 114; its zeros chained 114. Round 103 (fast, reduced 92): nested entry tests 92; the
+// kind test as an empty then-arm 92; the type mask as (1 << 1) 92; the flag test as !(x & 4) 92; the
+// change's k component first 99. No function of the linked file is on this function's direct call chain
+// in our image, and its frame-aligning callees align themselves, so the entry staging is not a callee's
+// stack-alignment request.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
