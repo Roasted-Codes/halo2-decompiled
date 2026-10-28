@@ -1103,6 +1103,10 @@ struct s_looping_promotion_table
 // Element/definition registers, class-load position and curve widening remain.
 // Word flag bitfield with byte-cast class: bool curve/direct or shared lookup 52/52, short curve 49/49;
 // with signed class member, bool curve 52/52 and short curve 49/49. Three-point gain at 286 bytes restored.
+// Native iterator index plus early one-use short class input, bool curve
+// with bitfield/word publication 30/30; short curve 42/42; force-inline
+// getter combinations 30/30/42/42. Class snapshot unmatched, restored.
+// Element/class carriers and pre-provider widening still differ.
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {
@@ -1130,7 +1134,7 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	}
 }
 
-// score 25 (was 35): the state load is folded before the element pointer is formed and the
+// score 25 (was 25): the state load is folded before the element pointer is formed and the
 // final looping store is scheduled early;
 // pool at each use 66; count declared first 66; count renamed 66; state guard 66;
 // plain for 66; iterator record 66; count-first iterator record 66; flag mask 66;
@@ -1143,6 +1147,9 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 // canonical iterator continue 35; curve after endpoints 35; computed endpoint first 35;
 // native word flag store 35; native word flag test/store 25, plain confirmed at 207/210 bytes.
 // Element/state fold and early flag store remain.
+// Native iterator-index receiver: word mask/shifted bool/bitfield/zero-first
+// 25/35/35/30; the same with force-inline getter 25/35/35/30.
+// Element formation and final flag-store schedule remain.
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {

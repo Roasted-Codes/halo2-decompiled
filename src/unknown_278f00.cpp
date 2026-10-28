@@ -133,6 +133,9 @@ bool function_a7670(long object_index);
 // Round 24: shared processing ordinal 183; island membership ordinal 181; both at function
 // scope 183; eager second scan 181; eager first/both scans 259/259; staged category 259;
 // direct body-pointer countdown 237. Original restored.
+// Round 244: twice-used pending-field pointer, with original/immutable-count/early-count/
+// found-first lifetimes 181/181/181/274; field-reference counterparts
+// 181/181/181/274. Original field observations, count and flag order restored.
 // Round 206: Chained initial list-count/list-and-retry resets, with separate/chained retry resets
 // [181, 273, 181, 273]; flat entry rejection on the same four graphs [181, 273, 181, 273]. All restored.
 // @retail 0x278f00

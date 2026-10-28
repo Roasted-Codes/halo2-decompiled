@@ -201,6 +201,9 @@ long function_1bc5d0(long actor_index, long ignore_index)
 // This round: seat-list helper with union/direct count 11/11; separate
 // remaining post/pre-decrement 10/10; count-output snapshot/reread 2/2;
 // split/guard count assignment 2/2.
+// Complete seat snapshot with bool/byte/short/long wanted 45/45/78/80;
+// two-use object/seat inputs with those widths 9/9/66/68.
+// Counter-store and cursor-address scheduling remain.
 // @retail 0x1bc6d0
 short __stdcall function_1bc6d0(long actor_index)
 {

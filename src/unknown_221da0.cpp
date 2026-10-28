@@ -824,6 +824,8 @@ real function_18cac0(long arg_0);
 // names with all three 155. Original executable body restored.
 // Round 370: consistent camera-provider observations with native table, default-first side and
 // after-clear structure interactions 253/253/270/269/253/253/270/269; restored.
+// Selected-mask address on shared membership with final-array ownership, consistent audibility
+// and native real storage: 266/266/260/260/263/263/266/266; exact-only pointer forms restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

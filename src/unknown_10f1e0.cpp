@@ -1648,7 +1648,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 805 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// score 805 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
 // computes the centred test once with x87 fabs before the blend block, copies the default angles as a
@@ -1694,6 +1694,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // 805 each (all compile to (x + 1) * 0.5; retail multiplies first); overlay loop as a for 875 (3338
 // bytes: the first 0x11df30 is then inlined as in retail, 0x1cb490 still inlined in the loop);
 // `++i < 3` / short index 805/805; `active` declared at the top of the aiming block 805.
+// Complementary activity across both aim stages, bool/byte/signed-byte/short at the
+// original declaration 850/850/850/824; constant entry initialization 850/850/850/836.
+// Original activity, input snapshots, helper boundaries and all smoothing values restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2672,6 +2675,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // score 155 (was 155): frame 0x3c versus 0x38; action/decision homes, input carrier roles and
 // call materialization remain. The action query now matches, but its returned-pointer test
 // grows the frame to 0x40 on this caller; the original executable body is retained.
+// frame 0x3c versus 0x38; the escaped action short has its own
+// aligned slot. The action and seat queries match; returned action-pointer comparison
+// and channel-copy/play argument scheduling still differ.
 // Tried: native channel workspace 139; copy return to play 152; accumulated channel failure 177;
 // unsigned word result 173; short table index 188; dword channel backing 152; direct copy chain 152;
 // mode at use 196 (frame 56); repeated table index 152; mode after animation 157; direct action
@@ -2689,6 +2695,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Returned action query with Boolean-result/copy-boundary/direct-return combinations
 // 196/207/198/209/200/200/202/202; three-field decision records 198/212/220 (exact-only, discarded);
 // returned query with entry result/result-and-force/result-and-action homes 200/200/200.
+// Complementary success/overlay decisions, individually and together with native widths
+// and constant entry initialization: 207/198/207/207/207/207/215/207; restored.
+// Unchanged reduced control 198/684 differs from full 155/668; original code retained.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
