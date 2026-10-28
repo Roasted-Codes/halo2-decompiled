@@ -74,6 +74,9 @@ real normalize2d(point2f *arg_0);
 // Round 240: Complete final offset through the existing shared scaler 258; with
 // radius first/copied point inputs/both 258/259/259; entry point storage alone/
 // with radius/with copied inputs/all 256/256/259/259. Original body restored.
+// Round 249: Native object receiver retaining output access with original/early radius
+// and aggregate/CRT center copies 220/215/220/215; all four with read-only actor
+// 220/215/220/215. Five-point radius lead below gate; original body restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

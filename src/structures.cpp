@@ -304,6 +304,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // vertex fetches as one && chain with the triangle test 257 (677 bytes); vertex helper taking the
 // block, read once per triangle 238; vertex getter returning the point or NULL 255; nested ifs in
 // place of the continues 185 (same code), with the result in the loop test 221.
+// Round 249: Complete pointer/lower/upper eligibility exits in all six orders
+// 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
+// defined-failure helper and complete query restored; BSP/section homes remain.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
