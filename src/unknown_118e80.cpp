@@ -103,6 +103,8 @@ PRIVATE __forceinline void forward_flags_set(s_forward_flags *flags, word mask, 
 		flags->value &= ~mask;
 }
 
+__declspec(noinline) void function_118fe0(long object_index, bool enabled);
+
 // @retail 0x118fe0
 void function_118fe0(long object_index, bool enabled)
 {
