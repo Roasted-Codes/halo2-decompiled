@@ -824,7 +824,6 @@ public:
 	virtual long count() = 0;
 	virtual long const *names() = 0;
 };
-
 // score 292 (was 292): frame 0x60, 1372 bytes against 1355. Left: our entry stores a `result`
 // slot (retail has none and returns `xor eax, eax` / `mov eax, 1` from the bool expression);
 // ours merges the flag-9 word update with the flag-8 clear (retail stores the word, clears flag 8
@@ -888,6 +887,10 @@ public:
 // [292, 366, 361, 366]; with word-pointer/bit-five flag idiom [359, 369, 359, 369]. Original result and flags restored.
 // Round 232: four complete positive/negative factor orders, direct or all six
 // products staged before output, 292 each. Original two-use helper restored.
+// Round 214: Direct selector/for-owned child handle/both 292 each; tint at the color-call
+// expression, alone/with selector/with child-for/with both, 288 each (four-point gains rejected).
+// All three with Boolean completion storage 344. Original body and every call restored;
+// entry result/flag publication and child/tint homes remain.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

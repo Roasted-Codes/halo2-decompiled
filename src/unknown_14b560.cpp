@@ -2123,7 +2123,6 @@ static __forceinline long player_round_ticks(real value)
     __asm { fistp result }
     return result;
 }
-
 // score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion remain.
 // frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
 // Frame 0x4c versus 0x74; request/pointer homes and selective expansion remain.
@@ -2144,6 +2143,10 @@ static __forceinline long player_round_ticks(real value)
 // inlined candidate pointer 708; two request workspaces 804; permuter 697 but a false match
 // (swapped callee arguments and byte/short volatile type stores, all wrong against retail),
 // its neutral remainder 701. Original body kept.
+// Round 214: Shared rounding 735; complete lunge/movement/both squared results 701 each;
+// shared rounding with either/both squared results and the renamed request 735 each.
+// Native view-helper input with two-use latch/view player receivers 700 (one-point gain rejected).
+// Original helper, complete body and includes restored; frame 0x4c/0x74 and call expansion remain.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {

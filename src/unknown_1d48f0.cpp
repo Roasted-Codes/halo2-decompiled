@@ -153,6 +153,9 @@ const dword g_455978[81] = {
 // Round 232: shared affine candidate alone/radius/blend/both 306 each;
 // with planar normalization on the same four graphs 307/307/307/304.
 // Two-point gain rejected; original producers and all helper contracts restored.
+// Round 214: Endpoint home alone/with sample/with radial/with both direction names 306 each;
+// immutable named count alone/with endpoint/with all three/with full ray-query name 306 each.
+// All restored; optional-state, sample/ray homes and selective helper expansion remain.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
