@@ -78,7 +78,8 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
     return (real)sqrt(local_2 * local_2 + local_1 * local_1 + local_0 * local_0);
 }
 
-// score 406 (was 406): table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
+// score 406 (was 406): frame 0x68/0x64, induction/endpoint homes and x87 scheduling differ.
+// Earlier: table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
 // Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
 // squared-distance second point by value 430; conditional table pointer initialization 416.
 // Group-table field at each use 457; native long overall result 445; bounded output for 420; same-group pretested while 416; positive nearest-point scope 416.
@@ -97,6 +98,7 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a
 // long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
 // bit helpers; same code).
+// Round 366: overwritten endpoint initializer removed 417; early group receiver 432; both 440; complete two-leg distance sum 406; with endpoint/receiver/both 417/432/440; all with scoped best-distance default 474. All restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

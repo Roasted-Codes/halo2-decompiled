@@ -496,7 +496,8 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 129 (was 212): Retail length and the mask update agree; retail keeps the previous side in memory
+// score 129 (was 129): aligned frame and stride/prior homes agree; prior-side byte and SIMD homes differ.
+// Earlier: Retail length and the mask update agree; retail keeps the previous side in memory
 // (ours CL across the back edge, one instruction short from the side test on), loads count once into ECX
 // for the scaled index and the guard, and keeps zero in XMM2. Earlier: count/stride/prior homes remained
 // (retail keeps the copy size at +0x18, the previous point at +0x1c and both side flags in memory).
@@ -554,6 +555,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // pointer with signed ordinal 254; false-first entry side with signed/unsigned ordinal 272/246;
 // previous-point lexical name 254; shared copy extent 265; output-mask lexical name with that extent
 // 265. Original declarations, qualifier, ordinal, names and body restored.
+// Round 366: previous-distance carry 156; two-use intersection pointer 129; both 156; shared 2-D difference 129, with distance/pointer/both 156/129/156; joint point cursor 262. All restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

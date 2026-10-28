@@ -3102,7 +3102,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 934 (was 971): Frame 0x2c agrees; capability/save roles and state expansion remain.
+// score 934 (was 934): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
+// Earlier: Frame 0x2c agrees; capability/save roles and state expansion remain.
 // frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
 // eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
@@ -3132,6 +3133,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Round 364: input byte/alpha byte/both 1185/934/980; signed input/alpha/both
 // 1185/934/980; short-input with byte-alpha 935; unsigned-input with byte-alpha 934.
 // Byte alpha selector alone kept plain at 934; its only values remain 4 and 24.
+// Round 366: blend/depth/both indexed state tables 1395/1417/1484; shared sampler 1223; sampler with blend/depth/both tables 1413/1410/1550; all with Boolean capabilities 1448. All restored.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
