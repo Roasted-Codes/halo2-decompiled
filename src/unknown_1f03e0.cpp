@@ -291,23 +291,32 @@ void function_141590(transform4x3f const *in, transform4x3f *out);
 int __fastcall function_142a60(transform4x3f const *a, transform4x3f const *b, transform4x3f *result);
 real function_f5e00(long vehicle_index);
 extern real g_47f05c;
-// score 202 (was 202): Frame 0xc8 versus 0xd4, folded displacement and shape/entry retention remain.
-// Earlier 202 (was 202): frame/displacement materialization and shape/entry retention;
-// float consistency 279; split root result 204; native normal 221; unsigned best 202;
-// integer result 276; scaled difference 203; point helper with height/point views 292.
-// Earlier 202 (was 202): frame 0xc8 versus 0xd4; displacement materialization and shape/entry homes still differ.
-// Unraised origin copy 265; height view with body reloads 275; selection/result names 202;
-// native point copy, enclosing point, entry displacement and read-only records 202 each;
-// size policy 357; existing magnitude boundary 204 (sum-order form not matched).
-// Earlier 202 (was 202): frame 0xc8 versus 0xd4; displacement folding and shape/entry homes remain;
-// separate displacement scalars, reversed scalar order, coordinate names, partial squared sum,
-// squared-distance result and outer scalar scope 202 each; actual point receiver with scalars 311;
-// separate squared components 204.
-// frame 0xc8 versus 0xd4, folded displacement and shape/entry homes remain.
-// Existing ground record 204; world matrix declared at entry 202; inverse/relative in place 244/241;
-// normal value with shape reads 233; selected-entry result 272; best comparison first 201;
-// selected index assigned before alignment 202. One-count comparison gain rejected.
-// Round 356: Transform role names 202; inverse/body/relative declarations 202; names with common scope 202; byte success 282; byte validity 202.
+// score 192 (was 202): frame 0xd0 versus 0xd4; retail keeps the shape in ESI and the count in EBP
+// (index and best in their stack homes, the best dot in XMM7), tests the count once and reads the
+// body index byte at each use.
+// Round 68 (kept): the distance from a center point through vector3d_from_points3d, as the file's
+// matched 0x1f2e60 writes it, 202 -> 192. Leads for the next round, each scored on that form or on
+// the one before it: the shape height read at each use 205 (frame 0xd4 and the shape in ESI as
+// retail); plus the inner test written with a named base height and top as in 0x1f2e60 252 (the
+// inner test then compiles to retail's exact instructions); the sum of the contact height and shape
+// height named before the count test 249 (retail computes it there; frame 0xd8); the body index read
+// at each use 208 (the tail then lines up with retail one line apart), 220/251 on the two forms
+// above; the loop without the `count > 0` wrapper (one count test and retail's push order) 237 on
+// the kept form, 211 on the base-height form, 218 on the height-at-use form; index declared at the
+// top, count declared after the best dot, shape declared after the components 211 each (same code);
+// a call to 0x1f2e60 itself 299 (inlined, but its bool result is materialised; retail inlines a
+// smaller sibling of it here).
+// Earlier: float consistency 279; split root result 204; native normal 221; unsigned best 202;
+// integer result 276; scaled difference 203; point helper with height/point views 292; unraised
+// origin copy 265; height view with body reloads 275; selection/result names 202; native point copy,
+// enclosing point, entry displacement and read-only records 202 each; size policy 357; existing
+// magnitude boundary 204 (sum-order form not matched); separate displacement scalars, reversed
+// scalar order, coordinate names, partial squared sum, squared-distance result and outer scalar
+// scope 202 each; actual point receiver with scalars 311; separate squared components 204; existing
+// ground record 204; world matrix declared at entry 202; inverse/relative in place 244/241; normal
+// value with shape reads 233; selected-entry result 272; best comparison first 201; selected index
+// assigned before alignment 202; transform role names 202; inverse/body/relative declarations 202;
+// names with common scope 202; byte success 282; byte validity 202.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -334,11 +343,13 @@ bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *stat
                 if (contact->point.z + height - 0.001f > contact->point.z)
                 {
                     point3f point = *(point3f *)(entry + 0x1c);
+                    point3f center;
                     vector3f delta;
-                    delta.i = point.x - contact->point.x;
-                    delta.j = point.y - contact->point.y;
-                    delta.k = point.z - (contact->point.z + height);
-                    real distance = (real)sqrt(delta.k * delta.k + delta.j * delta.j + delta.i * delta.i) - height;
+                    center.x = contact->point.x;
+                    center.y = contact->point.y;
+                    center.z = height + contact->point.z;
+                    vector3d_from_points3d(&center, &point, &delta);
+                    real distance = (real)sqrt(delta.i * delta.i + delta.j * delta.j + delta.k * delta.k) - height;
                     valid = PIN(distance, -0.1f, (stepping ? 0.1f : 0.2f)) == distance;
                 }
                 else
@@ -545,7 +556,49 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 	return (arg_0 >> 3) & 1;
 }
 
-// score 182 (was 182): frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
+// score 182 (was 182): frame 0x28 and state/output registers agree; the initial state-dot
+// displacement bytes (retail reads the old up through the ESI address it keeps, ours folds
+// [EDI+0x108]/[EDI+0x104]: the six extra bytes) and the rotation SSE schedule remain.
+// Tried: the state dot through dot3f 262 / through a branch-local pointer 206 (both break caller
+// 0x1e5af0); the rotation dot through shape_dot 182 (same code), through dot3f 248; the plain mode
+// bit test for the one-caller bit helper 299 (breaks 0x1e5af0); the file's contact_cross for the
+// duplicate cross helper 182 (same code; kept, the duplicate removed); repeated up-field reads 182;
+// native old-up 325; function-scope workspaces 195; vector names 195; shared dot helper 248; plain
+// parameters 182; branch-local up pointer 195; cross before trig 247; late limited snapshot 190;
+// cosine first 183; shared cosine scale 241; native settings mask 303; initial-phase up pointer 309;
+// between-trig snapshot 190; early alignment 192; rotation-only snapshot crosses 182; native j/k
+// rotation loop 240; frame pointer 312; depth zero 654; global optimization off 623; trig scalar
+// names 182; shared final normalization length 180 (two-point gain rejected); scaled cross 264;
+// scaled limited input 241; scaled axis projection 267; full component rotation 239; accumulated
+// alignment 245; normalization decision 183; scaled-cross scalars 186; projected-plus-cosine sums
+// 186; ground memcpy 182; limited memcpy 182; separate real components 182; cosine complement 180;
+// separate cross workspaces 182; cosine/complement before sine 181; explicit alignment with
+// complement 182; initial j/k/i products 179/180/179; first-plane subtotal 180; rotation k/j/i
+// products 242/183/237; turn alignment 180; paired jk/ki/ji/all initial products 186/186/187/186;
+// word/long rotation decision 182/182; shared entry cross 182; all shared crosses 182; vector home
+// names on recovered state base 182; rotation publication ijk/ikj/jik/jki/kji 242/241/244/247/244;
+// cross between trig 247; accepted-up library copy 182; deferred k/i results 247; native
+// state/workspace/both array views 182/182/182; native dot/up/orientation/full input fields
+// 182/182/182/182; test-produced rotation 183; inactive/active/both forward output library copies
+// 182/182/182; initial/all snapshot-safe crosses 182/182; ordinary cross inlining 182; both one-use
+// aliases removed 180; fallback axis/default library copies 182/182; initial snapshot with aliases
+// removed 182; all snapshots with fallback copies 182; settings-only/forward-only alias removal
+// 291/291; up-field reference on combined alias removal 195; complementary skip decision
+// bool/byte/short/long 182 each, each with consistent old-up field pointer 309 (losing the caller
+// match); shared initial/rotation alignment workspace 288, with cosine complement, both one-use
+// input aliases removed, or both 183/183/180; common normalization result alone, with complement,
+// with alias removal, or all 183/180/180/288; consistent repeated original-up field
+// pointer/reference before or after settings 309/309 each; active-entry or after ground-up
+// initialization 196/196 each at retail length (the pointer takes a fourth register: state moves
+// to EBX); existing flag predicate forced bool shift/mask, ordinary byte, ordinary bool
+// shift/mask, forced word/long/signed byte 182/182/182/182/182/182/299/182; whole-dot
+// multiplication operands commuted at initial, rotation and limit sites independently, in pairs,
+// all three, then with every rotation product 182/183/182/183/182/183/183/183; the state dot
+// through the file's shape_dot (state vector first or up first) 262/262 (1244 bytes: ESI loads as
+// retail, but j*j comes before k*k and the forward result leaves EBX); the rotation dot as
+// i + j + k with limited first 259 (1249 bytes), with axis first 261 (limited first in each
+// product and k + j + i as retail, but k is computed before j).
+// frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
 // Round 90: the state dot through dot3f 262 / through a branch-local pointer 206 (both break caller 0x1e5af0);
 // the rotation dot through shape_dot 182 (same code), through dot3f 248; the plain mode bit test for the
 // one-caller bit helper 299 (breaks 0x1e5af0); the file's contact_cross for the duplicate cross helper 182
@@ -1333,26 +1386,30 @@ bool function_1f2250(vector3f const *velocity, byte const *request, vector3f con
 real function_1201a0(vector3f *vector, vector3f const *fallback);
 bool havok_component_any_rigid_body_active(s_havok_component *component);
 
-// score 230 (was 230): Frame 0x28 agrees; zero-load width, reset/selection homes and material-call expansion remain.
-// Earlier: zero-load width, reset/selection lifetimes and material-call expansion;
-// float consistency 392; native normal 368; current supported long 261; current flag long 361;
-// unsupported-first with original magnitude 258; native movement input 284.
-// Earlier: double-width zero load, reset/selection homes and second material-call expansion still differ.
-// Combined eligibility 240; per-contact body-velocity snapshot 346; highest reduction after selection 258;
-// approach at use 351; surface output at entry 230.
-// Earlier: Frame 0x28 agrees; zero width, reset/selection homes and material-call expansion remain. Preservation arm first 288; entry score storage 230; shared squared length with double comparison 230; byte current flag 240; byte current supported 239 (fast).
-// Earlier: zero-load width, reset/selection homes and second material-call expansion remain.
-// Library history resets 238; contact-base field reference 235; unsigned selected ordinal 230;
-// native saved predicates at original magnitude 298; preservation predicate at dispatch 382.
-// Earlier: Frame 0x28 agrees; real-zero load, reset/selection homes and second material-call
-// expansion remain. Native component 230; flag after supported 355; long moving 300; long saved supported
-// 293; long saved flag 296 (fast).
-// Earlier: frame 0x28 agrees; zero width, selection homes and material-call expansion
-// remain. Separate inline declaration 230; entry normal workspace 230; unsigned highest 234;
-// native-long flying 306; final cleanup exit 230; normal/ordinal combination 232 (fast).
-// Signed-word moving/saved-supported/saved-flag/current-supported/current-flag 298/283/295/272/351.
-// Round 193: Component/component+contact/velocity/contact+velocity/component+velocity/all
-// fields at use; all with real magnitude; component root plus shared squared length: 460/404/334/336/501/540/540/460. Original restored.
+// score 230 (was 230): Frame 0x28 agrees; zero-load width, reset/selection homes and material-call
+// expansion remain. Our build inlines 0x1f1df0 at the second call (after 0x1f2250) where retail
+// calls it at both sites; retail also lays the not-supported arms of the contact loop out after the
+// first post-loop call block, keeps the supported flag in its stack byte and compares the movement
+// length with a float constant.
+// Tried: float consistency 392; native normal 368; current supported long 261; current flag long 361;
+// unsupported-first with original magnitude 258; native movement input 284; combined eligibility
+// 240; per-contact body-velocity snapshot 346; highest reduction after selection 258; approach at
+// use 351; surface output at entry 230; preservation arm first 288; entry score storage 230; shared
+// squared length with double comparison 230; byte current flag 240; byte current supported 239;
+// library history resets 238; contact-base field reference 235; unsigned selected ordinal 230;
+// native saved predicates at original magnitude 298; preservation predicate at dispatch 382; native
+// component 230; flag after supported 355; long moving 300; long saved supported 293; long saved
+// flag 296; separate inline declaration 230; entry normal workspace 230; unsigned highest 234;
+// native-long flying 306; final cleanup exit 230; normal/ordinal combination 232; signed-word
+// moving/saved-supported/saved-flag/current-supported/current-flag 298/283/295/272/351;
+// component/component+contact/velocity/contact+velocity/component+velocity/all fields at use, all
+// with real magnitude, component root plus shared squared length 460/404/334/336/501/540/540/460;
+// the movement length as `real` 233 (float constant as retail, first difference moves to +0x8b);
+// with the two NONE locals declared before the unknown70 store 283; with the contact list read
+// from the component field in the loop 234 (loaded after the count guard as retail), with dot3f
+// for the two contact dots 234 (same code: VC swaps the first two terms either way); with a
+// separate `__declspec(noinline)` declaration of 0x1f1df0 297 (1005 bytes: both calls out of line
+// as retail, 0x1f1df0 still matches; the arm layout and the supported flag's home are what remain).
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

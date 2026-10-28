@@ -881,6 +881,9 @@ public:
 // declared before pose 327; predicates with parent color 333; direct result with
 // predicates 357, reversed 361, with color 374, entry predicates/color 374. All
 // eight match-only capture forms restored; early result/flag stores and child/tint homes remain.
+// Round 24: scoped flags 292; plus direct Boolean result 356; plus early parent color 355;
+// plus function-entry tint 355; word-pointer flags instead 354; ordinary parent instead 344;
+// long tint instead 364; without parent color 353. Original restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

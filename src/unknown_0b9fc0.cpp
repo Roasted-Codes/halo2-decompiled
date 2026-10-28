@@ -230,6 +230,9 @@ PRIVATE void machine_release_rigid_bodies(long machine_index);
 // Round 270: native object-bit pointer/reference receivers 93/93; either with later
 // reset 93; either with default-first policy 91 (first +0x7f), with both 92. All
 // eight restored, including the named real bitfield type; initial carriers and merged clears remain.
+// Round 208: early policy declaration 81; descending configured cases 81; both 81;
+// comparison mapping with one short observation/direct fields 132/132; natural portal admission
+// and shared publication 150; with early policy 150; with direct configured comparisons 160.
 // @retail 0x115020
 void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine)
 {
@@ -576,6 +579,8 @@ bool __stdcall function_1152e0(long machine_index)
 // result/count/found 41; result/count/structure/found 56.
 // Entry index/end/both declarations 41/41/41; word/long result 61/60; bound fields at use 41; plain
 // ordinal 100, with long result 98. All restored.
+// Portal-table/reference-table/both scan bases 56/56/56; paired long/short cluster values
+// 55/73; both bases with long clusters 59; common completion 53, with long clusters 48. All restored.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {
