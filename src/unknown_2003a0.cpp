@@ -1819,6 +1819,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 198: Direct real entry fields 257; palette/area/both lookup field references
 // 284/286/280; consideration palette field reference alone/with palette/area/both
 // lookup references 271/271/273/273. Original value inputs and helper contracts restored.
+// Round 27: lookup/consideration expansion boundaries, ordinary/inline/forced
+// in all eight non-original pairs [546,546,305,546,546,305,462,462]. Original
+// helper bodies and metadata restored; coupled count/best/point homes remain.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
