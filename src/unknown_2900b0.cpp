@@ -263,10 +263,9 @@ PRIVATE __forceinline void copy_point_28f8d0(point3f const *source, point3f *des
 	*destination = *source;
 }
 
-/* the perception's centre: the origin plus every creature's position, averaged */
+/* the perception's centre: every creature's position added to the origin */
 PRIVATE __forceinline void center_update_28f8d0(s_28f8d0 *arg_0)
 {
-	copy_point_28f8d0(g_468788, &arg_0->field_8);
 	arg_0->field_14 = 0;
 	long local_2 = arg_0->field_18;
 	while (local_2 != NONE)
@@ -289,7 +288,12 @@ PRIVATE __forceinline void center_update_28f8d0(s_28f8d0 *arg_0)
 	}
 }
 
-// score 38 (was 38): only the entry differs: retail tests the actor index
+// score 28 (was 38): the entry now tests the actor index against an
+// immediate -1 and the origin copy takes ebp as its temporary, as retail
+// does. What is left is the order of the first loads: ours reads the origin
+// pointer (g_468788) before the actor pool, retail reads the pool, the
+// pool's data and then the origin, and retail's index multiply sits before
+// the copy's first component instead of after it.
 // against an immediate -1 and sets ebp to NONE at the loop head; ours sets
 // ebp to NONE before that first test and reuses it, so the origin copy and
 // the actor pointer take other registers. Check it with its caller 0x1e3b60
@@ -317,7 +321,9 @@ void function_28f8d0(long arg_0)
 	s_28f8d0 *local_0 = (s_28f8d0 *)perception_get(arg_0);
 	if (local_0->field_4 != NONE)
 	{
-		byte *local_1 = (byte *)actor_get(local_0->field_4);
+		byte *base = (byte *)g_4f55f0->data;
+		copy_point_28f8d0(g_468788, &local_0->field_8);
+		byte *local_1 = base + (local_0->field_4 & 0xffff) * sizeof(s_actor_view);
 		center_update_28f8d0(local_0);
 		memset(local_1 + 0x22c, 0, 0xbc);
 		*(long *)(local_1 + 0x26c) = NONE;

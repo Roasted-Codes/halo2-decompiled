@@ -10,6 +10,7 @@ detonation. */
 #include "data_array.h"
 #include "unknown_0259d0.h"
 #include "object_markers.h"
+#include "normalize3d.h"
 #include "object_iterator.h"
 #include "effects.h"
 #include "sound_sources.h"
@@ -353,6 +354,19 @@ bool __stdcall function_fa9a0(long *value)
 }
 
 /* the direction, distance and time to a target in a straight line */
+// score 87 (was 87): normalizer result lifetime moves the zero carrier before EBP and delays ESI; retail has separate zero/fallback tails.
+// Shared point producer 81; shared inline normalize 84; shared scale-normalize 86;
+// point producer with those normalizers 78/80; conditional seconds with private/inline/scale
+// normalization 80/80/83. Shared arithmetic regrouping is exact-match-only; restored.
+// Same-arithmetic private normalizer: one magnitude exit 86; separate result 93;
+// native failure guard 87; direct complete-vector output with those 122/116/122,
+// alone 122; one magnitude exit with local home names 86. Restored.
+// Complete setters: input 81; output 87; fallback 90; fallback/output 114;
+// input/output 70 (plain 70, three caller matches lost); all 104; complete
+// time arms with output/all setters 100/118. Native point/output 70; with late
+// time/full arms/conditional time 94/95/70; input/output late/entry time 94/96;
+// native point/output entry time 96; input setter/library output copy 81.
+// The 70 forms change input registers; 81 gains only six. All restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -381,12 +395,19 @@ bool function_fa580(real speed, point3f const *origin, point3f const *target, ve
 }
 
 /* the rotation a spinning projectile makes each tick */
-// score 3 (was 16): the flag OR/store crosses the angle duplicate and first
+// score 3 (was 3): the flag OR/store crosses the angle duplicate and first
 // axis load differently. Forced inline, speed/axis/angle declarations, the
 // first-product order and *= no change; shared normalize 14; j+(k+i) 14;
 // k+(j+i) 18; j+k+i 10; direct first reciprocal with inverse before 18,
 // without inverse 40, after first 3; flag before angle 22; sine before axis 3;
-// axis before flag 32; axis memcpy 3; named flags 3.
+// axis before flag 32; axis memcpy 3; named flags 3. Retail's order is VC's
+// when some local's address escapes (the axis load then waits for the flag
+// store). Axis after sine/cosine 21; axis by components 71; double angle 3;
+// named sine/cosine 3; dword OR 3; helper reading its parameter through its
+// address 11 (flag order right, copy-in wrong).
+// Further forms: shared output setter 81; shared input setter 68; both setters 90;
+// complete normalizer input snapshots 163, with output/both setters 147/125;
+// all squared terms named 3; plain array-index input copy 68.
 // @retail 0xfbd40
 void function_fbd40(long projectile_index)
 {
@@ -565,21 +586,36 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
-// score 69 (was 69): Material index/pointer and response cursor registers differ; both aligned loop entries are missing.
+// score 34 (was 34): word input, material-pointer formation and ordinal/loop entries still differ.
+// Prior: Input index load width, loop entry alignment and response cursor calculation differ.
 // Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
 // direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
 // native current ancestry index 69; entry result/current index 67.
+// Native table-end traversal: cached count / result-gated 54/36, relational 54/36;
+// per-use count 60/65/60/65; result-gated ordinal 57/55, nullable material 57/55;
+// indexed producer/result-first/current-short combinations 58/56/58/56;
+// direct table bound 36, with result first 34; without unused parameter reference 49/49.
+// Kept direct table bound/result-first 34 (147/145 bytes), plain confirmed;
+// input index width, loop entries and cursor arithmetic remain.
+// Short ancestry with direct endpoint 34; positive ordinal/body cursor 49; unguarded ordinal 55;
+// positive while ordinal 49; short ancestry/ordinal 48; per-use count/ordinal 66;
+// multiply-used response base 34; response base/short ancestry 34. Word input and cursor/loop entries remain.
+// Typed material table: cached header endpoint/count once or per-use 34/65; cached header ordinal 49/66;
+// per-use header endpoint 34/71 and ordinal 69/66. Typed parent member does not repair the word input.
+// Result-owned response cursor: endpoint 40, ordinal 39, relational endpoint 40;
+// direct ordinal/endpoint success returns 79/67; result cursor with per-use count
+// ordinal/endpoint 70/73; short ancestry with result ordinal 39. Restored.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
 {
+	s_projectile_material_response *result = NULL;
 	/* retail keeps material_index on the stack */
 	short const *reference = &material_index;
 	long response_count = definition->material_response_count;
 	byte *materials = (byte *)g_4e034c;
-	s_projectile_material_response *result = NULL;
 
-	while (material_index != NONE && material_index >= 0 &&
+	while (!result && material_index != NONE && material_index >= 0 &&
 		material_index < *(long *)(materials + 0x150))
 	{
 		byte *material = *(byte **)(materials + 0x154) + material_index * 0xb4;
@@ -587,19 +623,21 @@ s_projectile_material_response *__stdcall projectile_get_material_response(s_pro
 		if (!material)
 			break;
 
-		s_projectile_material_response *response = (s_projectile_material_response *)definition->material_responses;
-
-		for (long i = 0; i < response_count; i++, response++)
+		if (response_count > 0)
 		{
-			if (response->material_index == material_index)
+			s_projectile_material_response *response = (s_projectile_material_response *)definition->material_responses;
+
+			while (response != (s_projectile_material_response *)definition->material_responses + response_count)
 			{
-				result = response;
-				break;
+				if (response->material_index == material_index)
+				{
+					result = response;
+					break;
+				}
+				++response;
 			}
 		}
 		material_index = *(short *)(material + 8);
-		if (result)
-			return result;
 	}
 	if (!result)
 		result = &g_547660;
@@ -651,6 +689,21 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 }
 
 /* pushes a projectile, and spins it at random by the push's strength */
+// score 69 (was 69): frame 0x10 and retail length agree; impulse EDX/ESI, axis homes and seed carriers differ.
+// Round 196: direct length 95; fraction 114; complete native scale 98; length/fraction 114;
+// length/scale 98; fraction/scale with either length 83 (one-use fraction, restored); shared magnitude/scale 98.
+// Commuted first product with complete scaled vector 69 (kept); in-place, direct-root in-place,
+// and shared magnitude variants 69 each. Existing calls and multiply grouping preserved.
+// Round 212: native linear/angular/both component loops 71/77/79; earlier separate
+// vector declarations alone/linear/angular/both 69/71/77/79; renamed spin vectors 69.
+// Shared linear/angular/both sums 68/63/76; scaled angular sum with/without
+// the linear helper 121/121; complete linear/both/scaled angular outputs 112/130/117.
+// Object receiver at every use with no/linear/angular/both shared sums
+// 155/140/140/114; entry-scope uninitialized vectors with those sums
+// 155/140/140/114. Original object snapshot restored; impulse/seed carriers remain.
+// Shared seed receiver 69; native short/long axis index with complete setter 118/120;
+// selected-axis receiver/setter 112; memcpy axis 69; shared seed with short index,
+// axis receiver or memcpy 130/125/69. Restored.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -663,12 +716,14 @@ void function_fa820(long projectile_index, vector3f const *impulse)
 		projectile->linear_velocity.k += impulse->k;
 
 		vector3f axis = g_4417f0[random_index(&g_4e7408->unknown0, 1026)];
-		real spin = (real)sqrt(length_sq3f(impulse)) * function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) *
+		real spin = function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) * (real)sqrt(length_sq3f(impulse)) *
 			1.5707964f;
 
-		projectile->angular_velocity.i += spin * axis.i;
-		projectile->angular_velocity.j += spin * axis.j;
-		projectile->angular_velocity.k += axis.k * spin;
+		vector3f rotation;
+		vector3f_scale(&axis, spin, &rotation);
+		projectile->angular_velocity.i += rotation.i;
+		projectile->angular_velocity.j += rotation.j;
+		projectile->angular_velocity.k += rotation.k;
 		function_fbd40(projectile_index);
 		function_b9b90(projectile_index, false);
 	}
@@ -806,6 +861,14 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // Native real fields 72; named flag stores 72; conditional seconds 73; entry seconds 128;
 // seconds-first product 72; direct maximum reads 72; direct definition reads 219;
 // native fields/conditional seconds 73.
+// Two-use parent owner after its native type guard 72; with chained child zero
+// stores 74, named flags 72/74, complete seconds arms 73/75/73/75. Restored.
+// Early attachment counter 109; native while cursor 72; both 109; parent declaration
+// at entry 72; parent/tag names 72; incoming operand names 72; all-use parent
+// observations 72; those with early counter 109. Restored.
+// Separate parent type admission 72; separate type/owner/state admissions 72;
+// native parent mask named at its computation 72; scan-scoped child receiver 72;
+// receiver with those parent tests/mask 72/72/72; receiver/named reciprocal 72. Restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)
@@ -872,38 +935,28 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 237 (was 266): retail passes the time-scale pointer on the stack and takes only the
-// target (eax), origin (ecx) and direction (esi) in registers (`ret 0x2c`); ours also takes the
-// time scale in edx. Retail loads the gravity pointer into edx at entry, keeps the distance output
-// in edi from entry (ours the forced-speed pointer) and rounds the horizontal length to a float
-// before the gravity tests; ours loads the pointer into ebx and keeps the length on the x87 stack,
-// computing it after those tests. Retail evaluates the horizontal root in the entry block and
-// divides by two_a twice in x87; ours multiplies by one SSE reciprocal of two_a.
-// Tried: the high-arc flag or the time-scale pointer read once through its address 266/269;
-// horizontal tests with the constant first 266; the horizontal length computed after the gravity
-// value 266; the gravity operands swapped 266; result flag declared first 275 (frame 0x30);
-// optimal-time root with a double -1.0 244 (a final qword multiply where retail loads a dword
-// -1.0 first); t2 root without its float cast 266; horizontal through magnitude2d 272; gravity
-// computed first 266; the forced-speed test as `if (!forced_speed)` first 237 (kept, 983 bytes);
-// with the forced speed as a ternary 266; delta.k after the gravity product 236.
-// retail passes the time-scale pointer on the stack and takes only the
-// target (eax), origin (ecx) and direction (esi) in registers; ours also takes the time scale in
-// edx. Retail loads the gravity pointer into edx at entry and rounds the horizontal length to a
-// float before the gravity tests; ours loads the pointer into ebx and keeps the length on the
-// x87 stack, computing it after those tests. Tried: the high-arc flag or the time-scale pointer
-// read once through its address 266/269; horizontal tests with the constant first 266; the
-// horizontal length computed after the gravity value 266; the gravity operands swapped 266.
-// retail takes target/origin/direction in EAX/ECX/ESI and the time-scale pointer on
-// the stack (`ret 0x2c`); ours also takes it in EDX (retail's EDX holds the gravity pointer at entry and EDI
-// the distance output; ours keeps the forced-speed pointer in EDI). Retail evaluates the horizontal root in
-// the entry block and divides by two_a twice in x87; ours sinks the root below the gravity tests and
-// multiplies by one SSE reciprocal of two_a.
-// Tried: gravity product operands swapped 266; result flag declared first 275 (frame 0x30); optimal-time
-// root with a double -1.0 244 (no reciprocal, but a final qword multiply where retail loads a dword -1.0
-// first); t2 root without its float cast 266; horizontal through magnitude2d 272.
-// Round 31: the time scale read once into a value (`time_scale ? *time_scale : 0.0f`) 262, time scale still in
-// EDX (0xfa6a0 34 -> 35); retail keeps the distance output in EDI from entry and reads the forced speed and
-// time scale from the stack at their uses.
+// score 244 (was 244): the convention now agrees with retail (target EAX, origin ECX, direction
+// ESI, the rest on the stack, `ret 0x2c`): the forced-speed and time-scale pointers are each read
+// once through their addresses, which keeps them on the stack as retail reads them at their uses
+// and matches the callers 0xfa6a0, 0x1f8100, 0x26f150 and 0x2900b0 (each passed the time scale in
+// EDX before). Still differs: frame 0x28 vs 0x30; retail loads the gravity pointer into EDX at
+// entry and keeps the distance output in EDI from entry (ours: gravity in EBX), rounds the
+// horizontal length to a float before the gravity tests (ours keeps it on the x87 stack and
+// computes it after those tests), evaluates the horizontal root in the entry block and divides by
+// two_a twice in x87 (ours multiplies by one SSE reciprocal of two_a).
+// Tried: the high-arc flag or the time-scale pointer read once through its address 266/269 (round
+// 67: the time-scale pointer alone 244, the forced-speed pointer then takes EDX); horizontal tests with the constant first 266; the
+// horizontal length computed after the gravity value 266; the gravity operands swapped 266;
+// result flag declared first 275 (frame 0x30); optimal-time root with a double -1.0 244 (a final
+// qword multiply where retail loads a dword -1.0 first); t2 root without its float cast 266;
+// horizontal through magnitude2d 272; gravity computed first 266; the forced-speed test as
+// `if (!forced_speed)` first 237 (kept, 983 bytes); with the forced speed as a ternary 266;
+// delta.k after the gravity product 236; the time scale read once into a value (`time_scale ?
+// *time_scale : 0.0f`) 262; both pointers through their addresses 244 (kept, see above), with
+// the forced-speed read before the minimum-speed store 244.
+// Entry velocity workspace 244; reversed entry vector declarations 244; output-first
+// vector names 244/244; shared complete delta producer 245; common result exit 258;
+// that with entry velocity 258; result-first with entry velocity 266 (frame 0x2c). Restored.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -937,12 +990,19 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 
 		if (minimum_speed)
 			*minimum_speed = minimum_speed_value;
-		if (!forced_speed)
+
+		real const *const *forced_speed_reference = &forced_speed;
+		real const *forced = *forced_speed_reference;
+
+		if (!forced)
 		{
+			real const *const *time_scale_reference = &time_scale;
+			real const *scale = *time_scale_reference;
+
 			chosen_speed = speed;
-			if (time_scale && *time_scale > 0.0f)
+			if (scale && *scale > 0.0f)
 			{
-				real t = PIN(*time_scale * optimal_time, 0.001f, optimal_time);
+				real t = PIN(*scale * optimal_time, 0.001f, optimal_time);
 				real x = -(distance_squared / (t * t) + t * t * a);
 				real needed = (real)sqrt(b - x);
 
@@ -952,7 +1012,7 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 		}
 		else
 		{
-			chosen_speed = *forced_speed;
+			chosen_speed = *forced;
 		}
 
 		if (chosen_speed >= minimum_speed_value)
@@ -1016,12 +1076,6 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 
 /* aims a projectile of a definition at a target: along an arc for
    projectiles that fall, in a line otherwise */
-// score 34 (was 34): only the two call setups differ. 0xfa1a0 takes the time-scale pointer
-// in edx where retail pushes it, and the 0xfa580 call loads its pushed values through other
-// scratch registers (retail origin eax, speed ecx, direction edx before the pushes).
-// BLOCKED-BY 0xfa1a0 (its own body sets that convention). Tried in 0xfa1a0: gravity first,
-// forced-speed test inverted (0xfa1a0 237), forced speed as a ternary, delta.k after the
-// gravity product: 34 each; both arms here as an if/else with one return 34.
 // @retail 0xfa6a0
 bool function_fa6a0(long definition_index, real const *speed_override, point3f const *origin, point3f const *target,
 	real *unknown2, real const *unknown3, real const *unknown4, bool unknown5, vector3f *direction, real *speed_out,
@@ -1086,6 +1140,15 @@ extern vector3f *g_4687ac;
 
 /* whether a projectile's path to a point hits anything: the line from it,
    and for projectiles with a radius the two lines either side of it */
+// score 163 (was 163): simultaneous offset endpoints recover 757/756 bytes; frame 0x48
+// versus 0x34 and endpoint/query homes still differ. Shared input differences 220;
+// radius at use 224; both 233; simultaneous endpoints 163 plain (kept); endpoints with
+// radius reads 181, plus shared differences 188; shared ray displacement 189, with
+// shared cross product 189; first-ray scope 165, with radius reads 173.
+// Round 212: shared negative radius 173; plain endpoint loop 204; side producer
+// scope 163; negative/loop 204; negative/scope 173; loop/scope and all three 204.
+// Negative with initial-ray scope 175 (frame 0x3c); consistent radius at use with
+// initial scope alone/side scope/endpoint loop 173/173/201. Frame and ray homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1118,24 +1181,28 @@ bool function_fc030(long projectile_index, point3f const *point, s_collision_res
 			side = *g_4687ac;
 
 		point3f start;
+		point3f end;
+		point3f opposite_start;
+		point3f opposite_end;
 		vector3f offset_vector;
 
 		start.x = side.i * radius + origin->x;
 		start.y = side.j * radius + origin->y;
 		start.z = side.k * radius + origin->z;
-		offset_vector.i = side.i * radius + point->x - start.x;
-		offset_vector.j = side.j * radius + point->y - start.y;
-		offset_vector.k = side.k * radius + point->z - start.z;
+		end.x = side.i * radius + point->x;
+		end.y = side.j * radius + point->y;
+		end.z = side.k * radius + point->z;
+		opposite_start.x = (0.0f - radius) * side.i + origin->x;
+		opposite_start.y = side.j * (0.0f - radius) + origin->y;
+		opposite_start.z = side.k * (0.0f - radius) + origin->z;
+		opposite_end.x = (0.0f - radius) * side.i + point->x;
+		opposite_end.y = side.j * (0.0f - radius) + point->y;
+		opposite_end.z = side.k * (0.0f - radius) + point->z;
+		vector3d_from_points3d(&start, &end, &offset_vector);
 		if (function_1697c0(0x4800008, &start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
 			return true;
-
-		start.x = (0.0f - radius) * side.i + origin->x;
-		start.y = side.j * (0.0f - radius) + origin->y;
-		start.z = side.k * (0.0f - radius) + origin->z;
-		offset_vector.i = (0.0f - radius) * side.i + point->x - start.x;
-		offset_vector.j = side.j * (0.0f - radius) + point->y - start.y;
-		offset_vector.k = side.k * (0.0f - radius) + point->z - start.z;
-		if (function_1697c0(0x4800008, &start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
+		vector3d_from_points3d(&opposite_start, &opposite_end, &offset_vector);
+		if (function_1697c0(0x4800008, &opposite_start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
 			return true;
 	}
 	return false;
@@ -1147,12 +1214,17 @@ long function_189fe0(s_sound_request const *request, long tag_index);
 
 /* the effects and sounds of an effects block (a material's response) at
    a point */
-// score 4 (was 19): only the register arguments of the 0xfd740 call differ (retail
+// score 4 (was 4): only the register arguments of the 0xfd740 call differ (retail
 // passes the first sound in esi, the second effect in ecx, the second sound in edi
 // and the third effect in edx; ours ebx/edi/esi/edx), set by that callee's own body.
 // BLOCKED-BY 0xfd740. NUMBEROF loop bounds 17; parameter defaults in the effects
 // file's order 14; request filled in 0x1895f0's order 10; scale and audible bits
 // before the rest 4.
+// Coordinated selector output-parameter orders (original roles 0..5): 024135/042135 3;
+// 024315/042315/014325/032145 4; 041235/021435 3. Definition and both
+// callers changed together; every order restored because gains are at most one.
+// Caller body: separate unsigned ordinals 4; array names/order combinations 4/4/4;
+// both plain pointer walks with array names/order combinations 114/114/114/114.
 // @retail 0xfcea0
 void function_fcea0(long effects_index, point3f const *point, vector3f const *direction,
 	s_effect_owner const *owner, long index, vector3f const *normal)
@@ -1218,10 +1290,23 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 
 /* a projectile's detonation effects and sounds at a point, attached to an
    object's node when it stuck to one */
+// score 115 (was 115): frame 0x150 and extent agree; point EBX/EDI, zero lifetime and selector call registers differ.
+// Round 196: array-size bounds, unsigned shared ordinal and distinct unsigned ordinals 148 each;
+// word index 115; long node 148; both widths 115 (kept); both widths with array bounds
+// or separate ordinals 115 each. Every declaration coordinated; original loop bodies retained.
+// Round 212: chained defaults 119; early loop ordinal 188; outer effect storage 153;
+// defaults/ordinal 187; defaults/storage 157; ordinal/storage and all three 206;
+// aggregate defaults with ordinal/storage 206. Native zero and point lifetimes remain.
+// Existing request builder 251; direct spatial output 201; builder with point snapshot 250;
+// point/direction/both snapshots 195/210/235; defaults before markers 189;
+// matched sibling request-store order 120. Original body and all call roles restored.
+// Attachment bitfield/word/complete conditional results 190/188/192; attachment/all
+// overrides after selector 121/176; bitfield/complete conditional attachment after
+// selector 163/179; all overrides with word result after selector 175. Restored.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
-	point3f const *point, vector3f const *normal, long index, bool attached, long object_index,
-	short node_index, bool alternate)
+	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
+	long node_index, bool alternate)
 {
 	byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 	long sounds[3];
@@ -1333,6 +1418,11 @@ PRIVATE inline long projectile_object_root(long object_index)
 /* the projectile type's new callback: its target, lifetime, range,
    attachment, starting velocity and spin, whether it starts under water,
    and the seat flags of the unit that fired it */
+// score 360 (was 371): first +6 is pool/input register allocation; the speed update
+// remains a call where the surrounding code expands it, and the body is 85 bytes short.
+// Native flag tests 380; complete water result 375; both 380; plain velocity-component
+// loop 364 fast, 360 plain (kept); loop/flags 381; loop/water 364; all three 381;
+// chained target initialization with all three 381. Unchanged reduced control 375.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
@@ -1392,9 +1482,8 @@ bool __stdcall function_f8200(long projectile_index, byte const *data, long unus
 	real speed = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
 	vector3f *forward = (vector3f *)((byte *)projectile + 0x70);
 
-	projectile->linear_velocity.i += forward->i * speed;
-	projectile->linear_velocity.j += forward->j * speed;
-	projectile->linear_velocity.k += forward->k * speed;
+	for (long component = 0; component < 3; ++component)
+		projectile->linear_velocity.n[component] += forward->n[component] * speed;
 	*(real *)((byte *)projectile + 0x190) = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
 	*(dword *)&projectile->flags &= ~0x100;
 
@@ -1477,6 +1566,11 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
+// score 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
+// Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
+// shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
+// complete spherical direction 401; early index-only salt 377 (five-point gain dropped); target-distance
+// name 382; shared normalizer 382; dot after trigonometry 382; early salt plus field reads 387.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -1628,6 +1722,11 @@ vector3f const g_45326c[1] = { { 0.0f, 0.0f, -1.0f } };
 /* detonates a projectile: (once) its sound, contrail, direct and area
    damage, impact or airburst effects, and the effects of the material
    under it */
+// score 527 (was 527): Frame 0x184 agrees; header-offset home, cached flags and probe/material homes differ.
+// Native definition bit 533; projectile/child flag bits 527; definition bit plus parent field reads 527;
+// common exit 527; saved-position role name 527; distinct direct/area damage names 527;
+// probe-table pointer loop 530; probe declarations reversed 527; all native flag tests/stores 533;
+// unsigned table index 539; material declared at entry 527; parent/Boolean declarations first 527.
 // @retail 0xfc330
 void __stdcall function_fc330(long projectile_index, bool detach_contrail, real contrail_time)
 {
@@ -1906,6 +2005,13 @@ PRIVATE inline bool projectile_object_predicted(long object_index)
    target, its speed curve and gravity, its range, then the line it moves
    along and what that line hits (up to 10 times), its orientation, and at
    the end its detonation or deletion */
+// score 946 (was 1131): frame 0x110 versus 0x118, input/working registers, action-setter expansion and x87/SSE scheduling remain.
+// Shared guidance producers 1149; shared basis crosses 1152; point producers 1131; common forward/up 1050; plus crosses 1046;
+// role names 1131/1131; direct current field 1149; shared magnitude 1131; shared rotation crosses 1180; common left 1096;
+// common rotated output 1096; both common 1069; existing state helper 1050/1131; complete guidance/roll inputs 994,
+// with separate bases 1099; native count 1050, plus complete inputs 990 (four-point tail restored); caller noinline magnitude
+// 1050/1131; all rotation inputs 1099; free-axis inputs 1011; complete inputs plus shared basis crosses 997;
+// consistent dot/output inputs 946 (kept); consistent free-axis/all rotations 1011/1101; inputs before sine/cosine 1006.
 // @retail 0xf8eb0
 void function_f8eb0(long projectile_index, vector3f *displacement)
 {
@@ -1969,6 +2075,8 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 		real average_speed = speed;
 		real starting_remaining = remaining;
 		point3f end_point;
+		vector3f forward;
+		vector3f up;
 		bool moved = false;
 
 		collision.unknown24 = NONE;
@@ -2001,18 +2109,20 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 				real angle = turn_rate * remaining;
 				real sine = (real)sin(angle);
 				real cosine = (real)cos(angle);
-				real along = (axis.i * velocity.i + axis.k * velocity.k + axis.j * velocity.j) * (1.0f - cosine);
-				vector3f turned;
+				real incoming_i = velocity.i;
+				real incoming_j = velocity.j;
+				real incoming_k = velocity.k;
 
-				turned.i = cosine * velocity.i + along * axis.i - (axis.k * velocity.j - axis.j * velocity.k) * sine;
-				turned.j = cosine * velocity.j + axis.j * along - (axis.i * velocity.k - axis.k * velocity.i) * sine;
-				turned.k = cosine * velocity.k + axis.k * along - (axis.j * velocity.i - axis.i * velocity.j) * sine;
-				velocity = turned;
+				real along = (axis.i * incoming_i + axis.k * incoming_k + axis.j * incoming_j) * (1.0f - cosine);
+
+				velocity.i = cosine * incoming_i + along * axis.i - (axis.k * incoming_j - axis.j * incoming_k) * sine;
+				velocity.j = cosine * incoming_j + axis.j * along - (axis.i * incoming_k - axis.k * incoming_i) * sine;
+				velocity.k = cosine * incoming_k + axis.k * along - (axis.j * incoming_i - axis.i * incoming_j) * sine;
 
 				if (TEST_FIELD_BIT(definition->flag_bits.unknown6))
 				{
-					vector3f forward = to_aim;
-					vector3f up = projectile->up;
+					forward = to_aim;
+					up = projectile->up;
 					vector3f left;
 
 					function_30bf0(&forward);
@@ -2133,8 +2243,8 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 		if (!TEST_FIELD_BIT(projectile->flags.unknown3) && moved)
 		{
 			vector3f movement;
-			vector3f forward = projectile->forward;
-			vector3f up = projectile->up;
+			forward = projectile->forward;
+			up = projectile->up;
 
 			movement.i = end_point.x - projectile->position.x;
 			movement.j = end_point.y - projectile->position.y;
@@ -2174,16 +2284,18 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 					forward = projectile->forward;
 				}
 
-				real along = (forward.i * up.i + forward.k * up.k + up.j * forward.j) * (1.0f - projectile->rotation_cosine);
-				vector3f spun;
+				real incoming_i = up.i;
+				real incoming_j = up.j;
+				real incoming_k = up.k;
 
-				spun.i = along * forward.i + up.i * projectile->rotation_cosine -
-					(forward.k * up.j - up.k * forward.j) * projectile->rotation_sine;
-				spun.j = forward.j * along + up.j * projectile->rotation_cosine -
-					(up.k * forward.i - forward.k * up.i) * projectile->rotation_sine;
-				spun.k = forward.k * along + up.k * projectile->rotation_cosine -
-					(forward.j * up.i - up.j * forward.i) * projectile->rotation_sine;
-				up = spun;
+				real along = (forward.i * incoming_i + forward.k * incoming_k + incoming_j * forward.j) * (1.0f - projectile->rotation_cosine);
+
+				up.i = along * forward.i + incoming_i * projectile->rotation_cosine -
+					(forward.k * incoming_j - incoming_k * forward.j) * projectile->rotation_sine;
+				up.j = forward.j * along + incoming_j * projectile->rotation_cosine -
+					(incoming_k * forward.i - forward.k * incoming_i) * projectile->rotation_sine;
+				up.k = forward.k * along + incoming_k * projectile->rotation_cosine -
+					(forward.j * incoming_i - incoming_j * forward.i) * projectile->rotation_sine;
 			}
 			else if (TEST_FIELD_BIT(projectile->flags.rotating))
 			{
@@ -2291,6 +2403,11 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 /* a projectile's collision: damage to what it hit, the response of the
    material hit (detonating, bouncing, reflecting, attaching), the impact
    effects and sounds, then the projectile's action */
+// score 1162 (was 1185): frame 0x220 versus 0x218, velocity on the stack versus eax, input normalization and effect scheduling remain.
+// Independent damage scopes 1162 (kept); direct sound/late effects/both/scoped both 1223/1185/1223/1199; role names/chains/external normalization 1185/1185/1323.
+// Full count/potential conjunction/input aggregate/assignment helper/uninitialized direction 1201/1216/1198/1198/1185; array aggregates/plain loop/unsigned index 1166/1348/1185.
+// Those eight forms on damage scopes 1169/1199/1199/1194/1162/1162/1348/1162; coordinated velocity positions 1185/1185/1185/1201/1201.
+// Input copy/full normalization/intermediate normalization first 1186/1186/1198; on damage scopes 1163/1159/1170 (1159 three-point tail restored).
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
@@ -2304,7 +2421,6 @@ void function_faa60(vector3f *velocity, long projectile_index, s_collision_resul
 	real scale_b = 0.0f;
 	long sounds[3];
 	long effects[3];
-	s_type_1e6529 damage;
 	s_effect_marker markers[6];
 	s_effect_parameters parameters;
 	long i;
@@ -2374,6 +2490,8 @@ void function_faa60(vector3f *velocity, long projectile_index, s_collision_resul
 		}
 		else
 		{
+			s_type_1e6529 damage;
+
 			function_d6660(&damage, damage_definition_index);
 			damage.material_index = NONE;
 			damage.flags |= 8;
@@ -2477,6 +2595,8 @@ no_effects:
 
 	if (g_4e6948->mode != 4 && (collision->type == 1 || collision->type == 3) && (collision->unknown58 & 8))
 	{
+		s_type_1e6529 damage;
+
 		function_d6660(&damage, damage_definition_index);
 		damage.material_index = NONE;
 		damage.flags |= 8;

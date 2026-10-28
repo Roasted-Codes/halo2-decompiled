@@ -61,14 +61,9 @@ short __stdcall function_1be0f0(long actor_index, s_slot *slot, bool active)
 }
 
 point3f *function_b9dd0(long object_index, point3f *result);
-short __stdcall function_1c8df0(long object_index, point3f const *point, short team, short type,
+short __stdcall function_1c8df0(short team, short type, point3f const *point, long object_index,
 	void const *origin, long count, bool unknown, bool unknown2, bool unknown3, long *arg_9);
 
-// score 23 (was 35): the entry registers now agree; the object-pool load,
-// object-index reload before the position call and second-query argument setup
-// still differ. Slot data 23 (kept); late state store 41; position pointer 23;
-// origin pointer 23; late object lookup 61; direct slot data 35; query-result
-// local 23; late store with shared object index 55.
 // @retail 0x1be120
 bool __stdcall function_1be120(long actor_index, s_slot *slot)
 {
@@ -81,15 +76,15 @@ bool __stdcall function_1be120(long actor_index, s_slot *slot)
 		result = false;
 		if (actor->unknown5ac != NONE && actor->unknown5b0 == 6)
 		{
+			long object_index = actor->unknown5ac;
 			s_slot_object_view *object = object_get(actor->unknown5ac);
 			point3f position;
 			s_2641c0 origin;
+			function_b9dd0(object_index, &position);
 			state->unknown00 = false;
-			function_b9dd0(actor->unknown5ac, &position);
 			if (function_2641c0(actor_index, &origin, &position) &&
-				function_1c8df0(actor->unknown5ac, &position, *(short *)((byte *)object + 0x2c),
-					*(short *)((byte *)&origin + 0x28), (point3f const *)&origin, 1,
-					false, false, true, NULL) == 0)
+				function_1c8df0(*(short *)((byte *)object + 0x2c), *(short *)((byte *)&origin + 0x28),
+					&position, actor->unknown5ac, (point3f const *)&origin, 1, false, false, true, NULL) == 0)
 				state->unknown00 = true;
 			result = true;
 		}

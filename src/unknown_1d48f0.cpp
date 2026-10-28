@@ -43,9 +43,13 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 306 (was 317): aligned frame 0x1d4 agrees; the sample count matches (retail's
+// score 306 (was 306): aligned frame 0x1d4 agrees; first +0x21 is bounds/exclusion homes.
+// Earlier: the sample count matches (retail's
 // setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack). Structural cause of
 // the register differences: our LTCG inlines 0x11bed0 here (retail calls it, esi = location), and the
+// aligned frame 0x1d4 and incoming registers agree; small stack homes
+// and selective location/range expansion remain. Count is `27 - (flag ? 0 : 9)`. Earlier graph:
+// The register differences came from our LTCG inlining 0x11bed0 here (retail calls it, esi = location), and the
 // inlined copy takes esi, which swaps the optional inputs (esi/edi) and evicts the table cursor from esi
 // in the loop; retail also inlines 0x279740's range check at the first release only, ours calls it twice.
 // A separate noinline declaration of 0x11bed0 in its own file keeps the call (entry registers then match
@@ -131,6 +135,31 @@ const dword g_455978[81] = {
 // factor with radius scale 331; factor with blend setter 331.
 // all three producers 331; complete normalized-vector setter 321.
 // All executable forms restored.
+// Round 222: scan-lifetime transform description, original/late construction with set/native
+// copies 320/320/330/330; description-owned pose on the same four graphs 382/382/391/391.
+// Original description scope, standalone pose and copies restored; scalar homes and selective expansion remain.
+// Current query/radial/all scalar identities 306; shared planar normalization and its
+// three identity combinations 307; presence object identity 306. Coordinated range-helper
+// inline 419, plus shared planar normalization 416; both lose matched controls and are
+// restored. Original executable body and every external declaration retained.
+// CRT input samples/ray origin/both 306/306/306; native body pose 374, with samples/origin/both
+// 374/374/374; all inputs plus query pose 422. All restored.
+// Shared setters for all three native basis rows, with early/late scale publication, entry/local
+// input-output matrix declarations and native/library point publication: all eight 306. All restored.
+// Round 161: Transform opaque/reference ownership, then optional opaque with
+// derived/opaque/reference transform, then optional reference with derived/opaque/reference transform:
+// 306/306/306/306/306/306/306/306. Original persistent pointer types and all casts restored.
+// Round 206: Optional bounds/exclusion initialization after control-word setup [315, 315, 315];
+// after SSE setup [315, 315, 315]; early presence construction alone/with late optional state [467, 458]. All restored.
+// Round 228: optional-state/descriptor/receiver storage identity subsets 306 each;
+// all three plus immutable body binding 306. First +0x21 optional-state homes remain; all restored.
+// Round 232: shared affine candidate alone/radius/blend/both 306 each;
+// with planar normalization on the same four graphs 307/307/307/304.
+// Two-point gain rejected; original producers and all helper contracts restored.
+// Round 163: shared endpoint sum into point/native copy/float-set copy/vector
+// 306/341/314/306; each with shared optional-ray difference 306/341/314/306.
+// Native copies lengthen the body; optional-state homes and selective
+// location/range expansion remain. All endpoint producers and helpers restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

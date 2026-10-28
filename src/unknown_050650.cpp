@@ -205,6 +205,13 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // reversed terms and operands 8; helper terms/shared magnitude/named square 8/8/8; squared accumulation 10;
 // dot3f 8; an early final return 83; shared normalization with reversed terms 8; indexed vector2f locals 8;
 // comparison operands reversed 8; an explicit false arm 27; single-product operand swaps 8/8.
+// Native copies with complete/original result graphs 4/6; complete projected aggregates 28; complete parallel product/comparison variants
+// 66/66/65/66; both external normalizations 122; native copies with uniform operands/named parallel products 6/6/6/6; single-worker 100-trial
+// search from native copies/result 4, no improvement. Four-difference forms restored under the retention gate.
+// Complete single-exit dimensional result 4 (two-point gain, restored); horizontal-first dispatch 71; both workspaces
+// at function scope 6; named native vector2f components 6; complete named dot 6; both named products 14; single-exit
+// byte/integer results 57/62; direct horizontal success on that graph 62; full conjunction assignment 83;
+// single exit plus y-first normalization stores 8; single exit plus native fast normalization 4 (restored).
 // @retail 0x296d60
 PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
@@ -485,6 +492,8 @@ static inline void actor_looking_rotate_in_place(vector3f *vector, vector3f cons
 	vector->k = vector->k * cosine + axis->k * parallel - cross.k * sine;
 }
 
+static __forceinline void actor_looking_rotate(vector3f *vector, vector3f const *axis, real angle);
+
 static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, real angle)
 {
 	real sine = (real)sin(angle);
@@ -492,23 +501,34 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 	actor_looking_rotate_in_place(vector, axis, sine, cosine);
 }
 
-// score 355 (was 386): Frame 0x9c versus 0xa8; default/axis homes and register-carried collision input differ.
-// Round 28: Forced existing normalizer/angular/product boundaries, singly and in all
+// score 335 (was 335): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
+// Tried: direct collision Boolean 355; initial best vector before normalization 356; result declared first 354;
+// long sample counter 355; axis/sample/range names 355; shared normalizer 330 (sum order changed, restored);
+// shared random-range helper 360; one result return 377; paired span names 355; names plus one return 377;
+// those plus initial best vector first 356; startup values before axis initialization 335 (kept).
+// Early sample ordinal 358; distinct pitch/yaw vector results 383 (frame 0xb4);
+// both 404; entry ray with complete vector setter 338 (retail length); entry
+// collision result 335; split results with entry ray/collision 386/383; split
+// results with one return 404. Restored.
+// Unit-random producer with candidate after/before/between draws 335/336/341;
+// named normalized fractions at those sites 340/341/335 (last retail length).
+// Complete vector-copy setters with early/between candidate 363/363. Restored.
+// Lane T round 28 (older base): Forced existing normalizer/angular/product boundaries, singly and in all
 // combinations, 355 each; ordinary producers 1135. Original helpers restored.
-// Direct collision parameter alone 355 (plain, kept); frame 0x9c and default/axis homes remain.
+// Direct collision parameter alone 355 on T's older base (main's 335 form kept).
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
 {
-	vector3f pitch_axis = { -forward->j, forward->i, 0.f };
-	if (actor_looking_normalize3d(&pitch_axis) == 0.f)
-		pitch_axis = *g_4687ac;
 	vector3f best_direction = *g_4687a8;
 	bool result = false;
 	real best_fraction = 0.f;
 	real yaw_range = yaw_upper - yaw_lower;
 	real arg_58ecd0 = pitch_upper - pitch_lower;
 	bool clear = true;
+	vector3f pitch_axis = { -forward->j, forward->i, 0.f };
+	if (actor_looking_normalize3d(&pitch_axis) == 0.f)
+		pitch_axis = *g_4687ac;
 	for (short attempt = 0; attempt < 10; ++attempt)
 	{
 		real yaw = (real)random_next(&g_4e7408->unknown0) * (1.f / 65535.f) * yaw_range + yaw_lower;
@@ -581,8 +601,19 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 445 (was 445): Frame 0x8c agrees; early saved registers, Boolean defaults and prop-case layout differ.
-// Round 28: All eight ordinary/inline/noinline state-query/origin-output declaration
+// score 336 (was 336): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
+// Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
+// default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
+// result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
+// test results plus flag name 397; Boolean declarations reversed 414; tests plus reversed declarations 395 (restored).
+// Chained Boolean defaults 395 (+0x3a first); with case 2 first 399; entry marker
+// workspace 397, with chained defaults 395; complete point setters 336 (kept,
+// retail length); with chained defaults 334 (extra two-point gain restored);
+// those plus case order 339, plus entry marker 339.
+// Uniform five-point memcpy producers 397; case 2 first 401; chained defaults
+// 395; both 399. Uniform memmove producers with those forms 444/442/442/440.
+// All shorter than retail; original setters, cases and defaults restored.
+// Lane T round 28 (older base): All eight ordinary/inline/noinline state-query/origin-output declaration
 // pairs 446 (unchanged fast control 446; full baseline 445). All provider and
 // consumer declarations restored; saved-register timing and Boolean defaults remain.
 // @retail 0x2967b0
@@ -602,7 +633,7 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	{
 	case 0:
 		if (!actor->movement_aiming)
-			return false;
+			goto done;
 		*direction = actor->field_x6d9d38;
 		if (function_1f8660(actor_index) && actor->object_index == NONE &&
 			actor->field_xe428b1 == 4 && actor->path_index < actor->path_count - 1 &&
@@ -614,11 +645,11 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	case 1:
 		reference = (s_prop_datum *)record_pool_lookup(g_502418, specification->index);
 		if (!reference)
-			return false;
+			goto done;
 		state = function_25d690(reference);
 		point_valid = true;
 		if (reference->state < 1)
-			return false;
+			goto done;
 		if (reference->state <= 2)
 		{
 			long object_index = reference->object_index;
@@ -638,7 +669,7 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 
 	case 2:
 		if (actor->field_x50962e == NONE)
-			return false;
+			goto done;
 		reference = prop_ref_get(actor->field_x50962e);
 		state = function_25d690(reference);
 		point_valid = true;
@@ -654,9 +685,15 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 				}
 				s_object_marker marker;
 				if (actor->target_marker && function_b8d30(object_index, actor->target_marker, &marker, 1, false))
-					point = marker.matrix.position;
+					real_point3d_set(&point,
+						(marker.matrix.position).x,
+						(marker.matrix.position).y,
+						(marker.matrix.position).z);
 				else
-					point = *(point3f *)((byte *)state + 0x10);
+					real_point3d_set(&point,
+						(*(point3f *)((byte *)state + 0x10)).x,
+						(*(point3f *)((byte *)state + 0x10)).y,
+						(*(point3f *)((byte *)state + 0x10)).z);
 				goto aim_at_point;
 			}
 			long object_index = reference->object_index;
@@ -664,13 +701,19 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 			if (((1 << object->type) & 3) && object->player_index != NONE)
 				function_cafc0(object_index, &point);
 			else
-				point = *(point3f *)((byte *)state + 0x30);
+				real_point3d_set(&point,
+					(*(point3f *)((byte *)state + 0x30)).x,
+					(*(point3f *)((byte *)state + 0x30)).y,
+					(*(point3f *)((byte *)state + 0x30)).z);
 			goto direction_from_actor;
 		}
 		goto remembered_prop;
 
 	case 3:
-		point = specification->point;
+		real_point3d_set(&point,
+			(specification->point).x,
+			(specification->point).y,
+			(specification->point).z);
 		point_valid = true;
 		goto aim_at_point;
 
@@ -680,8 +723,11 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 
 	case 5:
 		if (actor->attention_state <= 0)
-			return false;
-		point = actor->attention_point;
+			goto done;
+		real_point3d_set(&point,
+			(actor->attention_point).x,
+			(actor->attention_point).y,
+			(actor->attention_point).z);
 		point_valid = true;
 		goto aim_at_point;
 
@@ -689,10 +735,10 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 		{
 			long object_index = specification->index;
 			if (object_index == actor->unit_index)
-				return false;
+				goto done;
 			s_actor_looking_object *object = (s_actor_looking_object *)function_badc0(object_index, 0xffffffff);
 			if (!object)
-				return false;
+				goto done;
 			if (((1 << object->type) & 3) && !aiming)
 			{
 				if (object->player_index != NONE)
@@ -706,12 +752,12 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 			goto aim_at_point;
 		}
 	default:
-		return false;
+		goto done;
 	}
 
 remembered_prop:
 	if (state->unknown00 == NONE)
-		return false;
+		goto done;
 	function_210850((s_type_c3b527 const *)&state->unknown48, &point);
 	if (aiming)
 		goto local_254539;
@@ -731,26 +777,27 @@ local_254539:
 	if (!result)
 	{
 		vector3d_from_points3d(&origin, &point, direction);
-		if (!(function_30bf0(direction) > 0.f))
-			return false;
-		result = true;
+		result = function_30bf0(direction) > 0.f;
+		if (!result)
+			goto done;
 	}
 	goto output_point;
 
 direction_from_actor:
 	vector3d_from_points3d(&actor->position, &point, direction);
 normalize_direction:
-	if (!(function_30bf0(direction) > 0.f))
-		return false;
-	result = true;
+	result = function_30bf0(direction) > 0.f;
+	if (!result)
+		goto done;
 	if (!point_valid)
-		return result;
+		goto done;
 output_point:
 	if (has_target_point && arg_0e6828)
 	{
 		*has_target_point = true;
 		*arg_0e6828 = point;
 	}
+done:
 	return result;
 }
 
@@ -761,6 +808,9 @@ output_point:
 // 9; a temporary caller (its only retail caller 0x1f38c0 is disabled here) 9; a cdecl compile-only
 // build gives ours too; shared actor getter or type 9 each; direct byte-base 9; offset local 9;
 // getter forceinline 9; data-base or slot locals 9 each; nested actor getter 9; a mode pointer 9.
+// Further forms: direct decoder result 42; low-mode rejection 38, with direct result 45;
+// path-first reset 21, with direct result 45; nested independent guards 9; native mode
+// snapshot 9; uniform getter observations 58. Original reset path and call values restored.
 // @retail 0x296580
 void function_296580(long actor_index)
 {
@@ -824,13 +874,29 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
+// score 54 (was 54): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
+// Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
+// both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
+// limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
+// both random spans read once 212; the direct Boolean in the sampler changes this caller from 55 to 96.
+// Round 212: yaw names/result-first/both 96; chained zero initialization and
+// its name/result/declaration combinations 98; lower-first character stores 96.
+// Upper-first yaw initialization 94; plus later scaled pitch/shared pitch limit/both
+// 202/94/202. Two-point form rejected; yaw homes, pitch scheduling and call registers remain.
+// Bounds before lookup, alone/with scale 98/99; direct horizontal/aiming/both
+// projections 173/159/170; shared dot 62; projections plus dot/upper-first 170/168.
+// Shared dot with upper-first/later pitch 60/58; reverse dot alone/upper-first/later
+// pitch 58/56/54 (kept). Addition grouping and all marked call arguments are unchanged.
+// Round 162: final-local pitch clamps 207; paired raw angle carriers 56, with clamps 207;
+// existing paired-angle view 54, with clamps 207; byte result 51 (three-point gain, restored);
+// branch-produced result 249, with clamps 253. Scaled pitch and sampler registers still differ.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	bool result = false;
-	real yaw_lower = 0.f, yaw_upper = 0.f, pitch_lower = 0.f, pitch_upper = 0.f;
+	real yaw_upper = 0.f, yaw_lower = 0.f, pitch_lower = 0.f, pitch_upper = 0.f;
 	real scale = 1.f;
 	s_actor_looking_properties *properties = function_1e5160(actor->character_definition_index);
 	if (properties)
@@ -844,8 +910,9 @@ PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool u
 			base.k = 0.f;
 			if (function_30bf0(&base) == 0.f)
 				base = *g_4687a8;
-			yaw_upper = properties->aiming_yaw * scale;
-			yaw_lower = 0.f - yaw_upper;
+			real yaw = properties->aiming_yaw * scale;
+			yaw_upper = yaw;
+			yaw_lower = 0.f - yaw;
 			real pitch = properties->aiming_pitch * scale;
 			real minimum = 0.f - g_55e5bc;
 			real lower = 0.f - pitch;
@@ -878,7 +945,7 @@ PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool u
 					else
 					{
 						real yaw = function_11cc90((vector2f *)&horizontal, (vector2f *)&aiming_horizontal);
-						real cosine = base.j * horizontal.j + base.i * horizontal.i + base.k * horizontal.k;
+						real cosine = dot3f(&horizontal, &base);
 						cosine = cosine < -1.f ? -1.f : (cosine > 1.f ? 1.f : cosine);
 						real pitch = function_50650(cosine);
 						if (base.k < 0.f)
@@ -927,13 +994,30 @@ struct s_actor_looking_structure_view
 };
 
 /* Name inferred from the path traces and the idle-direction caller. */
+// score 80 (was 80): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
+// Result first 139; existing angular wrapper 468; vector producer 261; both 466;
+// native header/body induction with those producers 137/468/266/466.
+// Separate forced angular declaration 78/265/85/270; earlier cursor step 88;
+// real indexed candidate producer 80, kept at 924/924 bytes after plain confirmation.
+// The 78 form retains the old comma-stepped loop and is not kept.
+// Angle ordinal renamed, candidate ordinal renamed, both renamed and candidate declared first 80 each;
+// candidate/trace scope, entry trace, entry horizontal, all entry workspaces and workspace names 80 each;
+// single short ordinal 137; single long ordinal 198; declaration-time path pointer 214;
+// int angle ordinal 80; two long ordinals 214; two int ordinals 214. Counter homes, rotation schedule and tail remain.
+// Round 162: native trace record 80; full candidate workspace with native/original trace 226/226;
+// native trace with direct array consumers 149; native trace with candidate/all vector copies 80/150;
+// original trace with candidate/all intrinsic copies 80/150. Both ordinals and all original code restored.
+// Existing sine/cosine rotation consumer: named angle 144; sine/cosine locals 80;
+// cosine first 86; trig before candidate 80; fraction after rotation 154;
+// angle ordinal stepped at last use 156; both shared dot products 144 (regrouped,
+// exact-match-only); immediate successful publication return 224. Restored.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
+	bool result = false;
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	s_actor_looking_structure_view *structure = (s_actor_looking_structure_view *)g_4e0348;
 	s_pathfinding_data *pathfinding = NULL;
-	bool result = false;
 	if (structure->pathfinding_count > 0)
 		pathfinding = structure->pathfinding;
 	if (actor->object_index == NONE && !actor->unknown229 && !actor->direction_locked)
@@ -956,14 +1040,12 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 					short best_index = NONE;
 					real best_score = 0.f;
 					long rotation_index = 0;
-					vector3f *direction = directions;
-					for (short i = 0; i < 8; i++, rotation_index++, direction++)
+					for (short i = 0; i < 8; ++i)
 					{
+						vector3f *direction = &directions[i];
 						*direction = actor->forward;
 						real fraction = 1.f;
-						real sine = (real)sin((real)rotation_index * 0.785398185f);
-						real cosine = (real)cos((real)rotation_index * 0.785398185f);
-						actor_looking_rotate_in_place(direction, g_4687b0, sine, cosine);
+						actor_looking_rotate(direction, g_4687b0, (real)rotation_index * 0.785398185f);
 						function_26c590(actor->location.unknown10, NULL, &trace, pathfinding,
 							&actor->location.point.point, NONE, direction, 5.f, 0);
 						if (*(byte *)&trace.unknown00)
@@ -975,6 +1057,7 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 							best_score = score;
 							best_index = i;
 						}
+						++rotation_index;
 					}
 					if (best_index != NONE)
 					{
@@ -998,38 +1081,41 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 PRIVATE bool function_2980d0(long actor_index, bool looking, bool use_character_bounds, vector3f *direction)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
-	s_type_952051 *aiming = (s_type_952051 *)&actor->idle_aiming_direction_type;
-	s_type_952051 *look = (s_type_952051 *)&actor->idle_looking_direction_type;
 	if (use_character_bounds && actor->unrestricted_looking && actor->attention_enabled &&
-		function_297d30(actor_index, aiming))
+		function_297d30(actor_index, ((s_type_952051 *)&actor->idle_aiming_direction_type)))
 	{
 		actor->idle_aiming_timer = function_297c10(actor_index, use_character_bounds, true);
 		actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
-		*look = *aiming;
+		*((s_type_952051 *)&actor->idle_looking_direction_type) = *((s_type_952051 *)&actor->idle_aiming_direction_type);
 		actor->attention_selected = true;
 	}
 	else
 	{
-		if (actor->idle_aiming_timer == 0 || !function_297a50(actor_index, use_character_bounds, aiming))
+		if (actor->idle_aiming_timer == 0 || !function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_aiming_direction_type)))
 		{
-			if (use_character_bounds && (random_next(&g_4e7408->unknown0) & 0x8000) != 0 &&
+			if (use_character_bounds && (random_next(&g_4e7408->unknown0) & 0x8000) > 0 &&
 				actor->idle_looking_timer > g_510c54->field_2_3 &&
-				function_297a50(actor_index, use_character_bounds, look))
-				*aiming = *look;
+				function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type)))
+				*((s_type_952051 *)&actor->idle_aiming_direction_type) = *((s_type_952051 *)&actor->idle_looking_direction_type);
 			else
-				function_297660(actor_index, true, use_character_bounds, aiming);
+				function_297660(actor_index, true, use_character_bounds, ((s_type_952051 *)&actor->idle_aiming_direction_type));
 			actor->idle_aiming_timer = function_297c10(actor_index, use_character_bounds, true);
 			actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
-			*look = *aiming;
+			*((s_type_952051 *)&actor->idle_looking_direction_type) = *((s_type_952051 *)&actor->idle_aiming_direction_type);
 		}
 		if (looking && (actor->idle_looking_timer == 0 ||
-			!function_297a50(actor_index, use_character_bounds, look)))
+			!function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type))))
 		{
-			function_297660(actor_index, false, use_character_bounds, look);
+			function_297660(actor_index, false, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type));
 			actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
 		}
 	}
-	if (!function_2967b0(actor_index, looking ? look : aiming, use_character_bounds, direction, NULL, NULL))
+	bool decoded;
+	if (looking)
+		decoded = function_2967b0(actor_index, ((s_type_952051 *)&actor->idle_looking_direction_type), use_character_bounds, direction, NULL, NULL);
+	else
+		decoded = function_2967b0(actor_index, ((s_type_952051 *)&actor->idle_aiming_direction_type), use_character_bounds, direction, NULL, NULL);
+	if (!decoded)
 		*direction = actor->forward;
 	return true;
 }
@@ -1055,8 +1141,20 @@ struct s_actor_looking_turn_request
 	vector3f forward;
 };
 
-// score 530 (was 530): Frame 0xd0 versus 0xc8; predicate expansion, animation/validity and vector homes differ.
-// Round 28: Inline predicate with long/unsigned-short/unsigned-long animation storage
+// score 530 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
+// Tried the out-of-line predicate declaration 546 fast; horizontal aggregate copies 562 fast; initial native setters 546 fast;
+// explicit looking success/fallback stores 532 fast, 527 plain (three-point gain, restored); target point or selected vector
+// renamed 546 fast each; validity at function scope 546 fast; aggregate inputs plus explicit stores 549 fast;
+// out-of-line predicate plus explicit stores 532 fast, 527 plain (restored). Unchanged preview 546 fast.
+// Separate noinline declarations in caller and callee units 570 fast, 590 plain at 1952/2020 (restored);
+// this removes the expansion and recovers the 0xc8 frame, but later scheduling/layout regress.
+// Distinct aiming/looking vector lifetimes, with explicit looking stores,
+// nested aiming validation and case-set looking result 546, 534, 546, 534, 546, 534, 546, 534 fast.
+// Disjoint outputs with explicit looking publication 525 plain at 2020/2020; restored.
+// Uniform 17 aggregate memcpy producers on disjoint outputs, varied by actual
+// predicate boundary and long animation carrier 534/540/562/563 fast; native
+// memmove variants 624/630/670/671. Best memcpy form 525 plain at 2020/2020; restored.
+// Lane T round 28 (older base): Inline predicate with long/unsigned-short/unsigned-long animation storage
 // 534/530/534; noinline predicate with those carriers 590 each; ordinary predicate
 // with long/unsigned-short 534/530. Original carrier and declarations restored; frame/validity homes remain.
 // @retail 0x298370

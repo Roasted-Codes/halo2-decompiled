@@ -136,6 +136,10 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // inputs with cross before projection 209/246. Six-point 180 form restored.
 // Round 210: Native heading aggregate/zero-first with forward publication after draws,
 // before draws, between draws and after axis: 186/256/251/196 each. Original restored.
+// Lane 4 r106 (fast): retail's arms read like pointer helpers (the random arm adds an {r1, r2, 0} offset:
+// z is stored back unchanged), but launch through vector3f_scale 186, both offsets through a point
+// add-scaled helper 192, both 192, the random offset as a vector added to the point 236 (1220 bytes),
+// all three 253, the rotation sum through vector3f_add then the cross subtraction 224.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

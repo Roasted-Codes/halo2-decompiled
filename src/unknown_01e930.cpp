@@ -34,6 +34,7 @@ void __stdcall function_18f1c0(long a);
 void function_12d520(long a);
 bool function_12b3c0(void);
 bool function_23e400(long button);
+void function_156960(void);
 void __stdcall function_35b90(void *material);
 void __stdcall function_363a0(void *vertices);
 void __stdcall function_1e930(long a);
@@ -42,34 +43,7 @@ int __stdcall function_3e2870(void *movie);
 void __stdcall function_3e2e50(void *movie);
 int __stdcall function_3e2830(void *movie, void *destination, long pitch, long height, long x, long y, dword flags);
 
-/* the screen rectangles (unknown_0167a0.cpp) */
-struct short_rect
-{
-	short v0, v1, v2, v3;
-};
-
-struct short_rect_pair
-{
-	short_rect a, b;
-};
-
-struct s_unknown_485a88
-{
-    byte flag;
-    short_rect_pair rects;
-};
-extern s_unknown_485a88 g_unknown_485a88;
-#define g_485a8a (g_unknown_485a88.rects)
 byte g_4c1a18;
-
-struct s_bink_vertex
-{
-	real x;
-	real y;
-	real u;
-	real v;
-	dword color;
-};
 
 /* the texture cache's physical memory (unknown_12c0d0.cpp) */
 extern s_physical_object *g_4e6464;
@@ -215,12 +189,19 @@ void function_155ed0(void)
 	}
 }
 
-// score 9 (was 53): in the padding path retail computes the alignment difference
+// score 9 (was 9): in the padding path retail computes the alignment difference
 // before pushing ebx and reloads the capacity global into ecx after the mask, ours
 // pushes ebx first and reloads the capacity global into edi earlier.
 // remaining-first expression 53; shared completion 75; named padding 53;
 // named mask 53; shared completion and mask 75; recomputed start 47;
 // named allocation extent 53; remaining extent with shared completion 86.
+// Round 22: explicit capacity store in the padding path/all paths 9/9; named alignment
+// difference 19; explicit size/result assignments 9/9; integer-address result 9;
+// const remaining/mask 9; reversed result-mask operands 9.
+// Further forms: unsigned-mask zero-alignment guard 28; aligned guard 20; flat guards 28;
+// named padding test 9. Signed-mask counterparts 36/45/36/40. Original body restored.
+// Initial base/capacity address ownership also differs. One captured capacity with
+// delta/shared-mask/early-publication combinations: 45/44/54/54/44/44/54/54; restored.
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {
@@ -330,54 +311,6 @@ void function_1568d0(void)
 		function_3e2830(g_4e9188.movie, locked.pBits, locked.Pitch, g_4e9188.height, 0, 0, g_4e9188.copy_flags | 0x80000000);
 }
 
-// score 109 (was 109): retail builds this function with SSE (cvtsi2ss, movaps, movss),
-// but this file is compiled /O2 /Ob1 /Gr without /arch:SSE, so our int-to-float
-// conversions go through the x87 stack; the flag test's block layout differs with it.
-// @retail 0x156960
-void function_156960(void)
-{
-	short_rect screen = g_485a8a.a;
-	short left, right, top, bottom;
-	s_bink_vertex vertices[4];
-
-	if (g_4e9188.flags & 0x10)
-	{
-		right = screen.v3;
-		left = screen.v1;
-		bottom = screen.v2;
-		top = screen.v0;
-	}
-	else
-	{
-		short screen_width = screen.v3 - screen.v1;
-		short screen_height = screen.v2 - screen.v0;
-
-		left = (screen_width - g_4e9188.width) / 2;
-		right = (screen_width + g_4e9188.width) / 2;
-		top = (screen_height - g_4e9188.height) / 2;
-		bottom = (screen_height + g_4e9188.height) / 2;
-	}
-
-	for (short i = 0; i < 4; i++)
-	{
-		long corner = i + 1;
-
-		vertices[i].x = (corner & 2) ? right : left;
-		vertices[i].y = i > 1 ? bottom : top;
-		vertices[i].u = (corner & 2) ? g_4e9188.width : 0.0f;
-		vertices[i].v = i > 1 ? g_4e9188.height : 0.0f;
-		vertices[i].color = 0xffffffff;
-	}
-
-	function_35b90(g_4e9188.material);
-	function_363a0(vertices);
-	if (g_4c1a18)
-	{
-		function_1e930(1);
-		g_4c1a18 = 0;
-	}
-}
-
 // @retail 0x155f80
 void function_155f80(bool synchronous)
 {
@@ -428,9 +361,31 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	__asm rdtsc
 }
 
+// score 244 (was 244): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
+// Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
+// arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
+// format-size query declaration 287. Original body and declaration restored.
+// Frame 0x3c versus 0x40, timestamp and output homes,
+// retry expansion, float comparison and material scheduling still differ.
+// Earlier retry/native block/shared audio forms 313/287/313/339/364/339/364/347;
+// format-size noinline 287. Native Boolean allocation choice 256 (plain).
+// Round 219: early texture outputs, output names, timestamp names and both names
+// 287 each; earlier large decision 286 (rejected); earlier size plus decision 295;
+// common void exit 287; SSE ownership original/Boolean 287/266, restored.
+// Round 212: allocation result first 244 (plain kept); retry ordinal/clock declaration
+// first 256/256; result+ordinal/result+clock/ordinal+clock/all 260/244/256/260;
+// direct skip result 286; full-width mask/Boolean decisions 289/290, with result
+// first 273/274. The frame remains 0x3c versus 0x40.
+// Round 223: two-use sound-interface value 274; allocation-size branches 256;
+// both 274; consistent movie-global reads 256; sound/movie 274; size/movie 256;
+// all three 274; per-branch volume arrays before channel arrays 256. All restored.
+// Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
+// parameter-derived decision at entry 306/306/305/298. Original large decision restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {
+	void *block = NULL;
+
 	bink_update_memory_available();
 
 	if (!g_4e9188.initialized)
@@ -452,9 +407,8 @@ void function_156090(char const *name, dword flags)
 		g_4e9188.unknown03 = skippable;
 	}
 
-	long large = flags & 0x100;
-	long size = (large | 0x40) << 16;
-	void *block = NULL;
+	bool large = (flags & 0x100) != 0;
+	long size = large ? 0x1400000 : 0x400000;
 
 	g_4e9188.permanent_memory_size = size;
 	g_4e9188.permanent_memory_used = 0;
