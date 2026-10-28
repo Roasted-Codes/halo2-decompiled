@@ -1505,6 +1505,8 @@ struct s_camera_clip_reference_16ebf0
 // 222; split scalar values with entry output declarations 209. All restored.
 // Individual direction, matrix, adjustment, point, fraction, location and position local names
 // 209/209/209/209/209/209/209/209.
+// Original-position pointer before view queries: scalar/native directions, word truth, both
+// 252/260/248/271; those four with entry matrix declaration 252/260/248/271. All restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
