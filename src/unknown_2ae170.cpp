@@ -699,7 +699,7 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 438 (was 438): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 428 (was 438): frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
 // Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
 // level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
@@ -761,12 +761,16 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // front/rear/front+rear/tail/front+tail/rear+tail/all loops 466/474/475/497/490/492/507;
 // all plus the repeated buffer send loop 523. Every loop uses a real channel/gain
 // index. All restored; frame 0xc, selected-level and SSE staging differences remain.
+// Round 164: ordinary append inline 438; right long original/ordinary inline 457/457,
+// right word 456/456, signed byte 438/438; word route with ordinary inline 428,
+// word route alone 428 plain (kept); long/dword/byte route 438 each. Only the native
+// 0-or-1 route word remains; original append declaration and all gain trees retained.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
 	if ((bool)((parameters->flags >> 2) & 1))
 	{
-		bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
+		word alternate = TEST_FLAG(parameters->flags, 3) != 0;
 		word left = alternate ? 0 : 6;
 		byte right = alternate ? 1 : 7;
 		real level2 = rear ? m_settings.level20 : m_settings.level28;

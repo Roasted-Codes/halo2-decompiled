@@ -238,6 +238,9 @@ union s_185be7
 // restored.
 // Round 243: Native latch fields 88/8e/8f/90/93, paired 8e+8f/88+90 and all five:
 // 780/780/780/780/777/780/780/777. Three-point nonmatch gains rejected; original byte fields restored.
+// Round 164: shared retained-response weight 926; paired bounded contributions staged
+// before blending 932; both 932; paired interpolated rates 780; rates with weight/
+// contributions/both 926/932/934; existing native forward-vector setter 920. All restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

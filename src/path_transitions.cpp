@@ -326,9 +326,8 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
-// score 31 (was 154): frame 0xe34 and retail length agree; collector flags, scan/selected-index
-// comparison and copy widths, and alignment-dot j ordering remain. Earlier at 154:
-// the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// score 31 (was 31): frame 0xe34 and retail length agree; collector flags, scan/selected-index
+// comparison and copy widths remain. Earlier at 154:
 // the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
 // term loads g_4687b0 first where retail loads the marker. Tried: single exit 167;
@@ -346,6 +345,9 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 // marker array: 154/154/154/154/154/154/154/154. Protected query promotion, loop padding and dot allocation
 // remain
 // original declaration scopes restored.
+// Round 164: native point setter at final/capture/both 51/50/166; short selection with
+// original count and wide scan 66, plus final/capture/both setters 169/170/142;
+// selected marker pointer 196. All restored; original short count and wide ordinals retained.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {

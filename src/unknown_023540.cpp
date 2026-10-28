@@ -3151,6 +3151,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // 1161/1202/1231; rounded result read once 1375; read once with byte channels 1325. All restored.
 // Round 232: native mode-one/two/three input layouts, all seven subsets 934;
 // complete premultiplied-color production with all layouts 935. All restored.
+// Round 164: bounded byte exponent alone/with reused threshold predicates 1182/1165;
+// signed byte 1013/1207; word 1200/1246; reused thresholds alone 1204; shared shifted
+// color-input word 934. All restored; original values, calls and directives retained.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
