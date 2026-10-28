@@ -51,7 +51,13 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 239 (was 215): retail's convention since round 67 (flag in AL, location stacked, 0x175270
+// score 227 (was 239): the child loop advances a 0xb8-stride cursor over the child table instead
+// of recomputing field_34 + i * 0xb8, as retail does; field_4 is now read before the metadata
+// call and the flag is stored after the position copy, as retail does.
+// Still differs: our frame is 0x10 against retail's 0x14, we keep the metadata pointer and the
+// child count in stack slots of our own, and the position copy uses EDX/ECX where retail uses
+// ESI/EDX.
+// Round 67: a position pointer for the copy and the three viewer reads, with field_4
 // then matches). Left: frame 0x10 versus 0x14 (our position pointer folds into [edi+0x10] where
 // retail keeps it in ECX and spills field_4 to a fifth slot), the inactive (viewer-loop) arm laid
 // out first in retail, the x87 pops before the radius multiply, and the child link (retail inlines
@@ -161,12 +167,12 @@ void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s
 	real *arg_3, transform4x3f const *arg_4)
 {
 	s_248970 *local_20 = (s_248970 *)arg_0;
-	local_20->field_2 = arg_5;
-	s_248971 *local_1 = (s_248971 *)arg_2->function_1751d0();
 	long local_0 = local_20->field_4;
+	s_248971 *local_1 = (s_248971 *)arg_2->function_1751d0();
 	long local_2 = local_1->field_30;
 	point3f *position = &local_20->field_10;
 	*position = arg_4->position;
+	local_20->field_2 = arg_5;
 	if (arg_5)
 		local_20->field_1c = 1.f;
 	else
@@ -200,6 +206,7 @@ void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s
 		}
 	}
 	*(real *)((byte *)arg_3 + 0x1c) = local_20->field_1c;
+	byte *local_cursor = local_1->field_34;
 	for (long local_14 = 0; local_14 < local_2; ++local_14)
 	{
 		s_record_pool *local_15 = g_51ec88;
@@ -226,7 +233,8 @@ void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s
 			local_20->field_8 = local_18;
 		}
 		c_247470 *local_19 = DATUM(local_15, c_247470, local_0);
-		local_19->function_247470(arg_1, arg_2, (s_object_2470e0 *)(local_1->field_34 + local_14 * 0xb8), (s_247fd0 *)arg_3, arg_4, arg_2->color);
+		local_19->function_247470(arg_1, arg_2, (s_object_2470e0 *)local_cursor, (s_247fd0 *)arg_3, arg_4, arg_2->color);
+		local_cursor += 0xb8;
 		local_0 = local_19->field_8;
 	}
 }

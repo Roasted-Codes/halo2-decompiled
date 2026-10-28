@@ -457,7 +457,7 @@ struct s_squad_iterator
 	short current;
 	short next;
 	short palette_index;
-	word flags;
+	short flags;
 	bool flag_a;
 	bool flag_b;
 	bool flag_c;
@@ -812,7 +812,8 @@ done:
 	return result;
 }
 
-// score 176 (was 176): Frame 8 and length agree; next-word cache and sentinel allocation remain.
+// score 175 (was 176): the iterator's flags word is read sign-extended, as retail reads it;
+// the walk still differs in the register it keeps the next index, the palette base and the entry index in.
 // Earlier: Frame 8 and length agree; entry next-word cache and sentinel register remain.
 // Earlier: frame 8 agrees; next stays in CX and the sentinel takes EBX.
 // Full-width result 211; full-width entries 214; full-width palettes 186;
@@ -1989,7 +1990,9 @@ extern s_record_pool *g_5044c8;
 bool function_1e1de0(long actor_index);
 bool function_1df5d0(short team_a, short team_b);
 
-// score 179 (was 179): Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
+// score 178 (was 179): the definition flags are now read as one dword, as retail reads them.
+// Still differs: our squad offset stays in EAX where retail keeps it in ESI, and the entry flag
+// clear is kept in BL across the loop instead of being done in place.
 // Earlier: Frame 0x14 agrees; next-cursor memory home, contribution register and split entry flag clear remain.
 // Earlier: frame 0x14 agrees; iterator index is cached and the flag clear splits.
 // frame 0x14 agrees; iterator index is cached and the flag clear splits.
@@ -2093,7 +2096,8 @@ void function_203360(long squad_index)
     if (definition_index != NONE)
     {
         byte *definition = *(byte **)((byte *)g_4e0350 + 0x244) + definition_index * 0x7c;
-        if ((definition[0x24] & 0x10) || ((definition[0x24] & 0x20) && *(short *)(definition + 0x4e) != NONE))
+        dword definition_flags = *(dword *)(definition + 0x24);
+        if ((definition_flags & 0x10) || ((definition_flags & 0x20) && *(short *)(definition + 0x4e) != NONE))
         {
             long last_update = *(long *)(squad + 0x5c);
             if (last_update == NONE || (g_510c54->game_time - last_update) * g_510c54->rate > 2.0f)
