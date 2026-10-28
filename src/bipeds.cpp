@@ -2835,6 +2835,15 @@ bool function_1cb920(void *data, long mode);
 bool function_114b60(short entry_index, short fallback_index, long unit_index, long priority, void const *extra);
 void __stdcall function_b8890(long unit_index);
 
+/* the byte at +0x10a as bits */
+struct s_biped_flags_10a_view
+{
+	word bit0 : 1;
+	word bit1 : 1;
+	word bit2 : 1;
+	word unknown3 : 5;
+};
+
 /* counts down the biped's landing (+0x39d); a ragdolling biped that can
    recover gets up when it reaches its last tick */
 // @retail 0xe2d80
@@ -2842,9 +2851,10 @@ bool __stdcall function_e2d80(long arg_159e6d)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
 	byte *definition = BIPED_DEFINITION_GET(biped);
+	bool result = false;
 
 	if (biped->unknown39d > 0 && biped->physics_mode == 3 && (TEST_FIELD_BIT((*(dword *)(definition + 0x1f0) >> 10) & 1)) &&
-		!(TEST_FIELD_BIT((biped->flags_10a >> 2) & 1)) && biped->unknown39d == 1)
+		!TEST_FIELD_BIT(((s_biped_flags_10a_view *)&biped->flags_10a)->bit2) && biped->unknown39d == 1)
 	{
 		function_e5930(arg_159e6d);
 		function_10f430(arg_159e6d, 0x7000001, 0x7000101, 0x7000101, 0x7000001, 0.0f, false, 2);
@@ -2869,9 +2879,9 @@ bool __stdcall function_e2d80(long arg_159e6d)
 	if (biped->unknown39d > 0)
 	{
 		biped->unknown39d--;
-		return true;
+		result = true;
 	}
-	return false;
+	return result;
 }
 
 /* the biped's movement animation names: hovering, swimming, and for an
