@@ -1121,6 +1121,9 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
 // Round 357: Output defaults before class guard 979; traversal-only defaults before
 // guard 1007; both 1005; selector-only setup before result 832; selector/output setup 833.
+// Return object after the class guard, with native iterator/post-lookup candidate/guaranteed
+// mode-write combinations: 988/1001/999/1001/989/1000/999/1001 (2825 bytes, first +0).
+// Original constructor timing, iterator, candidate, output order and resource requests restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

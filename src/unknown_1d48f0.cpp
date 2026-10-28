@@ -135,6 +135,8 @@ const dword g_455978[81] = {
 // three identity combinations 307; presence object identity 306. Coordinated range-helper
 // inline 419, plus shared planar normalization 416; both lose matched controls and are
 // restored. Original executable body and every external declaration retained.
+// Shared setters for all three native basis rows, with early/late scale publication, entry/local
+// input-output matrix declarations and native/library point publication: all eight 306. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

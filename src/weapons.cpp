@@ -3283,6 +3283,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Round 337 (fast control 637): direct short/promoted barrel values 637/634;
 // direct weapon value/both short values 637/637; both promoted values 634;
 // first-use promoted barrel/both/immutable values 634/634/634. Gain 3 rejected; all restored.
+// Complete native tag-reference arrays with short/long/byte/word mode, raw/native interval
+// fields: 637/637, 639/639, 632/632, 637/637 (fast control 637). Five-point gains rejected;
+// original effect type, fields, body, parameter aliases and local qualification restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
