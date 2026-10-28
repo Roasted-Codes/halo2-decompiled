@@ -2999,6 +2999,8 @@ struct s_voice_route_choice
 // Complete current route value/const value/element reference with bitwise radio
 // 438/438/395; with conditional radio 459/459/410; native three-pair descriptor
 // with current value/reference 431/386. All original observations and workspaces restored.
+// Reused radio/spatial/both predicates and both with conditional radio, after headset
+// update 430/399/404/466; before headset update 400/479/547/598.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

@@ -86,6 +86,8 @@ void function_1c2690()
 // score 4 (was 4): retail loads the three pointers before the two writes of
 // the valid flag and pushes the deleted one after both writes, ours pushes it
 // between them.
+// Library byte clears first/second/both 4/4/4; implicit null-safe interface deletion
+// alone/first-clear/second-clear/both-clear 4/4/4/4; both clears with saved byte 4.
 // @retail 0x1c27a0
 void function_1c27a0()
 {
