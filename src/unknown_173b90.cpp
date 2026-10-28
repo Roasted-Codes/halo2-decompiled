@@ -882,6 +882,9 @@ public:
 // long tint instead 364; without parent color 353. Original restored.
 // Round 232: four complete positive/negative factor orders, direct or all six
 // products staged before output, 292 each. Original two-use helper restored.
+// Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
+// 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
+// All record, request and completion forms restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
