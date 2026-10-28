@@ -93,7 +93,7 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 	return result;
 }
 
-// score 131 (was 131): frameless entry saves, unit reload and sentinel carriers differ.
+// score 107 (was 131): frameless entry saves, unit reload and sentinel carriers differ.
 // Native player-table stride and byte eligibility/prior-state combinations 131
 // each (seven forms); full-width eligibility 127 (four-point gain rejected).
 // Original record view, result types, observations and body restored.
@@ -120,6 +120,9 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 // On the 107 body: long user index 111; reset entry in full 109; weapon flag as if/else 111; zoom
 // test as !(keep && zoomed) 107; sound index as one ternary 107.
 // BLOCKED-BY 0xbadc0 (the re-fetch after its calls).
+// Round 57: force-inline current-weapon helper 107; both helpers force-inline 107; user ordinal
+// before the zoom flag 107; zoom flag after the entry unit 107; after the player queries 120;
+// after the weapon lookup 120; weapon index declared early 107; sound index declared early 107.
 // @retail 0xc86e0
 void function_c86e0(long unit_index, bool keep_weapon_zoom)
 {

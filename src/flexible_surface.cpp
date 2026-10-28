@@ -114,6 +114,9 @@ void function_117080(long);
 // registers (result edx, count edi, bitmap esi). Pool read directly at each use as in 0x1160c0 54 (reload
 // now after the `lea` as retail); with typed record arithmetic 54; with no slot local 54; with record and
 // definition locals 54; the for-loop next-index helper 50 (identical code).
+// Round 57: no slot with next before the reload 64; no slot alone 50; next with slot 54;
+// slot at function scope 50; typed record-array base 50; outer for-loop 50; alternate next
+// helper with next 54; record pointer on the pool-local body 50.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
