@@ -331,6 +331,10 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 // result 117, full traversal cursor 126, lookup/direct outputs 117; double offset names
 // 105; full success carrier 140; complete squared-sum local 105, accumulated z-x-y sum
 // 101; natural tested parent walk 105, with lookup/direct outputs 138. All restored.
+// Round 275 (fast control 105): minimum from tests 107; minimum plus full child 104;
+// direct selected end 105, with minimum 107; independent direction node 105; readonly
+// source view 105; minimum/direct end/direction node 107; complete distance names on
+// minimum/direction graph 107. All restored; the one-point 104 form is dropped.
 // @retail 0x270750
 bool function_270750(byte *buffer, long unknown, s_actor_point_target const *target,
 	real *distance, long a, long b)

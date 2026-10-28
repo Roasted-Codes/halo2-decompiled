@@ -1565,6 +1565,12 @@ void function_dfd70(long arg_159e6d)
 /* a point on a biped: its eye (mode 0 at its origin, 1 standing, 2
    crouching, raised to its head marker unless something is in the way), or
    an offset from a point along a forward vector (mode 3) */
+// score 995 (was 995): Native 0x8c eye workspace remains out of line; incoming roles and object acquisition differ.
+// Existing helper forced inline 287 but loses a matched caller; forced zero/default/reverse/if-else/
+// origin-join/name/zero-default forms 292/287/287/282/287/287/292 on that rejected boundary.
+// Both existing helpers forced 287; late force-inline declaration 287: both lose the same caller.
+// Original helper boundary with zero/default/reverse/if-else/origin-join/name/zero-default forms
+// 1003/995/995/989/995/995/1003; the six-point if-else gain is dropped. Original body restored.
 // @retail 0xdef60
 void __stdcall function_def60(point3f *point, long arg_159e6d, short mode, point3f const *origin,
 	vector3f const *forward, real const *offsets)
@@ -3161,6 +3167,10 @@ void __stdcall function_e2fa0(long arg_159e6d, long object_index, void *unused)
 
 /* counts the ticks an actor's biped has been falling too far to jump back
    (+0x3ab), and reports it once a second */
+// score 154 (was 208): Frame 0xa0 recovered; incoming index, native flag tests and probe/energy homes differ.
+// Caller-only noinline declaration 208, with collision arms 206 (two-point gain dropped).
+// Native conversion boundary 166; collision arms 162; Boolean bits 183; both 181;
+// actual count clamp 154 kept; workspace names 166; complete energy parts 166; all 177.
 // @retail 0xe30c0
 void function_e30c0(long arg_159e6d)
 {
@@ -3217,7 +3227,11 @@ void function_e30c0(long arg_159e6d)
 		}
 		if (stuck)
 		{
-			count = MIN(biped->unknown3ab + 1, 0xfe);
+			count = biped->unknown3ab + 1;
+			if (count > 0xfe)
+			{
+				count = 0xfe;
+			}
 		}
 	}
 	biped->unknown3ab = (byte)count;
@@ -4091,6 +4105,10 @@ void __stdcall function_b8600(long object_index, long unknown);
 /* applies the biped's character physics move: its facing and up, its
    animation names, its movement animation's rate, crouching and grabbing,
    and its new velocity (or, asleep, its new position) */
+// score 742 (was 793): Frame 0xd0 agrees; definition/state/motion homes, early exit, flag widths and vector schedules differ.
+// Default completion fallthrough 776; direct still-result ownership 773; both 749 fast/742 plain kept.
+// Common final result with fallthrough 789; coherent workspace names 800; declared flag stores 781;
+// entry still Boolean 800; definition at every use 864 (fast control 800, ordinary opening 793).
 // @retail 0xe24f0
 bool __stdcall function_e24f0(long arg_159e6d, long *names, s_biped_physics_output *output)
 {
@@ -4100,14 +4118,14 @@ bool __stdcall function_e24f0(long arg_159e6d, long *names, s_biped_physics_outp
 	word const *animation_flags = (word const *)((byte *)biped + biped->unknown33e);
 	s_biped_physics_move move;
 	vector3f velocity;
-	bool still = false;
+	bool still;
 	bool grabbing;
 	real change;
 
 	*(byte *)&biped->flags_348 &= ~0x10;
-	if (function_ddfb0(arg_159e6d))
+	still = function_ddfb0(arg_159e6d);
+	if (still)
 	{
-		still = true;
 		if (*((byte *)biped + 0xc1) & 1)
 		{
 			function_b9b90(arg_159e6d, false);
@@ -4184,6 +4202,7 @@ bool __stdcall function_e24f0(long arg_159e6d, long *names, s_biped_physics_outp
 		{
 		case 4:
 			function_e6f90(arg_159e6d);
+		default:
 			function_e5930(arg_159e6d);
 			break;
 		case 6:
@@ -4201,9 +4220,6 @@ bool __stdcall function_e24f0(long arg_159e6d, long *names, s_biped_physics_outp
 			function_e5930(arg_159e6d);
 			break;
 		}
-		default:
-			function_e5930(arg_159e6d);
-			break;
 		}
 	}
 	if (biped->unknown3aa && !function_e0dc0(arg_159e6d))
