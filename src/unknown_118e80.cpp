@@ -1015,6 +1015,14 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // each (identical code); sweep before the query 283 (now the start through the call matches; the
 // sweep stores land at 0x3c not retail's 0x48 and the candidate loop gains a jump over its alignment),
 // with quotient-first products 283. The zero register (retail XMM3) decides the response arm.
+// Round 12 (lane 10): sweep before the query with the maximum-fraction constant declared after it 283
+// (the constant's early load and slot then as retail; the extra count is our loop entry jumping over
+// 7 bytes of alignment where retail pads 6 and falls through, shifting every later line: retail
+// computes and stores the sweep one component at a time in one register, j and k loaded then
+// multiplied, where ours folds j/k as q*j/q*k); on that, component-first products 283 (same code),
+// point declared ahead of the sweep 283 (same code). On the current body: the sweep renamed to sort
+// before the point 156 and declared at the top of the block 156 (same code and homes: neither the
+// name nor the declaration order moves these slots). All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
