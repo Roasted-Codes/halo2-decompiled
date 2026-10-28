@@ -272,6 +272,10 @@ struct s_item_object_2bc1
 // shared event 97; separate timer values 110; early tally pointer 97; combined 156.
 // Separate entry declaration 97; independent/complete failure guards 97/97; multi-use team value 156;
 // timer field reference 110; published timer result 97; tally reference/array 97/97; signed ceiling 97; scoring-state lifetime 97.
+// Lane 10 r15: retail decrements a copy (`mov cl,al; dec cl; mov al,cl; test al,al`, one jg);
+// `countdown <= 0` 91 (one jg, state moves to ESI); the decremented value stored and the field
+// tested 91; `--field <= 0` 91; `= --timer` then `timer <= 0` 69 (state back in EBX, only the copy
+// and later offsets differ); the decremented value assigned back to the timer 91.
 // @retail 0x2bc990
 void __stdcall function_2bc990(long team)
 {
