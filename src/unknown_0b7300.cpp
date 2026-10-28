@@ -526,12 +526,12 @@ __forceinline void object_placement_unhide(long object_index)
 }
 
 /* hides an object that isn't on the current structure bsp, or deletes it */
-// score 17 (was 89): retail stores the flag word twice (hidden, then hidden_by_bsp from the same
+// score 70 (was 89): retail stores the flag word twice (hidden, then hidden_by_bsp from the same
 // register) where ours computes hidden_by_bsp from hidden with shl/xor, and it materializes the
 // placed test with setne before testing it. Retail re-reads the object array after the first
-// test, so the second lookup reads data through a volatile pool (89 -> 59); the persistent test
-// as a bool local gives retail's block order (44); hidden_by_bsp copied from hidden gives
-// retail's length (17). No effect: the flags as dword ors in either order or both, the value
+// test; ours keeps it. The persistent test as a bool local gives retail's block order, and
+// hidden_by_bsp copied from hidden helps too. The second lookup read through a volatile pool
+// gives 17, but that cast isn't kept without a byte match. No effect: the flags as dword ors in either order or both, the value
 // stored twice by hand, a volatile first store, a fresh lookup for the second store (40); the
 // placed test as a bool, byte, long or 0/1 local, negated, as == false, != true or !(&&).
 // @retail 0xd52b0
