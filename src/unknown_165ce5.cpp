@@ -1462,6 +1462,10 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 360 (fast base 243): native double aiming-limit/look-limit/look-rate
 // pairs, combinations and all three 574/543/259/584/574/531/584; native 64-bit
 // user flags 388. Original scalar widths and every smoothing input restored.
+// Round 25 (fast control 234, full 232): early return 234; view-named look outputs 234;
+// active-result preset 425; look/flags declarations at assignment 234; const first-assignment
+// look outputs 234; per-weapon scalar/channel declarations at assignment 234;
+// outer active/zoom declarations 234/234. Original body restored.
 // Round 225 (fast control 234, full 232): direct negative overlay result 414;
 // complete scope-first rate selection 416; native countdown store/test 234;
 // overlay/rate, overlay/countdown, rate/countdown and all three 422/414/416/422;
