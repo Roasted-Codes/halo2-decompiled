@@ -650,6 +650,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // both copied-level field references 378, with original buffers 398; native settings-copy producer
 // 384, with original buffers 426; native buffer-record snapshot 390 (fast control 378).
 // Original settings observations 396 plain, worse than full 393; all restored. Frame 0x130 remains.
+// Round 244: early native header initialization before the member copy, first/second/both/third/
+// first-third/last-two/all 381/378/375/371/368/374/374 fast; all before settings copy 374
+// (control 378/967). First-third 399/952 plain versus 393/951; original phases restored.
 // Round 235: Complete native descriptor initialization subsets and at-use clear [359, 348, 349, 349, 351,
 // 333, 334, 338] fast; uniform all-three 336 plain kept (393 before). On that producer, pairwise/all
 // descriptor scopes and one reused descriptor [370, 351, 381, 416, 426] fast; restored. Frame 0x130 and
@@ -703,7 +706,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 438 (was 438): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 438 (was 438): Frame 0xc agrees; selected-primary storage, destination construction and integer-bit/SSE staging differ.
+// Earlier: frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
 // Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
 // level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
@@ -758,6 +763,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Round 365: actual selected primary-field pointer with native destinations, special input
 // snapshot and native routing domains: 453/461/441/455/447/461/438/454. The 438 plain
 // form loses the dispatcher; input snapshots change the entry roles. All restored.
+// Round 274: primary scalar on retained asymmetric destinations with original/long right and bool/word
+// routing carriers 446/449/437/451; same forms with the secondary setting observed at its send
+// 455/462/450/452. The 437 gain is below margin; 449/451 lose the dispatcher. All restored.
 // Round 241: Paired selected-setting decision, rear/front first, with independent destinations, live
 // routing field, and paired true/false-first destinations: 449/449/449/449/473/473/473/473. All
 // selected-field observations and original body restored.

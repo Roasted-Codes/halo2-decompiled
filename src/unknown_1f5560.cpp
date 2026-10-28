@@ -741,6 +741,9 @@ real normalize2d(point2f *v);
 // score 171 (was 171): frame 0x48 and entry stores agree; the found-search re-test,
 // trajectory result DL, retry homes, object/query allocation and movement tails differ.
 // The trajectory helper uses retail ret 0x2c; the older extra-EDX blocker is absent.
+// frame 0x48, entry initialization and trajectory convention agree.
+// The found-type scan has an extra bound test; trajectory result registers, retry scalar homes,
+// object/query allocation and separate movement-return tails still differ.
 // Forms tried: search then selection 172; unsigned scan 178; fixed do/while 191; types arm first 191;
 // fallback setters 195; split plus unsigned scan 223; signed-long search 192; signed-byte search 188;
 // exact exhaustion 210; named first normalization result 172; low-bit presence guard 228; native type
@@ -792,6 +795,10 @@ real normalize2d(point2f *v);
 // bottom-tested scan 207; with the selection inside the scan 183; retry vertical renamed to sort first 168.
 // Round 236: native request/movement/selected-type result and all combinations, then native table
 // fields 171 each; all restored.
+// Round 162, with the corrected trajectory convention: found-bit selection, both output-pair orders,
+// false-validity return, overall result and the combined output/result form 174 each; early first-type
+// 230; byte/word trajectory success 189/177. Coordinated trajectory inline declarations on the
+// original/found-bit graphs 171/174. All bodies, call tuples and outside declarations restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -1362,6 +1369,9 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 // Round 10 (lane 11): one signed offset for the type-zero arm 293 (1140 bytes); `return 0.0f` at the type
 // exit 252 (same code); direction renamed to sort last 252 (same code); flag declared after the
 // normalization 287; side dot product with the side terms first 252 (same code).
+// Ordinary origin with existing 2D product producer across paired projections,
+// cosine and side classification 267 in all seven combinations; complete products
+// plus side-offset arms 278. Exact length throughout; original body restored.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

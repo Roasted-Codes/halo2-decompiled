@@ -53,6 +53,11 @@ static __forceinline long real_to_long(real value);
 // The collision workspace remains 16 bytes smaller; local offsets and loop layout differ.
 // Reused step scale 228; with shared delta 228, endpoint setter 220, both 220;
 // with start setter 228, start/delta 228, both setters 227, all three 227.
+// Reused actor-position pointer, first-use lifetime, origin/start declarations
+// and common-exit combinations 114, 82, 114, 82, 190, 154, 190, 154.
+// Round 219: Complete per-step direction snapshot with short/char/byte/long induction
+// 240/240/240/226; direct char/byte/long/word induction 210/210/164/81. All restored; frame
+// 0xc4/0xd4 and direction/counter roles remain.
 // @retail 0x1c19b0
 bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_type_f17a25 *path)
 {
@@ -140,6 +145,8 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 // Actor is held in ESI after the global lookup; retail masks its stack index first and uses EBX.
 // Tail advance after selection 96; shared direction setter 96; selected-result gate 97,
 // with setter 97; actor read at every use 85, with setter 84; both 85, with setter 84.
+// Current index before lookup/next cursor, rejection guards, reused post-scan
+// decision and closest-first combinations 80, 80, 85, 85, 80, 80, 85, 85.
 // @retail 0x1c1d50
 bool __stdcall function_1c1d50(long actor_index, s_type_f17a25 *path)
 {

@@ -2701,11 +2701,9 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
-// score 21 (was 153): at retail's length; left: the iterator index store sits before the
-// flag test, the tick store sits after the rate multiply (retail stores, then multiplies the
-// rate unfolded), the damage-type pointer load after the 7c store, the 0x29 store after
-// the flags (statement swap 19, under the keep threshold), and register choice in the second mode
-// test, the countdown's engine-slot block and the root walk's table load.
+// score 17 (was 21): frame 0xc8 and retail length agree; tick/rate scheduling, the damage-tag
+// pointer load and scratch registers in the later mode, slot and root blocks remain.
+// Earlier isolated damage-byte store order 19 was below the keep threshold.
 // Round 32: the trigger test through 0x11c5b0 148; the damage-type pointer read in the call 130;
 // long user index 19 with it (both loops get retail's padding). Then: typed byte decrements 19;
 // one inline helper for both slot notifications 19; `time = rate; time *= ticks` 226 (folds);
@@ -2754,6 +2752,9 @@ struct s_unit_flags_14d8b0
 // alignment. Tick field at each use 153; ticks * rate 153; rate read in the product
 // after the increment 228 (folds the rate load); a ticks-to-seconds inline 228; long
 // user index in the expired arm 157.
+// Low-time/reset/both inline declarations 21/229/229; signed-word counter 23; unsigned datum 21;
+// unsigned handles 21; low-time inline with first native flag 19; native controls with that flag 21;
+// combined first native flag and damage-byte store order 17 (plain whole-program confirmed).
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
@@ -2762,7 +2763,7 @@ void function_14d8b0(void)
     while ((player = iterator.current = data_iterator_next_inlined(&iterator.cursor)) != NULL)
     {
         long index = iterator.cursor.datum_index;
-        if (player[3] & 0x20)
+        if (((s_player *)player)->flags_word & 0x2000)
         {
             byte *globals = *(byte **)((byte *)g_4e034c + 0x134);
             long effect = *(long *)(globals + 0xb4);
@@ -2814,8 +2815,8 @@ void function_14d8b0(void)
                         s_type_1e6529 damage;
                         damage.unknown7c = NONE;
                         function_d6660(&damage, *(long *)(*(byte **)((byte *)g_4e034c + 0x144) + 0x28));
-                        damage.flags |= 4;
                         *(byte *)&damage.unknown84 = 0x29;
+                        damage.flags |= 4;
                         object_get_damage_owner(*(long *)(player + 0x2c), &damage.owner);
                         function_d7b80(&damage, *(long *)(player + 0x2c), NONE, NONE, NONE, NULL);
                     }

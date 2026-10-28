@@ -307,6 +307,10 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // byte seated predicate 186; request/snapshot 198; first-result/byte 214;
 // snapshot/byte 184; all three 198; request/snapshot/word 198.
 // Two-point snapshot gains at 668 bytes rejected; original body restored.
+// Round 163: both boarding object scopes/movement-first/both/full boarding
+// pawn scope 196/218/219/207; movement with full scope/readonly objects graph/
+// readonly full scope/readonly full movement scope 221/196/207/221.
+// Actor/pool and request tails remain; original scopes and every observation restored.
 // Round 234: complete positive boarding decision to final result, with actor/both-object
 // readonly receiver subsets, 221 each (692 bytes); query-produced function result with
 // the same four receiver graphs 232 each (700 bytes). Original body restored.

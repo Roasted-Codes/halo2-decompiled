@@ -1677,6 +1677,9 @@ void function_bba20(long index);
 // root-cluster scope 319 (fast).
 // Round 214: signed-byte permission 319; unsigned-word permission 320; signed-word saved activity 319; native-long saved activity 319; word permission/activity homes 319.
 // Isolated pool, offset, object, permission, ancestor, header, parent and cluster names each 319.
+// Round 244: complete rejection/positive/negative/acceptance branch results in bool
+// 311/311/311/309; long 320/320/320/310 (fast control 305).
+// Pool/NONE carriers stay different; original permission production restored.
 // Round 234: native initial header, inline offset, ancestry getter, both 305/319/307/315;
 // those four with consistent Boolean bit-seven/eight tests 312/327/314/324. All restored.
 // @retail 0xb93b0

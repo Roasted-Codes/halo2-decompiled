@@ -482,6 +482,12 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // pointer/reference contracts [476, 476, 476, 476, 476, 476, 476, 476]; all restored.
 // Round 236: conditional diagnostic pointer updates for right/top/tip/all
 // corner/right+tip/top+tip/all/all including initial result 404 each; all restored.
+// Round 244: rectangle/position/both/bounds/rectangle-bounds/position-bounds/all
+// memmove copies 721/691/716/712/721/710/740; all three memcpy copies 404.
+// Original native copies and separated normal inputs restored; camera/corner homes remain.
+// Round 218: CRT output-address rectangle products/all, memcpy 415/417,
+// memmove 721/592; each with copied-bounds output consumed 415/417/721/592. All restored.
+// Copy output identity does not recover camera EBP/corners EBX or the first store schedule.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

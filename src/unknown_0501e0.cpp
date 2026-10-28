@@ -35,7 +35,9 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
         ++output;
     }
 }
-// score 221 (was 221): frame 0x18 versus 0x14; retail loads the view scale once (xmm6) for
+// score 221 (was 221): frame 0x18 versus 0x14; retail keeps both transformed points in
+// registers and the second point's offset (with its scaled copy) in the frame, ours gives
+// the second view's x a frame slot of its own at [esp+8].
 // both inlined transforms, keeps the second point's offset in the frame and the first in
 // registers, and scales copies of the inputs; coefficient/result/tail homes differ. Tried:
 // global optimization off 961; depth zero 555; frame pointer 300; input-first products 255;
