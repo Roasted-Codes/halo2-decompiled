@@ -2693,7 +2693,7 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
-// score 128 (was 128): iterator store/test and rate/tick scheduling differ;
+// score 153 (was 160): iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
 // low-time arm first 179; inline depth one 155. Damage call convention differs: BLOCKED-BY 0xd66d0
 // (retail pushes both arguments; ours passes the object in eax).
@@ -2729,6 +2729,13 @@ struct s_unit_flags_14d8b0
 // register rotation; under the keep threshold alone); with the tick stored before the rate read 233 (rate folded
 // into mulss), rate named after the increment 233; trigger test as one condition 125; datum index read from
 // the iterator at each use 125.
+// Round 29 (from 160): the countdown at +0x180 read only under the mode test 153 kept
+// (retail tests the mode first). Left: the tick store sits after the rate multiply
+// (retail stores, then loads the rate unfolded), register rotation in the damage and
+// slot blocks, and a one-byte shorter mode load (eax) that drops the root walk's loop
+// alignment. Tick field at each use 153; ticks * rate 153; rate read in the product
+// after the increment 228 (folds the rate load); a ticks-to-seconds inline 228; long
+// user index in the expired arm 157.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
@@ -2817,14 +2824,17 @@ void function_14d8b0(void)
         }
         if (*(signed char *)(player + 0x3f) > 0) --player[0x3f];
         if (*(signed char *)(player + 0x40) > 0) --player[0x40];
-        short timer = *(short *)(player + 0x180);
-        if (g_4e6948->mode != 4 && timer > 0 && (*(short *)(player + 0x180) = --timer) == 0)
+        if (g_4e6948->mode != 4)
         {
-            player[3] &= ~8;
-            if (game_engine_get())
+            short timer = *(short *)(player + 0x180);
+            if (timer > 0 && (*(short *)(player + 0x180) = --timer) == 0)
             {
-                long slot = function_xaee93d()->slots[(short)index];
-                if (slot != NONE) function_b58c0(slot, 0x100);
+                player[3] &= ~8;
+                if (game_engine_get())
+                {
+                    long slot = function_xaee93d()->slots[(short)index];
+                    if (slot != NONE) function_b58c0(slot, 0x100);
+                }
             }
         }
         if (*(long *)(player + 0x2c) != NONE) function_1521d0(index);

@@ -163,7 +163,15 @@ void function_402b0(long cache_index, long mode)
     }
 }
 
-// score 182 (was 182): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
+// score 155 (was 182): Frame 0x84/0x88, cache/draw transport and state/API expansion remain.
+// Round 81: the last pass's flag test without the bool cast, `((g_4ba014 >> 1) & 1)`, 155 at
+// retail's length (kept; `g_4ba014 & 2` gives the same code; retail still tests the byte in memory
+// and reloads the dword for `shr 1`), with `bool selected` 220; on it the four selections without
+// their bool casts 155, the last pass's tests as nested ifs 155, 0x402b0's parameters as
+// (mode, cache_index) 155 (all the same code). 0x496f0 is now
+// inlined here (retail calls it at all five call sites): a separate noinline declaration at its
+// definition 314 (868 bytes); bool selection 222 (975 bytes, aligned 62 -> 32: retail's stack byte),
+// with the noinline declaration 285 (892 bytes); the flag test's arms swapped 182 (same code).
 // Earlier: frame 0x84/0x88, callee registers and render-state expansion differ;
 // dword selection 183; word setup flags 234; combined mask 222;
 // brightness component loop 238; redundant bit-clear removal 217.
@@ -255,6 +263,10 @@ void function_402b0(long cache_index, long mode)
 // Round 352: native cache-body graph with consistent reversed/unsigned/both mode contracts
 // 201f each; four explicit cdecl combinations 211f each; unsigned reversed stdcall 201f.
 // Fast control 201/946 versus plain 182/947. Original helper signature/call and body restored.
+// Round 64: retail's passes are 0x44370 inlined (contributor file) and its per-light reset is 0x4a780
+// inlined (same file); our LTCG keeps both out of line: the reset as a 0x4a780 call 305 (828 bytes), with
+// a forceinline declaration 305; 0x402b0 parameters (mode, cache_index) 182 (still EAX); flags assigned to
+// g_4ba014 directly 182 (identical); flag arms swapped by a negated test 182 (same layout).
 // Lane 9 r23 (plain): retail's four passes are 0x44370's body inlined with the mode constant and
 // its mode table folded (mode 14's target 1, the culling argument's dead g_485898 load, case 11's
 // `enabled = true` re-store, the stack enable byte at +0x13): BLOCKED-BY 0x44370, which sits in a
@@ -319,7 +331,7 @@ bool function_404b0(long mode)
         else g_467130 = 0;
         function_15370(0);
         if (selected) { function_44550(); function_445d0(); }
-        if ((g_4ba014 & 1) && (bool)((g_4ba014 >> 1) & 1))
+        if ((g_4ba014 & 1) && ((g_4ba014 >> 1) & 1))
         {
             selected = (bool)((g_4c1a48[1].flags >> 13) & 1);
             if (selected)
@@ -342,7 +354,13 @@ bool function_404b0(long mode)
     return true;
 }
 
-// score 193 (was 193): BLOCKED-BY 0x44370. Frame 0x48 and geometry agree. Retail's passes 16/1/3/8/20/7
+// score 193 (was 193): BLOCKED-BY 0x44370. Frame 0x48 and geometry agree. Round 81 (fast; aligned
+// count 24, so the 21 missing bytes cause most of the 193): the entry byte test as `<= 0` 192 (retail's
+// `jbe`); the selections or the geometry flag without their bool casts 193/193 (same code); pass 8 as
+// `selected = bit; if (selected) selected = g_4ba022;` 176 (aligned 16, not kept: a flag set inside a
+// test; retail copies the global byte unnormalised, which needs g_4ba022 declared bool where a
+// contributor file defines it as byte); the same as a ternary 170 (1215 bytes only through padding,
+// aligned 36, not kept). Retail's passes 16/1/3/8/20/7
 // are 0x44370 inlined with its mode table folded (that table lies in retail's .rdata; ours is a writable
 // byte array defined in a contributor's file), so in every pass that culls with 0 retail still loads
 // g_485898 (`mov eax, [g_485898]; xor eax, eax`, 20 of the 21 missing bytes: the table's cull mode became

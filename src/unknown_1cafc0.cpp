@@ -908,6 +908,16 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // transition ID's index in BP. Success stored before the channel queries 274; member NONE test
 // on the transition ID 210 (identical); resolved set named after the lookup, first/last 210/210
 // (identical); blend declared first 211; graph test before the transition test 272.
+// Round 64 (aligned counts in brackets, baseline [106]): retail keeps blend and the unflagged byte in
+// the [esp+0x50] slot (stored after every `&=`, reloaded after the 0xe6800 call), as if &blend escaped
+// in transition_find; a `bool *const *` read of transition_find's blend parameter (0x1ccda0 still
+// matches) 298 [110] moves the primary ID to retail's slot. Three name-change bools tested with `||`
+// after the store 265 [53]; with result true right after channel_start 256 [53]; plus bool result 249
+// [51] (362 instructions as retail; left: blend memory traffic, the cold `state_flags & 4` block after
+// the epilogue, the fraction pin's load order); the same with the gotos replaced by `if (!result &&
+// (state_flags & 4)) result = true; if (result) {...}` 249 [51] (identical code); `result ||` test 295;
+// bool result with early success 269 [105]; three bools with bool result 295 [65]; all with the
+// captured blend 261 [65].
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

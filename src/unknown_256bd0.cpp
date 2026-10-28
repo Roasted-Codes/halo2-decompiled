@@ -122,6 +122,9 @@ struct s_object_flags_256bd0
 // each; complete native and read-only native records 206/206. Original body, iterator
 // helper and includes restored.
 // Earlier: frame 0x114 versus 0x110: our build hoists the ai globals' active byte out
+// frame 0x114/0x110 from the hoisted ai-active byte (cause below), then
+// scratch-register rotation, the direction copy store order and the angle helper operand pairing.
+// Frame 0x114 versus 0x110: our build hoists the ai globals' active byte out
 // of the iterator loop into a stack byte, where retail re-reads it after every 0x6b380 call (its
 // compiler treats that call as possibly writing it; src/unknown_2003a0.cpp reaches the same reload
 // only through a volatile read, which is no longer allowed); every stack offset then differs by 4.
@@ -129,8 +132,7 @@ struct s_object_flags_256bd0
 // 0x28dbd0); retail selects the entry with cmovne; actor/point/selection register homes.
 // Tried: native placement fields 213; actor getter 212; slot reference 211; native fields with getter
 // 214; const entry result 211; condition-local entry 211; candidate skip 211; placement scope 211;
-// marker position workspace 235; placement position reads 253; in-place velocity 212; marker/placement
-// 225; marker/velocity 235; placement/velocity 253; all three 225; angle field before sign adjustment 230; helper state pointer in two orders 211/211; state reference 211/211;
+// before sign adjustment 230; helper state pointer in two orders 211/211; state reference 211/211;
 // activity value 211/211; external activity reference 211/211; actual datum cursor with separate
 // index output (pointer, void result, read-only result, reference output, each in both orders) 211;
 // shared native datum result/position value/read-only result/read-only position value
@@ -164,6 +166,12 @@ struct s_object_flags_256bd0
 // Round 63: object/selected handles declared the other way 205; result read after the timer pointer 205;
 // minimum declared before the flags query 210; entry position through a named point pointer 205; the
 // variant creation and the spawn as if/else after the flags block 208.
+// Round 102: the cause of the hoist: our link proves the iterator's address never escapes, so the
+// iterator stores cannot reach g_4f55d0->active; retail reloads it each pass. A diagnostic
+// `s_290c50_iterator *const *` read of the step helper's parameter (stores &iterator) gives
+// retail's frame 0x110 and loop: 187 fast (aligned 112 -> 67), not kept. The object index copied
+// only while active (retail skips the copy when inactive) 209; with the diagnostic 187; the step
+// helper forceinline 205; both 209.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
