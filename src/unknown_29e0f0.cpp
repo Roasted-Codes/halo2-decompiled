@@ -116,6 +116,11 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // link/directional/selected short-workspace identity subsets, 406 each. All restored.
 // Round 234: complete-search link count/base/both 459/438/478; with promoted group
 // domain 452/494/465; count/base with shared bits 462, plus promoted group 465. All restored.
+// Round 368: test-produced final result 440; complementary pass admission 406; search-scoped best distance
+// 457; result/admission 440; result/distance 478; admission/distance 457; all and named result 478/478.
+// Original executable body restored.
+// Round 370: shared point-array base with long group index, captured point count and shared
+// bitmap operations 429/428/410/432/515/515/464/464; body, helpers and original includes restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

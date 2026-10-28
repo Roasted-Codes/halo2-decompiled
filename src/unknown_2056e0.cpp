@@ -210,6 +210,9 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // aggregate initializer or real_point3d_set, `= 0`, zero k first 1/1/1/1/4; double-scale local 7; real
 // scale into the double helper 1; limit inline/no inline keyword 1/1; the existing 0xa75d0 for both/linear
 // only 72/2 (float scale: retail's zero constant but not its reload order); explicit double conversions 7.
+// Round 272: CRT planar/both brake initialization 172/172; complete velocity copy 190;
+// both native vector setters 1; consumed limiter output 146, explicit input/output 146;
+// native k-j-i norm loop 149; CRT planar zero with consumed limiter 183. All restored; zero-product width remains.
 // Existing double-scale force-inline declaration 1
 // complete limiter split pointer/reference outputs 1/1
 // native value input with pointer/reference outputs 325/325

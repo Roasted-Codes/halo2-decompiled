@@ -49,9 +49,10 @@ void __stdcall actor_behavior_81_update48(long object_index, long unused);
 
 static __forceinline long real_to_long(real value);
 
-// score 81 (was 81): our stack frame is 16 bytes smaller than retail's, so
-// every local
-// offset is shifted and the loop is laid out differently.
+// score 81 (was 81): frame 0xc4 versus 0xd4; direction/counter roles and endpoint scheduling differ.
+// The collision workspace remains 16 bytes smaller; local offsets and loop layout differ.
+// Reused step scale 228; with shared delta 228, endpoint setter 220, both 220;
+// with start setter 228, start/delta 228, both setters 227, all three 227.
 // @retail 0x1c19b0
 bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_type_f17a25 *path)
 {
@@ -135,9 +136,10 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 	return false;
 }
 
-// score 80 (was 80): the actor index is taken from the stack into EDX in
-// retail and from a
-// global into ESI here, so the whole prologue is a different length.
+// score 80 (was 80): actor/sentinel allocation and rotated prop walk differ at the 0x0c frame.
+// Actor is held in ESI after the global lookup; retail masks its stack index first and uses EBX.
+// Tail advance after selection 96; shared direction setter 96; selected-result gate 97,
+// with setter 97; actor read at every use 85, with setter 84; both 85, with setter 84.
 // @retail 0x1c1d50
 bool __stdcall function_1c1d50(long actor_index, s_type_f17a25 *path)
 {
@@ -257,6 +259,10 @@ bool __stdcall function_1c2120(long actor_index, s_slot *slot)
 }
 
 // The post-header slot state and output-before-clear initialization match retail.
+// score 0 (was 64): the object pointer is kept in ESI here and reloaded from
+// the stack
+// there, and the flag byte is written from AL here and as a constant 0 in
+// retail.
 // @retail 0x1c2130
 bool __stdcall function_1c2130(long actor_index, s_slot *slot)
 {

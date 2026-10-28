@@ -300,6 +300,9 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 267: boarding/animation/approach failure guards, singly and all combinations,
 // 194 each; all guards with the existing request result 186; minimal request result
 // alone 186 (plain, 680 B). Neutral guards removed; pool/actor-index and x87 homes remain.
+// Round 159: Canonical approach output and its byte seat result 186/186; canonical movement-long and both
+// results 191/191; original movement long/short 191/195; squared distance/rejection-first tail 186/186;
+// native slot parameter with retained/direct receiver 186/186. All restored.
 // Round 232: first request through result 214; uniform pawn snapshot 184;
 // byte seated predicate 186; request/snapshot 198; first-result/byte 214;
 // snapshot/byte 184; all three 198; request/snapshot/word 198.

@@ -1357,6 +1357,9 @@ struct s_player_properties
 // (fast) but 0x649c0 30; previous buffer read at each use 184; mask before the names 184; const owner
 // 184; state read at each test 184. Retail holds the owner in edx from the parameters test on, so no
 // zero register is free there.
+// Round 25 on the no-current graph: both byte zeros removed 207; first/second/all
+// redundant zero groups removed 222/207/259; first/second small reset calls 226/229;
+// separate count publication and separate loop indices 198 each. Original body restored.
 // Lane 4 r106 (plain): the 0x40 group is a 16-byte player appearance (bytes) and retail's dword zeros
 // fit small memsets: the 12-byte group's memset then the appearance's give retail's zero block (the
 // big memset's eax for 0x40, a fresh zero for 0x70) with no `current` 224 (930 bytes), with retail's
