@@ -144,7 +144,13 @@ void function_10ec00(long object_index, s_animation_state *state, long unused, d
 extern real g_547648;
 void c_animation_channel_data_get(c_animation_channel const *channel, s_animation_data *data);
 
-// score 221 (was 221): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// score 215 (was 221): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// Lane 8 r64: countdown weight with the `>= 3` case first (retail's fall-through) 215, kept; frame
+// byte in a long local 260 (32-bit compare as retail, aligned 119, 969 bytes); char/word loop index
+// 215 (identical: the loop stays a pointer plus spilled countdown); sampled flag declared before
+// the getter result 285 (994 bytes); weight as `frame * (weight byte * scale)` 215. Diagnostic only: 0x1c6440
+// declared noinline gives 940 bytes and 166 (with the long frame 215, aligned 94), but matched
+// callers such as 0x1c6500, 0x1c6560 and 0x1ccb40 inline it, so the header was restored.
 // and spilled induction remain; native-byte sample frame 221; short sample frame 261;
 // native-byte sample frame 221; short sample frame 261;
 // one tag frame count 255; input cursors 273; signed-byte sampled result 221;
@@ -246,7 +252,7 @@ void function_10e530(long object_index, s_animation_state *state, long unused, d
 		c_animation_channel channel;
 		if (state->channel_play(&channel, vibration->weighted_animation, 0) && channel.function_1c6440()->frame_count > 17)
 		{
-			real weight = vibration->countdown < 3 ? vibration->countdown * (1.0f / 3.0f) : (7 - vibration->countdown) * 0.25f;
+			real weight = vibration->countdown >= 3 ? (7 - vibration->countdown) * 0.25f : vibration->countdown * (1.0f / 3.0f);
 			channel.set_frame_position(17.0f);
 			channel.sample(weight, node_mask, node_count, transforms);
 			s_animation_data data;

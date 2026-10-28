@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "unknown_0259d0.h"
 #include <math.h>
+#include "vector_products.h"
 
 // @flags /O2 /arch:SSE /Gr
 
@@ -273,7 +274,15 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): frame 0x24 versus 0x2c; the source arrives in edx (retail: ecx, copied
+// score 204 (was 204): frame 0x24 versus 0x2c; source receiver and side-byte homes remain.
+// Earlier: Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
+// frame 0x24 versus 0x2c. Retail receives the source in ecx and keeps it in esi
+// until the plane-table read (scheduled after the edge vector), computes both side flags eagerly (one
+// spilled to a byte slot, `shr; and bl, 1`) and reads the transform from the stack at its test; ours
+// receives the source in edx with no copy, holds the transform in ebp from entry and folds the side
+// compare into one xor inside the branch. A separate rotation output vector copied into the direction
+// scores 193 but adds 19 bytes (one-use staging copy, not kept).
+// frame 0x24 versus 0x2c; the source arrives in edx (retail: ecx, copied
 // to esi, which keeps 0x245aa0 at 3); ours holds the transform in ebp from entry where retail
 // reads it from the stack at its test and borrows ebp (push/pop) only around the first plane
 // code; retail keeps the two material codes and the first side byte in separate stack homes and
@@ -309,17 +318,11 @@ void function_245400(s_source_245400 const *source, long index,
 // a separate rotation output vector copied into the direction scores 193 but adds 19 bytes (one-use
 // staging copy, not kept).
 
-// Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
 // Round 74: plane table declared as a source field and read at each use 204; plane codes declared
 // before the edge vector 203; source parameter declared last (definition, declaration and the one
 // call) 204, still edx; material pointer for the final call (as 0x245400) 204; transformed point
 // declared with the edge vector 204. Retail's source arrives in ecx and is kept in esi until the
 // plane table read, which it schedules after the edge vector; ours reads every source field first.
-// Earlier: Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
-// Earlier: frame 0x24 versus 0x2c, the source register (edx here, ecx in retail,
-// which keeps 0x245aa0 at 3) and the separate side-byte homes differ. Ours holds the transform
-// pointer in ebp from entry, so the source pointer stays in a scratch register; retail reads the
-// transform from the stack at its test and borrows ebp briefly for the first plane code.
 // Native plane field 204; signed surface field 204; combined views 204; native side bitfields
 // 207; indexed vector scaling 205; source reference 204; surface reference 204; vertex table
 // snapshot 204; plane references 204; transform forceinline 204; const transform result 204;
@@ -337,34 +340,9 @@ void function_245400(s_source_245400 const *source, long index,
 // through its address 226 (still loaded into ebp at entry); the edge vector scaled into a copy
 // and rotated with the existing matrix_transform_vector 220; the scaled rotation in an inline
 // helper with its own matrix parameter 204.
-// Frame 0x24 versus 0x2c, source register, matrix reload and independent side-byte homes remain.
-// Earlier: frame 0x24 versus 0x2c; source register and independent
-// side-byte homes differ. Native plane field 204; signed surface field 204;
-// combined views 204; native side bitfields 207; indexed vector scaling 205.
-// source reference 204; surface reference 204; vertex table snapshot 204; plane references 204.
-// transform forceinline 204; const transform result 204; separate emitter noinline 204; both call boundaries 204.
-// Frame 0x24/0x2c, source and side homes remain; first/second/both normal
-// Earlier: Frame 0x24/0x2c, source and side homes remain; first/second/both normal
-// values 230/208/248; first/second/both endpoint values 235/205/244; cross scope/late side values
-// 204/204.
-// frame 0x24 versus 0x2c, source register and independent side-byte homes remain;
-// narrow sides 207; early narrow sides 207.
-// direct narrow codes 239; material snapshot 206.
-// shared rotation 204; shared dot 204.
-// both shared products 204; snapshot with early sides 209.
-// Signed-byte side carriers first/second/both 238/238/204; native-long carriers
-// first/second/both 228/228/222; mixed signed-byte/native-long both ways 228/228.
-// frame, source register and separate side-byte homes still differ.
-// Live first material/matrix/plane table/material table/index 204/204/204/204/204;
-// material plus matrix records 208; both table fields 204; records with table fields 204.
-// frame 0x24/0x2c, source receiver and side-byte homes remain.
-// First/second/both live vertex records 204/204/204; native signed/unsigned low-word code 204/204;
-// current matrix scale 207; native code plus scale 207; vertex records plus scale 207.
 // Complete first/second/both plane values 233/230/262; geometry-scoped
 // first/second/both planes 217/222/255; scoped/outer full planes with shared cross
 // 246/252.
-// Earlier: frame, source register and separate side-byte homes still differ.
-// Earlier: frame 0x24/0x2c, source receiver and side-byte homes remain.
 // Round 130: shared in-place direction scale, with dot/cross/both, 203/203/203/208;
 // separate native scaled direction with those products 222/222/222/222.
 // One-point reduction excluded; alternate dot association/grouped values restored.
@@ -372,16 +350,39 @@ void function_245400(s_source_245400 const *source, long index,
 // stores in ijk/ikj/jik/jki/kij/kji order 222 each; partial rows with shared matrix scale 212.
 // Round 207: native endpoint-word array alone/with plane-table field/with signed material field/
 // with both 204 each; separate native endpoint words with those same four record views 204 each.
-// Earlier: original declarations and body restored; duplicate score headers merged.
 // Native scaled-vector copy with direct/separate rotation output 220/251;
 // native aggregate input with direct/separate output 204/193 (grouping rejected);
 // point workspace placement ties each. Original scalar inputs with separate native
 // rotation output copied before/after point transform 193/211, both declaration
 // scopes; direct final output with initial copy/branch results 193/229.
+// Round 211: complete native surface value, mutable/const, with primary-table-first-second /
+// primary-table-second-first / table-primary-first-second / table-second-primary-first publication
+// orders: 211/211/211/209 each; 789/789/789/787 bytes. Original record, reads and body restored.
+// Round 62: second material read first 205; side flags before the plane pointers 204; second material
+// record pointer read first 207; source parameter first (definition, declaration and the one call)
+// 204, still edx; the side comparison named before the plane test 204. The `/Gd` first pass keeps the
+// source in esi and loads the transform at its test (as retail); only the LTCG pass differs.
 // Round 225: uniform primary-index/surface/both observations 208/203/208;
 // each with the material table read at every use 217/213/209; complete at-use
 // graph with signed/unsigned native low-word fields 209/209. Surface-only
 // grows four bytes; no qualifying gain. Original receivers and observations restored.
+// Round 64: second surface's plane read first 205 (repeats round 62); both surfaces through record
+// pointers 204; early return on equal planes 204; facing arms swapped 204; plane codes as dword
+// (shr side bits, still fused into one xor at the compare) 204; the shared cross3f for the plane
+// cross product 204 (kept: it was that helper's body by hand); dot3f either order 206.
+// Lane 9 r23: retail reads the second material's index (+0xa) before forming the surface pointer
+// and keeps a dead lea of its material record; the source arrives in ECX (copied to ESI), which
+// also costs 0x245aa0 its 3 points. Material table first 205; second material declared first 207;
+// second material record pointer 204 (folded, same code); table and second material ahead of the
+// first index 205 (+0xa read first, material registers exchanged); that order with the first
+// material declared ahead and assigned later 205 (same code).
+// Emitter inline / inline-noinline 204/204; with early narrow sides 207; uniform
+// material-table / primary-index / both observations 207/208/217; native material
+// low word 204; branch-owned planes 223. Original emitter declaration and body restored.
+// Round 16: outer transformed-point workspace 204; native material codes without their later copies 211;
+// second-first 210; first/second alone 211/210; native codes with inner workspace 211; one matrix-address
+// read on that graph 235; signed-byte side carriers on it 211. Native codes move the matrix to ECX, not
+// the source, and give frame 0x28. Original body restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
@@ -408,9 +409,7 @@ void function_245540(long arg_0, s_source_245400 const *arg_1,
 		if ((local_2 & 0x7fff) != (local_3 & 0x7fff))
 		{
 			vector3f local_12;
-			local_12.i = local_8->j * local_9->k - local_8->k * local_9->j;
-			local_12.j = local_8->k * local_9->i - local_8->i * local_9->k;
-			local_12.k = local_8->i * local_9->j - local_8->j * local_9->i;
+			cross3f(&local_8->n, &local_9->n, &local_12);
 			real local_13 = local_12.k * local_6.k + local_12.j * local_6.j + local_12.i * local_6.i;
 			if (local_10 == local_11)
 			{

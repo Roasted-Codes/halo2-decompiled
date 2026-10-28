@@ -1114,6 +1114,11 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 190: Live input levels with bool/byte/short/word primary channel and entry-rear/live-rear
 // observations 221/229, 221/229, 213/231, 213/231. All regress; original scalar captures, channel
 // predicate and send expansion restored.
+// Lane 4 r98: the mode-one sends stay x87 in every add_send form (our VC picks x87 for a memory-homed
+// operand plus a field; retail adds the GPR-held level in SSE through its slot). Append decibels by const
+// reference 214; plain add_send sums 212 (0x2af800 102); a local copy of the gain in add_send 212 (copy
+// propagated); `real level = parameters->level; level += parameters->level_offset;` before the appends
+// with the gains read at use: retail's early offset-first sum, frame 4, 222; with the const reference 232.
 // Round 194: Native byte/short/word/dword channel masks with retained rear samples
 // 200/198/198/199; with entry level sum 209/209/209/212. Small gains rejected;
 // original scalar captures, channel decision, helpers and sum grouping restored.

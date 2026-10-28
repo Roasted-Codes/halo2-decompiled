@@ -63,6 +63,8 @@ public:
 // Returned byte on the first-owner per-use graph: direct construction 29; false/true
 // result 40/34; byte then kind 45; flag return and kind result 44; separate regions
 // and negative flag region 16/16; entry result with separate production 29. All restored.
+// Existing byte conversion types on per-use/cached/reference owner graphs
+// 16/16, 22/22, 22/22; operand-reference inputs 16/16. All restored.
 // @retail 0x319230
 s_result_319230 c_query_319230::function_319230(s_operand_319230 const *a, s_operand_319230 const *b) const
 {

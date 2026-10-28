@@ -13,6 +13,7 @@ unknown_0cd660.cpp, unknown_0d0690.cpp, unknown_0d0e00.cpp). */
 #include "globals.h"
 #include "data_array.h"
 #include "unknown_0259d0.h"
+#include "bit_vector.h"
 #include "units.h"
 #include "unit_requests.h"
 #include "object_markers.h"
@@ -39,6 +40,17 @@ struct s_unit_state_tail
 	real unknown1c;
 	real unknown20;
 };
+
+/* clears a unit state tail: its floats, NONE indices and +0x18 */
+inline void unit_state_tail_clear(s_unit_state_tail *tail)
+{
+	tail->unknown1c = 0.0f;
+	tail->unknown20 = 0.0f;
+	tail->unknown00 = NONE;
+	tail->unknown04 = NONE;
+	tail->unknown08 = NONE;
+	tail->unknown18 = 0;
+}
 
 /* the unit (the object fields, then the unit's own; the fields read here) */
 struct s_unit
@@ -271,6 +283,16 @@ struct s_unit_header
 #define UNIT_SEAT_COUNT(definition) (*(long *)((definition) + 0x1c8))
 #define UNIT_SEATS(definition) (*(s_unit_seat_definition **)((definition) + 0x1cc))
 #define UNIT_ANIMATION(unit) ((s_unit_animation *)((byte *)(unit) + (unit)->animation_offset))
+
+/* UNIT_GET with the index masked before the header array is read: the
+   lookups that address the header as offset + array (0xcea00, 0xce0c0) */
+static inline s_unit *unit_at_masked_index(long unit_index)
+{
+	long index = unit_index & 0xffff;
+	s_unit_header *headers = (s_unit_header *)g_4e0300->data;
+
+	return headers[index].unit;
+}
 
 /* a float rounded to an integer as the x87 does (fld, fistp) */
 __forceinline long unit_round(real value)
@@ -555,7 +577,7 @@ bool __stdcall function_cd7b0(long unit_index, long weapon_index, bool *modes);
 void function_a8a30(long unit_index, long definition_index);
 real normalize2d(point2f *v);
 real function_11cc90(vector2f const *a, vector2f const *b);
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *state);
 bool function_10ff40(long unit_index, long type, short side, short value, bool *flag, short *side_out, short *value_out);
 void function_ba350(long object_index, real seconds);
 bool function_101240(long weapon_index);
@@ -649,6 +671,11 @@ bool function_c4970(long unit_index)
 }
 
 /* plays one of the globals' sounds at the object's marker 0x4000095 */
+// score 10 (was 10): BLOCKED-BY 0x189210, whose retail form takes the play record in edi
+// (ours pushes it); play fields tag first 10; named globals pointer 10; 0x189210 parameter
+// orders play first/middle 10/10; 0x189210 reading the play fields at entry 16 (80 bytes).
+// Full/partial/const aggregate records 10/10/10; entry record 10; lookup assigned in the test 10;
+// 0x189210 inline with test assignment/original body 10/10; noinline declaration 10.
 // @retail 0xc5890
 void function_c5890(long object_index, short index)
 {
@@ -710,17 +737,22 @@ bool function_c70b0(long unit_index)
 	return result;
 }
 
-/* the last object of the chain the units' +0x24c links */
+/* the last object of the chain the units' +0x24c links. The link is tested
+   through the unit and the result read through the pointer, as retail reloads it */
 // @retail 0xc7100
 long function_c7100(long unit_index)
 {
 	long result = NONE;
-	long *next = &UNIT_GET(unit_index)->unknown24c;
+	s_unit *unit = UNIT_GET(unit_index);
+	long *next = &unit->unknown24c;
+	long value = *next;
 
-	while (*next != NONE)
+	while (value != NONE)
 	{
 		result = *next;
-		next = &UNIT_GET(result)->unknown24c;
+		unit = UNIT_GET(result);
+		value = unit->unknown24c;
+		next = &unit->unknown24c;
 	}
 	return result;
 }
@@ -989,11 +1021,13 @@ void __stdcall function_ceea0(long unit_index, long object_index)
 // @retail 0xd03b0
 bool function_d03b0(long unit_index)
 {
-	if (UNIT_GET(unit_index)->type != 0)
+	bool result = false;
+
+	if (UNIT_GET(unit_index)->type == 0)
 	{
-		return false;
+		result = function_e4050(unit_index);
 	}
-	return function_e4050(unit_index);
+	return result;
 }
 
 /* starts listing the units among the object's children */
@@ -1044,15 +1078,12 @@ void __stdcall function_c4880(long unit_index)
 
 /* outside mode 4: steps the unit's 4-bit counter at +0x210 and marks the
    object +0xd4 names */
-// score 3 (was 3): indexed-load operands and final owner register differ;
-// mode early exit, index first, unit reload, second owner and counter scope 3;
-// signed counter 7; shared header entry 35; direct related field 3.
 // @retail 0xcea00
 void function_cea00(long unit_index)
 {
 	if (g_4e6948->mode != 4)
 	{
-		s_unit *unit = UNIT_GET(unit_index);
+		s_unit *unit = unit_at_masked_index(unit_index);
 		word counter = ((byte)unit->unknown210 + 1) & 0xf;
 
 		if (counter == (word)NONE)
@@ -1061,10 +1092,10 @@ void function_cea00(long unit_index)
 		}
 		unit->unknown210 = counter;
 		unit->unknown214 = counter;
-		long index = UNIT_GET(unit_index)->unknown0d4;
-		if (index != NONE)
+		unit = unit_at_masked_index(unit_index);
+		if (unit->unknown0d4 != NONE)
 		{
-			function_b58c0(index, 0x2000);
+			function_b58c0(unit->unknown0d4, 0x2000);
 		}
 	}
 }
@@ -1306,6 +1337,10 @@ struct s_unit_state_c6ef0
 	s_unit_state_tail tail;
 };
 
+// score 2 (was 2): the name store and shared NONE setup are exchanged; name
+// after NONE 7, name before the zero 2, zero after NONE 2, zero removed 46,
+// cached default pointer 6, later default pointer 2, tail NONE grouped 45,
+// first vector early 16, zero floats swapped 4.
 // @retail 0xc6ef0
 void function_c6ef0(s_unit_state_c6ef0 *state)
 {
@@ -1320,12 +1355,7 @@ void function_c6ef0(s_unit_state_c6ef0 *state)
 	state->unknown28 = *g_4687a8;
 	state->unknown34 = *g_4687a8;
 	state->unknown40 = *g_4687a8;
-	state->tail.unknown1c = 0.0f;
-	state->tail.unknown20 = 0.0f;
-	state->tail.unknown00 = NONE;
-	state->tail.unknown04 = NONE;
-	state->tail.unknown08 = NONE;
-	state->tail.unknown18 = 0;
+	unit_state_tail_clear(&state->tail);
 }
 
 /* how far the unit's timer at +0x2be has run, by its kind at +0x2bc: kind 1
@@ -1410,7 +1440,8 @@ struct s_unit_starting_weapon
 	word rounds_total;
 };
 
-/* creates a starting weapon for the unit; flags it at +0x12d when asked */
+/* creates a starting weapon for the unit; when asked, sets bit 8 of the
+   weapon's item flags (the word at +0x12c) */
 // @retail 0xccd60
 long function_ccd60(s_unit_starting_weapon const *weapon, long unit_index, bool flag)
 {
@@ -1432,7 +1463,7 @@ long function_ccd60(s_unit_starting_weapon const *weapon, long unit_index, bool 
 			}
 			if (flag)
 			{
-				*((byte *)object + 0x12d) |= 1;
+				*(word *)((byte *)object + 0x12c) |= 0x100;
 			}
 		}
 	}
@@ -2672,6 +2703,11 @@ short __stdcall function_cdeb0(long unit_index, long state_name, short slot, sho
 /* starts (state 1, its timer from 0xc5340, flag 3) or ends (state 2, ten
    seconds) the unit's state +0x2bc while its player is in state 1 at
    +0x88 (or the campaign flag allows it), with the globals' sounds */
+// score 15 (was 15): ours keeps unit_index in edi and the player data pointer in esi, retail the
+// reverse: unit_index reaches 0xc5890 in the register that function hands on to 0x189210, which
+// takes the object in edi here and in esi in retail. BLOCKED-BY 0x189210. Tried: a named
+// player-state condition 15; the start arm's tests inverted 15; a player index local 15; the
+// stop arm first 60; the state byte read in the test 15.
 // @retail 0xc5740
 void function_c5740(long unit_index, bool start)
 {
@@ -3168,9 +3204,12 @@ long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool h
 
 /* whether the object's root, simulated by Havok and not keyframed, has
    something in the way (0x168f40 from its main rigid body's position) */
-// score 12 (was 12): root and rigid-body offset saved registers differ;
+// score 12 (was 12): root and rigid-body offset saved registers differ (a short index gives
+// retail's registers but tests at 16 bits before extending: 3 aligned differences, 293 bytes);
 // entry result 89; native short body index 12 at 293 bytes; root cursor/seed 110/96;
-// parent while, existing keyframe method and point first 12; point value copy 46.
+// parent while, existing keyframe method and point first 12; point value copy 46;
+// 0xbaf80 call for the root 121 at 258 bytes (our link keeps the call); one combined
+// index/fixed/keyframed test 12; root getter before the header 12; point read x, y, z 22.
 // @retail 0xcc460
 bool __stdcall function_cc460(long object_index)
 {
@@ -3375,14 +3414,20 @@ void __stdcall function_ceb30(long unit_index)
 /* puts a weapon of a definition (and a value at +0x17e) in the unit's slot,
    dropping the one there; sets the unit's +0x210 and +0x214 and, when the
    unit had no weapon, raises it (request 8) */
+// score 4 (was 124): retail sets 0xcea70's NONE mode (EAX) before the weapon (ECX), and 0xce520's
+// weapon (EDX) before the unit (EAX). The count declared first keeps the unit index in EBX from entry,
+// so LTCG passes it there as retail (with the NONE initialisers first: NONE in EBX, stack argument);
+// the unit through unit_at_masked_index and the definition/value declared before the weapon index
+// give the rest. Other orders 8-60; NONE in an else arm 117. With 0xcea70 declared (slot, weapon,
+// mode, unit) and 0xce520 (unit, weapon, flag) at every call it matches (contributor code: held).
 // @retail 0xd09c0
 void __stdcall function_d09c0(long unit_index, long slot_index, long definition_index, short value, dword const *state)
 {
-	s_unit *unit = UNIT_GET(unit_index);
-	long weapon_index = unit->weapon_object_indices[slot_index];
+	long count = 0;
+	s_unit *unit = unit_at_masked_index(unit_index);
 	long current_definition_index = NONE;
 	short current_value = NONE;
-	long count = 0;
+	long weapon_index = unit->weapon_object_indices[slot_index];
 
 	if (weapon_index != NONE)
 	{
@@ -3436,9 +3481,8 @@ void __stdcall function_d09c0(long unit_index, long slot_index, long definition_
 		}
 	}
 	s_unit *again = UNIT_GET(unit_index);
-	dword new_state = *state;
-	*(dword *)&again->unknown214 = new_state;
-	again->unknown210 = (short)new_state;
+	*(dword *)&again->unknown214 = *state;
+	again->unknown210 = again->unknown214;
 	if (count == 0 && weapon_index != NONE && unit->unknown216 == slot_index)
 	{
 		s_unit_request request;
@@ -4016,7 +4060,9 @@ store:
    state 1 when it has nowhere to go and is not a predicted copy (0xa7670) */
 // score 13 (was 13): argument setup scheduling and squared-length XMM homes differ;
 // existing length/dot helpers, direction lifetime/name and named angle 13;
-// existing random-real helper 111; scale/add component loops 80/13.
+// existing random-real helper 111; scale/add component loops 80/13; seed global at each
+// use, compound adds, direction-first adds, speed-first scaling 13 each; speed scaled
+// before the cone call 120; every squared-length operand order compiles the same.
 // @retail 0xce6b0
 void function_ce6b0(long unit_index, long name, long object_index, real scale)
 {
@@ -4968,17 +5014,21 @@ void __stdcall function_ca700(long unit_index, real amount, short type, bool not
    tick and the last, in the camera's frame scaled by its data; sets flag
    25 (and, seated, flag 26) when it passes the data's limits; then eases
    the smoothed copy at +0x288 toward it */
+// score 187 (was 206): the two flag-word clears (+0x134) and the +0x10a bit
+// test differ from the first store on; the two lookups through the masked-index
+// getter 205 (the first load's operand order now matches).
+// Frame 0x6c agrees; initial flag register/byte test, vector scheduling and smoothing carriers remain. Shared cross 212; scaled differences 205; native byte/word flags 206/206; role names 206; separate thresholds 206; shared writer 188; writer wide extraction 188; initial clears only 192; weight names 188; writer scaled/cross/both 224/203/223.
 // @retail 0xce0c0
 void function_ce0c0(long unit_index)
 {
-	s_unit *unit = UNIT_GET(unit_index);
+	s_unit *unit = unit_at_masked_index(unit_index);
 	transform4x3f matrix;
 	s_unit_camera_data camera;
 
-	unit->flags_134 &= ~0x4000000;
-	unit->flags_134 &= ~0x2000000;
+	bit_vector_set(&unit->flags_134, 26, false);
+	bit_vector_set(&unit->flags_134, 25, false);
 	bool still = TEST_FIELD_BIT((unit->flags_10a >> 2) & 1) &&
-		(UNIT_GET(unit_index)->type != 0 || !function_e4050(unit_index));
+		(unit_at_masked_index(unit_index)->type != 0 || !function_e4050(unit_index));
 	if (function_d1080(unit_index, &matrix, &camera) && !still)
 	{
 		real ticks = g_510c54->field_2_3;
@@ -5008,14 +5058,14 @@ void function_ce0c0(long unit_index)
 
 		if (limit > 0.0f && (forward > limit || sideways > limit || vertical > limit))
 		{
-			unit->flags_134 |= 0x2000000;
+			bit_vector_set(&unit->flags_134, 25, true);
 		}
 		limit = camera.unknown10;
 		if (limit > 0.0f && unit->parent_index != NONE && unit->parent_seat_index != NONE &&
 			(g_4e6948->state != 2 || !function_138880()) &&
 			(forward > limit || sideways > limit || vertical > limit))
 		{
-			unit->flags_134 |= 0x4000000;
+			bit_vector_set(&unit->flags_134, 26, true);
 		}
 		unit->unknown270 = matrix.position;
 		unit->unknown27c = velocity;
@@ -5032,7 +5082,7 @@ void function_ce0c0(long unit_index)
 	{
 		keep = 0.95f;
 		take = 0.05f;
-		unit->flags_134 &= ~0x10000000;
+		bit_vector_set(&unit->flags_134, 28, false);
 	}
 	unit->unknown288.i = unit->unknown288.i * keep + unit->unknown294.i * take;
 	unit->unknown288.j = take * unit->unknown294.j + keep * unit->unknown288.j;
@@ -5045,6 +5095,7 @@ void function_ce0c0(long unit_index)
    marker 0x500000a (type 0, when clear of the world), slightly above its
    center (type 1) or its center; then plays the impact sounds of what it
    hit */
+// score 195 (was 196): Frame 0x104 agrees; flag extraction, sentinel residency and location/owner call conventions remain. Bool flag tests 277; native collision 196; reversed cases 196; positive damage scope 196; native event byte 196; workspace names 196; native material word 196; shared flag reader 277; native seat bit 277; seat/weapon bool alone 270/275.
 // @retail 0xcf040
 void function_cf040(long unit_index, short type)
 {
@@ -5363,12 +5414,7 @@ bool __stdcall function_c4410(long unit_index, void const *creation, bool *out_o
 	unit->unknown1f7 = NONE;
 	unit->unknown334 = 0.0f;
 	unit->unknown338 = 0.0f;
-	unit->unknown1c8.unknown1c = 0.0f;
-	unit->unknown1c8.unknown20 = 0.0f;
-	unit->unknown1c8.unknown00 = NONE;
-	unit->unknown1c8.unknown04 = NONE;
-	unit->unknown1c8.unknown08 = NONE;
-	unit->unknown1c8.unknown18 = 0;
+	unit_state_tail_clear(&unit->unknown1c8);
 	s_unit_damage_source *sources = (s_unit_damage_source *)((byte *)unit + 0x2f0);
 	for (dword i = 0; i < 4; i++)
 	{
@@ -5458,6 +5504,8 @@ bool __stdcall function_c4410(long unit_index, void const *creation, bool *out_o
    (4 also changing weapons), 5 to 7 into the second hand beside a
    matching first (6 lowering it first, 7 readying it); tells the player
    code */
+// score 294 (was 325): Frame 0x50 and extent agree; incoming unit, return byte and ready home differ.
+// Two request homes 313; result first 313; shared exit 301; secondary modes first 294; branch-local requests 314.
 // @retail 0xcd0c0
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 {
@@ -5481,7 +5529,28 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 	}
 	else
 	{
-		if (mode == 3 || mode == 4)
+		if (mode == 5 || mode == 6 || mode == 7)
+		{
+			long first_index = function_cbd50(unit_index, UNIT_GET(unit_index)->current_weapon_index);
+
+			if (first_index == NONE || !function_101640(first_index) || !function_101640(weapon_index))
+			{
+				return result;
+			}
+			ready = true;
+			if (mode == 6)
+			{
+				memset(&request, 0, sizeof(request));
+				request.type = 0x13;
+				request.type17.unknown4 = true;
+				ready = function_e6900(unit_index, &request);
+				if (!ready)
+				{
+					return result;
+				}
+			}
+		}
+		else if (mode == 3 || mode == 4)
 		{
 			long second_index = function_cbd50(unit_index, UNIT_GET(unit_index)->next_weapon_index);
 
@@ -5517,27 +5586,6 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 				}
 			}
 		}
-		else if (mode == 5 || mode == 6 || mode == 7)
-		{
-			long first_index = function_cbd50(unit_index, UNIT_GET(unit_index)->current_weapon_index);
-
-			if (first_index == NONE || !function_101640(first_index) || !function_101640(weapon_index))
-			{
-				return result;
-			}
-			ready = true;
-			if (mode == 6)
-			{
-				memset(&request, 0, sizeof(request));
-				request.type = 0x13;
-				request.type17.unknown4 = true;
-				ready = function_e6900(unit_index, &request);
-				if (!ready)
-				{
-					return result;
-				}
-			}
-		}
 		hand = mode == 5 || mode == 6 || mode == 7 ? 1 : 0;
 	}
 	if (!ready)
@@ -5566,6 +5614,8 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 		unit->unknown216 = (char)function_cdeb0(unit_index, NONE, unit->current_weapon_index, 0);
 		if (mode == 1 && unit->unknown216 == slot_index)
 		{
+			s_unit_request request;
+
 			memset(&request, 0, sizeof(request));
 			request.type = 8;
 			request.type17.unknown4 = true;
@@ -5639,8 +5689,7 @@ void function_c98a0(point2f const *direction, long unit_index, long type, short 
 				{
 					short state;
 
-					function_e70b0(unit_index, &state);
-					if (state == NONE)
+					if (*function_e70b0(unit_index, &state) == NONE)
 					{
 						facing = toward;
 						turn = true;

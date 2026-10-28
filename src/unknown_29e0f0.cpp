@@ -78,7 +78,7 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
     return (real)sqrt(local_2 * local_2 + local_1 * local_1 + local_0 * local_0);
 }
 
-// score 416 (was 416): Frame 0x6c/0x64, table-pointer roles and bound spill remain.
+// score 406 (was 416): table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
 // Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
 // squared-distance second point by value 430; conditional table pointer initialization 416.
 // Group-table field at each use 457; native long overall result 445; bounded output for 420; same-group pretested while 416; positive nearest-point scope 416.
@@ -89,13 +89,16 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // Round 341: One short direction counter, point payload and long record-index graphs 425/454/431/459; long direction counter 479/453/477/453. Original loops and values restored.
 // Round 350: real outer/inner/both link-element receivers 416/416/416; with read-only
 // link/group/both/point/all views 416 each. Frame 0x6c/0x64, table roles and bound spill remain.
+// Round 146: short group index/pass counter/best indices (kept) 406; the three alone 409/416/512;
+// distance index at top of the inner while 416; long search result 415, on the kept form 428;
+// long point bounds 456; long last point 424; long nearest point 396 (word compares in retail, not kept).
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)
 {
-    long local_0 = NONE;
-    long local_1 = NONE;
-    long local_2 = NONE;
+    short local_0 = NONE;
+    short local_1 = NONE;
+    short local_2 = NONE;
     real best_distance = 3.402823466e38f;
     bool local_4 = false;
     s_29e0f3 *local_5 = (s_29e0f3 *)g_4e0348;
@@ -119,7 +122,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                     dword visited_groups[2] = {0, 0};
                     for (short local_14 = 0; local_14 < local_10->field_80; ++local_14)
                     {
-                        long local_15;
+                        short local_15;
                         local_15 = local_10->field_84[local_14].field_0;
                         if ((visited_groups[local_15 >> 5] & (1 << (local_15 & 31))) || local_15 < 0 || local_15 >= local_11->field_40) continue;
                         visited_groups[local_15 >> 5] |= 1 << (local_15 & 31);
@@ -145,7 +148,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                             if (arg_3->field_0[local_25].field_0 == local_15) { local_20 = local_25; break; }
                         short local_26 = 1;
                         short local_28 = local_19;
-                        for (long local_27 = 0; local_27 < 2; ++local_27)
+                        for (short local_27 = 0; local_27 < 2; ++local_27)
                         {
                             short local_29 = local_19;
                             point3f *local_30 = &local_22->field_4[local_19];
@@ -168,7 +171,7 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                                     if (best_distance > local_35 && function_29de20(local_33, arg_3, arg_0, arg_1) == 1)
                                     {
                                         best_distance = local_35;
-                                        local_0 = (short)local_15;
+                                        local_0 = local_15;
                                         local_1 = local_28;
                                         local_2 = local_29;
                                         local_32 = true;
@@ -180,16 +183,16 @@ bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg
                             local_28 = local_19 + local_26;
                         }
                     }
-                    if ((short)local_0 != NONE && (short)local_1 != NONE && (short)local_2 != NONE)
+                    if (local_0 != NONE && local_1 != NONE && local_2 != NONE)
                     {
-                        s_29e0f0 *local_36 = &local_11->field_44[(short)local_0];
+                        s_29e0f0 *local_36 = &local_11->field_44[local_0];
                         short local_37 = 0;
                         do
                         {
-                            function_29e64d(&arg_4->field_30[local_37], &local_36->field_4[(short)local_1]);
+                            function_29e64d(&arg_4->field_30[local_37], &local_36->field_4[local_1]);
                             ++local_37;
-                            if ((short)local_1 == (short)local_2) break;
-                            local_1 += (short)local_2 > (short)local_1 ? 1 : -1;
+                            if (local_1 == local_2) break;
+                            local_1 += local_2 > local_1 ? 1 : -1;
                         } while (local_37 < 4);
                         if (local_37 < 4)
                         {
@@ -230,48 +233,6 @@ struct s_29e730
 };
 struct s_29e731 { byte field_0[0x18]; long field_18; byte field_1c[0x38]; long field_54; };
 
-// score 52 (was 52): convention, frame, length and every path-block slot agree; the success-path copy
-// registers and the NONE constant (retail EDX, ours EBX, so the end section's last index takes DX and
-// its copy ESI/EDX for retail's BX and EDI/ESI), the 0x29db90 setup (retail stores the list pointer
-// before forming it again in ESI) and the failure counter's register rotation remain.
-// Earlier: primary index after vector 332; primary index before point 332; extra index before point
-// 332; branch counter result 356; extra flag native width 342; position helper inline 332; native
-// request/actor/output references 332/332/332; separate extra point/index 333; offset point setter
-// 332; parent/source/origin field references 332/332/332; byte result 338; long result 360; library
-// fallback/output record copies 332/332; unsigned primary index 332; inline out-of-line location
-// declaration 392; word path/extra states 364/350; signed-byte append ordinal 333; real counter field
-// 332; fallback-point library copy 332; unsigned-byte/signed-byte extra state 332/332; signed-byte
-// path state 338; unsigned-word append ordinal 332; successful exit before failure counter 332;
-// noinline 0x262a90 392 (kept); 6-path first with index reads at each use 333; 4-path index after its
-// lookup 321 (kept); 6-path index before the offset point, reused in the extra record 320; path
-// locals scoped with the location at the join 320; failure arm as the final else 320; field_10 test
-// inverted 320; the existing 0x210850 lookup called 360, with an inline redeclaration 360; vector
-// output in the extra record's point 307 (frame 0x10c; a reuse form); no __stdcall 332; field-wise
-// reference compare 357; output_index at each use 336.
-// Round 93 kept: the location lookup in 0x210850's own two-copy shape 197; path temporaries declared
-// in each path's block 182 (frame 0x10c); the extra lookup's index from the path record and the
-// extra record's from the location record 161; REFERENCE_EQUAL against g_470fa0 97; the failure arm
-// without the goto, the end section guarded by the result 88;
-// 0x2702a0 given 0x262af0's point then facing (retail's stack slots; ours crossed them under casts) 89;
-// 0x210770 given the 0x2702a0 facing as input and its own output (retail's EBX/EDI; ours transformed
-// the path point into the facing, which then went to field_2c) 89.
-// Not kept: field_28 stored before field_14 (retail's order) -2; forceinline redeclaration of 0x210850
-// 362 (stays a call); both indexes from the location
-// record 200; separate offset-point local 113 (frame 0x118); extra record copied whole 95; location
-// index set before the offset point 294; index read into a local first 238; offset point in its own
-// local after the transform fix 91 (every block slot but the path point's now retail's; that one
-// takes a new slot, frame 0x118). Declaration order and names in the path blocks change nothing.
-// Round 96 kept: the path record's location as s_type_c3b527 (no casts) 87; the 6-path point in its own
-// block around its two lookups, the offset point separate, the location index before it 65; the
-// 0x262b40 call inside the 0x29db90 arguments and field_28 before field_14 59; the reference result
-// declared in each path's block 52.
-// Not kept: transform output declared first/last/at function scope 87/87/87; transform output into the
-// path point (cast) 86; offset through an inline add-scaled helper 87; shared function-scope path
-// temporaries 94; 4-path point in its own block 59 (no change); 0x29db90 list from the parameter 52,
-// result pointer local 56, short range local 57; end-section element written out at each use 76.
-// Round 208: direct/last/optional sentinel chains 52/69/69/52/52/69/69;
-// scratch count before pointer publication 52; native result-record library-copy
-// combinations 52/52/52/52/52/52/52. Copy/NONE and failure-counter registers remain.
 // @retail 0x29e730
 bool __stdcall function_29e730(s_29e730 *arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 const *arg_3, s_reference arg_4, s_29de21 *arg_5,
@@ -358,8 +319,8 @@ local_21:
     bool local_13;
     if (function_29dd50(arg_2, &local_7, local_2, arg_6))
     {
-        arg_7->field_30[0].field_c = local_3;
         arg_7->field_30[0].field_0 = NONE;
+        arg_7->field_30[0].field_c = local_3;
         arg_7->field_30[0].field_4 = NONE;
         arg_7->field_30[0].field_8 = NONE;
         arg_7->field_2d = 1;
@@ -377,9 +338,10 @@ local_21:
             s_29de21 local_15;
             if (!arg_5)
             {
+                s_262b40_result *range_data = function_262b40(arg_4);
                 arg_5 = &local_15;
                 local_15.field_b4 = 0;
-                function_29db90((s_29db90 *)&local_15, arg_4.unknown2, function_262b40(arg_4)->unknown10);
+                function_29db90((s_29db90 *)&local_15, arg_4.unknown2, range_data->unknown10);
             }
             local_13 = function_29e0f0(arg_2, local_2, arg_4, arg_5, arg_7);
             if (local_13 && arg_7->field_2c && arg_7->field_2d > 0)
@@ -401,9 +363,9 @@ local_21:
         }
         else arg_7->field_2c = false;
         s_29e0f8 *local_19 = &arg_7->field_30[local_18];
-        local_19->field_c = local_6;
         local_19->field_0 = NONE;
         local_19->field_8 = NONE;
+        local_19->field_c = local_6;
         local_19->field_4 = NONE;
         local_19->field_2 = 0;
     }

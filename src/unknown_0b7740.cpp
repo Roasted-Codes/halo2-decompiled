@@ -573,42 +573,9 @@ void function_bdc40(point3f const *position, vector3f const *forward, vector3f c
 #include "cluster_marks_storage.h"
 short __stdcall function_14a5b0(short cluster_index, point3f const *point, real radius, short maximum_count, short *clusters);
 
-static inline bool cluster_sphere_accept_ab(long object, s_object_cluster_reference const *record, dword type_mask, point3f const *position, real radius)
-{
-    if (type_mask & (1 << record->type))
-    {
-        long index = object & 0xffff;
-        if (g_4de300[index] != g_4de2fc)
-        {
-            g_4de300[index] = g_4de2fc;
-            real combined = record->radius + radius;
-            real dx = record->center.x - position->x;
-            real dy = record->center.y - position->y;
-            real dz = record->center.z - position->z;
-            return dz * dz + dy * dy + dx * dx <= combined * combined;
-        }
-    }
-    return false;
-}
-
-// score 10 (was 24): the second inlined distance test computes dz, dx, dy in
-// retail (dz, dy, dx here); everything else matches. Each walk declares its
-// own record and the iterators sit at the cluster-loop scope (retail's slots
-// and record-first reloads); the clamp written once after the cluster branch
-// (as 0x180b60) gives retail's early counter increment through ecx (20 -> 10).
-// Tried: second inline copy with dz,dx,dy or dy,dx,dz or a vector3f delta (no
-// gain); a separate second-walk helper in all 36 definition/sum orders (no
-// dz, dx, dy order); count = 0 just before the loop (205); a goto to a shared exit
-// instead of the early returns (196); post-increment counter 24; while loops
-// 24; cluster list declared first 24; iterators passed without references 24.
-// Only the vector3d_from_points3d + length_sq3f forms give the two inlined
-// copies different shapes: single exit 15 (y, x, z first copy), early
-// returns 20 (the two shapes swapped), a distance-squared helper over them
-// with early returns 10 (both copies dz, dx, dy), the same with a single
-// exit 30, a hand distance-squared helper 18; sum order, parameter order,
-// local scopes, dot3f, named squared length, center pointer, early-out
-// tests, a separate center/radius overlap helper, walk forms and loop-index
-// widths change nothing else (compile-only screens).
+/* collects up to maximum_count objects of the masked types whose bounding
+   spheres meet the sphere at position: the colliding and the noncolliding
+   cluster lists of every cluster the sphere reaches, each object once */
 // @retail 0xbb050
 short __stdcall function_bb050(long mask, dword type_mask, void const *location, point3f const *position, real radius, long *objects, short maximum_count)
 {
@@ -647,7 +614,15 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             for (long object = function_b8940(cluster, &record, &colliding_iterator); object != NONE;
                  object = object_cluster_next_ab((s_record_pool *)g_4de2e4, &colliding_iterator, &record))
             {
-                if (cluster_sphere_accept_ab(object, record, type_mask, position, radius))
+                if (!(type_mask & (1 << record->type))) continue;
+                long index = object & 0xffff;
+                if (g_4de300[index] == g_4de2fc) continue;
+                g_4de300[index] = g_4de2fc;
+                real combined = record->radius + radius;
+                real dx = record->center.x - position->x;
+                real dy = record->center.y - position->y;
+                real dz = record->center.z - position->z;
+                if (dz * dz + dy * dy + dx * dx <= combined * combined)
                 {
                     if (count >= maximum_count)
                     {
@@ -665,7 +640,14 @@ short __stdcall function_bb050(long mask, dword type_mask, void const *location,
             for (long object = function_b8a10(cluster, &record, &noncolliding_iterator); object != NONE;
                  object = object_cluster_next_ab((s_record_pool *)g_4de2d8, &noncolliding_iterator, &record))
             {
-                if (cluster_sphere_accept_ab(object, record, type_mask, position, radius))
+                if (!(type_mask & (1 << record->type))) continue;
+                long index = object & 0xffff;
+                if (g_4de300[index] == g_4de2fc) continue;
+                g_4de300[index] = g_4de2fc;
+                real combined = record->radius + radius;
+                vector3f delta;
+                vector3d_from_points3d(position, &record->center, &delta);
+                if (length_sq3f(&delta) <= combined * combined)
                 {
                     if (count >= maximum_count)
                     {
@@ -1125,7 +1107,7 @@ void __stdcall function_1421f0(transform4x3f *out, rigid_transform_scaled const 
 bool function_a98b0(long index, vector3f *position);
 bool function_a9940(long index, vector3f *up, vector3f *forward);
 
-// score 234 (was 239): retail is 11 bytes longer. Left: retail sets the sample-mask
+// score 234 (was 234): retail is 11 bytes longer. Left: retail sets the sample-mask
 // address in esi again after 0xbfed0 (which never writes esi), tests the node count for
 // > 0 before the node loop from 1 (no loop-head pad), and in the no-model branch keeps
 // the object table pointer in ecx and re-reads its data pointer (parent index in esi)
@@ -1147,7 +1129,20 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // parent and mirrored defaults 361; the sample mask assigned before the copies 168 (the
 // mask gets a stack home and esi/edi and every later slot shift: 113 aligned differences
 // against 18; rejected as before); 0xbfed0 advancing or reassigning its own flags pointer
-// (both still match) 234/234.
+// (both still match) 234/234. Round 29: 0xbd090 is 0xbfed0's only retail caller and
+// 0xbfed0 never writes esi, so the reload looks like the caller not knowing 0xbfed0's
+// registers. 0xbfed0 inline without its noinline declaration 234 (still called, same
+// code); a bool for the copied mask passed as `masked ? mask : 0` 242; the mask pointer
+// from memcpy's return passed to both calls 255; the null mask declared above the
+// static guard 137 (an artefact: the guard test grows an instruction that realigns the
+// listing past the still-missing reload; rejected); the mask assigned before the copies
+// 168 again (as round 140; rejected). Round 31: the sample mask as the long 0xbdb60 takes 234; one pool
+// local for every lookup (0xba160's idiom) 399, from the current-object lookup on 234; the sample mask
+// declared at entry 328; the no-model parent index read at each use 234. Round 84 (aligned
+// differences are only the esi reload, the count > 0 guard and the no-model lookup): mask copy as a
+// struct assignment 234; sample mask as the storage object's address 234; a named model-mask pointer
+// for the test and the copy 258; a noinline 0xbfed0 declaration here 234; sample mask from memcpy's
+// return 255.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {

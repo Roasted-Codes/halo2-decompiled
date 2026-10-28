@@ -1005,13 +1005,16 @@ struct s_game_engine_globals_connections_view
 };
 
 /* builds a player's row of the scoreboard at a position */
-// score 170 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
+// score 170 (was 170): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
 // retail tests the score/time widths as dwords but adds them as words, name width (bx) first.
 // Round 75: short widths (casts dropped) 170 (kept: the column sums add the name width first as
 // retail, the width tests become word compares); parenthesised/(short)-summed time left 184/184;
 // connection sum reordered 184; summed time and connection lefts 184; short name width only 173,
 // with uncast long sums 173; word widths 170; short score/time with long name 292; long score
 // with short time/name 180.
+// Round 44: all/score-name/name/time width views 184/288/292/168; long time with short uses 168;
+// long fixed widths with short uses 173; derived score predicate 291; direct icon on the long-time
+// form 208. The two-point time-width gains are rejected; opening body restored.
 // Earlier 184 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
 // default-zero byte icon 230, native integer 184; parsed-name scope 184;
 // separate connection rectangle 206; both name buffers scoped 184.
@@ -1078,6 +1081,9 @@ struct s_game_engine_globals_connections_view
 // Native column-enable values serve width and visibility: score/time/both bool
 // 304/298/298; score/time/both byte 304/298/298; bool-byte/byte-bool 298/298
 // (calibrated fast). Original derived-width gates and frame restored.
+// Round 104 (plain): long column widths 184 (retail tests them as dwords); hidden-place arm first 216;
+// score column with its hidden arm first 170 (identical); icon value stored after the player index and
+// alpha 170; long icon value 170. Original body restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

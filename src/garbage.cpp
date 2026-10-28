@@ -10,13 +10,17 @@
 struct s_garbage_object_view
 {
 	long definition_index;
-	struct
+	union
 	{
-		dword : 16;
-		dword shadowless : 1;
-		dword deleted_when_deactivated : 1;
-		dword : 14;
-	} object;
+		struct
+		{
+			dword : 16;
+			dword shadowless : 1;
+			dword deleted_when_deactivated : 1;
+			dword : 14;
+		} object;
+		dword object_flag_bits;
+	};
 	byte unknown008[0x16c - 8];
 	long expiration_tick;
 };
@@ -29,16 +33,25 @@ struct s_garbage_header_view
 
 void function_bb950(long object_index, bool add, long delta);
 
+// score 2 (was 16): only the expiration addition/store uses the ticks register
+// instead of the time register. Earlier: named `seconds` 14; `ticks + current_time` 14;
+// second flag before expiration 14; `real_to_long` plain/forceinline 45/14;
+// game time read in the expression 27. Union alone 16; final/both direct masks 16/16;
+// shared flag-word pointer 4; pointer and named seconds 2; expiration accumulator 2;
+// flag pointer before the call 2; direct late game time 27; settings pointer 25;
+// ticks declared first 2; named expiration result 2.
 // @retail 0x11bb40
 bool __stdcall function_11bb40(long object_index, long creation_argument1, long creation_argument2)
 {
 	s_garbage_object_view *garbage =
 		((s_garbage_header_view *)g_4e0300->data)[object_index & 0xffff].object;
 	function_bb950(object_index, true, 0);
-	garbage->object.deleted_when_deactivated = true;
+	dword *flags = &garbage->object_flag_bits;
+	*flags |= 0x20000;
 	real sample = function_x82e52f(&g_4e7408->unknown0, NULL, 0);
 	long current_time = g_510c54->game_time;
-	real duration = (sample + 1.0f) * 10.0f * g_510c54->field_2_3;
+	real seconds = (sample + 1.0f) * 10.0f;
+	real duration = seconds * g_510c54->field_2_3;
 	long ticks;
 	__asm
 	{
@@ -46,7 +59,7 @@ bool __stdcall function_11bb40(long object_index, long creation_argument1, long 
 		fistp ticks
 	}
 	garbage->expiration_tick = current_time + ticks;
-	garbage->object.shadowless = true;
+	*flags |= 0x10000;
 	return true;
 }
 

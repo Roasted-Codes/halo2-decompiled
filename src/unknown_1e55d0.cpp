@@ -82,6 +82,9 @@ static __forceinline long real_to_long(real value);
 // 361/316/435/398; those four with one time step 362/314/431/394.
 // Aligned forms lose matched callees; other forms regress. Original repeated queries,
 // manual capsule lifetime, expanded update and complete executable body restored.
+// Round 23: library input-orientation/zero-velocity/support copies and all pairs/all
+// 353 each; all with final point library publication 353. All eight keep 1164 bytes,
+// the plain 0x8c frame and 340 executable instructions; original transfers restored.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {
