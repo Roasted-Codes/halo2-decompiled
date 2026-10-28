@@ -1302,10 +1302,10 @@ bool function_1e1de0(long arg_0);
 // index before owner/both before the lookup 220/221; test local, assign through owner 220; owner
 // first then index through it 220; separate guarded owner/index statement 220; permuter best 197
 // (type casts only). All restored.
-// Earlier 165 (was 165): early ESI save, computed return byte and actor/motion homes remain.
+// Earlier: early ESI save, computed return byte and actor/motion homes remain.
 // frame 0x84 agrees; early ESI save/computed return byte
 // frame 0x84 agrees; early ESI save, computed return byte and actor/motion homes differ.
-// Earlier 165 (was 175): frame 0x84 agrees; early ESI save/computed return byte
+// Earlier: frame 0x84 agrees; early ESI save/computed return byte
 // and actor/motion homes differ; scratch at entry 175; pointer/index names 175;
 // byte update result 232; byte readiness 182; byte behavior result 182.
 // early ESI save, update-result byte and motion-copy registers differ;
@@ -1316,7 +1316,7 @@ bool function_1e1de0(long arg_0);
 // default output values 165 kept; shared output guard 168; Boolean activity 257;
 // shared guard with Boolean activity 225.
 // early ESI save/return byte and motion-copy registers remain.
-// Earlier 175 (was 175): early ESI save/return byte and motion-copy registers remain.
+// Earlier: early ESI save/return byte and motion-copy registers remain.
 // Typed observed point, facing, anchor and location 175 each; combined fields 175;
 // combined with const motion 257, literal success 232, guarded single exit 249.
 // early ESI save, literal return byte and motion-copy registers differ.
@@ -1329,10 +1329,10 @@ bool function_1e1de0(long arg_0);
 // Object/actor homes 165/165; both homes/character/all scalar homes 165/165/165;
 // common guard with object/actor/both homes 168/168/168.
 // early ESI save, return byte and actor/motion homes remain.
-// Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Earlier: early ESI save, return byte and actor/motion homes remain.
 // Computed guarded result 250; failed literal/previous-time snapshot 165/165; conditional motion 191;
 // ordinary-parent-first/separate actor producers/cases 1,0,12 165/165/165; timestamp-first final stores 167.
-// Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Earlier: early ESI save, return byte and actor/motion homes remain.
 // Native initial/parent/root/all header queries 165 each; explicit initial/parent type domains
 // 181/192; both type domains 208; both with native header queries 208.
 // early ESI save, return byte and motion homes remain; parent flag/identifier/both clears
@@ -1388,6 +1388,9 @@ bool function_1e1de0(long arg_0);
 // parameter 93 (843 bytes); actor-index if/else with a repeated NONE arm 37 (847 bytes, redundant
 // store); local declared without initializer, NONE before the type test 218; per-path NONE in both
 // arms, either test sense 224/224 (fast). The first point copy keeps eax/ecx swapped in all. Restored.
+// Round 83 on the round-75 shape (218 fast): const index local 218; index read through the
+// actor-object pointer after it is set 220; actor index declared before the object pointer 220;
+// index local declared before the type test 218; index assigned without its NONE test 223. All restored.
 // Round 7 (lane 10): round-75 shape rebuilt 220; with `updated` declared before the time read 218
 // (entry exact; only the `mov ecx, eax` shift and the point-copy eax/ecx swap remain); on that,
 // index local as dword 218, actor index declared first 243; one end actor-index test alone on the

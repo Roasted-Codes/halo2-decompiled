@@ -1061,7 +1061,7 @@ void c_game_engine_markers::v21(long object_index)
 	function_243a20(object_index);
 }
 
-// score 40 (was 80): the entry swaps the object-header registers (retail: header in EAX, index in ECX),
+// score 40 (was 40): the entry swaps the object-header registers (retail: header in EAX, index in ECX),
 // and retail materializes the player pointer before the flag test (memory-operand test) and loads the
 // team after the engine-type compare, hoisted from both arms. Kept: retail's long slot and both bits
 // through byte_flags_set (retail stores the flag byte twice), 80 -> 50; the slot table read through
@@ -1076,7 +1076,10 @@ void c_game_engine_markers::v21(long object_index)
 // second player index read directly 40. Round 63: the team read at each call gives retail's middle
 // (memory-operand flag test, player pointer before it, team after the type compare) but keeps the
 // options pointer in EDX from entry; on it: the slot table in a local 119, arms swapped 119, unit
-// first 119, player from the absolute index 82; the mode and type tests joined 40.
+// first 119, player from the absolute index 82; the mode and type tests joined 40. Round 103: the
+// player getter as typed pointer arithmetic 40; the team per arm as in the matched v30 (unfolded
+// player data in v30, folded here) 119, with a const player 119, the player before the absolute
+// index 119, the mode and type tests joined 119, an early return on the mode 119 or on either test 119.
 // @retail 0x240ff0
 void c_game_engine_markers::v23(long object_index, long unit_index)
 {
@@ -1622,7 +1625,7 @@ void function_15e360(point3f const *point, long object_index);
 byte *record_pool_lookup(s_record_pool *data, long datum_index);
 void function_242e00(long player_index, long team);
 
-// score 64 (was 79): the root-location call passes the object in EAX and the location in ESI
+// score 64 (was 64): the root-location call passes the object in EAX and the location in ESI
 // (retail: location in EAX, object in ECX, BLOCKED-BY 0xba300); in the tail retail keeps the marker
 // index in ESI and reloads the engine globals pointer after each call, ours keeps that pointer in ESI
 // and spills the index. Kept: 0x176b60's parameters in retail's argument-setup order 83 -> 79; the
@@ -1636,7 +1639,7 @@ void function_242e00(long player_index, long team);
 // point read before the flag clears 44 (a read moved above a call). Found: the
 // tail's marker entry through an element pointer (`entry = &...marker_entries[marker_index]; point =
 // entry->position;`) gives 2 on the kept order, only the 0xba300 call differing; it needs a match, so
-// apply it together with the held 0xba300 change.
+// apply it together with the held 0xba300 change. Round 103: 0xba300 is still contributor code (DIFF 24).
 // @retail 0x242660
 void function_242660(long object_index, bool arg_1)
 {
