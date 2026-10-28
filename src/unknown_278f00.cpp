@@ -116,6 +116,9 @@ bool function_a7670(long object_index);
 // is folded after the `local_9 > 0` branch where retail computes it before, so the lockstep count rises);
 // with the header from object_header_get 260 (identical); with the type compared to 0 and 7 249 (address now
 // before the branch, but no bit test); the type comparisons alone 255. Slot order ignores local names.
+// Round 55: swapped count declarations 181; counts before the body-count snapshot 181;
+// retry before that snapshot 181; a fresh indexed cleanup counter 196; outer selector declared
+// after the arrays 181; scan-wide body pointer 181; existing header getter 181; const body count 181.
 // @retail 0x278f00
 void function_278f00()
 {
