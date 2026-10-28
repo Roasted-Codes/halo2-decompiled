@@ -3,6 +3,8 @@
 /* UNKNOWN_12A1B0.CPP: controllers and looping playback. */
 
 #include "unknown_11c920.h"
+#include "normalize3d.h"
+#include "vector_angles.h"
 #include "data_array.h"
 #include "local_cameras.h"
 #include "sound_sources.h"
@@ -1164,10 +1166,14 @@ void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 	}
 }
 
-// score 97 (was 97): each inlined range ends in a fused faddp where retail exchanges, adds and pops
-// separately; the rest is aligned. Round 58: split declarations and assignments 97; assignment in the
+// score 87 (was 97): the range additions still fuse; the 0x10 frame versus 4 and direction stores differ.
+// Before the shared direction workspace, only the range tails differed. Round 58:
+// split declarations and assignments 97; assignment in the
 // distance test 97; force-inline helper declaration 97; const results 97; entry-scope results 97;
 // zero-initialized results 97; explicit trigonometric result locals 97; shared vector setter 97.
+// Zero-first exit/if-else 102/102; double range/trig consumers 97/79 (precision form restored);
+// shared direction and scale in-place/workspace 97/87 (workspace kept); cosine before yaw 97;
+// complete offset before publication 94. Original real casts and component grouping are preserved.
 // @retail 0x21ce60
 void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 {
@@ -1176,10 +1182,9 @@ void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 	{
 		real pitch = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, detail->pitch_lower, detail->pitch_upper);
 		real yaw = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, detail->yaw_lower, detail->yaw_upper);
-		real cosine_pitch = (real)cos(pitch);
-		offset->i = (real)cos(yaw) * cosine_pitch * distance;
-		offset->j = (real)sin(yaw) * cosine_pitch * distance;
-		offset->k = (real)sin(pitch) * distance;
+		vector3f direction;
+		direction_from_angles(&direction, yaw, pitch);
+		vector3f_scale(&direction, distance, offset);
 	}
 	else
 		*offset = *g_4687a4;
@@ -1260,6 +1265,13 @@ bool looping_sound_prepare_detail(s_type_a82d9f const *detail, long looping_soun
 bool g_4e636d;
 real sound_get_minimum_distance(s_sound const *sound, long definition_index);
 
+// score 101 (was 101): the minimum query expands and the unused maximum query vanishes,
+// removing retail's spill. Caller noinline/inline declarations, separately/both, and
+// direct field reads 101 each; native receiver 103. Definition-side minimum/maximum/both
+// noinline 87/120/83; direct/native receivers with both 73/65. Maximum/both inline with
+// noinline 11/11; minimum inline 65. Guarded receiver/distinct ordinals 0/0, but the
+// matched declaration form loses other matches; detail cursor 10. Caller noinline with
+// provider inline 101. All provider declarations and the original body restored.
 // @retail 0x21d060
 void function_21d060(long definition_index, s_type_99c531 const *source)
 {

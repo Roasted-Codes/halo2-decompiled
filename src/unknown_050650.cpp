@@ -862,7 +862,7 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 96 (was 96): the 0x38 frame agrees; bounds homes/scheduling, the signed-angle registers and dot order differ.
+// score 54 (was 96): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
 // limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
@@ -871,13 +871,17 @@ real g_55e5cc = 0.08726646f;
 // its name/result/declaration combinations 98; lower-first character stores 96.
 // Upper-first yaw initialization 94; plus later scaled pitch/shared pitch limit/both
 // 202/94/202. Two-point form rejected; yaw homes, pitch scheduling and call registers remain.
+// Bounds before lookup, alone/with scale 98/99; direct horizontal/aiming/both
+// projections 173/159/170; shared dot 62; projections plus dot/upper-first 170/168.
+// Shared dot with upper-first/later pitch 60/58; reverse dot alone/upper-first/later
+// pitch 58/56/54 (kept). Addition grouping and all marked call arguments are unchanged.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	bool result = false;
-	real yaw_lower = 0.f, yaw_upper = 0.f, pitch_lower = 0.f, pitch_upper = 0.f;
+	real yaw_upper = 0.f, yaw_lower = 0.f, pitch_lower = 0.f, pitch_upper = 0.f;
 	real scale = 1.f;
 	s_actor_looking_properties *properties = function_1e5160(actor->character_definition_index);
 	if (properties)
@@ -892,9 +896,9 @@ PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool u
 			if (function_30bf0(&base) == 0.f)
 				base = *g_4687a8;
 			real yaw = properties->aiming_yaw * scale;
-			real pitch = properties->aiming_pitch * scale;
 			yaw_upper = yaw;
 			yaw_lower = 0.f - yaw;
+			real pitch = properties->aiming_pitch * scale;
 			real minimum = 0.f - g_55e5bc;
 			real lower = 0.f - pitch;
 			pitch_lower = minimum > lower ? minimum : lower;
@@ -926,7 +930,7 @@ PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool u
 					else
 					{
 						real yaw = function_11cc90((vector2f *)&horizontal, (vector2f *)&aiming_horizontal);
-						real cosine = base.j * horizontal.j + base.i * horizontal.i + base.k * horizontal.k;
+						real cosine = dot3f(&horizontal, &base);
 						cosine = cosine < -1.f ? -1.f : (cosine > 1.f ? 1.f : cosine);
 						real pitch = function_50650(cosine);
 						if (base.k < 0.f)

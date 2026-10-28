@@ -684,6 +684,8 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 // and shared magnitude variants 69 each. Existing calls and multiply grouping preserved.
 // Round 212: native linear/angular/both component loops 71/77/79; earlier separate
 // vector declarations alone/linear/angular/both 69/71/77/79; renamed spin vectors 69.
+// Shared linear/angular/both sums 68/63/76; scaled angular sum with/without
+// the linear helper 121/121; complete linear/both/scaled angular outputs 112/130/117.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -1274,6 +1276,9 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 // Round 212: chained defaults 119; early loop ordinal 188; outer effect storage 153;
 // defaults/ordinal 187; defaults/storage 157; ordinal/storage and all three 206;
 // aggregate defaults with ordinal/storage 206. Native zero and point lifetimes remain.
+// Existing request builder 251; direct spatial output 201; builder with point snapshot 250;
+// point/direction/both snapshots 195/210/235; defaults before markers 189;
+// matched sibling request-store order 120. Original body and all call roles restored.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
 	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
