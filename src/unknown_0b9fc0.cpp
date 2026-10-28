@@ -363,7 +363,7 @@ void __stdcall function_115220(long machine_index)
 	}
 }
 
-// score 415 (was 473): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
+// score 368 (was 473): its flag tests and the type-mask test read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0x1152e0
 bool __stdcall function_1152e0(long machine_index)
 {
@@ -448,7 +448,7 @@ bool __stdcall function_1152e0(long machine_index)
 					(s_machine_unit_definition_view *)g_4e3b44[unit->definition_index & 0xffff].bytes;
 				bool can_open = true;
 
-				if (((1 << header->type) & 2) && !(TEST_FIELD_BIT((local_98b918->unit_flags >> 20) & 1)))
+				if (TEST_FIELD_BIT(((1 << header->type) >> 1) & 1) && !(TEST_FIELD_BIT((local_98b918->unit_flags >> 20) & 1)))
 					can_open = false;
 				else if (TEST_FIELD_BIT((unit->flags_10a >> 2) & 1))
 					continue;

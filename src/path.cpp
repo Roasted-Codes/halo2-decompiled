@@ -729,6 +729,7 @@ bool function_2715a0(byte *buffer)
 	return result;
 }
 
+// score 512 (was 533): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x271630
 PRIVATE bool function_271630(s_type_f17a25 *state)
 {
@@ -796,7 +797,7 @@ PRIVATE bool function_271630(s_type_f17a25 *state)
 					}
 				}
 			}
-			if (blocked || (!input->unknown04 && (link->flags & 2) &&
+			if (blocked || (!input->unknown04 && TEST_FIELD_BIT((link->flags >> 1) & 1) &&
 				function_1fa6b0(&((s_pathfinding_data *)state->pathfinding)->nodes[link->node_index],
 					(s_pathfinding_data *)state->pathfinding)))
 			{

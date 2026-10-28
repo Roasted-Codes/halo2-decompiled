@@ -2176,6 +2176,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // `add ebp, 0x214`. memcmp for that test gives retail's loads and compare but no add
 // 193; with memcpy for the copy 193; with a named source pointer used for both 193;
 // with a four-byte struct copy 193; the unit pointer through OBJECT() 168 (identical).
+// score 155 (was 168): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -2287,7 +2288,7 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 		local_5++;
 	}
 	while (--local_16);
-	if ((local_3 & 0x400000) && local_2->field_ec != *(short *)(local_1 + 0x23e))
+	if (TEST_FIELD_BIT((local_3 >> 22) & 1) && local_2->field_ec != *(short *)(local_1 + 0x23e))
 	{
 		local_2->field_ec = *(short *)(local_1 + 0x23e);
 		local_4 |= 0x400000;
