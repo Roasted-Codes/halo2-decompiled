@@ -18,7 +18,7 @@ extern byte g_485a47;
 extern real g_485a0c[8];
 extern real g_4c9798[36];
 
-// score 252 (was 295): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
+// score 252 (was 252): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
 // Earlier form: frame 0x20 versus 0x28; input registers and rounding-call scalar reloads differ.
 // Branch-defined extent 321; two-vector copy loop 311; frame pointer 372; size policy 497; inline depth one 311.
 // Global optimization off 1009; expansion depth zero 349; late mode 350;
@@ -91,6 +91,10 @@ extern real g_4c9798[36];
 // 314. Ours keeps size and aspect in xmm registers across the 0x48e70
 // calls where retail reloads them; the tag test's constant 1 (ecx, reused for mode = 1) puts the state
 // record in esi where retail tests with movsx/dec and passes it in ecx.
+// Round 208 on the late-direction/complemented-mode graph: early zero border 322 (frame 0x28);
+// complete bounded-size result 252; reused native pixel area 342; zero+size 322; zero+area 354;
+// size+area 342; all three 354; all with zero declared after mode 353. All restored; state
+// transport, protected rounding reloads and far-plane stores remain.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
