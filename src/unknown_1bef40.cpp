@@ -21,6 +21,14 @@ struct s_slot_0a
 	byte unknown14[0x40 - 0x14];
 };
 
+struct s_slot_0a_data
+{
+	s_reference reference;
+	short unknown04;
+	short unknown06;
+	byte unknown08[0x34 - 0x08];
+};
+
 struct s_slot_0b
 {
 	s_slot_header header;
@@ -55,13 +63,14 @@ short *function_e70b0(long unit_index, short *value);
 long function_1469f0(real seconds);
 
 #pragma intrinsic(_ReadWriteBarrier)
-// score 18 (was 18): retail reads the slot reference before it fetches the
-// actor, ours fetches the actor first, and g_46fbe8 is read as a byte here
-// where retail reads it as a dword.
+// score 13 (was 18): retail reads the slot reference before actor arithmetic and the object table
+// after index arithmetic; ours has the opposite order in each case.
+// Slot data block 13; without the barrier 90; action helper result 13; actor/state/result 17;
+// result/state/actor 13; state/result/actor 13; result/actor/state 17; actor/result/state 17.
 // @retail 0x1bf0f0
 short __stdcall function_1bf0f0(long actor_index, s_slot *slot, bool active)
 {
-	s_slot_0a *state = (s_slot_0a *)slot;
+	s_slot_0a_data *state = (s_slot_0a_data *)slot->unknownc;
 	s_actor_view *actor = actor_get(actor_index);
 	short result = g_46fbe8;
 	_ReadWriteBarrier();
@@ -72,22 +81,21 @@ short __stdcall function_1bf0f0(long actor_index, s_slot *slot, bool active)
 	else if (actor->unknown504 == 2)
 	{
 		short action;
-		function_e70b0(actor->unknown018, &action);
-		if (action == 5)
+		if (*function_e70b0(actor->unknown018, &action) == 5)
 		{
-			if (state->unknown12 > 0)
-				state->unknown12--;
+			if (state->unknown06 > 0)
+				state->unknown06--;
 			else if (function_2684f0(actor) >= 10)
 			{
 				real delay = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 3.0f, 5.0f);
 				real wait = function_259d0(&g_4e7408->unknown0, __FILE__, __LINE__, 0.0f, 0.5f);
-				state->unknown10 = (short)function_1469f0(delay);
-				state->unknown12 = (short)function_1469f0(wait);
+				state->unknown04 = (short)function_1469f0(delay);
+				state->unknown06 = (short)function_1469f0(wait);
 				function_262800(actor_index, state->reference, false);
 				function_1f86a0(actor_index);
 				state->reference = g_470fa0;
 			}
-			else if (--state->unknown10 <= 0)
+			else if (--state->unknown04 <= 0)
 			{
 				g_46eeb8[0x2b]->unknown8 = g_46f348;
 				g_46eeb8[0xa]->unknown8 = g_46f348;

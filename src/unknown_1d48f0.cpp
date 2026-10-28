@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "unknown_1d5120.h"
 #include "object_queries.h"
+#include "unknown_11cc90.h"
 #include <float.h>
 #include <math.h>
 // @flags /O2 /arch:SSE /Gr
@@ -42,7 +43,7 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 317 (was 321): aligned frame 0x1d4 agrees; the sample count matches (retail's
+// score 306 (was 317): aligned frame 0x1d4 agrees; the sample count matches (retail's
 // setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack). Structural cause of
 // the register differences: our LTCG inlines 0x11bed0 here (retail calls it, esi = location), and the
 // inlined copy takes esi, which swaps the optional inputs (esi/edi) and evicts the table cursor from esi
@@ -82,6 +83,14 @@ const dword g_455978[81] = {
 // bounds filter 430; early transform filter 361; both early filters 423; reset at query 361; direct ray rejection
 // 393; per query callback 376; callback and direct ray 376; early filters and reset 423.
 // Native callback context: conditional count 389; earlier conditional 495; earlier arithmetic count 354 kept (plain).
+// Lane 6 r85: ray endpoint and translation copy through `real_point3d_set` kept (317 -> 308: entry esi/edi
+// roles and the movss translation copy now retail's); planar length through `magnitude2d` in place of the
+// volatile casts kept (306). Translation alone 339; sample end through `real_point3d_set` 424, with the
+// kept forms 308; direction locals renamed to flip their name order 308; `normalize3d` with k cleared 323
+// (the short-vector exit is no longer threaded straight to the loop end); shape pointer declared before
+// the body 306; radius scale and unit scale through `vector3f_scale` 306/308; scale factor first 306.
+// With 0x11bed0 built /Ob1 (diagnostic) it is called as in retail but 0x14a280's bsp moves to the stack;
+// with 0x279740 inlinable (diagnostic) 0x11bed0 is called here but both releases inline.
 // Exact sample end 361; transform slot names 361; native ray endpoint 394; expanded radius name 361; unsigned sample ordinal 361.
 // Candidate/endpoint/ray component loops 382/354/354; basis loop 524;
 // translation loop 350 kept (plain); radial scaling/blend loops 354/354; combined producers 492.
@@ -172,8 +181,7 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   if (arg_6 > 0.0f)
   {
    vector3f local_15 = ((vector3f const *)g_455978)[local_13];
-   real local_16 = (real)sqrt((double)*(real const volatile *)&local_15.i * local_15.i +
-    (double)*(real const volatile *)&local_15.j * local_15.j);
+   real local_16 = magnitude2d((vector2f const *)&local_15);
    if (fabs(local_16) < 0.0001f) continue;
    real local_17 = 1.0f / local_16;
    local_15.i *= local_17;
@@ -196,10 +204,8 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   ((hkRigidBody *)local_8)->pose_write(local_7);
   ((c_contact_query_dispatch *)local_8)->query(&local_12);
   if (local_12.found) continue;
-  point3f local_19 = *arg_11;
-  local_19.x += arg_4->i;
-  local_19.y += arg_4->j;
-  local_19.z += arg_4->k;
+  point3f local_19;
+  real_point3d_set(&local_19, arg_11->x + arg_4->i, arg_11->y + arg_4->j, arg_11->z + arg_4->k);
   if (function_168f40(0x1480040d, (s_vehicle_ray const *)&local_19, arg_0->object_index, NONE)) continue;
   if (local_1)
   {
@@ -222,8 +228,7 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   local_21.up.i = local_7.m_rotation.m_col2(0);
   local_21.up.j = local_7.m_rotation.m_col2(1);
   local_21.up.k = local_7.m_rotation.m_col2(2);
-  for (long component = 0; component < 3; ++component)
-   local_21.position.n[component] = local_7.m_translation(component);
+  real_point3d_set(&local_21.position, local_7.m_translation(0), local_7.m_translation(1), local_7.m_translation(2));
   function_1d43d0(arg_0, &local_21, &local_22);
   *arg_11 = local_22.position;
   function_11bed0(arg_5, arg_11);

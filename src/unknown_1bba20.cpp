@@ -148,10 +148,11 @@ real function_204950(long actor_index, long squad_index, short mode);
 void function_26def0(long actor_index, long owner_index);
 __declspec(noinline) bool function_f5dc0(long object_index);
 
-// score 67 (was 72): retail compares the squad field against -1 in memory and
-// reads it back as a word, ours loads the field into EAX first and narrows it
-// to a word; the arguments of the distance call are also set up in the other
-// order.
+// score 49 (was 67): the first squad test still reuses its full-width load;
+// the second call reloads the actor where retail uses its saved pointer, and
+// the distance-call argument order differs. Split entry branch 67; first fresh
+// actor 90; second fresh actor 49 (kept); both fresh actors 81; first field
+// pointer 49; second field pointer 67; typed vehicle 67; no final refresh 123.
 // @retail 0x1bba70
 void function_1bba70(long actor_index, long vehicle_index, long seat_index)
 {
@@ -172,7 +173,7 @@ void function_1bba70(long actor_index, long vehicle_index, long seat_index)
                 if (*(long *)((byte *)actor + 0x28) != NONE)
                     distance = function_204950(actor_index, *(long *)((byte *)actor + 0x28), 0);
                 if (*(long *)((byte *)actor + 0x28) != NONE && distance < 3.0f)
-                    function_1e3400(actor_index, *(word *)((byte *)actor + 0x28));
+                    function_1e3400(actor_index, *(word *)((byte *)actor_get(actor_index) + 0x28));
                 else
                 {
                     long squad_index = *(long *)(vehicle + 0x3a0);

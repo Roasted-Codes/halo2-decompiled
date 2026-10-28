@@ -193,6 +193,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // the second arm's data/publish calls into the first arm's (retail keeps both). Weight product
 // reordered, short and int index 221 each (identical); weighted id copied into the id local or its
 // own local 301/301 (the tail un-merges as retail but the state pointer leaves EBP).
+// Round 201: A single frame/weight-array cursor with paired index and char frame gives 248 each
+// with either end test; long frames give 227 each, recovering frame 0x2c but growing to 966 bytes.
+// On that recovered-frame graph, shared/separate weighted identifiers, each with either countdown
+// arm order, give 244/244/244/244. Original index loop, identifiers and constructors restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

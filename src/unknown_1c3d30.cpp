@@ -73,7 +73,9 @@ extern byte *g_51eca8;
 extern short g_51ecb0;
 c_2d8ab0 *g_47f044;
 
-// score 7 (was 7): all seven differing instructions are in the loop over the
+// score 7 (was 7): four differing instructions are in the loop over the groups
+// (retail loads the seat table into ECX and the index into EDX, ours into EAX and
+// ECX) and three in the release loop (retail keeps the index in EAX, ours in EDX).
 // groups: retail loads the seat table into ECX and the index into EDX, ours
 // loads the table into EAX and the index into ECX.
 // @retail 0x1c3d30

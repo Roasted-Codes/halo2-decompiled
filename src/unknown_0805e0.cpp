@@ -814,6 +814,10 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // (retail ECX, copied from the count) and the forward index EBP (retail EAX). On 71: one shared shift
 // index 74; range locals in three orders 74; named count 71; entry-pointer forward copy 71, copy from
 // lower 364; upper before lower 75; bounds zeroed in an else arm 71. Original body restored.
+// Round 215: native timestamp dword member 66; closed bounds workspace 66;
+// entry time workspace 66; pre-copy long adjustment 382; indexed destination 168;
+// mutable removal with upper-first declarations 66; shared range-direction relation 381;
+// indexed destination with native timestamp member 168. Original body restored.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

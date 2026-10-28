@@ -126,6 +126,9 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // 0x14 and 1136 bytes but regresses to 241; original helper and body restored.
 // Round 196: Descending transform rows with long/int/short/signed-byte ordinals: direct output
 // 275/275/407/407; descending output cursor 275/275/394/394. Original helper/body restored.
+// Round 358: Input-copy/scale orders ikj, jik, jki, kij 220/221/257/220; with live forward
+// coefficients 253/241/253/253. One-count gain rejected; exact-length 241 still regresses. Original
+// helper/body restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {
