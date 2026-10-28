@@ -1004,9 +1004,12 @@ s_slot_handler_2x g_47e9d0 =
 	1, 10, 1.5f, 0x5b
 };
 
-// score 47 (was 47): g_46fbe4 and g_46fbe8 are read as bytes here but as
-// dwords in retail; they are declared short in include/globals.h, which is not
-// mine to change.
+// score 47 (was 47): g_46fbe4 and g_46fbe8 have signed-word loads here versus
+// dword loads in retail; their shared declarations remain short.
+// Single-observation continuation selected by complementary tests, slot-data
+// view with long if/ternary result 86/86 and short result 77/77;
+// whole-slot receiver with the same choices 86/86/77/77.
+// Native pool/status carriers and the shared status load width remain.
 // @retail 0x1ba4e0
 short __stdcall function_1ba4e0(long actor_index, s_slot *slot, bool active)
 {

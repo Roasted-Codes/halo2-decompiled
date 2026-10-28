@@ -686,6 +686,9 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 // vector declarations alone/linear/angular/both 69/71/77/79; renamed spin vectors 69.
 // Shared linear/angular/both sums 68/63/76; scaled angular sum with/without
 // the linear helper 121/121; complete linear/both/scaled angular outputs 112/130/117.
+// Object receiver at every use with no/linear/angular/both shared sums
+// 155/140/140/114; entry-scope uninitialized vectors with those sums
+// 155/140/140/114. Original object snapshot restored; impulse/seed carriers remain.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
