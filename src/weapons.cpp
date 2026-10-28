@@ -2834,6 +2834,8 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Scalar accumulator/contribution/output names, alone and combined, 398 each;
 // combined names with late constant found declaration 398. All eight restored.
 // Round 251: Case-scoped barrel/trigger/both/magazine/barrel+magazine/trigger+magazine/all selectors 398/398/398/398/398/398/398; all with full-width selectors 424. Original shared word selector restored.
+// Round 228: existing activity helper as final-only/direct output producer,
+// original/native dispatch, supplied/helper-owned tag: 398/415/409/425/398/415/409/425. All restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3552,6 +3554,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // unsigned-byte effect decisions 1436; branch outputs/integer tables 1457. Original body restored.
 // Existing visible-owner result, with request guard/reset chain/both 1436/1436/1436/1436;
 // each graph with Boolean activity 1477/1477/1477/1477. All helpers and body restored.
+// Round 228: unsigned-word blocked/down/up carrier subsets 1436 each; all three
+// with unsigned native activity 1436. Frame 0x3c and initial spills remain; all restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
