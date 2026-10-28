@@ -192,9 +192,12 @@ short __stdcall function_1c04f0(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 143 (was 143): retail inlines function_1f4460, which lives in a file
-// that is not mine,
-// so our frame is 16 bytes smaller and the call is still there.
+// score 143 (was 143): frame 0xa0 versus 0xb0; action/collision argument registers
+// and destination publication scheduling differ. The movement helper already expands.
+// Earlier: complete 0x5c collision 140, with early material 138; uniform unit index
+// captures 234/161; native slot-data 143; target/request/point/probe names on full output 140.
+// Full output with shared scaled target, whole-point initialization or shared distance
+// difference, alone and together with native slot-data: eight forms 140 each; restored.
 // @retail 0x1c0670
 bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 {
