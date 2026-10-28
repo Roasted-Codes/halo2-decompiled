@@ -922,6 +922,7 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // all 462 with force-inline openness or 429 with ordinary-inline openness. All eight forms and shared type restored.
 // Round 234: native current edge/node/portal-surface records and combinations
 // 395/437/429/392/478/411/486; native portal query edges 392. Original receivers restored.
+// Round 197: Cached selected/portal/both node words 442/385/442; selected/portal/both with Boolean ring direction 414/399/414; both words with word first-openness 410, plus Boolean ring 396. All restored; frame 0x28 remains.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)

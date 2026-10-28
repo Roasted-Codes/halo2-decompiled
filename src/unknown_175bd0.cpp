@@ -1941,6 +1941,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // system in EDI, retail ESI; color B in EBX, retail EDI; tinted spilled, retail BL); its colors named
 // to sort after location_index 177; parameters reordered 177; colors read from the effect inside 177;
 // const color parameters 177.
+// Round 198: register-only scale formal in five source positions 130 each; read-only descriptor/original scale/scale last/scale middle 130/130/130. All definitions, declarations and both calls restored.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2757,7 +2758,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 	return out;
 }
 
-// score 148 (was 152): frame 0x7c and transform block agree. Retail stores both part-flag test results
+// score 148 (was 148): frame 0x7c and transform block agree. Retail stores both part-flag test results
 // in the byte at [esp+0x13] (as it does `reversed`); its radius slot lies between the definition
 // and event spills (ours below the next index); it loads the radius bounds upper first, then lower,
 // before drawing the random value (a range call's arguments) and keeps the fraction on the x87 stack;
@@ -2839,6 +2840,7 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // Round 147: matrix reference 152; source reference 152; output reference 152; matrix/source
 // 152; matrix/output 152; source/output 152; all native references 152; source vector value 383.
 // All executable forms restored; sources and comparisons saved.
+// Round 198: shared native flag word/dword/byte/signed byte 147/147/152/152; shared-word masks 153; entry/part/location flag receiver 147/147/147. One-count forms rejected; complete body and real flag declaration restored.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {

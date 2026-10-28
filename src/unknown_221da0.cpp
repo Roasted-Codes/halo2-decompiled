@@ -799,6 +799,9 @@ real function_18cac0(long arg_0);
 // with audibility at each bound 223/245/223/223. On long 223, after-clear BSP/native real/both
 // 235/223/235; small-mask memset alone/with after-clear BSP/native real/both 216 each.
 // Whole clear return, direct camera/audibility and library mask clear kept at 216 plain (813/812).
+// Round 195: Outer, inner and batch induction-zero lifetimes independently [241, 230, 247]; paired/joint
+// lifetimes [236, 263, 256, 254]; entry declarations with per-door inner reset 257. Original zeros,
+// clears and loop domains restored; scalar and mask/result homes remain.
 // Round 201: Per-door camera cluster captured after mask query in long/short, alone, with complete
 // role names, with an outer maximum workspace, and with both: 250 each (eight forms, 785 bytes).
 // Original direct field observations and inner result lifetime restored; frame/home and max joins remain.
