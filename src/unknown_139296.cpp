@@ -438,6 +438,9 @@ bool function_22acb4(long player_index);
 // Original scalar masks restored; extra second-mask spill and persistent constants remain.
 // Round 210: First-mask high-byte orders 2134/1324/1243/4123/4321/3412/2341/3142
 // all 165; original producers restored, extra second-mask spill remains.
+// Round 60, on the 232 ordered control: long/short first 290/290;
+// long first with short/long second 268/299; long third/fourth 229/229;
+// fourth before second 261; third before second 265. Original 165 body restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
