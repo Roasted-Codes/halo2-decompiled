@@ -152,7 +152,7 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 /* fills a variant: its type and settings, its nine names and descriptions
    and its tables. Retail keeps field_8 on the stack: reading it through its
    address keeps it there */
-// score 30 (was 172): Frame 0x408 and language/string homes agree; initial setup order and point-copy homes remain.
+// score 30 (was 30): Frame 0x408 and language/string homes agree; initial setup order and point-copy homes remain.
 // Earlier: Frame 0x40c versus 0x408; tag spill and language/range/cursor homes remain.
 // String zero and counter allocation also differ. Shared output cursor 221; native array cursors 229;
 // Frame 0x40c versus 0x408 and tag/language/cursor homes remain; intermediate ownership does not remove the spill.
@@ -217,6 +217,11 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // outlined inline search with outlined conversion/both noinline 172,172.
 // List-index helper word/masked, word/direct, short/masked, unsigned/masked 51/51/51/30;
 // word/short index local 212/212; word index and helper 212; short index and helper 212.
+// Round 31 (lane 12): retail loads the point source into eax before the two field stores; ours keeps it
+// in its stack home (with or without the field_8 read). Plain field_8 read 220; indexed destination with
+// stepped source 30 (same code); stepped destination with indexed source 219 (frame 0x404); string loops
+// on the shared counter 30; name third in the parameters, as the callers' loads order it, 30 (callers
+// still match), the same with the plain field_8 read 220 (three callers lost).
 // @retail 0x1936e0
 void function_1936e0(long type, s_built_variant *variant, dword field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {

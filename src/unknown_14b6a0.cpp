@@ -119,6 +119,11 @@ void function_14bac0()
 }
 
 // score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
+// center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
+// probe point at 0x1c); plus a bare block around the probe/center code 257 (identical code); per-marker
+// probe points with the center call written in both arms 302 (1080 bytes, not merged); first iterator
+// declared in the first block 257; iterator and probe point renamed 257 (identical layout).
 // Round 139: retail's two iterators are separate locals (first loop at frame 0x30, second at 0x1c
 // sharing the marker probe point's slot) and the second loop calls 0x6b380; split iterators with
 // the second through data_datum_iterator_next 257 (frame 0x44), both inline 234; per-marker probe
@@ -186,6 +191,11 @@ void function_14bac0()
 // datum iterator 257 (frame 0x44; both readiness homes then agree); plus a block scoping the
 // centre 257 (identical under LTCG, 0x38 compile-only); first loop on a datum iterator through an
 // inline next 257 (frame 0x48); readiness declarations swapped 262; centre declared first 257.
+// Round 80: the visit test through the existing 0xbec70 285 (called, not inlined); the root search in
+// 0xbaf80's own shape (NONE result, plain while) 298; first iterator scoped to its block with the second
+// scan through 0x6b380 257 (frame 0x44); stamp-first comparison 234 (identical); the visit test through
+// 0xbec70's inline stamp-parameter shape 239 (indexed store as retail, but no stamp copy). Retail's
+// `mov edx, ecx` before the stamp store occurs in no other retail function. Original body restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

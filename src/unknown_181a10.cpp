@@ -559,6 +559,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // `setne; test`. Entity as `type == 1 ? entity : NULL` 321; clamp as if/else-if on the local,
 // constant-first if/else-if and the PIN macro 321/321/321 (identical code); side test written in
 // each arm without the side local 352 (1289 bytes). All restored.
+// Round 23: property count/base/both observations 321/338/338; next-link snapshot 364;
+// link plus count/base/both 364/348/347; all with native property reference 346.
+// Frame stays 0x48 versus 0x44; original input scans and helper contracts restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
