@@ -374,6 +374,11 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
+// score 372 (was 386): the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
+// Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
+// all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
+// point-difference helpers alone/everywhere 398/398; depth-indexed step fields 385; direct data and step fields 372 (kept);
+// that with a short initialization count 402; separate clearing loops 394; both 384.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,
@@ -382,7 +387,6 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 {
 	s_path_lookup_view *lookup = (s_path_lookup_view *)state;
 	s_path_input_view const *input = (s_path_input_view *)&state->source;
-	s_path_links_data_view const *data = (s_path_links_data_view *)state->pathfinding;
 	long edge_indices[40];
 	long initialize_count = lookup->nodes[node_index].depth + 1;
 	if (initialize_count > maximum_steps)
@@ -403,8 +407,8 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	{
 		s_path_node_key_view *node = &lookup->nodes[node_index];
 		if (link_count < maximum_links && (node->unknown10 != NONE ||
-			(node->unknown14 >= 0 && node->unknown14 < data->edge_count &&
-			(data->edges[node->unknown14].flags & 0x80))))
+			(node->unknown14 >= 0 && node->unknown14 < ((s_path_links_data_view const *)state->pathfinding)->edge_count &&
+			(((s_path_links_data_view const *)state->pathfinding)->edges[node->unknown14].flags & 0x80))))
 		{
 			memcpy(&links[link_count++], &node->unknown10, sizeof(*links));
 		}
@@ -416,33 +420,32 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 		{
 			if (count == 0)
 				count = node->depth + 1;
-			s_path_step_view *step = &steps[node->depth];
-			step->node_index = node->node_index;
+			steps[node->depth].node_index = node->node_index;
 			if (previous_index == NONE)
-				step->point = result->destination;
+				steps[node->depth].point = result->destination;
 			else
 			{
-				step->point = previous->entry_point;
+				steps[node->depth].point = previous->entry_point;
 				if (previous->unknown10 == NONE)
 					edge_indices[node->depth] = previous->unknown14;
 			}
 			bool special = node->unknown10 == 2 &&
-				data->surfaces[node->unknown14].unknown0a == 0;
+				((s_path_links_data_view const *)state->pathfinding)->surfaces[node->unknown14].unknown0a == 0;
 			if (node->unknown10 == 1 || node->unknown10 == 6 ||
 				node->unknown10 == 5 || special)
 			{
-				step[-1].type = node->unknown10;
-				step[-1].link_index = (short)node->unknown14;
+				steps[node->depth - 1].type = node->unknown10;
+				steps[node->depth - 1].link_index = (short)node->unknown14;
 				s_path_node_key_view *parent = &lookup->nodes[node->parent];
 				function_26f3f0((s_pathfinding_data *)state->pathfinding,
 					node->unknown14, &node->entry_point, actor_index, state,
 					&parent->entry_point, parent->node_index, &parent->node_index,
-					&step[-1].point, &step[-1].node_index);
+					&steps[node->depth - 1].point, &steps[node->depth - 1].node_index);
 			}
 			else if (node->unknown10 == 2)
 			{
-				step[-1].type = node->unknown10;
-				step[-1].link_index = (short)node->unknown14;
+				steps[node->depth - 1].type = node->unknown10;
+				steps[node->depth - 1].link_index = (short)node->unknown14;
 			}
 		}
 		previous_index = node_index;
@@ -453,16 +456,16 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	for (short j = 0; j < count; j++)
 	{
 		long edge_index = edge_indices[j];
-		if (edge_index >= 0 && edge_index < data->edge_count && edge_index != 0xffff)
+		if (edge_index >= 0 && edge_index < ((s_path_links_data_view const *)state->pathfinding)->edge_count && edge_index != 0xffff)
 		{
 			s_type_c3b527 const *previous_point = j > 0 ? &steps[j - 1].point : &input->start;
-			s_path_edge_view const *edge = &data->edges[edge_index];
+			s_path_edge_view const *edge = &((s_path_links_data_view const *)state->pathfinding)->edges[edge_index];
 			s_type_c3b527 *point = &steps[j].point;
 			/* Retail widens these unsigned words before comparing against NONE. */
 			if ((long)edge->vertices[0] != NONE && (long)edge->vertices[1] != NONE)
 			{
-				point3f const *a = &data->vertices[edge->vertices[0]];
-				point3f const *b = &data->vertices[edge->vertices[1]];
+				point3f const *a = &((s_path_links_data_view const *)state->pathfinding)->vertices[edge->vertices[0]];
+				point3f const *b = &((s_path_links_data_view const *)state->pathfinding)->vertices[edge->vertices[1]];
 				vector3f edge_vector = { b->x - a->x, b->y - a->y, b->z - a->z };
 				vector3f offset = { previous_point->point.x - a->x,
 					previous_point->point.y - a->y, previous_point->point.z - a->z };
@@ -514,10 +517,17 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	return count;
 }
 
+// score 239 (was 356): the 0x5ac ESP frame and initial actor sequence now agree; avoidance-flag conversion and tail layout differ.
+// Tried: one result exit 308; stage array names 356; both 308; reversed arrays 356; named destination fields 360;
+// direct reconstruction count 357; full avoidance if/else 354; success first 362; shared rounding helper 363; helper plus one exit 314.
+// With direct data/step fields in the callee: original parent 353; original with actor NULL before the index test 350;
+// one exit plus actor NULL before the index test 239 (kept). The callee form alone moved the earlier parent from 308 to 349.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {
-	byte *actor = actor_index == NONE ? NULL : g_4f55f0->data + (actor_index & 0xffff) * 0x888;
+	byte *actor = NULL;
+	if (actor_index != NONE)
+		actor = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
 	s_path_input_view const *input = (s_path_input_view *)&state->source;
 	s_path_destination_view const *destination = (s_path_destination_view *)state;
 	s_path_closest_view const *closest = (s_path_closest_view *)state;
@@ -525,100 +535,99 @@ bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view 
 	result->valid = false;
 	result->location = *(s_path_location_view *)&state->location;
 	result->unknowna6 = false;
-	if (!destination->destination_valid)
-		return result->valid;
-	short index = function_272700(state, destination->destination_node_index);
-	if (index != NONE)
+	if (destination->destination_valid)
 	{
-		memcpy(&result->destination, &destination->destination, 24);
-		result->destination_distance = 0.0f;
-	}
-	else
-	{
-		if (!(destination->destination_radius > closest->distance))
-			return result->valid;
-		index = closest->node_index;
-		result->destination = closest->point;
-		result->destination_node_index = lookup->nodes[index].node_index;
-		result->destination_distance = closest->distance;
-	}
-	if (index == NONE)
-		return result->valid;
-
-	s_path_step_view local_0af630[40], name_b343c4[4], final_steps[4];
-	s_path_location_entry_view links[10];
-	short smoothed_count = 0, final_count = 0, link_count = 0;
-	bool complete = true, success = true;
-	short raw_count = function_270d90(actor_index, state, result, index, 40,
-		local_0af630, &complete, &link_count, links, 10);
-	function_2c2060(state, raw_count, local_0af630, &smoothed_count, name_b343c4, &complete);
-	if (actor && actor[0x478])
-	{
-		final_count = smoothed_count > 4 ? 4 : smoothed_count;
-		memcpy(final_steps, name_b343c4, final_count * sizeof(*final_steps));
-	}
-	else
-	{
-		bool avoid = state->unknownac != 0;
-		long object_index = NONE, type = NONE;
-		if (!avoid && result->location.flags > 0)
-			avoid = (result->location.flags / (1 << (byte)result->location.count)) % 2 == 1;
-		success = function_2c41b0(actor_index, state, smoothed_count, name_b343c4, avoid,
-			&final_count, final_steps, &complete, &object_index, &type, &result->unknowna6);
-		if (success)
+		short index = function_272700(state, destination->destination_node_index);
+		if (index != NONE)
 		{
-			result->object_index = object_index;
-			result->type = (short)type;
-			if (object_index != NONE && actor_index != NONE && (short)type == 6)
-			{
-				real duration = (real)g_510c54->field_2_3 * 0.2f;
-				long ticks;
-				__asm { fld duration }
-				__asm { fistp ticks }
-				function_1a8220(actor_index, 9, (short)ticks, 3, 1, 42, 3);
-			}
+			memcpy(&result->destination, &destination->destination, 24);
+			result->destination_distance = 0.0f;
 		}
-		else
+		else if (destination->destination_radius > closest->distance)
 		{
-			result->object_index = NONE;
-			result->type = NONE;
+			index = closest->node_index;
+			result->destination = closest->point;
+			result->destination_node_index = lookup->nodes[index].node_index;
+			result->destination_distance = closest->distance;
 		}
-	}
-	if (result->location.flags == 0)
-	{
-		if (link_count > 0)
-			result->location.entries[0] = links[0];
-		if (link_count > 1)
-			result->location.entries[1] = links[link_count - 1];
-		if (link_count > 2)
-			result->location.entries[2] = links[link_count / 2];
-		result->location.count = link_count < 0 ? 0 : link_count > 3 ? 3 : link_count;
-	}
-	if (success)
-	{
-		result->complete = complete;
-		result->step_count = (signed char)final_count;
-		result->valid = true;
-		result->step_index = 0;
-		result->start = input->start;
-		memcpy(result->steps, final_steps, final_count * sizeof(*final_steps));
-		if (result->complete)
+		if (index != NONE)
 		{
-			if (result->step_count > 0)
+			s_path_step_view local_0af630[40], name_b343c4[4], final_steps[4];
+			s_path_location_entry_view links[10];
+			short smoothed_count = 0, final_count = 0, link_count = 0;
+			bool complete = true, success = true;
+			short raw_count = function_270d90(actor_index, state, result, index, 40,
+				local_0af630, &complete, &link_count, links, 10);
+			function_2c2060(state, raw_count, local_0af630, &smoothed_count, name_b343c4, &complete);
+			if (actor && actor[0x478])
 			{
-				result->destination = result->steps[result->step_count - 1].point;
-				result->destination_node_index = result->steps[result->step_count - 1].node_index;
+				final_count = smoothed_count > 4 ? 4 : smoothed_count;
+				memcpy(final_steps, name_b343c4, final_count * sizeof(*final_steps));
 			}
 			else
 			{
-				result->destination = input->start;
-				result->destination_node_index = input->start_node_index;
+				bool avoid = state->unknownac != 0;
+				long object_index = NONE, type = NONE;
+				if (!avoid && result->location.flags > 0)
+					avoid = (result->location.flags / (1 << (byte)result->location.count)) % 2 == 1;
+				success = function_2c41b0(actor_index, state, smoothed_count, name_b343c4, avoid,
+					&final_count, final_steps, &complete, &object_index, &type, &result->unknowna6);
+				if (success)
+				{
+					result->object_index = object_index;
+					result->type = (short)type;
+					if (object_index != NONE && actor_index != NONE && (short)type == 6)
+					{
+						real duration = (real)g_510c54->field_2_3 * 0.2f;
+						long ticks;
+						__asm { fld duration }
+						__asm { fistp ticks }
+						function_1a8220(actor_index, 9, (short)ticks, 3, 1, 42, 3);
+					}
+				}
+				else
+				{
+					result->object_index = NONE;
+					result->type = NONE;
+				}
 			}
-			result->destination_distance = function_210970(&result->destination, &destination->destination);
+			if (result->location.flags == 0)
+			{
+				if (link_count > 0)
+					result->location.entries[0] = links[0];
+				if (link_count > 1)
+					result->location.entries[1] = links[link_count - 1];
+				if (link_count > 2)
+					result->location.entries[2] = links[link_count / 2];
+				result->location.count = link_count < 0 ? 0 : link_count > 3 ? 3 : link_count;
+			}
+			if (success)
+			{
+				result->complete = complete;
+				result->step_count = (signed char)final_count;
+				result->valid = true;
+				result->step_index = 0;
+				result->start = input->start;
+				memcpy(result->steps, final_steps, final_count * sizeof(*final_steps));
+				if (result->complete)
+				{
+					if (result->step_count > 0)
+					{
+						result->destination = result->steps[result->step_count - 1].point;
+						result->destination_node_index = result->steps[result->step_count - 1].node_index;
+					}
+					else
+					{
+						result->destination = input->start;
+						result->destination_node_index = input->start_node_index;
+					}
+					result->destination_distance = function_210970(&result->destination, &destination->destination);
+				}
+			}
+			else if (++result->location.flags > 32)
+				result->location.flags = 0;
 		}
 	}
-	else if (++result->location.flags > 32)
-		result->location.flags = 0;
 	return result->valid;
 }
 
