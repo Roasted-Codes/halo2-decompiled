@@ -2094,6 +2094,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Round 237: native state bit updates 488; actor/command/both at uses 1149/940/1417;
 // actor-state/command-state/all receivers 1149/940/1417; both getters with bit updates 1438
 // (fast control 491; full 478). Actor/state and first-point homes remain; all restored.
+// Round 240: Internal turning-result byte/short/long 491/491/491; facing-completion
+// byte/short/long 491/583/584; both short/long 583/584 (fast control 491, full 478).
+// Actor/state ownership and first point home persist; original predicates restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

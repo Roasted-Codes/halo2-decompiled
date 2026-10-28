@@ -148,6 +148,9 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // Round 217: Header-validator inline/noinline/inline-out-of-line declarations 367/367/367;
 // with cursor-end bounds 375/375/375; with repeated completed-count value 362/362
 // fast. Five-point exact-length forms are below the retention threshold; all declarations and body restored.
+// Round 240: One shared full-width priority ordinal, signed/unsigned, with state
+// first and/or constant true result first: eight forms 367. Request source,
+// dependency bound and write options remain; all original input reads restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {
