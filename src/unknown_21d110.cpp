@@ -397,6 +397,10 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // Round 63: platform handle by an if statement 211; nested class/flag tests 204; definition query and
 // allocation as one ternary 233; start-result arms swapped (delete first) 206; effect index declared
 // before the definition pointer 204.
+// Round 17: noinline target with the forced start/direct delete/common result form 80 (eight caller
+// losses); whole-body tag reference 207 (eight caller losses); single address-based tag reads at the
+// definition query, class lookup, effect start and fallback start 204 each; noinline target alone and
+// with the fallback address read 204 each. Original body and declarations restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

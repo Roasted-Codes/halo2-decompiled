@@ -2166,6 +2166,11 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // default as a ternary 201; field-copy compare operands swapped 168; field pointer for the
 // copied field 168 (retail's dead `add ebp, 0x214` remains). The first block's goto became a
 // plain NONE guard (identical code).
+// Round 66 (fast, identical code each): tail compare operands swapped for the 0x23e field / the flag byte /
+// both 168/168/168; entry lookup with the pool base first 168 (SIB order unchanged); the child getter's
+// object read in the entry's offset form 168. Retail loads the record field into a register before each
+// tail compare and re-reads the object field for its store; it reloads the object once after the loop
+// (ours reloads it into EBP at the bottom of each iteration).
 // Round 29: the 0x2000 block is 8 of the 11 missing bytes: retail loads the record's
 // field and the unit's +0x214 into registers, compares them, and leaves a dead
 // `add ebp, 0x214`. memcmp for that test gives retail's loads and compare but no add

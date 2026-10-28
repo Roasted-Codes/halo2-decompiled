@@ -517,9 +517,12 @@ bool __stdcall function_f8de0(long projectile_index)
 	vector3f displacement = *velocity;
 	vector3f delta;
 	bool moved;
+	bool rotate;
 
+	/* retail passes the rotate flag from a byte local's stack home */
 	if ((!(projectile->unknownc1 & 1) || TEST_FIELD_BIT(projectile->flags.unknown14)) &&
-		function_109a00(projectile_index, &delta, TEST_FIELD_BIT(projectile->flags.unknown15), &displacement))
+		(rotate = TEST_FIELD_BIT(projectile->flags.unknown15),
+			function_109a00(projectile_index, &delta, rotate, &displacement)))
 	{
 		moved = true;
 	}
