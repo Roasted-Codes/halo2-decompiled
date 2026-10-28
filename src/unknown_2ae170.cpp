@@ -573,7 +573,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 393 (was 449): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
+// score 393 (was 393): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
 // conversions (6 calls versus retail's 15; BLOCKED-BY 0x12aff0: retail's callers treat it as opaque).
 // Round 75: SetMixBins (retail calls 0x37c5e4) for SetMixBinVolumes 449 (kept); the existing 0x2216f0 with a
 // NULL list for the three submissions 393 (kept); explicit sends, one object 613, three objects 544; set-2 rear
@@ -630,6 +630,11 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Automatic-table pointer walks first/second/first+second/third/first+third/second+third/all:
 // 436/436/437/432/431/431/431 fast (control 436); shared table-end pointer 431.
 // All pointer walks 446 plain, three-point gain rejected; original word ordinals restored.
+// Round 208 reduced control 378/967, full 393/951: first/second, first/third,
+// last-two and all descriptor scopes on the current submission graph
+// 417/400/428/447; corresponding three pairwise object reuses 417/400/428;
+// all scopes with both repeated levels 500. All scopes reach frame 0xa0;
+// conversion reuse and the twelve-byte excess frame remain; original body restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -862,6 +867,10 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 190: Mode-first field-address selection with gain at entry/after selection/after
 // offset/after input level 247/247/258/258; constant-first counterpart 232/231/245/245. Every form
 // regresses; original helper and scalar lifetimes restored.
+// Round 208: uniform shared input sums with paired route subtotals, repeated
+// right gain and paired threshold observations 293/263/286/270/267/267/270/270.
+// Without the right-gain snapshot, frame 0x18 shortens to 779-804 bytes; gain forms
+// lose the dispatcher. Original sums, observations and local qualifications retained.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -1102,6 +1111,14 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 190: Live input levels with bool/byte/short/word primary channel and entry-rear/live-rear
 // observations 221/229, 221/229, 213/231, 213/231. All regress; original scalar captures, channel
 // predicate and send expansion restored.
+// Lane 4 r98: the mode-one sends stay x87 in every add_send form (our VC picks x87 for a memory-homed
+// operand plus a field; retail adds the GPR-held level in SSE through its slot). Append decibels by const
+// reference 214; plain add_send sums 212 (0x2af800 102); a local copy of the gain in add_send 212 (copy
+// propagated); `real level = parameters->level; level += parameters->level_offset;` before the appends
+// with the gains read at use: retail's early offset-first sum, frame 4, 222; with the const reference 232.
+// Round 194: Native byte/short/word/dword channel masks with retained rear samples
+// 200/198/198/199; with entry level sum 209/209/209/212. Small gains rejected;
+// original scalar captures, channel decision, helpers and sum grouping restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

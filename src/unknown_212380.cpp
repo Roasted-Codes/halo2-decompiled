@@ -31,6 +31,19 @@ bool function_212ec0(s_game_variant *arg_0, long arg_1);
 // each alone and create-dispose/normalize-save/save-dispose/all, all 386.
 // Round 169: Public initializer ordinary/forced boundaries 386/386; each low specialization
 // 386, high group 386, forced boundary with entry output 386. Original calls/declaration restored.
+// Round 193: Low-tail/high-specialization orders 1542897/1542987/1542978/1542879;
+// 1425897/1425987/1524897/1524987: 417/417/423/383/411/411/417/417. Original switch restored.
+// Round 60: ours folds the types 4-6 bit-0 set into the defaults mask and stores the flags late;
+// bit 0 through its bitfield, the mask split in two, bits 2-14 as single bitfields 386 each; the
+// existing engine-to-type mapping call 1391; flags right after the name copy in the shared
+// initializer 373 (0x19d220 then stops matching).
+// Round 32: the flags store is what differs per case: retail computes and stores flags48 right
+// after the name copy, before the copy's `add esp, 0xc`, so each case keeps its own store; ours
+// schedules it after the stack adjustment, where it is identical in every case and is merged
+// into the shared tail (each case one instruction shorter, the tail one longer, and the register
+// rotation that follows). Variant declared at function scope 386; the failure path returning
+// NONE directly 371 (only the length and table line up; the tail moves further from retail; not
+// kept); the initializer's returned pointer used afterwards 386; an early NONE return 446.
 // @retail 0x212380
 long function_212380(long arg_0, long arg_1, byte *arg_2)
 {

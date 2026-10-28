@@ -217,7 +217,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 		up->k = matrix->up.k * k + matrix->left.k * j + matrix->forward.k * i;
 	}
 }
-// score 220 (was 220): Frame 0x78 versus 0x6c, early ESI save and basis/position homes remain.
+// score 220 (was 220): Frame 0x78/0x6c, early ESI save and basis/position homes remain.
+// Earlier baseline: Frame 0x78 versus 0x6c, early ESI save and basis/position homes remain.
 // Earlier: Frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // frame 0x78 versus 0x6c; early ESI save and basis/position homes remain.
 // Depth zero 536; depth one 235; target size 429; ordinary world-up inline 465;
@@ -258,6 +259,23 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 250: Entry basis/position/all native workspaces 220/220/220; discarded-forward name 220;
 // complete basis/phase names 220/220; entry basis plus basis names 220; entry workspaces plus phase
 // names 220. Frame 0x78/0x6c and early ESI/basis/position homes remain.
+// Round 153: Actual up/forward/both/turn/up-turn/forward-turn/all three field receivers
+// 249/253/253/276/261/283/260; requested-forward/all four 266/256. Default-vector pointer observed
+// once, alone/with turn/with all three fields 240/251/292. Whole original body restored.
+// Round 252: Final orientation predicates in bool/byte/short/long domains 251/251/259/257; short-circuit
+// refined results 222/222/222/222. Original comparisons and every vector/callback role restored; frame
+// 0x78 versus 0x6c and early ESI/basis/position homes remain.
+// Round 80: retail's frame packs the position copy into the temporary velocity's slot and gives the
+// first basis call its own left output (sharing the later forward output's slot). Position copied
+// inside an inline helper gives the 0x6c frame under --fast, 269 plain (object re-looked-up); from the
+// cached object 243 (1030 bytes); plus the zero velocity before world-up 247 (zero-vector copies now
+// as retail); plus a separate first left 259; plus the speed scale read at each use 238. The early
+// ESI save and a 4-byte pad come from 0x11f0d0's double locals (angle, s) once the caller 0x118700 is
+// in the image: with both real, --fast with the caller gives retail's late ESI. `real angle` keeps
+// 0x11f0d0 identical; `real s` or the quotient written per component fold its last multiply (2 -> 89).
+// Lane 9 r29 (plain): `real angle` in 0x11f0d0 220 (identical); `real s` there 220 here
+// (--fast showed 200 with the late ESI, a reduced-image artifact; 0x11f0d0 2 -> 89), also as
+// `step / (real)sqrt(dist2)`; the four basis vectors declared in reverse 220; position renamed 220.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -467,8 +485,6 @@ struct s_parent_effect_definition_11a140
 	long alternate_effect_index;
 };
 
-// score 5 (was 5): the call to object_get_damage_owner gets its first argument in a register here,
-// while retail passes both arguments on the stack.
 // @retail 0x11a140
 void function_11a140(long object_index)
 {
@@ -919,7 +935,16 @@ void __stdcall function_d6bc0(long arg_0);
 void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vector3f const *arg_3,
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
-// score 151 (was 151): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// score 156 (was 156): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Retail's homes (frame offsets): selected 0xc, best 0x10, second word 0x14, third 0x18, normal 0x1c,
+// first word 0x28, location 0x2c, point 0x34, sweep 0x40, count 0x4c; ours keep the count at 0x2c and
+// the sweep before the point (0x38/0x44). Round 83: sweep before the query 292 (its products now
+// schedule after a hoisted constant); count declared before the query 156; sweep declared before the
+// buffer 156; saved records declared before the sweep 156; descriptive sweep/impact names 156; first
+// and second word names swapped 156 (homes unchanged).
+// Round 44: short/long-unit adjacent word bitfields 151/339; first-third-second words 153;
+// word/handle acquisition order 218; normal between words 162; sweep in radius/center argument
+// evaluation 293/293; named radius on the current frame 151. Opening body restored.
 // Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
 // Earlier: Frame 0x124 agrees; quotient spill, sweep/impact/location homes and owner-call setup remain.
 // frame 0x124 agrees; query/sweep timing and owner-call setup differ.
@@ -974,6 +999,8 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // all with double selected fraction 337 (exact-only precision diagnostics; all restored).
 // Round 332: Candidate/collision/eligibility inline contracts, each and every
 // combination, 151; candidate/collision noinline pair 151. All restored.
+// Round 149: Native unsigned first/second identifier words and third full-word carrier, all combinations;
+// unsigned pair with second capture first [151, 151, 151, 151, 151, 151, 151, 149]; all restored.
 // Round 220: Collision/effect/both request declarations before the scan 200/200/200;
 // both at entry 203. Real request names, candidate-buffer name and both name groups 151/151/151;
 // combined pre-scan requests with names 200. Wider request lifetimes grow frame to 0x180;
@@ -984,6 +1011,29 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Round 201: Response storage: normal/sweep reorientation and sweep reflection 176/160/177; paired
 // direction/reflection 193/174; consumed-input left output alone/with sweep reflection 176/194; saved-
 // velocity left output 176. All restored.
+// Round 352: native stored-velocity fields with direct, scalar-first, named-product and combined
+// products 151 each; each with one three-use velocity snapshot 374 (frame 0x128). Original
+// external record, response expressions, query-first sweep and saved identifiers restored.
+// Round 80: sweep stored before the query 283 (count and location homes as retail, but the point and
+// sweep homes swapped and j/k folded as q*j/q*k where retail loads j/k); with the point/sweep renamed
+// 283; with the capture declarations first 283; through the existing vector3f_scale 283. The tail is
+// 0xb77d0's body, which retail inlines here: calling the existing 0xb77d0 391 (stays a call), with a
+// forceinline declaration 391. Original body restored.
+// Round 7: response minimum as a ternary, response products scale-first, speed test summed j/k/i 156
+// each (identical code); sweep before the query 283 (now the start through the call matches; the
+// sweep stores land at 0x3c not retail's 0x48 and the candidate loop gains a jump over its alignment),
+// with quotient-first products 283. The zero register (retail XMM3) decides the response arm.
+// Lane 9 r29 (fast): role names for every local 156 and names flipping the 12-byte/8-byte
+// alphabetical order 156 (identical code); sweep before the query with the captures declared
+// first 292 (1329 bytes); sweep declared beside the scale 156; separate response vector 156.
+// Round 12 (lane 10): sweep before the query with the maximum-fraction constant declared after it 283
+// (the constant's early load and slot then as retail; the extra count is our loop entry jumping over
+// 7 bytes of alignment where retail pads 6 and falls through, shifting every later line: retail
+// computes and stores the sweep one component at a time in one register, j and k loaded then
+// multiplied, where ours folds j/k as q*j/q*k); on that, component-first products 283 (same code),
+// point declared ahead of the sweep 283 (same code). On the current body: the sweep renamed to sort
+// before the point 156 and declared at the top of the block 156 (same code and homes: neither the
+// name nor the declaration order moves these slots). All restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {

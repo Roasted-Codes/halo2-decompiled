@@ -759,6 +759,10 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 // Shared double scale 58; immutable/ordinary complete products 23/23;
 // product value copy 74; decode value copy 63; exchanged decode workspaces 17;
 // two decode-result lifetimes 45; double scale with in-place result 64.
+// Standalone unpack before scaling 41; unpacked pointer for scale and pack 42 (204 bytes);
+// vector half buffer 17; half names buffer/scaled 17/17; product declarations swapped 17;
+// second input alternate with declarations swapped/original 17/17.
+// Scale from the buffer through the unpacked result 42 (204 bytes); a 2400 s permuter run, no result.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
@@ -824,7 +828,8 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 294 (was 308): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
+// score 292 (was 292): frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
+// frame 0x60, 1372 bytes against 1355. Left: retail stores the flag word,
 // clears flag 8 with `and byte ptr [ebp+0xd], 0xfe` and reloads (ours merges the three); retail
 // has no result slot but spills the tinted byte (ours keeps it in BL, the tag object in EDI where
 // retail uses EBX, and the particle/index registers swapped); 0x248750 takes the definition in
@@ -882,6 +887,15 @@ public:
 // Round 183: Five complete fixed-basis column-order permutations 320/320/326/326/320;
 // three default-position permutations 308/308/308. Original cases and copies restored;
 // early result/flag publication, location transport and selective tag expansion remain.
+// Round 195: Tint byte/word/long/dword carriers 298/301/299/299; the same carriers
+// declared before the matrix 298/301/299/299. Original bool, queries and body restored;
+// early result slot, tint spill and location/child transport remain.
+// Round 139: the flag word through a `word *` local (read, set/clear 0x200, flag8 bitfield clear)
+// gives retail's word store + byte clear 292, and testing 0x20 through the flag5 bitfield then
+// reproduces retail's `mov ax, [ebp+0xc]; test al, 0x20` exactly, but our entry `result = false`
+// store still sits there and every later instruction shifts (352); with the pointer and a value
+// local 292/292; the bitfield test on the value form 294; result declared at the end or direct
+// returns on top of the exact flag form 345/351 (frame 0x5c).
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1093,6 +1107,10 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // child bit stores 340/340. Original lifetimes and stores restored.
 // Round 223: Real request parent aggregate/assignment receivers 235/238; with child bit stores
 // 369/255; location receiver 230; both aggregate/assignment 244/247; location with child stores 250.
+// Metadata lifetimes ending at the shader/table, reference chain or full tag chain give
+// 213/213/213; with native request initialization 211/211/211 (two-count gains rejected);
+// full tag scope with child set/clear stores 219, with native request as well 217.
+// Complete original scopes, request and child-bit copy restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

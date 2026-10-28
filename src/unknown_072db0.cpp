@@ -1185,7 +1185,10 @@ void function_7e100(long current, const s_member_quality_collection *collection,
 long function_1931a0(long count, s_surface_description *variant);
 
 #pragma inline_depth(0)
-// score 30 (was 30): frame 0x370 agrees; elapsed-store order, rating-call
+// score 15 (was 30): the group-identity copy matches retail's bytes now;
+// still differ: the elapsed store is ordered after the stack cleanup, the
+// 0x7e210 call passes the session on the stack, and the summary stores load
+// their ratings in another order.
 // transport, summary loads and copy-tail alignment differ. Fast control 32;
 // native rating record, native role names, native capacity expression, native
 // minimum observations, array minimum observations, capacity expression,
@@ -1253,9 +1256,15 @@ void function_73530(c_helper_a *helper, void *description)
 		*(long *)(output + 0x88) = 0;
 		if (*(long *)variant == 5)
 		{
-			long count = ratings[0x1d4 / 4];
-			*(long *)(output + 0x88) = count;
-			if (count > 0) memcpy(output + 0x8c, &ratings[0x298 / 4], ((unsigned long)count * 12) & ~3UL);
+			long group_count = ratings[0x1d4 / 4];
+			*(long *)(output + 0x88) = group_count;
+			if (group_count > 0)
+			{
+				struct s_group_identity { dword words[3]; };
+				for (long i = 0; i < group_count; i++)
+					((s_group_identity *)(output + 0x8c))[i] =
+						((const s_group_identity *)&ratings[0x298 / 4])[i];
+			}
 		}
 	}
 }
@@ -1320,7 +1329,7 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 202): Frame 0xfc agrees; key/statistic/group homes, cursor bias and grouped dispatch remain.
+// score 202 (was 202): frame 0xfc agrees; key/statistic/group homes, statistic cursor bias and grouped dispatch remain.
 // Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
 // Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
 // Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
@@ -1398,6 +1407,12 @@ struct s_rating_summary
 // status with player indexing 202, with fifteen-bit counters 199 (rejected).
 // Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
 // 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
+// DL159: uniform name-input field observations, crossed with shared pass ordinal, shared three-count results and two-word prefix clear, 235/236/235/236/234/234/234/234. Shared ordinal recovers key home but regresses total; original character snapshot and body restored.
+// Round 210: Query-count table publication 123/132/213/231/312/321 gives
+// 202/206/213/344/214/345; entry table with 123/321 gives 202/345. Original restored.
+// Round 194: On native fifteen-bit player statistics and a shared pass ordinal,
+// byte/short/word/dword group counters with dword or word characters all 311;
+// original body and native collection extent restored. Key/group homes remain.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {

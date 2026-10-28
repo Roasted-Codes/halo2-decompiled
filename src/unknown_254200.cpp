@@ -188,7 +188,23 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 	}
 }
 
-// score 153 (was 153): frame 0x14 against 0x10; color copy and reservation homes remain.
+// score 153 (was 153): frame 0x14 versus 0x10 (our color struct copy, made before 0x1cf50, where retail
+// Round 83 on the round-220 near source (color pointer, per-use coordinates, byte alpha, scalar size;
+// still 18 fast): size declared at function scope, const size, scale-first second texture products,
+// size-first sum in the third vertex 18 each; retail loads y before the pushes in the third and fourth
+// vertices (ours copies the size and folds y: 1 byte shorter each), and reloads the lower coordinate
+// before the next vertex's 16777215 constant. All restored.
+// keeps 0x13927e's result in EDI and reads it in the color call after Begin); the half-size texture
+// coordinates (computed before the third reservation, retail after it) and the alpha byte remain.
+// Round 60 lead: the result as a pointer read in the color call 349 alone (frame 0x10); with the
+// half-size values written as expressions in the four texture-coordinate calls 28; plus a byte alpha
+// 18 (2252 bytes; left: retail loads y and adds the offset in the offset quad's third and fourth
+// vertices where ours copies the offset and folds the y load, and one reload order). Not kept without
+// a match (computed values written at each use); same-length variants: swapped y operands 18, plain
+// real offset 18, D3DDevice:: wrapper for the offset quad 18; a 600 s permuter run, none below 18.
+// Earlier trials (scores at their time, frames 0x10/0x14):
+// Fast control 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
+// frame 0x14 against 0x10; color copy and reservation homes remain.
 // Round 137 lead (fast and plain 18 at retail length; not kept: it writes the texture
 // coordinate sums out at each use): the getter result kept as a `color3f const *` read at the
 // vertex call (retail keeps it in EDI across 0x1cf50 and Begin; frame 0x10), every texture
@@ -207,14 +223,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // 246; final/entry center values 307/590; edge values 322; center with edges 301; signed alpha/C++
 // color/both 246 each; alpha with edges 322; native color reference 276; color copies after
 // Begin/commit 293/311.
-// frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
-// Frame 0x14 versus 0x10; coordinate spills and first reservation scheduling remain.
-// Earlier 237 (was 276): frame 0x14 versus 0x10; coordinate spills and reservation scheduling differ.
-// frame 0x14 versus 0x10; color/coordinate spills and reservation scheduling remain.
 // Native color value 246 fast / 237 plain; value half-size 276; replicated alpha 349;
 // alpha after clear 265; second coordinate C entry 403; color with later alpha 252;
 // memcpy color 246. Only the native color value is kept.
-// Previously 276 (was 342): frame 0x10 agreed; texture-factor homes and reservation scheduling differed.
 // Value half-size 342; disabled-path return 342; C begin/vertex calls 561;
 // C texture-state calls 455; role-named texture coordinates 342.
 // First-quad scope 342; texture expressions at calls 386; C++ color entry 342;
@@ -301,6 +312,39 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // unit color helper alone/with products/with upper sums/all combined 2 each.
 // One 600 s filtered permuter search, 39 tries: best 2; the two reloads remain.
 // Every repeated-coordinate form restored; original color, alpha and locals retained.
+// Round 197 on the two-difference SDK graph: scalar color input, immutable input, scale
+// snapshot and all combinations, plus native input reference, 2 each; alpha word/short/long/
+// dword/int/const-word/const-long/const-dword 28/28/112/112/112/28/112/112; lower/upper
+// endpoints after the first position 293/330 and at the coordinate phase 363/363.
+// No exact match; every per-use coordinate form restored with the original body.
+// Round 81: the round-220 two-difference source (color pointer, per-use coordinates, byte alpha,
+// scalar size, member entry for the second position) now builds 18 fast and plain: unchanged
+// source, but the last two vertices' `y + size` again copy the size and fold y (other files'
+// changes since; reverting the five changed units in its reduced image keeps 18). On it, member
+// entries for both positions/color too/final quad, `0.5f * arg_1` products, `0.5f + ...` upper
+// sums 18 each (fast). All restored.
+// Round 7 (lane 10) on the two-difference graph (pointer color, byte alpha, per-use coordinates,
+// member second position): C-form Begin 446 (2196 bytes); member color plus member first
+// position 2; first lower coordinate with the product commuted 2; lower as a negated sum 2;
+// half-span as a division by two 2. The two reloads after the second texture reservation stay
+// swapped. All restored.
+// Complete resource outcomes (match-only; fast control 162): ready bool 162; ready byte 162.
+// ready short 162; ready long 162.
+// unavailable bool 162; unavailable byte 162.
+// unavailable short 162; unavailable long 162.
+// Current color/alpha frame: half-span parameter 162; parameter/byte alpha 166.
+// parameter/color pointer 349; parameter/value half-size 162.
+// All executable forms restored.
+// Lane 9 r29: the existing color helper `function_254491(1.f, color)` on the getter pointer 349
+// (2260 bytes; color copy exact, half-span hoisted again); with per-use coordinates 28, plus byte
+// alpha 18 at 2252 (lower-coordinate/constant reload order and the `y + size` fold remain); on it
+// plain real size 18, `size + y` 18, member second position 18 (fast); permuter 51 tries, best 18.
+// Round 12 (lane 10, fast control 162): parameter address taken (`(void)&arg_1;`) 162; the half
+// size read once through the parameter's address 162 (the product still lands ahead of the third
+// reservation); byte alpha 166; color pointer with the parameter address taken 349 (on the pointer
+// body everything through the second reservation matches; ours then loads the size and computes the
+// half span before the third reservation, retail after its call); color pointer with the lower
+// coordinate first 372. All restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

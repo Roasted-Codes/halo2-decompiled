@@ -175,10 +175,35 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // Complete world-inertia producer with matrix/state pointer/reference inputs, forced 233 each;
 // ordinary matrix/state pointer/reference 462/468/462/468. Original query boundary restored.
 // Round 153: native virtual query value/const-value initialization 184/184; assignment 275/275; each with broad rotation 221/287/221/287. Initializers retain the 0x94 frame; broad initialization recovers 0xc4 but regresses. Original virtual output, helpers and scoped rotation restored.
+// Round 76: existing vector3f_scale for the inverse mass, the angular brake, both 184/184/184 (identical
+// code: the reciprocal stays the product destination); angular product as three rows 221, with component
+// locals 221, with that and the brake helper 221. Aligned difference 143 of 289 (frame and float schedule).
 // Round 155: Native inverse-inertia/rotation matrix alignments 16/4,4/16,16/16,8/4,
 // 4/8,8/8,16/8,8/16: 240/224/240/241/224/241/240/241. Original native matrix alignments and scoped rotation restored.
+// Lane 4 r98: `0.0f - braking / dt` builds as braking * (-1 / dt); `-(braking / dt)` gives retail's
+// zero-minus-quotient and its 1265 bytes but 221. With broad rotation 232 (frame 0xc4, first difference
+// +0xfd); with it, divisions by the mass, reciprocal-first products and an inline vector-scale helper for
+// the mass and angular-brake products 232 each: the products still copy the scalar where retail scales
+// the component in place.
 // Round 224: Existing query producer owns preceding inverse-mass scaling; scalar/state inputs
 // and vector pointer/reference 184/184/184/184; broad-rotation counterparts 221/221/221/221. Original boundary and scopes restored.
+// Round 28 (m3 lane 12): `0.0f - braking / dt` compiles to a product with -1/dt; `-(braking / dt)` gives
+// retail's subtraction from the zero register and retail's length (1265) but 221 fast; with function-scope
+// rotation (frame 0xc4, rotation at +0xac) 232; with one integration loop 221; acceleration folded into the
+// angular loop 270; inverse-mass products reversed 221 (no change). Float register allocation then differs.
+// Round 66 (fast): the inverse-mass products follow definition order: with the reciprocal defined before the
+// force block they scale each component in place as retail and every later SSE register then agrees (aligned
+// 105 -> 58) but 170 is not kept (it moves a memory read past a call, and retail divides late, after the motion
+// load); defined at the top 263 (spilled across the state query); before the velocity call 200; before the
+// motion load 184; written at each use 184; `x = x * reciprocal` 184; `+=` force/torque adds 184.
+// Lane 9 r25: rotation declared in a block around the inertia query and assigned after it 221 (frame
+// 0xc4, raw inertia +0x70, rotation +0xac as retail's; first difference +0xfd: retail loads the motion
+// before the reciprocal and scales each component in place, ours copies the scalar); with the
+// reciprocal before the motion 221; with `-(braking / dt)` 232; with `x = x * s` mass products and an
+// angular brake copied then scaled 267; with the limiter's products as `*=` 221.
+// Round 30 (m3 lane 12): inverse-mass products as `x = x * inverse_mass`, reciprocal before the motion pointer,
+// force sum as `+=`, reciprocal written at each use 184 each (identical code: the reciprocal stays the
+// product destination); function-scope rotation 221 (frame 0xc4, rotation +0xac, float registers rename).
 // @retail 0x2056e0
 void __stdcall function_2056e0(long vehicle_index, s_vehicle_physics_state *state, real braking,
 	vector3f const *force, vector3f const *torque)

@@ -215,6 +215,11 @@ struct s_physics_component_walk : s_havok_component
 };
 
 // score 275 (was 275): Frame 0x1c versus 0x18; current/entry/status homes and next-group spill remain.
+// Round 9 (lane 11, fast): first body set in an if/else 300 (frame 0x18 and retail's out-of-line NONE store
+// with the re-tested next, but current moves to EDX and the entry index to ESI where retail has ESI/EDX);
+// with it: nested first-body skip test 300 (identical); `this` used directly for the component alias 300
+// (identical); availability set after the replacement branch 318; model pointer read before the body
+// index 294 (922 bytes).
 // In the body loop retail keeps the policy byte at frame 2 and the availability byte at 3
 // (available in dl on the replacement path, reloaded from its byte otherwise; replaced in cl);
 // ours swaps the two bytes and keeps available in memory, replaced in dl. Round 57: availability
@@ -264,10 +269,22 @@ struct s_physics_component_walk : s_havok_component
 // with application status from policy 319/304/304/304. All recover frame 0x18 but shorten to
 // 898/922 and retain wrong current/entry roles. Original executable source and output/status/clamp
 // observations restored.
+// Round 350: shared entry-bit test, visited-bit set, neighbor-bit test and all combinations
+// 275 each; complete shared bits with direct receiver 275. Frame/status/group spill unchanged.
 // Round 96: replace flag renamed to sort first 275 (slots unchanged); next-group count/body through the
 // current-style ternary 307; the file's section-test helper for the first query 283; first body as
 // if/else or ternary 300/300 (frame 0x18 and retail's untreaded next test, but current lands in EDX).
 // Retail stores -1 in a separate block and re-tests next, so it recomputes the group where ours spills it.
+// Round 190: method-scope body identity, both statuses, identity/status pair, model/body
+// receivers and each receiver combination 275 each; common native section ordinal 275.
+// Every initializer and memory observation retained at its original point; all forms restored.
+// Round 253: Existing component policy/application/availability bit helpers,
+// all seven nonempty subsets 275 each; native upper-bitfield policy with both
+// shared status stores 275. Original method and include set restored.
+// Round 82: first body if/else (frame 0x18, group recomputed as retail, but current in edx where
+// retail keeps esi and the index/next in esi) 300; with next/first body declared before the entry
+// tests 300; inverted first-body test 300; nested first-body rejection 300; NONE first body declared
+// before the entry tests 313. Original body restored.
 // @retail 0x1d6630
 void s_physics_component_walk::function_1d6630(s_physics_model_owner *owner, char const *kinds,
     dword const *entry_mask, s_physics_body_groups *groups, void *context, long parent, long current,
