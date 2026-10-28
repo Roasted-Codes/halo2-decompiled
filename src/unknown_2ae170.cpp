@@ -635,6 +635,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // 417/400/428/447; corresponding three pairwise object reuses 417/400/428;
 // all scopes with both repeated levels 500. All scopes reach frame 0xa0;
 // conversion reuse and the twelve-byte excess frame remain; original body restored.
+// Round 197: Static routing table with all scopes/reuse 496/496; first-third scopes 447; both levels with reuse/scopes 531/531; rear level with reuse/scopes 470/470 (frame 0x94); first-third scopes and both levels 484 (fast control 378). Restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -877,6 +878,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 201: Const send-input parameter, const receiver method, both, immutable scalar carriers,
 // each contract with those carriers, both contracts/carriers, and coherent scalar names: 224 each.
 // All eight tie; original signatures, selector inputs, scalar lifetimes and dispatcher retained.
+// Round 197: Retained word-route graph, per-use gain/offset/both/level/gain-level/offset-level/all inputs 265/257/276/290/312/308/324; all inputs with native phase scope 324. Some forms recover frame 0x18 but regress; original observations restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
