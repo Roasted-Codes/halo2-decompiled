@@ -2453,6 +2453,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 235: Direct enum-range address/filter/disabled-state loops, seven subsets and complete while form
 // [926, 883, 685, 1104, 1159, 1089, 1240, 681] fast. Runtime SDK setter specialization grows the body; all
 // original ordered direct calls, arrays, fields, directives and body restored.
+// Round 253: bounded native pixel short/long/word/dword producers 427/410/427/448;
+// native pixel lifetime across bitmap guard 438/439/438/433. Original float dimensions,
+// full-stack marker, state calls and complete body restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,

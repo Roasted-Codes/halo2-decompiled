@@ -222,6 +222,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // the existing entry_at_index getter 612 plain (aligned rows 497 -> 803, ebx/edi/esi roles move), with the
 // long index 612. Retail assigns the NULL record before the table's own NULL test.
 // Round 235: query-table/tag-input/falloff-radius consumption scopes, all seven combinations 616 each; source-selection consumption scope 616.
+// Round 253: multi-use scenario receiver with short/char/long palette 616/705/713;
+// each with plain cluster cursor 616/705/713; readonly selected record alone/with cursor
+// 616/616. Original source acquisition, loop and executable body restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {
