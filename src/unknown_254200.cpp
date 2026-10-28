@@ -330,6 +330,10 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // Current color/alpha frame: half-span parameter 162; parameter/byte alpha 166.
 // parameter/color pointer 349; parameter/value half-size 162.
 // All executable forms restored.
+// Lane 9 r29: the existing color helper `function_254491(1.f, color)` on the getter pointer 349
+// (2260 bytes; color copy exact, half-span hoisted again); with per-use coordinates 28, plus byte
+// alpha 18 at 2252 (lower-coordinate/constant reload order and the `y + size` fold remain); on it
+// plain real size 18, `size + y` 18, member second position 18 (fast); permuter 51 tries, best 18.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

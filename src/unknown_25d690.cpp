@@ -1397,6 +1397,10 @@ bool function_1e1de0(long arg_0);
 // observed/facing setters 222; position/facing setters 234.
 // all three setters 256; four library transfers 218.
 // All executable forms restored.
+// Lane 9 r29 (fast) on the round-75 shape (218: only retail's `mov ecx, eax` before the
+// actor-index spill and the first point copy's eax/ecx swap differ): index read and tested through
+// the owner 220/220; index ternary with a NONE arm 43 (849 bytes, extra store); owner after the
+// test 220; separate motion pointer 93 (843 bytes); index temporary at function scope 218.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
