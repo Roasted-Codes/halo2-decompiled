@@ -14,6 +14,7 @@ The handlers of the unit request table at 0x467564
 #include "unknown_1cafc0.h"
 #include "unknown_1dacb0.h"
 #include "unit_requests.h"
+#include "units.h"
 #include "unknown_1cec30.h"
 #include <math.h>
 #include <string.h>
@@ -1224,6 +1225,11 @@ void __stdcall function_fff40(long weapon_index, bool silent, bool immediate);
 
 /* a unit's weapon animations: its vehicle seat's weapon's, or the
    default */
+// score 73 (was 75): same length as retail now; registers differ. Retail keeps the object array
+// in ebx, the tag table in ebp and the seat index in di, and keeps both names on the stack where
+// ours keeps the default name in ebp. The seat flags as the seat definition's bitfields give
+// retail's shift-and-test reads after the weapon lookup, and the hand helper's short slot index
+// gives retail's movsx; the seat flags read as a dword after the weapon 88, with the hand helper 85.
 // @retail 0xe8620
 void __stdcall function_e8620(long unit_index, bool flag)
 {
@@ -1234,11 +1240,11 @@ void __stdcall function_e8620(long unit_index, bool flag)
 	if (unit->parent_object_index != NONE && unit->seat_index != NONE)
 	{
 		s_unit_action_unit *parent = UNIT_ACTION_UNIT_GET(unit->parent_object_index);
-		dword seat_flags = *(dword *)(*(byte **)(g_4e3b44[parent->definition_index & 0xffff].bytes + 0x1cc) +
+		s_unit_seat_definition *seat = (s_unit_seat_definition *)(*(byte **)(g_4e3b44[parent->definition_index & 0xffff].bytes + 0x1cc) +
 			unit->seat_index * 0xb0);
-		long weapon_index = unit_action_weapon_get(parent, false);
+		long weapon_index = unit_action_hand_weapon_get(parent, 0);
 
-		if (((seat_flags >> 3) & 1) && !((seat_flags >> 2) & 1) && weapon_index != NONE)
+		if (TEST_FIELD_BIT(seat->flags.bit3) && !TEST_FIELD_BIT(seat->flags.bit2) && weapon_index != NONE)
 		{
 			byte *s_type_67e06b = g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes;
 
