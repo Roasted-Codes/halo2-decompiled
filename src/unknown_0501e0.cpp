@@ -129,6 +129,9 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Round 259: Independent raw/scaled component families, explicit arms ijk/kji
 // 305/305, with shared scale 302/302; default-first ijk/kji 221/221, with
 // shared scale 252/252. Original helper/body restored; explicit arms grow frame to 0x20.
+// Round 358: Input-copy/scale orders ikj, jik, jki, kij 220/221/257/220; with live forward
+// coefficients 253/241/253/253. One-count gain rejected; exact-length 241 still regresses. Original
+// helper/body restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

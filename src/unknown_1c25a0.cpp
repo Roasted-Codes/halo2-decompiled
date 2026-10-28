@@ -660,7 +660,9 @@ PRIVATE __forceinline void function_1c2891(short *arg_0, c_havok_reference_count
 	}
 }
 
-// score 45 (was 45): ours loads the havok reference from a different global
+// score 45 (was 45): retail zeroes EBX and keeps three callee-saved registers, holds
+// g_47f048 in EDI and &reference_count in ESI; ours zeroes EDI, holds g_47f048 in
+// ESI, folds the count address into the object pointer and tests it before the delete.
 // and clears it in EDI, retail loads it into ESI and clears it in EBX.
 // @retail 0x1c2890
 void function_1c2890(void)
