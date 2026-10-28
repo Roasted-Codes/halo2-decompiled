@@ -433,6 +433,11 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 }
 
 // score 223 (was 223): Frame 0x14c versus 0x148, BSP/camera/query homes and duration spill remain.
+// Lane 8 r64 (fast; two callees build differently in the reduced image): existing 0x14ddc0 listener
+// test 295 (aligned 150 against 159: retail's `cmp iv, -0x48; setne`); existing first-local-player
+// helper alone 235; default-first transition re-read from the definition alone 267; all three 277;
+// those with the camera taken after the first-player compare 289 (aligned 142; retail computes the
+// camera after the scan). Retail keeps the BSP in esi from entry and listener/stride in ebx/edi.
 // Transition result 235; unsigned listener 264; byte listener 319; angle lifetime 264; separate request indices 264.
 // Request transition field 263; bounded listener result 223 plain; separate fill guard 255;
 // depth one 235; size optimization 441; direct search returns 254.
@@ -474,10 +479,35 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // home names, their three pairs, all three and reversed array declarations: 267
 // each, 1020 bytes and frame 0x148. Original sampled duration, helper contracts,
 // array names and executable body restored at 223.
+// Lane 8 r58: listener test through the existing 0x14ddc0 instead of the camera NULL test
+// (retail's `cmp iv,-0x48; setne`) 295; with the existing first-local-player helper 293
+// (loop head then retail's); first player in a local before the camera 292; that with the
+// default-first transition re-read from the definition 276 (frame 0x148, tags at retail's
+// slots; bsp not kept in esi, cluster spilled low); without the local 277; transition alone
+// 267; cluster local renamed three ways 276 each.
 // Round 180: Cue control/full-prefix clears 256/253; with pointer-tail clear 263/234;
 // the same four with chained index sentinels 257/253/263/234. Original cue helper restored.
+// Round 356: Cue equality continuation, outer request workspace, actual cue-handle return,
+// their three pairs and all three 223 each; combined graph with direct request walk 221 (only -2).
+// Original body and cue helper restored; frame and BSP/camera/query homes remain.
 // Round 253: Complete primary-listener result bool/byte/short/long 223 each;
 // uniform cluster at use 272, with bool/short/long result 272 each. All restored.
+// Round 210: Late transition/fade/tag and their three strict pairs give
+// 242/244/266/253/278/291; early tag/fade alone 270/267. Original restored.
+// Round 16: query declarations portals-indices-clusters/portals-clusters-indices 223 each;
+// environment-index lexical name 223; request-field duration workspace 247; plain-inline cue helper 452;
+// forced listener search 223; separate query arrays and count declared after them 223 each.
+// Original body and both helper declarations restored.
+// Lane 10 r11: retail's camera test is `listener * 0x48 == -0x48` (a NONE index test) with
+// the camera address formed after the first-listener scan. NONE-guarded camera lookup 312;
+// camera test dropped, lookup inside the entry test 261 (1033 bytes); first-listener helper as
+// a NONE result set in the scan (retail's scan exactly) 235 (1033); that with the existing
+// local-player test 0x14ddc0 and the lookup inside 293 (retail's cmp/setne tests); with the
+// lookup at each use after the first-listener test 286. Original body and helper restored.
+// Round 16: query declarations portals-indices-clusters/portals-clusters-indices 223 each;
+// environment-index lexical name 223; request-field duration workspace 247; plain-inline cue helper 452;
+// forced listener search 223; separate query arrays and count declared after them 223 each.
+// Original body and both helper declarations restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

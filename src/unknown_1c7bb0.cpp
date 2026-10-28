@@ -45,6 +45,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  return arg_0->squad != NULL;
 }
 // score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null and successor EBP remain.
+// Round 43: iterator-pool carrier 164; with field-pool cache 198; with state owner 193;
+// typed iterator/carrier 164; const carrier 164; carrier declared first 164; local result
+// with late/early member publication 164/164.
 // Earlier 164 (was 164): frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
 // Frame 0x28 agrees; separate pool/iterator homes, early null publication and saved successor EBP remain.
 // frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
@@ -148,6 +151,11 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 257: Real shared squad fields at declared offsets, existing getter/direct indexing,
 // each with native iterator datum/second-pass actor/both: all eight 164. Shared header, private
 // iterator and body restored; separate pool/iterator, early null and successor homes remain.
+// Round 206: Actual second-pass source-squad/pending-flag field receivers as pointer/reference,
+// individually and all four pairs, 164 each. Both acquisitions and pre-call successor retained.
+// Round 197: Coherent defining-unit/caller final-phase inline and inline/noinline
+// declarations, each with bool/byte/short/long private completion, 164 each. Original
+// provider declarations, private step and both traversals restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

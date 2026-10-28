@@ -1379,7 +1379,21 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 241 (was 241): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// score 241 (was 241): frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// restoring them at the loop exit), the two shared spill slots 0x18/0x1c swapped, and the look rates'
+// shared reciprocal (retail divides twice and reloads the time global) differ.
+// Round 139: the look rates as one s_view_angles local give retail's 0x2c/0x28 homes 237 (a local-
+// grouping struct, kept only on a match; a point2f gives the same code; a bare block changes nothing). Fast previews (kept body
+// 239 fast): rates written through an inline helper's pointer 239; through a pointer local 493; mode
+// declared before the unit 239; early return for a missing unit 239; springs as an array/two pairs
+// 256/258 (frame 0x38/0x30, before the kept change); mode renamed (spill slots are not name-ordered)
+// 243 (before). Active preset false with the inner `!155760 && b6780` assignment, with or without
+// the right-first callback, 381 (2195 bytes): its
+// sequence-aligned difference count is 63 against 68 for the kept body, so it is the closer shape
+// once the remaining length differences (look reciprocal, movzx flag test, channel rate store through
+// the weapon, overlay flag pushes) are fixed together.
+// Earlier 248 (was 248): frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
+// frame 0x28 vs 0x2c, unit/mode and look-output homes differ;
 // word/byte weapon index 388/373; scoped rate first/shared store 438/258; unscoped selection first 253.
 // Earlier 250 (was 250): frame 0x28 vs 0x2c and unit/mode/look homes remain.
 // frame 0x28 vs 0x2c, unit/mode homes, the look reciprocal (retail divides twice,
@@ -1429,6 +1443,12 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 257 (fast base 243): Active int/byte/signed-byte carriers 418/417/417;
 // each with complete idle-settings observations at uses 414/413/413; original bool with
 // those observations 270; int active with read-only idle settings 418. Original body restored.
+// Lane 5 r77 (fast base 243): the movzx is the only `movzx; test al, imm` in retail; casts, `> 0`,
+// `!!`, shifted bit pairs, TEST_FLAG pair, byte/word/dword bitfield and dword-shift views, ternary
+// and `&` bool forms, and the test in another file's non-inline function (LTCG-inlined) all fold to
+// `test byte`. Look angles through a pointer clamp helper 246 (inlined away; slots and shared
+// reciprocal kept); if/else clamps 246; mode declared before unit 243; look angles declared before
+// the springs 243; the round 93 combined set re-measured 378 (aligned 49, one instruction short).
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1823,6 +1843,10 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // ordinary inline last/first 769/768. Native orientation output gives the same
 // four scores. Reduced control 411/2166; full baseline 410/2154. All restored.
 // Native packed animation flags, logical result at bool/byte/word/long width 411/411/443/443; conditional result 446/446/442/443 (fast control 411/2166; full 410/2154). Frame 0x78 agrees; early blend byte and later receiver/sway homes remain.
+// Round 158: Early aiming default at two boundaries with bool/byte/short/long storage, then a complete
+// query-produced result at four widths and early bool/byte defaults (fast control 411; plain baseline 410).
+// Scores [393, 393, 426, 428, 411, 411, 434, 435, 441, 441, 471, 470, 441, 441]. Original executable body
+// restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
