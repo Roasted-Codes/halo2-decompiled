@@ -1118,7 +1118,9 @@ void function_c0110()
 // declared before the object 6. Round 95: the loop leaving through `!remaining` in its condition 6;
 // the object read as `*(byte **)(g_4e0300->data + i * 12 + 8)` (the file's form) 6, with `remaining`
 // declared before it 8; a set-or-clear ternary on the field 68; the light index read directly instead
-// of through a reference local 6 (kept).
+// of through a reference local 6 (kept). Round 52: explicit per-arm stores, direct per-arm stores,
+// and direct stores with an index reference 87/87/87; a direct store ternary 6; the object or flags
+// live at entry 6/6; flags declared before the object 6; separate original and updated flag values 6.
 // @retail 0xc3260
 void __stdcall function_c3260(long light_index, bool clear_object_flag)
 {
