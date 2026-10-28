@@ -1914,7 +1914,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
-// score 130 (was 130): Frame 0x40 versus 0x44, early color spill, cursor/query homes and zone-base scheduling remain.
+// score 128 (was 130): Frame 0x40 versus 0x44, early color spill, cursor/query homes and zone-base scheduling remain.
 // Earlier forms: frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
@@ -1946,6 +1946,10 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // Original zone producer and complete body restored; color/query frame remains 0x40 versus 0x44.
 // Round 198: register-only scale formal in five source positions 130 each; read-only descriptor/original scale/scale last/scale middle 130/130/130. All definitions, declarations and both calls restored.
 // Round 204: complete zone distance/products 133/133; forced zone expansion 130; signed-byte/native-long result 152/168; forced distance/products 133/133; long result plus distance 168. Whole original helper and body restored.
+// Round 151 (0x175a80 now takes retail's registers): inline color helper shared with 0x177040, colors as
+// its arguments 178 (frame 0x44 and early color loads, but the system keeps EDI, color B EBX, tinted spilled);
+// multiplied() as the call's argument 135; helper with colors first 185; inline member color update 185;
+// a loop-only definition copy 128; a cluster-array base local 128.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
