@@ -124,6 +124,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // DL round 156: per-component add/sub 233; two vector passes 225; native sums with
 // loop/aggregate input and loop/scalar output 225/229/229/225; parallel scalar sums
 // mutable/const 227/227. All increase the frame to 0x120; original helper restored.
+// Round 194: aggregate/zero-initialized/CRT-zeroed direction inputs 186/245/263;
+// each with delayed sine after direction scale 180/239/258; aggregate/CRT-zeroed
+// inputs with cross before projection 209/246. Six-point 180 form restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

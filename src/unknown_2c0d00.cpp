@@ -1059,6 +1059,9 @@ PRIVATE __forceinline real signed_angle_2c(point2f const *a, point2f const *b, b
 // second angular endpoint reuse 373; second distance endpoint reuse 360.
 // Round 54: first/second directions initialised directly 376 (x87 forwarding matches, y preload
 // missing), through normalize_local2d_2c 342/376, out-of-line normalize2d 414, plain first side 374.
+// Round 194: shared branch vectors all/targets/endpoints 361/350/342; endpoint-first
+// shared declarations and entry scope 361/361; shared vectors with ordinary first side
+// 374, native result 385, both 387. Original workspaces and qualifier restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1217,6 +1220,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Final source/emitted/both native coordinate values 476/484/557;
 // with existing point difference 492/484/557; both values emitted first
 // without/with point difference 557/557. All restored; original current record retained.
+// Round 194: native output-count/copied-result/found-result widths 505/468/476;
+// both result words 479; wide count with copied/found/both 492/478/473;
+// all native words with found from its bound test 500. Original carriers restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
