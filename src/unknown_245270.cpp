@@ -377,6 +377,10 @@ void function_245400(s_source_245400 const *source, long index,
 // second material record pointer 204 (folded, same code); table and second material ahead of the
 // first index 205 (+0xa read first, material registers exchanged); that order with the first
 // material declared ahead and assigned later 205 (same code).
+// Round 16: outer transformed-point workspace 204; native material codes without their later copies 211;
+// second-first 210; first/second alone 211/210; native codes with inner workspace 211; one matrix-address
+// read on that graph 235; signed-byte side carriers on it 211. Native codes move the matrix to ECX, not
+// the source, and give frame 0x28. Original body restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
