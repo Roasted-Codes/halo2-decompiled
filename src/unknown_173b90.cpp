@@ -880,6 +880,8 @@ public:
 // Round 24: scoped flags 292; plus direct Boolean result 356; plus early parent color 355;
 // plus function-entry tint 355; word-pointer flags instead 354; ordinary parent instead 344;
 // long tint instead 364; without parent color 353. Original restored.
+// Round 232: four complete positive/negative factor orders, direct or all six
+// products staged before output, 292 each. Original two-use helper restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
