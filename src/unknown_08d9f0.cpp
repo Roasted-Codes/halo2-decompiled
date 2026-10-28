@@ -206,6 +206,7 @@ void function_8dd70(void);
 // Round 197: Definite short observer/list/both else 244/226/239; canonical link with observer/list/both else 240/229/237; both else with bool/byte link 232/232. All restored.
 // Uninitialized function-scope link/observer/session/link-observer/link-session/observer-session/all
 // short declarations and complete stage-role names 230 each; every assignment kept at its stage.
+// Round 223: Canonical true tests on retained short link/observer/session stages, seven subsets 228/250/250/250/250/250/250; all with canonical entry consumption 250. Original truth tests and stage flow restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
