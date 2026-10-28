@@ -529,7 +529,7 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // value2c copies too (420); all of these 419. Tried: i < 2 (454), its own loop variable
 // for the first loop (363); initial real stores first 363; outer word index 469 signed
 // or unsigned; column word index 464; both signed-word indices 512. Original kept.
-// score 363 (was 363): frame 0x20 agrees; constant five, first-table induction and flag initialization differ.
+// Earlier: frame 0x20 agrees; constant five, first-table induction and flag initialization differ.
 // Reduced trials: integer stores reversed 363; result calculation reversed 362; table stores reversed 363;
 // shared multiplier 363; first interpolation local 363; second interpolation local 363; explicit low cases
 // 448; shared rounding 460.
@@ -538,13 +538,16 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // frame pointer 487; global optimization off 1180; size preference 538.
 // Zero-prefix split 461; column traversal 446; triangular pairs 497;
 // default-first matrix score 646; redundant first-table clear removed 454.
-// score 363 (was 363): round 312: constant-five/induction/flag gaps remain; branch-local table publication 478; signed-byte flags 363; first-table short counter 445; single grid publication 639; short matrix score 457.
+// Earlier: round 312: constant-five/induction/flag gaps remain; branch-local table publication 478; signed-byte flags 363; first-table short counter 445; single grid publication 639; short matrix score 457.
 // first-table induction and default/flag scheduling remain.
 // Unsigned table outputs 363; unsigned steps 363; byte outer ordinal 478;
 // shared five-derived observation 460; shared capacity observation 461 (fast).
-// score 363 (was 363): constant-five lifetime and first-table induction remain;
+// Earlier: constant-five lifetime and first-table induction remain;
 // byte matrix row 475; byte column 464; both byte ordinals 498;
 // native-word flag array 432; native-long flag array 455 (fast).
+// Round 358: Four regular short-table fill cursors with original/first-table/level/both shared
+// rounding 363/460/442/480; pointer-end termination gives 363/460/442/480. Original helpers, loops,
+// library calls and body restored.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {
