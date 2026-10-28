@@ -4063,13 +4063,16 @@ store:
    speed in a cone around the unit's aim on top of the unit's velocity
    (capped at 4 unless the unit's +0xc0 bit 1 is set), and deletes it in
    state 1 when it has nowhere to go and is not a predicted copy (0xa7670) */
-// score 4 (was 13): the cone call's argument setup is scheduled differently: retail stores the
+// score 4 (was 4): the cone call's argument setup is scheduled differently: retail stores the
 // cone angle and then sets up the three register arguments in order, ours sets up the forward
 // pointer first and the result pointer last.
 // existing length/dot helpers, direction lifetime/name and named angle 13;
 // existing random-real helper 111; scale/add component loops 80/13; seed global at each
 // use, compound adds, direction-first adds, speed-first scaling 13 each; speed scaled
 // before the cone call 120; every squared-length operand order compiles the same.
+// cone result pointer local, separate thrown-speed local, two-use scale snapshot, seed renamed,
+// velocity at function scope and forward pointer local 4 each; existing scale helper 80;
+// inline-product scale helper 93; direction pointer used throughout 48.
 // @retail 0xce6b0
 void function_ce6b0(long unit_index, long name, long object_index, real scale)
 {
