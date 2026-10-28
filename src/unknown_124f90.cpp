@@ -109,14 +109,6 @@ static inline s_sound_class *function_xaa8231(short class_index)
 	return &((s_sound_globals_classes_view *)g_51ebd4)->classes[class_index];
 }
 
-/* gains in decibels are kept as real bits in longs */
-static inline long decibels_add(long a, long b)
-{
-	real result = *(real *)&a + *(real *)&b;
-
-	return *(long *)&result;
-}
-
 static inline long decibels_interpolate(long a, long b, real t)
 {
 	real result = (*(real *)&b - *(real *)&a) * t + *(real *)&a;
