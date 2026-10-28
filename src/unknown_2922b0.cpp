@@ -32,9 +32,9 @@ real function_30bf0(vector3f *arg_0);
 
 PRIVATE __forceinline void function_2922b1(vector3f const *arg_0, vector3f const *arg_1, vector3f *arg_2)
 {
-	real local_0 = arg_0->j * arg_1->k - arg_0->k * arg_1->j;
-	real local_1 = arg_0->k * arg_1->i - arg_0->i * arg_1->k;
-	real local_2 = arg_0->i * arg_1->j - arg_0->j * arg_1->i;
+	real local_0 = arg_0->k * arg_1->j - arg_0->j * arg_1->k;
+	real local_1 = arg_0->i * arg_1->k - arg_0->k * arg_1->i;
+	real local_2 = arg_0->j * arg_1->i - arg_0->i * arg_1->j;
 	arg_2->i = local_0;
 	arg_2->j = local_1;
 	arg_2->k = local_2;
@@ -70,7 +70,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 	arg_3->k = local_6;
 }
 
-// score 629 (was 629): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
+// score 622 (was 629): the frame (0x108) agrees, but the low slots differ: retail's success flag is a
+// byte at F+0x0b and its four hit flags at F+0x14..0x17, ours has the flag at F+0x0f and the hit flags
+// at F+0x18..0x1b, and retail seeds the nearest-hit distance with FLT_MAX before the branch.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // frame agrees (0x108); early success BL/EBX and basis/ray/root/rotation homes remain;
 // retail is 60 bytes longer after the ray loop (12 more loads, 4 more products: (1/range) * minimum
@@ -184,15 +186,15 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 		{
 			local_10 = &local_1->forward;
 			local_11 = (vector3f const *)((byte *)local_1 + 0x7c);
-			function_2922b1(local_11, local_10, &local_9);
+			function_2922b1(local_10, local_11, &local_9);
 		}
 		else
 		{
 			local_7 = *arg_2;
 			if (function_30bf0(&local_7) == 0.0f) local_7 = *g_4687a8;
-			function_2922b1(g_4687b0, &local_7, &local_9);
+			function_2922b1(&local_7, g_4687b0, &local_9);
 			if (function_30bf0(&local_9) == 0.0f) local_9 = *g_4687ac;
-			function_2922b1(&local_7, &local_9, &local_8);
+			function_2922b1(&local_9, &local_7, &local_8);
 			if (function_30bf0(&local_8) == 0.0f) local_8 = *g_4687b0;
 			local_10 = &local_7;
 			local_11 = &local_8;
@@ -276,7 +278,7 @@ bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 			local_17.k = local_9.k * arg_3->j + local_10->k * arg_3->i + local_11->k * arg_3->k;
 			vector3f local_18;
 			vector3f const *local_19 = (vector3f const *)((byte *)local_1 + 0x7c);
-			function_2922b1(local_19, &local_1->forward, &local_18);
+			function_2922b1(&local_1->forward, local_19, &local_18);
 			arg_3->i = local_1->forward.k * local_17.k + local_1->forward.j * local_17.j + local_1->forward.i * local_17.i;
 			arg_3->j = local_18.k * local_17.k + local_18.j * local_17.j + local_18.i * local_17.i;
 			arg_3->k = local_19->k * local_17.k + local_19->j * local_17.j + local_19->i * local_17.i;
