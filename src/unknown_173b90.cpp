@@ -1111,6 +1111,9 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // 213/213/213; with native request initialization 211/211/211 (two-count gains rejected);
 // full tag scope with child set/clear stores 219, with native request as well 217.
 // Complete original scopes, request and child-bit copy restored.
+// Round 217: Selector inline/noinline/inline-out-of-line boundaries 213/213/213;
+// with child set/clear 219/219/219; with word bit five and child stores 316/316
+// (fast). Original selector declarations, complete body and call tuples restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

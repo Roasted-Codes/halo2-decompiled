@@ -1091,6 +1091,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // (484 bytes, ret 0x14, caller 76); pointer reference 221. Four-byte aggregate with const,
 // register, declaration-swapped or per-case-result pointer forms 242 each (484 bytes, caller MATCH).
 // All restored; selector/message/address convention and repeated sender loads remain.
+// Round 217: Reversed-peer/connection residual orders 24,5,23,6,22,7 / 5,24,6,23,7,22 /
+// 24,23,5,22,6,7 / 5,24,23,6,22,7 / 24,5,6,23,7,22 / 24,5,23,22,6,7 /
+// 5,24,6,7,23,22 / 24,23,22,5,6,7 give 192/193/190/193/192/192/192/189 fast;
+// reduced control 191, full 193. Original phases and every case/call restored.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
