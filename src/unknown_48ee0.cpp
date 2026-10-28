@@ -18,7 +18,7 @@ extern byte g_485a47;
 extern real g_485a0c[8];
 extern real g_4c9798[36];
 
-// score 295 (was 295): frame 0x20 versus 0x28; input and rounding scalar homes differ.
+// score 252 (was 295): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
 // Earlier form: frame 0x20 versus 0x28; input registers and rounding-call scalar reloads differ.
 // Branch-defined extent 321; two-vector copy loop 311; frame pointer 372; size policy 497; inline depth one 311.
 // Global optimization off 1009; expansion depth zero 349; late mode 350;
@@ -75,6 +75,15 @@ extern real g_4c9798[36];
 // Round 60: maximum width/height written through pointers by an inline helper 295; flag test as
 // a shifted bool, its negated-bool and its compare-with-zero spellings 311/337/295; offset as a
 // ternary 309.
+// Lane 10 r13: kept 252: the first block reads the direction through the record and the direction
+// reference is declared with the origin for the planes (292: the record now arrives in EBX and
+// stays there, with retail's lea/mixed [ebx+0x2c]/[ebp] direction reads); the mode bit tested as
+// (bool)((~(flags >> 10)) & 1) (252: retail's shr/not al/test al,1). Also tried: size clamp as one
+// ternary 295 (identical); !(bool) bit 299; (~flags >> 10) & 1 295; ~(flags >> 10) & 1 253; an
+// inline declaration of 0x48e70 252 (identical); height declared first 252; far plane copied
+// straight into the output 344; depth fields read at each use 253; 0.75 first in the border 252.
+// Retail reloads the size after each 0x48e70 call (ours keeps it in xmm0: LTCG knows the callee
+// leaves xmm alone; BLOCKED-BY 0x48e70, in a file this lane does not edit).
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
@@ -84,16 +93,15 @@ void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
     if (*(short const *)(tag + 0x8e) == 1)
         offset = *(real const *)(state + 0x28);
     real inverse = distance != 0.0f ? 1.0f / distance : -3.4028234663852886e38f;
-    vector3f const &direction = *(vector3f const *)(matrix + 0x28);
-    g_4c9798[0] = direction.i * inverse;
-    g_4c9798[1] = direction.j * inverse;
-    g_4c9798[2] = direction.k * inverse;
+    g_4c9798[0] = ((vector3f const *)(matrix + 0x28))->i * inverse;
+    g_4c9798[1] = ((vector3f const *)(matrix + 0x28))->j * inverse;
+    g_4c9798[2] = ((vector3f const *)(matrix + 0x28))->k * inverse;
     g_4c9798[3] = 0.0f - inverse * offset;
-    g_4c9798[4] = 0.0f - direction.i;
-    g_4c9798[5] = 0.0f - direction.j;
-    g_4c9798[6] = 0.0f - direction.k;
+    g_4c9798[4] = 0.0f - ((vector3f const *)(matrix + 0x28))->i;
+    g_4c9798[5] = 0.0f - ((vector3f const *)(matrix + 0x28))->j;
+    g_4c9798[6] = 0.0f - ((vector3f const *)(matrix + 0x28))->k;
     g_4c9798[7] = 0.0f;
-    long mode = !(g_4c1a80 & 0x400) ? 2 : g_485a40 > 0.0f && *(short const *)(tag + 0x14) == 0 ? 1 : 0;
+    long mode = (bool)((~(g_4c1a80 >> 10)) & 1) ? 2 : g_485a40 > 0.0f && *(short const *)(tag + 0x14) == 0 ? 1 : 0;
     real extent = *(real const *)(state + 4);
     if (*(real const *)(state + 0xc) > 0.0f)
         extent += (real)tan(*(real const *)(state + 0xc) * 0.5f) * distance * 2.0f;
@@ -140,6 +148,7 @@ void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
     g_4c9798[12] = border + 0.5f;
     g_4c9798[13] = 0.5f - border;
     g_4c9798[15] = 0.0f;
+    vector3f const &direction = *(vector3f const *)(matrix + 0x28);
     point3f const &origin = *(point3f const *)matrix;
     plane3f *plane = (plane3f *)&g_4c9798[16];
     vector3f normal;
