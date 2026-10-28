@@ -2992,6 +2992,9 @@ struct s_voice_route_choice
 // Round 379: coordinated formal orders 1023/1203/1230/0213/0132/0312/2013/3012
 // 363/363/363/363/364/364/363/364; first three preserve both callers, the other five lose them.
 // Original definition and every call restored; entry saves and cursor bias remain.
+// Round 381: headset accumulation after routing 423; settings publication after decisions 435;
+// both 494; with the actual choice receiver 423/435/494; both with conditional radio 416,
+// with the receiver 416. All restored; original byte accumulation and input reads retained.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

@@ -429,12 +429,15 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 168 (was 195): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// score 168 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
 // Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
 // Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
 // three named cross terms 195; named variation 195; scalar declarations first 195;
 // projection before shared cross 182. Shared cross product 168 fast/plain, 880/880 bytes.
+// Round 381: RNG before time 199; oscillation before RNG 203; axis before/between trigs 168/168;
+// RNG-first/axis-between 199; oscillation-first/axis-first 203; rotation-scoped angle 201,
+// with shared final scale 201. Late angle reaches frame 0x20 but loses wind register; all restored.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {

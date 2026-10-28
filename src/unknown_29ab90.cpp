@@ -156,6 +156,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Round 379: actor at later formal positions 1..8, preserving every other input order,
 // 383/381/381/381/381/381/381/381. Positions 2..8 recover actor EAX but leave vector ECX,
 // frame 0x5c and ret 0x1c; two-point gains rejected. Definition and disabled caller restored.
+// Round 381: marked-function requested/movement/acceleration vector references, all seven
+// nonempty subsets, 383 each; all vectors plus native scalar-output references 383.
+// Every original signature, operation and disabled declaration/call restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
