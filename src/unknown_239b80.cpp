@@ -325,6 +325,10 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // the increment at the end of the pass 176; the flag as `if (!left_start)` 246; the two final exits
 // as an else-if 151. There points/current/count sit in EBX/ESI/EDI (retail: points ESI, current
 // EDI, count in memory, the hull count cached in EBX).
+// Round 16: count read through its address at the first-scan/hull bounds 203 each; explicit false/true
+// departure branches with Boolean state and early heading, with memmove/memcpy 253/286; existing
+// displacement helper 203; shared start-point pointer 253; read-once start index 265, with memmove 263.
+// Original body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -546,6 +550,10 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // an if/else 249 (XMM4/XMM5 constants as retail, flag still in CL); side flags byte/char/long/short,
 // function-scope sides, swapped side test or loop-end copies, dot_product2d distances, a named
 // `count - 1` or copy size, the current point after the distance: no gain.
+// Round 17: entry previous-side direct assignment with signed/unsigned ordinal 254/227; entry previous
+// pointer with signed ordinal 254; false-first entry side with signed/unsigned ordinal 272/246;
+// previous-point lexical name 254; shared copy extent 265; output-mask lexical name with that extent
+// 265. Original declarations, qualifier, ordinal, names and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

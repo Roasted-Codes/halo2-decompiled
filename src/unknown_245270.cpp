@@ -318,7 +318,6 @@ void function_245400(s_source_245400 const *source, long index,
 // a separate rotation output vector copied into the direction scores 193 but adds 19 bytes (one-use
 // staging copy, not kept).
 
-// score 204 (was 238): Frame 0x24 versus 0x2c, source receiver and independent side homes remain.
 // Round 74: plane table declared as a source field and read at each use 204; plane codes declared
 // before the edge vector 203; source parameter declared last (definition, declaration and the one
 // call) 204, still edx; material pointer for the final call (as 0x245400) 204; transformed point
@@ -377,6 +376,13 @@ void function_245400(s_source_245400 const *source, long index,
 // second material record pointer 204 (folded, same code); table and second material ahead of the
 // first index 205 (+0xa read first, material registers exchanged); that order with the first
 // material declared ahead and assigned later 205 (same code).
+// Emitter inline / inline-noinline 204/204; with early narrow sides 207; uniform
+// material-table / primary-index / both observations 207/208/217; native material
+// low word 204; branch-owned planes 223. Original emitter declaration and body restored.
+// Round 16: outer transformed-point workspace 204; native material codes without their later copies 211;
+// second-first 210; first/second alone 211/210; native codes with inner workspace 211; one matrix-address
+// read on that graph 235; signed-byte side carriers on it 211. Native codes move the matrix to ECX, not
+// the source, and give frame 0x28. Original body restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
