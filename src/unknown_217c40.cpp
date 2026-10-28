@@ -118,6 +118,8 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // Shared prepare/apply stages, each called twice: immediate 501; both prepared 564; magnitude
 // first 561; original double-angle preparation 559 (retail frame 0x40); absolute offset 531;
 // absolute/magnitude-first 531; native quadrant 564; value-input application 564. All restored.
+// Round 368: complete four-axis scaled/normalized/both products 501/501/501; shared snap attenuation alone
+// or with each/all product forms and angle role names 566 each. Original body and helpers restored.
 // Raw coordinates reused as first/second/both normalized component locals 501/501/501;
 // vertical normalized components first on original/first/second/both reuse 551/551/551/551;
 // both coordinate reuses with shared trig magnitudes 501. All restored; frame 0x38 remains.
@@ -125,6 +127,8 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // raw/angle/trig/normalization phase schedules 546/537/537/536/536/543/560/508. Both exact callers
 // preserved in all nine comparisons. All restored; frame 0x38/0x40, rounded angle homes and
 // simultaneous snap work remain.
+// Round 370: double threshold, rounded absolute-angle carrier and rounded-angle formal
+// domains, then all with short quadrant 501/508/508/501/501/508/508/508; helpers and body restored.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {

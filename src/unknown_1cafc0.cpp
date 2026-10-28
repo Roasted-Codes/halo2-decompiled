@@ -576,6 +576,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // ordinary urgent while alone/with direct fields/with native index 399 each; earlier native
 // ordinal/resource declarations separately/together 399 each. Original helpers restored.
 // Round 251: Query-produced success at primary/alternate/both/fallback/primary+fallback/alternate+fallback/all 410/452/605/558/543/621/499; all with Boolean status 506. Original status assignments, hidden records and request expansions restored.
+// Round 367: Complementary failure in bool/byte/word/long 405/405/531/512; the same storage with
+// primary/alternate test producers 461/461/632/627. Original status, query publications and requests
+// restored.
 // Round 224: ordered five-request tuple/name tables, mutable/const with byte status
 // 1320/1177/1320/1177; Boolean status 1325/1182/1325/1182 (fast). Extra table storage
 // and rolled request expansions regress; original helper and status restored.

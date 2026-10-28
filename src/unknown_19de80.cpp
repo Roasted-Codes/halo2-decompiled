@@ -343,6 +343,8 @@ static inline bool teams_enabled_19e1c0()
 // keeps token_length in EDI and remaining in EBP and reloads token); with token read through
 // its address 701 (identical code); clamp as >=, remaining <, remaining <= 433 each, with the
 // plain result 701/701.
+// Round 367: Inline length/copy/comparison/variadic-format declarations 433 each; ordinary result on the
+// same four boundaries 701 each. All declarations, result storage and copy/format paths restored.
 // Round 224: ordinary result completed on every no-output path: all failure tails 715;
 // name/score/name+score entry defaults 713/707/692; timer/name+timer/score+timer/all entry
 // defaults 716/712/712/710 (fast). Frame 0x204 recovers, copy tails still merge; all restored.

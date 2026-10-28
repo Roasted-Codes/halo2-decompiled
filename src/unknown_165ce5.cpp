@@ -1470,6 +1470,8 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // complete scope-first rate selection 416; native countdown store/test 234;
 // overlay/rate, overlay/countdown, rate/countdown and all three 422/414/416/422;
 // all plus primary-pointer admission 587. Original complementary states and all calls restored.
+// Round 370 (fast control 234): scope-factored clear decision with active-default, callback
+// and member-rate interactions 434/410/434/410/401/397/401/397; original body restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

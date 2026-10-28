@@ -127,6 +127,9 @@ bool function_a7670(long object_index);
 // Round 218: First/second scratch arrays at island/function, function/island, island/island,
 // list/function, function/list, list/list, island/list and list/island scopes:
 // 181/181/181/181/181/181/181/181 (fast control 181). Original restored.
+// Round 368: first/second scratch counts long/short, long/word, short/long, short/short, short/word,
+// word/long, word/short, word/word 245/245/280/272/272/280/272/272. Original count domains and executable
+// body restored.
 // Round 24: shared processing ordinal 183; island membership ordinal 181; both at function
 // scope 183; eager second scan 181; eager first/both scans 259/259; staged category 259;
 // direct body-pointer countdown 237. Original restored.
