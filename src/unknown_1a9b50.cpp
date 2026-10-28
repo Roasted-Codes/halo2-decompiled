@@ -409,6 +409,12 @@ real normalize2d(point2f *arg_0);
 extern point2f *g_468778;
 
 // score 375 (was 375): Frame 0x40 agrees; early actor/settings/prop carriers and prediction homes remain.
+// Lane 6 r85: retail returns constants (`mov al, 1` / `xor al, al`, every push at entry, the early tests
+// jumping to the false exit); `if (...) return true; ... return false;` without the result byte gives that
+// 440 (frame 0x3c); with the actor looked up before the settings call 413 (retail's 0x40 frame and hoisted
+// actor-table load; retail then keeps arg_0/actor/slot/prop in edi/ebp/esi/ebx and the settings pointer at
+// [esp+0x10] only, ours keeps the settings pointer in esi and the prop in arg_1's home); prop pointer at
+// function scope 417; slot pointer declared first 413; early `if (!settings) return false;` 424.
 // Earlier at 375 (was 375): frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
 // frame 0x40 agrees; actor/settings/prop carriers and prediction homes remain.
 // Earlier: frame 0x40 agrees; early actor/settings/prop carriers and prediction scalar homes differ.
@@ -484,6 +490,9 @@ extern point2f *g_468778;
 // Boolean fields, output-pointer contracts and request discriminator restored.
 // Round 226: complete settings native/memcpy values with bool/byte result, original/actor-first
 // acquisition 441, 441, 413, 413, 422, 422, 394, 394. All restored; frame and early carrier homes remain.
+// Round 217: Prop-state inline/noinline, prop-view inline/noinline, both inline/noinline
+// boundaries 375/375/375/375/375/375; state/both inline with actor-first acquisition 413/413
+// fast. Original declarations, acquisitions, pointer homes and complete body restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -652,6 +661,11 @@ struct s_1aab51
 static __forceinline long real_to_long(real value);
 
 // score 386 (was 386): Frame 0x58 and length agree; early rejection, object/magnitude and query scalar homes remain.
+// Lane 6 r85: retail lays the early false exit (`xor al, al; pop ebp; add esp, 0x58; ret 8`) right after the
+// `goto local_7` jump; ours puts it last. `bool local_2 = !f13 && !f14 && !f2d; if (local_2) {...} return
+// local_2;` (and the same with an if/else setting the flag) lands it where retail does, but arg_0 then takes
+// edi from the settings pointer and the frame drops to 0x54: 517. Inverted test with the false arm first 386
+// (identical code); early `return false` then `bool local_2 = true;` 511; named admission bool 517.
 // Earlier: frame 0x58 and length agree; early rejection and query scalar/object homes remain.
 // Frame 0x58 and 1904-byte length agree; early rejection and query scalar homes remain.
 // frame 0x58 and length agree; early rejection and query scalar/object homes remain.

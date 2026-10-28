@@ -109,14 +109,6 @@ static inline s_sound_class *function_xaa8231(short class_index)
 	return &((s_sound_globals_classes_view *)g_51ebd4)->classes[class_index];
 }
 
-/* gains in decibels are kept as real bits in longs */
-static inline long decibels_add(long a, long b)
-{
-	real result = *(real *)&a + *(real *)&b;
-
-	return *(long *)&result;
-}
-
 static inline long decibels_interpolate(long a, long b, real t)
 {
 	real result = (*(real *)&b - *(real *)&a) * t + *(real *)&a;
@@ -3662,6 +3654,8 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // fallback in both arms 583 (frame 0xe0, 2243 bytes, aligned 650 -> 621; 0x16f3a0 stays out of
 // line and the first 0x155760 call sinks); plus an `inline` redeclaration of 0x16f3a0 583;
 // g_44a2a0 with only the helper loop head 637; the helper loop head alone 597. All restored.
+// Native rotation return, pointer/quaternion-value/vector-value/both-value inputs 1009/948/965/912;
+// those native returns with the existing fallback constant 1217/1162/1176/1126. All restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

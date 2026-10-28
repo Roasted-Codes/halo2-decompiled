@@ -160,7 +160,11 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 199 (was 199): frame 0xa4 and the marker branch agree; retail keeps the object data base in EBP
+// score 199 (was 309): Frame 0xb0 versus 0xa4, receiver homes and collision-point scheduling differ.
+// Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
+// 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
+// initialization alone/with all three narrowed lifetimes 309/310. Original body restored.
+// frame 0xa4 and the marker branch agree; retail keeps the object data base in EBP
 // (ours the tag table), and the collision point's last component reuses the fraction register, which
 // shifts the tail by one instruction. Retail reloads the tag table after the 0xb9ef0 call (parent
 // branch); ours treats that call as unable to change it and keeps it in EBP from entry.
@@ -179,6 +183,14 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // displacement/word/name 290; separate backward query vector 309; complete vector
 // graph/word 290; native copies on that graph 290; local-up name 309; word/local-up 290.
 // Retain the actual flag-word declaration with unchanged following field offsets.
+// Round 57: object header table local for entry and seat lookups 192 (frame and EBP base agree;
+// under the keep bar, restored); height accumulator 192; reversed point products 192; point setter 192;
+// collision-first comparison 193; separate backward vector 192; collision scoped to displacement 296;
+// outer definition through the unit 281; fraction at point scope 192; difference vectors swapped 192.
+// Round 195: Common collision result, query/final/both point-set calls [211, 211, 211, 211]; original
+// output with query/final/both point-set calls [199, 199, 199]; common result, both setters and
+// collision-first comparison 211. Original queries and output graph restored; tag-table retention and
+// fraction component reuse remain.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

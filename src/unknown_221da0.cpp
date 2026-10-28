@@ -756,7 +756,7 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
-// score 216 (was 225): Frame 0x8ac agrees; camera/BSP/gain homes and maximum joins remain.
+// score 207 (was 216): Frame 0x8ac agrees; camera/BSP/side homes and table-view spill remain.
 // Earlier: aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes differed.
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
 // indexed batch-entry pointer 225; previous-gain snapshot 262.
@@ -799,6 +799,16 @@ real function_18cac0(long arg_0);
 // with audibility at each bound 223/245/223/223. On long 223, after-clear BSP/native real/both
 // 235/223/235; small-mask memset alone/with after-clear BSP/native real/both 216 each.
 // Whole clear return, direct camera/audibility and library mask clear kept at 216 plain (813/812).
+// Round 195: Outer, inner and batch induction-zero lifetimes independently [241, 230, 247]; paired/joint
+// lifetimes [236, 263, 256, 254]; entry declarations with per-door inner reset 257. Original zeros,
+// clears and loop domains restored; scalar and mask/result homes remain.
+// Round 201: Per-door camera cluster captured after mask query in long/short, alone, with complete
+// role names, with an outer maximum workspace, and with both: 250 each (eight forms, 785 bytes).
+// Original direct field observations and inner result lifetime restored; frame/home and max joins remain.
+// Round 360: table-default strict maximum with audibility/camera/batch-bound
+// interactions 207/209/257/261/228/222/241/243. Table-default result kept at 207
+// plain, 813 bytes; unordered/equal values still select the door gain. Original
+// scalar observations and both library clears retained; camera/BSP homes remain.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
@@ -835,9 +845,9 @@ void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 						{
 							if (local_11 != local_0->index && (local_8[local_9][local_11 >> 5] & (1 << (local_11 & 31))))
 							{
-								real gain = local_7;
-								if (local_2[local_11] > local_7)
-									gain = local_2[local_11];
+								real gain = local_2[local_11];
+								if (!(gain > local_7))
+									gain = local_7;
 								local_2[local_11] = gain;
 							}
 						}

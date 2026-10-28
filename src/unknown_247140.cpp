@@ -305,6 +305,9 @@ public:
 // Round 77: the second loop as a while 92; its guard as nested ifs 92; the first loop as a for 92;
 // the count test reversed 92; the element as pointer plus index 92; the call through `this` 94. The
 // 12-byte pad before the second loop (retail none) and the call-setup registers remain.
+// Round 215: reused traversal handle 94; shared pool owner 171; both 171;
+// counter-before-successor update 99; update with reused handle 101; update with
+// pool/both 168/168; all with const pool view 168. Original body restored.
 // @retail 0x248750
 void c_248767::function_248750(s_particle_system_datum *arg_2, real arg_3, byte *arg_1)
 {

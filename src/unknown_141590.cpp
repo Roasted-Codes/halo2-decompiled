@@ -129,6 +129,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 
 /* the rotation that takes one unit vector to another */
 // score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross spill overlap remain.
+// Lane 6 r85: helper with `s` computed first 302 (s and the doubled scalar hoisted above the matrix copy,
+// the doubled scalar spilled twice as retail, frame 0x20, constants one xmm lower); with vector-first
+// products 302 (identical code); with plain half-angle locals 291; doubled scalar after the cross 301;
+// scalar cross terms 281 (retail's 0x24 frame and first difference +0x71, doubled scalar in the parameter
+// home and [esp+0x10] as retail; quaternion registers permuted); scalar cross with `s` first 306.
 // frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
 // quaternion scale loop 302; shared axis scale loop 294.
 // shared rotation cross 241; shared cross scale loop 294.
@@ -186,6 +191,9 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // and helpers restored.
 // Round 82: sine-branch axis k/j/i 327; transform scalars s/w2/dot 289, s/dot/w2 302; w assigned
 // before the axis 302; scale computed before the axis 301. Original body and helpers restored.
+// Round 259: Complete native cross-vector initializer with all six coefficient
+// schedules 237/285/240/240/302/289; immutable cross with dot/w2/s and s/w2/dot
+// 237/289. Original helper/body restored; frame and quaternion/cross spill reuse remain.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,
