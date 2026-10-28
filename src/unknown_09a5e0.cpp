@@ -2181,6 +2181,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // the store 168; the unit through the header-array index 168 (SIB order unchanged); the 0xee field and
 // its new value as bool 168 (retail loads the field into DL before the compare and keeps both float
 // flags in stack bytes; ours compares memory and keeps the first flag in DL).
+// score 155 (was 168): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -2292,7 +2293,7 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 		local_5++;
 	}
 	while (--local_16);
-	if ((local_3 & 0x400000) && local_2->field_ec != *(short *)(local_1 + 0x23e))
+	if (TEST_FIELD_BIT((local_3 >> 22) & 1) && local_2->field_ec != *(short *)(local_1 + 0x23e))
 	{
 		local_2->field_ec = *(short *)(local_1 + 0x23e);
 		local_4 |= 0x400000;

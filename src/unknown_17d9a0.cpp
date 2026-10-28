@@ -518,9 +518,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 572 (was 572): the axis now comes from vector3d_from_points3d with the length summed in
-// retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
-// Aligned frame 0x21e4 versus 0x21dc, count/plane/axis homes and rotation scheduling remain.
+// score 564 (was 572): frame 0x21dc and 3647-byte length agree; first +0x41 is the definition-pointer spill.
+// Plane/count homes, initial face-call scheduling and rotation spills remain.
+// Earlier aligned frame 0x21e4 versus 0x21dc, count/plane/axis homes and rotation scheduling remain.
 // The axis uses vector3d_from_points3d with length summed in retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
 // does; that frame is 0x21e4 against retail's 0x21dc (8 bytes more below the plane), 3631 bytes against
 // 3647. The definition/output registers agree with the pivot offset rotated in place, the mode read at
@@ -595,6 +595,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // nonempty subsets 572 each; all exchanges with factor-first axis normalization 572.
 // All original products restored; frame remains 0x21e4 versus 0x21dc and rotation spills differ.
 // Round 204: complete rotation input with direct/native result 611/831; direct input plus pivot/axis scale/both 607/607/608; native axis scale 613; native input/result plus pivot/plus scale 760/761. Original whole body and helpers restored.
+// Round 234: complete basis squares/sine/both/cosine pairs/squares+pairs/sine+pairs/all
+// 726/582/601/618/564/631/598; all with count order 597. Squares+pairs kept (plain 564);
+// each repeated part has two uses, every row is uniform and all float trees are preserved.
 // Round 241: Actual emitted-face total short/word/long/dword at secondary pass entry and before initial
 // projection: 735/723/723/723/749/626/626/626. Original outstanding count, face indices and body
 // restored.
@@ -710,16 +713,22 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 					real sine = (real)sin(angle);
 					real cosine = (real)cos(angle);
 					real one_minus_cosine = 1.0f - cosine;
+					real square_i = axis.i * axis.i;
+					real square_j = axis.j * axis.j;
+					real square_k = axis.k * axis.k;
+					real cosine_j_i = one_minus_cosine * axis.j * axis.i;
+					real cosine_k_i = one_minus_cosine * axis.k * axis.i;
+					real cosine_k_j = one_minus_cosine * axis.k * axis.j;
 					vector3f forward, left, up;
-					forward.i = axis.i * axis.i + (1.0f - axis.i * axis.i) * cosine;
-					forward.j = one_minus_cosine * axis.j * axis.i + axis.k * sine;
-					forward.k = one_minus_cosine * axis.k * axis.i - axis.j * sine;
-					left.i = one_minus_cosine * axis.j * axis.i - axis.k * sine;
-					left.j = axis.j * axis.j + (1.0f - axis.j * axis.j) * cosine;
-					left.k = one_minus_cosine * axis.k * axis.j + axis.i * sine;
-					up.i = one_minus_cosine * axis.k * axis.i + axis.j * sine;
-					up.j = one_minus_cosine * axis.k * axis.j - axis.i * sine;
-					up.k = axis.k * axis.k + (1.0f - axis.k * axis.k) * cosine;
+					forward.i = square_i + (1.0f - square_i) * cosine;
+					forward.j = cosine_j_i + axis.k * sine;
+					forward.k = cosine_k_i - axis.j * sine;
+					left.i = cosine_j_i - axis.k * sine;
+					left.j = square_j + (1.0f - square_j) * cosine;
+					left.k = cosine_k_j + axis.i * sine;
+					up.i = cosine_k_i + axis.j * sine;
+					up.j = cosine_k_j - axis.i * sine;
+					up.k = square_k + (1.0f - square_k) * cosine;
 					transform4x3f matrix;
 					vector3f offset;
 					vector3d_from_points3d(&start, &projection->matrix.position, &offset);
@@ -910,6 +919,7 @@ PRIVATE __forceinline void decal_vector_17ef10(transform4x3f const *m,
     out->k = m->up.k * z + m->left.k * y + m->forward.k * x;
 }
 
+// score 987 (was 1005): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x17ef10
 bool function_17ef10(transform4x3f const *transform, long tag_index,
     s_decal_placement const *placement, vector3f const *direction, real radius,
@@ -988,7 +998,7 @@ bool function_17ef10(transform4x3f const *transform, long tag_index,
     vector3f normal = placement->plane.n;
     vector3f tangent, perpendicular;
     real cosine, sine;
-    if ((definition->flags & 8) &&
+    if (TEST_FIELD_BIT((definition->flags >> 3) & 1) &&
         -0.0001f > normal.j * direction->j + normal.k * direction->k + normal.i * direction->i)
     {
         cosine = -1.0f;

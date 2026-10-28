@@ -375,6 +375,7 @@ void __stdcall function_115220(long machine_index)
 	}
 }
 
+// score 368 (was 473): its flag tests and the type-mask test read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0x1152e0
 bool __stdcall function_1152e0(long machine_index)
 {
@@ -385,11 +386,11 @@ bool __stdcall function_1152e0(long machine_index)
 	bool changed = false;
 	word object_flags = machine->flags_c0;
 
-	if (((object_flags >> 12) & 1) && (!(0.0001f > (real)fabs(machine->position)) || ((object_flags >> 10) & 1)) &&
+	if ((TEST_FIELD_BIT((object_flags >> 12) & 1)) && (!(0.0001f > (real)fabs(machine->position)) || (TEST_FIELD_BIT((object_flags >> 10) & 1))) &&
 		machine->havok_component_index != NONE)
 	{
 		s_havok_component *component = havok_component_get(machine->havok_component_index);
-		real position = ((object_flags >> 10) & 1) ? 1.0f : 0.0f;
+		real position = (TEST_FIELD_BIT((object_flags >> 10) & 1)) ? 1.0f : 0.0f;
 
 		if (machine->position > position)
 			position = machine->position;
@@ -459,11 +460,11 @@ bool __stdcall function_1152e0(long machine_index)
 					(s_machine_unit_definition_view *)g_4e3b44[unit->definition_index & 0xffff].bytes;
 				bool can_open = true;
 
-				if (((1 << header->type) & 2) && !((local_98b918->unit_flags >> 20) & 1))
+				if (TEST_FIELD_BIT(((1 << header->type) >> 1) & 1) && !(TEST_FIELD_BIT((local_98b918->unit_flags >> 20) & 1)))
 					can_open = false;
-				else if ((unit->flags_10a >> 2) & 1)
+				else if (TEST_FIELD_BIT((unit->flags_10a >> 2) & 1))
 					continue;
-				if (((local_98b918->object_flags >> 14) & 1) || !can_open)
+				if ((TEST_FIELD_BIT((local_98b918->object_flags >> 14) & 1)) || !can_open)
 					continue;
 				if ((machine->flags & 4) || (machine->flags & 8) && *(long *)((byte *)unit + 0x13c) != NONE)
 				{
@@ -538,7 +539,7 @@ bool __stdcall function_1152e0(long machine_index)
 		}
 	}
 
-	bool moved = (machine->device_flags >> 2) & 1;
+	bool moved = TEST_FIELD_BIT((machine->device_flags >> 2) & 1);
 
 	if (moved)
 	{

@@ -165,6 +165,9 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // rotate one register off), and the parent branch loads the tag table before the object table
 // (ours EAX for the object table is a byte shorter, which also keeps a later je short: 5 bytes).
 // Earlier allocation/collision forms follow.
+// frame 0xa4 and entry agree; height loads, dot input carriers and marker/parent tails differ.
+// frame 0xa4 and entry allocation agree; height-load order, dot-input carriers,
+// selected-seat/marker tails and parent-table scheduling differ. Earlier allocation/collision forms follow.
 // Frame 0xa4 agrees; object-data/tag-table allocation
 // and collision-point scheduling differ.
 // frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
@@ -205,6 +208,9 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Paired height terms 55 (plain, kept); collision production first 61; native marker copies 125;
 // twice-used seated object 146; first three boundaries 116; all four 154. Retain object-table,
 // existing backward-vector assignment, sentinel before forward, collision-first and paired height terms.
+// Round 373: Offset-first contact/origin/both dot inputs 55/55/55;
+// each with paired contact/origin role names 55/55/55; symmetric dots with
+// a common exit, without/with paired names 55/55. Original graph restored.
 // Paired raw height inputs 55; resolved marker seat short/long 55/100; conditional short/long 55/100;
 // marker handle 55; handle with short/long/conditional-short seat 55/100/55. All restored.
 // Default-first crouch 59; named standing complement 55; both 59; complete paired

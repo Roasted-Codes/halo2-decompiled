@@ -136,7 +136,7 @@ struct s_placement_2bc1
 	byte field_28[0xc4 - 0x28];
 };
 
-// score 5 (was 16): the placement pointer copied for the creation call uses ECX where retail uses
+// score 5 (was 5): the placement pointer copied for the creation call uses ECX where retail uses
 // EAX, and the game options pointer read for the mode test uses EDX where retail uses ECX.
 // Existing initializer 89; initializer result 89; initializer before mode 88; paired helpers 88;
 // event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90.
@@ -151,6 +151,8 @@ struct s_placement_2bc1
 // Round 70: byte-array placement 5; creation assignment in the marker test 5 (on the current
 // body); placement at function scope 5; event without its block scope 32 (fill moves before the
 // test); named marker-test bool 5.
+// Marker-query inline declarations 5; native tag hierarchy 5; creation/announcement/both names 5/5/5;
+// missing-tag return 5; tag field at both uses 50; direct tag receiver 5; native tag with both names 5.
 // @retail 0x2bc1f0
 void function_2bc1f0(long team)
 {

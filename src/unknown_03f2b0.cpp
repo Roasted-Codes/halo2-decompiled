@@ -1475,6 +1475,11 @@ struct s_133f70;
 // scope 176/175. All restored; distance staging and cache/result scheduling remain.
 // Round 218: Count/writer/projection/coefficient inline and noinline declarations:
 // 175/175/175/175/175/175/175/175 (fast control 175). Original restored.
+// Round 87 (plain; fast now gives 353): the tail from the 0x23690 call on (about 80 of the 175) follows
+// that callee's convention: ours passes the level in AX, retail pushes all seven arguments (`ret 0x1c`,
+// `movsx ecx` of the level), BLOCKED-BY 0x23690. Head forms: the 0x4ed284 test nested with an entry
+// pointer 175, nested without it 175; a cached-flag pointer at every access 175; the header as table
+// pointer + masked index 175; entries declared before the failure count 175.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
