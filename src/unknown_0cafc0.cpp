@@ -183,6 +183,10 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // displacement/word/name 290; separate backward query vector 309; complete vector
 // graph/word 290; native copies on that graph 290; local-up name 309; word/local-up 290.
 // Retain the actual flag-word declaration with unchanged following field offsets.
+// Round 57: object header table local for entry and seat lookups 192 (frame and EBP base agree;
+// under the keep bar, restored); height accumulator 192; reversed point products 192; point setter 192;
+// collision-first comparison 193; separate backward vector 192; collision scoped to displacement 296;
+// outer definition through the unit 281; fraction at point scope 192; difference vectors swapped 192.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {
