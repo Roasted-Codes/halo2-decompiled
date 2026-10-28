@@ -4153,6 +4153,11 @@ struct s_score_zone_view
 // individual own-text bounded-copy call (plain 440, 2688 B); extra scopes restored.
 // Round 241: Consistently retained team-mode result bool/byte/short/long at selection and at team entry:
 // 771/771/745/770/771/771/745/770. Original field reads, output store and complete body restored.
+// Round 207: seven color-helper inline-declaration subsets and all noinline 440 each.
+// Complete returned color values: rival/own/both team, held/free/both zones,
+// all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
+// forms rejected despite the 423 first-transfer recovery. Existing rival output
+// object consumed directly 493. All restored; team-color/zone/charge allocation remains.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

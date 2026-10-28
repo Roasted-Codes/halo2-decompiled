@@ -501,11 +501,15 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 	actor_looking_rotate_in_place(vector, axis, sine, cosine);
 }
 
-// score 335 (was 386): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
+// score 335 (was 335): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
 // Tried: direct collision Boolean 355; initial best vector before normalization 356; result declared first 354;
 // long sample counter 355; axis/sample/range names 355; shared normalizer 330 (sum order changed, restored);
 // shared random-range helper 360; one result return 377; paired span names 355; names plus one return 377;
 // those plus initial best vector first 356; startup values before axis initialization 335 (kept).
+// Early sample ordinal 358; distinct pitch/yaw vector results 383 (frame 0xb4);
+// both 404; entry ray with complete vector setter 338 (retail length); entry
+// collision result 335; split results with entry ray/collision 386/383; split
+// results with one return 404. Restored.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -591,11 +595,15 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 397 (was 445): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
+// score 336 (was 397): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
 // test results plus flag name 397; Boolean declarations reversed 414; tests plus reversed declarations 395 (restored).
+// Chained Boolean defaults 395 (+0x3a first); with case 2 first 399; entry marker
+// workspace 397, with chained defaults 395; complete point setters 336 (kept,
+// retail length); with chained defaults 334 (extra two-point gain restored);
+// those plus case order 339, plus entry marker 339.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -665,9 +673,15 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 				}
 				s_object_marker marker;
 				if (actor->target_marker && function_b8d30(object_index, actor->target_marker, &marker, 1, false))
-					point = marker.matrix.position;
+					real_point3d_set(&point,
+						(marker.matrix.position).x,
+						(marker.matrix.position).y,
+						(marker.matrix.position).z);
 				else
-					point = *(point3f *)((byte *)state + 0x10);
+					real_point3d_set(&point,
+						(*(point3f *)((byte *)state + 0x10)).x,
+						(*(point3f *)((byte *)state + 0x10)).y,
+						(*(point3f *)((byte *)state + 0x10)).z);
 				goto aim_at_point;
 			}
 			long object_index = reference->object_index;
@@ -675,13 +689,19 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 			if (((1 << object->type) & 3) && object->player_index != NONE)
 				function_cafc0(object_index, &point);
 			else
-				point = *(point3f *)((byte *)state + 0x30);
+				real_point3d_set(&point,
+					(*(point3f *)((byte *)state + 0x30)).x,
+					(*(point3f *)((byte *)state + 0x30)).y,
+					(*(point3f *)((byte *)state + 0x30)).z);
 			goto direction_from_actor;
 		}
 		goto remembered_prop;
 
 	case 3:
-		point = specification->point;
+		real_point3d_set(&point,
+			(specification->point).x,
+			(specification->point).y,
+			(specification->point).z);
 		point_valid = true;
 		goto aim_at_point;
 
@@ -692,7 +712,10 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	case 5:
 		if (actor->attention_state <= 0)
 			goto done;
-		point = actor->attention_point;
+		real_point3d_set(&point,
+			(actor->attention_point).x,
+			(actor->attention_point).y,
+			(actor->attention_point).z);
 		point_valid = true;
 		goto aim_at_point;
 
@@ -839,18 +862,26 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 96 (was 205): the 0x38 frame agrees; bounds homes/scheduling, the signed-angle registers and dot order differ.
+// score 54 (was 96): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
 // limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
 // both random spans read once 212; the direct Boolean in the sampler changes this caller from 55 to 96.
+// Round 212: yaw names/result-first/both 96; chained zero initialization and
+// its name/result/declaration combinations 98; lower-first character stores 96.
+// Upper-first yaw initialization 94; plus later scaled pitch/shared pitch limit/both
+// 202/94/202. Two-point form rejected; yaw homes, pitch scheduling and call registers remain.
+// Bounds before lookup, alone/with scale 98/99; direct horizontal/aiming/both
+// projections 173/159/170; shared dot 62; projections plus dot/upper-first 170/168.
+// Shared dot with upper-first/later pitch 60/58; reverse dot alone/upper-first/later
+// pitch 58/56/54 (kept). Addition grouping and all marked call arguments are unchanged.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	bool result = false;
-	real yaw_lower = 0.f, yaw_upper = 0.f, pitch_lower = 0.f, pitch_upper = 0.f;
+	real yaw_upper = 0.f, yaw_lower = 0.f, pitch_lower = 0.f, pitch_upper = 0.f;
 	real scale = 1.f;
 	s_actor_looking_properties *properties = function_1e5160(actor->character_definition_index);
 	if (properties)
@@ -865,9 +896,9 @@ PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool u
 			if (function_30bf0(&base) == 0.f)
 				base = *g_4687a8;
 			real yaw = properties->aiming_yaw * scale;
-			real pitch = properties->aiming_pitch * scale;
 			yaw_upper = yaw;
 			yaw_lower = 0.f - yaw;
+			real pitch = properties->aiming_pitch * scale;
 			real minimum = 0.f - g_55e5bc;
 			real lower = 0.f - pitch;
 			pitch_lower = minimum > lower ? minimum : lower;
@@ -899,7 +930,7 @@ PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool u
 					else
 					{
 						real yaw = function_11cc90((vector2f *)&horizontal, (vector2f *)&aiming_horizontal);
-						real cosine = base.j * horizontal.j + base.i * horizontal.i + base.k * horizontal.k;
+						real cosine = dot3f(&horizontal, &base);
 						cosine = cosine < -1.f ? -1.f : (cosine > 1.f ? 1.f : cosine);
 						real pitch = function_50650(cosine);
 						if (base.k < 0.f)
@@ -948,12 +979,16 @@ struct s_actor_looking_structure_view
 };
 
 /* Name inferred from the path traces and the idle-direction caller. */
-// score 80 (was 142): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
+// score 80 (was 80): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
 // Result first 139; existing angular wrapper 468; vector producer 261; both 466;
 // native header/body induction with those producers 137/468/266/466.
 // Separate forced angular declaration 78/265/85/270; earlier cursor step 88;
 // real indexed candidate producer 80, kept at 924/924 bytes after plain confirmation.
 // The 78 form retains the old comma-stepped loop and is not kept.
+// Angle ordinal renamed, candidate ordinal renamed, both renamed and candidate declared first 80 each;
+// candidate/trace scope, entry trace, entry horizontal, all entry workspaces and workspace names 80 each;
+// single short ordinal 137; single long ordinal 198; declaration-time path pointer 214;
+// int angle ordinal 80; two long ordinals 214; two int ordinals 214. Counter homes, rotation schedule and tail remain.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
