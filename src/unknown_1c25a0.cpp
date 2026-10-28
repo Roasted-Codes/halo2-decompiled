@@ -670,6 +670,9 @@ PRIVATE __forceinline void function_1c2891(short *arg_0, c_havok_reference_count
 // g_47f048 in EDI and &reference_count in ESI; ours zeroes EDI, holds g_47f048 in
 // ESI, folds the count address into the object pointer and tests it before the delete.
 // and clears it in EDI, retail loads it into ESI and clears it in EBX.
+// Round 378: Prefix-result zero arm, postfix old-count arm, nonzero completion
+// after decrement/reload and prefix-result completion, normal range arms [45, 55, 45, 45],
+// delete-first arms [45, 56, 45, 45]. Original helper and body restored.
 // @retail 0x1c2890
 void function_1c2890(void)
 {
@@ -1083,7 +1086,7 @@ struct s_1c4040
 	long field_10;
 };
 
-// score 8 (was 90): only the convention differs: ours takes the active flag in DL
+// score 8 (was 8): only the convention differs: ours takes the active flag in DL
 // (the default /Gr register: our LTCG reaches this function through 0x1c39c0 ->
 // 0x1c51c0 before 0x146bf0 on their call cycle), retail takes it in AL with attempt
 // in ECX. Kept: the existing function_a7670 for the mode test 66; the result field
@@ -1093,6 +1096,8 @@ struct s_1c4040
 // for the mode case 8. With 0x1c51c0's call removed (diagnostic) LTCG gives this
 // function a custom convention, but attempt in EAX and active in CL (30), and the
 // same with the parameters reordered (active, attempt).
+// Round 378: Scan-owned success result with shared/fixed/dynamic/both entity ordinals,
+// original/structured dispatch, all eight 111 at 537 bytes. Original result and body restored.
 // @retail 0x1c4040
 bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_unknown, long excluded_component_index)
 {

@@ -135,6 +135,9 @@ bool function_a7670(long object_index);
 // direct body-pointer countdown 237. Original restored.
 // Round 206: Chained initial list-count/list-and-retry resets, with separate/chained retry resets
 // [181, 273, 181, 273]; flat entry rejection on the same four graphs [181, 273, 181, 273]. All restored.
+// Round 378: Existing component-index getter with ordinary/inline/forced/noinline
+// caller declarations 299 each; each with indexed cleanup 294. Query remains out
+// of line; original property scan, cleanup cursor, declarations and body restored.
 // @retail 0x278f00
 void function_278f00()
 {
