@@ -94,9 +94,13 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 }
 
 // score 107 (was 107): entry saves, fresh unit reload and sentinel carriers still differ.
+// frameless entry saves, unit reload and sentinel carriers differ.
+// Native player-table stride and byte eligibility/prior-state combinations 131
+// each (seven forms); full-width eligibility 127 (four-point gain rejected).
+// Original record view, result types, observations and body restored.
+// entry saves, fresh unit reload and sentinel carriers still differ.
 // BLOCKED-BY 0xbadc0: retail re-fetches the unit after its two calls, ours reuses the entry
 // fetch (our link knows the callee writes no memory).
-// entry saves, fresh unit reload and sentinel carriers still differ.
 // shared weapon producer 131; user-result arms 125; both 125; signed-word user 128;
 // shared producer/word 128; word/result arms 122; all three 122; guarded weapon
 // result 135. Retain signed-word user/result arms; the six-count arm-only gain is rejected.

@@ -764,7 +764,7 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 66 (was 181): frame 0xc agrees; admission prefix, removed-index EDX/ESI and upper ECX/EAX remain.
+// score 66 (was 66): frame 0xc agrees; admission prefix, removed-index EDX/ESI and upper ECX/EAX remain.
 // Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
 // Paired range arms 373;
 // frame 0x0c agrees; removed-index registers, upper
@@ -807,6 +807,10 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // forward memmove 380; sentinel-first links 157; early view/bound declaration swap/
 // const admission with the 64-point lower 64/64/64; default insertion range 388;
 // three current-graph cases 386. The two-point lower gain was not kept; original body restored.
+// Round 215: native timestamp dword member 66; closed bounds workspace 66;
+// entry time workspace 66; pre-copy long adjustment 382; indexed destination 168;
+// mutable removal with upper-first declarations 66; shared range-direction relation 381;
+// indexed destination with native timestamp member 168. Original body restored.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

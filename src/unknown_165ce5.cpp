@@ -1440,6 +1440,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // `movzx eax, byte [edi+0x19]; test al, 0xa` after the update call, where ours folds `test byte`
 // (`!= 0`, two bit tests, a bool local, bitfield/word/shift views and a bool cast all fold).
 // Apply that set once the movzx form is found.
+// Round 257 (fast base 243): Active int/byte/signed-byte carriers 418/417/417;
+// each with complete idle-settings observations at uses 414/413/413; original bool with
+// those observations 270; int active with read-only idle settings 418. Original body restored.
 // Lane 5 r77 (fast base 243): the movzx is the only `movzx; test al, imm` in retail; casts, `> 0`,
 // `!!`, shifted bit pairs, TEST_FLAG pair, byte/word/dword bitfield and dword-shift views, ternary
 // and `&` bool forms, and the test in another file's non-inline function (LTCG-inlined) all fold to

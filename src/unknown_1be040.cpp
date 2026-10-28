@@ -12,6 +12,12 @@ struct s_slot_09
 	byte unknown0d[0x40 - 0xd];
 };
 
+struct s_slot_09_data
+{
+	bool unknown00;
+	byte unknown01[0x34 - 1];
+};
+
 /* the tag of an object, with a block of flagged elements at +0x5c */
 struct s_object_tag_view
 {
@@ -58,15 +64,17 @@ point3f *function_b9dd0(long object_index, point3f *result);
 short __stdcall function_1c8df0(long object_index, point3f const *point, short team, short type,
 	void const *origin, long count, bool unknown, bool unknown2, bool unknown3, long *arg_9);
 
-// score 35 (was 39): retail keeps the actor index in EBX and the object it
-// looks up in EBP,
-// ours keeps them in EBP and EBX.
+// score 23 (was 35): the entry registers now agree; the object-pool load,
+// object-index reload before the position call and second-query argument setup
+// still differ. Slot data 23 (kept); late state store 41; position pointer 23;
+// origin pointer 23; late object lookup 61; direct slot data 35; query-result
+// local 23; late store with shared object index 55.
 // @retail 0x1be120
 bool __stdcall function_1be120(long actor_index, s_slot *slot)
 {
 	bool result = true;
 	s_actor_view *actor = actor_get(actor_index);
-	s_slot_09 *state = (s_slot_09 *)slot;
+	s_slot_09_data *state = (s_slot_09_data *)slot->unknownc;
 
 	if (actor->unknown040)
 	{
@@ -76,13 +84,13 @@ bool __stdcall function_1be120(long actor_index, s_slot *slot)
 			s_slot_object_view *object = object_get(actor->unknown5ac);
 			point3f position;
 			s_2641c0 origin;
-			state->unknown0c = false;
+			state->unknown00 = false;
 			function_b9dd0(actor->unknown5ac, &position);
 			if (function_2641c0(actor_index, &origin, &position) &&
 				function_1c8df0(actor->unknown5ac, &position, *(short *)((byte *)object + 0x2c),
 					*(short *)((byte *)&origin + 0x28), (point3f const *)&origin, 1,
 					false, false, true, NULL) == 0)
-				state->unknown0c = true;
+				state->unknown00 = true;
 			result = true;
 		}
 	}

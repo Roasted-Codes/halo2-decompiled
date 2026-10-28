@@ -454,6 +454,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // declaration 144; both average values directly published 221. Original average result join retained.
 // Round 202: Paired projection multiplication operand orders i/k/ik/j/ij/kj/all, then all with average-dot-first evaluation 144/144/144/144/144/144/144/144 fast.
 // Original executable source restored. Frame 0x14 agrees; request/count homes, initial cross and selected cross/projection scheduling remain.
+// Round 257: On the direct snapshot-safe projection graph, one conditional-input shared call
+// 228; signed-int count 144; read-only component 144; call/count, call/receiver, count/receiver
+// and all three 228/228/144/228; signed-int scan/selection ordinals 144. Original body restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -592,6 +595,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // at retail length. Original field reads restored; direct-dot displacement and SIMD schedule remain.
 // Round 155: Existing flag predicate: forced bool shift/mask, ordinary byte, ordinary bool
 // shift/mask, forced word/long/signed byte: 182/182/182/182/182/182/299/182. Original byte predicate and complete vector body restored.
+// Round 257: Complete rotation/limit/both projection products and each with complete initial
+// products 186 each; all three with their native first subtotal 239; all three native subtotals
+// alone 245. Original expressions restored; matched caller preserved in every preview.
 // Round 158: Whole-dot multiplication operands commuted at initial, rotation and limit sites independently,
 // in pairs, all three, then with every rotation product. Scores [182, 183, 182, 183, 182, 183, 183, 183].
 // Original executable body restored.

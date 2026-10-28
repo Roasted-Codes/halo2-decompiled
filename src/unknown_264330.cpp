@@ -286,6 +286,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 337: complete origin point/scalars 419/427; sampled state position 444;
 // origin scalars/point with state position 463/457; const native copies 457;
 // entry origin copy 498; both native inputs with shared difference 457. All restored.
+// Round 358: Shared expiry/buildup/both tick conversions 358/358/358; both with state word/separate
+// current state/both state forms 358/357/357; unit predicate 447; disjoint vectors 358. One-count
+// gains rejected; body restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -829,6 +832,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // Round 203: native squad flag with squad-index, tracking-index and masked actor-slot producer
 // combinations 372 each in all eight fast trials (control 372/1260, full 331/1251).
 // Actor ESI and saved/squad homes remain; all native views, handles and temporary include restored.
+// Round 358: Complete different-target bool/byte/short/long carriers 376/341/376/375; before
+// suppression 376/341/364/366 (preview 341). Exact-length 364 regresses; original current predicate
+// and body restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
