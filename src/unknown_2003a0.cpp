@@ -1300,6 +1300,8 @@ void __stdcall function_205320(long group_index)
 // loads the squad pool into EAX, builds the index in EDX and forms the squad with lea eax,[edx+ecx] (so the
 // test of the index can sit before it), then uses EDX/ECX for the object reload and EDX for the new index;
 // ours builds the index in EAX (add eax,ecx) and swaps ECX/EDX after it.
+// The first vehicle read once through a volatile pointer, before the object reload as retail orders
+// it, gives 16; not kept, since it isn't a byte match.
 // Tried: squad_get 18; array address 18; index times size plus data 18; index local 18; or operands swapped
 // 18; early return 18; squad declared at the top 18; object reload into a local first 18; field through a
 // long pointer 18; first vehicle saved before the store 19; inverted test 24; squad lookup at each use 33;
