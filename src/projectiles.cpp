@@ -10,6 +10,7 @@ detonation. */
 #include "data_array.h"
 #include "unknown_0259d0.h"
 #include "object_markers.h"
+#include "normalize3d.h"
 #include "object_iterator.h"
 #include "effects.h"
 #include "sound_sources.h"
@@ -651,6 +652,11 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 }
 
 /* pushes a projectile, and spins it at random by the push's strength */
+// score 69 (was 95): frame 0x10 and retail length agree; impulse EDX/ESI, axis homes and seed carriers differ.
+// Round 196: direct length 95; fraction 114; complete native scale 98; length/fraction 114;
+// length/scale 98; fraction/scale with either length 83 (one-use fraction, restored); shared magnitude/scale 98.
+// Commuted first product with complete scaled vector 69 (kept); in-place, direct-root in-place,
+// and shared magnitude variants 69 each. Existing calls and multiply grouping preserved.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -663,12 +669,14 @@ void function_fa820(long projectile_index, vector3f const *impulse)
 		projectile->linear_velocity.k += impulse->k;
 
 		vector3f axis = g_4417f0[random_index(&g_4e7408->unknown0, 1026)];
-		real spin = (real)sqrt(length_sq3f(impulse)) * function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) *
+		real spin = function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) * (real)sqrt(length_sq3f(impulse)) *
 			1.5707964f;
 
-		projectile->angular_velocity.i += spin * axis.i;
-		projectile->angular_velocity.j += spin * axis.j;
-		projectile->angular_velocity.k += axis.k * spin;
+		vector3f rotation;
+		vector3f_scale(&axis, spin, &rotation);
+		projectile->angular_velocity.i += rotation.i;
+		projectile->angular_velocity.j += rotation.j;
+		projectile->angular_velocity.k += rotation.k;
 		function_fbd40(projectile_index);
 		function_b9b90(projectile_index, false);
 	}
@@ -1218,10 +1226,14 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 
 /* a projectile's detonation effects and sounds at a point, attached to an
    object's node when it stuck to one */
+// score 115 (was 148): frame 0x150 and extent agree; point EBX/EDI, zero lifetime and selector call registers differ.
+// Round 196: array-size bounds, unsigned shared ordinal and distinct unsigned ordinals 148 each;
+// word index 115; long node 148; both widths 115 (kept); both widths with array bounds
+// or separate ordinals 115 each. Every declaration coordinated; original loop bodies retained.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
-	point3f const *point, vector3f const *normal, long index, bool attached, long object_index,
-	short node_index, bool alternate)
+	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
+	long node_index, bool alternate)
 {
 	byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 	long sounds[3];
