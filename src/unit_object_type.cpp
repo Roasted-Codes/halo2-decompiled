@@ -3407,14 +3407,20 @@ void __stdcall function_ceb30(long unit_index)
 /* puts a weapon of a definition (and a value at +0x17e) in the unit's slot,
    dropping the one there; sets the unit's +0x210 and +0x214 and, when the
    unit had no weapon, raises it (request 8) */
+// score 4 (was 124): retail sets 0xcea70's NONE mode (EAX) before the weapon (ECX), and 0xce520's
+// weapon (EDX) before the unit (EAX). The count declared first keeps the unit index in EBX from entry,
+// so LTCG passes it there as retail (with the NONE initialisers first: NONE in EBX, stack argument);
+// the unit through unit_at_masked_index and the definition/value declared before the weapon index
+// give the rest. Other orders 8-60; NONE in an else arm 117. With 0xcea70 declared (slot, weapon,
+// mode, unit) and 0xce520 (unit, weapon, flag) at every call it matches (contributor code: held).
 // @retail 0xd09c0
 void __stdcall function_d09c0(long unit_index, long slot_index, long definition_index, short value, dword const *state)
 {
-	s_unit *unit = UNIT_GET(unit_index);
-	long weapon_index = unit->weapon_object_indices[slot_index];
+	long count = 0;
+	s_unit *unit = unit_at_masked_index(unit_index);
 	long current_definition_index = NONE;
 	short current_value = NONE;
-	long count = 0;
+	long weapon_index = unit->weapon_object_indices[slot_index];
 
 	if (weapon_index != NONE)
 	{
@@ -3468,9 +3474,8 @@ void __stdcall function_d09c0(long unit_index, long slot_index, long definition_
 		}
 	}
 	s_unit *again = UNIT_GET(unit_index);
-	dword new_state = *state;
-	*(dword *)&again->unknown214 = new_state;
-	again->unknown210 = (short)new_state;
+	*(dword *)&again->unknown214 = *state;
+	again->unknown210 = again->unknown214;
 	if (count == 0 && weapon_index != NONE && unit->unknown216 == slot_index)
 	{
 		s_unit_request request;
