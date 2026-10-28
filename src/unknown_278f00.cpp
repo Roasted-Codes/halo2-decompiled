@@ -141,6 +141,8 @@ bool function_a7670(long object_index);
 // Frame 0x424 agrees; scratch phase, scalar homes, admission BL and cleanup induction remain.
 // Round 206: Chained initial list-count/list-and-retry resets, with separate/chained retry resets
 // [181, 273, 181, 273]; flat entry rejection on the same four graphs [181, 273, 181, 273]. All restored.
+// Round 170: Recursive inline/forced-inline/noinline/inline-noinline declarations, then each with indexed
+// cleanup 181/181/181/181/196/196/196/196. Original recursive declaration and cursor restored.
 // @retail 0x278f00
 void function_278f00()
 {
