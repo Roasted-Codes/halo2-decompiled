@@ -347,7 +347,7 @@ struct s_path_result_view;
 struct s_29e730;
 struct s_29de21;
 struct s_29e0f9;
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *value);
 long function_1e4a50(long character_index);
 void __stdcall function_26c2d0(long prop_index);
 bool function_1f9490(long actor_index, s_reference reference, s_actor_move_request *request);

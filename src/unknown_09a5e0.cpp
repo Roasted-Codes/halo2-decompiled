@@ -2069,6 +2069,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 }
 
 // score 168 (was 168): object/offset homes and low-mask allocation remain;
+// Round 9 (lane 10): retail holds the 0x400 block's short in EAX (stores 0x90 before the result update);
+// its value as a ternary 201; its declaration after the field reads 168; set in if/else 201; both slot
+// masks at the loop head 285 (1041 bytes); first slot mask long 168.
 // frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // object/offset homes and low-mask allocation remain;
@@ -2168,6 +2171,11 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // object read in the entry's offset form 168. Retail loads the record field into a register before each
 // tail compare and re-reads the object field for its store; it reloads the object once after the loop
 // (ours reloads it into EBP at the bottom of each iteration).
+// Round 29: the 0x2000 block is 8 of the 11 missing bytes: retail loads the record's
+// field and the unit's +0x214 into registers, compares them, and leaves a dead
+// `add ebp, 0x214`. memcmp for that test gives retail's loads and compare but no add
+// 193; with memcpy for the copy 193; with a named source pointer used for both 193;
+// with a four-byte struct copy 193; the unit pointer through OBJECT() 168 (identical).
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

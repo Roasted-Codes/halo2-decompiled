@@ -152,10 +152,9 @@ void function_2b98b0(s_particle_2b96 const *particle, s_particle_2b96 const *oth
 
 PRIVATE __forceinline real particle_distance_estimate_2b(real squared)
 {
-    union { real value; long bits; } estimate;
-    estimate.value = squared;
-    estimate.bits = (estimate.bits >> 1) + 0x1fc00000;
-    return estimate.value;
+    real estimate;
+    *(long *)&estimate = (*(long *)&squared >> 1) + 0x1fc00000;
+    return estimate;
 }
 
 // @retail 0x2b9750
@@ -338,7 +337,18 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
     }
 }
 
-// score 249 (was 249): Frame 0xb8 versus 0xb4; cache/steering/estimate/inverse homes and staged stores remain.
+// score 196 (was 249): frame 0xb4 and length agree; retail scales the attraction direction's j and k in
+// place where ours computes them into temporaries (three instructions), and its second velocity normalize
+// multiplies j and k from memory with deferred stores; loop-top reload order of the definition/first.
+// Round 9 (lane 11): steering record replaced by plain locals 291 (frame 0xac); the distance estimate with
+// separate input and result variables (as flexible_surface.cpp) 254 (frame 0xb4); the 0x2b9750 call with
+// retail's argument registers 252; change zeroed i first 250; attraction delta and length through the
+// existing point-difference and direction-length helpers 213 (1516 bytes); its normalize through the
+// existing direction helper 196. On 196: compound multiplies in the scale helper 196; scaled delta added
+// straight into the change 213; direction helper in the change clamp 213 (1525 bytes); estimate before
+// and amount after the normalize 185 (lockstep only: retail divides before the branch; not kept);
+// names of the steering locals do not move their slots (spill slots).
+// Earlier: frame 0xb8 versus 0xb4; cache/steering/estimate/inverse homes and staged stores remained.
 // Round 138: the extra frame dword is the attraction delta: as a member of the escaped
 // steering record its scaled values are stored back and never read (retail keeps them in
 // registers), and ours shares two float homes retail keeps apart. Delta as its own local
@@ -407,18 +417,14 @@ void function_2b9b10(s_particle_properties_2ba const *definition, void const *or
         cache.valid |= requested;
         next = particle->next;
         s_particle_2b96 *nearest = function_2b9670(particle, first);
-        struct { real minimum_speed, maximum_speed, maximum_change; vector3f change, delta, previous; } steering;
-        real &minimum_speed = steering.minimum_speed;
-        minimum_speed = function_246cd0(&properties[6].property, cache.values);
-        real &maximum_speed = steering.maximum_speed;
-        maximum_speed = function_246cd0(&properties[7].property, cache.values);
-        real &maximum_change = steering.maximum_change;
-        maximum_change = function_246cd0(&properties[8].property, cache.values);
-        vector3f &change = steering.change;
-        change.i = change.j = change.k = 0.0f;
+        real minimum_speed = function_246cd0(&properties[6].property, cache.values);
+        real maximum_speed = function_246cd0(&properties[7].property, cache.values);
+        real maximum_change = function_246cd0(&properties[8].property, cache.values);
+        vector3f change;
+        change.k = change.j = change.i = 0.0f;
         if (nearest)
         {
-            function_2b9750(nearest, particle,
+            function_2b9750(particle, nearest,
                 function_246cd0(&properties[0].property, cache.values),
                 function_246cd0(&properties[1].property, cache.values), &change);
             function_2b98b0(particle, nearest,
@@ -429,17 +435,11 @@ void function_2b9b10(s_particle_properties_2ba const *definition, void const *or
         if (attraction_radius > 0.0f)
         {
             point3f const *center = (point3f const *)((byte const *)origin + 0x10);
-            vector3f &delta = steering.delta;
-            delta.i = center->x - particle->position.x;
-            delta.j = center->y - particle->position.y;
-            delta.k = center->z - particle->position.z;
-            real squared = delta.k * delta.k + delta.j * delta.j + delta.i * delta.i;
+            vector3f delta;
+            vector3d_from_points3d(&particle->position, center, &delta);
+            real squared = particle_direction_squared_2b(&delta);
             real amount = particle_distance_estimate_2b(squared) / attraction_radius * attraction_scale;
-            if (squared != 0.0f)
-            {
-                real inverse = inverse_sqrt_2b96(squared);
-                scale_particle_vector_2b(inverse, &delta);
-            }
+            normalize_particle_direction_2b(&delta);
             delta.i *= amount;
             delta.j *= amount;
             delta.k *= amount;
@@ -463,16 +463,15 @@ void function_2b9b10(s_particle_properties_2ba const *definition, void const *or
             change.j *= maximum_change;
             change.k *= maximum_change;
         }
-        vector3f &local_c01284 = steering.previous;
-        local_c01284 = particle->velocity;
-        scale_particle_vector_2b(0.75f, &local_c01284);
+        vector3f previous = particle->velocity;
+        scale_particle_vector_2b(0.75f, &previous);
         particle->velocity.i += change.i;
         particle->velocity.j += change.j;
         particle->velocity.k += change.k;
         scale_particle_vector_2b(0.25f, &particle->velocity);
-        particle->velocity.i += local_c01284.i;
-        particle->velocity.j += local_c01284.j;
-        particle->velocity.k += local_c01284.k;
+        particle->velocity.i += previous.i;
+        particle->velocity.j += previous.j;
+        particle->velocity.k += previous.k;
         squared = particle->velocity.k * particle->velocity.k + particle->velocity.j * particle->velocity.j + particle->velocity.i * particle->velocity.i;
         if (squared > maximum_speed * maximum_speed)
         {

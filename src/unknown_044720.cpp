@@ -209,6 +209,11 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 }
 // score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain;
 // retail also keeps a separate center point (+0x30) beside the sphere query (+0x20).
+// Round 81 (fast): a `visible_word` pointer for the test and both marks 190 (same code); one marking
+// site after the bound branch with `if (!(r * r >= d)) continue;` 210 (the marks become retail's single
+// tail block, word pointer reloaded), with `<` 210; on that a function-scope center copy and the query
+// local to the list branch 211, unaligned 209 (entry then in esi spilled at +0x44 as retail); plus a
+// long index local for the table and call 216/209.
 // frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
 // Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
@@ -292,6 +297,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // used for table and call 191 (index esi/entry edi, retail the other way); indexed entry at each use 271;
 // function-scope center copy with the query local to the list branch 199 (frame 0x10a4), unaligned 192;
 // one marking site with a `continue` 210 (comparison flips). All restored.
+// Round 30 (m3 lane 12): query declared after entry/geometry 190 (identical); geometry helper taking the
+// index (as the sibling file's) 228, 0x44c90 140; geometry helper with one result exit 188 but 0x44c90 107->132;
+// bound position read at each use 198; transform at function scope 190.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

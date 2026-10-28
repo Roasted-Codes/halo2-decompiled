@@ -143,6 +143,13 @@ union s_185be7
 
 #pragma inline_depth(1)
 // score 790 (was 790): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Round 9 (lane 10): retail clamps the range fraction in place (division result and clamp share its slot)
+// and threads every repeated flag test (one test, both stores per arm), testing the selected input as a
+// dword. Fraction computed then clamped into itself 790 (same code); fraction declared before its bounds
+// 793; descriptive fraction/minimum/range names 790 (slots unchanged); selected input as long 790 (dword
+// test, still unthreaded); flag helper as a conditional expression 789. Retail reloads the control
+// global after the magnitude call (0x24590, another lane's file) as if that call could write memory.
 // Retail re-reads the player-control global before its flag test, after the conditional magnitude/pow
 // calls, and keeps NONE in EBX; ours keeps the global in EBX from entry (LTCG trusts those callees here;
 // retail's address is never taken). Round 73: settings pointer after the clears 959; state entry after the

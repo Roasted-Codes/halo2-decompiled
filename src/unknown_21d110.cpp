@@ -310,6 +310,11 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 #define sound_effect_delete function_21dcf1
 // score 204 (was 204): BLOCKED-BY 0x189fe0. Frame eight versus four, the state/tag registers and the
 // opposite start/delete expansion remain (ours takes the tag in EAX and the state on the stack).
+// Round 102: the Round 72 form again 52 (429 B), 0x189fe0 110 -> 135 and its eight callers lost
+// (0x189fe0 then expands the first class lookup and keeps the request in EDX; retail calls both
+// lookups); with the parameters declared tag first, consistently at the caller and header, the same;
+// the private starter forceinline 256 (542 B, callers lost); the priority stored through the effect
+// pointer 220; the allocation as one conditional expression 233.
 // Round 72: both starts as calls to the existing
 // 0x125f70 (reason NULL), which LTCG inlines as retail, plus the out-of-line delete (this file's
 // delete macro moved below this function) give 52 plain (429/427): retail's frame and its

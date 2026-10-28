@@ -551,6 +551,11 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 }
 
 // score 280 (was 280): Frame 0x8c versus 0x80; datum/tag and protected root-location convention remain. BLOCKED-BY 0xba300.
+// Frame 0x8c versus 0x80; datum/tag and protected root-location convention remain.
+// Round 9 (lane 10): retail's case-3 failure byte is a dead store into the slot the audibility output
+// reuses. Forward vector at function scope 280; cluster flag as a word mask 280; case-0 fields read
+// without the type test 307; one function-scope status byte for failure and audibility 280 (no store);
+// case-2 spatial field passed directly 280. BLOCKED-BY 0xba300 (contributor) still.
 // Earlier baseline: Frame 0x84 versus 0x80; datum/tag allocation and protected root-location convention remain.
 // marker outer scope 309; direct failure predicate 293 kept (plain); stored-scale arm first 314; ascending cases 311; failure exit 314.
 // Long failure result 293; marker consumption scope 293; shared scale object index 339;

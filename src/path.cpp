@@ -231,7 +231,11 @@ void function_2705c0(s_path_source *source, point3f const *point,
 	input->unknown44 = unknown;
 }
 
-// score 28 (was 28): BLOCKED-BY 0x26c590. Retail keeps result false in al from
+// score 28 (was 28): retail takes the location in edx and the node in ebx and has one exit (`xor al, al` at entry, `mov al, 1`); the one-exit
+// form (`result = true; break;`) matches, but unmatched 0x26c590 then takes its origin in ecx and its eight matched callers stop matching
+// (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
+// function scope 420, the edge iterator at function scope 420; none keeps its convention.
+// BLOCKED-BY 0x26c590. Retail keeps result false in al from
 // entry, so the location comes in edx and the node index in ebx. `bool result =
 // false;` with `result = true; break;` in the loop and one `return result;` matches,
 // but 0x26c590 (unmatched) then changes its own conventions and its eight matched
@@ -252,6 +256,10 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 	return false;
 }
 
+// score 31 (was 31): at the call to 0x26c4e0 retail computes the end point (`lea ecx, [eax+0x18]`) right after pushing the parent's node
+// index and loads the next two arguments through eax; ours loads them through ecx and computes the end point last, and from there on our
+// eax/ecx/edx choices are one step off retail's. Tried: a named parent point for the compare and the call 65; the two break tests as one
+// `||` condition 31; trace at function scope 31; no parent local 85; the output arms swapped 34; the permuter (86 tries) found nothing below 31.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
@@ -684,7 +692,6 @@ PRIVATE bool function_2713f0(s_type_f17a25 *state)
 	return true;
 }
 
-// score 22 (was 26): the location counter: retail tests it in memory (`cmp word [esi+0x70], 0`) and steps it in memory (`inc word`, `cmp word ..., 0x20`), ours loads it into ax once and reuses it; tried: the increment as its own statement 26, `+= 1` 22, the whole update as an inline helper on the location 26 and 22, a named location pointer 22, the zero test inverted 25, the wrap test after the if/else 29. Only the else arm's step through a force-inline helper taking the location (`if (++location->unknown00 > 32) location->unknown00 = 0;`) matches, a one-caller helper.
 // @retail 0x2715a0
 bool function_2715a0(byte *buffer)
 {
@@ -708,9 +715,13 @@ bool function_2715a0(byte *buffer)
 		{
 			state->location.unknown00 = 32;
 		}
-		else if (++state->location.unknown00 > 32)
+		else
 		{
-			state->location.unknown00 = 0;
+			s_path_location *location = &state->location;
+			if (++location->unknown00 > 32)
+			{
+				location->unknown00 = 0;
+			}
 		}
 	}
 	return result;
