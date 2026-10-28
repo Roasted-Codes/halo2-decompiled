@@ -2989,6 +2989,9 @@ struct s_voice_route_choice
 // Shared priority call with a nearest-path return, original/choice receiver/three pairs/
 // native descriptor 402/401/419/424; shared priority with a combined routing decision,
 // corresponding forms 402/401/419/424. All original routing and engine calls restored.
+// Round 379: coordinated formal orders 1023/1203/1230/0213/0132/0312/2013/3012
+// 363/363/363/363/364/364/363/364; first three preserve both callers, the other five lose them.
+// Original definition and every call restored; entry saves and cursor bias remain.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

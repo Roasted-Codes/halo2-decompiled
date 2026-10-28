@@ -153,6 +153,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Round 211: Complete history value alone/with shared current add/history scale/both
 // 401/402/411/411; those four with a shared current coefficient 401/401/411/406. All original
 // helpers, fields and arithmetic restored; frame/input and magnitude homes remain.
+// Round 379: actor at later formal positions 1..8, preserving every other input order,
+// 383/381/381/381/381/381/381/381. Positions 2..8 recover actor EAX but leave vector ECX,
+// frame 0x5c and ret 0x1c; two-point gains rejected. Definition and disabled caller restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

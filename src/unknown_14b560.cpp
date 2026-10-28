@@ -2701,7 +2701,7 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
-// score 17 (was 21): frame 0xc8 and retail length agree; tick/rate scheduling, the damage-tag
+// score 17 (was 17): frame 0xc8 and retail length agree; tick/rate scheduling, the damage-tag
 // pointer load and scratch registers in the later mode, slot and root blocks remain.
 // Earlier isolated damage-byte store order 19 was below the keep threshold.
 // Round 32: the trigger test through 0x11c5b0 148; the damage-type pointer read in the call 130;
@@ -2755,6 +2755,8 @@ struct s_unit_flags_14d8b0
 // Low-time/reset/both inline declarations 21/229/229; signed-word counter 23; unsigned datum 21;
 // unsigned handles 21; low-time inline with first native flag 19; native controls with that flag 21;
 // combined first native flag and damage-byte store order 17 (plain whole-program confirmed).
+// Round 379: function-scope event/damage/both 17/23/23; early tag input alone/with event/damage/both
+// 150/150/151/151; tag value after scratch store 17. Original executable body restored.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {
