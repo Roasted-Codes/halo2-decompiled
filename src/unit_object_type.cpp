@@ -643,6 +643,11 @@ struct s_sound_label_play
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play);
 
 /* sends the unit request 8 between two updates of the unit */
+// score 24 (was 24): frame 0x20 agrees; the first update receives the unit in
+// EBX instead of retail EDI, so the caller retains it in EBX rather than ESI.
+// Existing request helper 77; producer workspace/request scope 24/24;
+// zero/final-type aggregate initialization 29/29; early clear 27;
+// inline update with helper/original workspace 77/24. All restored.
 // @retail 0xc4820
 void __stdcall function_c4820(long unit_index)
 {
@@ -788,6 +793,11 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 }
 
 /* clears the unit's flag 2 at +0x10a and its state that depends on it */
+// score 23 (was 23): indexed state clear still expands to load/modify/store;
+// the final call receives the unit in EAX rather than retail ESI and becomes a tail jump.
+// Existing indexed/both byte helpers 22/22; state pointer 22; subscript 23;
+// explicit state assignment 23; native state flags via pointer/at use 22/23;
+// native flags with masked lookup 22. Original body restored.
 // @retail 0xcaf00
 void function_caf00(long unit_index)
 {
@@ -930,8 +940,12 @@ long function_ccb80(long unit_index)
 }
 
 /* adds to the unit's count of a grenade type and makes it current */
+// score 2 (was 27): the short delta recovers the stack load, EBX save and cleanup;
+// only the base/index operand order in the count update and address still differs.
+// Short/long/word delta 2/2/2; byte delta 27; offset-first addresses 2/2/2/27.
+// Native element address 2; base advance/shared unit/existing masked lookup 4/4/4.
 // @retail 0xcccd0
-short function_cccd0(long unit_index, short grenade_type, char delta)
+short function_cccd0(long unit_index, short grenade_type, short delta)
 {
 	char *count = UNIT_GET(unit_index)->grenade_counts + grenade_type;
 
@@ -2243,6 +2257,10 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 
 /* once: sets the unit's flag 21 and a random angle at +0x2d8 around its
    actor's direction (or its own facing) */
+// score 20 (was 20): Frame 0xc versus 0x10; flag-word preservation, angle/random scratch homes and final x87
+// adds differ. Native vector, 12-byte scratch and real[3] 23; bool flag 60; native/bool 60; outer workspace
+// 23; field angle 57; random-first native/bool 60; outer angle 23; real flag view 60; native view 60; scoped
+// vector/view/random-first 60; scoped vector 23; scoped view 60; native/scoped bitfield setter 60.
 // @retail 0xcfec0
 void function_cfec0(long unit_index)
 {
@@ -2380,7 +2398,7 @@ void function_d0c10(long unit_index)
 			request.type = 0x1c;
 			request.type1c.object_index = unit->unknown2a0;
 			request.type1c.seat_index = unit->unknown2a4;
-			request.type1c.unknowna = unit_action_active(unit_index, 0x1f);
+			request.type1c.unknowna = unit_action_active(unit_index, 0x1f) != false;
 			request.type1c.unknownb = true;
 			function_e6900(unit_index, &request);
 		}
@@ -2527,6 +2545,10 @@ struct s_unit_placement
 /* places the unit from the scenario: its +0xec and flags, and, when the
    placement says so, starts it dead (animation, damage, no weapons or
    grenades) */
+// score 22 (was 22): Frameless entry and animation lookup agree; 0xc98a0 takes the unit in EDX versus a
+// retail push, 0xcaa60 in EAX versus a push. Animation owner 22; initial scale local 65; scale/owner 65;
+// chained zero stores 22; dead-placement guard 22; const animation 22; owner/const animation 22;
+// owner/scale/chained stores 65.
 // @retail 0xc42e0
 void __stdcall function_c42e0(long unit_index, void const *placement)
 {
@@ -4063,13 +4085,16 @@ store:
    speed in a cone around the unit's aim on top of the unit's velocity
    (capped at 4 unless the unit's +0xc0 bit 1 is set), and deletes it in
    state 1 when it has nowhere to go and is not a predicted copy (0xa7670) */
-// score 4 (was 13): the cone call's argument setup is scheduled differently: retail stores the
+// score 4 (was 4): the cone call's argument setup is scheduled differently: retail stores the
 // cone angle and then sets up the three register arguments in order, ours sets up the forward
 // pointer first and the result pointer last.
 // existing length/dot helpers, direction lifetime/name and named angle 13;
 // existing random-real helper 111; scale/add component loops 80/13; seed global at each
 // use, compound adds, direction-first adds, speed-first scaling 13 each; speed scaled
 // before the cone call 120; every squared-length operand order compiles the same.
+// cone result pointer local, separate thrown-speed local, two-use scale snapshot, seed renamed,
+// velocity at function scope and forward pointer local 4 each; existing scale helper 80;
+// inline-product scale helper 93; direction pointer used throughout 48.
 // @retail 0xce6b0
 void function_ce6b0(long unit_index, long name, long object_index, real scale)
 {

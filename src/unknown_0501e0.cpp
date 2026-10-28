@@ -126,9 +126,16 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // 0x14 and 1136 bytes but regresses to 241; original helper and body restored.
 // Round 196: Descending transform rows with long/int/short/signed-byte ordinals: direct output
 // 275/275/407/407; descending output cursor 275/275/394/394. Original helper/body restored.
+// Round 259: Independent raw/scaled component families, explicit arms ijk/kji
+// 305/305, with shared scale 302/302; default-first ijk/kji 221/221, with
+// shared scale 252/252. Original helper/body restored; explicit arms grow frame to 0x20.
 // Round 358: Input-copy/scale orders ikj, jik, jki, kij 220/221/257/220; with live forward
 // coefficients 253/241/253/253. One-count gain rejected; exact-length 241 still regresses. Original
 // helper/body restored.
+// Round 23 on the forward-cursor body: shared scale 242; reference scale parameter 243;
+// scale-field pointer 264; descending first displacement 241; scale pointer and descending
+// first 262; explicit second/first-kij displacement components 270/280; scale-last helper 241.
+// Original helper and body restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

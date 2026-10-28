@@ -2736,6 +2736,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // declared at block top as 0x1d1c10 7f; preincrement 7f; count local 160f; const component 7f;
 // direct data[i] reads at the first site/all sites 7f/10f; a body pointer after the state update 7f.
 // Retail's call graph from here holds 25 functions and no cycle.
+// Round 195: Native final vector outputs linear/angular/both [241, 244, 314]; paired result before
+// receiver 314; native component-set output linear/angular/both [241, 230, 205]; paired early component
+// result 205. Original private getters restored; staged saves and fixed/zero homes remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2822,42 +2825,31 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
     havok_from_vector3d(&position, (vector3f const *)&matrix->position);
     frame->m_translation = position;
 }
-// score 206 (was 206): Frame 0xb4 and extent agree; body base/stride and protected relative-call input registers remain.
-// BLOCKED-BY 0x1d83e0 (contributor code): retail passes the component to it in EAX and loads the
-// component into EAX at entry; ours passes it in ECX, and the EAX/ECX roles swap from the first body.
-// Earlier baseline: Frame 0xb4 and exact extent agree; stride/base and protected relative-call input registers remain.
-// Earlier: Frame 0xb4 agrees; stride/base and relative-call input registers remain.
-// Earlier: body/stride registers and relative-call input differ;
-// body getters 206; first count after lookup 205 (below gate), both 275;
-// node streams 336; streams with getters 336 (plain scores). Original kept.
-// body stride/base registers and transform call differ;
-// count names 206; search names 206; transformed name 206; entry phase
-// transforms 301; equal-node arm first 248.
-// second selector word 226; promoted first nodes 290; entry matrix 206;
-// entry relative transform 206; fallback first 206 (plain scores).
-// Round 303: first mapped byte 299; second mapped byte 213; first node at use 338;
-// second node at use 226; loop-scoped child counters 206 (plain scores). Original kept.
-// Earlier: Frame 0xb4 agrees; body/stride and relative-call registers remain. Late first link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup 224 (plain).
-// Earlier: Frame 0xb4 agrees; body/stride and relative-call registers remain. Reused first body 206; word first mapped index 220; word second mapped index 212; array header pointer 336; per-phase model pointers 209 (plain).
-// Earlier: frame 0xb4 agrees; stride/base and relative-call registers remain.
-// Reduced search operand order first/second/both 346/346/346; frame-test operands
-// first/second/both 346/346/346; first mapped-index result 345; with search operands 345
-// (control 346; one-point reductions excluded).
-// Round 130: existing frame converter with matrix/output/both references 206/206/206; direct translation, with matrix/output/both
-// references and actual output return 367/367/367/367/367 (plain scores).
-// The original aligned translation temporary and all interfaces are restored.
-// Round 132: output-first converter, with matrix reference, output pointer return, and
-// output-first return 206/206/206/206; split rotation/translation, output-first split,
-// split return and output-first split return 206/206/206/206 (resolved previews).
-// Round 345: Shared sequential body index/count/first-link workspaces 299/208/302;
-// index+count/index+link/count+link/all/all with child ordinal 217/213/302/300/300.
-// Original per-side lifetimes, frame 0xb4 and contributor interface restored.
-// Round 153: Consistent requested-node snapshots first/second/both 367/254/400; count fields at
-// every use first/second/both 316/337/358; corresponding snapshot/bound pairs and all 369/369/419.
-// All restored.
-// Round 8: index through if/else 313; a body-link table local 209; the child search as a while with
-// the compound test 206 (same code); the second index assigned in plain statements (no embedded
-// assignment, same code, kept) 206; the child counter declared first 208 (plain scores).
+// score 206 (was 206): Frame 0xb4 and extent agree; body base/stride and protected relative-call
+// input registers remain. BLOCKED-BY 0x1d83e0 (contributor code): retail passes the component to it
+// in EAX and loads the component into EAX at entry; ours passes it in ECX, and the EAX/ECX roles
+// swap from the first body (+0x3d, still the first difference in round 68; the reduced build of the
+// fast check gives another convention, 346, so only the plain check scores this function).
+// Tried: body getters 206; first count after lookup 205 (below gate), both 275; node streams 336;
+// streams with getters 336; count names 206; search names 206; transformed name 206; entry phase
+// transforms 301; equal-node arm first 248; second selector word 226; promoted first nodes 290; entry
+// matrix 206; entry relative transform 206; fallback first 206; first mapped byte 299; second mapped
+// byte 213; first node at use 338; second node at use 226; loop-scoped child counters 206; late first
+// link 370; late second 309; array accessor 206; mapped-index names 206; second count after lookup
+// 224; reused first body 206; word first mapped index 220; word second mapped index 212; array header
+// pointer 336; per-phase model pointers 209; reduced search operand order first/second/both
+// 346/346/346; frame-test operands first/second/both 346/346/346; first mapped-index result 345, with
+// search operands 345 (control 346; one-point reductions excluded); existing frame converter with
+// matrix/output/both references 206/206/206; direct translation, with matrix/output/both references
+// and actual output return 367/367/367/367/367; output-first converter, with matrix reference,
+// output pointer return, and output-first return 206/206/206/206; split rotation/translation,
+// output-first split, split return and output-first split return 206/206/206/206; shared sequential
+// body index/count/first-link workspaces 299/208/302; index+count/index+link/count+link/all/all with
+// child ordinal 217/213/302/300/300; consistent requested-node snapshots first/second/both
+// 367/254/400; count fields at every use first/second/both 316/337/358; corresponding
+// snapshot/bound pairs and all 369/369/419; index through if/else 313; a body-link table local 209;
+// the child search as a while with the compound test 206 (same code); the second index assigned in
+// plain statements (no embedded assignment, same code, kept) 206; the child counter declared first 208.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

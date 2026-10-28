@@ -324,7 +324,7 @@ PRIVATE __forceinline void function_1b9201(long arg_0, vector3f *arg_1)
 
 // score 11 (was 11): the seat loop keeps the seat count in EBP and the index
 // in ESI here, retail keeps the count in ESI and the index in EBP, so the loop
-// preamble is laid out differently.
+// preamble is laid out differently. The rest of the function matches.
 // @retail 0x1b9200
 bool function_1b9200(long object_index, long prop_index)
 {
@@ -374,9 +374,6 @@ bool function_1b9200(long object_index, long prop_index)
 	return result;
 }
 
-// score 32 (was 32): retail passes the child iterator in EBX, the register
-// argument of function_d0620 under LTCG, ours passes it on the stack; the
-// declaration in include/unknown_0d0690.h is not mine to change.
 // @retail 0x1b9420
 bool function_1b9420(long actor_index)
 {
@@ -389,13 +386,15 @@ bool function_1b9420(long actor_index)
 	s_object_child_iterator iterator;
 
 	function_d0620(actor->unknown26c, &iterator);
-	if (!function_d0690(&iterator))
-		return result;
-	do
+	if (function_d0690(&iterator))
 	{
-		if (object_get(iterator.child_value)->player_index != NONE)
-			return true;
-	} while (function_d0690(&iterator));
+		do
+		{
+			if (object_get(iterator.child_index)->player_index != NONE)
+				return true;
+		} while (function_d0690(&iterator));
+		return result;
+	}
 	return result;
 }
 
@@ -902,7 +901,8 @@ short __stdcall function_1b9890(long actor_index, s_slot *slot)
    object has more than one seat to take */
 // score 17 (was 17): retail loads the element pool data into EDX before the
 // actor is fetched and keeps the element record in ECX, ours loads the data
-// later into ESI and the record in EAX.
+// later into ESI and the record in EAX. Both read the actor pool global
+// first, so the difference is the order of the two data loads.
 // @retail 0x1bb3a0
 short __stdcall function_1bb3a0(long actor_index, long joint_index, long a, long b)
 {
