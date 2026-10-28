@@ -20,11 +20,11 @@ struct s_unit_eye_object
 	byte unknownab[0xb4 - 0xab];
 	long attachment_index;
 	byte unknownb8[0x10a - 0xb8];
-	byte flags10a_0 : 1;
-	byte flags10a_1 : 1;
-	byte flags10a_2 : 1;
-	byte : 5;
-	byte unknown10b[0x168 - 0x10b];
+	word flags10a_0 : 1;
+	word flags10a_1 : 1;
+	word flags10a_2 : 1;
+	word : 13;
+	byte unknown10c[0x168 - 0x10c];
 	vector3f forward;
 	byte unknown174[0x1fc - 0x174];
 	short seat_index;
@@ -160,11 +160,63 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
+// score 55 (was 55): frame 0xa4 and entry agree; height loads, dot input carriers and marker/parent tails differ.
+// frame 0xa4 and entry allocation agree; height-load order, dot-input carriers,
+// selected-seat/marker tails and parent-table scheduling differ. Earlier allocation/collision forms follow.
+// Frame 0xa4 agrees; object-data/tag-table allocation
+// and collision-point scheduling differ.
+// frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
+// Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
+// 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
+// initialization alone/with all three narrowed lifetimes 309/310. Original body restored.
+// frame 0xa4 and the marker branch agree; retail keeps the object data base in EBP
+// (ours the tag table), and the collision point's last component reuses the fraction register, which
+// shifts the tail by one instruction. Retail reloads the tag table after the 0xb9ef0 call (parent
+// branch); ours treats that call as unable to change it and keeps it in EBP from entry.
+// Round 10 (lane 10): outer definition declared first 199 (same code); outer definition through
+// unit->definition_index 281; hit point through a point-plus-scaled-vector inline 199 (same);
+// default marker call first 199 (same).
+// Round 8 (lane 10): up vector and point in their own block scopes (frame 0xa4) 292; with the heights
+// definition read through the unit index 273; marker name as an if/else 310; two marker calls 281;
+// default call first 281; one definition for both branches 336; outer definition read through the unit
+// index 266; with two marker calls 199 (kept); point written position-first/fraction-first 199/199;
+// point as a component loop 200; comparison written collision-first 200 (retail's dot order exactly,
+// shifted by the point block; apply once that is fixed); crouch blend operand orders 200/200;
+// collision initialiser before the forward copy or the origin 198/198.
+// Earlier: frame 0xb0 vs 0xa4 and vertical-basis/point homes still differ.
+// vertical role name 309; native word flags 290; both 290; shared displacement 309;
+// displacement/word/name 290; separate backward query vector 309; complete vector
+// graph/word 290; native copies on that graph 290; local-up name 309; word/local-up 290.
+// Retain the actual flag-word declaration with unchanged following field offsets.
+// Round 57: object header table local for entry and seat lookups 192 (frame and EBP base agree;
+// under the keep bar, restored); height accumulator 192; reversed point products 192; point setter 192;
+// collision-first comparison 193; separate backward vector 192; collision scoped to displacement 296;
+// outer definition through the unit 281; fraction at point scope 192; difference vectors swapped 192.
+// Round 195: Common collision result, query/final/both point-set calls [211, 211, 211, 211]; original
+// output with query/final/both point-set calls [199, 199, 199]; common result, both setters and
+// collision-first comparison 211. Original queries and output graph restored; tag-table retention and
+// fraction component reuse remain.
+// Complete coordinate products scalar/vector/scaled-point/original-point 199/206/206/237;
+// the same four point producers with collision-first comparison 200/206/206/238.
+// Round 225: object-table/sentinel-before-forward or origin 190/190; native backward assignment 78;
+// with either sentinel move 76/76; sentinel and collision-first 191/191; all three 59.
+// Paired height terms 55 (plain, kept); collision production first 61; native marker copies 125;
+// twice-used seated object 146; first three boundaries 116; all four 154. Retain object-table,
+// existing backward-vector assignment, sentinel before forward, collision-first and paired height terms.
+// Round 373: Offset-first contact/origin/both dot inputs 55/55/55;
+// each with paired contact/origin role names 55/55/55; symmetric dots with
+// a common exit, without/with paired names 55/55. Original graph restored.
+// Paired raw height inputs 55; resolved marker seat short/long 55/100; conditional short/long 55/100;
+// marker handle 55; handle with short/long/conditional-short seat 55/100/55. All restored.
+// Default-first crouch 59; named standing complement 55; both 59; complete paired
+// distance results 55; with crouch/complement/both 59/55/59; entry distance declarations
+// 55. Unmatched distance captures restored; original height and collision graph retained.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {
-	s_unit_eye_object *unit = EYE_OBJECT(unit_index);
-	s_unit_eye_definition *definition = EYE_DEFINITION(unit->definition_index);
+	s_unit_eye_object_header *objects = (s_unit_eye_object_header *)g_4e0300->data;
+	s_unit_eye_object *unit = objects[unit_index & 0xffff].object;
+	s_unit_eye_definition *definition = EYE_DEFINITION(objects[unit_index & 0xffff].object->definition_index);
 
 	if (unit->parent_index == NONE && !TEST_FIELD_BIT(unit->flags10a_2) && !unit->type)
 	{
@@ -172,27 +224,31 @@ void function_cafc0(long unit_index, point3f *position)
 		real crouch;
 		point3f origin;
 		vector3f forward;
-		vector3f up;
 		vector3f offset;
-		point3f point;
 		s_collision_result_1697c0 collision;
 
 		function_b9dd0(unit_index, position);
 		crouch = function_e0dc0(unit_index) ? 0.0f : unit->crouch;
-		position->z += ((1.0f - crouch) * local_98b918->standing_height + local_98b918->crouching_height * crouch) * unit->scale;
+		real standing_height = (1.0f - crouch) * local_98b918->standing_height;
+		real crouching_height = local_98b918->crouching_height * crouch;
+		position->z += (standing_height + crouching_height) * unit->scale;
 		origin = *position;
-		forward = unit->forward;
 		collision.unknown24 = NONE;
-		function_11d090(&forward, &up);
-		function_df380(unit_index, &origin, &forward, &up);
+		forward = unit->forward;
+		{
+			vector3f up;
+
+			function_11d090(&forward, &up);
+			function_df380(unit_index, &origin, &forward, &up);
+		}
 		offset.i = origin.x - position->x;
 		offset.j = origin.y - position->y;
 		offset.k = origin.z - position->z;
 		if (function_30bf0(&offset) > g_45dbd8)
 		{
-			forward.i = offset.i * -0.25f;
-			forward.j = offset.j * -0.25f;
-			forward.k = offset.k * -0.25f;
+			point3f point;
+
+			vector3f_assign(&forward, offset.i * -0.25f, offset.j * -0.25f, offset.k * -0.25f);
 			if (function_1697c0(0x4808c2d, position, &forward, NONE, NONE, &collision))
 			{
 				real t = *(real *)&collision.unknown00[4] * 0.9f;
@@ -212,7 +268,7 @@ void function_cafc0(long unit_index, point3f *position)
 
 				vector3d_from_points3d(&point, &origin, &to_origin);
 				vector3d_from_points3d(&point, &collision.point, &to_collision);
-				if (dot3f(&to_origin, &offset) + 0.05f > dot3f(&to_collision, &offset))
+				if (dot3f(&to_collision, &offset) < dot3f(&to_origin, &offset) + 0.05f)
 				{
 					position->x = collision.point.x - offset.i * 0.05f;
 					position->y = collision.point.y - offset.j * 0.05f;
@@ -225,19 +281,17 @@ void function_cafc0(long unit_index, point3f *position)
 	}
 	else if (unit->parent_index == NONE)
 	{
-		long marker_name = 0x4000095;
 		s_object_marker marker;
 
-		if (unit->unknown24c != NONE)
+		if (unit->unknown24c != NONE && objects[unit->unknown24c & 0xffff].object->seat_index != NONE)
 		{
-			s_unit_eye_object *object = EYE_OBJECT(unit->unknown24c);
-
-			if (object->seat_index != NONE)
-			{
-				marker_name = definition->seats[object->seat_index].marker_name;
-			}
+			function_b8d30(unit_index, definition->seats[objects[unit->unknown24c & 0xffff].object->seat_index].marker_name,
+				&marker, 1, false);
 		}
-		function_b8d30(unit_index, marker_name, &marker, 1, false);
+		else
+		{
+			function_b8d30(unit_index, 0x4000095, &marker, 1, false);
+		}
 		*position = marker.matrix.position;
 	}
 	else

@@ -1291,7 +1291,9 @@ void function_26c240(long arg_1, s_location_target_view *arg_0);
 long function_baf80(long arg_0);
 bool function_1e1de0(long arg_0);
 
-// score 165 (was 165): Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
+// matches retail: the flag local_10 is a bool (retail stores it raw), and the actor-index test is an
+// explicit if/else whose branch order matches retail's layout.
+// Earlier: Frame 0x84 agrees; early ESI save, return byte and actor/motion homes remain.
 // Round 75: retail's shape is `bool updated = true;` first, `if (unknown00 == time) updated = false;
 // else { body }`, the activity result a bool, and one actor-index test at the end (NONE arm false,
 // false, !flag; actor arm the three calls). That gives retail's entry, early epilogue, slot order and
@@ -1301,10 +1303,10 @@ bool function_1e1de0(long arg_0);
 // index before owner/both before the lookup 220/221; test local, assign through owner 220; owner
 // first then index through it 220; separate guarded owner/index statement 220; permuter best 197
 // (type casts only). All restored.
-// Earlier 165 (was 165): early ESI save, computed return byte and actor/motion homes remain.
+// Earlier: early ESI save, computed return byte and actor/motion homes remain.
 // frame 0x84 agrees; early ESI save/computed return byte
 // frame 0x84 agrees; early ESI save, computed return byte and actor/motion homes differ.
-// Earlier 165 (was 175): frame 0x84 agrees; early ESI save/computed return byte
+// Earlier: frame 0x84 agrees; early ESI save/computed return byte
 // and actor/motion homes differ; scratch at entry 175; pointer/index names 175;
 // byte update result 232; byte readiness 182; byte behavior result 182.
 // early ESI save, update-result byte and motion-copy registers differ;
@@ -1315,7 +1317,7 @@ bool function_1e1de0(long arg_0);
 // default output values 165 kept; shared output guard 168; Boolean activity 257;
 // shared guard with Boolean activity 225.
 // early ESI save/return byte and motion-copy registers remain.
-// Earlier 175 (was 175): early ESI save/return byte and motion-copy registers remain.
+// Earlier: early ESI save/return byte and motion-copy registers remain.
 // Typed observed point, facing, anchor and location 175 each; combined fields 175;
 // combined with const motion 257, literal success 232, guarded single exit 249.
 // early ESI save, literal return byte and motion-copy registers differ.
@@ -1328,10 +1330,10 @@ bool function_1e1de0(long arg_0);
 // Object/actor homes 165/165; both homes/character/all scalar homes 165/165/165;
 // common guard with object/actor/both homes 168/168/168.
 // early ESI save, return byte and actor/motion homes remain.
-// Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Earlier: early ESI save, return byte and actor/motion homes remain.
 // Computed guarded result 250; failed literal/previous-time snapshot 165/165; conditional motion 191;
 // ordinary-parent-first/separate actor producers/cases 1,0,12 165/165/165; timestamp-first final stores 167.
-// Earlier 165 (was 165): early ESI save, return byte and actor/motion homes remain.
+// Earlier: early ESI save, return byte and actor/motion homes remain.
 // Native initial/parent/root/all header queries 165 each; explicit initial/parent type domains
 // 181/192; both type domains 208; both with native header queries 208.
 // early ESI save, return byte and motion homes remain; parent flag/identifier/both clears
@@ -1371,102 +1373,152 @@ bool function_1e1de0(long arg_0);
 // Round 179: target-admission/target-publication/activity inline declaration subsets
 // 165/165/165/165/165/165/165; all three inline/noinline 165. Original declarations restored.
 // Scratch lifetime, split actor declarations, default order and scratch name: eight combinations 165.
+// Round 211: native signed/unsigned dword timestamp result, positive/complementary status
+// and early/shared predicate exits: 269/237/269/243/269/237/269/243. Original Boolean result and body restored.
+// Round 225: signed-byte readiness/activity/behavior carriers 174/177/175;
+// readiness-activity/readiness-behavior/activity-behavior 184/182/184; all three
+// 191; all three plus signed-byte observed state 198. Original carriers restored.
+// Round 150: Separate native motion/marker storage with lexical-home, marker-arm and motion last-use scopes 174/174/165/165/174/174/165/165. Original union restored.
+// Frame 0x84, early ESI save, return byte and actor/motion homes remain.
+// Existing actor query with sample-first/receiver-first/direct/separate admission
+// 297/256/268/268; read-only character counterparts 297/256/268/268. All restored.
+// Round 76 on the round-75 shape (218, aligned 12): actor arm first 218 (aligned 21); owner after the index
+// test 220; actor-index local in the actor arm 218. Retail gives the index local its call register (ecx) at the
+// definition and spills it there; ours stores it straight from the load.
+// Round 81 on the round-75 shape (218): separate motion pointer local instead of the reassigned
+// parameter 93 (843 bytes); actor-index if/else with a repeated NONE arm 37 (847 bytes, redundant
+// store); local declared without initializer, NONE before the type test 218; per-path NONE in both
+// arms, either test sense 224/224 (fast). The first point copy keeps eax/ecx swapped in all. Restored.
+// Round 83 on the round-75 shape (218 fast): const index local 218; index read through the
+// actor-object pointer after it is set 220; actor index declared before the object pointer 220;
+// index local declared before the type test 218; index assigned without its NONE test 223. All restored.
+// Round 7 (lane 10): round-75 shape rebuilt 220; with `updated` declared before the time read 218
+// (entry exact; only the `mov ecx, eax` shift and the point-copy eax/ecx swap remain); on that,
+// index local as dword 218, actor index declared first 243; one end actor-index test alone on the
+// current body 248 (842 bytes). All restored.
+// On the single-exit body with shared actor outputs: observed-point setter 218; position setter 230.
+// both point setters 234; facing setter 218.
+// observed/facing setters 222; position/facing setters 234.
+// all three setters 256; four library transfers 218.
+// All executable forms restored.
+// Lane 9 r29 (fast) on the round-75 shape (218: only retail's `mov ecx, eax` before the
+// actor-index spill and the first point copy's eax/ecx swap differ): index read and tested through
+// the owner 220/220; index ternary with a NONE arm 43 (849 bytes, extra store); owner after the
+// test 220; separate motion pointer 93 (843 bytes); index temporary at function scope 218.
+// Round 12 (lane 10) on the round-75 shape (rebuilt 218 fast; tail and entry exact, only the
+// `mov ecx, eax` before the actor-index store and the first point copy's eax/ecx swap remain): the
+// index temporary declared in the enclosing block 218; unit pointer set in the type test and the
+// index taken in a separate statement guarded on it 220; actor index initialised before the object
+// lookup 221; the three result flags declared at the top of the block 218. All restored.
+// Round 86 (fast) on the round-75 shape (rebuilt 218, aligned 12: the actor index copied through ECX before its
+// store and the first point copy's EAX/ECX roles): separate motion pointer 93 (843 bytes, every copy reallocated);
+// first copy through a real point field (diagnostic) identical; no existing inline actor-index getter to use;
+// motion union declared first in the block 218; owner pointer assigned after the index test 220. All restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {
+	bool updated = true;
 	long local_1 = g_510c54->game_time;
-	bool updated = arg_0->unknown00 != local_1;
-	if (!updated)
-		return updated;
-	s_slot_object_view *local_2 = object_get(arg_1);
-	s_slot_object_view *local_3 = NULL;
-	long local_4 = NONE;
-	if ((1 << local_2->type) & 3)
-	{
-		long local_12 = local_2->actor_index;
-		local_3 = local_2;
-		if (local_12 != NONE)
-			local_4 = local_12;
-	}
-	union
-	{
-		s_2640c0 field_0;
-		s_object_marker field_1;
-	} local_5;
-	if (!arg_3)
-	{
-		function_2640c0(arg_1, (s_object_motion_view *)&local_5.field_0);
-		arg_3 = &local_5.field_0;
-	}
-	*(point3f *)((byte *)arg_0 + 0x30) = arg_3->field_0;
-	arg_0->position = arg_3->field_c;
-	*(s_location *)((byte *)arg_0 + 0x28) = arg_3->field_24;
-	*(vector3f *)((byte *)arg_0 + 0x1c) = arg_3->field_2c;
-	if (local_3)
-	{
-		function_b8d30(arg_1, 0x40000bd, &local_5.field_1, 1, false);
-		*(point3f *)((byte *)arg_0 + 0x10) = local_5.field_1.matrix.position;
-		arg_0->unknown67 = ((*(dword *)((byte *)local_3 + 0x134) >> 8) & 1) != 0;
-	}
+	if (arg_0->unknown00 == local_1)
+		updated = false;
 	else
 	{
-		*(point3f *)((byte *)arg_0 + 0x10) = arg_0->position;
-	}
-	arg_0->unknown69 = function_11c120((s_location *)((byte *)arg_0 + 0x28), (point3f *)((byte *)arg_0 + 0x10), NULL);
-	arg_0->unknown3c = NONE;
-	arg_0->unknown65 = false;
-	arg_0->unknown66 = false;
-	arg_0->unknown40 = NONE;
-	arg_0->unknown63 = arg_2 == 1;
-	if (local_2->parent_index != NONE)
-	{
-		s_slot_object_view *local_7 = object_get(local_2->parent_index);
-		if (local_3 && local_7->type == 1)
+		s_slot_object_view *local_2 = object_get(arg_1);
+		long local_3 = 0;
+		long local_4 = NONE;
+		if ((1 << local_2->type) & 3)
 		{
-			arg_0->unknown3c = function_1caa10(local_3->parent_index);
-			arg_0->unknown65 = *(long *)((byte *)local_7 + 0x24c) == arg_1 || local_3->type == 15;
-			arg_0->unknown66 = *(long *)((byte *)local_7 + 0x248) == arg_1 && function_f0f90(arg_0->unknown3c);
+			long local_12 = local_2->actor_index;
+			local_3 = (long)local_2;
+			if (local_2->actor_index != NONE)
+				local_4 = local_2->actor_index;
 		}
-		else if ((1 << local_7->type) & 3)
+		union
 		{
-			arg_0->unknown40 = local_2->parent_index;
+			s_2640c0 field_0;
+			s_object_marker field_1;
+		} local_5;
+		if (!arg_3)
+		{
+			function_2640c0(arg_1, (s_object_motion_view *)&local_5.field_0);
+			arg_3 = &local_5.field_0;
 		}
+		*(point3f *)((byte *)arg_0 + 0x30) = arg_3->field_0;
+		arg_0->position = arg_3->field_c;
+		*(s_location *)((byte *)arg_0 + 0x28) = arg_3->field_24;
+		*(vector3f *)((byte *)arg_0 + 0x1c) = arg_3->field_2c;
+		if (local_3)
+		{
+			function_b8d30(arg_1, 0x40000bd, &local_5.field_1, 1, false);
+			*(point3f *)((byte *)arg_0 + 0x10) = local_5.field_1.matrix.position;
+			arg_0->unknown67 = ((*(dword *)((byte *)local_3 + 0x134) >> 8) & 1) != 0;
+		}
+		else
+		{
+			*(point3f *)((byte *)arg_0 + 0x10) = arg_0->position;
+		}
+		arg_0->unknown69 = function_11c120((s_location *)((byte *)arg_0 + 0x28), (point3f *)((byte *)arg_0 + 0x10), NULL);
+		arg_0->unknown3c = NONE;
+		arg_0->unknown65 = false;
+		arg_0->unknown66 = false;
+		arg_0->unknown40 = NONE;
+		arg_0->unknown63 = arg_2 == 1;
+		if (local_2->parent_index != NONE)
+		{
+			s_slot_object_view *local_7 = object_get(local_2->parent_index);
+			if (local_3 && local_7->type == 1)
+			{
+				arg_0->unknown3c = function_1caa10(((s_slot_object_view *)local_3)->parent_index);
+				arg_0->unknown65 = *(long *)((byte *)local_7 + 0x24c) == arg_1 || ((s_slot_object_view *)local_3)->type == 15;
+				arg_0->unknown66 = *(long *)((byte *)local_7 + 0x248) == arg_1 && function_f0f90(arg_0->unknown3c);
+			}
+			else if ((1 << local_7->type) & 3)
+			{
+				arg_0->unknown40 = local_2->parent_index;
+			}
+		}
+		if (function_26bf10(arg_1))
+			function_26c240(arg_1, (s_location_target_view *)arg_0);
+		else
+			arg_0->unknown58 = false;
+		s_slot_object_view *local_8 = object_get(function_baf80(arg_1));
+		switch ((char)local_8->type)
+		{
+		case 0:
+			arg_0->unknown64 = *((byte *)local_8 + 0x3dc) == 2;
+			break;
+		case 1:
+			arg_0->unknown64 = ((*(dword *)(g_4e3b44[local_8->tag_index & 0xffff].bytes + 0x1ec) >> 12) & 1) != 0;
+			break;
+		case 12:
+			arg_0->unknown64 = *((byte *)local_8 + 0x17c) == 2;
+			break;
+		default:
+			arg_0->unknown64 = false;
+			break;
+		}
+		bool local_9 = ((*((byte *)local_2 + 0x10a) >> 2) & 1) != 0;
+		arg_0->unknown5f = local_9 && arg_0->unknown5e == 0;
+		arg_0->unknown5e = local_9;
+		bool local_6 = false;
+		bool local_10;
+		bool local_11;
+		if (local_4 == NONE)
+		{
+			local_10 = false;
+			local_11 = !local_9;
+		}
+		else
+		{
+			local_6 = actor_get(local_4)->unknown084 < 4;
+			local_10 = function_1e1de0(local_4);
+			local_11 = actor_behavior_find_level(local_4, 14) != NONE;
+		}
+		arg_0->unknown60 = local_6;
+		arg_0->unknown62 = local_11;
+		arg_0->unknown61 = local_10;
+		arg_0->unknown00 = local_1;
 	}
-	if (function_26bf10(arg_1))
-		function_26c240(arg_1, (s_location_target_view *)arg_0);
-	else
-		arg_0->unknown58 = false;
-	s_slot_object_view *local_8 = object_get(function_baf80(arg_1));
-	switch ((char)local_8->type)
-	{
-	case 0:
-		arg_0->unknown64 = *((byte *)local_8 + 0x3dc) == 2;
-		break;
-	case 1:
-		arg_0->unknown64 = ((*(dword *)(g_4e3b44[local_8->tag_index & 0xffff].bytes + 0x1ec) >> 12) & 1) != 0;
-		break;
-	case 12:
-		arg_0->unknown64 = *((byte *)local_8 + 0x17c) == 2;
-		break;
-	default:
-		arg_0->unknown64 = false;
-		break;
-	}
-	bool local_9 = ((*((byte *)local_2 + 0x10a) >> 2) & 1) != 0;
-	arg_0->unknown5f = local_9 && !arg_0->unknown5e;
-	arg_0->unknown5e = local_9;
-	bool local_6 = local_4 != NONE && actor_get(local_4)->unknown084 < 4;
-	long local_10 = false;
-	bool local_11 = !local_9;
-	if (local_4 != NONE)
-	{
-		local_10 = function_1e1de0(local_4);
-		local_11 = actor_behavior_find_level(local_4, 14) != NONE;
-	}
-	arg_0->unknown60 = local_6;
-	arg_0->unknown62 = local_11;
-	arg_0->unknown61 = local_10;
-	arg_0->unknown00 = local_1;
 	return updated;
 }
 

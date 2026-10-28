@@ -2182,19 +2182,23 @@ void network_session_leave_joining(c_class_58d20 *session)
 	network_session_update_leaving_join(session);
 }
 
-// score 3 (was 3): retail sets the NONE carrier after clearing the state
-// block; ours sets it before the clear. Tried: the copy as a word loop
-// 49, as a pointer range or a byte loop 0 (not kept: the matched siblings
-// 0x61180 and 0x614a0 copy the same way with memcpy).
-// Complete field construction without scratch clear 48; clock before record
-// 28, after scratch clear 3; immutable initialized record 48; typed state
-// destination 11, without scratch clear 48, with immutable record 48, with
-// earlier clock 28. The original eight-byte frame and memcpy remain.
-// our NONE request sentinel is defined before clearing the
-// state block; retail defines it afterwards. Tried: the copy as a word loop
-// New trials: memmove 42; request field fill 3; clear result as copy target 9;
-// all-one record fill 31; tail-only clear 32; fill with memmove 37;
-// tail clear with fill 30; tail clear with memmove 46.
+// score 3 (was 3): retail sets the NONE carrier (EBX) after clearing the state block; ours sets
+// it before the clear. The carrier must stay live across the clear: set after it in the source, it
+// moves to EAX and EBX is no longer saved. Tried: the copy as a word loop 49, as a pointer range or
+// a byte loop 0 (not kept: the matched siblings 0x61180 and 0x614a0 copy the same way with memcpy);
+// complete field construction without scratch clear 48; clock before record 28, after scratch clear
+// 3; immutable initialized record 48; typed state destination 11, without scratch clear 48, with
+// immutable record 48, with earlier clock 28; memmove 42; request field fill 3; clear result as copy
+// target 9; all-one record fill 31; tail-only clear 32; fill with memmove 37; tail clear with fill
+// 30; tail clear with memmove 46; destination sentinel after copy 30; scratch sentinel after clear
+// 29, as fill 29; NONE before the clock 15 (NONE takes EBP, the clock EBX); destination fill 30;
+// copy-result sentinel 27; fill before clock 15; typed destination with late sentinel 26; zero
+// initializer for the record 27; state-block pointer local for the clear and the copy 11; scratch
+// source pointer: direct clear with record/pointer fields 3/3, with returned state-copy destination
+// 9/9; source from scratch clear with record/pointer fields 38/35, with returned state destination
+// 40/37. Round 87: clock after the state clear 28; state store before the copy 6, before the clear
+// 6; sizeof the record type in the record clear and the copy 3; `void *state_data` (0x5e030's
+// form) declared before the clear 3, between the clock and NONE 3.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {
@@ -2451,11 +2455,25 @@ bool network_session_handle_session_disband(c_class_58d20 *session, const s_type
 	return result;
 }
 
-// score 10 (was 10): byte zero/result exits still differ; full-state nonzero/equality 39/40; joined state 39/40; scalar-state boundary 39/40; accepted-state equality 55/36.
+// score 10 (was 10): byte zero/result exits still differ (the union shares the reason and the
+// result). Retail is the sibling 0x5e150's plain shape (`bool result = false; ... result = true;`)
+// apart from the inlined disconnect's reason: retail keeps it in ebx (as 0x5ade0 does), ours
+// folds it into an immediate store; that plain shape alone is 14. Tried: full-state
+// nonzero/equality 39/40; joined state 39/40; scalar-state boundary 39/40; accepted-state
+// equality 55/36; result initialization width and success tails; peer result with
+// literal/result reason 24/23; peer-fed value/bool view 37/43; host-fed reason with bool/union
+// result 14/10; both test results 24; peer-fed common success 15; plain shape 14, with the
+// disconnect callee beside its retail neighbours 14, the callee copying its reason with memcpy
+// 14, building a one-field state record 14, reading its reason through its address 14.
+// the result carrier is a dword here (xor ebx,ebx, mov eax,1, mov al,bl)
+// where retail keeps a byte (xor bl,bl, mov al,1), so the disconnect path also falls into the
+// false-exit copy instead of retail's shared mov al,1 exit; the disconnect reason agrees.
 // result initialization width and success tails differ;
 // peer result with literal/result reason 24/23; peer-fed value/bool view 37/43;
 // host-fed reason with bool/union result 14/10; both test results 24;
-// peer-fed common success 15.
+// peer-fed common success 15;
+// a plain bool result set before the disconnect and passed as the reason 14 (the reason folds
+// to an immediate store); the reason in a union with the result a separate bool 14.
 // @retail 0x5e1a0
 bool network_session_handle_session_boot(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -4334,7 +4352,29 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
 
-// score 370 (was 370): Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
+// score 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
+// instead of going through the shared exit, so each one gets its own epilogue and the extent matches
+// retail's 1264 bytes. The three boolean stack homes are still rotated relative to retail.
+// score 310 (was 318): the acknowledgement block returns the result directly instead of going through
+// the shared exit, so its epilogue is the one retail emits. The three boolean stack homes are still
+// rotated relative to retail and the invalid-state exit is still emitted twice.
+// score 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
+// it into a named flag, so the comparison is tested once as retail does. The three boolean stack homes
+// are still rotated relative to retail and the invalid-state exit is still emitted twice.
+// score 325 (was 335): the acceptance test is written as the no-sender case followed by the
+// acknowledgement, so the acknowledgement block stays out of line at the end of the function instead of
+// being pulled into the middle of it. The three boolean stack homes are still rotated relative to retail.
+// score 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
+// distinct arm, the peer-map update takes the remote member first (the callee is symmetric in its two
+// member arguments), and the channel-state test is split into a named flag. The three boolean stack
+// homes are still rotated relative to retail and the invalid-state exit is still duplicated.
+// score 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
+// separate arm instead of a merged join, and the identity pointer is taken before the member-state
+// pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
+// score 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
+// separate arms; the extent is 1265/1264 bytes. Acceptance/identity homes and acknowledgement
+// placement remain.
+// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
 // Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
 // Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
@@ -4387,61 +4427,87 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  long *reason, bool *has_identity, s_session_member_identity *identity)
 {
  long sender = network_session_find_member_by_address(session, address);
- bool result = false;
  long state = session->state;
+ bool result = false;
  if (!state || state == 10)
  {
   *reason = 1;
-  goto done;
+  return result;
  }
  if (state != 9)
  {
-  if (state <= 2 || state > 8)
+  if (state > 2)
+  {
+   if (state > 8)
+   {
+    *reason = 2;
+    return result;
+   }
+   else
+   {
+    if (function_058d90(session))
+    {
+     if (!session->function_058d20())
+     {
+      *reason = 3;
+      goto done;
+     }
+    }
+    if (state == 8)
+    {
+     if (sender != NONE)
+      goto acknowledge;
+     result = true;
+     goto done;
+    }
+    long host = session->member_index;
+    const s_session_member_identity *host_identity = (const s_session_member_identity *)&session->members[host];
+    s_network_session_member_state *host_state = &session->member_states[host];
+    bool identity_equal = memcmp(host_identity, (const byte *)message + 8, 0x24) == 0;
+    if (session->function_058d20())
+    {
+     if (sender == NONE)
+     {
+      *reason = 5;
+      *has_identity = true;
+      *identity = *host_identity;
+      goto done;
+     }
+     goto acknowledge;
+    }
+    if (network_observer_channel_timed_out(session->observer, host_state->unknown04))
+    {
+     if (identity_equal)
+     {
+      *reason = 4;
+      *has_identity = true;
+      *identity = *host_identity;
+      goto done;
+     }
+     *reason = 6;
+     *has_identity = true;
+     *identity = *host_identity;
+     goto done;
+    }
+    if (session->value4c == NONE)
+    {
+     *reason = 8;
+     goto done;
+    }
+    if (session->observer->channels[host_state->unknown04].state == 7)
+    {
+     if (!identity_equal)
+     {
+      result = true;
+      goto done;
+     }
+    }
+   }
+  }
+  else
   {
    *reason = 2;
-   goto done;
-  }
-  if (function_058d90(session) && !session->function_058d20())
-  {
-   *reason = 3;
-   goto done;
-  }
-  if (state == 8)
-  {
-   if (sender != NONE)
-    goto acknowledge;
-   result = true;
-   goto done;
-  }
-  long host = session->member_index;
-  const s_session_member_identity *host_identity = (const s_session_member_identity *)&session->members[host];
-  s_network_session_member_state *host_state = &session->member_states[host];
-  long identity_order = memcmp(host_identity, (const byte *)message + 8, 0x24);
-  if (session->function_058d20())
-  {
-   if (sender != NONE)
-    goto acknowledge;
-   *reason = 5;
-   *has_identity = true;
-   *identity = *host_identity;
-   goto done;
-  }
-  if (network_observer_channel_timed_out(session->observer, host_state->unknown04))
-  {
-   *reason = !identity_order ? 4 : 6;
-   *has_identity = true;
-   *identity = *host_identity;
-   goto done;
-  }
-  if (session->value4c == NONE)
-  {
-   *reason = 8;
-   goto done;
-  }
-  if (session->observer->channels[host_state->unknown04].state == 7 && identity_order)
-  {
-   result = true;
-   goto done;
+   return result;
   }
  }
  if (session->state != 9)
@@ -4449,19 +4515,19 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  if (sender == NONE || sender == session->current_member)
  {
   *reason = 9;
-  goto done;
+  return result;
  }
  {
   byte received[0xc0];
   s_session_member_header *remote = (s_session_member_header *)&session->members[sender];
-  s_session_member_header *local = (s_session_member_header *)&session->members[session->current_member];
   memcpy(received, (const byte *)message + 8, sizeof(received));
+  s_session_member_header *local = (s_session_member_header *)&session->members[session->current_member];
   s_session_peer_transition *transition = (s_session_peer_transition *)&session->value7420;
   s_session_peer_map *map = (s_session_peer_map *)transition->map;
   bool better = false;
   bool same = false;
   session_peer_map_update_reachable(local, (s_session_peer_map *)received, remote);
-  session_peer_map_update_reachable(local, map, remote);
+  session_peer_map_update_reachable(remote, map, local);
   long selected = network_session_find_member(session, (const s_session_member_identity *)(received + 0x24));
   long version = *(long *)(received + 0x48);
   long old_version = *(long *)(transition->map + 0x48);
@@ -4536,7 +4602,7 @@ acknowledge:
   if (session->state == 7)
    network_session_clear_peer(session, sender);
   result = true;
-  goto done;
+  return result;
  }
 done:
  return result;

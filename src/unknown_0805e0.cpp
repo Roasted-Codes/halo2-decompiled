@@ -117,21 +117,6 @@ struct s_cache_property_record
 	s_cache_property *properties;
 };
 
-// score 8 (was 104): only the first property's 0xfffd id store is scheduled early (retail emits it
-// after the record stores and the buffer-cursor load, just before the buffer pointer store).
-// Earlier (pointer-advancing body, capacity-derived totals): entry cursor 125; property cursor 135;
-// per-record property counts 113; count homes 121; cursor/count combination 132; shared record/buffer
-// total 125; property total from records/buffers 113/113; admission accounting 108; capacity bounds
-// 144/113/134/136; short property ordinal 114; early four-property accounting 109; count-indexed
-// record/buffer/both outputs 129/113/128; capacity-derived totals 137/136/116; paired totals 132;
-// all totals 142; three-use property element 104; unsigned/byte ordinals 109/110; native identifier
-// field 104; scalar-array end bound 105; ordinal do-loops 141/142.
-// Round 136: outputs written at running record/property/buffer indices, capacities counted down in
-// their homes, the property index and capacity advanced inside the three-property loop (rolled as
-// retail): 8. On that body: counted-up totals with pointer advances 135; loop bounded by the
-// record's count 134; record pointer local 119; sixteen orders of the index/capacity updates 17-102;
-// the id store placed around the record stores 8-114 (twenty orders); 16-bit id field 8;
-// named buffer local 8/17; permuter 64 tries 8.
 // @retail 0x80940
 void function_80940(long record_capacity, s_cache_property_record *records,
 	long property_capacity, s_cache_property *properties, long buffer_capacity,
@@ -148,12 +133,13 @@ void function_80940(long record_capacity, s_cache_property_record *records,
 			if (record_capacity <= 0 || property_capacity < 4 || buffer_capacity <= 0)
 				break;
 			memcpy(records[record_index].identity, &entry->player, sizeof(records[record_index].identity));
-			*(short *)&properties[property_index].unknown00 = -3;
+			s_cache_property *first_property = &properties[property_index];
 			records[record_index].type = 0x61;
 			records[record_index].count = 4;
-			records[record_index].properties = &properties[property_index];
+			records[record_index].properties = first_property;
 			record_index++;
 			record_capacity--;
+			*(short *)&first_property->unknown00 = -3;
 			properties[property_index].type = 4;
 			properties[property_index].unknown08 = (long)&buffers[0x40 * buffer_index];
 			property_index++;
@@ -778,7 +764,7 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 }
 #pragma inline_depth(8)
 
-// score 66 (was 181): frame 0xc agrees; admission prefix, removed-index EDX/ESI and upper ECX/EAX remain.
+// score 66 (was 66): frame 0xc agrees; admission prefix, removed-index EDX/ESI and upper ECX/EAX remain.
 // Frame 0xc agrees; removed-index EDX/ESI, upper-bound ECX and copy/repair induction remain.
 // Paired range arms 373;
 // frame 0x0c agrees; removed-index registers, upper
@@ -816,6 +802,22 @@ long __stdcall function_80330(const s_cached_player_identity *identity, long pos
 // nonfull polarity 190; full-width admission result 402. Kept form is 1185/1171 bytes, plain 181.
 // Current admission/bounds with long adjustment 66; byte admission 181; native time 194;
 // long/byte 66, long/time 137, byte/time 194, all three 137; mutable removed/long 66.
+// Round 10: existing initializer 98; direct/branch-shared removal 370/370;
+// separate admission 394; removal-first lower forms 66/66/64; forward source entry 66;
+// forward memmove 380; sentinel-first links 157; early view/bound declaration swap/
+// const admission with the 64-point lower 64/64/64; default insertion range 388;
+// three current-graph cases 386. The two-point lower gain was not kept; original body restored.
+// Round 149: plain entry (removed = NONE, set inside the full test) 370; with lower/upper as
+// `removed > position ? ...` and an explicit `>` arm 355; plus the flag cleared in the count path
+// (retail tail-merges that arm with it) 74 at 1171 bytes, with the flag set before the decrements and
+// upper assigned first there 71: entry, min/max and three-way test then match, but upper takes EAX
+// (retail ECX, copied from the count) and the forward index EBP (retail EAX). On 71: one shared shift
+// index 74; range locals in three orders 74; named count 71; entry-pointer forward copy 71, copy from
+// lower 364; upper before lower 75; bounds zeroed in an else arm 71. Original body restored.
+// Round 215: native timestamp dword member 66; closed bounds workspace 66;
+// entry time workspace 66; pre-copy long adjustment 382; indexed destination 168;
+// mutable removal with upper-first declarations 66; shared range-direction relation 381;
+// indexed destination with native timestamp member 168. Original body restored.
 // @retail 0x7fe90
 long function_7fe90(const s_cached_player_identity *identity, long position, const s_cached_player_source *source)
 {

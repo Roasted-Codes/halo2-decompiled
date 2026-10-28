@@ -823,6 +823,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // immutable direction 381 and length-at-expression 381. Executable differences
 // 233/354/354/383/383/357/357/357 versus baseline 233; all original receivers restored. Frame 0x48
 // agrees; direction preload, normal/length/zero allocation, flag stores and timer scheduling remain.
+// Round 206: All three length products named at their expression in orders kji/kij/jki/jik/ikj/ijk
+// 405/405/268/268/405/268; complete immutable products in jki/ijk order 268/268.
+// Original (k+j)+i grouping, operands, observations, helpers and calls restored.
 // Round 250: Projection for/while/do loops 360/360/401; pan for/while/do loops 385/385/292; both
 // for/while loops 380/380 (expanded fast control 245). Original parallel rows restored; direction
 // preload, length/zero allocation and flag stores remain.
@@ -830,6 +833,31 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // left-forward-up / left-up-forward, then normal before basis at forward-up-left /
 // up-forward-left / left-forward-up:
 // 247,247,248,248,247,279,279,279 fast; reduced control 245, full 245. Original executable source restored.
+// Round 356: Native-plane length before offset 250; common inner flag store 400; both 405;
+// length/complement 262; flag/complement 400; both/complement 405; both/quotient 405; all 405.
+// Original projection, native switch, separate flag stores and expression parts restored.
+// Round 190: separate blend output 337; native target quaternion mutable/const 367/367;
+// split output plus target 402; native converter result 363, with split output 393;
+// independent normalization value 367, with split output 375. All original quaternion boundaries restored.
+// Round 253: Parallel projection-product parts, ordinary/immutable 251/251;
+// pan first/both weighted parts 245/245; projection with either pan form 251/251;
+// native shared origin alone/with all parts 501/501 (1736 bytes). All restored.
+// Round 80: direction declared before the plane 245; length summed j-first, `(n.j * d.j + n.k * d.k) + n.i * d.i`,
+// 247 (retail's d.j preload, but the normal's i/k registers swapped and the i term still copies the
+// normal); both 247; j-first with direction-first operands in every product 247, with the swapped
+// declarations 247. Original body restored.
+// Round 82: length as dot3f(direction, &plane.n) 375 (retail's d.j preload, normal i/j/k in xmm3/4/5
+// and offset products, but the sum stays i-first and the rest shifts); dot3f(&plane.n, direction) 375;
+// t as a ternary 245; ternary with dot3f 375; dot3f with direction declared first 375. Body restored.
+// Round 60: length_sq3f(direction) 464; length_sq3f(&plane.n) 265;
+// dot length with prezero 463; copied-normal helper with reversed plane dot 265;
+// reversed plane dot alone 245; direction-j pointer 400; early copied-normal helper 272;
+// early dot length in either input order 256/256. Original body restored.
+// Round 84 (lane 5): VC reassociates the timer to (rate / scale) * ticks where retail keeps
+// (ticks * rate) / scale; a named seconds local in the tick helper restores retail's order 388,
+// a named seconds local at the use 384 (lockstep shift); field-of-view fields read at each use 259,
+// with a named start 264, target local with fields elsewhere 254; seconds local plus those fields
+// 380 (retail's instruction count, 462, but zero/value XMM roles swap throughout). Restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

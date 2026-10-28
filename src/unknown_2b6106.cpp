@@ -707,6 +707,11 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // 648/575/648/574/648/576/648; complementary campaign 573. Original truth states restored.
 // Three identity-query caller-inline contracts in all seven combinations 573 each; joint
 // caller-noinline contract 573. Original declarations restored.
+// Round 227: Native identifier copy/assignment/CRT, complete friend copy/assignment/CRT,
+// complete friend plus identifier copy/CRT 632/632/632/627/627/627/632/632 (exact-only). Restored.
+// Publication helper native widget/buffer-array/both references 573 each; array input
+// first 573; ordinary inline with widget/array/both references 573 each; both references
+// with text-first formals 573. Original helper and every publication call restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

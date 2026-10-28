@@ -685,6 +685,8 @@ struct s_control_pitch_unit
 	vector3f field_88;
 };
 
+real magnitude3d(vector3f const *v);
+
 PRIVATE inline real control_turn_difference(real a, real b)
 {
 	real difference = a - b;
@@ -706,12 +708,26 @@ PRIVATE inline void seat_direction_from_yaw_187510(vector3f *direction, real yaw
 }
 
 /* moves the value toward the target by at most one step */
-PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
+PRIVATE inline void seat_pitch_approach_187510(real target, real *value)
 {
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 172 (was 172): Frame 0xac versus 0xa8; pitch-bound and remaining scalar homes differ.
+// score 9 (was 52): only the order of two join stubs differs (retail places the no-seat stub `movss xmm3`
+// before the in-range stub `xorps xmm1`), and settings is stored after maximum (2 of the 9).
+// Round 69: the yaw read from a yaw_pitch2f filled by function_x9a60c1 (retail's atan2 home is the direction
+// vector's first dword, an aggregate home) 52 -> 29, frame 0xa8 as retail; the approach helper's parameters
+// as (target, value) 29 -> 9 (the tail's register roles); `real yaw = angles.yaw` 92 (scalar-replaced);
+// angles declared at the block/function top 27/27 (with settings between the bounds); the existing 0x11df30
+// instead 27 (identical); approach helper as `*value = *value + pin`/returning/forceinline 27/61/27; named
+// difference in it 54; if/else pin helper 71; De Morgan in-range test 7; range wrap first 321; fabs test
+// swapped 222; the in-range test through a two-use bool helper or a named bool 55 (stubs as retail, but the
+// rate arms' merged add loads the pitch first); rate as one ternary/if-else update 83/83 (89/93 with it).
+// Round 141: retail packs the yaw block's spilled turn differences into the direction vector's slots
+// (range with direction.i) and keeps maximum/minimum at 0x10/0x14 (ours: to_upper, maximum, minimum,
+// range, settings, then direction). Direction declared in the camera block / at the top 172/172;
+// camera after marker 172; range after the two turn differences 289. The movement length now calls
+// the existing 0x24590 (inlined, identical code).
 // Earlier at 213: Frame 0xa8 agrees; upper-bound, range and pin input homes differ.
 // settings/direction/turn-difference homes and step-clamp scheduling
 // differ within frame 0xa8; the initial minimum home now agrees; retail keeps the
@@ -765,12 +781,37 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Round 183: Direction reference/pointer-result/output-last 213/213/213; native vector result
 // 270; shared cosine 271, with reference/vector result 271/270; reversed scalar formals 227.
 // Original direction helper and body restored; upper-bound/range and pin homes remain.
+// Round 205: Native facing/minimum/maximum field receivers 171/182/176; both bounds 195;
+// facing with minimum/maximum/both 182/177/193; all reference receivers at use 177.
+// Original body restored; extra frame dword and scalar homes remain.
 // Angle/pin/both input-formal reuse 176/257/257; each with a shared
 // double pitch cosine 226/285/285; both with inner marker scope 257,
 // with the shared terminal pin 272. Original scalar helpers and body restored.
 // Round 249: promoted yaw/pitch/both trig formals 181/222/174; native promoted
 // yaw/pitch/both inputs 181/226/172; both formals with shared pitch cosine 176,
 // yaw formal with shared pitch cosine 172. Original helper/body restored.
+// Round 143 (plain; --fast now builds it differently): the yaw unnamed (atan2 written in both bounds)
+// 183; from_lower computed before to_upper 191; the range wrap before the two differences 307 (frame
+// 0xa8, but ebx saved in the prologue); the marker scoped to the seat block 176; to_upper renamed to
+// sort after minimum 172 (homes unchanged: names do not order these spill slots).
+// Round 252: Role names inside periodic/pin/direction/periodic+pin/periodic+direction/pin+direction/all
+// three/all plus approach inline expansions 172 each. Original helper names restored; extra frame dword
+// and scalar homes remain.
+// Round 64: the one-use difference local dropped 172 -> 122 and the pitch update written in both rate
+// arms (the shared difference is hoisted into target's register) 122 -> 52, both kept; direction in a
+// forceinline angle helper 176; seat clamp helper 180; difference named before amount/before rate
+// 172/172; named target test 153; atan2 at both uses 87; settings between the bounds (retail's store
+// order) 52; in-place positive-range helper 52. Round 14 (lane 10, plain): yaw renamed to sort last
+// 52 (names do not move these homes); direction declared in the bounds block 52; amount/movement
+// declared at camera-block scope 52; to_upper/from_lower declared before range 52 (all identical code);
+// direction and the angle in an inline helper 292 (not inlined; frame 0xa0), forceinline 52 (identical).
+// order) 52; in-place positive-range helper 52.
+// Round 66: direction helper returning the vector by value 185 (frame 0xb8); direction and the angle call in
+// a forceinline helper 52; the clamp's two negated tests as nested ifs 52; settings between the bounds with
+// direction at function scope after maximum/after marker 52/52 (direction stays at +0x24).
+// Complete shared angle output: direct field local/forced/outer/forced outer 181f each
+// (preview 192f); twice-used scalar yaw on those four graphs 203f each. Direct output 29 plain
+// at 1323 bytes with frame 0xa8, restored: native record storage requires an exact match.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
@@ -789,9 +830,10 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		if (seat->minimum != 0.0f || seat->maximum != 0.0f)
 		{
 			function_b8d30(camera.unit_index, seat->field_8, &marker, 1, false);
-			real yaw = (real)atan2(marker.matrix.forward.j, marker.matrix.forward.i);
-			real lower = seat->minimum + yaw;
-			real upper = seat->maximum + yaw;
+			yaw_pitch2f angles;
+			function_x9a60c1(&angles, &marker.matrix.forward);
+			real lower = seat->minimum + angles.yaw;
+			real upper = seat->maximum + angles.yaw;
 			real range = control_turn_difference(upper, lower);
 			real to_upper = control_turn_difference(upper, entry->facing.yaw);
 			real from_lower = control_turn_difference(entry->facing.yaw, lower);
@@ -832,14 +874,21 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		if (target != 0.0f || entry->value30)
 		{
 			real amount = (real)fabs(entry->facing.pitch - target) * 0.63661975f;
-			real delta = target - entry->facing.pitch;
-			real movement = (real)sqrt(unit->field_88.i * unit->field_88.i + unit->field_88.j * unit->field_88.j + unit->field_88.k * unit->field_88.k) * g_510c54->rate;
-			real rate = target != 0.0f ? movement * amount * 0.08f : *(real *)(settings + 0x5c) * movement * amount;
-			entry->facing.pitch += control_pitch_pin(delta, -rate, rate);
+			real movement = magnitude3d(&unit->field_88) * g_510c54->rate;
+			if (target != 0.0f)
+			{
+				real rate = movement * amount * 0.08f;
+				entry->facing.pitch += control_pitch_pin(target - entry->facing.pitch, -rate, rate);
+			}
+			else
+			{
+				real rate = *(real *)(settings + 0x5c) * movement * amount;
+				entry->facing.pitch += control_pitch_pin(target - entry->facing.pitch, -rate, rate);
+			}
 		}
 	}
-	seat_pitch_approach_187510(&entry->minimum_pitch, minimum);
-	seat_pitch_approach_187510(&entry->maximum_pitch, maximum);
+	seat_pitch_approach_187510(minimum, &entry->minimum_pitch);
+	seat_pitch_approach_187510(maximum, &entry->maximum_pitch);
 	entry->facing.pitch += pitch_delta;
 	entry->facing.pitch = entry->minimum_pitch > entry->facing.pitch ? entry->minimum_pitch :
 		(entry->facing.pitch > entry->maximum_pitch ? entry->maximum_pitch : entry->facing.pitch);

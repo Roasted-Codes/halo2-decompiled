@@ -14,7 +14,10 @@ The handlers of the unit request table at 0x467564
 #include "unknown_1cafc0.h"
 #include "unknown_1dacb0.h"
 #include "unit_requests.h"
+#include "units.h"
+#include "matrix_transform.h"
 #include "unknown_1cec30.h"
+#include "bit_vector.h"
 #include <math.h>
 #include <string.h>
 
@@ -179,15 +182,26 @@ PRIVATE inline long unit_action_weapon_get(s_unit_action_unit *unit, bool second
 	return weapon_index;
 }
 
+/* the weapon in a unit's hand (0 or 1), read through the hand's slot index */
+PRIVATE inline long unit_action_hand_weapon_get(s_unit_action_unit *unit, long hand)
+{
+	short index = (&unit->current_weapon_index)[hand];
+	long weapon_index = NONE;
+
+	if (index != NONE)
+		weapon_index = unit->weapon_object_indices[index];
+	return weapon_index;
+}
+
 /* ends an action (its finished handler), and clears it */
 // @retail 0xe6960
 void function_e6960(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	t_unit_request_end_proc finished = g_4677c8[type]->finished;
+	s_unit_request_definition *definition = g_4677c8[type];
 
-	if (finished)
-		finished(unit_index, type);
+	if (definition->finished)
+		definition->finished(unit_index, type);
 	actions->active[type >> 5] &= ~(1 << (type & 0x1f));
 }
 
@@ -196,10 +210,10 @@ void function_e6960(long unit_index, long type)
 void function_e69c0(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	t_unit_request_end_proc interrupted = g_4677c8[type]->interrupted;
+	s_unit_request_definition *definition = g_4677c8[type];
 
-	if (interrupted)
-		interrupted(unit_index, type);
+	if (definition->interrupted)
+		definition->interrupted(unit_index, type);
 	actions->active[type >> 5] &= ~(1 << (type & 0x1f));
 }
 
@@ -244,7 +258,7 @@ void function_e6a20(long unit_index, long name, bool active, bool keep)
 }
 
 void function_e6b00(long unit_index, long name, long *state_name, long *action_name);
-PRIVATE void function_e70b0(long unit_index, short *value);
+PRIVATE short *function_e70b0(long unit_index, short *state);
 
 /* when an animation of a unit ends: the action it ends, and the state and
    action animations that follow */
@@ -307,8 +321,7 @@ void function_e6b00(long unit_index, long name, long *state_name, long *action_n
 		{
 			short count;
 
-			function_e70b0(unit_index, &count);
-			if (count == 0)
+			if (*function_e70b0(unit_index, &count) == 0)
 			{
 				function_e6960(unit_index, 0x1d);
 				next_state = 0x6000086;
@@ -432,6 +445,9 @@ void function_e6f90(long unit_index)
 
 /* whether a unit can play an animation, from its idle state or (when it
    asks) its alternate one */
+// score 156 (was 156): ours inlines function_10f3b0 at both of its calls, where retail calls it
+// (this is its only caller in retail too), and the alternate pointer then stays on the stack
+// where retail has it in ebx. Adding /Ob1 to this file's flags leaves it at 156.
 // @retail 0xe7020
 bool function_e7020(long unit_index, bool *alternate, long name)
 {
@@ -454,10 +470,13 @@ bool function_e7020(long unit_index, bool *alternate, long name)
 	return false;
 }
 
+/* the unit's action state (its actions' +0x36): stores it and returns where
+   it went, so callers test it through the result */
 // @retail 0xe70b0
-PRIVATE void function_e70b0(long unit_index, short *value)
+PRIVATE short *function_e70b0(long unit_index, short *state)
 {
-	*value = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index))->unknown36;
+	*state = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index))->unknown36;
+	return state;
 }
 
 /* readies the weapon in a unit's hand (the second hand when it's dual
@@ -541,18 +560,14 @@ bool __stdcall function_e7280(long unit_index, s_unit_request *request)
 // @retail 0xe7320
 bool __stdcall function_e7320(long unit_index, long type)
 {
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	bool result = false;
-	long weapon_index = NONE;
-	short index;
+	long weapon_index;
 	long slot_index;
 
 	if (type > 1)
-		index = unit->current_secondary_weapon_index;
+		weapon_index = function_cbd50(unit_index, UNIT_ACTION_UNIT_GET(unit_index)->current_secondary_weapon_index);
 	else
-		index = unit->current_weapon_index;
-	if (index != NONE)
-		weapon_index = unit->weapon_object_indices[index];
+		weapon_index = function_cbd50(unit_index, UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index);
 
 	switch (type)
 	{
@@ -575,8 +590,12 @@ bool __stdcall function_e7320(long unit_index, long type)
 // @retail 0xe73c0
 void __stdcall function_e73c0(long unit_index, long type)
 {
-	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), type > 1);
+	long weapon_index;
 
+	if (type > 1)
+		weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 1);
+	else
+		weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 0);
 	if (weapon_index != NONE)
 		function_1015a0(weapon_index);
 }
@@ -1166,7 +1185,7 @@ void function_e8460(long unit_index, bool primary)
 // @retail 0xe8510
 bool function_e8510(long unit_index, bool immediate, bool silent, bool primary)
 {
-	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
+	long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
 	bool result = true;
 
 	if (weapon_index != NONE)
@@ -1202,6 +1221,11 @@ void __stdcall function_fff40(long weapon_index, bool silent, bool immediate);
 
 /* a unit's weapon animations: its vehicle seat's weapon's, or the
    default */
+// score 73 (was 75): same length as retail now; registers differ. Retail keeps the object array
+// in ebx, the tag table in ebp and the seat index in di, and keeps both names on the stack where
+// ours keeps the default name in ebp. The seat flags as the seat definition's bitfields give
+// retail's shift-and-test reads after the weapon lookup, and the hand helper's short slot index
+// gives retail's movsx; the seat flags read as a dword after the weapon 88, with the hand helper 85.
 // @retail 0xe8620
 void __stdcall function_e8620(long unit_index, bool flag)
 {
@@ -1212,11 +1236,11 @@ void __stdcall function_e8620(long unit_index, bool flag)
 	if (unit->parent_object_index != NONE && unit->seat_index != NONE)
 	{
 		s_unit_action_unit *parent = UNIT_ACTION_UNIT_GET(unit->parent_object_index);
-		dword seat_flags = *(dword *)(*(byte **)(g_4e3b44[parent->definition_index & 0xffff].bytes + 0x1cc) +
+		s_unit_seat_definition *seat = (s_unit_seat_definition *)(*(byte **)(g_4e3b44[parent->definition_index & 0xffff].bytes + 0x1cc) +
 			unit->seat_index * 0xb0);
-		long weapon_index = unit_action_weapon_get(parent, false);
+		long weapon_index = unit_action_hand_weapon_get(parent, 0);
 
-		if (((seat_flags >> 3) & 1) && !((seat_flags >> 2) & 1) && weapon_index != NONE)
+		if (TEST_FIELD_BIT(seat->flags.bit3) && !TEST_FIELD_BIT(seat->flags.bit2) && weapon_index != NONE)
 		{
 			byte *s_type_67e06b = g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes;
 
@@ -1400,13 +1424,16 @@ bool __stdcall function_e8b20(long unit_index, long type)
 
 /* a weapon switch interrupted: the old weapon is put away at once and the
    new one taken out */
+// score 11 (was 29): only the entry block's order differs (retail loads the global and the
+// actions pointer before `cmp ecx, 8; sete bl`). Tried: unit_action_active() 95; primary
+// declared first 11; primary inside the block 82; a unit local 90; an early-return guard 11.
 // @retail 0xe8c10
 void __stdcall unit_action_weapon_switch_interrupted(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
 	bool primary = type == 8;
 
-	if (UNIT_ACTION_ACTIVE(actions, type))
+	if (bit_vector_test(actions->active, type))
 	{
 		function_e8510(unit_index, true, false, primary);
 		function_e8720(unit_index, 0x7000101, false, false, primary);
@@ -1700,6 +1727,8 @@ PRIVATE __forceinline bool unit_action_pause(long unit_index, s_unit_request *re
 	return result;
 }
 
+// 0xe9370 and 0xe9500 (score 139 each) are 17 bytes short through unit_action_pause, which
+// reaches function_e7020; see the note there.
 /* pauses a unit's animation (type 23) */
 // @retail 0xe9370
 bool __stdcall function_e9370(long unit_index, s_unit_request *request)
@@ -1716,7 +1745,7 @@ bool __stdcall function_e9500(long unit_index, s_unit_request *request)
 
 bool __stdcall function_10f430(long unit_index, long field_7c, long state_name, long weapon_name, long action_name,
 	real blend, bool flags, long mode);
-void function_edfa0(long unit_index, point2f const *facing);
+__declspec(noinline) void function_edfa0(long unit_index, point2f const *facing);
 void function_ba3d0(long unit_index);
 
 /* the request to play an animation impulse (type 25) */
@@ -2473,6 +2502,7 @@ bool __stdcall unit_action_vehicle_entry(long unit_index, s_unit_request *reques
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 	s_unit_request_vehicle_entry *entry = (s_unit_request_vehicle_entry *)request;
+	bool result = false;
 	bool reset = false;
 
 	if (function_ea1f0(unit_index, entry->vehicle_index, entry->seat_index, entry->keep_animation, entry->type,
@@ -2481,13 +2511,15 @@ bool __stdcall unit_action_vehicle_entry(long unit_index, s_unit_request *reques
 		if (reset)
 		{
 			function_ea6b0(unit_index, entry->type);
-			return true;
 		}
-		actions->active[0] |= 0x10000000;
-		function_d1360(unit->parent_object_index, unit->seat_index, 0, 1);
-		return true;
+		else
+		{
+			actions->active[0] |= 0x10000000;
+			function_d1360(unit->parent_object_index, unit->seat_index, 0, 1);
+		}
+		result = true;
 	}
-	return false;
+	return result;
 }
 
 long function_10eef0(long object_index, bool alternate, bool no_request);
@@ -2920,12 +2952,9 @@ void __stdcall function_eb520(long unit_index, long type)
 	if (unit->unknown13c != NONE)
 		function_152140(unit->unknown13c);
 	function_eac90(unit_index, false, push);
-
-	s_unit_action_header *header = UNIT_ACTION_HEADER_GET(unit_index);
-
-	if ((1 << header->type) & 1)
+	if ((1 << UNIT_ACTION_HEADER_GET(unit_index)->type) & 1)
 	{
-		word *flags = (word *)((byte *)header->unit + 0x348);
+		word *flags = (word *)((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x348);
 
 		*flags |= 0x40;
 	}
@@ -3143,9 +3172,7 @@ PRIVATE __forceinline void unit_action_seat_facing_get(s_unit_action_unit *unit,
 		transform4x3f const *matrix = (transform4x3f const *)((byte *)parent +
 			*(short *)((byte *)parent + 0x116) + *((char *)unit + 0x18) * 0x34);
 
-		facing->i = matrix->up.i * unit->forward.k + matrix->left.i * unit->forward.j + matrix->forward.i * unit->forward.i;
-		facing->j = matrix->up.j * unit->forward.k + matrix->left.j * unit->forward.j + matrix->forward.j * unit->forward.i;
-		facing->k = matrix->up.k * unit->forward.k + matrix->left.k * unit->forward.j + matrix->forward.k * unit->forward.i;
+		matrix_transform_vector(matrix, &unit->forward, facing);
 	}
 }
 
@@ -3284,8 +3311,11 @@ bool __stdcall function_ebf20(long unit_index, s_unit_request *request)
 
 	function_b9dd0(unit_index, &point);
 	unit_action_seat_facing_get(UNIT_ACTION_UNIT_GET(unit_index), &facing);
-	return function_ee090(unit_index, *(long *)((byte *)request + 8), *(long *)((byte *)request + 4), 0x5000049,
-		&point, &facing);
+
+	long state_name = *(long *)((byte *)request + 8);
+	long mode = *(long *)((byte *)request + 4);
+
+	return function_ee090(unit_index, state_name, mode, 0x5000049, &point, &facing);
 }
 
 /* sits a unit down from its pose (type 39) */
@@ -3719,9 +3749,12 @@ bool __stdcall function_ecb80(long unit_index, s_unit_request *request)
 				memset(actions->active, 0, sizeof(actions->active));
 				actions->unknown36 = 0;
 				function_1e54d0((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x3dc, 1);
-				return true;
+				result = true;
 			}
-			return false;
+			else
+			{
+				result = false;
+			}
 		}
 	}
 	return result;
@@ -3760,14 +3793,16 @@ bool __stdcall function_eccc0(long unit_index, s_unit_request *request)
 		state_name = 0x12000547;
 		break;
 	default:
-		return result;
+		goto done;
 	}
 
 	long state = *((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x3dc);
 	long action_name = state == 5 || state == 4 ? 0x400000c : 0x5000049;
 
-	return function_ee090(unit_index, state_name, 5, action_name, (point3f const *)((byte *)request + 8),
+	result = function_ee090(unit_index, state_name, 5, action_name, (point3f const *)((byte *)request + 8),
 		(vector3f const *)((byte *)request + 0x14));
+done:
+	return result;
 }
 
 /* sits a unit down from its pose, keeping a vector (type 46) */
@@ -4069,6 +4104,8 @@ tick:
 }
 
 /* a unit's flinch (type 51): its animation, and its time */
+// score 136 (was 136): ours inlines c_animation_channel::get_duration (0x1c6ea0), which retail
+// calls; that accounts for most of the 79 extra bytes. The rest of the body lines up.
 // @retail 0xed800
 bool __stdcall function_ed800(long unit_index, s_unit_request *request)
 {
@@ -4100,21 +4137,27 @@ void *function_1e4f90(long actor_index);
 
 /* a flinch: its time, then the weapon dropped (or swapped for the actor's
    spare weapon) */
+// score 65 (was 82): retail keeps no result local (ours puts it in bl and a stack byte) and still
+// leaves through two exits. A single exit through a result local 65-68; the hand helper's short slot
+// index gives retail's movsx (80); gotos to a final return false for some or all paths 80.
 // @retail 0xed910
 bool __stdcall function_ed910(long unit_index, long type)
 {
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 
+	bool result = true;
+
 	if (--actions->flinch_ticks > 0)
-		return true;
+		goto done;
+	result = false;
 
 	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), false);
 
 	if (weapon_index == NONE)
-		return false;
+		goto done;
 	if (g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes[0x12f] & 1)
-		return false;
+		goto done;
 
 	long actor_index = unit->unknown12c;
 
@@ -4133,7 +4176,7 @@ bool __stdcall function_ed910(long unit_index, long type)
 			if (new_weapon_index != NONE)
 			{
 				function_cd0c0(unit_index, new_weapon_index, 4);
-				return false;
+				goto done;
 			}
 		}
 	}
@@ -4143,7 +4186,8 @@ bool __stdcall function_ed910(long unit_index, long type)
 	drop.type = 9;
 	*((bool *)&drop + 4) = true;
 	unit_action_drop_weapon(unit_index, &drop);
-	return false;
+done:
+	return result;
 }
 
 /* a unit's taunt (type 52) */
@@ -4335,14 +4379,23 @@ void function_edfa0(long unit_index, point2f const *facing)
 
 	if (unit->parent_object_index == NONE)
 	{
-		unit->forward.j = facing->y;
-		unit->forward.i = facing->x;
-		unit->forward.k = 0.0f;
+		vector3f_assign(&unit->forward, facing->x, facing->y, 0.0f);
 		unit->up = *g_4687b0;
 	}
 }
 
 /* faces a unit along its aiming direction */
+// score 13 (was 24): retail stores x before it loads y (`movss xmm2, y; mulss xmm2, xmm0`); ours
+// multiplies y into the inverse's register and stores both after. Tried: the products as `*=` or
+// in any operand order 13; normalize2d_fast 13; `else length = 0.0f;` before the test, either arm
+// first 13; a vector2f local 13; the normalisation as a helper inlined from another file 13; the
+// local filled by one point2f copy 19 (x87 squares swap); `= { x, y }` 13; y copied first 21;
+// `inverse` declared at the top 13; each coordinate divided by the length 13; the matched
+// 0x2c1d90 shape (pointer helper, `else magnitude = 0`, test on its result) 13.
+// Round 85: retail loads y only after storing x (an ordered, unfolded load: matched functions with this
+// sequence used volatile casts or real pointer aliasing); every plain shape compiles to the same code here:
+// a `real *` array helper 13; separate in/out pointer helper 13; element pointer local 13; pointer helper
+// with `*=` 13; one point2f copy 19 (as before); y first, `*=`, division by the length all code-identical.
 // @retail 0xedff0
 void function_edff0(long unit_index)
 {
@@ -4356,12 +4409,11 @@ void function_edff0(long unit_index)
 
 	if (!(0.0001f > (real)fabs(length)))
 	{
-		bool positive = length > 0.0f;
 		real inverse = 1.0f / length;
 
 		facing.x = inverse * facing.x;
 		facing.y = facing.y * inverse;
-		if (positive)
+		if (length > 0.0f)
 			function_edfa0(unit_index, &facing);
 	}
 }
@@ -4573,24 +4625,28 @@ void function_ee680(long user_index, long state, long secondary, long weapon_ind
 // @retail 0xee7f0
 void function_ee7f0(long unit_index, long state)
 {
-	byte *object = (byte *)function_badc0(unit_index, 3);
 	long user_index;
 
-	if (!object || *(long *)(object + 0x13c) == NONE)
-	{
+	if (unit_get_player_index(unit_index) == NONE)
 		user_index = NONE;
-	}
 	else
-	{
-		byte *current = (byte *)function_badc0(unit_index, 3);
-		long player_index = current ? *(long *)(current + 0x13c) : NONE;
+		user_index = unit_action_player_value28_get(unit_get_player_index(unit_index));
 
-		user_index = unit_action_player_value28_get(player_index);
+	long secondary;
+
+	switch (state)
+	{
+	case 0x13:
+	case 0x15:
+	case 0x19:
+		secondary = true;
+		break;
+	default:
+		secondary = false;
+		break;
 	}
 
-	bool secondary = state == 0x13 || state == 0x15 || state == 0x19;
-
-	function_168896(user_index, unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), secondary),
+	function_168896(user_index, unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), secondary),
 		secondary, state);
 }
 

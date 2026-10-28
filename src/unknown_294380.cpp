@@ -2,6 +2,7 @@
 #include "globals.h"
 #include "slot_handler.h"
 #include "object_default_placement.h"
+#include "unknown_293070.h"
 #include <math.h>
 // @flags /O2 /arch:SSE /Gr
 
@@ -140,6 +141,21 @@ PRIVATE __forceinline void function_295027(long arg_0, vector3f *arg_1)
             &local_0->forward, arg_1);
 }
 
+// score 523 (was 581): frame 0xdc agrees; since round 67 the neighbour walk is the shared inline member
+// step (retail's head-tested loop) and 0x118fe0 stays out of line as in retail. Left: retail keeps the
+// walk's position at 0x20 sharing its slot with the post-walk vector (ours shares the offset vector,
+// position at 0x94), and pushes ESI only after the early return (ours uses ESI for the definition-table
+// temporary). Round 67: the walk through the existing out-of-line step 837 (call kept, frame 0xe4);
+// 0x118fe0 noinline alone 792 (3718 bytes); the inline step alone 794; both 510 with a private step copy,
+// 523 with the shared one (kept); on that: the second index read plainly 676 (entry, ESI push and frame
+// exactly as retail, but registers/slots after it move); the scaled forward through vector3f_scale 728;
+// the forward scale as a named local 642; the walk offset declared before the position 523; the offset
+// declared at the walk's enclosing block 523.
+// Tried: the flock-state getter as if/else 731 (fast); without the stack read of the second index 679
+// (fast; the first index then arrives in ECX); 0x118fe0 noinline with the arms swapped 792 (3718 bytes);
+// the scaled forward through vector3f_scale 742 (fast), with noinline 726; the walk as a for loop 1022;
+// names for the walk's two vectors 734 (fast, no change); the drop term or the dot helper's i term
+// with its operands swapped 581 each.
 // @retail 0x294380
 void function_294380(long arg_0, long arg_1)
 {
@@ -172,16 +188,16 @@ void function_294380(long arg_0, long arg_1)
     local_6.i = local_6.j = local_6.k = 0.0f;
     if (local_1->field_34 > 0.0f)
     {
-        long local_20 = local_0->field_4;
-        while (local_20 != NONE)
+        s_flock_member_iterator local_20;
+        local_20.next_object_index = local_0->field_4;
+        local_20.object_index = NONE;
+        s_flock_object *local_21;
+        while ((local_21 = function_2937a1(&local_20)) != NULL)
         {
-            long local_21 = local_20;
-            s_slot_object_view *local_22 = object_get(local_21);
-            s_294384 *local_23 = function_2943dd(local_22);
-            local_20 = local_23 ? local_23->field_8 : NONE;
+            s_slot_object_view *local_22 = (s_slot_object_view *)local_21;
             if (local_22 == local_2) continue;
             point3f local_24;
-            function_b9dd0(local_21, &local_24);
+            function_b9dd0(local_20.object_index, &local_24);
             vector3f local_25;
             function_2945bd(&local_4, &local_24, &local_25);
             real local_26 = function_30bf0(&local_25);
@@ -306,16 +322,16 @@ void function_294380(long arg_0, long arg_1)
     if (!(local_12 > local_18)) local_12 = local_18;
     local_6.i = local_12;
     if (local_7) { local_6.k = 0.0f; local_19.k = 0.0f; }
-    if (!(local_3->field_d ? local_5 >= local_1->field_68 * 0.7f : local_5 >= local_1->field_68))
+    if (local_3->field_d ? local_5 >= local_1->field_68 * 0.7f : local_5 >= local_1->field_68)
+    {
+        if (function_30bf0(&local_19) == 0.0f) function_b9fc0(arg_1, &local_19, NULL);
+        local_3->field_d = true;
+    }
+    else
     {
         local_6 = *g_4687a4;
         function_295027(arg_1, &local_19);
         local_3->field_d = false;
-    }
-    else
-    {
-        if (function_30bf0(&local_19) == 0.0f) function_b9fc0(arg_1, &local_19, NULL);
-        local_3->field_d = true;
     }
     s_orientation_request_118f90 local_39;
     function_118f90(&local_39);

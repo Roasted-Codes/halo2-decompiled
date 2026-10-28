@@ -573,7 +573,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 393 (was 449): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
+// score 336 (was 393): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
 // conversions (6 calls versus retail's 15; BLOCKED-BY 0x12aff0: retail's callers treat it as opaque).
 // Round 75: SetMixBins (retail calls 0x37c5e4) for SetMixBinVolumes 449 (kept); the existing 0x2216f0 with a
 // NULL list for the three submissions 393 (kept); explicit sends, one object 613, three objects 544; set-2 rear
@@ -630,13 +630,40 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Automatic-table pointer walks first/second/first+second/third/first+third/second+third/all:
 // 436/436/437/432/431/431/431 fast (control 436); shared table-end pointer 431.
 // All pointer walks 446 plain, three-point gain rejected; original word ordinals restored.
+// Round 208 reduced control 378/967, full 393/951: first/second, first/third,
+// last-two and all descriptor scopes on the current submission graph
+// 417/400/428/447; corresponding three pairwise object reuses 417/400/428;
+// all scopes with both repeated levels 500. All scopes reach frame 0xa0;
+// conversion reuse and the twelve-byte excess frame remain; original body restored.
+// Round 197: Static routing table with all scopes/reuse 496/496; first-third scopes 447; both levels with reuse/scopes 531/531; rear level with reuse/scopes 470/470 (frame 0x94); first-third scopes and both levels 484 (fast control 378). Restored.
+// Current submission graph: routing table after copy with original/first-second/first-third/all
+// descriptor scopes 379/421/415/462 fast; first-use long/word/byte/short table 380/398/393/398
+// fast (control 378, full 393). Original table producer and descriptors restored.
+// Round 222: equality endpoints on all seven nonempty subsets of the three bounded word
+// traversals 378 fast each; all equality endpoints with native-long ordinals 406 (fast control 378).
+// Original ordinal comparisons restored; descriptor/conversion frame remains 0x130 versus 0x94.
+// Round 203: descriptor lexical orders first-second-third, first-third-second, second-first-third,
+// second-third-first, third-first-second and third-second-first 378 each (fast control 378/967);
+// fourth order with both repeated levels 416; fourth order with existing raw append 390.
+// Current inlined submission scratch still gives frame 0x130; every body form restored.
+// Current submission graph: complete original buffers/settings/both observations 398/370/397 fast;
+// both copied-level field references 378, with original buffers 398; native settings-copy producer
+// 384, with original buffers 426; native buffer-record snapshot 390 (fast control 378).
+// Original settings observations 396 plain, worse than full 393; all restored. Frame 0x130 remains.
+// Round 244: early native header initialization before the member copy, first/second/both/third/
+// first-third/last-two/all 381/378/375/371/368/374/374 fast; all before settings copy 374
+// (control 378/967). First-third 399/952 plain versus 393/951; original phases restored.
+// Round 235: Complete native descriptor initialization subsets and at-use clear [359, 348, 349, 349, 351,
+// 333, 334, 338] fast; uniform all-three 336 plain kept (393 before). On that producer, pairwise/all
+// descriptor scopes and one reused descriptor [370, 351, 381, 416, 426] fast; restored. Frame 0x130 and
+// repeated-conversion reuse remain.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
 	long const muted_mixbins[4] = {6, 8, 7, 9};
-	s_mixbin_settings mixbins;
-	s_mixbin_settings second;
-	s_mixbin_settings third;
+	s_mixbin_settings mixbins = {0};
+	s_mixbin_settings second = {0};
+	s_mixbin_settings third = {0};
 
 	m_buffers = buffers;
 	m_settings = *settings;
@@ -679,7 +706,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 453 (was 453): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 438 (was 438): Frame 0xc agrees; selected-primary storage, destination construction and integer-bit/SSE staging differ.
+// Earlier: frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
 // Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
 // level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
@@ -724,13 +753,33 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Native-bit scalar early returns retained: split 238 to 224, direct 447 to 453, net eight plain.
 // Positive-mode original/native direct returns 447/447/453/453 (split 235 each, rejected);
 // native routing bit two on retained selector graph 453 (tie, reverted).
+// Round 234: primary/front consumption scopes and right-first destinations
+// 453/453/453/449/449/449/449; special workspace end 453; complete target flag word
+// 453 with right-first 449. Below-margin gains restored.
+// Asymmetric first/second long destinations 446/462; first/second word 438/461;
+// first/second signed short 438/461; first dword alone/right-first 446/448 (fast).
+// First unsigned-word destination retained: 438 plain, dispatcher exact; other destination remains
+// byte and both value sets are unchanged. Selected-level/SSE homes still differ in frame 0xc.
+// Round 365: actual selected primary-field pointer with native destinations, special input
+// snapshot and native routing domains: 453/461/441/455/447/461/438/454. The 438 plain
+// form loses the dispatcher; input snapshots change the entry roles. All restored.
+// Round 274: primary scalar on retained asymmetric destinations with original/long right and bool/word
+// routing carriers 446/449/437/451; same forms with the secondary setting observed at its send
+// 455/462/450/452. The 437 gain is below margin; 449/451 lose the dispatcher. All restored.
+// Round 241: Paired selected-setting decision, rear/front first, with independent destinations, live
+// routing field, and paired true/false-first destinations: 449/449/449/449/473/473/473/473. All
+// selected-field observations and original body restored.
+// Round 207: native two-gain field array, uniform at-use gain reads and plain paired
+// front/rear/front+rear/tail/front+tail/rear+tail/all loops 466/474/475/497/490/492/507;
+// all plus the repeated buffer send loop 523. Every loop uses a real channel/gain
+// index. All restored; frame 0xc, selected-level and SSE staging differences remain.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
 	if ((bool)((parameters->flags >> 2) & 1))
 	{
 		bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
-		byte left = alternate ? 0 : 6;
+		word left = alternate ? 0 : 6;
 		byte right = alternate ? 1 : 7;
 		real level2 = rear ? m_settings.level20 : m_settings.level28;
 		real const &level = rear ? m_settings.level1c : m_settings.level24;
@@ -857,9 +906,32 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 183: Eight actual native-word destination declaration permutations
 // 227/228/228/225/228/224/227/228; starting with right ties, rear-first forms regress.
 // Original declarations restored; frame 0x20, mode/input-level and x87 tail homes remain.
+// Native-word destinations with bool/byte routing predicates and original/gain/level/both
+// read-at-use forms 242/271/302/323 each. Original scalar observations restored.
 // Round 190: Mode-first field-address selection with gain at entry/after selection/after
 // offset/after input level 247/247/258/258; constant-first counterpart 232/231/245/245. Every form
 // regresses; original helper and scalar lifetimes restored.
+// Round 208: uniform shared input sums with paired route subtotals, repeated
+// right gain and paired threshold observations 293/263/286/270/267/267/270/270.
+// Without the right-gain snapshot, frame 0x18 shortens to 779-804 bytes; gain forms
+// lose the dispatcher. Original sums, observations and local qualifications retained.
+// Round 195: Input-level-first scalar schedules [227, 228, 239, 238]; offset-first and selector/gain
+// schedules [239, 239, 245, 228]. Original observations and three local qualifications restored; frame,
+// mode/input and tail homes remain.
+// Round 201: Const send-input parameter, const receiver method, both, immutable scalar carriers,
+// each contract with those carriers, both contracts/carriers, and coherent scalar names: 224 each.
+// All eight tie; original signatures, selector inputs, scalar lifetimes and dispatcher retained.
+// Round 234: destination/selected-send/input-level consumption scopes and all combinations
+// 224/224/224/224/224/224/224; routing-predicate consumption scope 224. Original lifetimes restored.
+// Round 197: Retained word-route graph, per-use gain/offset/both/level/gain-level/offset-level/all inputs 265/257/276/290/312/308/324; all inputs with native phase scope 324. Some forms recover frame 0x18 but regress; original observations restored.
+// Round 204: Native signed/unsigned routing predicate with primary/spilled/all destination
+// promotions 241/241/248/248/245/245/248/248. Independent selectors and scalar-return graph
+// regress; original word route, scalar observations and three local qualifications restored.
+// Round 365: joint native destination branch with all eight spilled-width subsets
+// 262/263/263/264/263/264/264/265. All restored; frame/input-level and tail sum remain.
+// Round 235: Existing qualified class raw-send path, seven front/rear/tail subsets and all-path if-else tail
+// [224, 224, 247, 224, 247, 247, 248, 254] fast. Dispatcher preserved in every trial; all original helper
+// calls, sums, fields and three local qualifications restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -1100,6 +1172,18 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 190: Live input levels with bool/byte/short/word primary channel and entry-rear/live-rear
 // observations 221/229, 221/229, 213/231, 213/231. All regress; original scalar captures, channel
 // predicate and send expansion restored.
+// Lane 4 r98: the mode-one sends stay x87 in every add_send form (our VC picks x87 for a memory-homed
+// operand plus a field; retail adds the GPR-held level in SSE through its slot). Append decibels by const
+// reference 214; plain add_send sums 212 (0x2af800 102); a local copy of the gain in add_send 212 (copy
+// propagated); `real level = parameters->level; level += parameters->level_offset;` before the appends
+// with the gains read at use: retail's early offset-first sum, frame 4, 222; with the const reference 232.
+// Round 194: Native byte/short/word/dword channel masks with retained rear samples
+// 200/198/198/199; with entry level sum 209/209/209/212. Small gains rejected;
+// original scalar captures, channel decision, helpers and sum grouping restored.
+// Round 203: qualified raw sends front/rear/all 196/198/194; with early level sum 209/211/207;
+// native channel bit with all raw sends, late/early sum 194/207. Short-complement interactions
+// front/rear/all 188/192/188; front plain full 188/592, all matches preserved, but word tests
+// and aligned instruction changes regress (110/120 to 121/128). All executable forms restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

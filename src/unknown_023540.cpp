@@ -2400,7 +2400,14 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 331 (was 331): Frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
+// score 251 (was 251): frame 0x28 agrees; zero/sampler homes, bitmap transport and late fallback selection remain.
+// Earlier: 251 fast (was 252 fast): the pixel-shader RGB output mask is selected before the shift
+// ((inverse ? 8 : 0) << 8), which gives retail's and/shl pair instead of a single 0x800 mask.
+// Earlier: 252 fast (was 335 fast): the standard marker gives retail's stack convention (ret 0x34,
+// inverse at E+36) and width/height default to 1.0f before the bitmap test. Still differs: the
+// 0/1/2 constants land in different registers than retail (EBP against EDI), and the call to
+// 0x144f0 uses our callee's convention.
+// Earlier: 331 (was 331): Frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // Frame 0x28 agrees; inverse AL entry save, dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
@@ -2437,7 +2444,16 @@ dword __cdecl function_131fc0(real alpha);
 // construction with destination selection first 433/439; source selection first 439/433;
 // source construction before conditional destination 331 (four-point fast gain rejected);
 // conditional source then unconditional destination 427, against fast control 335.
-// @retail 0x2a8d0
+// Round 60: BLOCKED-BY 0x289e0 (the only caller, under #if 0, so LTCG gives inverse AL). Own-address
+// inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
+// dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
+// Round 204: Tag/bitmap producer, late fallback/draw arrays and paired shader-alpha workspace
+// scopes, masks 1-7: 251/251/251/255/255/255/255; all with coherent dimension/reciprocal names
+// 255. Full-stack transport retained; original scopes, observations, arrays and equations restored.
+// Round 235: Direct enum-range address/filter/disabled-state loops, seven subsets and complete while form
+// [926, 883, 685, 1104, 1159, 1089, 1240, 681] fast. Runtime SDK setter specialization grows the body; all
+// original ordered direct calls, arrays, fields, directives and body restored.
+// @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
     real strength, bool blend, bool inverse, bool alternate_target,
@@ -2449,8 +2465,8 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     if (!g_4b99b0[1] && alternate_target) return;
     real default_source[4];
     real default_destination[4];
-    real width;
-    real height;
+    real width = 1.0f;
+    real height = 1.0f;
     byte *definition = tag != NONE ? g_4e3b44[tag & 0xffff].bytes : NULL;
     if (tag != NONE && bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
     {
@@ -2460,7 +2476,6 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
         real h = (real)*(short *)(bitmap + 6);
         height = 1.0f > h ? 1.0f : h;
     }
-    else width = height = 1.0f;
     if (alternate_target) function_14bc0(*(short *)(g_4b99b0 + 0x38), 0, false);
     else if (screen_target) function_14bc0(0, 0, false);
     else function_14bc0(*(short *)(g_4b99b0 + 0x34), 0, false);
@@ -2501,7 +2516,7 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
 #pragma inline_depth(255)
         g_484f68.PSConstant1[0] = 0xff;
         g_484f68.PSRGBInputs[0] = 0x8200211;
-        g_484f68.PSRGBOutputs[0] = inverse ? 0x800 : 0;
+        g_484f68.PSRGBOutputs[0] = (inverse ? 8 : 0) << 8;
         g_484f68.PSConstant0[1] = function_131f40(strength, color);
         g_484f68.PSRGBInputs[1] = 0x8011811;
         g_484f68.PSRGBOutputs[1] = 0xcd;
@@ -2582,7 +2597,7 @@ bool spherical_harmonics_evaluate_directional_light(vector3f const *direction, d
     real red, real green, real blue, real *red_result, real *green_result, real *blue_result);
 void __stdcall function_22cf0(s_light_sample_source const *source, real *red, real *green,
     real *blue, byte order, vector3f *direction, point3f const *position);
-// score 530 (was 530): frame 0x20c versus 0x200; order, coefficient and separate sample homes differ.
+// score 506 (was 530): frame 0x21c versus 0x200; order, coefficient and separate sample homes differ.
 // Earlier: Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
 
 // Earlier score 530 (was 530): Frame 0x20c versus 0x200; order, coefficient homes and sample paths remain.
@@ -2625,6 +2640,10 @@ void __stdcall function_22cf0(s_light_sample_source const *source, real *red, re
 // Negative allocation failure bool/byte/short/long in the original rejection arm
 // 531/531/529/528; reused actual capacity predicate 539/539/537/537.
 // Best reduction two is below the gate; original result and all helpers restored.
+// Coefficient address at the consumer 506; direct bucket/sample/both 530/530/530;
+// consumer address with bucket/sample/both 506/506/506. Address begun at accepted
+// allocation with both direct receivers 527 (three-point gain rejected). Only the
+// consumer address retained; 1404/1543 bytes, frame 0x21c.
 // Round 190: Existing copy/inverse/coefficient inline declarations singly, in three pairs and
 // together 530 each; all three separate noinline declarations 850. Original helper declarations and
 // body restored; frame 0x20c/0x200 and separate-sample boundaries remain.
@@ -2649,7 +2668,6 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
         real red[16], green[16], blue[16];
         long level = 5 - order;
         if (level > layout->level_count - 1) level = layout->level_count - 1;
-        real const *data = layout->data + layout->levels[level].offset;
         long stride = layout->groups * (layout->columns * 3 + 4);
         s_bucket_source const *buckets = (s_bucket_source const *)vertices;
         long total = function_023540((short)count, buckets, &g_4b89b0[g_5093e8], stride);
@@ -2702,7 +2720,7 @@ bool __stdcall function_23690(s_coefficient_layout const *layout, short order, l
                     function_143600((real const *)&rotation, 3, red, rotated_red);
                     function_143600((real const *)&rotation, 3, green, rotated_green);
                     function_143600((real const *)&rotation, 3, blue, rotated_blue);
-                    function_023ca0((s_block_layout const *)layout, data, rotated_red, rotated_green, rotated_blue, output);
+                    function_023ca0((s_block_layout const *)layout, layout->data + layout->levels[level].offset, rotated_red, rotated_green, rotated_blue, output);
                     output += stride;
                 }
             }
@@ -2728,6 +2746,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 }
 
 // score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
+// has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
+// its 0 lives there. 0x144f0 sits in a contributor file this round; no new form tried.
 // The stage call is BLOCKED-BY 0x144f0: retail passes tag in EAX, stage in ECX and the fallback in EBX
 // (ret 0xc), and reads the first bitmap formal as a full dword (cmovne). Round 73: for loop 334;
 // stage-nonzero ternary 334; selected bitmap local 294 at 2001 bytes (strength-reduced sampler table);
@@ -2765,10 +2786,24 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Actual address/filter/disabled sampler tables alone 775/813/794; address+filter,
 // address+disabled and filter+disabled 1072/1087/1092; all indexed/pointer walks
 // 1262/1261. Original eleven sampler statements and helpers restored.
+// Alpha clamps before initial setup first/second/both 445/433/469; before sampler
+// setup 358/389/341; both before shader clear 353; both at admitted entry 481.
+// Exact-only timing forms restored; original packing and sampler/draw calls retained.
 // Native tag block/bitmap records separately/together, their read-only receivers and
 // complete tag/bitmap observations at use: eight forms 334 each. Original receivers restored.
 // Complete alpha parameter results, ternary/else-if/independent clamps 353 each; native rectangle
 // field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
+// Round 219: Normalized first/second/maximum scalar role-name masks 1-7 and all plus both trig
+// names: 334/334/334/334/334/334/334/334. Original body restored.
+// Round 201: split flag/tag rejection, positive flag-first admission, nested flag-first admission and
+// nested flag rejection 334 each; tag-first split/positive/nested/mixed admission 370 each (2023 bytes).
+// Original guard and all sampler, packing, scale, rotation and vertex operations restored.
+// Round 204: Complete dimension/tag, sampler-loop and scale/bounds/trig producer workspace
+// endings, masks 1-7, and all with immutable maximum/reciprocal: 334 each. Original
+// scalar/output lifetimes, helper calls, state order and arithmetic trees restored.
+// Signed integral corner inputs char/short/int/long in the existing rotation helper
+// 334/334/334/334; each with native coordinate outputs
+// 334/334/334/334. Original helper and all eight calls restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -3083,7 +3118,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 971 (was 971): Frame 0x2c agrees; capability/save roles and state expansion remain.
+// score 934 (was 934): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
+// Earlier: Frame 0x2c agrees; capability/save roles and state expansion remain.
 // frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
 // eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
@@ -3110,6 +3146,16 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // quantizer scope 971; native long success 1194.
 // Mode assignment orders MNS/SMN/SNM/NMS/NSM 973/971/971/973/973; NSM in cases
 // 0/1, 2/3, 0/2 971/973/971 (fast; M=maximum, S=allow_small, N=allow_negative).
+// Round 364: input byte/alpha byte/both 1185/934/980; signed input/alpha/both
+// 1185/934/980; short-input with byte-alpha 935; unsigned-input with byte-alpha 934.
+// Byte alpha selector alone kept plain at 934; its only values remain 4 and 24.
+// Round 366: blend/depth/both indexed state tables 1395/1417/1484; shared sampler 1223; sampler with blend/depth/both tables 1413/1410/1550; all with Boolean capabilities 1448. All restored.
+// Test-defined rescale state, canonical permission-width pairs and negative-
+// permission failure-first combinations 1216, 1205, 1208, 933, 1186, 1184, 1180, 1183 fast.
+// Round 159: Upper/lower/both byte channels 1119/1202/1178; upper/lower/both word channels
+// 1161/1202/1231; rounded result read once 1375; read once with byte channels 1325. All restored.
+// Round 232: native mode-one/two/three input layouts, all seven subsets 934;
+// complete premultiplied-color production with all layouts 935. All restored.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
@@ -3191,7 +3237,7 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     long whole = fixed >> 8;
     long fraction = fixed & 0xff;
     long input = small ? 5 : 4;
-    long alpha_input = small ? 4 : 24;
+    byte alpha_input = small ? 4 : 24;
     if (whole > 255) whole = fraction = 255;
     memset(&g_484f68, 0, sizeof(g_484f68));
     g_484f68.PSTextureModes = 1;

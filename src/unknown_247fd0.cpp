@@ -1,5 +1,6 @@
 #include "unknown_11c920.h"
 #include "effects.h"
+#include "vector_products.h"
 
 // @flags /O2 /arch:SSE /Gr
 
@@ -70,7 +71,7 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 	arg_1 = function_x82e52f(arg_0, 0, 0);
 }
 
-// score 70 (was 142): frame 0x10 and length agree. Retail stores field_10 before the field_38
+// score 70 (was 70): frame 0x10 and length agree. Retail stores field_10 before the field_38
 // sample; written in that order (133) everything through the 0x249aa0 call matches except that
 // the cached-record compare loads field_50 into EAX where retail folds `cmp ebp, [ebx+0x50]`,
 // and the child loop's scratch registers rotate. Compile-only: after an x87 fmul + fstp the
@@ -137,6 +138,12 @@ PRIVATE __forceinline void function_248076(dword *arg_0, real &arg_1)
 // cache-update body 133. Round 137: inline link-child helper (parent pointer argument), with
 // the parent store inside 70/70; cache-update inline helper with early return in retail store
 // order 133; sample through the existing helper in retail store order 133; child result /
+// loop index declared before the loop 70/70. Round 139: this compiler never folds a load into
+// an ALU operand right after an x87 fstp (no such site in the whole linked image, and 0x39a80's
+// equivalent site splits too), while retail folds at both of its two sites, so the retail store
+// order cannot reach `cmp ebp, [ebx+0x50]` from source. Tag index local 245; child definition
+// local 76; first lookup through the inline particle_object_for_tag 69; list-address pointer
+// locals 70; retail order through the shared sample local 133.
 // loop index declared before the loop 70/70.
 // changed-record predicate 142; actual head field 142; unsigned child handle 142; shared bounded
 // selector 142; word flags 142, with bounded selector 142; child zero-age before enable 142;
@@ -289,7 +296,7 @@ vector3f *function_143070(matrix3x3 const *arg_1, vector3f const *arg_0, vector3
 void placement_set(s_placement *arg_0, vector3f const *arg_1, point3f const *arg_2, vector3f const *arg_3, short arg_4);
 void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_object_246eb0 const *arg_3, long arg_4);
 
-// score 368 (was 368): frame 0xb0, 1643 bytes against 1652. Left: retail saves EBP at entry and
+// score 356 (was 368): frame 0xb0, 1643 bytes against 1652. Left: retail saves EBP at entry and
 // shares one epilogue (ours saves it after the early exits); retail keeps the blend in XMM2-4
 // across the first 0x143070 call (here it goes through the grouped local's memory); retail's
 // frame holds probe point f0x14, probe direction f0x20, collision result f0x2c, 16 unreferenced
@@ -386,6 +393,20 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // First native sample on the collision/source frame: entry/producer 426/426;
 // with native probe point/direction/both 426/426/426; entry/producer/both probes
 // with shared loop lookup 443/443/443. Frame shrinks to 0xac; all restored.
+// Round 223: Defining/caller inline with noinline spawn/matrix/placement/spawn+matrix/
+// spawn+placement/matrix+placement/all 368/369/368/369/368/369/369; spawn noinline 368.
+// Round 226: native signed particle header, unsigned effect/child handles, every pair/all
+// three, and all with unsigned allocated handle 368 each. Frame 0xb0 and late EBP save remain.
+// Round 32: plain locals for the grouped one 466 (frame 0xa0, the blend has no home); blend through
+// an inline interpolation helper 466; a 0x5c-byte collision result (the size 0x0b8ca0 and 0x26bfa0
+// give it) 369 alone, 463 with plain locals (frame 0xb0, but collision above the placement);
+// placement renamed 463; trace locals in the trace block 466. All restored.
+// Round 244: direct existing real producer assigned at original draws 1/2/3/4/last-three/
+// all/first-third/second-fourth 368/368/368/368/368/368/368/368. Original output assignments
+// and reference helper restored; late EBP save, first-sample store and geometry homes remain.
+// Round 218: Shared vector sums blend/velocity/both/motion/blend-motion/velocity-motion/all
+// 368/368/368/356/356/363/363; all plus trace-vector setter 366. Motion helper alone
+// 356 kept plain; frame 0xb0 and 1643/1652 bytes remain, with late EBP save and random/blend/getter homes.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)
@@ -483,9 +504,7 @@ void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition
 		else
 		{
 			real local_11 = (1.f - arg_5) * arg_6;
-			local_2->field_1c.x = local_2->field_28.i * local_11 + local_2->field_1c.x;
-			local_2->field_1c.y = local_2->field_28.j * local_11 + local_2->field_1c.y;
-			local_2->field_1c.z = local_2->field_28.k * local_11 + local_2->field_1c.z;
+			vector3f_add_scaled((vector3f const *)&local_2->field_1c, &local_2->field_28, local_11, (vector3f *)&local_2->field_1c);
 		}
 		local_2->field_3c = arg_4;
 		++arg_1->field_2;

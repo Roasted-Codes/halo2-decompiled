@@ -127,6 +127,9 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // (frame 0x6c); existing outlined normalizer at both 549. One-point forms rejected;
 // original helpers, calls and includes restored. Entry/XY homes and cleanup remain.
 // Sum/direction/evaluation point-name order, eight combinations 408.
+// Round 240: Shared normalizer factor-first, early uninitialized factor and role names,
+// all seven combinations 408; native epsilon-rejection return 408. Internal magnitude/
+// reciprocal lifetime forms do not recover entry/XY homes or cleanup; helper restored.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -341,6 +344,14 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // 803/798/858; center-first/reverse-first initial points 836/802; reverse-first with late forward 792;
 // center-first with late reverse 797. Original geometry production restored; frame 0x11c/0x114,
 // eager radius and trace/pivot/point homes remain.
+// Split-output planar frame with native trace/sample-point/state role-name groups,
+// their pairs/all and reversed trace declarations: 755 each (fast control 749). All restored.
+// Separate transform/planar pivot plus all sweep-rotation products, with complete
+// normalizer-square/distance-square/obstacle-rotation product phases: all eight 755
+// (3351 bytes, frame 0x114, first +0x14). Eager radius remains; all restored.
+// Unsigned-word edge pair/center/both/facing/edge-facing/center-facing/all results
+// 776/779/776/775/775/790/756; all four native-dword results 752 (fast control 749).
+// Frame/radius and trace/pivot homes remain; original result widths and body restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,
@@ -531,6 +542,7 @@ bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 }
 
 union vector2f;
+real function_11cc90(vector2f const *a, vector2f const *b);
 extern point2f *g_468778;
 real function_30bf0(vector3f *arg_0);
 real normalize2d(point2f *arg_0);
@@ -561,6 +573,21 @@ __forceinline void function_29a20e(vector3f *arg_0)
 	}
 }
 
+// score 550 (was 550): frame 0x580 agrees; retail duplicates the epilogue into both arms of the final
+// clamp and places the failure exit last (ours 82 bytes shorter), keeps the flattened forward vector's
+// length on the x87 stack and loads the reference vector's fields before multiplying. Tried: the
+// flattened length summed j first 551; the flag cleared before the forward copy 550; the flatten helper
+// returning the length 551; the existing normalize3d after clearing k 676 (retail's fst/fabs, but the
+// angle dot is one instruction short and every later line shifts); angle dot products local-first 676;
+// the failure test after the loop 550; the final clamp as if/else 547; one exit for the final heading
+// store 550; the velocity dot with the k term first 550. Round 67: also retail lays the 12-byte
+// locals out in declaration order (position 0x3c, the 0x1f9760 output 0x48, the object pointer 0x54,
+// the perpendicular 0x58; ours puts the perpendicular first at 0x3c), and keeps each angle-update arm's
+// store and the clamp's reloads (ours hoists the angle load above the branch and sinks both stores into
+// the clamp). Descriptive names for the four vectors 550 (no slot moved); the perpendicular assigned
+// field by field 550; the angle arms as explicit `a = a - d` / `a = d + a` 550; the dead success test
+// as break-first 550; the failure statements written at each of the three gotos 583 (2622 bytes, not
+// merged).
 // @retail 0x29a190
 void function_29a190(long arg_0, long arg_1, vector3f const *arg_2, vector3f *arg_3,
 	short *arg_4, real *arg_5, bool *arg_6, bool *arg_7, short arg_8)
@@ -575,14 +602,7 @@ void function_29a190(long arg_0, long arg_1, vector3f const *arg_2, vector3f *ar
 	vector3f local_5 = *(vector3f *)(local_0 + 0x290);
 	*(bool *)(local_0 + 0x6d1) = false;
 	function_29a20e(&local_5);
-	real local_6 = g_468778->x * local_5.i + g_468778->y * local_5.j;
-	if (-1.0f > local_6)
-		local_6 = -1.0f;
-	else if (local_6 > 1.0f)
-		local_6 = 1.0f;
-	local_6 = function_50650(local_6);
-	if (g_468778->x * local_5.j - g_468778->y * local_5.i < 0.0f)
-		local_6 = -local_6;
+	real local_6 = function_11cc90((vector2f const *)g_468778, (vector2f const *)&local_5);
 	if (!*(bool *)(local_0 + 0x5d0) || *(bool *)(local_0 + 0x5d2) || !local_2)
 	{
 		*(real *)(local_0 + 0x670) = 0.0f;

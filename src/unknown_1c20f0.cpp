@@ -16,6 +16,15 @@ struct s_slot_81
 	byte unknown11[0x40 - 0x11];
 };
 
+struct s_slot_81_data
+{
+	long flags;
+	bool unknown04;
+	byte unknown05[0x34 - 5];
+};
+
+typedef char assert_slot_81_data_size[(sizeof(s_slot_81_data) == 0x34) ? 1 : -1];
+
 /* the prop state as these callbacks read it: the position at +4 */
 struct s_prop_state_point_81
 {
@@ -40,9 +49,15 @@ void __stdcall actor_behavior_81_update48(long object_index, long unused);
 
 static __forceinline long real_to_long(real value);
 
-// score 81 (was 81): our stack frame is 16 bytes smaller than retail's, so
-// every local
-// offset is shifted and the loop is laid out differently.
+// score 81 (was 81): frame 0xc4 versus 0xd4; direction/counter roles and endpoint scheduling differ.
+// The collision workspace remains 16 bytes smaller; local offsets and loop layout differ.
+// Reused step scale 228; with shared delta 228, endpoint setter 220, both 220;
+// with start setter 228, start/delta 228, both setters 227, all three 227.
+// Reused actor-position pointer, first-use lifetime, origin/start declarations
+// and common-exit combinations 114, 82, 114, 82, 190, 154, 190, 154.
+// Round 219: Complete per-step direction snapshot with short/char/byte/long induction
+// 240/240/240/226; direct char/byte/long/word induction 210/210/164/81. All restored; frame
+// 0xc4/0xd4 and direction/counter roles remain.
 // @retail 0x1c19b0
 bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_type_f17a25 *path)
 {
@@ -126,9 +141,12 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 	return false;
 }
 
-// score 80 (was 80): the actor index is taken from the stack into EDX in
-// retail and from a
-// global into ESI here, so the whole prologue is a different length.
+// score 80 (was 80): actor/sentinel allocation and rotated prop walk differ at the 0x0c frame.
+// Actor is held in ESI after the global lookup; retail masks its stack index first and uses EBX.
+// Tail advance after selection 96; shared direction setter 96; selected-result gate 97,
+// with setter 97; actor read at every use 85, with setter 84; both 85, with setter 84.
+// Current index before lookup/next cursor, rejection guards, reused post-scan
+// decision and closest-first combinations 80, 80, 85, 85, 80, 80, 85, 85.
 // @retail 0x1c1d50
 bool __stdcall function_1c1d50(long actor_index, s_type_f17a25 *path)
 {
@@ -247,13 +265,15 @@ bool __stdcall function_1c2120(long actor_index, s_slot *slot)
 	return true;
 }
 
-// score 64 (was 64): the object pointer is kept in ESI here and reloaded from
+// The post-header slot state and output-before-clear initialization match retail.
+// score 0 (was 64): the object pointer is kept in ESI here and reloaded from
 // the stack
-// there, and the flag byte is written as a constant 0 here.
+// there, and the flag byte is written from AL here and as a constant 0 in
+// retail.
 // @retail 0x1c2130
 bool __stdcall function_1c2130(long actor_index, s_slot *slot)
 {
-	s_slot_81 *state = (s_slot_81 *)slot;
+	s_slot_81_data *state = (s_slot_81_data *)slot->unknownc;
 	s_actor_view *actor = actor_get(actor_index);
 
 	if (!actor->unknown605 && !actor->unknown264 && actor->unknown040)
@@ -265,17 +285,17 @@ bool __stdcall function_1c2130(long actor_index, s_slot *slot)
 
 		actor->unknown5e8 = 1;
 		buffer = ai_scratch_buffer_get();
+		flag = false;
 		memset(&request, 0, sizeof(request));
 		request.unknown015 = true;
-		flag = false;
 		request.type = 4;
 		function_2605d0(actor_index, &request, 0, (long)&unknown, buffer, &flag);
 		if (actor->unknown5e8 == 0)
 		{
-			state->unknown10 = true;
+			state->unknown04 = true;
 		}
 		ai_scratch_buffer_release(buffer);
-		if (!state->unknown10)
+		if (!state->unknown04)
 		{
 			s_path_settings settings;
 			s_path_source source;

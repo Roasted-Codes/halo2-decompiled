@@ -217,7 +217,11 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // native byte palette 611. Round 75: palette byte read at each use 683; fog-colour accumulator with
 // four scalar colour arguments 770 (frame 0x4824: one colour value spills), with its alpha term first
 // 761, with the per-use palette byte 746; named alpha in the pointer helper 698 (3826 bytes, aligned
-// 497 -> 489).
+// 497 -> 489). Round 78: byte test with a long index at the top of the branch and the field re-read at
+// the source-index store 683 (fast; retail's movsx position); with a named cluster index 683; lookup through
+// the existing entry_at_index getter 612 plain (aligned rows 497 -> 803, ebx/edi/esi roles move), with the
+// long index 612. Retail assigns the NULL record before the table's own NULL test.
+// Round 235: query-table/tag-input/falloff-radius consumption scopes, all seven combinations 616 each; source-selection consumption scope 616.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

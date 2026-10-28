@@ -1235,6 +1235,11 @@ bool function_c70b0(long unit_index);
 long function_cbd50(long unit_index, short weapon_index);
 
 // score 164 (was 164): frame eight agrees; entry pool/state registers, signed-count joins and result
+// Round 141: retail returns the result byte unnormalised (a bool) and keeps the depletion in BL with the
+// interruptibility in memory; round 75's first-sets/second-clears depletion 330, with a bool result
+// 361 (1243 bytes, aligned 132 -> 102: retail's setle and second test, but depleted in memory and
+// interruptible in BL, no unit re-read), with interruptible/depleted/result declaration orders 362/363;
+// controlling read first 164; name before overlay 164.
 // normalization differ. Retail keeps the pool global in EAX and its data in EBP from entry, the state
 // in EDI, re-reads the unit pointer for both held-weapon queries (the second through a fresh data load)
 // and keeps the depletion's initial false in a stack byte (+0x12) beside the result (+0x11) and the
@@ -1263,6 +1268,12 @@ long function_cbd50(long unit_index, short weapon_index);
 // also in 0x1103a0); depletion as `if (first != NONE) depleted = ...; if (second != NONE && count > 0)
 // depleted = false;` 330 (frame four), with a byte depleted 330; without the parameter's volatile
 // re-read at the 0xc70b0 call 322; depletion through an inline helper writing a pointer 330.
+// Round 80: bool result 194 (head unchanged; the exits lose the normalisation but still lack retail's
+// ebp pop); second query as `if (second != NONE && count > 0) depleted = false;` 345 (all four registers
+// at entry, but frame four, depletion in memory, interruptibility in BL, unit kept live); with the
+// overlay read at its switch 331; with cached-unit slot arguments 345; with short slot locals 345.
+// Retail's unit reload at each query (`mov ecx, ebp; mov ecx, [ecx + edx + 8]`) occurs in only one
+// other retail function (0x100130, unmatched). Original body restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1637,12 +1648,13 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 810 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// score 805 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// frame 0xcc versus 0xd4 and first angle expansion remain.
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
 // computes the centred test once with x87 fabs before the blend block, copies the default angles as a
-// struct and duplicates the seat-weight call setup in both arms. 0x1c6470's convention (graph in ECX in
-// retail) still differs: BLOCKED-BY 0x1c6470 at its four call sites.
+// struct and duplicates the seat-weight call setup in both arms. 0x1c6470 takes graph in ECX in
+// both builds; its save placement and store scheduling still differ at the four calls.
 // Tried: depth zero 1428, depth one 833, projection inline 833, bounds inline 1055, native centered 834,
 // separate secondary activity 833; two inline levels 833, sequential channel construction 833, activity
 // byte 833, short overlay counter 833, channels before curve weights 833; seat-weight branches 874,
@@ -1668,15 +1680,36 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // projection vector 830; default angles copied as a struct 826; `active` cleared by a conditional
 // assignment 884 (3358 bytes, aligned 846 -> 622); that plus the centred test as a named bool 875
 // (aligned 584).
+// Round 187: basis matrix 807; matrix/shared cross 858; matrix pointer/reference/value
+// inputs 807/807/842; aggregate/member basis copies 1102/1102; matrix reference/shared
+// cross 851. The three-count gain is dropped; original independent vectors restored.
+// Round 7: graph looked up right after the state 805 (kept); with the final flags as a ternary 804;
+// final test with its arms swapped 810; activity as a logical and 849; a fresh object pointer for the
+// final test 810; definition first 810; definition before control 805; channel tests through a
+// pointer helper 838; overlay ratio clamp as a ternary 805. Retail inlines the first 0x11df30 call
+// and reads the projection input from the object in place.
+// Round 26 (lane 9): ours inlines 0x1cb490 (and 0x1cb410 below it) in the overlay loop, where retail
+// calls 0x1cb490 and inlines the first 0x11df30 instead (an inliner budget trade; 0x1cb490 can't be
+// noinline: matched 0x105e80/0x1ccae0 inline it). Unused model-tag local for retail's dead entry
+// lookup 805 (eliminated); ratio as 0.5f + x * 0.5f, x / 2.0f + 0.5f, (x + 1.0f) / 2.0f, 0.5f * x + 0.5f
+// 805 each (all compile to (x + 1) * 0.5; retail multiplies first); overlay loop as a for 875 (3338
+// bytes: the first 0x11df30 is then inlined as in retail, 0x1cb490 still inlined in the loop);
+// `++i < 3` / short index 805/805; `active` declared at the top of the aiming block 805.
+// Complementary activity across both aim stages, bool/byte/signed-byte/short at the
+// original declaration 850/850/850/824; constant entry initialization 850/850/850/836.
+// Original activity, input snapshots, helper boundaries and all smoothing values restored.
+// Round 210: Animation-ID fields at every use: overlay/primary pair/secondary 867/863/833;
+// overlay-primary/overlay-secondary/primary-secondary/all 879/857/856/874;
+// graph at every use 873. Original ID ownership and all executable source restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
 {
 	s_unit_animation_object *unit = UNIT_ANIMATION_OBJECT(unit_index);
 	s_animation_state *state = UNIT_ANIMATION_STATE(unit);
+	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	s_unit_animation_control *control = UNIT_ANIMATION_CONTROL(unit);
 	s_unit_animation_definition *definition = (s_unit_animation_definition *)TAG_BYTES(unit->definition_index);
-	s_graph_tag *graph = GRAPH_GET(state->graph_tag_index);
 	c_animation_channel channel;
 	if (control->channel_9c.graph_tag_index != NONE && control->channel_9c.animation_id.index != NONE)
 		control->channel_9c.sample(1.0f, node_mask, node_count, transforms);
@@ -2343,6 +2376,11 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // helper 702 (aligned 487 -> 476); validity result computed before the changed flag 668 (aligned 468);
 // definition pointer computed second 663; both 665; with a Boolean force flag 706 (frame 0x7c, aligned
 // 385); plus the force result as a flag set in a test 708 (aligned 361, frame still 0x7c).
+// Round 187: primary/secondary request producers, original/input-first/complete branch:
+// original/input 694; original/branch 708; input/original 722; input/input 727;
+// input/branch 727; branch/original 713; branch/input 690; branch/branch 690.
+// On the secondary input-first form (ret 8): tag second 694; state before control 694;
+// Boolean transition 702; tag second with Boolean transition 702. Original body restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2621,7 +2659,7 @@ bool __stdcall function_111650(long arg_0, long *arg_1)
     return active;
 }
 
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *value);
 bool function_e4050(long object_index);
 const long g_4408f8[8] = { NONE, 0, 1, 2, 2, NONE, NONE, 3 };
 const long g_440918[8] = { NONE, NONE, 0x600008c, 0xc000043, 0xc000043, 0xd000042, 0xc000043, 0xc000043 };
@@ -2638,9 +2676,15 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
-// score 147 (was 147): BLOCKED-BY 0xe70b0 (retail passes the unit in ecx and the action pointer
-// in eax and compares through the pointer it returns); frame 0x3c versus 0x38: retail packs the
-// address-taken action short at +2 beside the two flag bytes, ours gives it a 4-byte slot.
+// score 155 (was 155): frame 0x3c versus 0x38; action/decision homes, input carrier roles and
+// call materialization remain. The action query now matches, but its returned-pointer test
+// grows the frame to 0x40 on this caller; the original executable body is retained.
+// frame 0x3c versus 0x38; the escaped action short has its own
+// aligned slot. The action and seat queries match; returned action-pointer comparison
+// and channel-copy/play argument scheduling still differ.
+// frame 0x3c versus 0x38; action/decision packing and copy schedule differ.
+// Retail packs the address-taken action short at +2 beside the two flag bytes;
+// ours gives it a 4-byte slot. The action query now matches and returns its output pointer.
 // Tried: native channel workspace 139; copy return to play 152; accumulated channel failure 177;
 // unsigned word result 173; short table index 188; dword channel backing 152; direct copy chain 152;
 // mode at use 196 (frame 56); repeated table index 152; mode after animation 157; direct action
@@ -2655,6 +2699,16 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // lookup/animation/mode 147 each; action-result assignment/positive completion 161/161; direct
 // success return 154; copy statement before the play call 162 (aligned diff 71 -> 65); copy with
 // direct success return 165; bool result 152, with the copy 162, with copy and return 162.
+// Returned action query with Boolean-result/copy-boundary/direct-return combinations
+// 196/207/198/209/200/200/202/202; three-field decision records 198/212/220 (exact-only, discarded);
+// returned query with entry result/result-and-force/result-and-action homes 200/200/200.
+// Complementary success/overlay decisions, individually and together with native widths
+// and constant entry initialization: 207/198/207/207/207/207/215/207; restored.
+// Unchanged reduced control 198/684 differs from full 155/668; original code retained.
+// Round 210: State/control/tag reads at every use 196/202/222; state-control/state-tag/control-tag/all
+// 205/216/202/217; unit at every use 188, plain 195. Reduced unchanged control 198;
+// all restored against full baseline 155. Action query now matches; its return-use forms
+// previously grew the frame and remain excluded.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
