@@ -1501,6 +1501,51 @@ struct s_camera_clip_reference_16ebf0
 // values with native basis inputs 222; library copies with native basis inputs 222; native values with
 // entry output declarations 222; scalar values with entry output declarations 209. Individual direction,
 // matrix, adjustment, point, fraction, location and position local names 209 each.
+// Frame 0x98 agrees; saved-state/input-output direction homes and clipping convention remain.
+// Earlier: Frame 0x98 agrees; saved-state and native direction/point homes plus the held narrow/fraction convention remain.
+// Earlier 209 (was 209): Frame 0x98 now agrees; saved-state/direction homes and narrow/fraction convention differ.
+// Frame 0x98 agrees; saved-state/direction homes and clipping convention remain.
+// Frame 0x98 now agrees; saved-state/direction homes and narrow/fraction convention differ.
+// Earlier forms on frame 0x9c:
+// shared cross product 234, scoped matrix 234, working-vector matrix copies 232,
+// aggregate copies with shared cross product 249, role names 249, combined scope 249.
+// Earlier vector-copy homes and narrow/fraction convention trials:
+// Direct view call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode branch 240.
+// State first 253; early native declarations 229; split input/output vectors 229; scalar position 223;
+// full-width narrow 231 (frame 0x98); point setter 223; setter with wide predicate 253; combined native copies 287.
+// Scalar-workspace role names 229; scale assigned after copies 229; later position pointer 226;
+// no inner position alias 229; directions published first 229; scalar vector aggregates 229;
+// later position pointer with native direction copies 237. Three-point gain rejected.
+// Complete direction memcpy 237; direct input cross with late workspaces 244;
+// later up pointer 253; native point carried through composition 229; matrix-axis cross with late workspaces 241.
+// Adjustment memcpy 223; native directions with point setter 251; fraction-only scope 223;
+// location-only scope 223; geometry fields at each use 223.
+// Interpolation setter 223; transformation scope 223; branch-assigned narrow 220;
+// transformation names 223; direction fields at use 213; native copies with branch-assigned narrow 240;
+// direction fields with branch-assigned narrow 209 (plain).
+// Round 215: signed-byte narrow 218; signed/unsigned-word narrow 208/208;
+// function-scope narrow 209; missing-location-first 209. One-point gains rejected.
+// Recovered-frame saved-state name 209; composition output memcpy 209; consistent
+// direction/position role names 209; native byte predicate 218; invalid-reference-first 209.
+// Recovered-frame forward-only copy 217; up-only copy 217; shared cross product 209; saved-state
+// alias removed 254; split high-bit predicate 209. Frame 0x98 agrees; saved-state and direction
+// homes plus clipping convention remain.
+// Native player receiver 209; input/basis/composition/publication component loops 1165/1161/1157/265;
+// native receiver with input/composition loops 1165/1157; all native copy phases 1210. All restored.
+// Existing matrix constructor: scalar inputs 290; direct fields 379; native/library direction inputs 330/330;
+// native point 299; direct fields/library point 388; native/library complete copies 332/332. All constructor
+// and declaration forms restored.
+// Input/axis/output/all order 209 each; point/point-axis order 209/209; cross ji/kj 209/209;
+// input-axis order 209.
+// On frame 0x98, separate input and output direction values: split scalar input/output values
+// 209; split native input/output values 222; split library input/output copies 222; split scalar
+// values and native basis inputs 246; split native values and native basis inputs 222; split
+// library copies and native basis inputs 222; split native values with entry output declarations
+// 222; split scalar values with entry output declarations 209. All restored.
+// Individual direction, matrix, adjustment, point, fraction, location and position local names
+// 209/209/209/209/209/209/209/209.
+// Original-position pointer before view queries: scalar/native directions, word truth, both
+// 252/260/248/271; those four with entry matrix declaration 252/260/248/271. All restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

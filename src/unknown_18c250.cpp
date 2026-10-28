@@ -599,6 +599,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Round 233: cluster/spatial/both receivers bounded to their consuming kind phases 309/293/311;
 // marker declared at object-phase entry 280; marker plus those receivers 309/293/311;
 // audible output declared at object-phase entry, initialized at its query 280. All restored.
+// Round 360: tag pointer acquired in the object phase after admission/name/marker/
+// position/forward/velocity/root-location/audibility boundaries 308/316/312/314/316/321/318/320.
+// Original acquisition and receiver pair restored; root-location convention remains.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
