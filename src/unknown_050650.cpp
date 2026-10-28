@@ -198,14 +198,24 @@ static inline real actor_looking_normalize2d(point2f *vector)
 }
 
 /* A switch selects whether the vertical component is compared. */
+// score 6 (was 40): only the final horizontal products and their result branch differ. Vector parameters
+// swapped, aggregate 2D copies and the 3D result assignment (kept). The aim renamed 40; declarations
+// swapped 39; forceinline/shared first normalization 40/40; a product accumulation 20; a commuted sum 14;
+// the final comparison assigned 25; nested comparison/single product local 6/6; product operands swapped 8;
+// reversed terms and operands 8; helper terms/shared magnitude/named square 8/8/8; squared accumulation 10;
+// dot3f 8; an early final return 83; shared normalization with reversed terms 8; indexed vector2f locals 8;
+// comparison operands reversed 8; an explicit false arm 27; single-product operand swaps 8/8.
 // @retail 0x296d60
-PRIVATE bool function_296d60(real cosine, vector3f const *aim, vector3f const *reference, bool three_dimensional)
+PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
 	bool result = false;
 	if (three_dimensional)
-		return reference->k * aim->k + reference->j * aim->j + reference->i * aim->i > cosine;
-	point2f aim_horizontal = { aim->i, aim->j };
-	point2f reference_horizontal = { reference->i, reference->j };
+	{
+		result = reference->k * aim->k + reference->j * aim->j + reference->i * aim->i > cosine;
+		return result;
+	}
+	point2f aim_horizontal = *(point2f const *)aim;
+	point2f reference_horizontal = *(point2f const *)reference;
 	if (actor_looking_normalize2d(&aim_horizontal) > 0.f &&
 		normalize2d(&reference_horizontal) > 0.f &&
 		reference_horizontal.y * aim_horizontal.y + aim_horizontal.x * reference_horizontal.x > cosine)
@@ -1118,7 +1128,7 @@ void function_298370(long actor_index)
 			}
 		}
 		if (valid && !actor->unrestricted_looking && !forced &&
-			!function_296d60(aiming_cosine, &direction, &actor->forward, actor->unknown229))
+			!function_296d60(aiming_cosine, &actor->forward, &direction, actor->unknown229))
 		{
 			if (allow_turn)
 			{
