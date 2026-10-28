@@ -5543,6 +5543,7 @@ bool __stdcall function_c4410(long unit_index, void const *creation, bool *out_o
    code */
 // score 294 (was 325): Frame 0x50 and extent agree; incoming unit, return byte and ready home differ.
 // Two request homes 313; result first 313; shared exit 301; secondary modes first 294; branch-local requests 314.
+// score 279 (was 294): object flag 7 read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0xcd0c0
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 {
@@ -5553,7 +5554,7 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 	short hand;
 	s_unit_request request;
 
-	if ((weapon->object_flags >> 7) & 1 || *((byte *)weapon + 0x12c) & 1 ||
+	if (TEST_FIELD_BIT((weapon->object_flags >> 7) & 1) || *((byte *)weapon + 0x12c) & 1 ||
 		!function_cd6a0(unit_index, NONE, weapon_index))
 	{
 		return result;
