@@ -361,6 +361,12 @@ bool __stdcall function_fa9a0(long *value)
 // Same-arithmetic private normalizer: one magnitude exit 86; separate result 93;
 // native failure guard 87; direct complete-vector output with those 122/116/122,
 // alone 122; one magnitude exit with local home names 86. Restored.
+// Complete setters: input 81; output 87; fallback 90; fallback/output 114;
+// input/output 70 (plain 70, three caller matches lost); all 104; complete
+// time arms with output/all setters 100/118. Native point/output 70; with late
+// time/full arms/conditional time 94/95/70; input/output late/entry time 94/96;
+// native point/output entry time 96; input setter/library output copy 81.
+// The 70 forms change input registers; 81 gains only six. All restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -580,7 +586,8 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
-// score 34 (was 34): Input index load width, loop entry alignment and response cursor calculation differ.
+// score 34 (was 34): word input, material-pointer formation and ordinal/loop entries still differ.
+// Prior: Input index load width, loop entry alignment and response cursor calculation differ.
 // Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
 // direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
 // native current ancestry index 69; entry result/current index 67.
@@ -593,6 +600,11 @@ s_projectile_material_response g_547660;
 // Short ancestry with direct endpoint 34; positive ordinal/body cursor 49; unguarded ordinal 55;
 // positive while ordinal 49; short ancestry/ordinal 48; per-use count/ordinal 66;
 // multiply-used response base 34; response base/short ancestry 34. Word input and cursor/loop entries remain.
+// Typed material table: cached header endpoint/count once or per-use 34/65; cached header ordinal 49/66;
+// per-use header endpoint 34/71 and ordinal 69/66. Typed parent member does not repair the word input.
+// Result-owned response cursor: endpoint 40, ordinal 39, relational endpoint 40;
+// direct ordinal/endpoint success returns 79/67; result cursor with per-use count
+// ordinal/endpoint 70/73; short ancestry with result ordinal 39. Restored.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
@@ -686,6 +698,12 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 // vector declarations alone/linear/angular/both 69/71/77/79; renamed spin vectors 69.
 // Shared linear/angular/both sums 68/63/76; scaled angular sum with/without
 // the linear helper 121/121; complete linear/both/scaled angular outputs 112/130/117.
+// Object receiver at every use with no/linear/angular/both shared sums
+// 155/140/140/114; entry-scope uninitialized vectors with those sums
+// 155/140/140/114. Original object snapshot restored; impulse/seed carriers remain.
+// Shared seed receiver 69; native short/long axis index with complete setter 118/120;
+// selected-axis receiver/setter 112; memcpy axis 69; shared seed with short index,
+// axis receiver or memcpy 130/125/69. Restored.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -848,6 +866,9 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // Early attachment counter 109; native while cursor 72; both 109; parent declaration
 // at entry 72; parent/tag names 72; incoming operand names 72; all-use parent
 // observations 72; those with early counter 109. Restored.
+// Separate parent type admission 72; separate type/owner/state admissions 72;
+// native parent mask named at its computation 72; scan-scoped child receiver 72;
+// receiver with those parent tests/mask 72/72/72; receiver/named reciprocal 72. Restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)
@@ -1279,6 +1300,9 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 // Existing request builder 251; direct spatial output 201; builder with point snapshot 250;
 // point/direction/both snapshots 195/210/235; defaults before markers 189;
 // matched sibling request-store order 120. Original body and all call roles restored.
+// Attachment bitfield/word/complete conditional results 190/188/192; attachment/all
+// overrides after selector 121/176; bitfield/complete conditional attachment after
+// selector 163/179; all overrides with word result after selector 175. Restored.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
 	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,

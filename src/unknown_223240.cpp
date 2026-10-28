@@ -182,6 +182,9 @@ void function_2232a0(void)
 // 0x2b5d0's disabled body 127 (it takes the mode in EAX and the count on the stack; retail count
 // EAX, mode ECX; its frame does not self-align as retail's `and esp, -8`), with formals
 // players/layout/source/count/mode 123; reverted.
+// Round 87 (fast): slot data NULL at the loop top with no else arms 124 (gives retail's loop-top zero,
+// in EDX, but not the found arm's second zero); the NONE store then one ternary 117, one if/else 117;
+// the first with a pretested for loop 179, the second 166. 0x2b5d0's file is held by another lane.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
