@@ -233,9 +233,17 @@ short __stdcall function_1c10a0(long actor_index)
 }
 
 // score 2 (was 2): the pool pointer is loaded into ECX here and into EDX in
+// retail, the rest of the function matches.
+// This round: plain slot read 28; plain index read 4; plain index with
+// const pool/data/slot/actor, swapped local names or early mask 4 each;
+// original with const pool/data/actor/slot or swapped local names 2 each.
 // retail, the rest of the function matches. An ordinary pool read puts the
 // pointer in EDX but lets the data load fold into the final add, and a
 // volatile data read keeps the load apart but moves the pointer to ECX.
+// Typed actor-array base 2; direct typed slot snapshot 2; actor-zero chain 6;
+// missing-index chain 4; both chains 8; mutable pool with byte/actor base 2/2;
+// typed actor base with direct index parameter 4. Original body restored.
+// Single typed/byte actor cursors advanced after the slot snapshot 17/2. Restored.
 // @retail 0x1c10f0
 bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 {
@@ -266,6 +274,12 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 // pointer local 11 (fixes the seat registers, flips the dot product's x term),
 // with the dot arguments swapped 13; forceinline seat search helper 17; tag
 // lookup written out 15; object pointer local 17; request stores reordered 15.
+// frame 0x24 and status loads agree; actor lookup order, early
+// slot retention and object/tag registers differ. Earlier forms: wide result 97;
+// shared predicate 112/115/120; actor-offset form 112; request at entry 70.
+// Round 162: native payload 115, with found-seat result 115; whole-slot found-seat result 65;
+// unsigned-word status with payload/whole-slot 115/65; long found-seat result 114/100;
+// payload/search with direct unit observations 91. Original body and data types restored.
 // @retail 0x1c1160
 short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 {
