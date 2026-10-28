@@ -392,6 +392,9 @@ bool function_fa580(real speed, point3f const *origin, point3f const *target, ve
 // store). Axis after sine/cosine 21; axis by components 71; double angle 3;
 // named sine/cosine 3; dword OR 3; helper reading its parameter through its
 // address 11 (flag order right, copy-in wrong).
+// Further forms: shared output setter 81; shared input setter 68; both setters 90;
+// complete normalizer input snapshots 163, with output/both setters 147/125;
+// all squared terms named 3; plain array-index input copy 68.
 // @retail 0xfbd40
 void function_fbd40(long projectile_index)
 {
@@ -1156,12 +1159,17 @@ long function_189fe0(s_sound_request const *request, long tag_index);
 
 /* the effects and sounds of an effects block (a material's response) at
    a point */
-// score 4 (was 19): only the register arguments of the 0xfd740 call differ (retail
+// score 4 (was 4): only the register arguments of the 0xfd740 call differ (retail
 // passes the first sound in esi, the second effect in ecx, the second sound in edi
 // and the third effect in edx; ours ebx/edi/esi/edx), set by that callee's own body.
 // BLOCKED-BY 0xfd740. NUMBEROF loop bounds 17; parameter defaults in the effects
 // file's order 14; request filled in 0x1895f0's order 10; scale and audible bits
 // before the rest 4.
+// Coordinated selector output-parameter orders (original roles 0..5): 024135/042135 3;
+// 024315/042315/014325/032145 4; 041235/021435 3. Definition and both
+// callers changed together; every order restored because gains are at most one.
+// Caller body: separate unsigned ordinals 4; array names/order combinations 4/4/4;
+// both plain pointer walks with array names/order combinations 114/114/114/114.
 // @retail 0xfcea0
 void function_fcea0(long effects_index, point3f const *point, vector3f const *direction,
 	s_effect_owner const *owner, long index, vector3f const *normal)

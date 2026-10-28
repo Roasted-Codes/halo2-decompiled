@@ -768,6 +768,9 @@ done:
 // 9; a temporary caller (its only retail caller 0x1f38c0 is disabled here) 9; a cdecl compile-only
 // build gives ours too; shared actor getter or type 9 each; direct byte-base 9; offset local 9;
 // getter forceinline 9; data-base or slot locals 9 each; nested actor getter 9; a mode pointer 9.
+// Further forms: direct decoder result 42; low-mode rejection 38, with direct result 45;
+// path-first reset 21, with direct result 45; nested independent guards 9; native mode
+// snapshot 9; uniform getter observations 58. Original reset path and call values restored.
 // @retail 0x296580
 void function_296580(long actor_index)
 {
