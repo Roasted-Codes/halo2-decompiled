@@ -182,6 +182,10 @@ void function_2232a0(void)
 // 0x2b5d0's disabled body 127 (it takes the mode in EAX and the count on the stack; retail count
 // EAX, mode ECX; its frame does not self-align as retail's `and esp, -8`), with formals
 // players/layout/source/count/mode 123; reverted.
+// Round 213: byte-source exact do/for/while and last-ordinal do [109, 138, 138, 91];
+// native-record-source counterparts [109, 138, 138, 91]. Last-ordinal 91 adds an unmatched
+// bound calculation and worsens aligned instructions; restored. Pretest, optional-source and
+// tail transport remain.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

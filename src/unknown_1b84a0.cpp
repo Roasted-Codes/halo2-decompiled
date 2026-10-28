@@ -227,6 +227,9 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
 // ordinary result/receiver with ordinary result 325/325; search outputs first 257.
 // Typed payload/native input and preparation scope kept at 257 plain; all follow-ups restored.
+// Round 213: character/payload/scratch home names and named scalar outputs [257, 257, 257,
+// 257]; shared guard/node prop index with original/renamed actor and entry/later result [257,
+// 257, 257, 257]. Frame and actor/slot/scratch allocation remain.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
 {
