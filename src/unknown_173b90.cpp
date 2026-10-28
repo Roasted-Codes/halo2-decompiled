@@ -759,6 +759,10 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 // Shared double scale 58; immutable/ordinary complete products 23/23;
 // product value copy 74; decode value copy 63; exchanged decode workspaces 17;
 // two decode-result lifetimes 45; double scale with in-place result 64.
+// Standalone unpack before scaling 41; unpacked pointer for scale and pack 42 (204 bytes);
+// vector half buffer 17; half names buffer/scaled 17/17; product declarations swapped 17;
+// second input alternate with declarations swapped/original 17/17.
+// Scale from the buffer through the unpacked result 42 (204 bytes); a 2400 s permuter run, no result.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {

@@ -1071,6 +1071,12 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 176: Complementary substitution result bool/byte/short/long, guarded
 // producer 362/362/364/363; complete conditional producer 372/372/375/374.
 // Frame 0x118 agrees; sentinel and query-result homes persist. All forms restored.
+// Lane 5 r77: retail's substitution loop is top-tested and not rotated (its jmp only skips the
+// head's padding), computes the result as `forced ? 0x203900(...) : enabled`, keeps the flag as a
+// byte `(flags >> 10) & 1` in the squad pointer's slot, tests grenade indices as ints and reads the
+// palette count at each use. Each alone: int grenade tests 349 (frame changes), count at each use
+// 336, byte shifted flag 359, ternary result 358 (its block then matches retail); all four 379
+// (aligned 233 against 243). All restored.
 // Round 149: Substitution producer/test ordinary inline, noinline, paired and mixed contracts [320, 320,
 // 320, 320, 320, 320, 320, 320]; all restored.
 // @retail 0x1e0850

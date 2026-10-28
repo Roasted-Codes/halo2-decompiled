@@ -530,6 +530,7 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // for the first loop (363); initial real stores first 363; outer word index 469 signed
 // or unsigned; column word index 464; both signed-word indices 512. Original kept.
 // Earlier: frame 0x20 agrees; constant five, first-table induction and flag initialization differ.
+// frame 0x20 agrees; constant five, first-table induction and flag initialization differ.
 // Reduced trials: integer stores reversed 363; result calculation reversed 362; table stores reversed 363;
 // shared multiplier 363; first interpolation local 363; second interpolation local 363; explicit low cases
 // 448; shared rounding 460.
@@ -548,6 +549,13 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // Round 358: Four regular short-table fill cursors with original/first-table/level/both shared
 // rounding 363/460/442/480; pointer-end termination gives 363/460/442/480. Original helpers, loops,
 // library calls and body restored.
+// round 312: constant-five/induction/flag gaps remain; branch-local table publication 478; signed-byte flags 363; first-table short counter 445; single grid publication 639; short matrix score 457.
+// constant-five lifetime and first-table induction remain;
+// Index name 363; column name 363; both names 363; index declaration order 363;
+// step names 363; common first-table factor 363 (fast).
+// Round 23: shared-level parameter/cached base 444/444; ordinary inline with field/parameter/
+// cached base 573 each; low table first with field/parameter/cached base 478/362/362.
+// One-point gains rejected; original level producer and initialization order restored.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {

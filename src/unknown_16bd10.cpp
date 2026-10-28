@@ -842,6 +842,13 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // Round 253: Parallel projection-product parts, ordinary/immutable 251/251;
 // pan first/both weighted parts 245/245; projection with either pan form 251/251;
 // native shared origin alone/with all parts 501/501 (1736 bytes). All restored.
+// Round 80: direction declared before the plane 245; length summed j-first, `(n.j * d.j + n.k * d.k) + n.i * d.i`,
+// 247 (retail's d.j preload, but the normal's i/k registers swapped and the i term still copies the
+// normal); both 247; j-first with direction-first operands in every product 247, with the swapped
+// declarations 247. Original body restored.
+// Round 82: length as dot3f(direction, &plane.n) 375 (retail's d.j preload, normal i/j/k in xmm3/4/5
+// and offset products, but the sum stays i-first and the rest shifts); dot3f(&plane.n, direction) 375;
+// t as a ternary 245; ternary with dot3f 375; dot3f with direction declared first 375. Body restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

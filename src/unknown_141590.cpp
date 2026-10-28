@@ -179,6 +179,13 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Round 210: Scalar crosses with coefficient orders dot/s/w2, w2/dot/s, w2/s/dot,
 // s/dot/w2, s/w2/dot: 274/274/272/306/235; cross-first schedules 282/297/304.
 // Best 235 gains two, rejected; original helper/body restored.
+// Round 80: plain half-angle locals 291 (sine half in the parameter home; frame 0x18). The existing
+// quaternion_rotate_point for the three transforms 272 (1317 bytes, frame 0x20, xmm numbering one
+// lower than retail's from entry: 1.0 in xmm6 not xmm7); with the axis scaled at construction 342;
+// with `0.f > cosine` 272; with rotation.w assigned before the axis 257 (1317 bytes). Original body
+// and helpers restored.
+// Round 82: sine-branch axis k/j/i 327; transform scalars s/w2/dot 289, s/dot/w2 302; w assigned
+// before the axis 302; scale computed before the axis 301. Original body and helpers restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

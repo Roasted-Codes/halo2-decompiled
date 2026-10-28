@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "data_array.h"
+#include "data_iterator.h"
 #include "unknown_067e10.h"
 #include <string.h>
 
@@ -118,7 +119,12 @@ void function_14bac0()
 	players_pending_creation_process(iterator_reference);
 }
 
-// score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// score 230 (was 234): Frame 0x44 versus 0x3c; centre/second-iterator slot sharing, readiness homes and the second scan's call remain.
+// Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
+// center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
+// probe point at 0x1c); plus a bare block around the probe/center code 257 (identical code); per-marker
+// probe points with the center call written in both arms 302 (1080 bytes, not merged); first iterator
+// declared in the first block 257; iterator and probe point renamed 257 (identical layout).
 // Round 139: retail's two iterators are separate locals (first loop at frame 0x30, second at 0x1c
 // sharing the marker probe point's slot) and the second loop calls 0x6b380; split iterators with
 // the second through data_datum_iterator_next 257 (frame 0x44), both inline 234; per-marker probe
@@ -178,6 +184,32 @@ void function_14bac0()
 // Round 352: readiness at request entry, alone and with point/bounds/both output declarations,
 // 274 each; early point/bounds/both declarations without readiness 234 each; complete
 // function-entry graph 288. Frame stays 0x34; original storage and observations restored.
+// Marker-test readiness results, destination/alternate/both 237/243/244; with
+// native recipients 262/278/261. Both results plus fallback query result 252;
+// with native recipients 278. Original points, flags and shared iterator restored.
+// Round 62: retail's frame fits two 16-byte datum iterators, the first sharing its slot with the
+// alternate point and the second with the centre and offset. Second loop through the existing
+// datum iterator 257 (frame 0x44; both readiness homes then agree); plus a block scoping the
+// centre 257 (identical under LTCG, 0x38 compile-only); first loop on a datum iterator through an
+// inline next 257 (frame 0x48); readiness declarations swapped 262; centre declared first 257.
+// Lane 10 r11: first iterator scoped to its block with the existing datum iterator for the second
+// loop 257 (frame 0x44); centre/height/radius in their own block 257 (no change); point names
+// sorting as retail's slots 234 (identical code); final scan through an early-return do-while
+// next-index helper 270 (1026 bytes; gives retail's or/inc/js scan exactly); with the datum
+// iterator second loop 270 (1027; retail's call to 0x6b380 exactly). Retail also re-reads the
+// visit counter at each test, where ours keeps it in EBX. Original body restored.
+// Round 80: the visit test through the existing 0xbec70 285 (called, not inlined); the root search in
+// 0xbaf80's own shape (NONE result, plain while) 298; first iterator scoped to its block with the second
+// scan through 0x6b380 257 (frame 0x44); stamp-first comparison 234 (identical); the visit test through
+// 0xbec70's inline stamp-parameter shape 239 (indexed store as retail, but no stamp copy). Retail's
+// `mov edx, ecx` before the stamp store occurs in no other retail function. Original body restored.
+// Lane 10 r13: kept 230: first scan through the existing data_datum_iterator_next_called (retail's
+// 16-byte iterator, data at +4 and index at +0xc, the other stores dropped; frame 0x38, 234), each
+// marker probe in its own block-local point with the centre declared for 0xdf5f0 (231; destination
+// now at retail's 0x20), readiness declarations in the other order (230; the homes stay swapped).
+// Second scan through 0x6b380 on its own iterator 257/259 (frame 0x48, no slot sharing); the centre
+// probing in a bare block 257 (no sharing); second iterator scoped to its block 230 (identical);
+// separate point declarations in five orders 233 each (layout unchanged).
 // @retail 0x14b6a0
 void function_14b6a0()
 {
@@ -206,12 +238,12 @@ void function_14b6a0()
 			offset.k = destination->z - origin->z;
 			++g_4de2fc;
 			g_4de2f8 = true;
-			iterator.data = players;
-			iterator.index = NONE;
-			byte *current;
-			while ((current = data_iterator_next_calling(&iterator)) != 0)
+			s_data_datum_iterator player_walk;
+			player_walk.data = players;
+			player_walk.index = NONE;
+			while (data_datum_iterator_next_called(&player_walk))
 			{
-				long unit = *(long *)(current + 0x2c);
+				long unit = *(long *)(player_walk.datum + 0x2c);
 				if (unit != NONE)
 				{
 					byte *headers = g_4e0300->data;
@@ -239,26 +271,27 @@ void function_14b6a0()
 		}
 		if (*(long *)g_4e8c20 > 1)
 		{
-			bool have_destination = false;
 			bool have_alternate = false;
-			point3f destination, alternate, center;
+			bool have_destination = false;
+			point3f destination, alternate;
 			short target_marker = *(short *)(record + 0xa);
 			if (target_marker != NONE)
 			{
-				center = *(point3f *)(*(byte **)(scenario + 0x1e4) + target_marker * 0x38 + 0x24);
-				while (function_168f40(0x800005, (s_vehicle_ray const *)&center, NONE, NONE)) {}
+				point3f point = *(point3f *)(*(byte **)(scenario + 0x1e4) + target_marker * 0x38 + 0x24);
+				while (function_168f40(0x800005, (s_vehicle_ray const *)&point, NONE, NONE)) {}
 				have_destination = true;
-				destination = center;
+				destination = point;
 			}
 			short alternate_marker = *(short *)(record + 0xc);
 			if (alternate_marker != NONE)
 			{
-				center = *(point3f *)(*(byte **)(scenario + 0x1e4) + alternate_marker * 0x38 + 0x24);
-				while (function_168f40(0x800005, (s_vehicle_ray const *)&center, NONE, NONE)) {}
-				alternate = center;
+				point3f point = *(point3f *)(*(byte **)(scenario + 0x1e4) + alternate_marker * 0x38 + 0x24);
+				while (function_168f40(0x800005, (s_vehicle_ray const *)&point, NONE, NONE)) {}
+				alternate = point;
 				alternate.z += 1.0f;
 				have_alternate = true;
 			}
+			point3f center;
 			real height, radius;
 			function_df5f0(*(long *)(player + 0x2c), &center, &height, &radius);
 			if (have_destination)

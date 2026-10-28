@@ -1325,15 +1325,38 @@ struct s_player_properties
 // Round 179: first/second/both default arrays after name output 194/205/234;
 // two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
 // all scalar/array defaults after names 296. Original store phases restored.
+// Round 81: the record's explicit zero stores keep the hoisted zero (a compile-only build without them
+// gives retail's `test edi, edi`); retail takes the first default array from the memset's eax and the
+// second array, team and byte from a fresh ecx. First/second/both default arrays as `real`
+// 214/215/187; getter NULL in an else arm 184 (0x649c0 stops matching); previous-record pointer
+// before the getter 190 (916 bytes). All restored.
 // Round 76: separate counters per loop 184; name loop on the player mask field 184; record declared once
 // before the loops 184; previous record before the parameters getter 190; getter before the owner 225.
 // Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
 // in three pairs and together 184 each; all three separate noinline declarations 237. Original
 // declarations and body restored; owner/count/zero allocation and requested cursor remain.
+// Round 198: Native parameter block alone/with native cache receiver 184/184;
+// with multi-use requested receiver/both 199/199; bounded word name count on
+// those four graphs 214/214/228/228. Original byte views, count and complete body restored.
 // Round 225: real packed byte-quartet/byte-pair/short-pair declarations
 // 221/204/210; quartet-byte/quartet-short/byte-short pairs 208/217/221;
 // all groups 216, with promoted team 215. Byte-pair form reaches retail length
 // but regresses; original record declaration and team carrier restored.
+// Round 7 (lane 10, plain checks; the fast check builds this differently): the zero in edx is the
+// second loop's hoisted invariant for the dword zero stores (retail uses the memset's eax for the
+// four-long group and a fresh ecx for the three-long group). Three-long group as real 0.0f 215;
+// both groups as memsets 235 (941 bytes; the parameters test becomes `test`, but the zero registers
+// land on the wrong groups); three-long/four-long memset alone 240/240; both memsets reversed 235.
+// Round 66 (plain): no `current` pointer (its fields read through the player entry at each use) 198: retail's
+// owner in EDX, `test` parameters check and requested-record cursor (+0x1138), 917 bytes, but the zero is then
+// hoisted into ESI for the second loop where retail keeps the name count (ESI, reloaded at the latch); with a
+// named requested pointer 199 (890 bytes); with the four-long group as a memset 226, both groups 224 (930
+// bytes, aligned 101 -> 55: the zeros are local again, the name count still in memory); with the mask read
+// from the field 198.
+// Lane 9 r25 (plain; the fast check gives 211 for the unchanged body here): ternary data getter 184
+// (fast) but 0x649c0 30; previous buffer read at each use 184; mask before the names 184; const owner
+// 184; state read at each test 184. Retail holds the owner in edx from the parameters test on, so no
+// zero register is free there.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
