@@ -206,7 +206,7 @@ PRIVATE real function_272810(s_type_f17a25 const *state, s_type_c3b527 const *st
 PRIVATE void function_271e50(s_type_f17a25 *state, short index);
 PRIVATE void function_271fd0(s_type_f17a25 *state, short node_index, short cost);
 short function_272700(s_type_f17a25 *state, long node_index);
-PRIVATE void function_272740(point3f const *attractor,
+PRIVATE __declspec(noinline) void function_272740(point3f const *attractor,
 	point3f const *start, point3f const *end, point3f *out);
 
 // @retail 0x270590
@@ -231,12 +231,12 @@ void function_2705c0(s_path_source *source, point3f const *point,
 	input->unknown44 = unknown;
 }
 
-// score 28 (was 28): BLOCKED-BY 0x26c590. Retail keeps result false in al from
-// entry, so the location comes in edx and the node index in ebx. `bool result =
-// false;` with `result = true; break;` in the loop and one `return result;` matches,
-// but 0x26c590 (unmatched) then changes its own conventions and its eight matched
-// callers (0x1ab770, 0x1bd400, 0x1f5110, 0x26c4e0, 0x26cbe0, 0x26ccb0, 0x26d290,
-// 0x2c39f0) stop matching.
+// score 28 (was 28): retail takes the location in edx and the node in ebx and has one exit (`xor al, al` at entry, `mov al, 1`); the one-exit
+// form (`bool result = false;` ... `result = true; break;` ... `return result;`) matches, but unmatched 0x26c590 then takes its origin in
+// ecx and its eight matched callers (0x1ab770, 0x1bd400, 0x1f5110, 0x26c4e0, 0x26cbe0, 0x26ccb0, 0x26d290, 0x2c39f0) stop matching
+// (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
+// function scope 420, the edge iterator at function scope 420; hit at function scope 419; long count 424; line_normal as one struct
+// copy 444 (retail's 0x64 frame), the same with the old exits 478, with bool success 507; none keeps origin on the stack.
 // @retail 0x270600
 PRIVATE bool function_270600(s_path_location const *location, long node_index)
 {
@@ -252,6 +252,12 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 	return false;
 }
 
+// score 31 (was 31): at the call to 0x26c4e0 retail computes the end point (`lea ecx, [eax+0x18]`) right after pushing the parent's node
+// index and loads the next two arguments through eax; ours loads them through ecx and computes the end point last, and from there on our
+// eax/ecx/edx choices are one step off retail's. Tried: a named parent point for the compare and the call 65; the two break tests as one
+// `||` condition 31; trace at function scope 31; no parent local 85; the output arms swapped 34; the permuter (86 tries) found nothing below 31;
+// the loop as `for (; node->parent != NONE; node = ...)` 31; a pathfinding local before the call 34; parent declared after the
+// output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
@@ -684,7 +690,6 @@ PRIVATE bool function_2713f0(s_type_f17a25 *state)
 	return true;
 }
 
-// score 22 (was 26): the location counter: retail tests it in memory (`cmp word [esi+0x70], 0`) and steps it in memory (`inc word`, `cmp word ..., 0x20`), ours loads it into ax once and reuses it; tried: the increment as its own statement 26, `+= 1` 22, the whole update as an inline helper on the location 26 and 22, a named location pointer 22, the zero test inverted 25, the wrap test after the if/else 29. Only the else arm's step through a force-inline helper taking the location (`if (++location->unknown00 > 32) location->unknown00 = 0;`) matches, a one-caller helper.
 // @retail 0x2715a0
 bool function_2715a0(byte *buffer)
 {
@@ -708,9 +713,13 @@ bool function_2715a0(byte *buffer)
 		{
 			state->location.unknown00 = 32;
 		}
-		else if (++state->location.unknown00 > 32)
+		else
 		{
-			state->location.unknown00 = 0;
+			s_path_location *location = &state->location;
+			if (++location->unknown00 > 32)
+			{
+				location->unknown00 = 0;
+			}
 		}
 	}
 	return result;
@@ -1224,20 +1233,19 @@ short function_272700(s_type_f17a25 *state, long node_index)
 	return result;
 }
 
+// score 16 (was 67): retail computes the segment i, j, k and sums (i + j) + k for the length and (j + k) + i for the projection, ours j, k, i and (k + j) + i for both; tried: `dot3f(&delta, &delta)` for the length 16, `dot3f(&delta, &offset)` 16, the projection written out in y, z, x order 36, all three written out 67, parameters reordered (start, end, attractor, out) 16; compile-only harness: every written-out sum order and grouping 27-64, all 24 parameter orders and the offset computed at the top no better.
 // @retail 0x272740
 PRIVATE void function_272740(point3f const *attractor,
 	point3f const *start, point3f const *end, point3f *out)
 {
 	vector3f delta;
-	delta.i = end->x - start->x;
-	delta.j = end->y - start->y;
-	delta.k = end->z - start->z;
-	real length_squared = delta.i * delta.i + delta.j * delta.j + delta.k * delta.k;
+	vector3d_from_points3d(start, end, &delta);
+	real length_squared = length_sq3f(&delta);
 	if (length_squared > 0.0f)
 	{
-		real t = ((start->y - attractor->y) * delta.j +
-			(start->z - attractor->z) * delta.k +
-			(start->x - attractor->x) * delta.i) / length_squared;
+		vector3f offset;
+		vector3d_from_points3d(attractor, start, &offset);
+		real t = dot3f(&offset, &delta) / length_squared;
 		if (t < 0.0f || t > 1.0f)
 		{
 			*out = *end;
@@ -1255,26 +1263,31 @@ PRIVATE void function_272740(point3f const *attractor,
 	}
 }
 
+// score 8 (was 97): retail computes the segment i, k, j and sums its square as (k + i) + j; ours computes j, k, i and sums
+// (k + j) + i. Tried: the weight in float (no double local) 88 -> 82; weight declared first 81; written-out sums in every order
+// 79-94; the segment, offset and both lengths through vector3d_from_points3d/length_sq3f/dot3f 21; the length test against g_45dbd8
+// (retail reads 0x45dbd8; weight's zero is then not shared) 8; dot3f for either length and the swapped projection 8; separate
+// segment/delta vectors 8; a `0.0` double test 102; the permuter (86 tries) found nothing below 8.
 // @retail 0x272810
 PRIVATE real function_272810(s_type_f17a25 const *state, s_type_c3b527 const *start,
 	point3f const *end, real *distance_out)
 {
 	s_path_input_view const *input = (s_path_input_view const *)&state->source;
-	real distance = FLT_MAX;
 	real weight = 0.0f;
+	real distance = FLT_MAX;
 	point3f local_end;
 	point3f local_attractor;
 	function_210690(start->output_index, end, &local_end);
 	function_210690(start->output_index, &input->attractor_point, &local_attractor);
 	vector3f delta;
 	vector3d_from_points3d(&start->point, &local_end, &delta);
-	real length_squared = delta.k * delta.k + delta.i * delta.i + delta.j * delta.j;
+	real length_squared = length_sq3f(&delta);
 	point3f closest;
-	if (length_squared > 0.0f)
+	if (length_squared > g_45dbd8)
 	{
-		real t = ((start->point.z - local_attractor.z) * delta.k +
-			(start->point.y - local_attractor.y) * delta.j +
-			(start->point.x - local_attractor.x) * delta.i) / length_squared;
+		vector3f offset;
+		vector3d_from_points3d(&local_attractor, &start->point, &offset);
+		real t = dot3f(&offset, &delta) / length_squared;
 		if (t < 0.0f || t > 1.0f)
 		{
 			closest = local_end;
@@ -1291,12 +1304,11 @@ PRIVATE real function_272810(s_type_f17a25 const *state, s_type_c3b527 const *st
 		closest = start->point;
 	}
 	vector3d_from_points3d(&local_attractor, &closest, &delta);
-	real distance_squared = delta.k * delta.k + delta.j * delta.j + delta.i * delta.i;
+	real distance_squared = length_sq3f(&delta);
 	if (input->attractor_radius * input->attractor_radius > distance_squared)
 	{
-		double length = sqrt(distance_squared);
-		distance = (real)length;
-		weight = (real)((1.0 - length / input->attractor_radius) * input->field_40);
+		distance = (real)sqrt(distance_squared);
+		weight = (1.0f - distance / input->attractor_radius) * input->field_40;
 	}
 	*distance_out = distance;
 	return weight;

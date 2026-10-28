@@ -42,9 +42,28 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 321 (was 321): Aligned frame 0x1d4 agrees; the sample count now matches (retail's
+// score 317 (was 321): aligned frame 0x1d4 agrees; the sample count matches (retail's
+// setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack). Structural cause of
+// the register differences: our LTCG inlines 0x11bed0 here (retail calls it, esi = location), and the
+// inlined copy takes esi, which swaps the optional inputs (esi/edi) and evicts the table cursor from esi
+// in the loop; retail also inlines 0x279740's range check at the first release only, ours calls it twice.
+// A separate noinline declaration of 0x11bed0 in its own file keeps the call (entry registers then match
+// retail through +0x54, 337; with the first release's range check written inline 291 at 2064 bytes), but
+// it moves 0x14a280's bsp parameter from ecx to the stack and loses its 18 matched callers (0x21a100,
+// which also inlines 0x11bed0 in our build, then matches). Round 83: description shape stored before its
+// transform 317 kept; then (re-tested on this graph) length terms swapped 316 and translation as three
+// statements 339; success flag declared first 407; upper bound set before lower 334; filter stored
+// first 317.
+// Earlier forms: optional-input registers, scalar homes and selective helper expansion: retail calls
+// 0x11bed0 out of line and inlines the cache-range check of the first reference release (the form of
+// 0x1d01c0), while ours does the opposite.
+// Aligned frame 0x1d4 agrees; the sample count now matches (retail's
 // setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack); optional input
 // registers (esi/edi swapped), scalar homes and selective helper expansion remain.
+// Round 8 (lane 10): noinline redeclaration of 0x11bed0 here 321 (ignored); a separate noinline
+// declaration in 0x11bed0's own file 337 (called as retail, but 0x11bed0 and its caller 0x168f40 stop
+// matching); bounds coordinate as a named local 360; table direction pointer for both samples 321;
+// excluded index declared first, its test braced 323.
 // Earlier: Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Earlier 350 (was 350): Aligned 0x1d4 frame agrees; optional-input registers, scalar homes and selective helper expansion remain.
 // Frame 0x1d4 agrees; optional input registers, scalar homes and selective location/release expansion remain.
@@ -140,8 +159,8 @@ bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long
   c_contact_shape_view *local_11 = *(c_contact_shape_view **)((byte *)local_10 + 0xc);
   if (local_11->type() == 0x17) local_11 = *(c_contact_shape_view **)((byte *)local_11 + 0x30);
   local_7.set(local_10->m_motion->m_transform);
-  local_9.transform.set(local_7);
   local_9.shape = local_11;
+  local_9.transform.set(local_7);
   local_9.filter = ((arg_0->object_index + 1) << 16) | arg_2;
   local_8 = new c_contact_query_transform_volume(&local_9);
  }

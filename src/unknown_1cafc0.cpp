@@ -833,6 +833,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 }
 
 // score 210 (was 210): Frame 0x38 and result/prior-loop bytes agree; ID homes and blend-query lifetime still differ.
+// Round 15: inline channel query 210; early success with separate name comparisons 256; separate comparisons
+// with late success 265; bitwise separate comparisons 256; inline transition-find 210 (callee still matched);
+// fraction clamp workspace 287; signed-byte result 210; primary-ID lexical rename 210. Original body restored.
 // Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
 // 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
 // Two-point gains dropped.
@@ -905,6 +908,16 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // transition ID's index in BP. Success stored before the channel queries 274; member NONE test
 // on the transition ID 210 (identical); resolved set named after the lookup, first/last 210/210
 // (identical); blend declared first 211; graph test before the transition test 272.
+// Round 64 (aligned counts in brackets, baseline [106]): retail keeps blend and the unflagged byte in
+// the [esp+0x50] slot (stored after every `&=`, reloaded after the 0xe6800 call), as if &blend escaped
+// in transition_find; a `bool *const *` read of transition_find's blend parameter (0x1ccda0 still
+// matches) 298 [110] moves the primary ID to retail's slot. Three name-change bools tested with `||`
+// after the store 265 [53]; with result true right after channel_start 256 [53]; plus bool result 249
+// [51] (362 instructions as retail; left: blend memory traffic, the cold `state_flags & 4` block after
+// the epilogue, the fraction pin's load order); the same with the gotos replaced by `if (!result &&
+// (state_flags & 4)) result = true; if (result) {...}` 249 [51] (identical code); `result ||` test 295;
+// bool result with early success 269 [105]; three bools with bool result 295 [65]; all with the
+// captured blend 261 [65].
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

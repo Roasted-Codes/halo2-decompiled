@@ -265,6 +265,14 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 252: Final orientation predicates in bool/byte/short/long domains 251/251/259/257; short-circuit
 // refined results 222/222/222/222. Original comparisons and every vector/callback role restored; frame
 // 0x78 versus 0x6c and early ESI/basis/position homes remain.
+// Round 80: retail's frame packs the position copy into the temporary velocity's slot and gives the
+// first basis call its own left output (sharing the later forward output's slot). Position copied
+// inside an inline helper gives the 0x6c frame under --fast, 269 plain (object re-looked-up); from the
+// cached object 243 (1030 bytes); plus the zero velocity before world-up 247 (zero-vector copies now
+// as retail); plus a separate first left 259; plus the speed scale read at each use 238. The early
+// ESI save and a 4-byte pad come from 0x11f0d0's double locals (angle, s) once the caller 0x118700 is
+// in the image: with both real, --fast with the caller gives retail's late ESI. `real angle` keeps
+// 0x11f0d0 identical; `real s` or the quotient written per component fold its last multiply (2 -> 89).
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -925,7 +933,12 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // score 156 (was 156): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
-// Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Retail's homes (frame offsets): selected 0xc, best 0x10, second word 0x14, third 0x18, normal 0x1c,
+// first word 0x28, location 0x2c, point 0x34, sweep 0x40, count 0x4c; ours keep the count at 0x2c and
+// the sweep before the point (0x38/0x44). Round 83: sweep before the query 292 (its products now
+// schedule after a hoisted constant); count declared before the query 156; sweep declared before the
+// buffer 156; saved records declared before the sweep 156; descriptive sweep/impact names 156; first
+// and second word names swapped 156 (homes unchanged).
 // Round 44: short/long-unit adjacent word bitfields 151/339; first-third-second words 153;
 // word/handle acquisition order 218; normal between words 162; sweep in radius/center argument
 // evaluation 293/293; named radius on the current frame 151. Opening body restored.
@@ -998,6 +1011,11 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // Round 352: native stored-velocity fields with direct, scalar-first, named-product and combined
 // products 151 each; each with one three-use velocity snapshot 374 (frame 0x128). Original
 // external record, response expressions, query-first sweep and saved identifiers restored.
+// Round 80: sweep stored before the query 283 (count and location homes as retail, but the point and
+// sweep homes swapped and j/k folded as q*j/q*k where retail loads j/k); with the point/sweep renamed
+// 283; with the capture declarations first 283; through the existing vector3f_scale 283. The tail is
+// 0xb77d0's body, which retail inlines here: calling the existing 0xb77d0 391 (stays a call), with a
+// forceinline declaration 391. Original body restored.
 // Round 7: response minimum as a ternary, response products scale-first, speed test summed j/k/i 156
 // each (identical code); sweep before the query 283 (now the start through the call matches; the
 // sweep stores land at 0x3c not retail's 0x48 and the candidate loop gains a jump over its alignment),
