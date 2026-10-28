@@ -3656,6 +3656,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // g_44a2a0 with only the helper loop head 637; the helper loop head alone 597. All restored.
 // Native rotation return, pointer/quaternion-value/vector-value/both-value inputs 1009/948/965/912;
 // those native returns with the existing fallback constant 1217/1162/1176/1126. All restored.
+// Round 364: raw cross parts at each row/before outputs/before coefficients
+// 535/1050/1050; named dot parts 544; with those raw-cross boundaries
+// 542/1050/1050; joint entry coefficient declarations 1050. Original helper restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

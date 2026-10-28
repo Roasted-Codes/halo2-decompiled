@@ -3095,7 +3095,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 971 (was 971): Frame 0x2c agrees; capability/save roles and state expansion remain.
+// score 934 (was 971): Frame 0x2c agrees; capability/save roles and state expansion remain.
 // frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
 // eligibility-first bound 1212; earlier input selectors 979; blending helper depth one 1393.
@@ -3122,6 +3122,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // quantizer scope 971; native long success 1194.
 // Mode assignment orders MNS/SMN/SNM/NMS/NSM 973/971/971/973/973; NSM in cases
 // 0/1, 2/3, 0/2 971/973/971 (fast; M=maximum, S=allow_small, N=allow_negative).
+// Round 364: input byte/alpha byte/both 1185/934/980; signed input/alpha/both
+// 1185/934/980; short-input with byte-alpha 935; unsigned-input with byte-alpha 934.
+// Byte alpha selector alone kept plain at 934; its only values remain 4 and 24.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
@@ -3203,7 +3206,7 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     long whole = fixed >> 8;
     long fraction = fixed & 0xff;
     long input = small ? 5 : 4;
-    long alpha_input = small ? 4 : 24;
+    byte alpha_input = small ? 4 : 24;
     if (whole > 255) whole = fraction = 255;
     memset(&g_484f68, 0, sizeof(g_484f68));
     g_484f68.PSTextureModes = 1;
