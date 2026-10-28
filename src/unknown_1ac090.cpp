@@ -1246,7 +1246,7 @@ bool __stdcall function_1acb50(long arg_0, s_slot *arg_1)
 bool function_2613d0(long arg_0, s_reference arg_1, s_prop_search *arg_2);
 bool __stdcall function_1acb50(long arg_0, s_slot *arg_1);
 
-// score 61 (was 68): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
+// score 61 (was 61): frame 0x764 agrees; slot ESI arrives late and boolean/result traffic differs.
 // Common volatile/plain result exits 178/185; native short result 201; result declared first 114;
 // state name 114; existing prop getter 184; native request initialization 117; reversed references 115.
 // Round 195: retained/default-false active result 139/106; each with direct child result 129/68;
@@ -1271,6 +1271,11 @@ bool __stdcall function_1acb50(long arg_0, s_slot *arg_1);
 // if-set, if/else or ternary bool, a helper before or after the body 121; slot pointer before the
 // first exit (retail's ESI) after/before the actor/first 186, with nested ifs 172; plain result 193,
 // with nested ifs 206.
+// Round 27 (lane 9): retail's sete/test comes from a mode flag tested twice, `bool moving = ... == 2; if (moving && !unknown10
+// && (...)) {...} if (!moving) unknown10 = false;` (result byte then at +0x13 as retail), 71: ESI still late, eax/ecx one step
+// off at the calls, and the actor index load hoisted above the child-state test; same with `else if (!moving)` 71; with the slot
+// pointer before the first exit/declared first 177/177 (actor spilled); moving from 0x1f86f0 185 (called out of line); a call
+// to 0x1f86f0 in the nested ifs 185.
 // @retail 0x1acda0
 bool __stdcall function_1acda0(long arg_0, s_slot *arg_1)
 {
