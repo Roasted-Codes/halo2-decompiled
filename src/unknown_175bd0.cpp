@@ -2571,7 +2571,8 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 177 (was 177): Frame 0x104 versus 0x100 and point/up eligibility remain; native input-reference contracts leave caller and callee unchanged.
+// score 38 (was 38): Frame 0x100 and length agree; incoming effect/up carrier, decal convention and light/sound setup remain.
+// Earlier measurements and forms:
 // frame 0x100 and length agree. Retail passes up in EAX (moved to EDI) and effect
 // on the stack; ours passes effect in EAX and up on the stack whatever the declared order, which also
 // moves two scratch registers in the sound arms. 0x17e670's register arguments (BLOCKED-BY 0x17e670,
@@ -2631,6 +2632,10 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // 177; location/part 177; effect/part 177; all record references 177; all references/point value
 // 350; direction inline 177; angular inline 177; both vector inline 177; light inline (lost
 // matches) 177. All executable forms restored; sources and comparisons saved.
+// Round 155: owned input values point 421; forward 434; both 466; up 424; point/up 483;
+// forward/up 493; all 520; all with shared point setters 560; target inline 38;
+// native up CRT copy 38; uniform placement CRT copies 38. Owned up restores the incoming
+// EAX up pointer but adds entry copies; every executable form restored.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {

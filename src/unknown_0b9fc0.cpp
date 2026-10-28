@@ -558,11 +558,18 @@ bool __stdcall function_1152e0(long machine_index)
 }
 
 /* whether any cluster on either side of a machine's portals is set */
+// score 41 (was 58): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
+// Found return 45; empty return 69; native count 58; native first 62; structure receiver 52;
+// reject unset portals 58; result first 53; admitted result 61; result/found 41 (kept, gain 17);
+// structure/found 60; result/structure 45; native receivers/found 56; shared bit tests 58;
+// structure/shared 52; count/shared 58; result/shared 53; object getter 58; getter/structure 52;
+// getter/shared 58; getter/structure/shared 52; count before false/found 45; count before false 58;
+// result/count/found 41; result/count/structure/found 56.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {
-	s_machine *machine = MACHINE_GET(machine_index);
 	bool result = false;
+	s_machine *machine = MACHINE_GET(machine_index);
 
 	if (machine->portal_reference_count > 0)
 	{
@@ -577,7 +584,7 @@ bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bo
 				cluster_bits[portal->back_cluster_index >> 5] & (1 << (portal->back_cluster_index & 0x1f)))
 			{
 				*found = true;
-				break;
+				return true;
 			}
 		}
 		result = true;
@@ -604,27 +611,29 @@ PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed)
 			component->rigid_bodies[i].node_count > 0)
 		{
 			byte *physics = (byte *)matrices.node_indices;
-			short const *node_index =
+			short const *node_mapping =
 				(short const *)(*(byte **)(physics + 0x3c) + component->rigid_bodies[i].nodes[0] * 0x90);
 
 			if (keyframed)
 			{
 				havok_component_rigid_body_linear_velocity_set(i, component, g_4687a4);
 				havok_component_rigid_body_angular_velocity_set(i, component, g_4687a4);
+				long node_index = *node_mapping;
 				havok_component_rigid_body_matrix_set(i, component,
-					*node_index == NONE ? &matrices.root_matrix : &matrices.field_50[*node_index]);
+					node_index == NONE ? &matrices.root_matrix : &matrices.field_50[node_index]);
 			}
 			else
 			{
+				long node_index = *node_mapping;
 				function_1d0ee0(i, component,
-					*node_index == NONE ? &matrices.root_matrix : &matrices.field_50[*node_index]);
+					node_index == NONE ? &matrices.root_matrix : &matrices.field_50[node_index]);
 			}
 		}
 	}
-	if (keyframed)
-		machine->flags &= ~0x40;
-	else
+	if (!keyframed)
 		machine->flags |= 0x40;
+	else
+		machine->flags &= ~0x40;
 }
 
 /* stops a machine's keyframed Havok bodies once it stops moving */
