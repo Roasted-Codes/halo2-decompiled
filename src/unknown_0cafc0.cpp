@@ -160,7 +160,7 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 199 (was 199): Frame 0xa4 agrees; object-data/tag-table allocation
+// score 55 (was 55): Frame 0xa4 agrees; object-data/tag-table allocation
 // and collision-point scheduling differ.
 // frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
 // Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
@@ -200,6 +200,9 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Paired height terms 55 (plain, kept); collision production first 61; native marker copies 125;
 // twice-used seated object 146; first three boundaries 116; all four 154. Retain object-table,
 // existing backward-vector assignment, sentinel before forward, collision-first and paired height terms.
+// Default-first crouch 59; named standing complement 55; both 59; complete paired
+// distance results 55; with crouch/complement/both 59/55/59; entry distance declarations
+// 55. Unmatched distance captures restored; original height and collision graph retained.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

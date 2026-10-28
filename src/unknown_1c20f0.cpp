@@ -16,6 +16,15 @@ struct s_slot_81
 	byte unknown11[0x40 - 0x11];
 };
 
+struct s_slot_81_data
+{
+	long flags;
+	bool unknown04;
+	byte unknown05[0x34 - 5];
+};
+
+typedef char assert_slot_81_data_size[(sizeof(s_slot_81_data) == 0x34) ? 1 : -1];
+
 /* the prop state as these callbacks read it: the position at +4 */
 struct s_prop_state_point_81
 {
@@ -247,13 +256,11 @@ bool __stdcall function_1c2120(long actor_index, s_slot *slot)
 	return true;
 }
 
-// score 64 (was 64): the object pointer is kept in ESI here and reloaded from
-// the stack
-// there, and the flag byte is written as a constant 0 here.
+// The post-header slot state and output-before-clear initialization match retail.
 // @retail 0x1c2130
 bool __stdcall function_1c2130(long actor_index, s_slot *slot)
 {
-	s_slot_81 *state = (s_slot_81 *)slot;
+	s_slot_81_data *state = (s_slot_81_data *)slot->unknownc;
 	s_actor_view *actor = actor_get(actor_index);
 
 	if (!actor->unknown605 && !actor->unknown264 && actor->unknown040)
@@ -265,17 +272,17 @@ bool __stdcall function_1c2130(long actor_index, s_slot *slot)
 
 		actor->unknown5e8 = 1;
 		buffer = ai_scratch_buffer_get();
+		flag = false;
 		memset(&request, 0, sizeof(request));
 		request.unknown015 = true;
-		flag = false;
 		request.type = 4;
 		function_2605d0(actor_index, &request, 0, (long)&unknown, buffer, &flag);
 		if (actor->unknown5e8 == 0)
 		{
-			state->unknown10 = true;
+			state->unknown04 = true;
 		}
 		ai_scratch_buffer_release(buffer);
-		if (!state->unknown10)
+		if (!state->unknown04)
 		{
 			s_path_settings settings;
 			s_path_source source;
