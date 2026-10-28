@@ -737,17 +737,22 @@ bool function_c70b0(long unit_index)
 	return result;
 }
 
-/* the last object of the chain the units' +0x24c links */
+/* the last object of the chain the units' +0x24c links. The link is tested
+   through the unit and the result read through the pointer, as retail reloads it */
 // @retail 0xc7100
 long function_c7100(long unit_index)
 {
 	long result = NONE;
-	long *next = &UNIT_GET(unit_index)->unknown24c;
+	s_unit *unit = UNIT_GET(unit_index);
+	long *next = &unit->unknown24c;
+	long value = *next;
 
-	while (*next != NONE)
+	while (value != NONE)
 	{
 		result = *next;
-		next = &UNIT_GET(result)->unknown24c;
+		unit = UNIT_GET(result);
+		value = unit->unknown24c;
+		next = &unit->unknown24c;
 	}
 	return result;
 }
@@ -3205,6 +3210,11 @@ long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool h
 // parent while, existing keyframe method and point first 12; point value copy 46;
 // 0xbaf80 call for the root 121 at 258 bytes (our link keeps the call); one combined
 // index/fixed/keyframed test 12; root getter before the header 12; point read x, y, z 22.
+// This round: a short root index 62 and an unsigned short one 77 (the saved registers do not
+// change); int, unsigned int and unsigned long roots 12; a short rigid-body index 12 at 293
+// bytes and an unsigned short one 13; a short loop variable 83 and an unsigned short one 18;
+// the root loop over the root itself 22; the loop variable outside the `for` 12; the root index
+// in a nested block 12; the rigid-body index declared before the root index 12.
 // @retail 0xcc460
 bool __stdcall function_cc460(long object_index)
 {
@@ -4053,7 +4063,9 @@ store:
    speed in a cone around the unit's aim on top of the unit's velocity
    (capped at 4 unless the unit's +0xc0 bit 1 is set), and deletes it in
    state 1 when it has nowhere to go and is not a predicted copy (0xa7670) */
-// score 13 (was 13): argument setup scheduling and squared-length XMM homes differ;
+// score 4 (was 13): the cone call's argument setup is scheduled differently: retail stores the
+// cone angle and then sets up the three register arguments in order, ours sets up the forward
+// pointer first and the result pointer last.
 // existing length/dot helpers, direction lifetime/name and named angle 13;
 // existing random-real helper 111; scale/add component loops 80/13; seed global at each
 // use, compound adds, direction-first adds, speed-first scaling 13 each; speed scaled
@@ -4093,7 +4105,9 @@ void function_ce6b0(long unit_index, long name, long object_index, real scale)
 	}
 	if (!TEST_FIELD_BIT((unit->unknownc0 >> 1) & 1))
 	{
-		real length_squared = direction.i * direction.i + direction.j * direction.j + direction.k * direction.k;
+		real length_squared = direction.j * direction.j;
+		length_squared += direction.k * direction.k;
+		length_squared += direction.i * direction.i;
 
 		if (length_squared > 16.0f)
 		{

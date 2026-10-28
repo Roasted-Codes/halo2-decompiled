@@ -668,6 +668,10 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // Round 329: native position/radius fields, readonly object and direct center 239/239/239;
 // direct marker/both points 266/266; shared differences/readonly 239/239; native root observations 252.
 // All use ordinary direct radius operands; both known callers included. Original type and body restored.
+// Round 17: named float angle term 231; separate facing vector 231; second point-difference helper
+// with that vector 231; first point-difference helper 231; second helper with the shared vector 231;
+// component-assignment helper 231; dot-product helper with component assignment 231; point setter 234.
+// All include both known callers. Original position, differences, dot expression and angle restored.
 // Lane 10 r11: BLOCKED-BY 0x268c90 for the frame: the fast build (which self-aligns like retail)
 // scores this body 247; there a bool result 276, short result 235 (plain 239, no self-alignment),
 // marker/position/offset declared at function scope 247 each. Retail also keeps the player-index
@@ -1514,35 +1518,17 @@ long __stdcall function_bb670(short name_index, bool force)
     return result;
 }
 
-// score 84 (was 84): the two fields of the definition are read in the other order and the -1 sentinel is kept in edi instead of ecx
-// score 31 (was 84): the early metadata reads, saved-register order and final argument staging differ.
-// Offset references 84; const metadata 84; long offsets 95; separate metadata 84;
-// direct success 117; input reference 84; index-field reference 31; palette-field reference 84.
-// score 31 (was 31): metadata reads and saved-register order remain; final creation arguments agree.
-// With the index-field reference: late stride 93; word stride 48; independent clamps 31;
-// creation return 113; native datum 31; later result 31; common metadata exit 41; long palette 82.
-// Valid-path stride before/after scenario 106/106; offset references 31; offset references plus
-// valid stride 106; direct guards with valid stride 106; word valid stride 106; one-use creation index copy 27 (reverted in review);
-// creation index with valid stride 106.
-// score 27 (was 31): the definition's two offsets are still read into registers before the guard
-// where retail compares them in memory against a -1 sentinel, and the saved registers are popped
-// in a different order than retail.
-// metadata result arms
-// 108; placement result arms 94; palette result start 89; palette result arms 104; input index
-// entry binding 31; tag index field binding 31; stride field binding 93; native promoted metadata
-// 31; shared input index binding 31.
 // @retail 0xa73b0
 long __stdcall function_a73b0(s_entity_info *info)
 {
-    long result = NONE;
     long type = *(short *)g_4e3b44[info->definition_index & 0xffff].bytes;
     byte *definition = (byte *)g_468630[type];
-    long stride = *(short *)(definition + 0xe);
-    short placement_offset = *(short *)(definition + 0xa), palette_offset = *(short *)(definition + 0xc);
-    if (placement_offset != NONE && palette_offset != NONE)
+    long result = NONE;
+    if (*(short *)(definition + 0xa) != NONE && *(short *)(definition + 0xc) != NONE)
     {
         byte *scenario = (byte *)g_4e0350;
-        byte *placements = scenario + placement_offset;
+        byte *placements = scenario + *(short *)((byte *)g_468630[type] + 0xa);
+        long stride = *(short *)((byte *)g_468630[type] + 0xe);
         long const &index = info->field0;
         long clamped = index < 0 ? 0 : index > *(long *)placements - 1 ? *(long *)placements - 1 : index;
         if (clamped == index)

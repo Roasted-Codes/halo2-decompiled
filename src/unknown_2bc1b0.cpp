@@ -136,7 +136,8 @@ struct s_placement_2bc1
 	byte field_28[0xc4 - 0x28];
 };
 
-// score 16 (was 16): placement argument EAX/ECX transfer and event-store scheduling differ from +0x6d.
+// score 5 (was 16): the placement pointer copied for the creation call uses ECX where retail uses
+// EAX, and the game options pointer read for the mode test uses EDX where retail uses ECX.
 // Existing initializer 89; initializer result 89; initializer before mode 88; paired helpers 88;
 // event before team 63; early event plus sender 63; event before creation 63; returning initializer before creation 90.
 // Unconditional event with options pointer 32; byte mode before event 31; mode against event type 31;
@@ -164,13 +165,11 @@ void function_2bc1f0(long team)
 				if (object_index != NONE)
 				{
 					function_15e050(object_index, (short)team);
-					if (g_4e6948->mode != 4)
 					{
 						s_event event;
 
 						game_engine_event_initialize_inline(&event, 4, 1);
-						function_a7c50(&event);
-						function_19eb30(&event);
+						game_engine_event_send_inline(&event);
 					}
 					function_a7870(object_index);
 				}
@@ -273,6 +272,10 @@ struct s_item_object_2bc1
 // shared event 97; separate timer values 110; early tally pointer 97; combined 156.
 // Separate entry declaration 97; independent/complete failure guards 97/97; multi-use team value 156;
 // timer field reference 110; published timer result 97; tally reference/array 97/97; signed ceiling 97; scoring-state lifetime 97.
+// Lane 10 r15: retail decrements a copy (`mov cl,al; dec cl; mov al,cl; test al,al`, one jg);
+// `countdown <= 0` 91 (one jg, state moves to ESI); the decremented value stored and the field
+// tested 91; `--field <= 0` 91; `= --timer` then `timer <= 0` 69 (state back in EBX, only the copy
+// and later offsets differ); the decremented value assigned back to the timer 91.
 // @retail 0x2bc990
 void __stdcall function_2bc990(long team)
 {

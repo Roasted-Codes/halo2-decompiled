@@ -67,7 +67,9 @@ struct s_transition_collision
 // pair passed start first, as 0x272020 passes start on the stack and end in ECX) 15 -> 9 (kept: it
 // fixes the values, not just the bytes); both calls' ends swapped instead 33. On 0xfa1a0 (all
 // reverted, the pointer stays in EDX): scale read once 262, delta.k with i/j 247, gravity operands
-// swapped 266.
+// swapped 266. Round 52: a noinline callee declaration 9; the result declaration split 9; a
+// short-circuit return 46; nested result/alternate branches 9; alternate tests first 106; the second
+// call returned directly 106; a separate alternate result 9; the direction renamed 9.
 // @retail 0x26f150
 bool function_26f150(short type, point3f const *start, point3f const *end,
     point3f const *alternate_start, point3f const *alternate_end)
@@ -234,6 +236,9 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
 // best before best_distance 20; the marker query before both 99; dot3f alignment 26; sum
 // x + y + z 20; nested point test 20; flags through a word local 22; alignment k + i + j 20;
 // the markers array after best 20; long count 111; const character 20.
+// A direct word cast 20; the existing orientation predicate forced inline 22; count declared before
+// best_distance and assigned in place 20; const count 20; the loop ordinal declared outside 20;
+// const actor 20; success result assigned before the point query 106; const marker 20.
 // @retail 0x26fc80
 bool function_26fc80(long actor_index, long object_index, real distance, void *path, point3f *point)
 {
