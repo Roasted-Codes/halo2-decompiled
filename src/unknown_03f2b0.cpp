@@ -1460,6 +1460,8 @@ struct s_133f70;
 // record + offset adds (`add eax, ecx; lea ebx, [eax + 0xbc]`) and the dead entry lea stay unreproduced.
 // Round 224: Signed-short query count/failure count/derived-slot domains, seven combinations,
 // then all with short entry ordinal 368/216/367/229/364/229/364/354 fast. Original count/compaction widths restored.
+// Round 202: Consistent pooled-index/byte-offset expressions at all three acquisitions: long index, long/dword offset, word index, word+offset, dword+offset, split mask, split multiply 175/175/175/356/356/175/175/175 fast.
+// Original executable source restored. Frame 0x33f8 agrees; distance staging, nullable-entry address, cache-member adds and result homes remain.
 // Round 14 (lane 10, plain): signed-char previous with signed-char levels 319 (gives retail's byte store,
 // byte level load, `cmp byte` test and `movsx ax` publication, but ours folds the cache-slot address into one
 // lea where retail adds the record first, so the code after it runs one instruction ahead); with the levels

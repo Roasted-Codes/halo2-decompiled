@@ -113,7 +113,7 @@ struct s_type_181dea
 	byte unknown00[0x3c];
 	dword flags;
 	long portal_count;
-	struct
+	struct s_portal_entry
 	{
 		short unknown0;
 		short portal_index;
@@ -221,6 +221,8 @@ __forceinline short machine_round(real value)
 PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed);
 PRIVATE void machine_release_rigid_bodies(long machine_index);
 
+// score 81 (was 112): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
+// Round 204: native portal entry 81 kept plain; default-first policy 100; both 106 (subthreshold); shared final update 81; long/unsigned-word policy 102/81; six-use flags 108; flags/default 117; chained clears 81.
 // @retail 0x115020
 void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine)
 {
@@ -272,10 +274,10 @@ void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine
 	case 1:
 		if (g_4686c4 >= 0 && g_4686c4 < scenario_machine->portal_count)
 		{
-			short const *portal_index = &scenario_machine->portals[g_4686c4].portal_index;
+			s_type_181dea::s_portal_entry const *portal = &scenario_machine->portals[g_4686c4];
 
-			machine->placement_index = *portal_index;
-			if (*portal_index != NONE)
+			machine->placement_index = portal->portal_index;
+			if (portal->portal_index != NONE)
 			{
 				machine->object_flags.unknown22 = true;
 
@@ -283,7 +285,7 @@ void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine
 
 				if (table)
 				{
-					short index = *portal_index;
+					short index = portal->portal_index;
 
 					if (index >= 0 && index < *(long *)(table + 0x30) &&
 						(*(byte *)(*(long *)(table + 0x34) + index * 0x1c) & 1))

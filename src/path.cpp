@@ -237,6 +237,9 @@ void function_2705c0(s_path_source *source, point3f const *point,
 // (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
 // function scope 420, the edge iterator at function scope 420; hit at function scope 419; long count 424; line_normal as one struct
 // copy 444 (retail's 0x64 frame), the same with the old exits 478, with bool success 507; none keeps origin on the stack.
+// Inline with original exits 28; inline plus single result MATCH fast, but seven matched reduced-image callers lose
+// their match (the eighth already differs in that image); shared byte/short result 40/45; native index with original/
+// shared exits 32/37; nested tests 28; active-bit-first tests 28 (same caller losses). All restored.
 // @retail 0x270600
 PRIVATE bool function_270600(s_path_location const *location, long node_index)
 {
@@ -1257,6 +1260,9 @@ short function_272700(s_type_f17a25 *state, long node_index)
 }
 
 // score 16 (was 67): retail computes the segment i, j, k and sums (i + j) + k for the length and (j + k) + i for the projection, ours j, k, i and (k + j) + i for both; tried: `dot3f(&delta, &delta)` for the length 16, `dot3f(&delta, &offset)` 16, the projection written out in y, z, x order 36, all three written out 67, parameters reordered (start, end, attractor, out) 16; compile-only harness: every written-out sum order and grouping 27-64, all 24 parameter orders and the offset computed at the top no better.
+// Indexed unit-scale segment/offset differences 16; all three named squares 62; native point publication 31;
+// complete start/end values 139/131; named projection 16; indexed segment plus all named squares 62;
+// all named squares plus named projection 62. Original complete body and noinline declaration retained.
 // @retail 0x272740
 PRIVATE void function_272740(point3f const *attractor,
 	point3f const *start, point3f const *end, point3f *out)
@@ -1293,6 +1299,9 @@ PRIVATE void function_272740(point3f const *attractor,
 // segment/delta vectors 8; a `0.0` double test 102; the permuter (86 tries) found nothing below 8; distance_sq3f for the segment
 // 132 fast/100 plain; vector3f_assign 8; offset or t at function scope 8 each; delta renamed segment 8; closest declared first 8;
 // input declared later 8; length declaration split 8; aggregate segment initialization 83.
+// Indexed unit-scale difference helper for the segment or all differences 8/8; all three named segment squares 83;
+// all three named component differences plus the native setter 8; complete start-point value 117; named projection 8;
+// complete native point publication 30; complete start-point value plus named projection 117. All restored.
 // @retail 0x272810
 PRIVATE real function_272810(s_type_f17a25 const *state, s_type_c3b527 const *start,
 	point3f const *end, real *distance_out)
