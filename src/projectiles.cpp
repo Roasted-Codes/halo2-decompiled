@@ -361,6 +361,10 @@ bool __stdcall function_fa9a0(long *value)
 // Same-arithmetic private normalizer: one magnitude exit 86; separate result 93;
 // native failure guard 87; direct complete-vector output with those 122/116/122,
 // alone 122; one magnitude exit with local home names 86. Restored.
+// Native final-time guard 87; entry/result-phase output requests 104/106;
+// entry requests with final-time guard 104; forced existing normalizer 87;
+// forced normalizer with guard 87, entry requests 104, result requests/guard 106.
+// Original body, expression grouping, output order and private helper attribute restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -848,6 +852,9 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // Early attachment counter 109; native while cursor 72; both 109; parent declaration
 // at entry 72; parent/tag names 72; incoming operand names 72; all-use parent
 // observations 72; those with early counter 109. Restored.
+// Scan-owned tag 133; complete projectile observations 201; full decay quotient 72;
+// tag/receiver 183; tag/quotient 133; receiver/quotient 201; all producers 183;
+// direct native void completion with all producers 183. Every body statement restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)

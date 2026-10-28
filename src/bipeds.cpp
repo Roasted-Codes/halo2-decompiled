@@ -1124,7 +1124,7 @@ PRIVATE inline void biped_eye_raise(long arg_159e6d, real crouch, point3f *eye)
 	}
 }
 
-PRIVATE inline void biped_grab_eye(long arg_159e6d, point3f *eye)
+PRIVATE __forceinline void biped_grab_eye(long arg_159e6d, point3f *eye)
 {
 	function_b9dd0(arg_159e6d, eye);
 	biped_eye_raise(arg_159e6d, function_e0dc0(arg_159e6d) ? 0.0f : BIPED_GET(arg_159e6d)->crouch, eye);
@@ -1132,6 +1132,12 @@ PRIVATE inline void biped_grab_eye(long arg_159e6d, point3f *eye)
 
 /* fills the biped's character physics input for its physics mode: walking
    (1), flying (2), dead (3), animation driven (4, 5) or grabbing (6) */
+// score 1497 (was 1638): Frame 0x7c versus retail 0xfc; the inner eye helper, flag homes and argument scheduling still differ.
+// Outer-only inline control 1566; native case order 1562; full vector setter 1555;
+// use-site animation flags 1578; consistent ground observations 1502; default boost 1563;
+// conditional material 1566; workspace names 1566; case/setter/boost/names 1552.
+// Ground observations with case order 1497, setter 1510, default boost 1535, case/setter 1509.
+// Case order alone is below the eight-point gate; retain it only with the native ground observation cause, plain 1497.
 // @retail 0xdc5c0
 void __stdcall function_dc5c0(long arg_159e6d, s_biped_physics_output *output)
 {
@@ -1147,12 +1153,11 @@ void __stdcall function_dc5c0(long arg_159e6d, s_biped_physics_output *output)
 	point3f position;
 	vector3f ground_velocity;
 	vector3f facing;
-	byte *ground = *(byte **)(*(byte **)((byte *)component + 0x70) + 0x40);
 
 	function_b9dd0(arg_159e6d, &position);
-	if (!ground[0x40])
+	if (!(*(byte **)(*(byte **)((byte *)component + 0x70) + 0x40))[0x40])
 	{
-		ground_velocity = *(vector3f *)(*(byte **)(ground + 0x3c) + 0x40);
+		ground_velocity = *(vector3f *)(*(byte **)((*(byte **)(*(byte **)((byte *)component + 0x70) + 0x40)) + 0x3c) + 0x40);
 	}
 	else
 	{
@@ -1232,21 +1237,6 @@ void __stdcall function_dc5c0(long arg_159e6d, s_biped_physics_output *output)
 		function_1e67a0((s_character_physics_component *)&biped->physics_mode,
 			(s_type_94656b *)output, 1, biped->unknown34b != 0);
 		break;
-	case 4:
-	case 5:
-	{
-		vector3f velocity;
-		point3f body;
-		c_type_709360 current;
-		long animation_id;
-
-		function_e59e0(arg_159e6d, &velocity, &position);
-		havok_component_rigid_body_position_get(0, component, &body);
-		animation_id = *(long *)((s_animation_state *)state)->current_animation_get(&current);
-		function_1e67f0((s_type_94656b *)output,
-			(s_character_physics_component *)&velocity, animation_id, &position, &body, &body);
-		break;
-	}
 	case 6:
 	{
 		point3f target_position = position;
@@ -1317,6 +1307,22 @@ void __stdcall function_dc5c0(long arg_159e6d, s_biped_physics_output *output)
 			&target_position, distance);
 		break;
 	}
+	case 4:
+	case 5:
+	{
+		vector3f velocity;
+		point3f body;
+		c_type_709360 current;
+		long animation_id;
+
+		function_e59e0(arg_159e6d, &velocity, &position);
+		havok_component_rigid_body_position_get(0, component, &body);
+		animation_id = *(long *)((s_animation_state *)state)->current_animation_get(&current);
+		function_1e67f0((s_type_94656b *)output,
+			(s_character_physics_component *)&velocity, animation_id, &position, &body, &body);
+		break;
+	}
+
 	}
 }
 
@@ -1420,6 +1426,11 @@ apply:
 /* whether the biped can see a biped it would grab: a ray from its eye to
    the target's center (or to three points up the target's height) gets
    through */
+// score 932 (was 1031): Frame 0x8c versus retail 0xac; the outer eye call expands, but the inner call and incoming self index still differ.
+// Outer-only inline 952; entry result 1038; scan result 1020; shared displacement 1031;
+// scan collision workspace 1031; role names 1031; native while scan 1031; combined entry result 1038.
+// Outer-only inline with scan/entry result 932/950; shared workspaces 952; all scan forms 932.
+// Retain outer-only inline and scan result, plain 932; the inner helper remains ordinary.
 // @retail 0xde9d0
 bool __stdcall function_de9d0(long arg_159e6d, long target_index)
 {
@@ -1451,6 +1462,8 @@ bool __stdcall function_de9d0(long arg_159e6d, long target_index)
 			count = 3;
 		}
 		biped_grab_eye(arg_159e6d, &eye);
+		bool result = false;
+
 		for (i = 0; i < count; i++)
 		{
 			s_biped_collision collision;
@@ -1463,14 +1476,15 @@ bool __stdcall function_de9d0(long arg_159e6d, long target_index)
 			if (!function_1697c0(0x84000d, &eye, &vector, arg_159e6d, target_index,
 				(s_collision_result_1697c0 *)&collision))
 			{
-				return true;
+				result = true;
+				break;
 			}
 			if (count > 1)
 			{
 				center.z += height / (real)(count - 1);
 			}
 		}
-		return false;
+		return result;
 	}
 	return true;
 }
@@ -3042,6 +3056,10 @@ void __stdcall function_e2e90(long arg_159e6d, long *field_7c, long *state_name,
 // Shared bounded-range helper short/byte 60/59; consistent inline/forceinline short 60/4, forceinline byte 27;
 // range divided by two 4; short read then halved 4; signed-byte test 4; short positive/nonzero tests 10/10;
 // shared bounded-range helper with a short positive test 59.
+// Mode receiver owned at guard/entry 77/77, in native admission scope 4;
+// final-store narrowing 4, with mode receiver 77; early completion guards 4; staged guards 4;
+// consistent object observations 129; role names 4; entry-scope ranges 4.
+// One serial 600-second search: twelve attempts, eight scored, none below 4. Original body restored.
 // @retail 0xe3f00
 void function_e3f00(long arg_159e6d)
 {
