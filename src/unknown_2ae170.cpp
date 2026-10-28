@@ -751,6 +751,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // first/second signed short 438/461; first dword alone/right-first 446/448 (fast).
 // First unsigned-word destination retained: 438 plain, dispatcher exact; other destination remains
 // byte and both value sets are unchanged. Selected-level/SSE homes still differ in frame 0xc.
+// Round 365: actual selected primary-field pointer with native destinations, special input
+// snapshot and native routing domains: 453/461/441/455/447/461/438/454. The 438 plain
+// form loses the dispatcher; input snapshots change the entry roles. All restored.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -902,6 +905,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 234: destination/selected-send/input-level consumption scopes and all combinations
 // 224/224/224/224/224/224/224; routing-predicate consumption scope 224. Original lifetimes restored.
 // Round 197: Retained word-route graph, per-use gain/offset/both/level/gain-level/offset-level/all inputs 265/257/276/290/312/308/324; all inputs with native phase scope 324. Some forms recover frame 0x18 but regress; original observations restored.
+// Round 365: joint native destination branch with all eight spilled-width subsets
+// 262/263/263/264/263/264/264/265. All restored; frame/input-level and tail sum remain.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
