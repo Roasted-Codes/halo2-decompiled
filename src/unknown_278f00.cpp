@@ -47,7 +47,7 @@ void __stdcall function_b8890(long arg_0);
 
 bool function_a7670(long object_index);
 
-// score 181 (was 212): frame 0x424 and retail's length agree; left are the scratch-register phase at entry
+// score 181 (was 181): frame 0x424 and retail's length agree; left are the scratch-register phase at entry
 // (retail xor eax), the homes of the list/island/index/count slots and the inner-loop induction, the
 // admission flag (retail BL, ours a stack byte) and the cursor cleanup loop (retail indexed).
 // list reference 212; island reference 212.
@@ -102,6 +102,12 @@ bool function_a7670(long object_index);
 // descriptive names for the outer locals 212; second scan with its own found flag 269 (flag materialized,
 // not threaded); index comparison before the first-scan flag 213. Diagnostics, not kept: the predicted-copy
 // test as a one-line inline bool helper 212, as a single-exit helper 281 (gives the setne/test).
+// Round 104: retail tests the second scan's hit first (threaded straight past the insert), then the first
+// found flag (CL), then the admission flag (BL). Index compare first 244; a second-scan found flag tested
+// first 260 (retail's scan shape and BL/CL exactly, 83 aligned differences against 93, but the header address
+// is folded after the `local_9 > 0` branch where retail computes it before, so the lockstep count rises);
+// with the header from object_header_get 260 (identical); with the type compared to 0 and 7 249 (address now
+// before the branch, but no bit test); the type comparisons alone 255. Slot order ignores local names.
 // @retail 0x278f00
 void function_278f00()
 {

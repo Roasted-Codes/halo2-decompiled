@@ -2905,8 +2905,10 @@ void __stdcall function_f3010(long vehicle_index, s_vehicle_physics_state *state
 
 /* the duration of the vehicle's current flip (+0x350: 1 and 2 to either
    side, 3 end over end) */
-PRIVATE inline real vehicle_flip_duration(s_vehicle const *vehicle)
+PRIVATE inline real vehicle_flip_duration(long vehicle_index)
 {
+	s_vehicle *vehicle = VEHICLE_GET(vehicle_index);
+
 	if (vehicle->unknown350 > 0)
 	{
 		if (vehicle->unknown350 > 2)
@@ -2931,7 +2933,8 @@ real function_f4250(long vehicle_index)
 {
 	s_vehicle *vehicle = VEHICLE_GET(vehicle_index);
 	real elapsed = vehicle->unknown351 * g_510c54->rate;
-	real duration = vehicle_flip_duration(vehicle);
+	real duration = vehicle_flip_duration(vehicle_index);
+	real result = 0.0f;
 
 	if (duration > elapsed)
 	{
@@ -2939,20 +2942,25 @@ real function_f4250(long vehicle_index)
 		{
 			real remaining = 1.0f - elapsed / duration;
 
-			return 1.0f - remaining * remaining;
+			result = 1.0f - remaining * remaining;
 		}
 		else
 		{
-			real fraction = elapsed / duration;
-
-			fraction *= fraction;
-			return fraction;
+			result = elapsed / duration;
+			result *= result;
 		}
 	}
-	return 0.0f;
+	return result;
 }
 
 /* whether the vehicle is flipping */
+// score 8 (was 33): pointer/flip-kind registers, the shared outer kind test and final false lifetime differ;
+// reversed comparison 33; duration local before/after elapsed 33/33; direct returns 31;
+// result first 36; direct comparison assignment 31; combined/nested conditions 33/33;
+// force-inline duration helper 33; product operands swapped 33; const vehicle 33; byte result 30.
+// retail reads the tick count into eax (clobbering the false
+// result, which it zeroes again on the false path) and loads the time globals
+// after the flip type test; ours uses edx and keeps al. Tried: direct returns 30.
 // @retail 0xf42f0
 bool function_f42f0(long vehicle_index)
 {
@@ -2963,7 +2971,7 @@ bool function_f42f0(long vehicle_index)
 	{
 		real elapsed = vehicle->unknown351 * g_510c54->rate;
 
-		if (vehicle_flip_duration(vehicle) > elapsed)
+		if (vehicle_flip_duration(vehicle_index) > elapsed)
 		{
 			result = true;
 		}
@@ -3169,19 +3177,19 @@ bool function_f5d70(long vehicle_index)
 real function_f5e00(long vehicle_index)
 {
 	s_vehicle *vehicle = VEHICLE_GET(vehicle_index);
-	s_game_time_globals *time = g_510c54;
-	long delay = vehicle_round(time->field_2_3 * 0.45f);
+	long delay = vehicle_round(g_510c54->field_2_3 * 0.45f);
+	real result = 0.0f;
 
 	if ((char)vehicle->unknown34a > delay &&
 		(vehicle->unknown248 == NONE || 3.0625f > vehicle->linear_velocity.i * vehicle->linear_velocity.i +
 			vehicle->linear_velocity.j * vehicle->linear_velocity.j +
 			vehicle->linear_velocity.k * vehicle->linear_velocity.k))
 	{
-		real brake = ((char)vehicle->unknown34a * time->rate - 0.45f) * 1.25f;
+		real brake = ((char)vehicle->unknown34a * g_510c54->rate - 0.45f) * 1.25f;
 
-		return PIN(brake, 0.0f, 1.0f);
+		result = PIN(brake, 0.0f, 1.0f);
 	}
-	return 0.0f;
+	return result;
 }
 
 /* counts the ticks the vehicle sits idle: no control pushed (or braking),

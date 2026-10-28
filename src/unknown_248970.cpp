@@ -8,6 +8,8 @@ struct s_object_2470e0;
 struct s_unknown_13bf00;
 extern s_unknown_13bf00 *g_510c50;
 
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
 struct s_248970
 {
 	short field_0;
@@ -49,8 +51,8 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 215 (was 215): Frame 0x10 versus 0x14 and stacked activation versus AL remain (ours passes the location pointer
-// in ebx instead); metadata/viewer/child homes differ.
+// score 196 (was 215): Frame 0x10 versus 0x14 and stacked activation versus AL remain (ours passes the location pointer
+// in ebx instead); loop counters, the x87 pops after the square root and the child link differ.
 // Frame 0x10 versus 0x14 and stacked activation versus AL remain; metadata/viewer/child homes differ;
 // ours passes the location in EBX (LTCG's choice from this body) where retail leaves it on the stack.
 // Round 9 (lane 11, fast): location read once through its address with retail's entry order (head read,
@@ -140,6 +142,12 @@ public:
 // Round 195: Queued-function inline/noinline/combined/forceinline declarations 215 each;
 // each with closed coordinate-double lifetime 215. Original boundary and body restored;
 // frame and activation/location transport remain.
+// Lane 10 r11: retail takes the activation in AL with the location as the first stack
+// argument (ours: location in EBX, activation on the stack). Activation-first parameter
+// order with a forwarding definition for the caller 215 (location still in EBX, forwarder
+// not inlined); location read once through its address 233 (both on the stack, ret 0x18);
+// both 233; activation store after the getter and position copy 251 (724 bytes); with the
+// activation-first order 251. Original order and body restored.
 // Round 81: retail's child link is the existing 0x2483f0 inlined (salt from the element, ordinal from
 // the pointer difference); calling it keeps a call in this /Ob1 file: alone 303, with the entry
 // reordered as below 299, inline/forceinline declarations 299/299; field_4 read before the getter
@@ -153,16 +161,23 @@ public:
 // 0.70). Left: our frame stays 0x10 because the position pointer folds into [edi+0x10] (retail keeps
 // it in ecx and spills field_4 to a fifth slot); then the child link (retail inlines 0x2483f0) and
 // the x87 cleanup after the square root.
+// Lane 10 r13: activation stored after the position copy with the fade combine as a nested MAX
+// 196 kept (the combine now matches). From the 215 body: position pointer with the head read first
+// and the flag after the copy 277 (retail's convention, 692 bytes); with nested MAX 243; with
+// retail's inlined child link (0x2483f0's helper form) 207 (location back in EBX); link without MAX
+// 273; link and MAX with the original entry order 227; link/MAX/late flag 208. On 196: position
+// pointer 242 (retail's convention; the pointer folds into [edi+0x10], frame stays 0x10); with the
+// head read first 243, with the copy written through the field 243; head read first alone 195.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
 {
 	s_248970 *local_20 = (s_248970 *)arg_0;
-	local_20->field_2 = arg_5;
 	s_248971 *local_1 = (s_248971 *)arg_2->function_1751d0();
 	long local_0 = local_20->field_4;
 	long local_2 = local_1->field_30;
 	local_20->field_10 = arg_4->position;
+	local_20->field_2 = arg_5;
 	if (arg_5)
 		local_20->field_1c = 1.f;
 	else
@@ -192,9 +207,7 @@ void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s
 				else
 					local_11 = 1.f;
 			}
-			real local_12 = TEST_FIELD_BIT(arg_2->flag10) ? 1.f : 0.f;
-			real local_13 = local_11 > local_12 ? local_11 : local_12;
-			local_20->field_1c = local_20->field_1c > local_13 ? local_20->field_1c : local_11 > local_12 ? local_11 : local_12;
+			local_20->field_1c = MAX(local_20->field_1c, MAX(local_11, TEST_FIELD_BIT(arg_2->flag10) ? 1.f : 0.f));
 		}
 	}
 	*(real *)((byte *)arg_3 + 0x1c) = local_20->field_1c;

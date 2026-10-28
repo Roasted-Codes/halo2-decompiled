@@ -179,15 +179,26 @@ PRIVATE inline long unit_action_weapon_get(s_unit_action_unit *unit, bool second
 	return weapon_index;
 }
 
+/* the weapon in a unit's hand (0 or 1), read through the hand's slot index */
+PRIVATE inline long unit_action_hand_weapon_get(s_unit_action_unit *unit, long hand)
+{
+	short index = (&unit->current_weapon_index)[hand];
+	long weapon_index = NONE;
+
+	if (index != NONE)
+		weapon_index = unit->weapon_object_indices[index];
+	return weapon_index;
+}
+
 /* ends an action (its finished handler), and clears it */
 // @retail 0xe6960
 void function_e6960(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	t_unit_request_end_proc finished = g_4677c8[type]->finished;
+	s_unit_request_definition *definition = g_4677c8[type];
 
-	if (finished)
-		finished(unit_index, type);
+	if (definition->finished)
+		definition->finished(unit_index, type);
 	actions->active[type >> 5] &= ~(1 << (type & 0x1f));
 }
 
@@ -196,10 +207,10 @@ void function_e6960(long unit_index, long type)
 void function_e69c0(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	t_unit_request_end_proc interrupted = g_4677c8[type]->interrupted;
+	s_unit_request_definition *definition = g_4677c8[type];
 
-	if (interrupted)
-		interrupted(unit_index, type);
+	if (definition->interrupted)
+		definition->interrupted(unit_index, type);
 	actions->active[type >> 5] &= ~(1 << (type & 0x1f));
 }
 
@@ -540,12 +551,17 @@ bool __stdcall function_e7280(long unit_index, s_unit_request *request)
 	return result;
 }
 
+// score 25 (was 44): about 14 of the count is the jump table read as code. Retail
+// keeps the data pointer and the hand index in edx and the weapon in esi to the
+// call; ours swaps them (esi, then edx). Tried: the hand index declared first 44;
+// the hand index renamed 25; a ternary for it 43; the weapon default before the
+// result 26; a 600 s permuter run, best 23 (volatile only).
 // @retail 0xe7320
 bool __stdcall function_e7320(long unit_index, long type)
 {
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	bool result = false;
 	long weapon_index = NONE;
+	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	short index;
 	long slot_index;
 
@@ -577,8 +593,12 @@ bool __stdcall function_e7320(long unit_index, long type)
 // @retail 0xe73c0
 void __stdcall function_e73c0(long unit_index, long type)
 {
-	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), type > 1);
+	long weapon_index;
 
+	if (type > 1)
+		weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 1);
+	else
+		weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 0);
 	if (weapon_index != NONE)
 		function_1015a0(weapon_index);
 }
@@ -1168,7 +1188,7 @@ void function_e8460(long unit_index, bool primary)
 // @retail 0xe8510
 bool function_e8510(long unit_index, bool immediate, bool silent, bool primary)
 {
-	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
+	long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
 	bool result = true;
 
 	if (weapon_index != NONE)
@@ -3721,9 +3741,12 @@ bool __stdcall function_ecb80(long unit_index, s_unit_request *request)
 				memset(actions->active, 0, sizeof(actions->active));
 				actions->unknown36 = 0;
 				function_1e54d0((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x3dc, 1);
-				return true;
+				result = true;
 			}
-			return false;
+			else
+			{
+				result = false;
+			}
 		}
 	}
 	return result;
@@ -4343,6 +4366,10 @@ void function_edfa0(long unit_index, point2f const *facing)
 }
 
 /* faces a unit along its aiming direction */
+// score 13 (was 24): retail stores x before it loads y (`movss xmm2, y; mulss xmm2, xmm0`); ours
+// multiplies y into the inverse's register and stores both after. Tried: the products as `*=` or
+// in any operand order 13; normalize2d_fast 13; `else length = 0.0f;` before the test, either arm
+// first 13; a vector2f local 13; the normalisation as a helper inlined from another file 13.
 // @retail 0xedff0
 void function_edff0(long unit_index)
 {
@@ -4356,12 +4383,11 @@ void function_edff0(long unit_index)
 
 	if (!(0.0001f > (real)fabs(length)))
 	{
-		bool positive = length > 0.0f;
 		real inverse = 1.0f / length;
 
 		facing.x = inverse * facing.x;
 		facing.y = facing.y * inverse;
-		if (positive)
+		if (length > 0.0f)
 			function_edfa0(unit_index, &facing);
 	}
 }
@@ -4588,9 +4614,21 @@ void function_ee7f0(long unit_index, long state)
 		user_index = unit_action_player_value28_get(player_index);
 	}
 
-	bool secondary = state == 0x13 || state == 0x15 || state == 0x19;
+	long secondary;
 
-	function_168896(user_index, unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), secondary),
+	switch (state)
+	{
+	case 0x13:
+	case 0x15:
+	case 0x19:
+		secondary = true;
+		break;
+	default:
+		secondary = false;
+		break;
+	}
+
+	function_168896(user_index, unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), secondary),
 		secondary, state);
 }
 
