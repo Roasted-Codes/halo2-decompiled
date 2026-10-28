@@ -224,6 +224,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // 308/308/380; each with twice-used long sample frame 332/332/375;
 // copy/member copy with native sample-result enum 316/390. All exact-match-only
 // storage forms restored; frame 0x30, getter expansion and ordinal spill remain.
+// Round 212: complete native weight-array identity, mutable/const, with original/complete
+// frame-array identity and literal/native bounds [250, 250, 287, 287, 250, 250, 287, 287].
+// Original array observations restored; getter, destination and frame remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

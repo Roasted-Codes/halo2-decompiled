@@ -379,6 +379,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 223: two-use sound-interface value 274; allocation-size branches 256;
 // both 274; consistent movie-global reads 256; sound/movie 274; size/movie 256;
 // all three 274; per-branch volume arrays before channel arrays 256. All restored.
+// Round 212: native status zero/length aggregate initialization, original/entry texture outputs
+// and bins/volumes declaration orders [286, 286, 286, 286, 285, 285, 285, 285]. Original shared
+// producer and body restored; frame and clock/output homes remain.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

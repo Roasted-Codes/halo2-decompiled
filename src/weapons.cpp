@@ -3577,6 +3577,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 243: Player default before scale override, direct/valid candidate 1439/1420;
 // before unit lookup 1442/1421; before dual query 1447/1428; before first lookup 1447/1428.
 // Kept scale-override default plus valid candidate, plain 1420/5680; frame and pool carriers remain.
+// Round 212: native animation/trigger/barrel activity-test accumulation, seven subsets and
+// complete entry-zero result [1421, 1425, 1432, 1432, 1431, 1438, 1450, 1450]. Original
+// producers restored; pool, dual and frame homes remain.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

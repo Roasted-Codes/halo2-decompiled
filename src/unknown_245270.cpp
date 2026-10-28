@@ -398,6 +398,9 @@ void function_245400(s_source_245400 const *source, long index,
 // endpoint/transform identities: 203/203/203/203/203/203/203/203. Source receiver, side homes and frame gap
 // remain
 // original identities restored.
+// Round 212: native material-index pair traversal, long/short/dword/word counters, narrow/full
+// decoded pairs [222, 233, 222, 233, 235, 229, 235, 229]; exact-match-only grouped storage
+// restored. Frame, source receiver and side homes remain.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
