@@ -1279,6 +1279,11 @@ bool function_0b6760(s_index_pair const *pair);
 // velocity reference 396, with power/position/both 401/396/414; all references
 // with result initialized before lookup 414. Frame and index/state/result homes
 // remain; original field observations, producers, qualifiers and body restored.
+// Round 84 (lane 5): event ids as a select between two field reads (retail's separate loads)
+// 351; with a plain index 361 (frame 0x20, the index * 12 kept in a register as retail, 394
+// instructions as retail, but index/offset in EDI/ESI where retail has ESI/EBX and the result in
+// a register where retail keeps its byte); also a plain definition 410; with the result declared
+// first 366, the state before the result 361, the state second 360.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

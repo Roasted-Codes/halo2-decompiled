@@ -375,6 +375,9 @@ long cache_copy_priority(char const *map_name)
 // helpers defined after their callers 7; path helper alone in an /Ob1 file 7; print helper
 // inline with a noinline declaration 7. Retail also forms 0x2141f0's EDI constant again after
 // the call: retail callers act as if they had no register summary for the path helper.
+// Inline/outlined file query 7/7; one-byte memset and empty strcpy 7/7;
+// nonnegative open domain 10; exclusive completion bound 9; tail conditional 7;
+// queued tail branch 19. The path address still reuses EBX after normalization.
 // @retail 0x213f10
 long map_location_get(char const *map_name)
 {

@@ -1585,12 +1585,12 @@ struct s_258cf0
 struct s_named_entry_owner;
 short named_entry_find(s_named_entry_owner const *owner, char const *name);
 void *function_1e5380(long actor_index);
-short function_cccd0(long unit_index, short grenade_type, char delta);
+short function_cccd0(long unit_index, short grenade_type, short delta);
 bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 466 (was 466): the body is 36 bytes short; retail loads the actor and cs-datum
+// score 471 (was 471): the body is 40 bytes short; retail loads the actor and cs-datum
 // table globals before the actor index and keeps the actor base in EBX, ours loads the
 // index first and keeps the actor base in ESI.
 // Actor/output registers, dispatch layout and rounding homes still differ.
@@ -1658,9 +1658,14 @@ void function_b7360(long object_index);
 // all three 532; field reads with positive point-production admission 530. Original body restored.
 // Complete core-group orders ACB/BAC/BCA/CAB/CBA 474/544/534/478/532;
 // B/A with point case before/between/after the groups 522/546/549. All original case bodies restored.
+// Round 223: shared initial truncation 509; complete direction assignment helper 477;
+// both 509; named-entry inline declaration 471; with truncation/direction/both
+// 509/477/509; separate named-entry noinline declaration 471. All restored.
 // Cross-case same-object comparison result bool/byte/short/long 536/536/527/532;
 // complete complementary result at the same widths 536/536/527/532. Added storage
 // regresses acquisition and dispatch; original comparison observations restored.
+// Round 226: Per-use actor pool/getter 501/501; command pool/getter 786/787; both direct/getters 798/793;
+// mixed direct/getter acquisitions 798/793. All original acquisitions and body restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

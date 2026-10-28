@@ -344,6 +344,11 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // 803/798/858; center-first/reverse-first initial points 836/802; reverse-first with late forward 792;
 // center-first with late reverse 797. Original geometry production restored; frame 0x11c/0x114,
 // eager radius and trace/pivot/point homes remain.
+// Split-output planar frame with native trace/sample-point/state role-name groups,
+// their pairs/all and reversed trace declarations: 755 each (fast control 749). All restored.
+// Separate transform/planar pivot plus all sweep-rotation products, with complete
+// normalizer-square/distance-square/obstacle-rotation product phases: all eight 755
+// (3351 bytes, frame 0x114, first +0x14). Eager radius remains; all restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

@@ -15,6 +15,7 @@ files; 0xdc370, at the start of the range, is c_a's destructor
 #include "unknown_0259d0.h"
 #include "unknown_1cec30.h"
 #include "object_markers.h"
+#include "slot_handler.h"
 #include "unknown_11cc90.h"
 #include "unknown_1efac0.h"
 #include "unknown_1eb550.h"
@@ -79,7 +80,15 @@ struct s_biped
 	byte unknown2e8[0x33e - 0x2e8];
 	short unknown33e;
 	byte unknown340[0x348 - 0x340];
-	word flags_348;
+	union
+	{
+		word flags_348;
+		struct
+		{
+			word : 15;
+			word flag_348_15 : 1;
+		};
+	};
 	byte unknown34a;
 	byte unknown34b;
 	short unknown34c;
@@ -347,6 +356,11 @@ void havok_component_rigid_body_position_get(long rigid_body_index, s_havok_comp
 
 /* fills the biped's character physics input for its current physics mode
    (+0x3dc): its node matrix, facing, controls and Havok body */
+// score 134 (was 134): frame 0x4c versus 0x44, Boolean argument staging and mode dispatch remain.
+// Long airborne/landing/both 162/161/135; native-short body ordinal 135, with long
+// airborne/landing/both 152/152/128; paired word results and short ordinal 128.
+// The 128 forms recover frame 0x44 but are below the keep margin. Consistent biped
+// flag word with animation-word/native-result/native-ordinal subsets: 148/183/155/174/147/171/147/173. All restored.
 // @retail 0xdd0d0
 void __stdcall function_dd0d0(long arg_159e6d, s_biped_physics_input *input, bool flag)
 {
@@ -417,6 +431,12 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 
 /* moves the biped's camera offset (+0x3cc) toward its head marker,
    relative to its root node, a little each tick */
+// score 24 (was 127): frame 0x9c and native entry now agree at retail length; cross-component
+// scheduling and the final float load remain. Existing node query 34; point difference 129;
+// both 48; coherent vector homes 127/34/129/48; outputs first 48. Clamped steps 34;
+// destination pointer 24; both 34; delta-first 34, with steps/pointer/both 34/24/34;
+// plain component loop 24 (kept, plain); raw differences 24; current components 87;
+// current components and differences 87; point setter 34.
 // @retail 0xde190
 void function_de190(long arg_159e6d)
 {
@@ -424,7 +444,7 @@ void function_de190(long arg_159e6d)
 
 	if (biped->unknown13c != NONE && !function_10f820(arg_159e6d))
 	{
-		transform4x3f const *nodes = (transform4x3f const *)((byte *)biped + biped->node_matrices_offset);
+		transform4x3f const *nodes = object_node_matrix(object_get(arg_159e6d), 0);
 		s_object_marker marker;
 		vector3f offset;
 		vector3f aim;
@@ -447,9 +467,11 @@ void function_de190(long arg_159e6d)
 		local.z = offset.k;
 		if (biped->unknown3c8)
 		{
-			biped->unknown3cc.x += PIN(local.x - biped->unknown3cc.x, -0.01f, 0.01f);
-			biped->unknown3cc.y += PIN(local.y - biped->unknown3cc.y, -0.01f, 0.01f);
-			biped->unknown3cc.z += PIN(local.z - biped->unknown3cc.z, -0.01f, 0.01f);
+			for (long component = 0; component < 3; ++component)
+			{
+				biped->unknown3cc.n[component] +=
+					PIN(local.n[component] - biped->unknown3cc.n[component], -0.01f, 0.01f);
+			}
 		}
 		else
 		{
@@ -1573,19 +1595,23 @@ void __stdcall function_def60(point3f *point, long arg_159e6d, short mode, point
 
 /* a biped's collision capsule: its bottom point, the vector to its top and
    its radius, from its two capsule nodes when its definition names them */
+// score 105 (was 134): one-dword frame, stack object index and retail length now agree;
+// pool/definition and output-register roles remain. Existing node queries 105;
+// vector difference and fallback names 134 each, node combinations and entry locals 105.
+// Direct definition producer removes the one-use object alias at 105 (kept, plain);
+// cached object/shared entry 126 each; direct shared entry 105; those four with
+// vector difference 105/126/126/105. Header getter at entry/nodes/both and vector pair 105 each.
 // @retail 0xdf6c0
 void __stdcall function_df6c0(point3f *bottom, vector3f *axis, long arg_159e6d, real *radius)
 {
-	s_biped *biped = BIPED_GET(arg_159e6d);
-	byte *definition = BIPED_DEFINITION_GET(biped);
+	byte *definition = BIPED_DEFINITION_GET(BIPED_GET(arg_159e6d));
 	short node_a = *(short *)(definition + 0x254);
 	short node_b = *(short *)(definition + 0x256);
 
 	if (node_a != NONE && node_b != NONE)
 	{
-		transform4x3f const *nodes = (transform4x3f const *)((byte *)biped + biped->node_matrices_offset);
-		point3f const *a = &nodes[node_a].position;
-		point3f const *b = &nodes[node_b].position;
+		point3f const *a = &object_node_matrix(object_get(arg_159e6d), node_a)->position;
+		point3f const *b = &object_node_matrix(object_get(arg_159e6d), node_b)->position;
 
 		if (TEST_FIELD_BIT((*(dword *)(definition + 0x264) >> 1) & 1))
 		{
@@ -2014,11 +2040,14 @@ real function_1d1230(long rigid_body_index, s_havok_component *component);
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value);
 
 /* starts a fallen biped's ragdoll from its main rigid body */
-// score 2 (was 61): only argument preparation before the extent call differs: mov ecx,esi precedes mov eax,ebx.
+// score 2 (was 2): only argument preparation before the extent call differs: mov ecx,esi precedes mov eax,ebx.
 // Shared main-index helper with short 34, with long 31; long ternary 76; shared point setter 52; long helper/setter 24;
 // typed body getter 61; short helper/setter 27; both typed body helpers/setter 24; typed three-use point source 2, kept; earlier uninitialized index declaration 2.
 // Setter result as point argument 2; returned pointer 2; returned reference 2; split extent declaration 2;
 // point storage first 2; source pointer declared first 2; initialized point-first declarations 2; const extent result 2.
+// Extent formal order reversed 0 but loses its matched callee (1, address base/index); separate noinline and inline
+// extent declarations original/reversed 2/0 with the same callee loss; outer early exit, split inner guard, both early exits 2/2/2;
+// explicit cdecl and stdcall original/reversed 2/0 with the same callee loss; signed int extent index original/reversed 2/0, same loss.
 // @retail 0xe1a80
 void function_e1a80(long arg_159e6d)
 {
@@ -2087,6 +2116,9 @@ void function_1d1540(s_havok_component *component);
 
 /* turns the biped into a ragdoll: lifted a little when it fell through
    something, its nodes placed from its Havok bodies */
+// score 125 (was 125): frame 0x18 agrees; header-offset, biped/component roles and packed result homes differ.
+// Boolean word conditions 154; result first 125; both 154; ragdoll/reach names 125;
+// conditions/names 154; result/names 125; all three 154; all with indexed nodes 292.
 // @retail 0xe16b0
 bool __stdcall function_e16b0(long arg_159e6d)
 {
@@ -2966,11 +2998,14 @@ void __stdcall function_e2e90(long arg_159e6d, long *field_7c, long *state_name,
 
 /* starts the biped's landing: its landing time, and for one that can
    collapse, a ragdoll for a random part of it */
-// score 4 (was 27): the range is widened in CX, but ours tests CL before the seed pointer; retail
+// score 4 (was 4): the range is widened in CX, but ours tests CL before the seed pointer; retail
 // tests AL, then loads the seed pointer before widening CX. A signed range also deriving the byte
 // test 4; an independent byte 8; an unsigned range 4; explicit byte narrowing 4; a two-view union 4;
 // range assigned inside/before the byte test 27/27; long/dword range 16/16; a low-byte mask 4.
 // Earlier: retail widens the halved landing time to 16 bits (`movzx cx, al`) before the seed step and sign-extends it at the multiply, ours folds both into `movzx edx, al` (seed then in ecx, not eax); tried: `(short)half` as the argument 27, a named seed pointer 28, `x = x + random_index(...)` 27, a one-use `short` range local 27, a file-local `__forceinline` short-parameter copy of the helper 27.
+// Shared bounded-range helper short/byte 60/59; consistent inline/forceinline short 60/4, forceinline byte 27;
+// range divided by two 4; short read then halved 4; signed-byte test 4; short positive/nonzero tests 10/10;
+// shared bounded-range helper with a short positive test 59.
 // @retail 0xe3f00
 void function_e3f00(long arg_159e6d)
 {
@@ -3178,6 +3213,10 @@ void function_e3910(long arg_159e6d);
 /* a walking biped falling faster than the globals' falling speed takes
    falling damage, unless it rides a vehicle that protects it; a falling
    object leaves its cluster */
+// score 98 (was 130): frame 0x9c and length 518 agree; high-byte immunity test, load order and damage-result roles differ.
+// Native byte high/lower/both bitfield tests 130 each; native high word bitfield store 98;
+// with high/lower/both byte tests 98 each; all fields with immunity set from tests 134.
+// The native high word bitfield store is kept; all input/call expressions retain their original roles.
 // @retail 0xe3700
 void function_e3700(long arg_159e6d)
 {
@@ -3224,7 +3263,7 @@ void function_e3700(long arg_159e6d)
 		{
 			s_type_1e6529 data;
 
-			*((byte *)&biped->flags_348 + 1) |= 0x80;
+			biped->flag_348_15 = true;
 			if (biped->unknown13c != NONE)
 			{
 				function_155b60(arg_159e6d);

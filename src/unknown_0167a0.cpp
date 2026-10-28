@@ -1365,6 +1365,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 // score 267 (was 267): Frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// Direct descriptor pointer/reference 267/267; mapped pre-rescale reload 267; mapped descriptor across pack 263 (not kept: a gain under 8);
+// validation descriptor across pack 288; direct pointer on that graph 263; separate mapped output word 268;
+// short mapping base 263 (no added gain, restored).
 // Frame and sampler agree; captured descriptor/index and post-store rereads remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
