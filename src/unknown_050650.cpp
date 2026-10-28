@@ -205,6 +205,9 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // reversed terms and operands 8; helper terms/shared magnitude/named square 8/8/8; squared accumulation 10;
 // dot3f 8; an early final return 83; shared normalization with reversed terms 8; indexed vector2f locals 8;
 // comparison operands reversed 8; an explicit false arm 27; single-product operand swaps 8/8.
+// Native copies with complete/original result graphs 4/6; complete projected aggregates 28; complete parallel product/comparison variants
+// 66/66/65/66; both external normalizations 122; native copies with uniform operands/named parallel products 6/6/6/6; single-worker 100-trial
+// search from native copies/result 4, no improvement. Four-difference forms restored under the retention gate.
 // Complete single-exit dimensional result 4 (two-point gain, restored); horizontal-first dispatch 71; both workspaces
 // at function scope 6; named native vector2f components 6; complete named dot 6; both named products 14; single-exit
 // byte/integer results 57/62; direct horizontal success on that graph 62; full conjunction assignment 83;

@@ -1973,6 +1973,13 @@ PRIVATE inline bool projectile_object_predicted(long object_index)
    target, its speed curve and gravity, its range, then the line it moves
    along and what that line hits (up to 10 times), its orientation, and at
    the end its detonation or deletion */
+// score 946 (was 1131): frame 0x110 versus 0x118, input/working registers, action-setter expansion and x87/SSE scheduling remain.
+// Shared guidance producers 1149; shared basis crosses 1152; point producers 1131; common forward/up 1050; plus crosses 1046;
+// role names 1131/1131; direct current field 1149; shared magnitude 1131; shared rotation crosses 1180; common left 1096;
+// common rotated output 1096; both common 1069; existing state helper 1050/1131; complete guidance/roll inputs 994,
+// with separate bases 1099; native count 1050, plus complete inputs 990 (four-point tail restored); caller noinline magnitude
+// 1050/1131; all rotation inputs 1099; free-axis inputs 1011; complete inputs plus shared basis crosses 997;
+// consistent dot/output inputs 946 (kept); consistent free-axis/all rotations 1011/1101; inputs before sine/cosine 1006.
 // @retail 0xf8eb0
 void function_f8eb0(long projectile_index, vector3f *displacement)
 {
@@ -2036,6 +2043,8 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 		real average_speed = speed;
 		real starting_remaining = remaining;
 		point3f end_point;
+		vector3f forward;
+		vector3f up;
 		bool moved = false;
 
 		collision.unknown24 = NONE;
@@ -2068,18 +2077,20 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 				real angle = turn_rate * remaining;
 				real sine = (real)sin(angle);
 				real cosine = (real)cos(angle);
-				real along = (axis.i * velocity.i + axis.k * velocity.k + axis.j * velocity.j) * (1.0f - cosine);
-				vector3f turned;
+				real incoming_i = velocity.i;
+				real incoming_j = velocity.j;
+				real incoming_k = velocity.k;
 
-				turned.i = cosine * velocity.i + along * axis.i - (axis.k * velocity.j - axis.j * velocity.k) * sine;
-				turned.j = cosine * velocity.j + axis.j * along - (axis.i * velocity.k - axis.k * velocity.i) * sine;
-				turned.k = cosine * velocity.k + axis.k * along - (axis.j * velocity.i - axis.i * velocity.j) * sine;
-				velocity = turned;
+				real along = (axis.i * incoming_i + axis.k * incoming_k + axis.j * incoming_j) * (1.0f - cosine);
+
+				velocity.i = cosine * incoming_i + along * axis.i - (axis.k * incoming_j - axis.j * incoming_k) * sine;
+				velocity.j = cosine * incoming_j + axis.j * along - (axis.i * incoming_k - axis.k * incoming_i) * sine;
+				velocity.k = cosine * incoming_k + axis.k * along - (axis.j * incoming_i - axis.i * incoming_j) * sine;
 
 				if (TEST_FIELD_BIT(definition->flag_bits.unknown6))
 				{
-					vector3f forward = to_aim;
-					vector3f up = projectile->up;
+					forward = to_aim;
+					up = projectile->up;
 					vector3f left;
 
 					function_30bf0(&forward);
@@ -2200,8 +2211,8 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 		if (!TEST_FIELD_BIT(projectile->flags.unknown3) && moved)
 		{
 			vector3f movement;
-			vector3f forward = projectile->forward;
-			vector3f up = projectile->up;
+			forward = projectile->forward;
+			up = projectile->up;
 
 			movement.i = end_point.x - projectile->position.x;
 			movement.j = end_point.y - projectile->position.y;
@@ -2241,16 +2252,18 @@ void function_f8eb0(long projectile_index, vector3f *displacement)
 					forward = projectile->forward;
 				}
 
-				real along = (forward.i * up.i + forward.k * up.k + up.j * forward.j) * (1.0f - projectile->rotation_cosine);
-				vector3f spun;
+				real incoming_i = up.i;
+				real incoming_j = up.j;
+				real incoming_k = up.k;
 
-				spun.i = along * forward.i + up.i * projectile->rotation_cosine -
-					(forward.k * up.j - up.k * forward.j) * projectile->rotation_sine;
-				spun.j = forward.j * along + up.j * projectile->rotation_cosine -
-					(up.k * forward.i - forward.k * up.i) * projectile->rotation_sine;
-				spun.k = forward.k * along + up.k * projectile->rotation_cosine -
-					(forward.j * up.i - up.j * forward.i) * projectile->rotation_sine;
-				up = spun;
+				real along = (forward.i * incoming_i + forward.k * incoming_k + incoming_j * forward.j) * (1.0f - projectile->rotation_cosine);
+
+				up.i = along * forward.i + incoming_i * projectile->rotation_cosine -
+					(forward.k * incoming_j - incoming_k * forward.j) * projectile->rotation_sine;
+				up.j = forward.j * along + incoming_j * projectile->rotation_cosine -
+					(incoming_k * forward.i - forward.k * incoming_i) * projectile->rotation_sine;
+				up.k = forward.k * along + incoming_k * projectile->rotation_cosine -
+					(forward.j * incoming_i - incoming_j * forward.i) * projectile->rotation_sine;
 			}
 			else if (TEST_FIELD_BIT(projectile->flags.rotating))
 			{
@@ -2358,6 +2371,11 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 /* a projectile's collision: damage to what it hit, the response of the
    material hit (detonating, bouncing, reflecting, attaching), the impact
    effects and sounds, then the projectile's action */
+// score 1162 (was 1185): frame 0x220 versus 0x218, velocity on the stack versus eax, input normalization and effect scheduling remain.
+// Independent damage scopes 1162 (kept); direct sound/late effects/both/scoped both 1223/1185/1223/1199; role names/chains/external normalization 1185/1185/1323.
+// Full count/potential conjunction/input aggregate/assignment helper/uninitialized direction 1201/1216/1198/1198/1185; array aggregates/plain loop/unsigned index 1166/1348/1185.
+// Those eight forms on damage scopes 1169/1199/1199/1194/1162/1162/1348/1162; coordinated velocity positions 1185/1185/1185/1201/1201.
+// Input copy/full normalization/intermediate normalization first 1186/1186/1198; on damage scopes 1163/1159/1170 (1159 three-point tail restored).
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
@@ -2371,7 +2389,6 @@ void function_faa60(vector3f *velocity, long projectile_index, s_collision_resul
 	real scale_b = 0.0f;
 	long sounds[3];
 	long effects[3];
-	s_type_1e6529 damage;
 	s_effect_marker markers[6];
 	s_effect_parameters parameters;
 	long i;
@@ -2441,6 +2458,8 @@ void function_faa60(vector3f *velocity, long projectile_index, s_collision_resul
 		}
 		else
 		{
+			s_type_1e6529 damage;
+
 			function_d6660(&damage, damage_definition_index);
 			damage.material_index = NONE;
 			damage.flags |= 8;
@@ -2544,6 +2563,8 @@ no_effects:
 
 	if (g_4e6948->mode != 4 && (collision->type == 1 || collision->type == 3) && (collision->unknown58 & 8))
 	{
+		s_type_1e6529 damage;
+
 		function_d6660(&damage, damage_definition_index);
 		damage.material_index = NONE;
 		damage.flags |= 8;

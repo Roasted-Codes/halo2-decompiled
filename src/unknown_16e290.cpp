@@ -1551,6 +1551,9 @@ struct s_camera_clip_reference_16ebf0
 // All frames 0xcc versus 0x98; original alias-safe composition and native homes restored.
 // Original-position pointer before view queries: scalar/native directions, word truth, both
 // 252/260/248/271; those four with entry matrix declaration 252/260/248/271. All restored.
+// Round 202: Existing saved-state lifetime after view/basis/composition/output-copy/validation
+// phases 239/239/239/239/256; view/composition/validation with entry fraction 239/239/256.
+// Original saved-state initialization, qualifier and fraction lifetime restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

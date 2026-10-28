@@ -1357,6 +1357,12 @@ struct s_player_properties
 // (fast) but 0x649c0 30; previous buffer read at each use 184; mask before the names 184; const owner
 // 184; state read at each test 184. Retail holds the owner in edx from the parameters test on, so no
 // zero register is free there.
+// Lane 4 r106 (plain): the 0x40 group is a 16-byte player appearance (bytes) and retail's dword zeros
+// fit small memsets: the 12-byte group's memset then the appearance's give retail's zero block (the
+// big memset's eax for 0x40, a fresh zero for 0x70) with no `current` 224 (930 bytes), with retail's
+// default store order 224; no `current` with both/0x40/0x70 groups typed real 204/179/182 (not real
+// types). The name count stays in memory through the first loop in every form (the per-player memset
+// alone decides it); retail keeps it in esi. Retail also compares the clamped team as a movsx'd long.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

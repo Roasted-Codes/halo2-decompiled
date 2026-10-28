@@ -1409,6 +1409,10 @@ bool function_1e1de0(long arg_0);
 // index temporary declared in the enclosing block 218; unit pointer set in the type test and the
 // index taken in a separate statement guarded on it 220; actor index initialised before the object
 // lookup 221; the three result flags declared at the top of the block 218. All restored.
+// Round 86 (fast) on the round-75 shape (rebuilt 218, aligned 12: the actor index copied through ECX before its
+// store and the first point copy's EAX/ECX roles): separate motion pointer 93 (843 bytes, every copy reallocated);
+// first copy through a real point field (diagnostic) identical; no existing inline actor-index getter to use;
+// motion union declared first in the block 218; owner pointer assigned after the index test 220. All restored.
 // @retail 0x25ccd0
 bool function_25ccd0(s_type_5cfb45 *arg_0, long arg_1, short arg_2, s_2640c0 *arg_3)
 {

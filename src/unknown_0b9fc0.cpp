@@ -223,6 +223,10 @@ PRIVATE void machine_release_rigid_bodies(long machine_index);
 
 // score 81 (was 81): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
 // Round 204: native portal entry 81 kept plain; default-first policy 100; both 106 (subthreshold); shared final update 81; long/unsigned-word policy 102/81; six-use flags 108; flags/default 117; chained clears 81.
+// Round 268: six-use destination flags receiver 81; reset after both clears 81;
+// receiver with six-use source bits 108; receiver with later reset 81; source bits
+// with later reset 108; all three 108; final default-first dispatch with receiver 81;
+// that plus later reset 81. Original portal, policy, flag stores and reads restored.
 // Round 208: early policy declaration 81; descending configured cases 81; both 81;
 // comparison mapping with one short observation/direct fields 132/132; natural portal admission
 // and shared publication 150; with early policy 150; with direct configured comparisons 160.
