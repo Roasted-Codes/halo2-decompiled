@@ -794,6 +794,8 @@ real normalize2d(point2f *v);
 // Round 31 (lane 12): first normalization as `!(... > 0.0f)` 167; with `!(base_speed * 1.2f >= chosen_speed)`
 // 166; then the success store as the `if` arm 192 (942 B); the scan with selection and break on that graph
 // 183 (matches through +0x111); 0xfa1a0 time scale read once into a value 166 (0xfa1a0 262, still EDX).
+// Round 10 (lane 11): both of those with `return valid` 167; with a plain `for`/`break` scan 167; with a
+// bottom-tested scan 207; with the selection inside the scan 183; retry vertical renamed to sort first 168.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -1361,6 +1363,9 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 // slots, but the result takes the origin slot and facing EBP), with the result declared there too 296;
 // radius read at each use 277 (1165 B); not-left type-zero arm assigning y first 285; type exit
 // returning 0.0f 252 (identical).
+// Round 10 (lane 11): one signed offset for the type-zero arm 293 (1140 bytes); `return 0.0f` at the type
+// exit 252 (same code); direction renamed to sort last 252 (same code); flag declared after the
+// normalization 287; side dot product with the side terms first 252 (same code).
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

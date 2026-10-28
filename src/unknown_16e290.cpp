@@ -565,7 +565,7 @@ struct s_16e290_bitmap_group
 
 bool texture_cache_bitmap_request(s_bitmap_data *bitmap);
 
-static inline s_bitmap_data *bitmap_group_get_bitmap(s_16e290_bitmap_group *group, short bitmap_index)
+static inline s_bitmap_data *bitmap_group_bitmap(s_16e290_bitmap_group *group, long bitmap_index)
 {
 	return (s_bitmap_data *)(group->bitmaps + bitmap_index * 0x74);
 }
@@ -587,9 +587,7 @@ bool function_16e7b0(long index)
 			{
 				s_16e290_bitmap_group *group = (s_16e290_bitmap_group *)g_4e3b44[bsp->unknown1c & 0xffff].bytes;
 
-				s_bitmap_data *bitmap = bitmap_group_get_bitmap(group, (short)bitmap_index);
-
-				result = texture_cache_bitmap_request(bitmap);
+				result = texture_cache_bitmap_request(bitmap_group_bitmap(group, bitmap_index));
 			}
 		}
 	}
@@ -613,9 +611,7 @@ bool function_16e820(long index)
 			{
 				s_16e290_bitmap_group *group = (s_16e290_bitmap_group *)g_4e3b44[bsp->unknown1c & 0xffff].bytes;
 
-				s_bitmap_data *bitmap = bitmap_group_get_bitmap(group, (short)bitmap_index);
-
-				result = texture_cache_bitmap_request(bitmap);
+				result = texture_cache_bitmap_request(bitmap_group_bitmap(group, bitmap_index));
 			}
 		}
 	}
@@ -1413,7 +1409,9 @@ void function_170630(long player_index);
 // (EDX), first (EAX), then second (ECX), so retail declares it (second, first, out); an
 // inline forwarder with that order changes nothing. Round 52: forwarder 7; address from
 // the array element at each argument 7; shifted flag test 7; state pointer inside the guard 7;
-// state before the array pointer 36. Earlier:
+// state before the array pointer 36. This round: forwarder with the (second, first, out)
+// order 7; the three channel addresses as named locals in five orders 7 each; the observer
+// element through a local 28; the command test before the state pointer 18. Earlier:
 // three channel-pointer orders 7/7/7; delta pointer early/late 7/7;
 // command pointer 7; guard return 7; motion-channel view 7.
 // scalar channel addresses 7; timer cursor after delta 11; countdown for 7;
@@ -1422,6 +1420,10 @@ void function_170630(long player_index);
 // Single current/previous/delta pointers 7/7/7; direct observer array 36;
 // scoped state/time 18; command flags snapshot 7; countdown entry/before delta/split 7/7/7;
 // fixed base pointers 7.
+// This round: the three channel addresses as named locals in four orders (out/first/second
+// and three others) 7 each and byte-identical to the inline form, the command pointer as a
+// local 7, the state pointer from the observer element 7: the compiler always prepares the
+// three addresses in the argument-register order, while retail prepares out, first, second.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {

@@ -833,6 +833,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 }
 
 // score 210 (was 210): Frame 0x38 and result/prior-loop bytes agree; ID homes and blend-query lifetime still differ.
+// Round 15: inline channel query 210; early success with separate name comparisons 256; separate comparisons
+// with late success 265; bitwise separate comparisons 256; inline transition-find 210 (callee still matched);
+// fraction clamp workspace 287; signed-byte result 210; primary-ID lexical rename 210. Original body restored.
 // Shared loop query/getter 251/251; shared query with byte result 249, signed-byte/long loop
 // 251/337; getter with byte result 249; shared query with signed-byte result/both bytes 249/249.
 // Two-point gains dropped.
@@ -915,6 +918,13 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // (state_flags & 4)) result = true; if (result) {...}` 249 [51] (identical code); `result ||` test 295;
 // bool result with early success 269 [105]; three bools with bool result 295 [65]; all with the
 // captured blend 261 [65].
+// Lane 10 r13: retail holds the set (its register argument) in EBP from the lookup to the
+// transition channel, reloaded from the names.set slot, and keeps the transition ID in memory; ours
+// caches the transition ID's index in BP instead. Animation ID renamed to sort last 210 (identical
+// layout); the set parameter at the three later uses 277 (retail's ID slots and memory transition ID,
+// 1133 bytes, but the set moves to the stack and every argument slot shifts); only at
+// transition_find 309; only at transition_lookup/the transition channel 223/223 (set stacked);
+// a set local copied after the lookup 210 (identical, read back from names.set).
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

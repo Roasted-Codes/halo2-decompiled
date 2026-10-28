@@ -114,6 +114,13 @@ void function_7f930(void);
 void pending_messages_reset(void);
 void function_53210(void);
 void function_8dd70(void);
+// Lane 10 r11 (forms reverted: reading globals through casts of their own addresses is not kept
+// without a match): message pointer read through its address 231; noinline 0x662f0 in its header
+// 266, with 0xb2cc0 too 321 (calls pair with retail's); all seven network pointers (0x510560..
+// 0x510578) read once through their addresses 207 at 892 bytes, each one alone dropped 226-276.
+// Retail reloads them after every call and pointer store, as LTCG does for address-taken globals:
+// find the original code that takes their addresses (a dispose or setup passing &g) rather than
+// casting at the reads. Entry flag: retail's sete/cmp not produced by a negated or explicit test.
 
 // score 230 (was 230): entry predicate, helper boundaries and global reloads differ;
 // Round 9 (lane 11, fast): a noinline declaration of 0x662f0 in this file (before or after its header)

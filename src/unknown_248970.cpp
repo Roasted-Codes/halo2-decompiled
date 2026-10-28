@@ -59,6 +59,8 @@ public:
 // read before the getter and the flag stored after the copy, 277 (692 bytes; 0x175270 100 ->
 // match); plus the nested MAX fade combine 243; pointer and MAX in the original entry order 239
 // (kept, 0x175270 still matches); MAX alone on the old body 230 (0x175270 100).
+// Lane 10 round 13: MAX with the flag stored after the position copy 196, but the location stays
+// in EBX and 0x175270 stays 100.
 // Round 9 (lane 11, fast): location read once through its address with retail's entry order (head
 // read, metadata call, position copy, then the flag store) 232 (location stacked, flag still
 // stacked); flag-first parameter order through a temporary forwarder (diagnostic) 251, with the

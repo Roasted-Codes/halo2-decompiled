@@ -51,6 +51,12 @@ static __forceinline long real_to_long(real value);
 // External record layouts restored; raw actor receiver and original values retained.
 // Round 226: native point-state value / memcpy with bool, byte, short and long
 // adjustment carriers 459, 459, 459, 459, 472, 472, 477, 477. All restored; frame/input ownership remain.
+// Round 32: retail holds the third input in ESI from entry (so its stack slot is free for the
+// float scratch after its last use: frame 0x48), keeps the random seed in EAX across the sign test
+// and the three draws (two stores), and loads the random state into ECX before the 0x1fe410 test.
+// Timer draw without the named timer locals 373; flag declared at its block 395; random state
+// read before the 0x1fe410 test 428; first/third draws through slot_random_range 395; sign
+// test through _random 417. All restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

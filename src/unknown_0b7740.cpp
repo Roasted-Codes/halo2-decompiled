@@ -1138,7 +1138,11 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // listing past the still-missing reload; rejected); the mask assigned before the copies
 // 168 again (as round 140; rejected). Round 31: the sample mask as the long 0xbdb60 takes 234; one pool
 // local for every lookup (0xba160's idiom) 399, from the current-object lookup on 234; the sample mask
-// declared at entry 328; the no-model parent index read at each use 234.
+// declared at entry 328; the no-model parent index read at each use 234. Round 84 (aligned
+// differences are only the esi reload, the count > 0 guard and the no-model lookup): mask copy as a
+// struct assignment 234; sample mask as the storage object's address 234; a named model-mask pointer
+// for the test and the copy 258; a noinline 0xbfed0 declaration here 234; sample mask from memcpy's
+// return 255.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {
