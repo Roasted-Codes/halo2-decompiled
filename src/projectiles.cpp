@@ -695,6 +695,9 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 // vector declarations alone/linear/angular/both 69/71/77/79; renamed spin vectors 69.
 // Shared linear/angular/both sums 68/63/76; scaled angular sum with/without
 // the linear helper 121/121; complete linear/both/scaled angular outputs 112/130/117.
+// Shared seed receiver 69; native short/long axis index with complete setter 118/120;
+// selected-axis receiver/setter 112; memcpy axis 69; shared seed with short index,
+// axis receiver or memcpy 130/125/69. Restored.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -1291,6 +1294,9 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 // Existing request builder 251; direct spatial output 201; builder with point snapshot 250;
 // point/direction/both snapshots 195/210/235; defaults before markers 189;
 // matched sibling request-store order 120. Original body and all call roles restored.
+// Attachment bitfield/word/complete conditional results 190/188/192; attachment/all
+// overrides after selector 121/176; bitfield/complete conditional attachment after
+// selector 163/179; all overrides with word result after selector 175. Restored.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
 	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,

@@ -341,6 +341,9 @@ void function_11bed0(s_location *location, point3f const *point);
 // shared salted getter 117; native while 93; absolute-slot continue 110;
 // returned-datum eligibility/native index 147; typed returned datum 147; typed datum/aggregate 147;
 // returned-datum eligibility/shared getter 192. Location expansion and datum/element register ownership remain.
+// Native iterator source/spatial receivers 93/99; location-result workspace alone,
+// with source or spatial receiver 118 each; eligibility continue with source, spatial
+// or location workspace 93/99/118. Restored.
 // @retail 0x21a100
 void looping_sound_update_locations(void)
 {
@@ -1129,7 +1132,7 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	}
 }
 
-// score 25 (was 35): the state load is folded before the element pointer is formed and the
+// score 25 (was 25): the state load is folded before the element pointer is formed and the
 // final looping store is scheduled early;
 // pool at each use 66; count declared first 66; count renamed 66; state guard 66;
 // plain for 66; iterator record 66; count-first iterator record 66; flag mask 66;
@@ -1142,6 +1145,8 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 // canonical iterator continue 35; curve after endpoints 35; computed endpoint first 35;
 // native word flag store 35; native word flag test/store 25, plain confirmed at 207/210 bytes.
 // Element/state fold and early flag store remain.
+// Native word flag snapshot inside/before state with mask and first/last publication 75 each;
+// boolean extraction under each lifetime/publication 82 each. Restored.
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {
@@ -1275,6 +1280,8 @@ real sound_get_minimum_distance(s_sound const *sound, long definition_index);
 // noinline 11/11; minimum inline 65. Guarded receiver/distinct ordinals 0/0, but the
 // matched declaration form loses other matches; detail cursor 10. Caller noinline with
 // provider inline 101. All provider declarations and the original body restored.
+// Minimum result after completed track scan, function/guard scope, index/track receiver,
+// and nested/early eligibility 101 in all eight combinations. Restored.
 // @retail 0x21d060
 void function_21d060(long definition_index, s_type_99c531 const *source)
 {
