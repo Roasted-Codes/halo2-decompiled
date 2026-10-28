@@ -749,16 +749,20 @@ void swarm_leader_detach(long actor_index);
 // Prop walk through 0x26be00/0x26be30 alone (fresh pool reads after the callback) 298 (996 bytes);
 // tail read per use 282; prop record re-derived per use 278; named bool for the definition bit 277;
 // the bit test as `(bool)((x >> 3) & 1)` 291 (retail: shr/and al, stored in the dead index slot).
+// score 261 (was 277): the frame is 0x1c instead of 0x20, the actor byte offset is kept in EBX
+// instead of EAX and the slot index in ECX instead of EDX, and the cleanup loop keeps its
+// countdown in a register instead of a stack slot.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
-	for (short slot_index = 0; slot_index <= actor_get(actor_index)->current; ++slot_index)
+	s_actor_view *actor = actor_get(actor_index);
+	for (short slot_index = 0; slot_index <= actor->current; ++slot_index)
 	{
-		t_slot_proc stop = g_46eeb8[actor_get(actor_index)->slots[slot_index].type]->stop;
+		t_slot_proc stop = g_46eeb8[actor->slots[slot_index].type]->stop;
 		if (stop)
-			stop(actor_index, slot_index < 4 ? &actor_get(actor_index)->slots[slot_index] : NULL);
+			stop(actor_index, slot_index < 4 ? &actor->slots[slot_index] : NULL);
 	}
-	actor_get(actor_index)->current = NONE;
+	actor->current = NONE;
 	function_258600(actor_index);
 	long memory_index = 0;
 	do
@@ -774,7 +778,7 @@ void __stdcall function_1e1a00(long actor_index, long value)
 			memory->type = NONE;
 		}
 	} while (++memory_index < 4);
-	if (*((byte *)actor_get(actor_index) + 0xa))
+	if (actor->unknown00a[0])
 		function_203fb0(actor_index);
 	else
 		function_203ed0(actor_index, (byte)value != 0);
@@ -848,11 +852,11 @@ void __stdcall function_1e1a00(long actor_index, long value)
 			}
 		} while (++i < 3);
 	}
-	s_actor_view *actor = actor_get(actor_index);
-	if (actor->unknown009)
+	s_actor_view *actor_view = actor_get(actor_index);
+	if (actor_view->unknown009)
 	{
-		actor->unknown009 = false;
-		*(long *)((byte *)actor + 0x10) = g_510c54->game_time;
+		actor_view->unknown009 = false;
+		*(long *)((byte *)actor_view + 0x10) = g_510c54->game_time;
 		--*(short *)((byte *)g_4f55d0 + 0x36a);
 	}
 	record_pool_release(g_4f55f0, actor_index);
