@@ -2077,10 +2077,6 @@ void function_1421b0(transform4x3f *out, point3f const *position, quaternionf co
 void function_1dd7a0(long *reference);
 
 /* attaches the arms to the weapon's markers while the unit's aiming blends */
-// score 9 (was 9): the object pointer and the entry index are kept in swapped registers in the
-// second lookup (retail builds the arms marker group in the index's register, ecx; ours in the base's,
-// edx). The arguments arrive as in retail (eax and two stack words, ret 8), so the caller is not the
-// cause. Tried: a weapon definition local like the arms one (9), the group as index + pointer (9).
 // @retail 0x168644
 void function_168644(long user_index, s_first_person_model *arms, s_first_person_model *arg_2f82bc)
 {
@@ -2129,7 +2125,11 @@ void function_168644(long user_index, s_first_person_model *arms, s_first_person
 								s_168644_marker_group *weapon_group = &((s_168644_render_model *)
 									g_4e3b44[weapon_render_model_index & 0xffff].bytes)->marker_groups[weapon_group_index];
 
-								if (arms_group->marker_count > 0 && weapon_group->marker_count > 0)
+								/* read once through the pointer: retail builds the arms group in the
+								   index's register (ecx) and reads its count from there */
+								long arms_marker_count = *(volatile long *)&arms_group->marker_count;
+
+								if (arms_marker_count > 0 && weapon_group->marker_count > 0)
 								{
 									s_168644_marker *weapon_marker = weapon_group->markers;
 									s_168644_marker *arms_marker = arms_group->markers;
