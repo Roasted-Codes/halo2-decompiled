@@ -272,6 +272,9 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 // Round 270: readonly native receivers 31; promoted lookup index 89; parent-handle
 // traversal 31, readonly 31; complete endpoint 110, with parent handle 110; complete
 // start input 134; word success result 65. All restored; frame 0x24 and call scheduling remain.
+// Round 272: active-node index 101; shared root result/record selection 120; parent reference 31;
+// index plus root result 125; exact-only parent-node/start-space/both captures 31/31/31;
+// byte success result 51. All restored; endpoint scheduling at +0x61 remains.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
