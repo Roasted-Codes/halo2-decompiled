@@ -264,7 +264,7 @@ bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 // score 26 (was 26): the slot pointer and the actor index are loaded into the
 // opposite
 // registers here, and the shared actor_reset_state helper stores its fields in
-// another order.
+// another order (retail keeps the two NONE stores between the zero stores).
 // @retail 0x1c0430
 bool __stdcall function_1c0430(long actor_index, s_slot *slot)
 {

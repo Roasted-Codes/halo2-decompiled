@@ -120,9 +120,12 @@ long __stdcall function_1bead0(long actor_index, s_slot *slot)
 /* invites the actor's clump members near enough, the nearest first */
 static __forceinline long real_to_long(real value);
 
-// score 88 (was 88): retail loads the pool pointer first and keeps the record
-// count in ECX,
-// ours reads a different global before the pool.
+// score 83 (was 88): retail adds the participant count and the accepted count
+// in 16 bits, and it builds the joint pointer in the entry block, so the
+// element pool data dies in ECX and only three registers are pushed; ours
+// sinks that pointer past the loop head, keeps the data in EBP and pushes
+// four. Retail also zeroes the accepted counter at the top of the frame and
+// has two separate returns where ours shares one epilogue.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {
@@ -180,7 +183,7 @@ short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 						function_1fb7e0(0x86, actor_index, NULL, NONE, NONE);
 					return result;
 				}
-				if (joint->participant_count + (short)accepted >= 2)
+				if ((short)(joint->participant_count + (short)accepted) >= 2)
 					return g_46fbe8;
 			}
 		}

@@ -101,7 +101,7 @@ inline real distance3d_fast(point3f const *a, point3f const *b)
 	real j = a->y - b->y;
 	real k = a->z - b->z;
 
-	return (real)sqrt(i * i + j * j + k * k);
+	return (real)sqrt(j * j + (i * i + k * k));
 }
 
 void function_26c180(long actor_index);
@@ -162,9 +162,10 @@ short __stdcall function_1bc580(long actor_index, s_slot *slot, bool active)
 }
 
 /* the nearest actor of the actor's group not in a vehicle */
-// score 51 (was 51): retail loads the pool before it masks the index and
-// stores the float
-// at a different stack offset, ours does the two the other way round.
+// score 51 (was 51): our loop tests the index before the body and keeps the
+// test at the loop's end; retail jumps to a test at the loop's head and
+// shares the store of the best distance between the first pass and the
+// update, so its float lands at another stack offset.
 // @retail 0x1bc5d0
 long function_1bc5d0(long actor_index, long ignore_index)
 {

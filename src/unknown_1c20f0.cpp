@@ -249,7 +249,8 @@ bool __stdcall function_1c2120(long actor_index, s_slot *slot)
 
 // score 64 (was 64): the object pointer is kept in ESI here and reloaded from
 // the stack
-// there, and the flag byte is written as a constant 0 here.
+// there, and the flag byte is written from AL here and as a constant 0 in
+// retail.
 // @retail 0x1c2130
 bool __stdcall function_1c2130(long actor_index, s_slot *slot)
 {
