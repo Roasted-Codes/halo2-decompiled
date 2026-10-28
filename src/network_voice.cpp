@@ -2702,6 +2702,7 @@ finish:
 // score 2 (was 2): only mask/source reload order after logging differs; frame and copy graph agree.
 // Round 196: query-carrier names singly/paired, comparison-input names singly/paired,
 // comparison ordinal and copy ordinal names [2, 2, 2, 2, 2, 2, 2, 2]; original source restored.
+// Round 198: read-only mask/source/both 2/2/2; unsigned/signed-word/unsigned-word copy ordinal 123/318/318; unsigned comparison/both ordinals 162/186. Opening body restored.
 // @retail 0x54590
 void function_54590(void)
 {
