@@ -15,6 +15,7 @@ The handlers of the unit request table at 0x467564
 #include "unknown_1dacb0.h"
 #include "unit_requests.h"
 #include "unknown_1cec30.h"
+#include "bit_vector.h"
 #include <math.h>
 #include <string.h>
 
@@ -551,26 +552,17 @@ bool __stdcall function_e7280(long unit_index, s_unit_request *request)
 	return result;
 }
 
-// score 25 (was 44): about 14 of the count is the jump table read as code. Retail
-// keeps the data pointer and the hand index in edx and the weapon in esi to the
-// call; ours swaps them (esi, then edx). Tried: the hand index declared first 44;
-// the hand index renamed 25; a ternary for it 43; the weapon default before the
-// result 26; a 600 s permuter run, best 23 (volatile only).
 // @retail 0xe7320
 bool __stdcall function_e7320(long unit_index, long type)
 {
 	bool result = false;
-	long weapon_index = NONE;
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-	short index;
+	long weapon_index;
 	long slot_index;
 
 	if (type > 1)
-		index = unit->current_secondary_weapon_index;
+		weapon_index = function_cbd50(unit_index, UNIT_ACTION_UNIT_GET(unit_index)->current_secondary_weapon_index);
 	else
-		index = unit->current_weapon_index;
-	if (index != NONE)
-		weapon_index = unit->weapon_object_indices[index];
+		weapon_index = function_cbd50(unit_index, UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index);
 
 	switch (type)
 	{
@@ -1422,13 +1414,16 @@ bool __stdcall function_e8b20(long unit_index, long type)
 
 /* a weapon switch interrupted: the old weapon is put away at once and the
    new one taken out */
+// score 11 (was 29): only the entry block's order differs (retail loads the global and the
+// actions pointer before `cmp ecx, 8; sete bl`). Tried: unit_action_active() 95; primary
+// declared first 11; primary inside the block 82; a unit local 90; an early-return guard 11.
 // @retail 0xe8c10
 void __stdcall unit_action_weapon_switch_interrupted(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
 	bool primary = type == 8;
 
-	if (UNIT_ACTION_ACTIVE(actions, type))
+	if (bit_vector_test(actions->active, type))
 	{
 		function_e8510(unit_index, true, false, primary);
 		function_e8720(unit_index, 0x7000101, false, false, primary);
