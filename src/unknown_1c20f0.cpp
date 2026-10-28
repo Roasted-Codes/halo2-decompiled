@@ -259,7 +259,7 @@ bool __stdcall function_1c2120(long actor_index, s_slot *slot)
 }
 
 // The post-header slot state and output-before-clear initialization match retail.
-// score 64 (was 64): the object pointer is kept in ESI here and reloaded from
+// score 0 (was 64): the object pointer is kept in ESI here and reloaded from
 // the stack
 // there, and the flag byte is written from AL here and as a constant 0 in
 // retail.

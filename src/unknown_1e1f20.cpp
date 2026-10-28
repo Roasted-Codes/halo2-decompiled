@@ -749,7 +749,7 @@ void swarm_leader_detach(long actor_index);
 // Prop walk through 0x26be00/0x26be30 alone (fresh pool reads after the callback) 298 (996 bytes);
 // tail read per use 282; prop record re-derived per use 278; named bool for the definition bit 277;
 // the bit test as `(bool)((x >> 3) & 1)` 291 (retail: shr/and al, stored in the dead index slot).
-// score 261 (was 277): the frame is 0x1c instead of 0x20, the actor byte offset is kept in EBX
+// score 285 (was 277): the frame is 0x1c instead of 0x20, the actor byte offset is kept in EBX
 // instead of EAX and the slot index in ECX instead of EDX, and the cleanup loop keeps its
 // countdown in a register instead of a stack slot.
 // @retail 0x1e1a00

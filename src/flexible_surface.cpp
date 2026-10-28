@@ -299,7 +299,7 @@ void function_117510(long index)
 		if (surface_normalize(&vertices[i].normal) == 0.0f) vertices[i].normal = *g_4687a8;
 }
 
-// score 154 (was 154): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.
+// score 139 (was 154): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.
 // Shared difference 154; vertex base 155; distinct correction 161, with shared difference 161;
 // both shared scales 154, with difference 154; early rest square 155; all producers/lifetimes 162.
 // All executable forms restored.
