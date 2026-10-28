@@ -44,7 +44,10 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
  }
  return arg_0->squad != NULL;
 }
-// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null and successor EBP remain.
+// score 163 (was 164): Frame 0x28 agrees; retail keeps a pool copy in EDI beside the iterator's own
+// copy in EBX, publishes the null squad at the loop head and keeps the actor successor in EBP.
+// Round 17: the negative squad test spelled as <= -1 keeps retail's sign-test branch (163); the same
+// body with the null publication moved into the loop condition compiles to the same 163 bytes.
 // Round 43: iterator-pool carrier 164; with field-pool cache 198; with state owner 193;
 // typed iterator/carrier 164; const carrier 164; carrier declared first 164; local result
 // with late/early member publication 164/164.
@@ -166,12 +169,10 @@ void function_1c7bb0()
  {
   short local_0 = g_4686c4;
   s_squad_iterator_1c7bb0 local_1;
-  byte *datum;
   local_1.records.data = g_51e9d8;
   local_1.records.index = NONE;
   while (function_1c7bb1(&local_1))
   {
-   datum = local_1.squad;
    long local_2 = local_1.squad_index;
    if (function_204390(local_2))
    {
@@ -191,7 +192,7 @@ void function_1c7bb0()
    }
    else
     ((s_1c7bb0 *)g_51e9d8->data)[local_2 & 0xffff].field_7e = NONE;
-   if (((s_1c7bb0 *)datum)->field_2 < 0)
+   if (((s_1cbb0 *)local_1.squad)->field_2 <= -1)
    {
     ((s_1c7bb0 *)g_51e9d8->data)[local_2 & 0xffff].field_28 = 0;
     function_203cc0(local_2);

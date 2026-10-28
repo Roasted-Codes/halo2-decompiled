@@ -23,6 +23,12 @@ struct s_crate_object_view
 		word : 3;
 	} state;
 	byte unknown0c2[0x12c - 0xc2];
+	float unknown12c;
+};
+
+struct s_crate_flag_view
+{
+	byte unknown000[0x12c];
 	dword crate_flags;
 };
 
@@ -97,13 +103,13 @@ bool __stdcall function_11bbf0(long object_index, s_crate_placement_view const *
 {
 	s_crate_object_view *crate = CRATE_GET(object_index);
 	bool result = false;
-	crate->crate_flags = 0;
+	crate->unknown12c = 0.0f;
 	if (placement->definition_index != NONE)
 	{
 		s_crate_definition_view const *definition =
 			CRATE_TAG_GET(s_crate_definition_view, placement->definition_index);
 		if (definition->flags_bc & 1)
-			crate->crate_flags |= 2;
+			((s_crate_flag_view *)crate)->crate_flags |= 2;
 		if (definition->model_index != NONE)
 		{
 			s_crate_model_view const *model = CRATE_TAG_GET(s_crate_model_view, definition->model_index);
@@ -119,7 +125,7 @@ bool __stdcall function_11bbf0(long object_index, s_crate_placement_view const *
 						has_other_motion_type = true;
 				}
 				if (!has_other_motion_type)
-					crate->crate_flags |= 2;
+					((s_crate_flag_view *)crate)->crate_flags |= 2;
 			}
 		}
 	}
