@@ -104,6 +104,9 @@ PRIVATE __forceinline real pinned_real(real const &value, real minimum, real max
 // cursor with positive-light strength lifetime, mutable/const views 223/223;
 // plain count with cursor, const views, scoped strength or both 233 each.
 // Original indexed traversal, strength lifetime and inherited count qualifier restored.
+// Round 360: Complete trig factors, existing contribution setter, returning color-result copy,
+// all pairs and all three 162/162/179/162/180/180/180; original real-narrowed terms
+// in double scalar carriers 186. Original contribution and color ownership restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {

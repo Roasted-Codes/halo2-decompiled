@@ -144,7 +144,7 @@ void function_10ec00(long object_index, s_animation_state *state, long unused, d
 extern real g_547648;
 void c_animation_channel_data_get(c_animation_channel const *channel, s_animation_data *data);
 
-// score 215 (was 221): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// score 207 (was 215): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Lane 8 r64: countdown weight with the `>= 3` case first (retail's fall-through) 215, kept; frame
 // byte in a long local 260 (32-bit compare as retail, aligned 119, 969 bytes); char/word loop index
 // 215 (identical: the loop stays a pointer plus spilled countdown); sampled flag declared before
@@ -197,6 +197,11 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // with either end test; long frames give 227 each, recovering frame 0x2c but growing to 966 bytes.
 // On that recovered-frame graph, shared/separate weighted identifiers, each with either countdown
 // arm order, give 244/244/244/244. Original index loop, identifiers and constructors restored.
+// Round 360: independent data constructors before base/weighted/countdown admission,
+// pairs and all three 263/207/231/290/278/223/281; all with a long sample frame 279.
+// Weighted output after admission/getter/result-zero/loop 213/213/261/215;
+// before admission at its natural positive-phase scope 207 (950 bytes), selected.
+// Frame 0x30, getter expansion and pointer/countdown induction remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
@@ -218,6 +223,7 @@ void function_10e530(long object_index, s_animation_state *state, long unused, d
 			c_animation_channel_data_get(&channel, &data);
 			function_20adf0((s_anim_data *)&data, dest);
 		}
+		s_animation_data data;
 		if (vibration->weighted_animation.index != NONE && state->channel_play(&channel, vibration->weighted_animation, 0))
 		{
 			s_animation *animation = channel.function_1c6440();
@@ -234,7 +240,6 @@ void function_10e530(long object_index, s_animation_state *state, long unused, d
 			}
 			if (sampled)
 			{
-				s_animation_data data;
 				c_animation_channel_data_get(&channel, &data);
 				function_20adf0((s_anim_data *)&data, dest);
 			}

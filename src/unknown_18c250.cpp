@@ -593,6 +593,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // (diagnostic) that form gives retail's ESI datum and EBP definition (frame 0x84), the pointer pair does not
 // (frame 0x88): retail passes 0xba300 the object in ECX and the location in EAX, ours the location in ESI.
 // Failure flag from the bit test, then from the call 333.
+// Round 360: tag pointer acquired in the object phase after admission/name/marker/
+// position/forward/velocity/root-location/audibility boundaries 308/316/312/314/316/321/318/320.
+// Original acquisition and receiver pair restored; root-location convention remains.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
