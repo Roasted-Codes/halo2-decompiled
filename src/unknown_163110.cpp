@@ -480,6 +480,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // expansion 654/755. Original diagnostic and transform helpers restored.
 // Round 149: Split native normal/distance outputs with all matrix, normal-input and distance-output
 // pointer/reference contracts [476, 476, 476, 476, 476, 476, 476, 476]; all restored.
+// Round 218: CRT output-address rectangle products/all, memcpy 415/417,
+// memmove 721/592; each with copied-bounds output consumed 415/417/721/592. All restored.
+// Copy output identity does not recover camera EBP/corners EBX or the first store schedule.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

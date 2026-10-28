@@ -130,6 +130,9 @@ bool function_a7670(long object_index);
 // Round 24: shared processing ordinal 183; island membership ordinal 181; both at function
 // scope 183; eager second scan 181; eager first/both scans 259/259; staged category 259;
 // direct body-pointer countdown 237. Original restored.
+// Round 218: Indexed 0x81 membership with bool/byte/short/long admission 182/182/182/260;
+// with fresh body bound 249/249/246/245. Original classification and body restored.
+// Frame 0x424 agrees; scratch phase, scalar homes, admission BL and cleanup induction remain.
 // @retail 0x278f00
 void function_278f00()
 {

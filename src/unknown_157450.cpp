@@ -3885,6 +3885,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 225: chained award/subtype defaults at entry, admission and victim lookup 549/548/548;
 // award/message 470, all three at entry 549, subtype/message 549; all three
 // after admission/lookup 548/548. Original result defaults and complete body restored.
+// Round 218: Exhaustive award result, entry declaration with before/after subtype leaves and
+// ordinary/excluded category first 579/591/584/602; selection declaration counterparts 579/591/584/602.
+// All restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
