@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "data_array.h"
+#include "data_iterator.h"
 #include "unknown_067e10.h"
 #include <string.h>
 
@@ -118,7 +119,7 @@ void function_14bac0()
 	players_pending_creation_process(iterator_reference);
 }
 
-// score 234 (was 234): Frame 0x34 versus 0x3c; point/iterator, receiver and readiness homes remain.
+// score 230 (was 234): Frame 0x44 versus 0x3c; centre/second-iterator slot sharing, readiness homes and the second scan's call remain.
 // Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
 // center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
 // probe point at 0x1c); plus a bare block around the probe/center code 257 (identical code); per-marker
@@ -202,6 +203,13 @@ void function_14bac0()
 // scan through 0x6b380 257 (frame 0x44); stamp-first comparison 234 (identical); the visit test through
 // 0xbec70's inline stamp-parameter shape 239 (indexed store as retail, but no stamp copy). Retail's
 // `mov edx, ecx` before the stamp store occurs in no other retail function. Original body restored.
+// Lane 10 r13: kept 230: first scan through the existing data_datum_iterator_next_called (retail's
+// 16-byte iterator, data at +4 and index at +0xc, the other stores dropped; frame 0x38, 234), each
+// marker probe in its own block-local point with the centre declared for 0xdf5f0 (231; destination
+// now at retail's 0x20), readiness declarations in the other order (230; the homes stay swapped).
+// Second scan through 0x6b380 on its own iterator 257/259 (frame 0x48, no slot sharing); the centre
+// probing in a bare block 257 (no sharing); second iterator scoped to its block 230 (identical);
+// separate point declarations in five orders 233 each (layout unchanged).
 // @retail 0x14b6a0
 void function_14b6a0()
 {
@@ -230,12 +238,12 @@ void function_14b6a0()
 			offset.k = destination->z - origin->z;
 			++g_4de2fc;
 			g_4de2f8 = true;
-			iterator.data = players;
-			iterator.index = NONE;
-			byte *current;
-			while ((current = data_iterator_next_calling(&iterator)) != 0)
+			s_data_datum_iterator player_iterator;
+			player_iterator.data = players;
+			player_iterator.index = NONE;
+			while (data_datum_iterator_next_called(&player_iterator))
 			{
-				long unit = *(long *)(current + 0x2c);
+				long unit = *(long *)(player_iterator.datum + 0x2c);
 				if (unit != NONE)
 				{
 					byte *headers = g_4e0300->data;
@@ -263,26 +271,27 @@ void function_14b6a0()
 		}
 		if (*(long *)g_4e8c20 > 1)
 		{
-			bool have_destination = false;
 			bool have_alternate = false;
-			point3f destination, alternate, center;
+			bool have_destination = false;
+			point3f destination, alternate;
 			short target_marker = *(short *)(record + 0xa);
 			if (target_marker != NONE)
 			{
-				center = *(point3f *)(*(byte **)(scenario + 0x1e4) + target_marker * 0x38 + 0x24);
-				while (function_168f40(0x800005, (s_vehicle_ray const *)&center, NONE, NONE)) {}
+				point3f point = *(point3f *)(*(byte **)(scenario + 0x1e4) + target_marker * 0x38 + 0x24);
+				while (function_168f40(0x800005, (s_vehicle_ray const *)&point, NONE, NONE)) {}
 				have_destination = true;
-				destination = center;
+				destination = point;
 			}
 			short alternate_marker = *(short *)(record + 0xc);
 			if (alternate_marker != NONE)
 			{
-				center = *(point3f *)(*(byte **)(scenario + 0x1e4) + alternate_marker * 0x38 + 0x24);
-				while (function_168f40(0x800005, (s_vehicle_ray const *)&center, NONE, NONE)) {}
-				alternate = center;
+				point3f point = *(point3f *)(*(byte **)(scenario + 0x1e4) + alternate_marker * 0x38 + 0x24);
+				while (function_168f40(0x800005, (s_vehicle_ray const *)&point, NONE, NONE)) {}
+				alternate = point;
 				alternate.z += 1.0f;
 				have_alternate = true;
 			}
+			point3f center;
 			real height, radius;
 			function_df5f0(*(long *)(player + 0x2c), &center, &height, &radius);
 			if (have_destination)
