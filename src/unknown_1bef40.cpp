@@ -138,11 +138,16 @@ PRIVATE __forceinline void function_1befd1(long arg_0)
 
 static __forceinline long real_to_long(real value);
 
-// score 38 (was 42): our frame reserves eight bytes where retail reserves
+// score 38 (was 38): our frame reserves eight bytes where retail reserves
 // four, so the two temporaries sit four bytes higher; retail also scales the
 // first draw before it converts the second one, loads the tick source after
 // the slot reference (which puts the reference in ECX, not EDX) and stores the
-// actor's 0x5b0 field before its 0x4ac and 0x504 fields.
+// actor's 0x5b0 field before its 0x4ac and 0x504 fields. Named reals give
+// retail's frame but finish both range products late (second draw spilled
+// unscaled): reals 53, doubles 39, double/real 49, real/double 52; the header
+// random-range helper 55 (57 in the pair); the reset without its volatile
+// casts 43 in either store order; named reals through a seconds-to-ticks
+// inline 53.
 // @retail 0x1befd0
 bool __stdcall function_1befd0(long actor_index, s_slot *slot)
 {
