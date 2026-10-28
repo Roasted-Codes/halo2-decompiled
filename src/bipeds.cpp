@@ -3207,7 +3207,7 @@ bool function_109e00(long object_index, vector3f *velocity, bool definition_flag
 void function_155b60(long unit_index);
 bool function_a7670(long object_index);
 void __stdcall function_b8540(long a);
-long function_10f8f0(long object_index);
+__declspec(noinline) long function_10f8f0(long object_index);
 void function_e3910(long arg_159e6d);
 
 /* a walking biped falling faster than the globals' falling speed takes
@@ -3285,6 +3285,12 @@ void function_e3700(long arg_159e6d)
 
 /* the airborne biped: falling damage, a random spin for one that tumbles,
    and its airborne animation */
+// score 90 (was 177): frame 0x10 and retail extent recovered; random products, cross operands and tail stores remain.
+// Getter declaration at caller only 177; bounded-random helper 194 (range rounding differs);
+// shared cross 177; both helpers 194; unit-random/both helpers 177/177; entry axis 194;
+// role names and branch stores 190. Separate out-of-line getter declaration 90, plain confirmed.
+// On the out-of-line graph: cross/unit-random/both 90/90/90; branch stores alone,
+// with cross/unit-random/both, and all with entry axis 94/94/94/94/94. Original body retained.
 // @retail 0xe40d0
 void __stdcall function_e40d0(long arg_159e6d, long *names)
 {
@@ -3948,6 +3954,10 @@ void function_188180(point3f const *point, vector3f const *forward, long tag_ind
 
 /* a walking biped's footstep effect: at its foot marker (or its origin),
    with the material it stands on */
+// score 168 (was 183): frame 0xec versus 0x94; material homes, model-count test and effect-call transport remain.
+// Marker scope/direct location/full-width material combinations 190/168/177/183/189/169/178;
+// early collision initialization with all three 169. Query-branch location pointer 168 plain;
+// with marker scope/full-width material/both 177/169/178. Keep only query-branch location ownership.
 // @retail 0xe4d90
 void __stdcall function_e4d90(long arg_159e6d, long type, real scale, long marker)
 {
@@ -3957,7 +3967,6 @@ void __stdcall function_e4d90(long arg_159e6d, long type, real scale, long marke
 	if (biped->physics_mode == 1 && *(long *)(definition + 0x58) != NONE)
 	{
 		point3f point;
-		s_location *location = (s_location *)((byte *)biped + 0x28);
 		s_object_marker foot;
 
 		if (marker < *(long *)(definition + 0x2f8) &&
@@ -3977,6 +3986,7 @@ void __stdcall function_e4d90(long arg_159e6d, long type, real scale, long marke
 
 			function_b9dd0(arg_159e6d, &probe);
 			probe.z += 0.0328f;
+			s_location *location = (s_location *)((byte *)biped + 0x28);
 			if (function_11c120(location, &probe, &zone))
 			{
 				material = zone;
@@ -4010,7 +4020,7 @@ void __stdcall function_e4d90(long arg_159e6d, long type, real scale, long marke
 				if (function_1697c0(0x84000d, &point, &down, NONE, NONE, (s_collision_result_1697c0 *)&collision))
 				{
 					function_188180(&point, g_4687b0, *(long *)(definition + 0x58), arg_159e6d, type,
-						*((byte *)definition + 0x1a), collision.unknown24, (long)g_4687bc, location, scale);
+						*((byte *)definition + 0x1a), collision.unknown24, (long)g_4687bc, (s_location *)((byte *)biped + 0x28), scale);
 				}
 			}
 		}

@@ -505,6 +505,9 @@ extern point2f *g_468778;
 // Round 217: Prop-state inline/noinline, prop-view inline/noinline, both inline/noinline
 // boundaries 375/375/375/375/375/375; state/both inline with actor-first acquisition 413/413
 // fast. Original declarations, acquisitions, pointer homes and complete body restored.
+// Round 205: Complete settings/state/direction getter receiver masks 1/2/3/4/5/6/7
+// 433/487/516/506/574/663/657; all with constant return exits 660. Every original
+// receiver, early distance, request transfer, expression tree and body restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {

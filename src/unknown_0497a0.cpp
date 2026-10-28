@@ -14,8 +14,8 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 594 (was 594): the frame is 0x64 against retail's 0x60 and the body is
-// nine bytes longer; retail keeps the primary shape in the stack slot at [esp+0x14]
+// score 581 (was 594): the frame is 0x64 against retail's 0x60 and the body is
+// thirteen bytes longer; retail keeps the primary shape in the stack slot at [esp+0x14]
 // and the secondary shape in EDI, ours keeps the inverse at [esp+0x14] and the
 // secondary shape at [esp+0x10].
 // Round 134: retail reads the wave's sine arguments from the global point: that form 701 (frame 0x60,
@@ -80,6 +80,9 @@
 // and four paired combinations all 594; frame and initial shape homes unchanged.
 // Round 201: basis/camera/input-copy consumer scopes, all seven nonempty combinations,
 // and the independent wave-scratch end scope 594 each (2631/2622). Original scopes and values restored.
+// Round 206: shared vector-add first/second/both wave stages 690/581/690; paired camera
+// add-scaled 702, with first/second/both waves 708/703/709; all with shared default scale 708.
+// Second-wave vector-add kept at plain 581 (2635 bytes); frame 0x64 and shape/basis homes remain.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -117,9 +120,7 @@ void function_0497a0(
 		v1.z = v1.z + (wave_shift.k);
 		real k = s1 * 0.025f;
 		vector3f_scale(&c, k, &wave_shift);
-		v1.x = (wave_shift.i) + v1.x;
-		v1.y += wave_shift.j;
-		v1.z = (wave_shift.k) + v1.z;
+		vector3f_add((vector3f const *)&v1, &wave_shift, (vector3f *)&v1);
 		cross3f(&v2, &v4, &w);
 	}
 	else
@@ -445,6 +446,8 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Round 201: state/geometry/both consumer-end scopes 615/615/615; per-point scratch end,
 // with state/geometry/both endings, and combined scopes with library tint copy 624 each (2604 bytes).
 // Original scratch scopes, tint initialization, helper calls and endpoint masks restored.
+// Round 206: Whole camera-facing normal/side normalization through the existing two inline helpers,
+// all eight nonoriginal combinations [615, 615, 620, 620, 620, 620, 620, 620]. Grouping changes require an exact match; all restored.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {
