@@ -1666,6 +1666,9 @@ void function_b7360(long object_index);
 // regresses acquisition and dispatch; original comparison observations restored.
 // Round 226: Per-use actor pool/getter 501/501; command pool/getter 786/787; both direct/getters 798/793;
 // mixed direct/getter acquisitions 798/793. All original acquisitions and body restored.
+// Round 159: Nine/eleven action tables with range admission 656/695 and switch dispatch 646/690;
+// notification membership table 534; membership with eleven/nine ranged action tables 772/738 and eleven
+// switched actions 771. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2099,6 +2102,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Round 237: native state bit updates 488; actor/command/both at uses 1149/940/1417;
 // actor-state/command-state/all receivers 1149/940/1417; both getters with bit updates 1438
 // (fast control 491; full 478). Actor/state and first-point homes remain; all restored.
+// Round 240: Internal turning-result byte/short/long 491/491/491; facing-completion
+// byte/short/long 491/583/584; both short/long 583/584 (fast control 491, full 478).
+// Actor/state ownership and first point home persist; original predicates restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

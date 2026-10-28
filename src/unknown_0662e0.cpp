@@ -588,6 +588,10 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // Round 23: shared-level parameter/cached base 444/444; ordinary inline with field/parameter/
 // cached base 573 each; low table first with field/parameter/cached base 478/362/362.
 // One-point gains rejected; original level producer and initialization order restored.
+// Round 239: direct descending first-table/levels/both indices 452/476/476;
+// matrix rows 490, with first-table/levels/both 493/490/505; all with descending
+// columns 470. Constant forwarding and native ascending induction remain; original
+// indexed walks, existing level producer, tables and body restored.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {

@@ -274,6 +274,7 @@ bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 // Round 272: native slot-data block 26; with one clock 34, chained false stores 26,
 // readonly actor 26, late actor 36, actor at use 36; existing reset with data/full slot 85/85.
 // All bodies/types restored; entry actor/slot and reset-store scheduling remain.
+// another order (retail keeps the two NONE stores between the zero stores).
 // @retail 0x1c0430
 bool __stdcall function_1c0430(long actor_index, s_slot *slot)
 {

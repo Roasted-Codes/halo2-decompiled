@@ -67,6 +67,9 @@ long function_1469f0(real seconds);
 // after index arithmetic; ours has the opposite order in each case.
 // Slot data block 13; without the barrier 90; action helper result 13; actor/state/result 17;
 // result/state/actor 13; state/result/actor 13; result/actor/state 17; actor/result/state 17.
+// Packed reference field view/local names/entry declarations/actor-result scope/action lifetime 13;
+// presence-first branch 91; branch-local actor lifetime 96; shared entry exit 13.
+// Native field view and all scope forms restored; both remaining load regions still differ.
 // Early reference predicate/default-first/wide-result/presence predicate 109/108/111/109;
 // complete current/both reference values 100/104; native word equality logical/bitwise 222/130.
 // @retail 0x1bf0f0

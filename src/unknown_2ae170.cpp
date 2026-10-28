@@ -701,6 +701,7 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 
 // score 438 (was 438): Frame 0xc agrees; selected-primary storage, destination construction and integer-bit/SSE staging differ.
 // Earlier: frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
 // Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
 // level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
@@ -758,6 +759,13 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Round 274: primary scalar on retained asymmetric destinations with original/long right and bool/word
 // routing carriers 446/449/437/451; same forms with the secondary setting observed at its send
 // 455/462/450/452. The 437 gain is below margin; 449/451 lose the dispatcher. All restored.
+// Round 241: Paired selected-setting decision, rear/front first, with independent destinations, live
+// routing field, and paired true/false-first destinations: 449/449/449/449/473/473/473/473. All
+// selected-field observations and original body restored.
+// Round 207: native two-gain field array, uniform at-use gain reads and plain paired
+// front/rear/front+rear/tail/front+tail/rear+tail/all loops 466/474/475/497/490/492/507;
+// all plus the repeated buffer send loop 523. Every loop uses a real channel/gain
+// index. All restored; frame 0xc, selected-level and SSE staging differences remain.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -909,6 +917,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 234: destination/selected-send/input-level consumption scopes and all combinations
 // 224/224/224/224/224/224/224; routing-predicate consumption scope 224. Original lifetimes restored.
 // Round 197: Retained word-route graph, per-use gain/offset/both/level/gain-level/offset-level/all inputs 265/257/276/290/312/308/324; all inputs with native phase scope 324. Some forms recover frame 0x18 but regress; original observations restored.
+// Round 204: Native signed/unsigned routing predicate with primary/spilled/all destination
+// promotions 241/241/248/248/245/245/248/248. Independent selectors and scalar-return graph
+// regress; original word route, scalar observations and three local qualifications restored.
 // Round 365: joint native destination branch with all eight spilled-width subsets
 // 262/263/263/264/263/264/264/265. All restored; frame/input-level and tail sum remain.
 // @retail 0x2af450

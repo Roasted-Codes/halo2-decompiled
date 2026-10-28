@@ -93,7 +93,9 @@ static __forceinline long real_to_long(real value);
 // where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
 // player vehicle 77; the actor looked up at each store 45; separate conversion
 // locals in the loop 15; the loop product passed straight to the conversion
-// 8; the block locals in two other orders 8.
+// 8; the block locals in two other orders 8. Separately, from the 44 form: the clock
+// local moved into the player block with the slot local declared first, 8 (the same
+// lines); pointer, type, scope, direct-store and helper forms on it give the same bytes.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {
@@ -153,6 +155,9 @@ __declspec(noinline) bool function_f5dc0(long object_index);
 // the distance-call argument order differs. Split entry branch 67; first fresh
 // actor 90; second fresh actor 49 (kept); both fresh actors 81; first field
 // pointer 49; second field pointer 67; typed vehicle 67; no final refresh 123.
+// Native tag field 49; squad-first admission 74; squad before entry flag 77;
+// distance-first admission 70; entry declaration lifetime/constant pointer/role names/unsigned tag handle 49.
+// Tag field and all body forms restored; the full/low-word reuse and later schedules remain.
 // Native squad full/low-word fields alone/with timer/with flag/with both 49/49/49/49;
 // the same native field forms with a saved second actor read 67/67/67/67.
 // Round 273: one tick-rate short/long carrier 129/129; multiplier-first
