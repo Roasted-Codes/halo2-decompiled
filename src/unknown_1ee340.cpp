@@ -222,6 +222,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 262: entry polygon/projected/hit-point storage, all seven combinations, 192 each;
 // all three with entry fraction storage 192. All computations stayed at their original uses;
 // original declarations restored. Frame 0x84 and origin/edge spills remain.
+// Round 218: Direct ray-start observations, polygon inline/noinline, both direct-ray combinations,
+// direct ray with point-set/cross/normalize forceinline declarations:
+// 282/192/192/282/282/282/282/282 (fast control 192). Original restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

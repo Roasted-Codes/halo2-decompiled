@@ -1094,6 +1094,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Vector declaration order 172; split direction declarations 172; second-side declaration first 172;
 // direct distance comparison 172; angle-wrap order 191; named angle sums 172;
 // named side product 172; nested single result 414.
+// Native unsigned/signed byte returns with original tests, terminal comparison values and
+// a shared narrow result 172/172/172/172/172/172; shared-dot second-side-first ordinary
+// storage with narrow value returns 350/350 at 1465 bytes. Original bool contract restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)

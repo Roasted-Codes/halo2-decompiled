@@ -518,7 +518,7 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 572 (was 587): the axis now comes from vector3d_from_points3d with the length summed in
+// score 572 (was 572): the axis now comes from vector3d_from_points3d with the length summed in
 // retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
 // does; that frame is 0x21e4 against retail's 0x21dc (8 bytes more below the plane), 3631 bytes against
 // 3647. The definition/output registers agree with the pivot offset rotated in place, the mode read at
@@ -587,6 +587,8 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // mode field at every use 796; both 806; shared pivot-offset difference 753; promoted index plus
 // shared offset 716 (kept, plain); mode plus offset 783; all three 787; all with shared normalizer 775.
 // Retain the signed index promotion and existing offset helper; frame 0x2204 and entry carriers remain.
+// Earlier 572 from 587. Shared-axis graph: uninitialized group-scope first/candidate/selected plane declarations in
+// all seven nonempty subsets, then complete plane-role names, 572 each. All writes stay in place.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

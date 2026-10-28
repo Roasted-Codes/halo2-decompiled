@@ -1468,6 +1468,8 @@ struct s_133f70;
 // Round 262: saved-level short at original/pre-query/function scope 194/195/194;
 // signed-byte at pre-query/function/output scope 321/319/321; long at pre-query/function
 // scope 176/175. All restored; distance staging and cache/result scheduling remain.
+// Round 218: Count/writer/projection/coefficient inline and noinline declarations:
+// 175/175/175/175/175/175/175/175 (fast control 175). Original restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

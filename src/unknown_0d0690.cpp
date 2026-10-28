@@ -1350,6 +1350,9 @@ real function_30bf0(vector3f *vector);
 // Round 184: direct-field normal initializer 473; early normal snapshot/native initializer
 // 488/507; native query vector view 364; view with shared snapshot/direct reads/library copy
 // 488/364/364; early normal plus direct magnitude reads 517. Original observations restored.
+// Round 217: Repeated primary direction/secondary direction/both/reflected color/secondary+color/
+// both+color/primary+color/secondary+all-colors views 367/468/468/368/471/471/370/471 fast.
+// In-place direction views recover frame 0x40 but regress; original fields, scratch and helpers restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

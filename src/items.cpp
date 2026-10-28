@@ -1034,6 +1034,9 @@ struct s_item_flags_view_10b850
 // Rotation cross-term declaration orders ikj/jik/jki/kij/kji 814/813/813/814/814;
 // cross-first orders jki/kij/kji 814/815/815. Frame 0x154/0x12c and Boolean/native
 // rotation homes remain. Original complete body and all helpers restored.
+// Round 219: Independent motion-copy/gravity-update/floor-speed observation order masks 1-7; all
+// with projection role names; existing direct-output side cross helper:
+// 812/813/812/863/862/863/862/862/921. Original body restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
