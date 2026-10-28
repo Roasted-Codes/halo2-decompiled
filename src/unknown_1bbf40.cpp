@@ -203,6 +203,9 @@ long function_1bc5d0(long actor_index, long ignore_index)
 // score 2 (was 2): the counter is stored before the seat array is addressed
 // here, retail
 // addresses the array first and stores the counter after it.
+// This round: seat-list helper with union/direct count 11/11; separate
+// remaining post/pre-decrement 10/10; count-output snapshot/reread 2/2;
+// split/guard count assignment 2/2.
 // @retail 0x1bc6d0
 short __stdcall function_1bc6d0(long actor_index)
 {
