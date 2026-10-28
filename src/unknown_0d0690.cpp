@@ -51,10 +51,14 @@ PRIVATE __forceinline real pinned_real(real const &value, real minimum, real max
 	return value;
 }
 
-// score 93 (was 150): at retail's length; frame, sky/count homes, trig temporaries, blend registers
+// score 93 (was 93): at retail's length; frame, sky/count homes, trig temporaries, blend registers
 // and the color0 store now match. Left: the three x87 direction adds load the direction first
 // (retail adds it as the memory operand), 0x131c20's `&color` is formed in edi and copied to ecx
 // (retail ecx, then edi), and the collision test's sete.
+// Round 69: `direction.i = contribution.i + direction.i` written out, or contribution declared
+// before direction, 93/93 (identical code: the add operands are reordered); the collision test as
+// an inline/forceinline bool helper (call && no-object) 93/93 (folded); the per-light count test as
+// an early `continue` 93.
 // Lane 8 r64 (93 form = count read at each use, lights pointer in the loop, a contribution vector
 // with double products cast once, the blend through the returning clamp, color0 first): three scalar
 // terms 179/184 (sunk into the adds); terms written into the adds 186; contribution renamed/array/

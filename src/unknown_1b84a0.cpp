@@ -119,9 +119,15 @@ void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 	state->unknown0c = true;
 }
 
-// score 41 (was 41): retail reads a different global and keeps the record
-// count in EBP,
-// ours uses ESI and another pool.
+/* slot type 0x23's block after the slot header (s_slot's unknownc) */
+struct s_slot_23_data
+{
+	bool unknown00;
+	bool unknown01;
+	short unknown02;
+	byte unknown04[0x34 - 4];
+};
+
 // @retail 0x1b8ae0
 void __stdcall function_1b8ae0(long actor_index, s_slot *slot)
 {
@@ -130,17 +136,17 @@ void __stdcall function_1b8ae0(long actor_index, s_slot *slot)
 	if (actor->prop_index != NONE)
 	{
 		s_prop_view_fields *view = prop_node_view(prop_node_get(actor->prop_index));
-		s_slot_23 *state = (s_slot_23 *)slot;
+		s_slot_23_data *state = (s_slot_23_data *)slot->unknownc;
 
 		actor->unknown4a2 = true;
 		if (view->unknown06 != 2)
-			state->unknown0e = g_510c54->field_2_3;
-		else if (state->unknown0e > 0)
-			state->unknown0e--;
+			state->unknown02 = g_510c54->field_2_3;
+		else if (state->unknown02 > 0)
+			state->unknown02--;
 
 		s_actor_view *current = actor_get(actor_index);
 		if (current->unknown50c && current->unknown504 == 1 &&
-			function_1f8940(actor_index) >= 2.0f && state->unknown0e <= 0)
+			!(function_1f8940(actor_index) < 2.0f) && state->unknown02 <= 0)
 		{
 			actor->unknown41c = 3;
 			actor->unknown420 = 0;
@@ -155,8 +161,8 @@ void __stdcall function_1b8ae0(long actor_index, s_slot *slot)
 			point3f point;
 
 			function_210850(&view->unknown78, &point);
-			actor->unknown424.point = point;
 			actor->unknown420 = 3;
+			actor->unknown424.point = point;
 			actor->unknown41c = 4;
 		}
 
