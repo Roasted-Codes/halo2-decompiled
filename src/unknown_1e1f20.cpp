@@ -675,7 +675,7 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 277 (was 282): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// score 277 (was 277): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
 // Round 141: the memory loop is the existing joint_decline (0x26ed40) inlined in retail (test through the
 // cached actor, body re-derived, participant index re-read per store), BLOCKED-BY 0x26ed40: its /Ob1
 // file keeps it out of line (a call there 317/343). The tail block (flag 9 clear, as 0x1c7bb0/0x1e3920
@@ -745,6 +745,10 @@ void swarm_leader_detach(long actor_index);
 // cast 291; actor local in the slot loop 309; memory test without the entry pointer 277; prop view index
 // re-derived 278. Still BLOCKED-BY 0x26ed40 (src/unknown_26e370.cpp) and the bool parameter
 // (src/unknown_1bba20.cpp).
+// Round 31: still BLOCKED-BY 0x26ed40 (lane file) and the bool parameter (src/unknown_1bba20.cpp).
+// Prop walk through 0x26be00/0x26be30 alone (fresh pool reads after the callback) 298 (996 bytes);
+// tail read per use 282; prop record re-derived per use 278; named bool for the definition bit 277;
+// the bit test as `(bool)((x >> 3) & 1)` 291 (retail: shr/and al, stored in the dead index slot).
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

@@ -53,6 +53,7 @@ void online_result_query_finish(s_type_9df9da *task);
 bool online_result_register(s_online_cached_result *record, IN_ADDR *address);
 void online_result_shuffle(dword count, s_online_cached_result *records);
 void online_result_describe(char *text, const s_online_cached_result *record);
+long sound_random_range(short lower, short upper);
 char *online_result_format(char *text, const char *format, ...);
 char *online_result_append(char *text, const char *format, ...);
 dword online_result_text_length(const char *text);
@@ -155,10 +156,7 @@ void online_result_shuffle(dword count, s_online_cached_result *records)
 {
     for (dword i = 0; i < count - 1; i++)
     {
-        dword seed = g_4e7408->seed * 1664525 + 1013904223;
-        g_4e7408->seed = seed;
-        short chosen = (short)i + (short)(((seed >> 16) *
-            ((short)count - (short)i)) >> 16);
+        long chosen = sound_random_range((short)i, (short)count);
         s_online_cached_result temporary = records[i];
         records[i] = records[chosen];
         records[chosen] = temporary;
@@ -205,17 +203,22 @@ bool online_result_register(s_online_cached_result *record, IN_ADDR *address)
         g_5107e4++;
         if (XNetTsAddrToInAddr((TSADDR *)&record->address, 0x4d530064,
             &record->key_id, address) == 0)
-            return true;
-        text[0] = 0;
-        if (g_5107e0.s_addr)
         {
-            XNetConnect(g_5107e0);
-            g_5107e0.s_addr = 0;
+            result = true;
         }
-        XNetUnregisterKey(&record->key_id);
-        g_5107e4--;
-        online_result_format(text, "XNetTsAddrToInAddr() failed in register_ip_and_key() with error code %s.  ", 0);
-        online_result_describe(text, record);
+        else
+        {
+            text[0] = 0;
+            if (g_5107e0.s_addr)
+            {
+                XNetConnect(g_5107e0);
+                g_5107e0.s_addr = 0;
+            }
+            XNetUnregisterKey(&record->key_id);
+            g_5107e4--;
+            online_result_format(text, "XNetTsAddrToInAddr() failed in register_ip_and_key() with error code %s.  ", 0);
+            online_result_describe(text, record);
+        }
     }
     return result;
 }

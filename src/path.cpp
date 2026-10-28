@@ -206,7 +206,7 @@ PRIVATE real function_272810(s_type_f17a25 const *state, s_type_c3b527 const *st
 PRIVATE void function_271e50(s_type_f17a25 *state, short index);
 PRIVATE void function_271fd0(s_type_f17a25 *state, short node_index, short cost);
 short function_272700(s_type_f17a25 *state, long node_index);
-PRIVATE void function_272740(point3f const *attractor,
+PRIVATE __declspec(noinline) void function_272740(point3f const *attractor,
 	point3f const *start, point3f const *end, point3f *out);
 
 // @retail 0x270590
@@ -1233,20 +1233,19 @@ short function_272700(s_type_f17a25 *state, long node_index)
 	return result;
 }
 
+// score 16 (was 67): retail computes the segment i, j, k and sums (i + j) + k for the length and (j + k) + i for the projection, ours j, k, i and (k + j) + i for both; tried: `dot3f(&delta, &delta)` for the length 16, `dot3f(&delta, &offset)` 16, the projection written out in y, z, x order 36, all three written out 67, parameters reordered (start, end, attractor, out) 16; compile-only harness: every written-out sum order and grouping 27-64, all 24 parameter orders and the offset computed at the top no better.
 // @retail 0x272740
 PRIVATE void function_272740(point3f const *attractor,
 	point3f const *start, point3f const *end, point3f *out)
 {
 	vector3f delta;
-	delta.i = end->x - start->x;
-	delta.j = end->y - start->y;
-	delta.k = end->z - start->z;
-	real length_squared = delta.i * delta.i + delta.j * delta.j + delta.k * delta.k;
+	vector3d_from_points3d(start, end, &delta);
+	real length_squared = length_sq3f(&delta);
 	if (length_squared > 0.0f)
 	{
-		real t = ((start->y - attractor->y) * delta.j +
-			(start->z - attractor->z) * delta.k +
-			(start->x - attractor->x) * delta.i) / length_squared;
+		vector3f offset;
+		vector3d_from_points3d(attractor, start, &offset);
+		real t = dot3f(&offset, &delta) / length_squared;
 		if (t < 0.0f || t > 1.0f)
 		{
 			*out = *end;

@@ -958,7 +958,7 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
     result->y = scale * y;
 }
 
-// score 539 (was 621): the entry pointer's base (+0x4c), the direction cursor and the table stores
+// score 513 (was 539): the entry pointer's base (+0x4c), the direction cursor and the table stores
 // now agree; retail stores the +radius vertex group first (so 1.0 lands in XMM2, not XMM1) and
 // computes each projection's forward row first. Kept: the file's cross helper for both crosses
 // (it sets the +0x4c base; the shared cross3f for the forward one gives +0x50), normalize3d for
@@ -966,6 +966,14 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
 // dot helpers with a plane3f for the plane, one negate helper for both up vectors. Tried: term
 // and row orders in the projection (identical); y stored before x with each component
 // declaration order 551-571; the radius field at each table use 645; a named negative radius 574.
+// Round 64: the face table declared before the direction table 513 (kept; retail stores the rest of the
+// faces before the directions). The projection helper through a local vector (rows forward, left, up)
+// 511 with retail's x-first rows, -1.0 in XMM7 and the +radius vertex group first (the top matches to
+// the first cross product); with y stored first 511; also the left.i product reversed 511; parenthesised
+// rows 576; y first with parentheses 579; normalize_inline for the left vector 581 (alone), 586/587
+// with the local vector; the shared cross3f for the left vector 570, 528 with the local vector; the
+// other table orders 549-568. Next: the local vector plus retail's cross-product loads (up loaded into
+// registers, up.i twice) and the normalize's i, k, j product order.
 // @retail 0xc1d90
 void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab const *shape, s_light_projection_ab *entries, short *count)
 {
@@ -984,13 +992,13 @@ void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab co
                 { radius, radius, radius }, { -radius, radius, radius },
                 { -radius, -radius, radius }, { radius, -radius, radius }
             };
-            vector3f directions[6] = {
-                { 0, 0, -1 }, { 1, 0, 0 }, { 0, 1, 0 },
-                { -1, 0, 0 }, { 0, -1, 0 }, { 0, 0, 1 }
-            };
             long faces[6][4] = {
                 { 0, 1, 2, 3 }, { 0, 3, 7, 4 }, { 0, 4, 5, 1 },
                 { 1, 5, 6, 2 }, { 2, 6, 7, 3 }, { 4, 7, 6, 5 }
+            };
+            vector3f directions[6] = {
+                { 0, 0, -1 }, { 1, 0, 0 }, { 0, 1, 0 },
+                { -1, 0, 0 }, { 0, -1, 0 }, { 0, 0, 1 }
             };
             entry->depth = shape->sphere_render.radius;
             entry->orthogonal = false;
@@ -1172,7 +1180,11 @@ point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *p
 // forward product reversed and sums the second one up + forward + left. Diagnostics on the shared
 // header (restored): vector-first products 70 (identical), components read at each use 153; const
 // vector arguments 70; a file-private up-first normal transform returning its output (the form other
-// files keep) 70 (identical); the parameter alias dropped 158.
+// files keep) 70 (identical); the parameter alias dropped 158. Round 81: the marker local scoped to
+// its arm 78; the overflow flag declared first 70 (same code); forward/up output pointer locals 86;
+// the location pointer taken at the top 155; the marker flag tested as a byte 70 (same code);
+// diagnostics on the shared header (restored): the helper's components loaded j,k,i / k,j,i / i,k,j /
+// j,i,k / k,i,j 78/76/78/75/81 (i,j,k stays best).
 // @retail 0xc2d00
 void __stdcall function_c2d00(long light_index)
 {
@@ -1371,7 +1383,7 @@ extern s_object_list *g_4de2f4;
 
 #define PIN(x, low, high) ((x) < (low) ? (low) : ((x) > (high) ? (high) : (x)))
 
-// score 49 (was 147): four bytes over retail's length; only the colour-copy block differs: retail
+// score 49 (was 49): four bytes over retail's length; only the colour-copy block differs: retail
 // hoists each next definition load above the previous copy's last store, loads 1.0f before the tint
 // stores and stores the last pair-colour dword after the pushes, so `&light->fraction` takes EBX and
 // is read back as `[ebx]` after the calls (ours stores each copy's last dword first, takes EAX and
@@ -1388,7 +1400,13 @@ extern s_object_list *g_4de2f4;
 // and the clamped fade named 50; the alphas after the rgb copies in declaration order 49 (kept). On
 // that: alphas before each copy / after in source order / first 50/50/49; tint copied last 66; memcpy
 // copies 49; per-field float copies 414; `&light->fraction` passed directly 214; the fraction pointer
-// declared at the block top 88; every fade product `*= 1.0f - light->fade` 50.
+// declared at the block top 88; every fade product `*= 1.0f - light->fade` 50. Round 81 (aligned
+// count 8: the 4 bytes are `[ebx]` against our `[ebp + 0xd0]`, which shifts every later call): RA
+// gives the pointer eax (then rematerialised) because our scheduler stores the last pair-colour dword
+// before the pushes; the colour struct given an rgb member (shared header, restored) 49 (same code);
+// the pointer declared at the function top 93 (it then takes edi and the late store moves as
+// retail's); the pointer also for the second call and/or the blend 49/49/49 (same code);
+// `&light->fraction` passed with no pointer 214.
 // @retail 0xc0c80
 void __stdcall function_c0c80(long light_index)
 {

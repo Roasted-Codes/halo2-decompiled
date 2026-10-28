@@ -65,13 +65,13 @@ Analysis, documentation and review do not need it.
 
 ## Status
 
-Decompilation is under way, and 9802 retail functions now match byte for
+Decompilation is under way, and 9824 retail functions now match byte for
 byte. The checker reports:
 
 ```
-matched 9802 of 11326 game functions (1606923 of 2786206 bytes, 57.67%)
+matched 9824 of 11326 game functions (1612805 of 2786206 bytes, 57.89%)
 matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
-matched 10986 of 17654 functions in scope (1766225 of 3904218 bytes, 45.24%)
+matched 11008 of 17654 functions in scope (1772107 of 3904218 bytes, 45.39%)
 ```
 
 Matched code so far includes:
@@ -288,16 +288,43 @@ Microsoft; other names and marks belong to their respective owners. See
 
 ## License
 
-The contributors' own work in this repository is released under CC0 1.0.
-Refer to [LICENSE](LICENSE).
+Copyright (C) 2026 the halo2-decompiled contributors. The git history and
+[The community](#the-community) list them.
 
-- CC0 applies only to material the contributors have the right to license.
-- It does not place Halo 2, or any intellectual property of Microsoft,
-  Bungie, 343 Industries, Activision or anyone else, into the public domain.
+The contributors' own work in this repository is licensed under the GNU
+General Public License, version 3 or (at your option) any later version
+(GPL-3.0-or-later). Refer to [LICENSE](LICENSE). Forks and other works based
+on it that are distributed must stay under the GPL, with their source
+available, and must keep the copyright and license notices.
+
+Versions published before this change were released under CC0 1.0, and
+copies of those versions stay under CC0. The GPL applies from the commit that
+introduced this notice, on 2026-10-27, onward.
+
+- The GPL applies only to material the contributors have the right to
+  license.
+- It grants no rights in Halo 2, or in any intellectual property of
+  Microsoft, Bungie, 343 Industries, Activision or anyone else, and the
+  earlier CC0 release did not place any of it into the public domain.
   Halo 2's game content and trademarks remain the property of their owners.
 - The `name` and `object` columns of `config/functions.csv` once came from
   [halo-symbol-atlas](https://github.com/tinkerer-red/halo-symbol-atlas) under
   [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) and were not
-  covered by CC0. That data has been removed (see [PROVENANCE.md](PROVENANCE.md)).
+  covered by the repository's own license. That data has been removed (see
+  [PROVENANCE.md](PROVENANCE.md)).
 
 Details are in [LEGAL.md](LEGAL.md#licence-scope).
+
+### Additional permission for the Xbox Development Kit
+
+The matching build links the libraries of the Microsoft Xbox Development Kit.
+As an additional permission under section 7 of the GPL:
+
+If you modify this program, or any covered work, by linking or combining it
+with the libraries of the Microsoft Xbox Development Kit (or modified versions
+of those libraries), containing parts covered by the terms of their licenses,
+the licensors of this program grant you additional permission to convey the
+resulting work.
+
+This permission covers only those libraries. The project's own code stays
+under the GPL.

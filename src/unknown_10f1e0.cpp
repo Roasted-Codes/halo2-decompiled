@@ -1268,6 +1268,12 @@ long function_cbd50(long unit_index, short weapon_index);
 // also in 0x1103a0); depletion as `if (first != NONE) depleted = ...; if (second != NONE && count > 0)
 // depleted = false;` 330 (frame four), with a byte depleted 330; without the parameter's volatile
 // re-read at the 0xc70b0 call 322; depletion through an inline helper writing a pointer 330.
+// Round 80: bool result 194 (head unchanged; the exits lose the normalisation but still lack retail's
+// ebp pop); second query as `if (second != NONE && count > 0) depleted = false;` 345 (all four registers
+// at entry, but frame four, depletion in memory, interruptibility in BL, unit kept live); with the
+// overlay read at its switch 331; with cached-unit slot arguments 345; with short slot locals 345.
+// Retail's unit reload at each query (`mov ecx, ebp; mov ecx, [ecx + edx + 8]`) occurs in only one
+// other retail function (0x100130, unmatched). Original body restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -2646,7 +2652,7 @@ bool __stdcall function_111650(long arg_0, long *arg_1)
     return active;
 }
 
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *value);
 bool function_e4050(long object_index);
 const long g_4408f8[8] = { NONE, 0, 1, 2, 2, NONE, NONE, 3 };
 const long g_440918[8] = { NONE, NONE, 0x600008c, 0xc000043, 0xc000043, 0xd000042, 0xc000043, 0xc000043 };
