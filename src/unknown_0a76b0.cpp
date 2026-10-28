@@ -14,6 +14,7 @@ The handlers of the unit request table at 0x467564
 #include "unknown_1cafc0.h"
 #include "unknown_1dacb0.h"
 #include "unit_requests.h"
+#include "units.h"
 #include "matrix_transform.h"
 #include "unknown_1cec30.h"
 #include "bit_vector.h"
@@ -444,6 +445,9 @@ void function_e6f90(long unit_index)
 
 /* whether a unit can play an animation, from its idle state or (when it
    asks) its alternate one */
+// score 156 (was 156): ours inlines function_10f3b0 at both of its calls, where retail calls it
+// (this is its only caller in retail too), and the alternate pointer then stays on the stack
+// where retail has it in ebx. Adding /Ob1 to this file's flags leaves it at 156.
 // @retail 0xe7020
 bool function_e7020(long unit_index, bool *alternate, long name)
 {
@@ -1217,6 +1221,11 @@ void __stdcall function_fff40(long weapon_index, bool silent, bool immediate);
 
 /* a unit's weapon animations: its vehicle seat's weapon's, or the
    default */
+// score 73 (was 75): same length as retail now; registers differ. Retail keeps the object array
+// in ebx, the tag table in ebp and the seat index in di, and keeps both names on the stack where
+// ours keeps the default name in ebp. The seat flags as the seat definition's bitfields give
+// retail's shift-and-test reads after the weapon lookup, and the hand helper's short slot index
+// gives retail's movsx; the seat flags read as a dword after the weapon 88, with the hand helper 85.
 // @retail 0xe8620
 void __stdcall function_e8620(long unit_index, bool flag)
 {
@@ -1227,11 +1236,11 @@ void __stdcall function_e8620(long unit_index, bool flag)
 	if (unit->parent_object_index != NONE && unit->seat_index != NONE)
 	{
 		s_unit_action_unit *parent = UNIT_ACTION_UNIT_GET(unit->parent_object_index);
-		dword seat_flags = *(dword *)(*(byte **)(g_4e3b44[parent->definition_index & 0xffff].bytes + 0x1cc) +
+		s_unit_seat_definition *seat = (s_unit_seat_definition *)(*(byte **)(g_4e3b44[parent->definition_index & 0xffff].bytes + 0x1cc) +
 			unit->seat_index * 0xb0);
-		long weapon_index = unit_action_weapon_get(parent, false);
+		long weapon_index = unit_action_hand_weapon_get(parent, 0);
 
-		if (((seat_flags >> 3) & 1) && !((seat_flags >> 2) & 1) && weapon_index != NONE)
+		if (TEST_FIELD_BIT(seat->flags.bit3) && !TEST_FIELD_BIT(seat->flags.bit2) && weapon_index != NONE)
 		{
 			byte *s_type_67e06b = g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes;
 
@@ -1718,6 +1727,8 @@ PRIVATE __forceinline bool unit_action_pause(long unit_index, s_unit_request *re
 	return result;
 }
 
+// 0xe9370 and 0xe9500 (score 139 each) are 17 bytes short through unit_action_pause, which
+// reaches function_e7020; see the note there.
 /* pauses a unit's animation (type 23) */
 // @retail 0xe9370
 bool __stdcall function_e9370(long unit_index, s_unit_request *request)
@@ -3782,14 +3793,16 @@ bool __stdcall function_eccc0(long unit_index, s_unit_request *request)
 		state_name = 0x12000547;
 		break;
 	default:
-		return result;
+		goto done;
 	}
 
 	long state = *((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x3dc);
 	long action_name = state == 5 || state == 4 ? 0x400000c : 0x5000049;
 
-	return function_ee090(unit_index, state_name, 5, action_name, (point3f const *)((byte *)request + 8),
+	result = function_ee090(unit_index, state_name, 5, action_name, (point3f const *)((byte *)request + 8),
 		(vector3f const *)((byte *)request + 0x14));
+done:
+	return result;
 }
 
 /* sits a unit down from its pose, keeping a vector (type 46) */
@@ -4091,6 +4104,8 @@ tick:
 }
 
 /* a unit's flinch (type 51): its animation, and its time */
+// score 136 (was 136): ours inlines c_animation_channel::get_duration (0x1c6ea0), which retail
+// calls; that accounts for most of the 79 extra bytes. The rest of the body lines up.
 // @retail 0xed800
 bool __stdcall function_ed800(long unit_index, s_unit_request *request)
 {
@@ -4122,21 +4137,27 @@ void *function_1e4f90(long actor_index);
 
 /* a flinch: its time, then the weapon dropped (or swapped for the actor's
    spare weapon) */
+// score 65 (was 82): retail keeps no result local (ours puts it in bl and a stack byte) and still
+// leaves through two exits. A single exit through a result local 65-68; the hand helper's short slot
+// index gives retail's movsx (80); gotos to a final return false for some or all paths 80.
 // @retail 0xed910
 bool __stdcall function_ed910(long unit_index, long type)
 {
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 
+	bool result = true;
+
 	if (--actions->flinch_ticks > 0)
-		return true;
+		goto done;
+	result = false;
 
 	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), false);
 
 	if (weapon_index == NONE)
-		return false;
+		goto done;
 	if (g_4e3b44[UNIT_ACTION_UNIT_GET(weapon_index)->definition_index & 0xffff].bytes[0x12f] & 1)
-		return false;
+		goto done;
 
 	long actor_index = unit->unknown12c;
 
@@ -4155,7 +4176,7 @@ bool __stdcall function_ed910(long unit_index, long type)
 			if (new_weapon_index != NONE)
 			{
 				function_cd0c0(unit_index, new_weapon_index, 4);
-				return false;
+				goto done;
 			}
 		}
 	}
@@ -4165,7 +4186,8 @@ bool __stdcall function_ed910(long unit_index, long type)
 	drop.type = 9;
 	*((bool *)&drop + 4) = true;
 	unit_action_drop_weapon(unit_index, &drop);
-	return false;
+done:
+	return result;
 }
 
 /* a unit's taunt (type 52) */
