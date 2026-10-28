@@ -186,6 +186,9 @@ void function_2232a0(void)
 // native-record-source counterparts [109, 138, 138, 91]. Last-ordinal 91 adds an unmatched
 // bound calculation and worsens aligned instructions; restored. Pretest, optional-source and
 // tail transport remain.
+// Round 87 (fast): slot data NULL at the loop top with no else arms 124 (gives retail's loop-top zero,
+// in EDX, but not the found arm's second zero); the NONE store then one ternary 117, one if/else 117;
+// the first with a pretested for loop 179, the second 166. 0x2b5d0's file is held by another lane.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

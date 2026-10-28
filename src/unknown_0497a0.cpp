@@ -83,6 +83,10 @@
 // Round 206: shared vector-add first/second/both wave stages 690/581/690; paired camera
 // add-scaled 702, with first/second/both waves 708/703/709; all with shared default scale 708.
 // Second-wave vector-add kept at plain 581 (2635 bytes); frame 0x64 and shape/basis homes remain.
+// Round 275: complete clamp operands 581; named lower/upper-first bounded values
+// 747/755; in-place lower/upper-first fields 727/790; explicit result arms 890;
+// independent lower-upper/upper-lower bounds 747/755. All restored; current frame
+// 0x58 versus 0x60, thirteen excess bytes and native shape/basis/wave homes remain.
 // Round 209: Intrinsic copies at history/publication/all outputs 581/581/581; conditional origin 726;
 // origin and basis 825; basis 817; ordinary and late input snapshots 581; all boundaries 825. Restored;
 // actual frame 0x58/0x60, shape/basis/wave homes remain; original sixth-component conversion unchanged.

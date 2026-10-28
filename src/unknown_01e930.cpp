@@ -361,7 +361,7 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	__asm rdtsc
 }
 
-// score 244 (was 256): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
+// score 244 (was 244): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
 // Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
 // arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
 // format-size query declaration 287. Original body and declaration restored.
@@ -382,6 +382,8 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 212: native status zero/length aggregate initialization, original/entry texture outputs
 // and bins/volumes declaration orders [286, 286, 286, 286, 285, 285, 285, 285]. Original shared
 // producer and body restored; frame and clock/output homes remain.
+// Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
+// parameter-derived decision at entry 306/306/305/298. Original large decision restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

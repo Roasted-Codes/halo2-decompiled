@@ -135,6 +135,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // graphs with entry declarations 412/568/589; both plus scale value input 710.
 // Original helper interfaces, body and declarations restored; frame/input homes remain.
 // Round 366: returned position producer 408; shared scale 383; both 408; full vector setter 399; position/setter 426; scale/setter 399; all 426; all with earlier reused magnitude 413. All restored.
+// Round 245: existing scale formal orders 021/102/120/210 and clamp orders
+// 102/120/201/210 all 383. Original helper definitions and every call restored.
+// Frame 0x5c/0x64, actor/requested-vector transport and x87 homes remain.
 // Round 208: all three native square-product carriers in six declaration orders 383 each;
 // successive original K/J/I sum with those carriers 383; first-declared epsilon result on the
 // product graph 439. All helper/body text restored; frame 0x5c/0x64, actor/input transport and x87

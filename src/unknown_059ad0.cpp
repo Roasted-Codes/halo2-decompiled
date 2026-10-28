@@ -2182,36 +2182,23 @@ void network_session_leave_joining(c_class_58d20 *session)
 	network_session_update_leaving_join(session);
 }
 
-// score 3 (was 3): retail sets the NONE carrier after clearing the state
-// block; ours sets it before the clear. Tried: the copy as a word loop
-// 49, as a pointer range or a byte loop 0 (not kept: the matched siblings
-// 0x61180 and 0x614a0 copy the same way with memcpy).
-// Complete field construction without scratch clear 48; clock before record
-// 28, after scratch clear 3; immutable initialized record 48; typed state
-// destination 11, without scratch clear 48, with immutable record 48, with
-// earlier clock 28. The original eight-byte frame and memcpy remain.
-// our NONE request sentinel is defined before clearing the
-// state block; retail defines it afterwards. Tried: the copy as a word loop
-// New trials: memmove 42; request field fill 3; clear result as copy target 9;
-// all-one record fill 31; tail-only clear 32; fill with memmove 37;
-// tail clear with fill 30; tail clear with memmove 46. Destination sentinel
-// after copy 30; scratch sentinel after clear 29, as fill 29; sentinel before
-// clock 15; destination fill 30; copy-result sentinel 27; fill before clock 15;
-// typed destination with late sentinel 26.
-// retail sets the NONE carrier (ebx) after clearing the state block; ours sets
-// it before the clear. The carrier must stay live across the clear: set after it in the source,
-// it moves to eax and ebx is no longer saved. Tried: the copy as a word loop 49, as a pointer
-// range or a byte loop 0 (not kept: the matched siblings 0x61180 and 0x614a0 copy the same way
-// with memcpy); complete field construction without scratch clear 48; clock before record 28,
-// after scratch clear 3; immutable initialized record 48; typed state destination 11, without
-// scratch clear 48, with immutable record 48, with earlier clock 28; memmove 42; request field
-// fill 3; clear result as copy target 9; all-one record fill 31; tail-only clear 32; fill with
-// memmove 37; tail clear with fill 30; tail clear with memmove 46; NONE set after the state
-// clear 29; NONE before the clock 15; field fill (0xff memset) after the state clear 29; zero
-// initializer for the record 27; state-block pointer local for the clear and the copy 11.
-// Scratch source pointer: direct clear with record/pointer fields 3/3;
-// with returned state-copy destination 9/9. Source from scratch clear with
-// record/pointer fields 38/35; with returned state destination 40/37.
+// score 3 (was 3): retail sets the NONE carrier (EBX) after clearing the state block; ours sets
+// it before the clear. The carrier must stay live across the clear: set after it in the source, it
+// moves to EAX and EBX is no longer saved. Tried: the copy as a word loop 49, as a pointer range or
+// a byte loop 0 (not kept: the matched siblings 0x61180 and 0x614a0 copy the same way with memcpy);
+// complete field construction without scratch clear 48; clock before record 28, after scratch clear
+// 3; immutable initialized record 48; typed state destination 11, without scratch clear 48, with
+// immutable record 48, with earlier clock 28; memmove 42; request field fill 3; clear result as copy
+// target 9; all-one record fill 31; tail-only clear 32; fill with memmove 37; tail clear with fill
+// 30; tail clear with memmove 46; destination sentinel after copy 30; scratch sentinel after clear
+// 29, as fill 29; NONE before the clock 15 (NONE takes EBP, the clock EBX); destination fill 30;
+// copy-result sentinel 27; fill before clock 15; typed destination with late sentinel 26; zero
+// initializer for the record 27; state-block pointer local for the clear and the copy 11; scratch
+// source pointer: direct clear with record/pointer fields 3/3, with returned state-copy destination
+// 9/9; source from scratch clear with record/pointer fields 38/35, with returned state destination
+// 40/37. Round 87: clock after the state clear 28; state store before the copy 6, before the clear
+// 6; sizeof the record type in the record clear and the copy 3; `void *state_data` (0x5e030's
+// form) declared before the clear 3, between the clock and NONE 3.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {

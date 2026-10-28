@@ -1416,6 +1416,9 @@ extern s_object_list *g_4de2f4;
 // every offset 49 (identical code); alphas after each copy 50; pair copies after the second/first alphas
 // 49; second/first alphas between the copies 49; the fraction pointer before the alphas / after the tint
 // / between the alphas 49/75/49 (retail keeps it in EBX across both calls; ours rematerialises it).
+// Round 62: a point3f tint 49; alpha-only aggregate initializers 438; the last pair colour copied as
+// a whole color4f 365; a reused input pointer 357; a reused output pointer, chained alphas, a const
+// fraction handle, separate declarations, function-scope colours and const copy sources 49 each.
 // @retail 0xc0c80
 void __stdcall function_c0c80(long light_index)
 {

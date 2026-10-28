@@ -3529,7 +3529,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1420 (was 1436): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
+// score 1420 (was 1420): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
 // Earlier: frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
@@ -3580,6 +3580,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 212: native animation/trigger/barrel activity-test accumulation, seven subsets and
 // complete entry-zero result [1421, 1425, 1432, 1432, 1431, 1438, 1450, 1450]. Original
 // producers restored; pool, dual and frame homes remain.
+// Round 246: complementary activity result bool/byte/short/long 1440/1440/1459/1459; the same
+// with entry declaration 1440/1440/1459/1459. Original persistent result restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

@@ -3889,6 +3889,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 225: chained award/subtype defaults at entry, admission and victim lookup 549/548/548;
 // award/message 470, all three at entry 549, subtype/message 549; all three
 // after admission/lookup 548/548. Original result defaults and complete body restored.
+// Round 218: Exhaustive award result, entry declaration with before/after subtype leaves and
+// ordinary/excluded category first 579/591/584/602; selection declaration counterparts 579/591/584/602.
+// All restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4158,6 +4161,9 @@ struct s_score_zone_view
 // all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
 // forms rejected despite the 423 first-transfer recovery. Existing rival output
 // object consumed directly 493. All restored; team-color/zone/charge allocation remains.
+// Round 219: Rival metadata before color, team/individual/both 566/518/566; own score before text
+// alone/with team/with individual/with both 476/545/523/564; all rival metadata before text 590.
+// All restored; native color transfers, zone homes and charge spills remain.
 // Round 209: Returned-color memcpy rival/own/both/zones/all 440 each; overlap-safe rival/own/both copies
 // 548/418/427. Own copy plain 418 but introduces a library call absent from the native retail transfer;
 // discarded as the wrong copy boundary. Frame, palette/zone homes and charge spills remain.
