@@ -922,6 +922,7 @@ PRIVATE __forceinline void decal_vector_17ef10(transform4x3f const *m,
     out->k = m->up.k * z + m->left.k * y + m->forward.k * x;
 }
 
+// score 987 (was 1005): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x17ef10
 bool function_17ef10(transform4x3f const *transform, long tag_index,
     s_decal_placement const *placement, vector3f const *direction, real radius,
@@ -1000,7 +1001,7 @@ bool function_17ef10(transform4x3f const *transform, long tag_index,
     vector3f normal = placement->plane.n;
     vector3f tangent, perpendicular;
     real cosine, sine;
-    if ((definition->flags & 8) &&
+    if (TEST_FIELD_BIT((definition->flags >> 3) & 1) &&
         -0.0001f > normal.j * direction->j + normal.k * direction->k + normal.i * direction->i)
     {
         cosine = -1.0f;
