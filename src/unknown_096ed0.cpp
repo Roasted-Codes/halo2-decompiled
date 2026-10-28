@@ -93,6 +93,20 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 104: an entry pointer for the body's reads 216; also driving the loop step 216; size as one
 // expression 202 (aligned count unchanged); count incremented first 209; the `index != NONE` guard that
 // repeated the loop test removed 199 (identical code, kept).
+// Round 31 lead (170 at 814 bytes, not kept: mixed reads and a repeated loop guard): a
+// `s_handle_peers *peers = table;` local for the peer lookup and the three single-handle calls (the
+// chain loops keep `table->`) puts every callee-saved register where retail has it (this EBP,
+// peer/count EDI, table/index ESI, type EBX) 207; the output in 0x8b890's order (`out = cursor;
+// count++; cursor++;`, size as one expression with `(handles_count > 1 ? 2 : 0)`) then gives retail's
+// output block exactly 175; index read inside `if (unknown09)` and the cursor declared under `if
+// (index != NONE)` with a `for (; ...)` loop gives retail's prologue 170. Left: in the first chain
+// loop retail keeps the chain index in ESI, the vtable in EBX and spills type to [esp+0x34] (reloaded
+// before the join); ours keeps type in EBX and spills the index, shifting the cursor/entry/item slots
+// by 4. On that lead: type declared last/at function scope, one shared chain index, the first loop's
+// item locals at block scope, the chain query through the local 170 each; `type = 3` after the loop
+// 249 (782 bytes); type set only on the unblocked exit 228; the local in the loops too 216; a 600 s
+// permuter run 158 only through a volatile read; an entry pointer for the reads 195. Without the local: the sibling output order 234,
+// with the cursor inside the flag test 232; count renamed result 199 (identical).
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

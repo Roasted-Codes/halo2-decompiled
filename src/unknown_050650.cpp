@@ -753,7 +753,8 @@ output_point:
 // Tried: a specification pointer local 9; an if/else chain without the early return 9; the valid
 // flag assigned from the `&&` 22; a valid local stored once 47; the getter as `data + index * size`
 // 9; a temporary caller (its only retail caller 0x1f38c0 is disabled here) 9; a cdecl compile-only
-// build gives ours too.
+// build gives ours too; shared actor getter or type 9 each; direct byte-base 9; offset local 9;
+// getter forceinline 9; data-base or slot locals 9 each; nested actor getter 9; a mode pointer 9.
 // @retail 0x296580
 void function_296580(long actor_index)
 {

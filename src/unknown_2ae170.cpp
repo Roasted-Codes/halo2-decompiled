@@ -871,6 +871,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // right gain and paired threshold observations 293/263/286/270/267/267/270/270.
 // Without the right-gain snapshot, frame 0x18 shortens to 779-804 bytes; gain forms
 // lose the dispatcher. Original sums, observations and local qualifications retained.
+// Round 201: Const send-input parameter, const receiver method, both, immutable scalar carriers,
+// each contract with those carriers, both contracts/carriers, and coherent scalar names: 224 each.
+// All eight tie; original signatures, selector inputs, scalar lifetimes and dispatcher retained.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

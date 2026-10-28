@@ -843,6 +843,15 @@ bool function_1f8660(long arg_0);
 // result first 68; slot first 34.
 // Round 49: const actor/buffer/both pointers 7/7/7; request/validation/release buffer aliases
 // 7/7/7; first/second position pointers 7/7. Starting body restored.
+// Round 16: the two homes are frame-relative +0x1c (actor) and +0x18 (buffer) in retail, the other
+// way round here; the request sits at +0xb4 in both. The buffer declared at function scope before
+// or after the actor (with 0, with no initializer, with a dummy initializer) 7/7/7/7; the buffer
+// declared after the entry/status/reference outputs 7/7/7; the actor typed as a long address 7;
+// redundant extra buffer uses (self-assign, self-compare) 7/7/7; the release written in both arms
+// 66; the actor declared inside the flag test with the getter in the test 63; the actor in a nested
+// block with the buffer outside 52; the actor looked up at every use 243; the slot and entry-guard
+// conditions written as nested ifs 7/7. Only the actor and buffer homes remain exchanged; the
+// opening body is restored.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {
