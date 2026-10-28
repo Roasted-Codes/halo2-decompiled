@@ -6065,7 +6065,6 @@ static long unit_weapon_rounds(long weapon_index, long magazine_count, bool chec
    replaced only by a fresher one, an empty weapon only when it adds
    rounds, not a fully used one for AIs; the player code and the engine
    have the last word, then the weapon learns its holder */
-// score 1009 (was 1032): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0xcd7b0
 bool __stdcall function_cd7b0(long unit_index, long weapon_index, bool *modes)
 {
@@ -6111,7 +6110,7 @@ bool __stdcall function_cd7b0(long unit_index, long weapon_index, bool *modes)
 		}
 	}
 	dword weapon_flags = *(dword *)(UNIT_DEFINITION_GET(UNIT_GET(weapon_index)) + 0x12c);
-	bool dual_wieldable = TEST_FIELD_BIT((weapon_flags >> 22) & 1) || (weapon_flags >> 23) & 1;
+	bool dual_wieldable = (weapon_flags >> 22) & 1 || (weapon_flags >> 23) & 1;
 	bool second_hand_only = (weapon_flags >> 23) & 1;
 	long *slot = unit->weapon_object_indices;
 	for (long i = 0; i < 4; i++, slot++)

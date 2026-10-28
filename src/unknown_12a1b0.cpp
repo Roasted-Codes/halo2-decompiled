@@ -1380,7 +1380,6 @@ bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_inde
 long function_125f70(long definition_index, s_looping_detail_request *request, long *reason);
 void function_126df0(long new_sound, long old_sound, short curve, real duration);
 
-// score 719 (was 801): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x21b0e0
 void function_21b0e0(bool update)
 {
@@ -1501,7 +1500,7 @@ void function_21b0e0(bool update)
 					}
 				}
 			}
-			if (sound->state != 2 && !TEST_FIELD_BIT((sound->flags >> 2) & 1))
+			if (sound->state != 2 && !(sound->flags & 4))
 			{
 				for (long i = 0; i < definition->detail_sound_count; ++i)
 				{
