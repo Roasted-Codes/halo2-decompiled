@@ -615,13 +615,10 @@ const unsigned short g_445580[35] =
 	-1, -1, -1, -1, -1
 };
 
-// score 1 (was 8): the table entry is read as an unsigned 16 bit value and
-// copied into the 32 bit kind, so the copy is a plain register move like
-// retail's; retail still loads the entry with a 16 bit mov ax, this loads it
-// with movzx.
-// Retry baseline: score 1; both direct callees match.
+// Both the incoming row and the alternate table row are 16-bit values;
+// keeping them narrow reproduces retail's partial-register table load.
 // @retail 0x1e9720
-real function_1e9720(long kind, short team)
+real function_1e9720(short kind, short team)
 {
 	short difficulty;
 	if (g_4e6948->state == 1)
@@ -634,7 +631,7 @@ real function_1e9720(long kind, short team)
 	}
 	else if (g_4e6948->state == 1 && !team_is_enemy(1, team))
 	{
-		unsigned long alternate = g_445580[(short)kind];
+		short alternate = g_445580[(short)kind];
 		if ((short)alternate == NONE)
 			difficulty = 1;
 		else
