@@ -139,15 +139,6 @@ void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 	state->unknown0c = true;
 }
 
-/* slot type 0x23's block after the slot header (s_slot's unknownc) */
-struct s_slot_23_data
-{
-	bool unknown00;
-	bool unknown01;
-	short unknown02;
-	byte unknown04[0x34 - 4];
-};
-
 // @retail 0x1b8ae0
 void __stdcall function_1b8ae0(long actor_index, s_slot *slot)
 {
