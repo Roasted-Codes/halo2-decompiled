@@ -160,8 +160,8 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 199 (was 199): Frame 0xa4 agrees; object-data/tag-table allocation
-// and collision-point scheduling differ.
+// score 55 (was 55): frame 0xa4 and entry allocation agree; height-load order, dot-input carriers,
+// selected-seat/marker tails and parent-table scheduling differ. Earlier allocation/collision forms follow.
 // frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
 // Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
 // 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
@@ -200,6 +200,8 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Paired height terms 55 (plain, kept); collision production first 61; native marker copies 125;
 // twice-used seated object 146; first three boundaries 116; all four 154. Retain object-table,
 // existing backward-vector assignment, sentinel before forward, collision-first and paired height terms.
+// Paired raw height inputs 55; resolved marker seat short/long 55/100; conditional short/long 55/100;
+// marker handle 55; handle with short/long/conditional-short seat 55/100/55. All restored.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

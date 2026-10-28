@@ -110,7 +110,7 @@ void function_118140(long);
 void __stdcall function_118430(long);
 void function_117080(long);
 
-// score 50 (was 54): retail adds the pool data to the record offset before the store (`add eax, edx`),
+// score 50 (was 50): retail adds the pool data to the record offset before the store (`add eax, edx`),
 // reloads the pool after the `lea` of the next index, and gives the inlined next-index search other
 // registers (result edx, count edi, bitmap esi). Pool read directly at each use as in 0x1160c0 54 (reload
 // now after the `lea` as retail); with typed record arithmetic 54; with no slot local 54; with record and
@@ -121,6 +121,9 @@ void function_117080(long);
 // Round 268: explicit search result 50; unsigned slot 50; word slot 51; unsigned
 // datum handle 50; explicit search result with those three carriers 50/51/50;
 // shared out-of-line datum conversion 102. All original helper and field reads restored.
+// Round 270: native iterator called/inline 89, with CRT scalar clear 89; called/called
+// 124, with CRT 121; inline/inline 89, with CRT 89; original traversal with CRT
+// scalar clear 76, unsigned slot 76. All restored; record-address and search homes remain.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -288,6 +291,10 @@ void function_117510(long index)
 		if (surface_normalize(&record->vertices[i].normal) == 0.0f) record->vertices[i].normal = *g_4687a8;
 }
 
+// score 154 (was 154): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.
+// Shared difference 154; vertex base 155; distinct correction 161, with shared difference 161;
+// both shared scales 154, with difference 154; early rest square 155; all producers/lifetimes 162.
+// All executable forms restored.
 // @retail 0x117790
 void __stdcall function_117790(long index)
 {
@@ -441,12 +448,15 @@ void function_117dd0(long index, vector3f *wind)
 	wind->i = (real)(g_55ecd4.i * strength); wind->j = (real)(g_55ecd4.j * strength); wind->k = (real)(g_55ecd4.k * strength);
 }
 
-// score 109 (was 152): the loop's vertex cursor points at the normal's j (retail: k), so the dot product,
+// score 109 (was 109): the loop's vertex cursor points at the normal's j (retail: k), so the dot product,
 // tangent and position sums load and schedule in another order; retail adds the acceleration and the force
 // as first operands. Weights stored after the acceleration (retail stores them first, with the current
 // weight above the previous). Tried: dot sums i,j,k / k,i,j / j,k,i 109 each; dot3f either argument order
 // 117 (744 bytes); weights before the acceleration 109; previous weight declared first 113, before the
 // acceleration 113; current weight renamed 109; acceleration and force as first addends 116 (744 bytes).
+// Shared tangent scale 109; previous point first 122; outer vertex declaration 109; native scaling loop
+// 120; scale helper/previous first 122; native additions 116; scaling/additions 154, with helper 151.
+// All restored.
 // @retail 0x118140
 void function_118140(long index)
 {

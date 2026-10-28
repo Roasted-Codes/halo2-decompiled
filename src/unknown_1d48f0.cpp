@@ -142,6 +142,8 @@ const dword g_455978[81] = {
 // three identity combinations 307; presence object identity 306. Coordinated range-helper
 // inline 419, plus shared planar normalization 416; both lose matched controls and are
 // restored. Original executable body and every external declaration retained.
+// CRT input samples/ray origin/both 306/306/306; native body pose 374, with samples/origin/both
+// 374/374/374; all inputs plus query pose 422. All restored.
 // Shared setters for all three native basis rows, with early/late scale publication, entry/local
 // input-output matrix declarations and native/library point publication: all eight 306. All restored.
 // Round 206: Optional bounds/exclusion initialization after control-word setup [315, 315, 315];
