@@ -300,6 +300,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // (registers wrong); ta/tb declared first 206. Left: b at +0x10 (retail +0xc, frame 0x30 v 0x2c) and the second
 // inlined transform spilling two scaled components where retail spills one. Retail-order sum operands 195
 // (same code); a `d`-first parameter order needs callers in contributor files.
+// Round 14: forced shared transform 718; helper camera home 234 (frame 0x2c); with snapshots
+// y,x,z / x,z,y / y,z,x / z,x,y / z,y,x 234/207/204/231/227; best plus outer reversed point 204;
+// outer reversed point 195; pointer-returning helper with it 195. All restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

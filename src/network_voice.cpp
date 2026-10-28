@@ -150,6 +150,10 @@ bool voice_xhv_get_runtime_parameters(XHV_RUNTIME_PARAMS *parameters, c_voice_xh
 }
 
 // score 2 (was 2): the engine pointer is loaded into ebp before the branch that
+// skips the creation; retail loads it after the branch. Direct creation with
+// the pointer bound after the call or in its argument 8; initialized error 2;
+// error declared at creation 2; const engine pointer 6; plain result store 36;
+// early false return 92; error before engine 2.
 // skips the creation; retail loads it after the branch. With the load after the
 // branch ebp is pushed there instead of at entry, and without the volatile store
 // the true result is folded into separate epilogues. Natural nested ifs 42;
@@ -2694,13 +2698,17 @@ PRIVATE __forceinline byte *function_54592(void *arg_0, const s_network_session_
  return (byte *)arg_0;
 }
 
-// score 157 (was 179): mask/player homes, zero register and grouped source cursor differ;
+// score 157 (was 157): Player/mask homes, separate zero and selected-input tests remain; frame 0x94 agrees.
+// Read-only mask/player view 157/157; early active copy return 157; memcpy result cursor 157;
+// fallback memcpy 164; ordinary inline copy 157; empty before reason byte 157;
+// read-only mask/copy-result cursor 157.
+// mask/player homes, zero register and grouped source cursor differ;
 // empty-word order 193; third-index groups 193; both 193; word groups 179
 // signed or unsigned. The bounded unsigned-word group index is kept.
 // previous mask 179; ordinary empty/mask-empty 208/208; active memcpy 174;
 // selected input 172; selected/ordinary 204; selected/memcpy 157;
 // mask-selected/mask-memcpy 172/174; typed output/selected/ordinary 179/172/208.
-// score 157 (was 157): player/mask homes, separate zero and selected-pointer tests remain.
+// player/mask homes, separate zero and selected-pointer tests remain.
 // Active-Boolean copy contract 174; const empty 157; byte group 157; word compare 195;
 // source-local name 157; grouped source cursor 181 (fast). Original kept.
 // mask/player homes, zero carrier and grouped cursors remain;
