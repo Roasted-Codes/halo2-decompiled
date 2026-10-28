@@ -443,6 +443,9 @@ void function_e6f90(long unit_index)
 
 /* whether a unit can play an animation, from its idle state or (when it
    asks) its alternate one */
+// score 156 (was 156): ours inlines function_10f3b0 at both of its calls, where retail calls it
+// (this is its only caller in retail too), and the alternate pointer then stays on the stack
+// where retail has it in ebx. Adding /Ob1 to this file's flags leaves it at 156.
 // @retail 0xe7020
 bool function_e7020(long unit_index, bool *alternate, long name)
 {
@@ -1728,6 +1731,8 @@ PRIVATE __forceinline bool unit_action_pause(long unit_index, s_unit_request *re
 	return result;
 }
 
+// 0xe9370 and 0xe9500 (score 139 each) are 17 bytes short through unit_action_pause, which
+// reaches function_e7020; see the note there.
 /* pauses a unit's animation (type 23) */
 // @retail 0xe9370
 bool __stdcall function_e9370(long unit_index, s_unit_request *request)
@@ -4100,6 +4105,8 @@ tick:
 }
 
 /* a unit's flinch (type 51): its animation, and its time */
+// score 136 (was 136): ours inlines c_animation_channel::get_duration (0x1c6ea0), which retail
+// calls; that accounts for most of the 79 extra bytes. The rest of the body lines up.
 // @retail 0xed800
 bool __stdcall function_ed800(long unit_index, s_unit_request *request)
 {
