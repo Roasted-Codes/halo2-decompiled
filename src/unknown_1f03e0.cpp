@@ -1175,6 +1175,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Existing selection/tangent/speed dot inputs reversed independently, in all seven combinations,
 // and together with the accepted-count lexical home: 421 each. Helpers and body restored.
 // Round 152: Eight relative/desired/direction library-copy forms 421 each; complete accepted-count producer shared by insertion, increment, store and both tests 419, with one-contact-first 419 (2089 bytes). Two-point forms rejected; original copies, qualified count, cursor and response order restored.
+// Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
+// inline query with each support contract 434; the other five pairs 421.
+// Original declarations, qualified count, candidate cursor and response order restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)

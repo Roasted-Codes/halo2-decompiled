@@ -492,12 +492,14 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 	actor_looking_rotate_in_place(vector, axis, sine, cosine);
 }
 
+// score 355 (was 386): Frame 0x9c versus 0xa8; default/axis homes and register-carried collision input differ.
+// Round 28: Forced existing normalizer/angular/product boundaries, singly and in all
+// combinations, 355 each; ordinary producers 1135. Original helpers restored.
+// Direct collision parameter alone 355 (plain, kept); frame 0x9c and default/axis homes remain.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
 {
-	/* retail keeps test_collision on the stack */
-	bool const *test_collision_reference = &test_collision;
 	vector3f pitch_axis = { -forward->j, forward->i, 0.f };
 	if (actor_looking_normalize3d(&pitch_axis) == 0.f)
 		pitch_axis = *g_4687ac;
@@ -515,7 +517,7 @@ PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, boo
 		actor_looking_rotate(&candidate, &pitch_axis, pitch);
 		actor_looking_rotate(&candidate, g_4687b0, yaw);
 		clear = true;
-		if (*test_collision_reference)
+		if (test_collision)
 		{
 			vector3f ray = { candidate.i * 3.f, candidate.j * 3.f, candidate.k * 3.f };
 			s_collision_result_1697c0 collision;
@@ -579,6 +581,10 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
+// score 445 (was 445): Frame 0x8c agrees; early saved registers, Boolean defaults and prop-case layout differ.
+// Round 28: All eight ordinary/inline/noinline state-query/origin-output declaration
+// pairs 446 (unchanged fast control 446; full baseline 445). All provider and
+// consumer declarations restored; saved-register timing and Boolean defaults remain.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -1049,6 +1055,10 @@ struct s_actor_looking_turn_request
 	vector3f forward;
 };
 
+// score 530 (was 530): Frame 0xd0 versus 0xc8; predicate expansion, animation/validity and vector homes differ.
+// Round 28: Inline predicate with long/unsigned-short/unsigned-long animation storage
+// 534/530/534; noinline predicate with those carriers 590 each; ordinary predicate
+// with long/unsigned-short 534/530. Original carrier and declarations restored; frame/validity homes remain.
 // @retail 0x298370
 void function_298370(long actor_index)
 {
