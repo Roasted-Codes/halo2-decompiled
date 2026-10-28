@@ -10,6 +10,9 @@
 
 #define k_real_epsilon 0.0001f
 #define MAXIMUM_POLYGON_POINTS 48
+#define FLAG(bit) (1 << (bit))
+#define TEST_FLAG(flags, bit) (((flags) & FLAG(bit)) != 0)
+#define SET_FLAG(flags, bit, value) ((value) ? ((flags) |= FLAG(bit)) : ((flags) &= ~FLAG(bit)))
 
 struct vector2f { real i, j; };
 
@@ -314,6 +317,14 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // plus heading/flag stored before the scan and a done flag in the hull condition (retail's
 // unrotated loop and j-loop registers) 229; best declaration order of those 227; lowest_y
 // declared first 203. One use of `count` fewer moves it to memory (diagnostic only).
+// Round 105: on the done-flag form `count` keeps a callee-saved register whichever single use is
+// removed (outer bound, scan bound, the current index's start, the call argument), so it is not one
+// use over a threshold; renaming count/hull_count/left_start changes nothing. With `current = count`
+// declared before the classifier call: 153 (784 B; done flag, kept only on a match), lowest_y before
+// lowest_x 151; the hull-loop declarations after the index store 155; memcpy for the compaction 215;
+// the increment at the end of the pass 176; the flag as `if (!left_start)` 246; the two final exits
+// as an else-if 151. There points/current/count sit in EBX/ESI/EDI (retail: points ESI, current
+// EDI, count in memory, the hull count cached in EBX).
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -481,7 +492,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 212 (was 212): Retail length and common failure publication agree; count/stride/prior homes remain
+// score 129 (was 212): Retail length and the mask update agree; retail keeps the previous side in memory
+// (ours CL across the back edge, one instruction short from the side test on), loads count once into ECX
+// for the scaled index and the guard, and keeps zero in XMM2. Earlier: count/stride/prior homes remained
 // (retail keeps the copy size at +0x18, the previous point at +0x1c and both side flags in memory).
 // Earlier: count/stride homes and distance/intersection lifetimes differ. Tried capacity break common result 245; shared mask return 254; existing plane dot 243; plain previous side 265; previous side branches 259; byte side presence 243; named distance products 243; native clipping role homes 243.
 // Native current ordinal 249; long side states 264; prior-point ordinal 288; ordered fraction clamp 243; clear-mask arm first 243; shared normalized count 275; existing point difference 243.
@@ -526,6 +539,13 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // without it: that if/else 250, the current side declared beside the previous one 227, the previous
 // point through a named `count - 1` index 229 (harness: `points + count - 1` and a word-cast index
 // 220/277, unchanged or worse; without the volatile the previous side lives in CL, retail's in memory).
+// Round 105: the mask update as SET_FLAG(mask, result, point_mask ? TEST_FLAG(...) : false) (retail's
+// materialised bit, `neg; sbb; neg`, with the NULL mask threaded to the clear arm; `&&` folds it to `test`)
+// with a signed short index and the previous side's volatile removed 133, plus the previous distance
+// named like the loop's 129 (kept); the bit as `(*point_mask >> i) & 1` alone 177; on 129: the fraction as
+// an if/else 249 (XMM4/XMM5 constants as retail, flag still in CL); side flags byte/char/long/short,
+// function-scope sides, swapped side test or loop-end copies, dot_product2d distances, a named
+// `count - 1` or copy size, the current point after the distance: no gain.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
@@ -543,8 +563,9 @@ short function_23a6f0(point2f *output, short count, point2f const *points,
 		points = copy;
 	}
 	point2f const *previous = &points[count - 1];
-	volatile bool previous_inside = previous->y * plane->n.j + previous->x * plane->n.i - plane->d >= 0.f;
-	for (unsigned short i = 0; i < count; i++)
+	real previous_distance = previous->y * plane->n.j + previous->x * plane->n.i - plane->d;
+	bool previous_inside = previous_distance >= 0.f;
+	for (short i = 0; i < count; i++)
 	{
 		point2f const *current = &points[i];
 		real distance = current->y * plane->n.j + plane->n.i * current->x - plane->d;
@@ -571,7 +592,7 @@ short function_23a6f0(point2f *output, short count, point2f const *points,
 			fraction = fraction < 0.f ? 0.f : fraction > 1.f ? 1.f : fraction;
 			output[result].x = dx * fraction + current->x;
 			output[result].y = dy * fraction + current->y;
-			mask |= 1 << result;
+			mask |= FLAG(result);
 			result++;
 			if (result != 1 && (clip_points_equal_23a6f0(&output[result - 1], output, epsilon) ||
 				clip_points_equal_23a6f0(&output[result - 1], &output[result - 2], epsilon)))
@@ -585,10 +606,7 @@ short function_23a6f0(point2f *output, short count, point2f const *points,
 				break;
 			}
 			output[result] = *current;
-			if (point_mask && (*point_mask & (1 << i)))
-				mask |= 1 << result;
-			else
-				mask &= ~(1 << result);
+			SET_FLAG(mask, result, point_mask ? TEST_FLAG(*point_mask, i) : false);
 			result++;
 			if (result != 1 && (clip_points_equal_23a6f0(&output[result - 1], output, epsilon) ||
 				clip_points_equal_23a6f0(&output[result - 1], &output[result - 2], epsilon)))

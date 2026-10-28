@@ -315,6 +315,11 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // lookups); with the parameters declared tag first, consistently at the caller and header, the same;
 // the private starter forceinline 256 (542 B, callers lost); the priority stored through the effect
 // pointer 220; the allocation as one conditional expression 233.
+// Round 105: only the no-effect start through 0x125f70 with the delete out of line 224 (callers
+// kept); only the effect start through it with the delete out of line 175 (state in EAX, the eight
+// callers lost); the first with the priority through the effect pointer 214, with the start-result
+// arms swapped 225. Every form that gives the state EAX (the effect start through 0x125f70) moves
+// 0x189fe0's request to EDX, where it then stays (no copy to EBX).
 // Round 72: both starts as calls to the existing
 // 0x125f70 (reason NULL), which LTCG inlines as retail, plus the out-of-line delete (this file's
 // delete macro moved below this function) give 52 plain (429/427): retail's frame and its
