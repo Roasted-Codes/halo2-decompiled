@@ -278,9 +278,7 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 
 /* gift wrapping: the indices of the convex hull of the points, starting from
    the lowest */
-// score 193 (was 196): Frame 0x14 agrees; the count and the departure flag sit in the opposite
-// stack homes from retail's (ours keeps the count at +0x30, retail at +0x10), the duplicate-point
-// helper is reached through a thunk, and the compaction is copied inline instead of via the CRT.
+// score 203 (was 203): Frame 0x14 agrees; count/departure homes, scan bound, equality and compaction differ.
 // Round 27 (lane 9): memmove for the compaction (retail calls the CRT) with a bool flag and the heading set before the scan gives
 // retail's count home +0x10, scan bound EDX and early heading/flag stores, but points takes EBP and the flag lands in points' home
 // (retail: indices in EBP, the flag in its home) 265 (759 B); with the flag declared first 265; long flag 242; memcpy kept 250;
@@ -341,10 +339,10 @@ short function_239e50(short count, point2f const *points, short *indices)
 
 	if (function_239b80(count, points) == 2)
 	{
-		int left_start = false;
+		long left_start = false;
 		real lowest_x = FLT_MAX;
-		short current = count;
 		real lowest_y = FLT_MAX;
+		short current = count;
 
 		for (short i = 0; i < count; ++i)
 		{
@@ -390,19 +388,15 @@ short function_239e50(short count, point2f const *points, short *indices)
 				}
 			}
 
-			previous_angle = best_angle;
 			current = next;
+			previous_angle = best_angle;
 			if (next == NONE)
 				goto finished;
 			if (!left_start)
-				left_start = fabs(points[next].x - points[indices[0]].x) >= k_real_epsilon ||
-					fabs(points[next].y - points[indices[0]].y) >= k_real_epsilon;
+				left_start = !points2d_equal(&points[next], &points[indices[0]]);
 			if (next == indices[0])
 				goto finished;
-			bool point_equals_first = false;
-			if (left_start)
-				point_equals_first = points2d_equal(&points[indices[0]], &points[next]);
-			if (point_equals_first)
+			if (left_start && points2d_equal(&points[next], &points[indices[0]]))
 				goto finished;
 		}
 
@@ -414,7 +408,7 @@ short function_239e50(short count, point2f const *points, short *indices)
 				if (indices[j] == indices[i])
 				{
 					hull_count = i - j;
-					memcpy(&indices[j], indices, sizeof(short) * (short)hull_count);
+					memcpy(indices, &indices[j], sizeof(short) * (short)hull_count);
 					break;
 				}
 			}
