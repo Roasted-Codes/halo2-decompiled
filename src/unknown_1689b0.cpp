@@ -1572,6 +1572,8 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // separation vector, contact midpoint/half and all native producers: 552 each. All restored.
 // Round 227: Native prism/query-origin/initial-sum values, their pairs/all,
 // all with CRT prism construction 779/758/554/886/779/758/886/886. All restored.
+// Round 226: Plain component loops for paired edge inputs/contact direction/residuals and
+// their pairs/all [672, 594, 556, 680, 674, 594, 682]; all with the three ray scales 660. All restored.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)
