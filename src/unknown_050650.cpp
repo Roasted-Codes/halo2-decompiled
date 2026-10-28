@@ -205,6 +205,9 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // reversed terms and operands 8; helper terms/shared magnitude/named square 8/8/8; squared accumulation 10;
 // dot3f 8; an early final return 83; shared normalization with reversed terms 8; indexed vector2f locals 8;
 // comparison operands reversed 8; an explicit false arm 27; single-product operand swaps 8/8.
+// Native copies with complete/original result graphs 4/6; complete projected aggregates 28; complete parallel product/comparison variants
+// 66/66/65/66; both external normalizations 122; native copies with uniform operands/named parallel products 6/6/6/6; single-worker 100-trial
+// search from native copies/result 4, no improvement. Four-difference forms restored under the retention gate.
 // @retail 0x296d60
 PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {

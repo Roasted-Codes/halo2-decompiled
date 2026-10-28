@@ -237,6 +237,10 @@ void function_2705c0(s_path_source *source, point3f const *point,
 // (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
 // function scope 420, the edge iterator at function scope 420; hit at function scope 419; long count 424; line_normal as one struct
 // copy 444 (retail's 0x64 frame), the same with the old exits 478, with bool success 507; none keeps origin on the stack.
+// Separate noinline with complete/original exits 0/28; scan-position result 29; direct view with complete result 0; shifted bit 37; entry-pointer
+// walk 27; walk plus result 39; word index plus result 21. Both matching forms and the word-index form lose the protected caller chain. Ordinary
+// noinline/result confirmation matches here but loses all eight listed callers; all body/declaration trials restored. The pointer walk gains only
+// one and is restored.
 // @retail 0x270600
 PRIVATE bool function_270600(s_path_location const *location, long node_index)
 {
@@ -1240,6 +1244,8 @@ short function_272700(s_type_f17a25 *state, long node_index)
 }
 
 // score 16 (was 67): retail computes the segment i, j, k and sums (i + j) + k for the length and (j + k) + i for the projection, ours j, k, i and (k + j) + i for both; tried: `dot3f(&delta, &delta)` for the length 16, `dot3f(&delta, &offset)` 16, the projection written out in y, z, x order 36, all three written out 67, parameters reordered (start, end, attractor, out) 16; compile-only harness: every written-out sum order and grouping 27-64, all 24 parameter orders and the offset computed at the top no better.
+// Complete output object/early admissions/uninitialized offset scope/role names/indexed interpolation/native output aggregate/parallel projection
+// products/combined indexed projection 111/49/16/16/21/99/85/85; all restored.
 // @retail 0x272740
 PRIVATE void function_272740(point3f const *attractor,
 	point3f const *start, point3f const *end, point3f *out)
