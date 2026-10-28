@@ -142,7 +142,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 780 (was 790): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// score 780 (was 780): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
 // Round 86 (fast, aligned counts in brackets, 383 at the start): turn rates assigned in both arms (retail loads
 // the stored rates on the else path) 788 [367] and the attachment index NONE per path (retail sets it on each
 // failure path) 780 [356], both kept; on 780: selected input as long (retail movzx/test edx/setg) 779 [348];
@@ -233,6 +233,9 @@ union s_185be7
 // 934, on every clamp but the magnitude one 971; the selected input byte as a long (retail's movzx edx /
 // test edx / setg / jle) 790, aligned 289 -> 281, the repeated test still not threaded; long input plus
 // early copy 789. Retail also reads the two selector bytes as one dword (EBX, then BL/BH).
+// Round 209: Caller-local inline declarations for magnitude/curve/response, all seven nonempty subsets, and
+// all three with separate noinline declarations: 780 each. All restored; frame/state/output agree, but
+// control-root reload, NONE/settings/zero homes and repeated flag tests remain.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

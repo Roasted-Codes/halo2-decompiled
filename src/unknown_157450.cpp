@@ -4152,6 +4152,9 @@ struct s_score_zone_view
 // all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
 // forms rejected despite the 423 first-transfer recovery. Existing rival output
 // object consumed directly 493. All restored; team-color/zone/charge allocation remains.
+// Round 209: Returned-color memcpy rival/own/both/zones/all 440 each; overlap-safe rival/own/both copies
+// 548/418/427. Own copy plain 418 but introduces a library call absent from the native retail transfer;
+// discarded as the wrong copy boundary. Frame, palette/zone homes and charge spills remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
