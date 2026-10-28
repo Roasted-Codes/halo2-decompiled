@@ -40,6 +40,10 @@ struct s_e6830_request_block
 // through a byte pointer, an offset local or offset first, an unsigned offset, a signed mask.
 // Worse: an array index (scaled address) 10/22/27; bit_vector_test and bit_vector_set 22/37;
 // (type >> 5) << 2 5; the offset before the mask 37. 120 permuter variants: best 3.
+// Also 3: the sum as integers either way, the offset cast to a byte pointer as the base, [1] off
+// an offset-based pointer, sizeof(dword), a scaled dword pointer, and unused includes (string.h,
+// math.h, stdio.h, stdlib.h, a repo header) or dummy declarations before the function; a word
+// pointer or reference 27; an unsigned type with / and % 5.
 // @retail 0xe6830
 bool __stdcall function_e6830(long unit_index)
 {
