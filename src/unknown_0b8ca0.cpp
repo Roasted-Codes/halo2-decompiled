@@ -1654,7 +1654,7 @@ void function_b8840(long index);
 long function_baf80(long index);
 void function_bba20(long index);
 
-// score 305 (was 306): the frame (0x64) and the body length (1236) agree with retail.
+// score 305 (was 305): the frame (0x64) and the body length (1236) agree with retail.
 // What still differs: retail keeps the pool pointer in EBX and re-derives pool->data from it,
 // ours keeps the pool in ECX and pool->data in EDI, so retail holds -1 in EAX and the object's
 // parent link in ECX where ours holds them in EBX and EAX.
@@ -1677,6 +1677,9 @@ void function_bba20(long index);
 // root-cluster scope 319 (fast).
 // Round 214: signed-byte permission 319; unsigned-word permission 320; signed-word saved activity 319; native-long saved activity 319; word permission/activity homes 319.
 // Isolated pool, offset, object, permission, ancestor, header, parent and cluster names each 319.
+// Round 377: ancestry result at loop exit 300; with pool reads/unsigned offset/hidden shift/
+// component shift 330/300/307/300; pool+offset/both shifts/all 330/307/332;
+// 300 at 1236 bytes gains five only, rejected. Original body restored; pool/parent/SIMD homes remain.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

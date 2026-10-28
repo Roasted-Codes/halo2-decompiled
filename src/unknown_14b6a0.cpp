@@ -119,7 +119,7 @@ void function_14bac0()
 	players_pending_creation_process(iterator_reference);
 }
 
-// score 230 (was 234): Frame 0x44 versus 0x3c; centre/second-iterator slot sharing, readiness homes and the second scan's call remain.
+// score 230 (was 230): Frame 0x44 versus 0x3c; centre/second-iterator slot sharing, readiness homes and the second scan's call remain.
 // Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
 // center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
 // probe point at 0x1c); plus a bare block around the probe/center code 257 (identical code); per-marker
@@ -210,6 +210,9 @@ void function_14bac0()
 // Second scan through 0x6b380 on its own iterator 257/259 (frame 0x48, no slot sharing); the centre
 // probing in a bare block 257 (no sharing); second iterator scoped to its block 230 (identical);
 // separate point declarations in five orders 233 each (layout unchanged).
+// Round 377: one native iterator on the first-pass/probe graph, original/request/marker
+// carrier combinations 334/333/333/334/333/333/332/333. All give frame 0x50 and 1084 bytes;
+// original iterators, signed carriers, probes and readiness restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

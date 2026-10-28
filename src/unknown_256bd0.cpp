@@ -180,6 +180,9 @@ struct s_object_flags_256bd0
 // Round 208: actual entry-result output through pointer/reference, each formal order and bool/byte
 // success, 201 each. All original step and caller contracts restored; frame 0x114/0x110, cached
 // activity and geometry/selection homes remain.
+// Round 377: real datum-member storage, byte/native entry 201/201;
+// separate actual cursor/index outputs 202/202; conditional-entry byte/native
+// and split outputs 274/274/274/274. All helper/header/body changes restored; activity spill remains.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
