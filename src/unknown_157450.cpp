@@ -5217,6 +5217,10 @@ void __stdcall function_d6bc0(long object_index);
 // Original body restored; frame 0x14/0x18 and independent timer spill remain.
 // Round 146: Reset short/word/byte/signed-byte carriers 195/195/144/144; with a complete retained radius
 // 230/230/228/228. Original observations and body restored.
+// Lane 3 r142: retail never keeps `entries` in a register and holds the timer pointer in edi (sixth
+// frame slot); ours keeps `entries` in edi and folds the timer. A c_engine_equipment method 144;
+// `entries` read through its address 144; timer pointer before the reset block (used there) 155;
+// char kind with long modifier 178; timer pointer at the loop top 249.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {

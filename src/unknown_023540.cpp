@@ -2437,6 +2437,9 @@ dword __cdecl function_131fc0(real alpha);
 // construction with destination selection first 433/439; source selection first 439/433;
 // source construction before conditional destination 331 (four-point fast gain rejected);
 // conditional source then unconditional destination 427, against fast control 335.
+// Round 60: BLOCKED-BY 0x289e0 (the only caller, under #if 0, so LTCG gives inverse AL). Own-address
+// inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
+// dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2731,6 +2734,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 }
 
 // score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
+// has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
+// its 0 lives there. 0x144f0 sits in a contributor file this round; no new form tried.
 // The stage call is BLOCKED-BY 0x144f0: retail passes tag in EAX, stage in ECX and the fallback in EBX
 // (ret 0xc), and reads the first bitmap formal as a full dword (cmovne). Round 73: for loop 334;
 // stage-nonzero ternary 334; selected bitmap local 294 at 2001 bytes (strength-reduced sampler table);

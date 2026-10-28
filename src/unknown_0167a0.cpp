@@ -74,7 +74,9 @@ PRIVATE inline byte const *material_parameters(long tag)
     return *(byte **)(g_4e3b44[tag & 0xffff].bytes + 0x24);
 }
 
-// score 132 (was 132): Frame and numeric/reset sequence agree; logarithm factor width and restore pointer/mask allocation remain.
+// score 95 (was 132): frame four, the logarithm and the tail agree; left are the restore block (retail reloads
+// the range field before each call; ours keeps it in a register) and BLOCKED-BY 0x18a90, which retail passes
+// the state in ebx (ours pushes it).
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier: Frame and numeric/reset sequence agree; logarithm width and restore allocation remain.
 // Earlier 167 from 167: logarithm width/reset schedule and restore/final pointer allocation;
@@ -147,6 +149,10 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Minimal entry-field form kept after ordinary confirmation at retail length 972.
 // Existing updater inline declarations 16f60/17000/189a0, their three pairs/all,
 // and all three noinline declarations 132 each. Original declarations and body restored.
+// DL159: coherent updater inline definition/declaration 132; on that graph, global-first complete mask groups 001/010/011/100/101/110/111 all 132. Original provider specifications, exact logarithm and body restored.
+// Round 104: logarithm product in float 131 (retail's dword factor); with the record read from its field at
+// every use after it is stored (retail reloads it after 0x18900) 95, kept. On it: both range calls reading the range field 177 (978 B); with the entry stored from its local 191;
+// entry, pass and range written and read through their fields 177; plus global-first unions 177.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -170,7 +176,7 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
     if (scale > 0.0f) inverse = 1.0f / scale;
     else inverse = 100000.0f;
     *(real *)(state + 0x28) = inverse;
-    *(real *)(state + 0x2c) = (real)(log((double)inverse) * 0.6931471824645996f);
+    *(real *)(state + 0x2c) = (real)log((double)inverse) * 0.6931471824645996f;
     memset(state + 0x58, 0, sizeof(dword));
     state[0x1514] = false;
     *(dword *)(state + 0x1518) = 0;
@@ -204,13 +210,13 @@ void __stdcall function_16b90(byte *state, long tag, long first, long second,
                 function_18900((s_render_state_source *)state, (word const *)(old + 0x11c));
             *(byte **)(state + 0x24) = record;
             *(byte **)(state + 0x20) = records;
-            *(dword *)(state + 0x44) = *(dword *)(record + 0x10c);
-            *(dword *)(state + 0x48) = *(dword *)(record + 0x110);
-            *(dword *)(state + 0x4c) = *(dword *)(record + 0x104);
-            *(dword *)(state + 0x50) = *(dword *)(record + 0x108);
-            *(dword *)(state + 0x54) = *(dword *)(record + 0x114);
-            function_18900((s_render_state_source *)state, (word const *)(record + 2));
-            function_189a0(state, (word const *)(record + 4));
+            *(dword *)(state + 0x44) = *(dword *)(*(byte **)(state + 0x24) + 0x10c);
+            *(dword *)(state + 0x48) = *(dword *)(*(byte **)(state + 0x24) + 0x110);
+            *(dword *)(state + 0x4c) = *(dword *)(*(byte **)(state + 0x24) + 0x104);
+            *(dword *)(state + 0x50) = *(dword *)(*(byte **)(state + 0x24) + 0x108);
+            *(dword *)(state + 0x54) = *(dword *)(*(byte **)(state + 0x24) + 0x114);
+            function_18900((s_render_state_source *)state, (word const *)(*(byte **)(state + 0x24) + 2));
+            function_189a0(state, (word const *)(*(byte **)(state + 0x24) + 4));
         }
     }
     function_1ae70(state);
@@ -857,7 +863,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): Frame 0xc versus 0x10; entry/value homes and deferred descriptor rereads remain.
+// score 157 (was 157): frame 0xc versus retail 0x10; entry/value homes and deferred descriptor observations remain.
 // Earlier: Frame 0xc versus 0x10 and deferred descriptor rereads remain.
 // frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
@@ -892,6 +898,9 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // Round 201: Native packed-range parameter and entry record: direct/count accessor/selector
 // fields/both 155/189/185/199; the same four with complete remapping fields 155/189/185/199. Two-point
 // body-step lead rejected; complete source restored.
+// DL159: actual direct/mapped/both selector field references 199/177/185; signed source field reference 157, with direct/mapped/both selectors 199/177/185; complete field graph with body cursor steps 185. Original copied fields, dynamic bounds and writer retained.
+// Round 206: Native ordinary/special/dirty output fields, individually, all three pairs and all
+// together 157 each; complete output fields with body cursor steps 155. Two-point gain rejected.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -1382,10 +1391,15 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Shared writer reference 267; masked value 302; split stores 267; reference/mask 302;
 // reference/split 267; mask/split and all three 302; named destination values 267.
 // Native external indexed banks/constants/dirty words and their pairs/all 267 each; all fields with packed reference 267.
+// Round 351: native component/mask/packed-color scalar home names in all seven combinations
+// 267/267/267/267/267/267/267; all with descriptor/input/output ordinal names 267. Original names restored.
 // Round 148: indexed destination pointers 267; constant destination pointers 296; all
 // destination pointers 296; pointers/packed reference 296; pointers/dword packed 320;
 // pointers/mask complement 274; pointers/XOR replacement 274; pointers/reference/complement 278.
 // All executable forms restored.
+// Round 353: short writer index, category/bank-first 266/255; shared complement
+// 286/269; shared masked input 298/270; both mask parts 317/305.
+// Every short-index form loses a matched sibling; original shared writer restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

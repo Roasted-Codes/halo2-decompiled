@@ -124,6 +124,12 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // Round 190: existing time helpers at first elapsed/growth stamp/both 494/494/508;
 // second elapsed/first-and-second/growth-and-second/all 496/503/510/520;
 // all with private force-inline declarations 520. Original timing expressions and declarations restored.
+// Round 97: the existing value getter for the session index 439; noinline getter 467; with a
+// file-local time-since helper 486 (1549 bytes: retail also clears a ready byte in every failed
+// check); a ready byte from the player-match chain, cleared in each failure arm and set from
+// 0x72140, 448 (1580 bytes); that with the noinline getter and time-since helper 461 (1573 bytes,
+// frame, entry and failure stores now retail's; left: the property value and both flag bytes
+// cleared before the player-count branch, a separate mode-7 exit per missing pointer).
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

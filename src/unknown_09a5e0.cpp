@@ -2069,6 +2069,9 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 }
 
 // score 168 (was 168): object/offset homes and low-mask allocation remain;
+// Round 9 (lane 10): retail holds the 0x400 block's short in EAX (stores 0x90 before the result update);
+// its value as a ternary 201; its declaration after the field reads 168; set in if/else 201; both slot
+// masks at the loop head 285 (1041 bytes); first slot mask long 168.
 // frame 0x1c agrees; object/offset, low-mask and tail result homes remain.
 // Earlier: Frame 0x1c agrees; object/offset homes, low-mask and tail flag homes remain;
 // object/offset homes and low-mask allocation remain;
@@ -2150,10 +2153,29 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // 267/266/169; 266/265. Original early stores and retained child timing restored.
 // Round 246: metadata/count/fraction defaults before the child getter in seven
 // combinations 276/258/230/210/276/258/280; all defaults before the slot mask 245.
+// Round 197: Existing base-sync/identifier-map ordinary-inline-noinline declaration pairs,
+// all eight alternatives, 168 each; original declaration graph and body restored.
+// Round 352: persistent, child-value and induction/mask scalar-home groups, singly and all
+// combinations, 168; complete homes plus native header offset 167 (one point, rejected).
+// Original executable body and retained post-store child masks restored at 168/1070.
 // Final source-field pointer 168; exhaustive first parent result alone/with pointer
 // 164/164 rejected; exhaustive mapped results alone/with pointer 223/223; both
 // parent result groups without/with pointer 219/219; named-offset combination 218.
 // Original receiver, result production, stores and lookup restored.
+// Round 62: first-block declaration orders, all five others 168 (identical code); NONE
+// default as a ternary 201; field-copy compare operands swapped 168; field pointer for the
+// copied field 168 (retail's dead `add ebp, 0x214` remains). The first block's goto became a
+// plain NONE guard (identical code).
+// Round 66 (fast, identical code each): tail compare operands swapped for the 0x23e field / the flag byte /
+// both 168/168/168; entry lookup with the pool base first 168 (SIB order unchanged); the child getter's
+// object read in the entry's offset form 168. Retail loads the record field into a register before each
+// tail compare and re-reads the object field for its store; it reloads the object once after the loop
+// (ours reloads it into EBP at the bottom of each iteration).
+// Round 29: the 0x2000 block is 8 of the 11 missing bytes: retail loads the record's
+// field and the unit's +0x214 into registers, compares them, and leaves a dead
+// `add ebp, 0x214`. memcmp for that test gives retail's loads and compare but no add
+// 193; with memcpy for the copy 193; with a named source pointer used for both 193;
+// with a four-byte struct copy 193; the unit pointer through OBJECT() 168 (identical).
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {
@@ -2168,11 +2190,8 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 		long local_5 = *(long *)(local_1 + 0x13c);
 		short local_7 = *(short *)(local_1 + 0x130);
 		if (local_5 != NONE)
-		{
 			local_6 = (short)local_5;
-			if (local_6 != NONE && local_7 != NONE)
-				goto local_18;
-		}
+		if (local_6 == NONE || local_7 == NONE)
 		{
 			if (local_2->field_90 != local_6 || local_2->field_92 != local_7)
 			{
@@ -2182,7 +2201,6 @@ long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 			}
 		}
 	}
-local_18:
 	if (local_3 & 0x800)
 	{
 		long local_5 = NONE;

@@ -27,6 +27,8 @@ void query_31bc80::function_31bc80(bool *result) const
 // element memcpy 44; loop names 44; decrement in test 44; map while 76;
 // shared counter 44; zero before count 36; compound subtract 44; old count 74;
 // int counters 44; four zeros 44; memset 37; constant new count 79.
+// Two/three aggregate zeros 80/44; chained zeros in member/reverse/op-first/
+// total-results order 48/44/47/47; empty aggregate 37; entry zero list 94.
 // Pair predicate 36; full branch sizes 98; source ordinal 96, with full
 // sizes 100; source cursor 133, with full sizes 122. All restored.
 // Repeated id-array pointer/reference, const or mutable, 36; those views

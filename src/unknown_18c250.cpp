@@ -550,7 +550,13 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 	location->spatial.compressed_forward = vector3d_compress(g_4687b0);
 }
 
-// score 293 (was 293): Frame 0x84 versus 0x80; datum/tag allocation and protected root-location convention remain.
+// score 280 (was 280): Frame 0x8c versus 0x80; datum/tag and protected root-location convention remain. BLOCKED-BY 0xba300.
+// Frame 0x8c versus 0x80; datum/tag and protected root-location convention remain.
+// Round 9 (lane 10): retail's case-3 failure byte is a dead store into the slot the audibility output
+// reuses. Forward vector at function scope 280; cluster flag as a word mask 280; case-0 fields read
+// without the type test 307; one function-scope status byte for failure and audibility 280 (no store);
+// case-2 spatial field passed directly 280. BLOCKED-BY 0xba300 (contributor) still.
+// Earlier baseline: Frame 0x84 versus 0x80; datum/tag allocation and protected root-location convention remain.
 // marker outer scope 309; direct failure predicate 293 kept (plain); stored-scale arm first 314; ascending cases 311; failure exit 314.
 // Long failure result 293; marker consumption scope 293; shared scale object index 339;
 // force-inline object-index query 293; marker/axis/audibility role names 293.
@@ -576,11 +582,24 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // location in ESI, so ESI cannot hold the datum and the definition pointer spills (frame 0x84). Without
 // that call (diagnostic) the frame is 0x80 with retail's ESI datum / EBP definition. Failure byte in a
 // function-scope char shared with the audibility output 293; address-taken failure flag 293.
+// Round 152: Cluster/scale/paired/spatial/location+spatial/scale+spatial/all/late-all receivers
+// 309/345/336/309/280/331/337/337; genuine location+spatial pair kept at plain 280, 1034 bytes.
+// Direct/reversed-direct/entry pair 311/311/282; late pair 278 (two-point gain rejected);
+// position/location and spatial/world receiver names 280/280.
+// Round 208: existing output bit members 2/3/4/5/6 individually, all five,
+// with bit 10, and with bits 10/0 all 293. Original output masks and complete
+// body restored; frame 0x84, datum/tag homes and root-location convention remain.
+// Round 66: addresses written at each use (no spatial/location pointers) 293; without the root-location call
+// (diagnostic) that form gives retail's ESI datum and EBP definition (frame 0x84), the pointer pair does not
+// (frame 0x88): retail passes 0xba300 the object in ECX and the location in EAX, ours the location in ESI.
+// Failure flag from the bit test, then from the call 333.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
 	s_loop_location_datum *sound = &((s_loop_location_datum *)g_4ed28c->data)[looping_sound_index & 0xffff];
 	byte *definition = g_4e3b44[sound->tag & 0xffff].bytes;
+	s_sound_position *spatial = &location->spatial;
+	s_location *cluster_location = &spatial->location;
 	location->flags = 0;
 	location->unknown08 = *(sound->type == 0 ? &sound->owner : &g_444ae0);
 	location->unknown02 = 0;
@@ -590,12 +609,12 @@ void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 		{
 			location->audible = 1;
 			vector3f forward;
-			bool failed = TEST_FIELD_BIT(sound->flag1) || !function_17b2d0(sound->owner, &location->spatial.position, &forward, &location->scale);
+			bool failed = TEST_FIELD_BIT(sound->flag1) || !function_17b2d0(sound->owner, &spatial->position, &forward, &location->scale);
 			if (!failed)
 			{
-				location->spatial.compressed_forward = vector3d_compress(&forward);
-				location->spatial.velocity = *(vector3f *)((byte *)g_4ea93c->data + (sound->owner & 0xffff) * 0x190 + 0x30);
-				function_11bed0(&location->spatial.location, &location->spatial.position);
+				spatial->compressed_forward = vector3d_compress(&forward);
+				spatial->velocity = *(vector3f *)((byte *)g_4ea93c->data + (sound->owner & 0xffff) * 0x190 + 0x30);
+				function_11bed0(cluster_location, &spatial->position);
 			}
 			else loop_location_clear(location);
 			return;
@@ -604,7 +623,7 @@ void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 		location->audible = 1;
 		if (!TEST_FIELD_BIT(sound->flag1))
 			impact_sound_location_get((s_impact *)((byte *)g_51ebfc->data + (sound->owner & 0xffff) * 0xa0),
-				(s_impact_sound_location *)&location->spatial, &location->scale);
+				(s_impact_sound_location *)spatial, &location->scale);
 		else loop_location_clear(location);
 		return;
 	case 0:
@@ -612,9 +631,9 @@ void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 		long cluster = sound->type == 0 ? sound->cluster : NONE;
 		if (cluster != NONE)
 		{
-			*(short *)((byte *)&location->spatial.location + 4) = (short)cluster;
-			*(long *)&location->spatial.location = NONE;
-			*(short *)((byte *)&location->spatial.location + 6) = sound->type == 0 ? sound->listener : NONE;
+			*(short *)((byte *)cluster_location + 4) = (short)cluster;
+			*(long *)cluster_location = NONE;
+			*(short *)((byte *)cluster_location + 6) = sound->type == 0 ? sound->listener : NONE;
 			((byte *)&location->flags)[1] |= 0x10;
 		}
 		break;
@@ -643,10 +662,10 @@ void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 		if (sound->marker != NONE) marker_name = function_b8c40(sound->owner, sound->marker);
 		s_object_marker marker;
 		function_b8d30(sound->owner, marker_name, &marker, 1, false);
-		location->spatial.position = marker.matrix.position;
-		location->spatial.compressed_forward = vector3d_compress(&marker.matrix.forward);
-		function_ba1d0(loop_location_object_index(sound), &location->spatial.velocity, NULL);
-		object_get_root_location(loop_location_object_index(sound), &location->spatial.location);
+		spatial->position = marker.matrix.position;
+		spatial->compressed_forward = vector3d_compress(&marker.matrix.forward);
+		function_ba1d0(loop_location_object_index(sound), &spatial->velocity, NULL);
+		object_get_root_location(loop_location_object_index(sound), cluster_location);
 		char audible = 1;
 		function_18d4f0(loop_location_object_index(sound), &audible, NULL);
 		location->audible = audible;

@@ -476,9 +476,14 @@ extern point2f *g_468778;
 // Round 177: Shared dot at facing/alignment/both/prediction/facing+prediction/alignment+prediction/
 // all three 374/377/383/375/374/377/383; all three with opposite helper inputs 383.
 // Exact-only grouping forms restored; actor/settings/prop carriers remain.
+// Round 158: Complete facing/alignment/prediction product operands commuted independently, in pairs, all
+// three, then with both full prediction producers. Scores [375, 375, 375, 375, 375, 375, 375, 375]. Original
+// executable body restored.
 // Round 184: native admission/active/request byte fields, all seven nonempty
 // groups, and the unsigned bounded request discriminator 375 each. Original
 // Boolean fields, output-pointer contracts and request discriminator restored.
+// Round 226: complete settings native/memcpy values with bool/byte result, original/actor-first
+// acquisition 441, 441, 413, 413, 422, 422, 394, 394. All restored; frame and early carrier homes remain.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -704,6 +709,11 @@ static __forceinline long real_to_long(real value);
 // all prediction products 386; helper/prediction 384; projection/prediction 480;
 // all producers 460; all with target velocity receiver 456. Original restored.
 // Round 341: One vector-length scalar before prediction, target receiver and direct-facing graphs 384/383/517/520; after prediction 386/384/513/514. Two/three-count gains dropped; original body restored.
+// Round 354: complete shared relative-velocity difference 391; every-use object producer 509;
+// both 484; native request initialization on the recovered frame 472; with shared difference 477;
+// with every-use object producer 506; all three 430; all with wide eligibility 493. Original restored.
+// Round 193: Existing metadata providers ordinary-inline singly, all pairs and all,
+// then separate noinline declarations on all three: 386/386/386/386/386/386/386/386. Original restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

@@ -59,6 +59,12 @@ real normalize2d(point2f *arg_0);
 // native query-test completion 274; Boolean/query-test forms with radius first
 // 243/274; common Boolean with entry points 248; query-test completion
 // with entry points and radius first 274. Original result graph restored.
+// Round 254: entry collision-sentinel initialization with original/first-point/center/both
+// entry storage 269/269/269/269; with radius-before-center 269/269/269/269.
+// Original late collision initialization, point storage and executable body restored.
+// Round 195: Normalizer inline/noinline/combined/forceinline declarations 220 each;
+// with radius before center 215 each. Five-point best restored; original output access,
+// scalar spill, radius lifetime and body retained, output/vector homes unresolved.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)
