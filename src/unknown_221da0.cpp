@@ -817,6 +817,9 @@ real function_18cac0(long arg_0);
 // Membership helper at door/camera/inner only 207/155/207; door-camera/door-inner/camera-inner
 // 155/207/155. The camera membership role accounts for the retained change.
 // Round 366: final-array ownership 219; consistent audibility 167; both 239; native per-door camera cluster 155; array/cluster 221; audibility/cluster 167; all 239; direct native array throughout 190. All restored.
+// Native callback-entry record with audibility/direct-array/countdown interactions
+// 155/167/240/190/157/172/237/192; gain/cluster-query/door-query/all inline declarations
+// with separate noinline declarations 155/155/155/155. Original body and declarations restored.
 // Round 368: persistent camera/structure/gain names alone and in all combinations 155 each; coherent array
 // names with all three 155. Original executable body restored.
 // Round 370: consistent camera-provider observations with native table, default-first side and

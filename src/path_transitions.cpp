@@ -326,7 +326,10 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
-// score 154 (was 154): the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// score 31 (was 154): frame 0xe34 and retail length agree; collector flags, scan/selected-index
+// comparison and copy widths, and alignment-dot j ordering remain. Earlier at 154:
+// the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
 // term loads g_4687b0 first where retail loads the marker. Tried: single exit 167;
 // long best 199; long loop index 202; point names 199; vector helper 202;
@@ -334,6 +337,11 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 // pointer based at +0x4c); dot3f operands swapped 154; 0.95f < dot 154; a named alignment
 // 154; the alignment through markers[i] 154 (more x87 differences); both dots written out
 // with the delta and normalize helpers 141 (14 more instructions off once aligned).
+// Input-only marker/actor/character/all receivers 154 each; wide count 106; word selection 156;
+// word induction 106; combined native scan 113; wide count with wide scan/selection/both 66/120/33;
+// actual marker cursor with wide count 67, with wide scan 63, with short count 153;
+// paired wide scan/selection with short count 31 kept; unsigned-word scan on that graph 120
+// with either count; all-wide marker cursor 30 (sub-threshold addition, discarded).
 // Candidate/delta/selected-point uninitialized entry storage, all seven subsets and all three with the native
 // marker array: 154/154/154/154/154/154/154/154. Protected query promotion, loop padding and dot allocation
 // remain
@@ -348,10 +356,10 @@ bool function_26f990(long actor_index, long object_index, real distance, s_objec
     {
         s_object_marker markers[32];
         real best_distance = FLT_MAX;
-        short best = NONE;
+        long best = NONE;
         point3f best_point;
         short count = function_26f930(object_index, markers, 32, character->marker_flags);
-        for (short i = 0; i < count; i++)
+        for (long i = 0; i < count; i++)
         {
             s_object_marker *marker = &markers[i];
             if (dot3f(&marker->matrix.forward, g_4687b0) > 0.95f)
