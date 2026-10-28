@@ -1092,7 +1092,8 @@ struct s_looping_promotion_table
 	s_looping_promotion *entries;
 };
 
-// score 52 (was 52): frame and loop head now retail's; the body's element and definition registers differ;
+// score 52 (was 52): iterator frame agrees; class load, curve widening and element/definition carriers still differ.
+// Prior: frame and loop head now retail's; the body's element and definition registers differ;
 // short curve 76; long curve 80; count renamed 72; table snapshot 72; pool snapshot 76;
 // count first 74; plain for 74; flag mask 72; shared lookup 72; short curve and lookup 76;
 // bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65;
@@ -1103,6 +1104,12 @@ struct s_looping_promotion_table
 // shared class lookup/one-use short class index 30 (unmatched, restored).
 // Native definition getter 52; both native getters 52; both/short curve 56; composed getters 52.
 // Element/definition registers, class-load position and curve widening remain.
+// Word flag bitfield with byte-cast class: bool curve/direct or shared lookup 52/52, short curve 49/49;
+// with signed class member, bool curve 52/52 and short curve 49/49. Three-point gain at 286 bytes restored.
+// Native iterator index plus early one-use short class input, bool curve
+// with bitfield/word publication 30/30; short curve 42/42; force-inline
+// getter combinations 30/30/42/42. Class snapshot unmatched, restored.
+// Element/class carriers and pre-provider widening still differ.
 // Curve produced by short tests 70; with native word publication 70; bool tests/word 52;
 // short default/word 56; original bool/word 52; short conditional/word 56;
 // native definition with short tests/default and word publication 70/56. Restored.
@@ -1146,6 +1153,9 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 // canonical iterator continue 35; curve after endpoints 35; computed endpoint first 35;
 // native word flag store 35; native word flag test/store 25, plain confirmed at 207/210 bytes.
 // Element/state fold and early flag store remain.
+// Native iterator-index receiver: word mask/shifted bool/bitfield/zero-first
+// 25/35/35/30; the same with force-inline getter 25/35/35/30.
+// Element formation and final flag-store schedule remain.
 // Native word flag snapshot inside/before state with mask and first/last publication 75 each;
 // boolean extraction under each lifetime/publication 82 each. Restored.
 // @retail 0x21be20

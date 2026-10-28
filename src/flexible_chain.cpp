@@ -246,6 +246,10 @@ void __stdcall function_1160c0(real dt)
 // combined, 194 each.
 // Round 371: first-node position copied before direction 179, kept; previous-first
 // publication, complete scalar cross/axial terms and their combinations 179 each.
+// Complete previous-position scalars, with complete axis/rest-offset/prediction
+// coordinate sets 345, 335, 332, 323, 345, 335, 332, 323.
+// Native segment index before lookup, explicit last-segment arm, uniform
+// rest-offset fields and invariant reciprocal combinations 179, 179, 336, 336, 189, 189, 338, 338.
 // Round 219: Exhaustive segment-pointer result, inner/outer invariant vertical and sine/cosine
 // order 297/297/309/309; default-pointer counterparts 281/281/309/309. All restored;
 // segment/previous/axis homes and rotation schedule remain.

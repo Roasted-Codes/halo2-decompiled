@@ -586,7 +586,8 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
-// score 34 (was 34): Input index load width, loop entry alignment and response cursor calculation differ.
+// score 34 (was 34): word input, material-pointer formation and ordinal/loop entries still differ.
+// Prior: Input index load width, loop entry alignment and response cursor calculation differ.
 // Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
 // direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
 // native current ancestry index 69; entry result/current index 67.
@@ -599,6 +600,8 @@ s_projectile_material_response g_547660;
 // Short ancestry with direct endpoint 34; positive ordinal/body cursor 49; unguarded ordinal 55;
 // positive while ordinal 49; short ancestry/ordinal 48; per-use count/ordinal 66;
 // multiply-used response base 34; response base/short ancestry 34. Word input and cursor/loop entries remain.
+// Typed material table: cached header endpoint/count once or per-use 34/65; cached header ordinal 49/66;
+// per-use header endpoint 34/71 and ordinal 69/66. Typed parent member does not repair the word input.
 // Result-owned response cursor: endpoint 40, ordinal 39, relational endpoint 40;
 // direct ordinal/endpoint success returns 79/67; result cursor with per-use count
 // ordinal/endpoint 70/73; short ancestry with result ordinal 39. Restored.
@@ -695,6 +698,9 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 // vector declarations alone/linear/angular/both 69/71/77/79; renamed spin vectors 69.
 // Shared linear/angular/both sums 68/63/76; scaled angular sum with/without
 // the linear helper 121/121; complete linear/both/scaled angular outputs 112/130/117.
+// Object receiver at every use with no/linear/angular/both shared sums
+// 155/140/140/114; entry-scope uninitialized vectors with those sums
+// 155/140/140/114. Original object snapshot restored; impulse/seed carriers remain.
 // Shared seed receiver 69; native short/long axis index with complete setter 118/120;
 // selected-axis receiver/setter 112; memcpy axis 69; shared seed with short index,
 // axis receiver or memcpy 130/125/69. Restored.

@@ -4164,6 +4164,9 @@ struct s_score_zone_view
 // Round 219: Rival metadata before color, team/individual/both 566/518/566; own score before text
 // alone/with team/with individual/with both 476/545/523/564; all rival metadata before text 590.
 // All restored; native color transfers, zone homes and charge spills remain.
+// Round 209: Returned-color memcpy rival/own/both/zones/all 440 each; overlap-safe rival/own/both copies
+// 548/418/427. Own copy plain 418 but introduces a library call absent from the native retail transfer;
+// discarded as the wrong copy boundary. Frame, palette/zone homes and charge spills remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

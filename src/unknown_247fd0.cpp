@@ -401,6 +401,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // an inline interpolation helper 466; a 0x5c-byte collision result (the size 0x0b8ca0 and 0x26bfa0
 // give it) 369 alone, 463 with plain locals (frame 0xb0, but collision above the placement);
 // placement renamed 463; trace locals in the trace block 466. All restored.
+// Round 244: direct existing real producer assigned at original draws 1/2/3/4/last-three/
+// all/first-third/second-fourth 368/368/368/368/368/368/368/368. Original output assignments
+// and reference helper restored; late EBP save, first-sample store and geometry homes remain.
 // Round 218: Shared vector sums blend/velocity/both/motion/blend-motion/velocity-motion/all
 // 368/368/368/356/356/363/363; all plus trace-vector setter 366. Motion helper alone
 // 356 kept plain; frame 0xb0 and 1643/1652 bytes remain, with late EBP save and random/blend/getter homes.

@@ -202,6 +202,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // result 1414 plain kept, named predicate 1433 plain restored. Result/field combinations
 // 1412/1403/1408/1411 fast; completion result with direct arm/velocity fields 1405 plain kept. On that
 // graph normal/forward/direct velocity/byte flags 1436/1517/1470/1403 fast, all restored.
+// Earlier 1405 from 1435.
+// Round 161: Native point storage with direct record/arm/velocity/record-arm/record-velocity/arm-velocity/all
+// observations 1445/1402/1428/1416/1415/1506/1429; complete native point members 1429.
+// Fast control 1403 versus full 1405; one-point direct-arm gain rejected. Original storage and body restored.
 // Round 219: Shared vector sums, point/contact/both/output/point-output/contact-output/all
 // 1440/1441/1405/1405/1440/1441/1405; all with native output copies 1405. Single-phase local sums
 // reach retail length but regress; combined sums restore frame 0x5d0. Original body and every

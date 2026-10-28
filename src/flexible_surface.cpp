@@ -363,6 +363,10 @@ void __stdcall function_117790(long index)
 // vertex-array base 67 kept; loop-lifetime attachment cursor 90; attachment array base 75; aggregate delta
 // with the array base 83; length helper on the best form 83; correction-only difference helper 83;
 // direct vertex reads through the attachment base 91; entry velocity declaration 67.
+// Round 209: Intrinsic attachment copy 74; with direct attachment fields 85; all three intrinsic copies 67;
+// shared unit-scale differences initial/both/both plus origin copy 67/67/67; function-scope markers 67,
+// plus direct-field intrinsic copy 85. Restored; pool base, displacement schedule and attachment
+// copy/reload remain.
 // Complete squared displacement terms 81; point/vector/marker role identities 67; both 81;
 // native word attachment ordinal 96; with squares/roles/both 105/96/105; complete graph
 // with displacement declared before point acquisition 105. Original executable body restored.
@@ -566,10 +570,13 @@ public:
 static inline byte *surface_tag(long index) { return g_4e3b44[index & 0xffff].bytes; }
 static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)(base + offset); }
 
-// score 473 (was 526): frame 0x44 versus 0x2c; attribute scans and D3D call expansion differ.
+// score 473 (was 473): frame 0x44 versus 0x2c; attribute scans and D3D call expansion differ.
 // Integer orientation 529; null-first lighting 522; per-scan results 530; real type
 // cursors 574; existing format/state helpers 473 (kept, full); cursors/orientation
 // 573; helpers/orientation 471 (two-point addition dropped); all three 516.
+// Round 209: Fresh type-field reads/cursors 498/497; with per-scan results 482/498; existing oriented
+// tangent setter 473, tangent and normal setters 472 (one-point lead dropped); both setters with fresh
+// cursors/results 497/482. All restored; frame 0x44/0x2c, descriptor scans and outer D3D expansion remain.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {
