@@ -880,6 +880,8 @@ public:
 // Round 24: scoped flags 292; plus direct Boolean result 356; plus early parent color 355;
 // plus function-entry tint 355; word-pointer flags instead 354; ordinary parent instead 344;
 // long tint instead 364; without parent color 353. Original restored.
+// Round 206: Two-state completion enum, entry default/entry complete arms/tail default/tail complete arms
+// [292, 366, 361, 366]; with word-pointer/bit-five flag idiom [359, 369, 359, 369]. Original result and flags restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
