@@ -221,6 +221,9 @@ short __stdcall function_1c10a0(long actor_index)
 
 // score 2 (was 2): the pool pointer is loaded into ECX here and into EDX in
 // retail, the rest of the function matches.
+// This round: plain slot read 28; plain index read 4; plain index with
+// const pool/data/slot/actor, swapped local names or early mask 4 each;
+// original with const pool/data/actor/slot or swapped local names 2 each.
 // @retail 0x1c10f0
 bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 {
