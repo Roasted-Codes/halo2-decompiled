@@ -278,7 +278,7 @@ bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6);
 bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool arg_3);
 
-// score 186 (was 194): frame 0x38 agrees; actor pool data is loaded into EBX here and
+// score 186 (was 186): frame 0x38 agrees; actor pool data is loaded into EBX here and
 // ECX in retail. Early actor-index retention, request tails and distance scheduling differ.
 // frame 0x38 agrees; actor-pool data takes EBX instead of retail ECX,
 // with early actor-handle retention, request-tail sharing and x87 scheduling still different.
@@ -300,6 +300,9 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 267: boarding/animation/approach failure guards, singly and all combinations,
 // 194 each; all guards with the existing request result 186; minimal request result
 // alone 186 (plain, 680 B). Neutral guards removed; pool/actor-index and x87 homes remain.
+// Round 159: Canonical approach output and its byte seat result 186/186; canonical movement-long and both
+// results 191/191; original movement long/short 191/195; squared distance/rejection-first tail 186/186;
+// native slot parameter with retained/direct receiver 186/186. All restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {
