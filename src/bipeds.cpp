@@ -2288,6 +2288,10 @@ void __stdcall function_b77d0(long object_index, vector3f const *linear_velocity
 /* the dead biped's ragdoll: when it falls over (+0x34b 0 to 1) its bodies
    get a push along the killing blow, spread from the hit body; a fallen
    one settles and goes to sleep (2); one that gets up again stands */
+// score 774 (was 774): Frame 0x4c agrees; incoming index/result homes, flag widths and unrolled distance scan differ.
+// Single result exit 861, entry result plus exit 861; native Boolean flag bits 801, with result exit 879;
+// position after mass query 796; complete reciprocal 774; complete vector producers 774; workspace role names 774;
+// body count at every use 773; separate scan ordinals 774, with count fields 773; complete offset vectors 776. All restored.
 // @retail 0xe0ef0
 bool __stdcall function_e0ef0(long arg_159e6d)
 {
@@ -2518,11 +2522,14 @@ PRIVATE inline void biped_rotate(vector3f *v, vector3f const *axis, real sine, r
 /* turns the biped toward its desired facing: flying ones by their flight
    controls, walking ones at the definition's turn rate (or by a turning
    animation when they stand), and a grabbing one toward its target */
+// score 654 (was 679): Frame 0x80 versus 0x78; entry/result and spatial-rotation scheduling remain.
+// Entry result 682; complete shared cross products 678; unified planar workspace 674; both 672;
+// workspace role names 682; one result exit 682; consistent definition reads 667; full-width predicates 720;
+// definition reads with complete projections/planar workspace 670, with planar workspace alone 658 fast / 654 plain (kept).
 // @retail 0xe01d0
 bool __stdcall function_e01d0(long arg_159e6d, long *names)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
-	byte *definition = BIPED_DEFINITION_GET(biped);
 	byte *state = (byte *)biped + *(short *)((byte *)biped + 0x12a);
 	bool changed = false;
 
@@ -2533,9 +2540,9 @@ bool __stdcall function_e01d0(long arg_159e6d, long *names)
 		{
 			if (*(long *)((byte *)biped + 0x3ec) <= 0)
 			{
-				real rate = (biped->control_flags & 8) ? 0.99f : *(real *)(definition + 0x24c);
+				real rate = (biped->control_flags & 8) ? 0.99f : *(real *)(BIPED_DEFINITION_GET(biped) + 0x24c);
 
-				function_1faf80(&biped->facing_goal, arg_159e6d, definition + 0x2cc, &biped->control, rate,
+				function_1faf80(&biped->facing_goal, arg_159e6d, BIPED_DEFINITION_GET(biped) + 0x2cc, &biped->control, rate,
 					&biped->unknown3a0);
 			}
 			else
@@ -2546,7 +2553,7 @@ bool __stdcall function_e01d0(long arg_159e6d, long *names)
 		else if (biped->physics_mode != 5 && *(long *)(state + 0x70) != 0x6000084)
 		{
 			bool special = *(long *)(state + 0x70) == 0x7000039;
-			bool wall = TEST_FIELD_BIT((*(dword *)(definition + 0x264) >> 3) & 1);
+			bool wall = TEST_FIELD_BIT((*(dword *)(BIPED_DEFINITION_GET(biped) + 0x264) >> 3) & 1);
 			vector3f facing;
 			real sine;
 			real cosine;
@@ -2573,20 +2580,16 @@ bool __stdcall function_e01d0(long arg_159e6d, long *names)
 			}
 			else
 			{
-				point2f flat;
-
-				flat.x = biped->facing_goal.i;
-				flat.y = biped->facing_goal.j;
-				if (normalize2d(&flat) == 0.0f)
-				{
-					flat.x = biped->forward.i;
-					flat.y = biped->forward.j;
-				}
-				facing.i = flat.x;
-				facing.j = flat.y;
+				facing.i = biped->facing_goal.i;
+				facing.j = biped->facing_goal.j;
 				facing.k = 0.0f;
-				sine = biped->forward.i * flat.y - biped->forward.j * flat.x;
-				cosine = biped->forward.j * flat.y + biped->forward.i * flat.x;
+				if (normalize2d((point2f *)&facing) == 0.0f)
+				{
+					facing.i = biped->forward.i;
+					facing.j = biped->forward.j;
+				}
+				sine = biped->forward.i * facing.j - biped->forward.j * facing.i;
+				cosine = biped->forward.j * facing.j + biped->forward.i * facing.i;
 			}
 			left = sine > 0.0f;
 			if (-0.9f > cosine)
@@ -2600,9 +2603,9 @@ bool __stdcall function_e01d0(long arg_159e6d, long *names)
 					left = false;
 				}
 			}
-			if (biped->unknown34a == 1 || (*(dword *)(definition + 0x1f0) & 1))
+			if (biped->unknown34a == 1 || (*(dword *)(BIPED_DEFINITION_GET(biped) + 0x1f0) & 1))
 			{
-				real angle = g_510c54->rate * *(real *)(definition + 0x1ec);
+				real angle = g_510c54->rate * *(real *)(BIPED_DEFINITION_GET(biped) + 0x1ec);
 				real turn_cosine = (real)cos(angle);
 				real turn_sine = (real)sin(angle);
 				vector3f turned;
@@ -2674,9 +2677,9 @@ bool __stdcall function_e01d0(long arg_159e6d, long *names)
 			}
 			else if (!biped->unknown34a && !special && !(TEST_FIELD_BIT((biped->flags_134 >> 11) & 1)))
 			{
-				real limit = (biped->control_flags & 8) ? 0.99f : *(real *)(definition + 0x24c) + 0.0001f;
+				real limit = (biped->control_flags & 8) ? 0.99f : *(real *)(BIPED_DEFINITION_GET(biped) + 0x24c) + 0.0001f;
 
-				if (limit >= cosine && !(TEST_FIELD_BIT((*(dword *)(definition + 0xbc) >> 20) & 1)))
+				if (limit >= cosine && !(TEST_FIELD_BIT((*(dword *)(BIPED_DEFINITION_GET(biped) + 0xbc) >> 20) & 1)))
 				{
 					names[1] = left ? 0xa00000f : 0x900000e;
 				}
