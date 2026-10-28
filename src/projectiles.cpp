@@ -10,6 +10,7 @@ detonation. */
 #include "data_array.h"
 #include "unknown_0259d0.h"
 #include "object_markers.h"
+#include "normalize3d.h"
 #include "object_iterator.h"
 #include "effects.h"
 #include "sound_sources.h"
@@ -381,12 +382,16 @@ bool function_fa580(real speed, point3f const *origin, point3f const *target, ve
 }
 
 /* the rotation a spinning projectile makes each tick */
-// score 3 (was 16): the flag OR/store crosses the angle duplicate and first
+// score 3 (was 3): the flag OR/store crosses the angle duplicate and first
 // axis load differently. Forced inline, speed/axis/angle declarations, the
 // first-product order and *= no change; shared normalize 14; j+(k+i) 14;
 // k+(j+i) 18; j+k+i 10; direct first reciprocal with inverse before 18,
 // without inverse 40, after first 3; flag before angle 22; sine before axis 3;
-// axis before flag 32; axis memcpy 3; named flags 3.
+// axis before flag 32; axis memcpy 3; named flags 3. Retail's order is VC's
+// when some local's address escapes (the axis load then waits for the flag
+// store). Axis after sine/cosine 21; axis by components 71; double angle 3;
+// named sine/cosine 3; dword OR 3; helper reading its parameter through its
+// address 11 (flag order right, copy-in wrong).
 // @retail 0xfbd40
 void function_fbd40(long projectile_index)
 {
@@ -651,6 +656,11 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 }
 
 /* pushes a projectile, and spins it at random by the push's strength */
+// score 69 (was 95): frame 0x10 and retail length agree; impulse EDX/ESI, axis homes and seed carriers differ.
+// Round 196: direct length 95; fraction 114; complete native scale 98; length/fraction 114;
+// length/scale 98; fraction/scale with either length 83 (one-use fraction, restored); shared magnitude/scale 98.
+// Commuted first product with complete scaled vector 69 (kept); in-place, direct-root in-place,
+// and shared magnitude variants 69 each. Existing calls and multiply grouping preserved.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -663,12 +673,14 @@ void function_fa820(long projectile_index, vector3f const *impulse)
 		projectile->linear_velocity.k += impulse->k;
 
 		vector3f axis = g_4417f0[random_index(&g_4e7408->unknown0, 1026)];
-		real spin = (real)sqrt(length_sq3f(impulse)) * function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) *
+		real spin = function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) * (real)sqrt(length_sq3f(impulse)) *
 			1.5707964f;
 
-		projectile->angular_velocity.i += spin * axis.i;
-		projectile->angular_velocity.j += spin * axis.j;
-		projectile->angular_velocity.k += axis.k * spin;
+		vector3f rotation;
+		vector3f_scale(&axis, spin, &rotation);
+		projectile->angular_velocity.i += rotation.i;
+		projectile->angular_velocity.j += rotation.j;
+		projectile->angular_velocity.k += rotation.k;
 		function_fbd40(projectile_index);
 		function_b9b90(projectile_index, false);
 	}
@@ -872,38 +884,25 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 237 (was 266): retail passes the time-scale pointer on the stack and takes only the
-// target (eax), origin (ecx) and direction (esi) in registers (`ret 0x2c`); ours also takes the
-// time scale in edx. Retail loads the gravity pointer into edx at entry, keeps the distance output
-// in edi from entry (ours the forced-speed pointer) and rounds the horizontal length to a float
-// before the gravity tests; ours loads the pointer into ebx and keeps the length on the x87 stack,
-// computing it after those tests. Retail evaluates the horizontal root in the entry block and
-// divides by two_a twice in x87; ours multiplies by one SSE reciprocal of two_a.
-// Tried: the high-arc flag or the time-scale pointer read once through its address 266/269;
-// horizontal tests with the constant first 266; the horizontal length computed after the gravity
-// value 266; the gravity operands swapped 266; result flag declared first 275 (frame 0x30);
-// optimal-time root with a double -1.0 244 (a final qword multiply where retail loads a dword
-// -1.0 first); t2 root without its float cast 266; horizontal through magnitude2d 272; gravity
-// computed first 266; the forced-speed test as `if (!forced_speed)` first 237 (kept, 983 bytes);
-// with the forced speed as a ternary 266; delta.k after the gravity product 236.
-// retail passes the time-scale pointer on the stack and takes only the
-// target (eax), origin (ecx) and direction (esi) in registers; ours also takes the time scale in
-// edx. Retail loads the gravity pointer into edx at entry and rounds the horizontal length to a
-// float before the gravity tests; ours loads the pointer into ebx and keeps the length on the
-// x87 stack, computing it after those tests. Tried: the high-arc flag or the time-scale pointer
-// read once through its address 266/269; horizontal tests with the constant first 266; the
-// horizontal length computed after the gravity value 266; the gravity operands swapped 266.
-// retail takes target/origin/direction in EAX/ECX/ESI and the time-scale pointer on
-// the stack (`ret 0x2c`); ours also takes it in EDX (retail's EDX holds the gravity pointer at entry and EDI
-// the distance output; ours keeps the forced-speed pointer in EDI). Retail evaluates the horizontal root in
-// the entry block and divides by two_a twice in x87; ours sinks the root below the gravity tests and
-// multiplies by one SSE reciprocal of two_a.
-// Tried: gravity product operands swapped 266; result flag declared first 275 (frame 0x30); optimal-time
-// root with a double -1.0 244 (no reciprocal, but a final qword multiply where retail loads a dword -1.0
-// first); t2 root without its float cast 266; horizontal through magnitude2d 272.
-// Round 31: the time scale read once into a value (`time_scale ? *time_scale : 0.0f`) 262, time scale still in
-// EDX (0xfa6a0 34 -> 35); retail keeps the distance output in EDI from entry and reads the forced speed and
-// time scale from the stack at their uses.
+// score 244 (was 237): the convention now agrees with retail (target EAX, origin ECX, direction
+// ESI, the rest on the stack, `ret 0x2c`): the forced-speed and time-scale pointers are each read
+// once through their addresses, which keeps them on the stack as retail reads them at their uses
+// and matches the callers 0xfa6a0, 0x1f8100, 0x26f150 and 0x2900b0 (each passed the time scale in
+// EDX before). Still differs: frame 0x28 vs 0x30; retail loads the gravity pointer into EDX at
+// entry and keeps the distance output in EDI from entry (ours: gravity in EBX), rounds the
+// horizontal length to a float before the gravity tests (ours keeps it on the x87 stack and
+// computes it after those tests), evaluates the horizontal root in the entry block and divides by
+// two_a twice in x87 (ours multiplies by one SSE reciprocal of two_a).
+// Tried: the high-arc flag or the time-scale pointer read once through its address 266/269 (round
+// 67: the time-scale pointer alone 244, the forced-speed pointer then takes EDX); horizontal tests with the constant first 266; the
+// horizontal length computed after the gravity value 266; the gravity operands swapped 266;
+// result flag declared first 275 (frame 0x30); optimal-time root with a double -1.0 244 (a final
+// qword multiply where retail loads a dword -1.0 first); t2 root without its float cast 266;
+// horizontal through magnitude2d 272; gravity computed first 266; the forced-speed test as
+// `if (!forced_speed)` first 237 (kept, 983 bytes); with the forced speed as a ternary 266;
+// delta.k after the gravity product 236; the time scale read once into a value (`time_scale ?
+// *time_scale : 0.0f`) 262; both pointers through their addresses 244 (kept, see above), with
+// the forced-speed read before the minimum-speed store 244.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -937,12 +936,19 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 
 		if (minimum_speed)
 			*minimum_speed = minimum_speed_value;
-		if (!forced_speed)
+
+		real const *const *forced_speed_reference = &forced_speed;
+		real const *forced = *forced_speed_reference;
+
+		if (!forced)
 		{
+			real const *const *time_scale_reference = &time_scale;
+			real const *scale = *time_scale_reference;
+
 			chosen_speed = speed;
-			if (time_scale && *time_scale > 0.0f)
+			if (scale && *scale > 0.0f)
 			{
-				real t = PIN(*time_scale * optimal_time, 0.001f, optimal_time);
+				real t = PIN(*scale * optimal_time, 0.001f, optimal_time);
 				real x = -(distance_squared / (t * t) + t * t * a);
 				real needed = (real)sqrt(b - x);
 
@@ -952,7 +958,7 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 		}
 		else
 		{
-			chosen_speed = *forced_speed;
+			chosen_speed = *forced;
 		}
 
 		if (chosen_speed >= minimum_speed_value)
@@ -1016,12 +1022,6 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 
 /* aims a projectile of a definition at a target: along an arc for
    projectiles that fall, in a line otherwise */
-// score 34 (was 34): only the two call setups differ. 0xfa1a0 takes the time-scale pointer
-// in edx where retail pushes it, and the 0xfa580 call loads its pushed values through other
-// scratch registers (retail origin eax, speed ecx, direction edx before the pushes).
-// BLOCKED-BY 0xfa1a0 (its own body sets that convention). Tried in 0xfa1a0: gravity first,
-// forced-speed test inverted (0xfa1a0 237), forced speed as a ternary, delta.k after the
-// gravity product: 34 each; both arms here as an if/else with one return 34.
 // @retail 0xfa6a0
 bool function_fa6a0(long definition_index, real const *speed_override, point3f const *origin, point3f const *target,
 	real *unknown2, real const *unknown3, real const *unknown4, bool unknown5, vector3f *direction, real *speed_out,
@@ -1227,10 +1227,14 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 
 /* a projectile's detonation effects and sounds at a point, attached to an
    object's node when it stuck to one */
+// score 115 (was 148): frame 0x150 and extent agree; point EBX/EDI, zero lifetime and selector call registers differ.
+// Round 196: array-size bounds, unsigned shared ordinal and distinct unsigned ordinals 148 each;
+// word index 115; long node 148; both widths 115 (kept); both widths with array bounds
+// or separate ordinals 115 each. Every declaration coordinated; original loop bodies retained.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
-	point3f const *point, vector3f const *normal, long index, bool attached, long object_index,
-	short node_index, bool alternate)
+	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
+	long node_index, bool alternate)
 {
 	byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 	long sounds[3];
@@ -1490,6 +1494,11 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
+// score 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
+// Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
+// shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
+// complete spherical direction 401; early index-only salt 377 (five-point gain dropped); target-distance
+// name 382; shared normalizer 382; dot after trigonometry 382; early salt plus field reads 387.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -1641,6 +1650,11 @@ vector3f const g_45326c[1] = { { 0.0f, 0.0f, -1.0f } };
 /* detonates a projectile: (once) its sound, contrail, direct and area
    damage, impact or airburst effects, and the effects of the material
    under it */
+// score 527 (was 527): Frame 0x184 agrees; header-offset home, cached flags and probe/material homes differ.
+// Native definition bit 533; projectile/child flag bits 527; definition bit plus parent field reads 527;
+// common exit 527; saved-position role name 527; distinct direct/area damage names 527;
+// probe-table pointer loop 530; probe declarations reversed 527; all native flag tests/stores 533;
+// unsigned table index 539; material declared at entry 527; parent/Boolean declarations first 527.
 // @retail 0xfc330
 void __stdcall function_fc330(long projectile_index, bool detach_contrail, real contrail_time)
 {

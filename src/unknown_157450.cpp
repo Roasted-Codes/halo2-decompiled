@@ -4107,7 +4107,7 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-// score 472 (was 472): Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
+// score 464 (was 472): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
 // Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
@@ -4134,6 +4134,11 @@ struct s_score_zone_view
 // zone/charge allocation remain; opening executable body restored.
 // Round 364: Native player/team/both statistics arrays 472/472/472; fresh statistics 686;
 // fresh player 790; both fresh bases 792; native arrays plus fresh statistics/player 686/790.
+// Round 233: own-score text consumption scopes 464; rival scopes 472; all text scopes 472;
+// individual/zone/both iterator consumption scopes 472/472/472; all text plus iterators 472;
+// four native palette/color consumption scopes 472. Minimal own-score scopes retained.
+// Team-only own-text scope 471; individual-only 466 (small gains dropped); both scopes with
+// all palette scopes or both iterator scopes 464/464. Only the two own-text scopes retained.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4212,13 +4217,15 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     display->rival = true;
                 }
                 else { display->rival = false; display->leading = true; }
-                word text[256];
-                text[0] = 0;
-                long mode = g_4e6948->mode_180;
-                if ((mode >= 3 && mode <= 4) || mode == 8) game_engine_format_time(score, text);
-                else function_1630e0(text, (word const *)L"%d", score);
-                wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                display->score_text[7] = 0;
+                {
+                    word text[256];
+                    text[0] = 0;
+                    long mode = g_4e6948->mode_180;
+                    if ((mode >= 3 && mode <= 4) || mode == 8) game_engine_format_time(score, text);
+                    else function_1630e0(text, (word const *)L"%d", score);
+                    wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
+                    display->score_text[7] = 0;
+                }
                 display->score = score;
                 color3f color;
                 display->color = *function_7f720(&color, player->team);
@@ -4258,11 +4265,13 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     display->rival = true;
                 }
                 else { display->rival = false; display->leading = true; }
-                word text[256];
-                text[0] = 0;
-                function_159130(score, text);
-                wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                display->score_text[7] = 0;
+                {
+                    word text[256];
+                    text[0] = 0;
+                    function_159130(score, text);
+                    wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
+                    display->score_text[7] = 0;
+                }
                 display->score = score;
                 color3f colors[4];
                 function_7f790(display->teams ? player->team : NONE, false, (s_player_appearance *)((byte *)player + 0x84), colors);

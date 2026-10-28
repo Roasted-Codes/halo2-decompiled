@@ -86,6 +86,9 @@ void function_1c2690()
 // score 4 (was 4): retail loads the three pointers before the two writes of
 // the valid flag and pushes the deleted one after both writes, ours pushes it
 // between them.
+// void listener local before the stores, first pool reference, both pool references,
+// cleanup tail scope, valid-store scope, split saved flag, const renamed saved flag
+// and subtraction-assignment reference count 4 each.
 // Further trials: complete pointer observations first/second/listener 4; complete pointer
 // observations first/listener/second 4; complete pointer observations
 // second/first/listener 4; complete pointer observations second/listener/first 4; complete

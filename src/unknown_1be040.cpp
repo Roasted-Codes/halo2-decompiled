@@ -72,6 +72,9 @@ short __stdcall function_1c8df0(long object_index, point3f const *point, short t
 // Further forms (fast control 26): existing header lookup 42; read-only object 26; both 42;
 // both output buffers at entry 26; byte/char completion 51/51; completion in both branches 47;
 // completion from admission tests 88. Original body and slot-data form restored.
+// Early successful completion with data pointer at entry/action/object 75/75/75; with late clear and
+// data pointer at entry/action/object/position 80/80/80/80; position plus explicit inactive success 96.
+// Original completion and clear restored.
 // @retail 0x1be120
 bool __stdcall function_1be120(long actor_index, s_slot *slot)
 {

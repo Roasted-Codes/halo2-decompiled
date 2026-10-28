@@ -143,7 +143,7 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 	return success;
 }
 
-// score 418 (was 419): the frame is 0x5c against retail's 0x64; retail keeps the
+// score 418 (was 418): the frame is 0x5c against retail's 0x64; retail keeps the
 // pathfinding pointer in EBP and the -1 edge seed in EDX where ours keeps them in EBX
 // and EDI, and retail keeps a byte local at [esp+0xe] where ours has a long zero at
 // [esp+0x14].
@@ -181,6 +181,8 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Round 129, traversal-count scope retained: native planar copy with long/bool/short/byte
 // result 479/543/483/427; CRT planar copy with those result types 479/543/483/427.
 // All original executable source restored.
+// Round 234: normal/endpoint-scan/node-admission consumption endings and combinations
+// 421/418/421/418/421/418/421; all endings with Boolean success 583. Original body restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

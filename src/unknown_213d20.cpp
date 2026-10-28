@@ -182,6 +182,8 @@ void cache_copy_forget(char const *map_name)
 // helpers defined after their callers 6; path helper alone in an /Ob1 file 6; print helper
 // inline with a noinline declaration 6. Retail also forms 0x2141f0's EDI constant again after
 // the call: retail callers act as if they had no register summary for the path helper.
+// Round 206: nested name helper noinline/inline/forceinline 6/6/51; nested cdecl/stdcall 6/6;
+// byte/word table ordinals 45/45; native complete path memmove 51.
 // @retail 0x214100
 void __stdcall cache_copy_record_use(char const *map_name)
 {
@@ -295,6 +297,8 @@ void cache_copy_buffer_resize(long size)
 // two-buffer record 5; result between buffers 5; result initialized between calls 10;
 // unsigned result 5; named equality 5; combined noinline declarations 5;
 // combined inline declarations 5; force-inline comparison declaration 5.
+// Round 206: nested name helper noinline/inline/forceinline 5/5/24; nested cdecl/stdcall 5/5;
+// comparison-first path production 12; comparison-first symmetric test 14; success return 24.
 // @retail 0x213e30
 long cache_copy_current_priority(char const *map_name)
 {
@@ -325,6 +329,8 @@ long cache_copy_current_priority(char const *map_name)
 // helper in its own file sorted after or before this one 5/5.
 // Queued record pointer 5; delayed/scoped comparison buffer 5/5; interleaved result 5;
 // path matrix 15; two-arm result 24; named comparison 5; unsigned result 5.
+// Round 206: nested name helper noinline/inline/forceinline 5/5/24; nested cdecl/stdcall 5/5;
+// comparison-first path production 12; comparison-first symmetric test 14; success return 24.
 // @retail 0x213e90
 long cache_copy_queued_priority(char const *map_name)
 {

@@ -1379,7 +1379,10 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 232 (was 241): frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// score 241 (was 241): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal differ.
+// Earlier 241 from 241: frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // restoring them at the loop exit), the two shared spill slots 0x18/0x1c swapped, and the look rates'
 // shared reciprocal (retail divides twice and reloads the time global) differ.
 // Round 139: the look rates as one s_view_angles local give retail's 0x2c/0x28 homes 237 (a local-
@@ -1449,10 +1452,16 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // `test byte`. Look angles through a pointer clamp helper 246 (inlined away; slots and shared
 // reciprocal kept); if/else clamps 246; mode declared before unit 243; look angles declared before
 // the springs 243; the round 93 combined set re-measured 378 (aligned 49, one instruction short).
+// Round 231: Aiming/look/paired field references 574/248/572; animation reference 400; aiming-
+// animation/look-animation/all receiver references 550/405/548; all plus user-flag field 421.
+// Original body restored.
 // Round 262 (fast control 243, full 241): complementary scoped bool/byte/short/long
 // 242/242/447/457; both zoom/scoped complements 234/234/440/450. Dual bool gives 232 plain;
 // direct short-circuit scope complement also 234 fast / 232 plain, kept. Frame 0x28,
 // unit/mode homes and shared look reciprocal remain; every smoothing input is unchanged.
+// Round 360 (fast base 243): native double aiming-limit/look-limit/look-rate
+// pairs, combinations and all three 574/543/259/584/574/531/584; native 64-bit
+// user flags 388. Original scalar widths and every smoothing input restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

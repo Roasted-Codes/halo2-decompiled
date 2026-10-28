@@ -122,6 +122,9 @@ bool function_a7670(long object_index);
 // Round 262: function-entry selector/index/island storage, all seven combinations, 181 each;
 // all three with entry body-count storage 181. Every initializer stayed at its original use;
 // original declarations restored. Scratch phase, scalar homes and indexed cleanup remain.
+// Round 218: First/second scratch arrays at island/function, function/island, island/island,
+// list/function, function/list, list/list, island/list and list/island scopes:
+// 181/181/181/181/181/181/181/181 (fast control 181). Original restored.
 // @retail 0x278f00
 void function_278f00()
 {
