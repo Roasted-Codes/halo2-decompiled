@@ -92,6 +92,15 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // Round 146: short group index/pass counter/best indices (kept) 406; the three alone 409/416/512;
 // distance index at top of the inner while 416; long search result 415, on the kept form 428;
 // long point bounds 456; long last point 424; long nearest point 396 (word compares in retail, not kept).
+// Round 86 (fast; aligned counts in brackets, 378 at the start): long group index 513 [313, retail's first-loop
+// registers]; separate output cursor (retail compares the end index with the original start) 416 [357]; both 490
+// [278]; bit_vector_test/bit_vector_set instead of the open-coded bits, identical; else-false result 459 [238];
+// record index set before the pass loop and after each step 446 [189, frame 0x64]; memset group bitmap 437 [185];
+// bit test on the field read ahead of the group-index local 197 [65], with the (point, record) output-helper order
+// 199 [57], x*x + (y*y + z*z) squared sum 190 [48] and the found flag declared first 188 [46] (not kept: a field read
+// beside a local copy needs a match; the same body without it 437). Left on 188: x87 square orders (retail rotates
+// them per call; a vector-local distance with j, k, i terms gives d1/d2 175), arg_0 in EDX with arg_3 kept in ESI
+// at the 0x29de20 call, AL reused for the found flag, the pass latch's lea, the output loop's entry jump.
 // Round 148: the visited bits through the existing bit_vector_test/bit_vector_set (include/bit_vector.h)
 // 416 at 1577 bytes, but difflib-aligned 378 -> 338: retail's separate test and set (word address and
 // mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a

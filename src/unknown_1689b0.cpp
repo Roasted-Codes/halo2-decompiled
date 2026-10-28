@@ -1118,6 +1118,10 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
 bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const *vector,
 	long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *result);
 
+/* retail calls this out of line (0xcf040, 0x1c8df0, 0x24da18, 0x24e59f) */
+__declspec(noinline) bool function_16a040(long flags, point3f const *point0, point3f const *point1, long ignore_object_index,
+	long ignore_unit_index, s_collision_result_1697c0 *result);
+
 /* ray_cast_test between two points */
 // @retail 0x16a040
 bool function_16a040(long flags, point3f const *point0, point3f const *point1, long ignore_object_index,
