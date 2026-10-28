@@ -868,7 +868,6 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 }
 
 // score 157 (was 157): frame 0xc versus retail 0x10; entry/value homes and deferred descriptor observations remain.
-// Earlier: Frame 0xc versus 0x10 and deferred descriptor rereads remain.
 // frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
 // alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
@@ -905,6 +904,15 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // DL159: actual direct/mapped/both selector field references 199/177/185; signed source field reference 157, with direct/mapped/both selectors 199/177/185; complete field graph with body cursor steps 185. Original copied fields, dynamic bounds and writer retained.
 // Round 206: Native ordinary/special/dirty output fields, individually, all three pairs and all
 // together 157 each; complete output fields with body cursor steps 155. Two-point gain rejected.
+// Round 30 (fast): retail's direct loop re-reads the entry word after the output store (for the dirty bit),
+// stores through a computed address (lea) and keeps the value table in EBX: that is a store written with
+// the index derived inside from a reference to the entry word, not a precomputed index. A file-local
+// forceinline store taking `word const &packed` for the direct loop alone gives that loop retail's shape
+// 191 (695 bytes; the mapped loop then tests 0x200 twice); with the value masked at the top of it 183, the
+// masked value passed by the caller 183 (both move the state parameter from EAX to EDX); plus the mapped
+// loop in 0x176a0's shape (value/mask locals, the call in both arms, remap byte added first) 226 at frame
+// 0x10 as retail (the direct loop's counter then takes EBX); one counter declared for both loops 226.
+// Match-only (a one-caller helper); original body restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

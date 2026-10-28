@@ -215,20 +215,25 @@ void function_155ed0(void)
 	}
 }
 
-// score 53 (was 53): capacity/mask homes and aligned-exit reloads still differ;
+// score 9 (was 53): in the padding path retail computes the alignment difference
+// before pushing ebx and reloads the capacity global into ecx after the mask, ours
+// pushes ebx first and reloads the capacity global into edi earlier.
 // remaining-first expression 53; shared completion 75; named padding 53;
 // named mask 53; shared completion and mask 75; recomputed start 47;
 // named allocation extent 53; remaining extent with shared completion 86.
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {
-	byte *result = g_4e9188.permanent_memory + g_4e9188.permanent_memory_size - size;
+	long remaining = g_4e9188.permanent_memory_size - size;
+	byte *result = g_4e9188.permanent_memory + remaining;
 
 	if (alignment)
 	{
-		if ((long)result & (alignment - 1))
+		unsigned long mask = (unsigned long)alignment - 1;
+
+		if ((long)result & mask)
 		{
-			size += (alignment - (long)result) & (alignment - 1);
+			size += (alignment - (long)result) & mask;
 			result -= (alignment - 1) & (alignment - (long)result);
 			g_4e9188.permanent_memory_size -= size;
 			return result;
@@ -325,6 +330,9 @@ void function_1568d0(void)
 		function_3e2830(g_4e9188.movie, locked.pBits, locked.Pitch, g_4e9188.height, 0, 0, g_4e9188.copy_flags | 0x80000000);
 }
 
+// score 109 (was 109): retail builds this function with SSE (cvtsi2ss, movaps, movss),
+// but this file is compiled /O2 /Ob1 /Gr without /arch:SSE, so our int-to-float
+// conversions go through the x87 stack; the flag test's block layout differs with it.
 // @retail 0x156960
 void function_156960(void)
 {

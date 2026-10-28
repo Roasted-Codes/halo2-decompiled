@@ -257,6 +257,8 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 // eax/ecx/edx choices are one step off retail's. Tried: a named parent point for the compare and the call 65; the two break tests as one
 // `||` condition 31; trace at function scope 31; no parent local 85; the output arms swapped 34; the permuter (86 tries) found nothing below 31;
 // the loop as `for (; node->parent != NONE; node = ...)` 31; a pathfinding local before the call 34; parent declared after the
+// output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93;
+// the end point named for the call only 31; the call's result in a named bool 31; `parent` as a const pointer 31; a trailing `continue` 31.
 // output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
@@ -1271,7 +1273,9 @@ PRIVATE void function_272740(point3f const *attractor,
 // (k + j) + i. Tried: the weight in float (no double local) 88 -> 82; weight declared first 81; written-out sums in every order
 // 79-94; the segment, offset and both lengths through vector3d_from_points3d/length_sq3f/dot3f 21; the length test against g_45dbd8
 // (retail reads 0x45dbd8; weight's zero is then not shared) 8; dot3f for either length and the swapped projection 8; separate
-// segment/delta vectors 8; a `0.0` double test 102; the permuter (86 tries) found nothing below 8.
+// segment/delta vectors 8; a `0.0` double test 102; the permuter (86 tries) found nothing below 8; distance_sq3f for the segment
+// 132 fast/100 plain; vector3f_assign 8; offset or t at function scope 8 each; delta renamed segment 8; closest declared first 8;
+// input declared later 8; length declaration split 8; aggregate segment initialization 83.
 // @retail 0x272810
 PRIVATE real function_272810(s_type_f17a25 const *state, s_type_c3b527 const *start,
 	point3f const *end, real *distance_out)
