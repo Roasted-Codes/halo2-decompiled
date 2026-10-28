@@ -200,6 +200,8 @@ void function_8dd70(void);
 // Complete link/search/scalar/gateway/ready publication orders 0-1-2-3-4, 1-0-2-3-4,
 // 0-2-1-3-4, 0-2-3-1-4, 3-0-1-2-4, 0-4-1-2-3, 1-2-0-3-4 and 2-3-0-4-1 each 230.
 // Each search reset clears before both sentinels; original complete publication order restored.
+// Uninitialized function-scope link/observer/session/link-observer/link-session/observer-session/all
+// short declarations and complete stage-role names 230 each; every assignment kept at its stage.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

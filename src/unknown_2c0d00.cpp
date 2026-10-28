@@ -1088,6 +1088,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // On that lead: `(bool)` returns 349; one value return only 373; `if (!(c)) return false` 349;
 // nested body with final `return true` 362; shared `return false` after an if/else 361;
 // single-exit result 376; explicit y-first side expressions 358.
+// Native unsigned/signed byte returns with original tests, terminal comparison values and
+// a shared narrow result 172/172/172/172/172/172; shared-dot second-side-first ordinary
+// storage with narrow value returns 350/350 at 1465 bytes. Original bool contract restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)

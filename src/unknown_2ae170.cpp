@@ -635,6 +635,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // 417/400/428/447; corresponding three pairwise object reuses 417/400/428;
 // all scopes with both repeated levels 500. All scopes reach frame 0xa0;
 // conversion reuse and the twelve-byte excess frame remain; original body restored.
+// Current submission graph: routing table after copy with original/first-second/first-third/all
+// descriptor scopes 379/421/415/462 fast; first-use long/word/byte/short table 380/398/393/398
+// fast (control 378, full 393). Original table producer and descriptors restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
