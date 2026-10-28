@@ -618,8 +618,14 @@ void function_d4e60(short bsp_index)
 }
 
 /* fills in the data a scenario object is made from */
+// score 63 (was 184): same length; retail keeps type in ebp and the palette in ebx (ours the
+// reverse), and at the end sets or clears flag 8 through a register in two separate exits, testing
+// datum flag 0x100 with a shift in the second. Without the volatile on type (the parameter stays
+// in a register as in retail), case 1 reading the datum's byte again (retail's mov al, [edi + 0x5a])
+// and the palette entry kept as a pointer, as retail does, it lines up to there. No effect on the
+// tail: the flag test as a shift, the flag set through a bitfield view, an explicit read and write.
 // @retail 0xd5060
-bool function_d5060(s_scenario_block *palette, volatile long type, long unknown10,
+bool function_d5060(s_scenario_block *palette, long type, long unknown10,
 	s_type_4f0dcc const *datum, bool unknown, s_object_placement_data *data)
 {
 	bool create = !((datum->flags >> 6) & 1);
@@ -635,7 +641,7 @@ bool function_d5060(s_scenario_block *palette, volatile long type, long unknown1
 			switch (*(long *)((byte *)g_4e6948 + 0x180))
 			{
 			case 1:
-				create = (byte)multiplayer_flags & 1;
+				create = (byte)datum->multiplayer_flags & 1;
 				break;
 			case 2:
 				create = ((byte)multiplayer_flags >> 1) & 1;
@@ -664,11 +670,12 @@ bool function_d5060(s_scenario_block *palette, volatile long type, long unknown1
 	if (PIN(datum->palette_index, 0, palette->count - 1) != datum->palette_index)
 		return result;
 
-	long tag_index = ((s_scenario_palette_entry *)palette->elements)[datum->palette_index].tag_index;
+	s_scenario_palette_entry *entry = &((s_scenario_palette_entry *)palette->elements)[datum->palette_index];
+	long tag_index = entry->tag_index;
 
 	if (tag_index != NONE)
 	{
-		function_b7930(data, tag_index, NONE, NULL);
+		function_b7930(data, entry->tag_index, NONE, NULL);
 		data->position = datum->position;
 		data->scale = datum->scale > 0.0f ? datum->scale : 1.0f;
 		function_11df60(&datum->rotation, &data->forward, &data->up);
