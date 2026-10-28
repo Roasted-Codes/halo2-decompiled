@@ -111,6 +111,8 @@ static inline vector3f *function_x84d9e8(vector3f *vector, vector3f const *axis,
 // void rotation return 6; cosine-in-place i/j/k/i+j/i+k/j+k 12 each;
 // sine-in-place cross i 15; single-precision trig 46; scalar trig results 6;
 // value-returning cross 123; reference cross interface 6; array component cross 6.
+// Axis/input/both scalar snapshots 48/53/56; paired products 34;
+// cross inputs by value axis/input/both 150/157/193; rotation axis by value 150.
 // @retail 0x18c250
 bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
