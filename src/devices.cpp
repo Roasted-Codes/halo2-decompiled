@@ -1263,6 +1263,9 @@ bool function_0b6760(s_index_pair const *pair);
 // it also re-reads the animation-state offset after the result/state stores. Plain index 389; plain
 // index and definition 421; plain index with the result declared first 394; plain index with a
 // ternary state 416; result declared first 301 (two-point gain dropped).
+// Round 230: existing state-admission helper with independent tag-pointer name/result-first
+// homes 400/400/400/400; the same four with ordinary index 369/369/370/370. Original
+// admission, index, declarations and scalar homes restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

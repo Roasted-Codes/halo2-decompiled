@@ -276,6 +276,8 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
 // Round 224: Uniform node-byte observations with branch/broad count, initialized/filled output
 // and original/success-local transform lifetimes 219/199/223/199/219/199/223/199. Original node snapshot and scopes restored.
+// Round 230: native list count/capacity signedness and readonly release-input metadata,
+// four header forms and their readonly-release pairs, all eight 190. Original types restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {
