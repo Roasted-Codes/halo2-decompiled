@@ -699,7 +699,7 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 438 (was 453): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 438 (was 438): frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
 // Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
 // level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
@@ -754,6 +754,10 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Round 365: actual selected primary-field pointer with native destinations, special input
 // snapshot and native routing domains: 453/461/441/455/447/461/438/454. The 438 plain
 // form loses the dispatcher; input snapshots change the entry roles. All restored.
+// Round 207: native two-gain field array, uniform at-use gain reads and plain paired
+// front/rear/front+rear/tail/front+tail/rear+tail/all loops 466/474/475/497/490/492/507;
+// all plus the repeated buffer send loop 523. Every loop uses a real channel/gain
+// index. All restored; frame 0xc, selected-level and SSE staging differences remain.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

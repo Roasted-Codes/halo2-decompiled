@@ -213,6 +213,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Round 364: independent data outputs at entry, base/weighted/countdown and
 // pairs/all 295/304/304/294/283/304/290; all with long sample frame 312.
 // Original separate construction points restored; frame and getter expansion remain.
+// Round 207: distinct weighted channel with native copy/default-assignment/member copy
+// 308/308/380; each with twice-used long sample frame 332/332/375;
+// copy/member copy with native sample-result enum 316/390. All exact-match-only
+// storage forms restored; frame 0x30, getter expansion and ordinal spill remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

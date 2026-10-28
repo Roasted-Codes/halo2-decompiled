@@ -4111,7 +4111,7 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-// score 440 (was 464): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
+// score 440 (was 440): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
 // Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
@@ -4147,6 +4147,11 @@ struct s_score_zone_view
 // both texts 534/440/536; score publication inside both text scopes 464; copy forms with
 // those scopes 534/440/536; team copy plus team publication scope 534. Keep only the
 // individual own-text bounded-copy call (plain 440, 2688 B); extra scopes restored.
+// Round 207: seven color-helper inline-declaration subsets and all noinline 440 each.
+// Complete returned color values: rival/own/both team, held/free/both zones,
+// all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
+// forms rejected despite the 423 first-transfer recovery. Existing rival output
+// object consumed directly 493. All restored; team-color/zone/charge allocation remains.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
