@@ -179,6 +179,17 @@ PRIVATE inline long unit_action_weapon_get(s_unit_action_unit *unit, bool second
 	return weapon_index;
 }
 
+/* the weapon in a unit's hand (0 or 1), read through the hand's slot index */
+PRIVATE inline long unit_action_hand_weapon_get(s_unit_action_unit *unit, long hand)
+{
+	short index = (&unit->current_weapon_index)[hand];
+	long weapon_index = NONE;
+
+	if (index != NONE)
+		weapon_index = unit->weapon_object_indices[index];
+	return weapon_index;
+}
+
 /* ends an action (its finished handler), and clears it */
 // @retail 0xe6960
 void function_e6960(long unit_index, long type)
@@ -540,12 +551,17 @@ bool __stdcall function_e7280(long unit_index, s_unit_request *request)
 	return result;
 }
 
+// score 25 (was 44): about 14 of the count is the jump table read as code. Retail
+// keeps the data pointer and the hand index in edx and the weapon in esi to the
+// call; ours swaps them (esi, then edx). Tried: the hand index declared first 44;
+// the hand index renamed 25; a ternary for it 43; the weapon default before the
+// result 26; a 600 s permuter run, best 23 (volatile only).
 // @retail 0xe7320
 bool __stdcall function_e7320(long unit_index, long type)
 {
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	bool result = false;
 	long weapon_index = NONE;
+	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	short index;
 	long slot_index;
 
@@ -577,8 +593,12 @@ bool __stdcall function_e7320(long unit_index, long type)
 // @retail 0xe73c0
 void __stdcall function_e73c0(long unit_index, long type)
 {
-	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), type > 1);
+	long weapon_index;
 
+	if (type > 1)
+		weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 1);
+	else
+		weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 0);
 	if (weapon_index != NONE)
 		function_1015a0(weapon_index);
 }
@@ -1168,7 +1188,7 @@ void function_e8460(long unit_index, bool primary)
 // @retail 0xe8510
 bool function_e8510(long unit_index, bool immediate, bool silent, bool primary)
 {
-	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
+	long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
 	bool result = true;
 
 	if (weapon_index != NONE)
@@ -3721,9 +3741,12 @@ bool __stdcall function_ecb80(long unit_index, s_unit_request *request)
 				memset(actions->active, 0, sizeof(actions->active));
 				actions->unknown36 = 0;
 				function_1e54d0((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x3dc, 1);
-				return true;
+				result = true;
 			}
-			return false;
+			else
+			{
+				result = false;
+			}
 		}
 	}
 	return result;
@@ -4588,9 +4611,21 @@ void function_ee7f0(long unit_index, long state)
 		user_index = unit_action_player_value28_get(player_index);
 	}
 
-	bool secondary = state == 0x13 || state == 0x15 || state == 0x19;
+	long secondary;
 
-	function_168896(user_index, unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), secondary),
+	switch (state)
+	{
+	case 0x13:
+	case 0x15:
+	case 0x19:
+		secondary = true;
+		break;
+	default:
+		secondary = false;
+		break;
+	}
+
+	function_168896(user_index, unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), secondary),
 		secondary, state);
 }
 
