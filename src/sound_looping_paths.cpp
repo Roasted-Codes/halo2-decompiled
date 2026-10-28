@@ -154,7 +154,7 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 	return index;
 }
 
-// score 886 (was 886): Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice carriers remain.
+// score 886 (was 886): frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice carriers remain.
 // Earlier 919 (was 919): count/array homes and choice registers differ in the 0x4e0 frame;
 // count/array homes and choice registers differ in the 0x4e0 frame;
 // Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice registers remain.
@@ -182,8 +182,16 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // Round 180 current gain active/inactive/outside state/both gains/active-outside/inactive-outside/all/byte
 // outside 890/889/887/893/891/890/894/887 (fast); all restored. Frame 0x4e0 agrees; entry zero,
 // query-array/count and primary homes remain.
+// Native floating decibel fields/conversions 998 (frame 0x4dc); all seven ordinary-
+// inline conversion-helper combinations 998 each. Original integer-bit fields,
+// helpers, query boundary and complete body restored.
 // Datum consumed-bit/selection bits/both 886/886/886; audible/muted bit assignments alone and with
 // consumed/selection/both 911/911/911/911; all with allocator bits 911. Original word view and statements restored.
+// Round 369: short-query graph choice pointer early/late count 962/922; all query-array names and gains/portal/cluster names individually 886 each; early/late pointers with all names 962/922. All restored.
+// Query arrays, matching records and inactive-pass workspaces ended at their real phase
+// boundaries, all seven subsets and producer-count ending after snapshot: 886 each.
+// Round 224: shared inline iterator first/second/both 968/1007/1103; shared calling iterator
+// first/second/both 905/915/899; real iterator-step first/second 953/919. Original scans restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

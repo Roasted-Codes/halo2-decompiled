@@ -225,6 +225,17 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 218: Direct ray-start observations, polygon inline/noinline, both direct-ray combinations,
 // direct ray with point-set/cross/normalize forceinline declarations:
 // 282/192/192/282/282/282/282/282 (fast control 192). Original restored.
+// Round 222: dominant-axis long/word/dword/signed byte 192/193/192/193;
+// the same four carriers with immutable native origin construction 192/193/192/193.
+// All restored; origin retention and edge homes still leave frame 0x84 versus 0x90.
+// Round 207: existing array-based unit-scaled differences for ray direction, both edges,
+// ray plus edges, offset, edges plus offset, ray plus offset, all differences and second
+// edge alone: 192 each at 1007/1001. All exact-match-only forms restored;
+// frame 0x84 versus 0x90 and origin/edge homes remain.
+// Coupled origin-start/edge-pair/plane-result lexical identities, all seven subsets and complete
+// projection/ray identities: 192/192/192/192/192/192/192/192. Origin retention and edge spills still leave
+// the short frame
+// original identities restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

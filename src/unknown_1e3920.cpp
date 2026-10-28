@@ -993,7 +993,7 @@ long function_1e4990(long character_index);
 void function_d5c90(long unit_index, real *body, real *shield);
 void __stdcall function_ccff0(long unit_index);
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode);
-short function_cccd0(long unit_index, short type, char count);
+short function_cccd0(long unit_index, short type, short count);
 struct s_effect_owner;
 void function_b7930(void *data, long tag_index, long object_index, s_effect_owner const *owner);
 long __stdcall function_b7b40(void *creation);
@@ -1679,6 +1679,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // both with long slots mutable/const 293/293; both with signed-byte slots mutable/const 268/268 (fast
 // control 270). Two-point gain rejected; original scalar-index inputs and short slots restored. Frame
 // 0x14 agrees; index/pool roles and scalar/ammunition homes remain.
+// Round 22: existing object/header/moving/nested-object accessors 263 each; actor-index
+// address read 263; split/reversed entry declarations 263/263; const actor index 263.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

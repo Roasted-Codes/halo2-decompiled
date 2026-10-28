@@ -1118,6 +1118,10 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
 bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const *vector,
 	long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *result);
 
+/* retail calls this out of line (0xcf040, 0x1c8df0, 0x24da18, 0x24e59f) */
+__declspec(noinline) bool function_16a040(long flags, point3f const *point0, point3f const *point1, long ignore_object_index,
+	long ignore_unit_index, s_collision_result_1697c0 *result);
+
 /* ray_cast_test between two points */
 // @retail 0x16a040
 bool function_16a040(long flags, point3f const *point0, point3f const *point1, long ignore_object_index,
@@ -1555,7 +1559,7 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 			prism->plane.n.n[indices[1]] * point->y) / prism->plane.n.n[axis];
 }
 
-// score 552 (was 552): Frame 0xb964 agrees; sum homes and EBX/ESI zero carrier remain.
+// score 552 (was 552): frame 0xb964 agrees; sum homes and EBX/ESI zero carrier remain.
 // sum homes and zero register; accumulation loops 597;
 // average loops 554; midpoint loop 554; branch-local ray results 552;
 // face classification from normal selection 553.
@@ -1572,6 +1576,12 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // separation vector, contact midpoint/half and all native producers: 552 each. All restored.
 // Round 227: Native prism/query-origin/initial-sum values, their pairs/all,
 // all with CRT prism construction 779/758/554/886/779/758/886/886. All restored.
+// Round 369: actual clamped point candidate/first/second defaults 628/623/628; with nearest result 629/624/629; candidate/second with completed face result 627/627. All restored.
+// Round 235: query/candidate/contact consumption scopes, all seven combinations 552 each; midpoint-half consumption scope 552.
+// Round 201: byte inside/face/normal decisions, all seven nonempty subsets, and all three signed
+// bytes 552 each (2898/2882). Original canonical bools, accepted word counts and geometry restored.
+// Round 226: Plain component loops for paired edge inputs/contact direction/residuals and
+// their pairs/all [672, 594, 556, 680, 674, 594, 682]; all with the three ray scales 660. All restored.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

@@ -643,6 +643,11 @@ struct s_sound_label_play
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play);
 
 /* sends the unit request 8 between two updates of the unit */
+// score 24 (was 24): frame 0x20 agrees; the first update receives the unit in
+// EBX instead of retail EDI, so the caller retains it in EBX rather than ESI.
+// Existing request helper 77; producer workspace/request scope 24/24;
+// zero/final-type aggregate initialization 29/29; early clear 27;
+// inline update with helper/original workspace 77/24. All restored.
 // @retail 0xc4820
 void __stdcall function_c4820(long unit_index)
 {
@@ -788,6 +793,11 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 }
 
 /* clears the unit's flag 2 at +0x10a and its state that depends on it */
+// score 23 (was 23): indexed state clear still expands to load/modify/store;
+// the final call receives the unit in EAX rather than retail ESI and becomes a tail jump.
+// Existing indexed/both byte helpers 22/22; state pointer 22; subscript 23;
+// explicit state assignment 23; native state flags via pointer/at use 22/23;
+// native flags with masked lookup 22. Original body restored.
 // @retail 0xcaf00
 void function_caf00(long unit_index)
 {
@@ -930,8 +940,12 @@ long function_ccb80(long unit_index)
 }
 
 /* adds to the unit's count of a grenade type and makes it current */
+// score 2 (was 27): the short delta recovers the stack load, EBX save and cleanup;
+// only the base/index operand order in the count update and address still differs.
+// Short/long/word delta 2/2/2; byte delta 27; offset-first addresses 2/2/2/27.
+// Native element address 2; base advance/shared unit/existing masked lookup 4/4/4.
 // @retail 0xcccd0
-short function_cccd0(long unit_index, short grenade_type, char delta)
+short function_cccd0(long unit_index, short grenade_type, short delta)
 {
 	char *count = UNIT_GET(unit_index)->grenade_counts + grenade_type;
 

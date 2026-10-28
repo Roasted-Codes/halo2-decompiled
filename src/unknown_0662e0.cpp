@@ -509,14 +509,46 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 	}
 }
 
-// score 363 (was 363): constant-five lifetime and first-table induction differ;
+// score 363 (was 363): frame 0x20 agrees; constant five, first-table induction and flag
+// initialization differ. Register allocation differs from the first loop on. Retail keeps i in
+// ebp and walks a pointer in esi over value84 (value40 at [esi - 0x44]), comparing it with
+// &value84[1] and &value84[4]; the inlined levels loops walk pointers the same way. Ours keeps i
+// in esi with scaled addressing and holds 0 (ebp) and 1 (edx) in registers, where retail holds only
+// 5 (edx, from the value28 store to the value1b0 store) and later 2000 (ebp) and 5000 (esi) for the
+// value774 adds. Retail forwards the stored value28 and value2c into the value1b0/value368 and
+// value18c/value358 copies across every table loop (5 in edx, then immediates); ours reloads both
+// after any loop that stores into the global's arrays (with every table loop removed, as a
+// diagnostic, ours forwards value28 into value1b0 too; removing the rounding asm does not), so
+// the copies stay as copies: written as literals they hoist 65536 into a register instead.
+// Retail's forms, which score higher here only through that allocation: flags as memset then
+// flags[1], [6], [7] = true (dword, dword, byte, then three byte stores; 449); the value774 loop
+// as i <= 39 (jle against [39]; 449); value1b0 and value368 as literal 5 (388), with 65536 for the
+// value2c copies too (420); all of these 419 (417 in round 68).
+// Tried: i < 2 (454), its own loop variable for the first loop (363); initial real stores first
+// 363; outer word index 469 signed or unsigned; column word index 464; both signed-word indices
+// 512; first-table result names 363; loop-scope steps 363; initialized steps 363; first regular
+// table tail loop 531; second tail loop 530; zero inline depth 610; depth one 363; frame pointer
+// 487; global optimization off 1180; size preference 538; integer stores reversed 363; result
+// calculation reversed 362; table stores reversed 363; shared multiplier 363; first interpolation
+// local 363; second interpolation local 363; explicit low cases 448; shared rounding 460;
+// zero-prefix split 461; column traversal 446; triangular pairs 497; default-first matrix score
+// 646; redundant first-table clear removed 454; branch-local table publication 478; signed-byte
+// flags 363; first-table short counter 445; single grid publication 639; short matrix score 457;
+// unsigned table outputs 363; unsigned steps 363; byte outer ordinal 478; shared five-derived
+// observation 460; shared capacity observation 461; byte matrix row 475; byte column 464; both
+// byte ordinals 498; native-word flag array 432; native-long flag array 455; index name 363;
+// column name 363; both names 363; index declaration order 363; step names 363; common first-table
+// factor 363; shared-level parameter/cached base 444/444; ordinary inline with field/parameter/
+// cached base 573 each; low table first with field/parameter/cached base 478/362/362; value84
+// stored before value40 363 (same code); flags zero-initialised then three true stores 453;
+// table values zero-initialised with one `i > 1` arm 364.
+// constant-five lifetime and first-table induction differ;
 // initial real stores first 363; outer word index 469 signed or unsigned;
 // column word index 464; both signed-word indices 512. Original kept.
 // first-table result names 363; loop-scope steps 363; initialized steps 363;
 // first regular table tail loop 531; second tail loop 530.
 // Zero inline depth 610; depth one 363; frame pointer 487;
 // global optimization off 1180; size preference 538. Original kept.
-// register allocation differs from the first loop on. Retail keeps i
 // register allocation differs from the first loop on. Retail keeps i
 // in ebp and walks a pointer in esi over value84 (value40 at [esi - 0x44]), comparing it
 // with &value84[1] and &value84[4]; the inlined levels loops walk pointers the same way.
@@ -556,6 +588,10 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // Round 23: shared-level parameter/cached base 444/444; ordinary inline with field/parameter/
 // cached base 573 each; low table first with field/parameter/cached base 478/362/362.
 // One-point gains rejected; original level producer and initialization order restored.
+// Round 239: direct descending first-table/levels/both indices 452/476/476;
+// matrix rows 490, with first-table/levels/both 493/490/505; all with descending
+// columns 470. Constant forwarding and native ascending induction remain; original
+// indexed walks, existing level producer, tables and body restored.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {
