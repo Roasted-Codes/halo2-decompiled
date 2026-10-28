@@ -2226,6 +2226,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 27: actor-step/getter expansion boundaries, ordinary/inline/forced
 // in all eight non-original pairs [283,283,283,283,283,283,283,283]. Original
 // declarations and bodies restored; early reset SI and later homes remain.
+// Round 250: existing native structure count 283; with per-iteration candidate,
+// short/long cursor and selected carriers 384/336/383/337;
+// corresponding direct indexed fields 374/336/375/337. Original body restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

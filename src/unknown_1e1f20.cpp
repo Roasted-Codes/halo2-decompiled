@@ -675,7 +675,9 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 277 (was 277): Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// score 285 (was 285): frame 0x1c versus 0x20, early actor/pool allocation,
+// cleanup countdown and slot homes remain.
+// Earlier: Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
 // Round 141: the memory loop is the existing joint_decline (0x26ed40) inlined in retail (test through the
 // cached actor, body re-derived, participant index re-read per store), BLOCKED-BY 0x26ed40: its /Ob1
 // file keeps it out of line (a call there 317/343). The tail block (flag 9 clear, as 0x1c7bb0/0x1e3920
@@ -749,9 +751,11 @@ void swarm_leader_detach(long actor_index);
 // Prop walk through 0x26be00/0x26be30 alone (fresh pool reads after the callback) 298 (996 bytes);
 // tail read per use 282; prop record re-derived per use 278; named bool for the definition bit 277;
 // the bit test as `(bool)((x >> 3) & 1)` 291 (retail: shr/and al, stored in the dead index slot).
-// score 285 (was 277): the frame is 0x1c instead of 0x20, the actor byte offset is kept in EBX
-// instead of EAX and the slot index in ECX instead of EDX, and the cleanup loop keeps its
-// countdown in a register instead of a stack slot.
+// Round 250: existing cleanup helper with fresh admission and long/short/byte/unsigned
+// indices 335/335/325/335; cached admission with those domains
+// 347/347/346/347. Shared declaration unchanged; original body restored.
+// Shared inline/forced declaration diagnostics, each long/short/byte/unsigned,
+// 330/303/285/330 and 330/303/285/330; declarations restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

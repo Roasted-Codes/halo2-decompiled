@@ -107,6 +107,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 249 (782 bytes); type set only on the unblocked exit 228; the local in the loops too 216; a 600 s
 // permuter run 158 only through a volatile read; an entry pointer for the reads 195. Without the local: the sibling output order 234,
 // with the cursor inside the flag test 232; count renamed result 199 (identical).
+// Round 250: two-use pending handle 199; pending array cursor 258; both 258;
+// active array cursor 207; handle/active 207; both cursors 213; handle/both 213;
+// all with cursors before chain queries 214. Original traversal restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
