@@ -426,11 +426,15 @@ s_scenario_cluster_reference *cluster_reference_upper_bound(s_scenario_cluster_r
 
 /* whether an object is in one of the clusters a pair of structure bsps
    share (true when the scenario lists none) */
+// score 59 (was 71, full build; the reduced image disagrees): result as a byte. Retail walks the
+// references through a pointer to their cluster field and aligns the loop; the loop as while with
+// a break after the increment 75, a break at the end 81, the result test last 80, a do-while 78;
+// a volatile cluster read, the flags in the other order or the call in a nested if no change.
 // @retail 0xd5390
 bool function_d5390(long object_index, long key)
 {
 	s_scenario_block *references = (s_scenario_block *)((byte *)g_4e0350 + 0x380);
-	bool result = false;
+	byte result = false;
 	bool listed = false;
 
 	if (references->count > 0)
