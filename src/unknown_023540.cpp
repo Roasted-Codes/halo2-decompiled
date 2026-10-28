@@ -2788,6 +2788,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
 // Round 219: Normalized first/second/maximum scalar role-name masks 1-7 and all plus both trig
 // names: 334/334/334/334/334/334/334/334. Original body restored.
+// Round 201: split flag/tag rejection, positive flag-first admission, nested flag-first admission and
+// nested flag rejection 334 each; tag-first split/positive/nested/mixed admission 370 each (2023 bytes).
+// Original guard and all sampler, packing, scale, rotation and vertex operations restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
