@@ -1373,6 +1373,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 218: Completed collector counts cached, player/team/both long 795/782/832;
 // native short 795/789/813; mixed short-long/long-short 832/813. All restored.
 // Frame/viewer/coordinate homes remain; promoted player-only count recovers frame 0x79c but regresses.
+// DH round 215: Row-geometry/team-RGB/player-RGB home identities, all seven subsets,
+// and all three with the heading-rectangle identity 756 each. Frame/viewer/coordinate homes
+// unchanged; every original operation and body restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

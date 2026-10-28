@@ -244,6 +244,9 @@ union s_185be7
 // Round 235: Native output flag dword/analog field/trailing bytes, paired and complete layouts
 // 780/780/778/780/778/778/778; complete trailing dword 812. Two-point leads rejected; original output layout
 // and body restored.
+// DH round 215: Pointer-output flag-helper formal orders (0,2,1)/(1,0,2)/(1,2,0)/
+// (2,0,1)/(2,1,0) 780 each; canonical byte/long predicate inputs 780/778; actual
+// destination reference 780. Two-point lead rejected; original contracts and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
