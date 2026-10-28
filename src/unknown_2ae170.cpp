@@ -643,6 +643,10 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // second-third-first, third-first-second and third-second-first 378 each (fast control 378/967);
 // fourth order with both repeated levels 416; fourth order with existing raw append 390.
 // Current inlined submission scratch still gives frame 0x130; every body form restored.
+// Current submission graph: complete original buffers/settings/both observations 398/370/397 fast;
+// both copied-level field references 378, with original buffers 398; native settings-copy producer
+// 384, with original buffers 426; native buffer-record snapshot 390 (fast control 378).
+// Original settings observations 396 plain, worse than full 393; all restored. Frame 0x130 remains.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -692,7 +696,7 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 453 (was 453): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 438 (was 453): frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
 // Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
 // level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
@@ -740,13 +744,17 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Round 234: primary/front consumption scopes and right-first destinations
 // 453/453/453/449/449/449/449; special workspace end 453; complete target flag word
 // 453 with right-first 449. Below-margin gains restored.
+// Asymmetric first/second long destinations 446/462; first/second word 438/461;
+// first/second signed short 438/461; first dword alone/right-first 446/448 (fast).
+// First unsigned-word destination retained: 438 plain, dispatcher exact; other destination remains
+// byte and both value sets are unchanged. Selected-level/SSE homes still differ in frame 0xc.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
 	if ((bool)((parameters->flags >> 2) & 1))
 	{
 		bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
-		byte left = alternate ? 0 : 6;
+		word left = alternate ? 0 : 6;
 		byte right = alternate ? 1 : 7;
 		real level2 = rear ? m_settings.level20 : m_settings.level28;
 		real const &level = rear ? m_settings.level1c : m_settings.level24;

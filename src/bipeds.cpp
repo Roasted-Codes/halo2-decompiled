@@ -3364,6 +3364,10 @@ real magnitude3d(vector3f const *v);
 /* an actor riding a fast vehicle that is about to leave the ground (no
    ground under it, or none along its flight) says so, at most once every
    half second: falling (0x54), flipping over (0x56) or a jump (0x55) */
+// score 105 (was 169): Frame 0x84 agrees; byte/word read, float scheduling and normal-copy homes differ.
+// First/second/both branch-selected collision calls 215/225/105 fast; both retained.
+// On both calls: state at test 105; shared vector/point/both setters 107/110/111; carrier name 105.
+// Complete branch-selected calls 105 plain; original operands and helper roles preserved.
 // @retail 0xe3380
 void __stdcall function_e3380(long arg_159e6d)
 {
@@ -3394,8 +3398,11 @@ void __stdcall function_e3380(long arg_159e6d)
 			vector.j = g_4687bc->j * 8.0f;
 			vector.k = g_4687bc->k * 8.0f;
 			collision.unknown24 = NONE;
-			if (!function_1697c0(function_ddf60(arg_159e6d) ? 0x800001 : 0x84000d, &start, &vector, NONE, NONE,
-				(s_collision_result_1697c0 *)&collision))
+			if (!(function_ddf60(arg_159e6d) ?
+				function_1697c0(0x800001, &start, &vector, NONE, NONE,
+					(s_collision_result_1697c0 *)&collision) :
+				function_1697c0(0x84000d, &start, &vector, NONE, NONE,
+					(s_collision_result_1697c0 *)&collision)))
 			{
 				vector3f flight;
 
@@ -3413,8 +3420,11 @@ void __stdcall function_e3380(long arg_159e6d)
 					vector.j = flight.j * 8.0f;
 					vector.k = flight.k * 8.0f;
 					collision.unknown24 = NONE;
-					if (function_1697c0(function_ddf60(arg_159e6d) ? 0x800001 : 0x84000d, &start, &vector, NONE, NONE,
-						(s_collision_result_1697c0 *)&collision) && collision.normal.k > 0.3f)
+					if ((function_ddf60(arg_159e6d) ?
+						function_1697c0(0x800001, &start, &vector, NONE, NONE,
+							(s_collision_result_1697c0 *)&collision) :
+						function_1697c0(0x84000d, &start, &vector, NONE, NONE,
+							(s_collision_result_1697c0 *)&collision)) && collision.normal.k > 0.3f)
 					{
 						falling = false;
 					}
@@ -3444,6 +3454,10 @@ void __stdcall function_e3380(long arg_159e6d)
 
 /* the dead biped's animation: its getting-up animation once it can stand,
    the ragdoll's pose while it lies, or its landing */
+// score 171 (was 171): Frame 0xc agrees; receiver/index operand order, repeated flag test and result/SSE homes differ.
+// Result first 174; explicit status exits 173; current/primary/tag receivers at uses 182/177/206;
+// initial success joined to result 201; current observations/status exits 185; result first too 186.
+// Original body and every callee contract restored.
 // @retail 0xe3c90
 bool __stdcall function_e3c90(long arg_159e6d, long *names, s_biped_physics_output *output)
 {

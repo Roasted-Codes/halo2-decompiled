@@ -118,6 +118,9 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // Shared prepare/apply stages, each called twice: immediate 501; both prepared 564; magnitude
 // first 561; original double-angle preparation 559 (retail frame 0x40); absolute offset 531;
 // absolute/magnitude-first 531; native quadrant 564; value-input application 564. All restored.
+// Raw coordinates reused as first/second/both normalized component locals 501/501/501;
+// vertical normalized components first on original/first/second/both reuse 551/551/551/551;
+// both coordinate reuses with shared trig magnitudes 501. All restored; frame 0x38 remains.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {
