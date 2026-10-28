@@ -498,7 +498,6 @@ void function_1cd90();
 byte *g_485a80;
 // Render-state storage read by the two external state helpers.
 // Attribute pairs terminated by 255, as consumed by the retail state helper.
-byte g_43f8df[] = {59, 0, 2, 4, 2, 6, 2, 5, 2, 3, 1, 255};
 
 class c_surface_reference_view
 {

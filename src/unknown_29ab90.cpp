@@ -59,7 +59,8 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 	arg_2->k = arg_0->k * arg_1;
 }
 
-// score 396 (was 428): magnitude helpers now give retail's copies, memory-operand products and epsilon;
+// score 396 (was 396): frame 0x5c versus 0x64, actor/input transport and x87 homes differ.
+// Earlier 396 from 428: magnitude helpers now give retail's copies, memory-operand products and epsilon;
 // frame 0x5c versus 0x64 and the convention remain: ours takes arg_0 in ECX and arg_2 in EAX (kept in
 // EBX) and folds the +0x290 vector into [ebp+0x290]; retail keeps that pointer in EBX, loads arg_2 into
 // ESI after the position call and takes only arg_0 in EAX. x87 homes also differ.
@@ -110,6 +111,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // products 463; plus by-value magnitude 396 (kept); magnitude sum written i,j,k 396; magnitude
 // zero test as an if statement 453 (retail's branch and slot, one instruction off elsewhere).
 // With the disabled caller enabled (diagnostic) the convention stays ECX/EAX.
+// Round 231: direction/velocity/paired field references 396/396/396; history/direction-
+// history/velocity-history/all three references 397/397/397/397; all plus settings reference 396.
+// Original body restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
