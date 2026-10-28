@@ -494,12 +494,20 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // uniform cluster at use 272, with bool/short/long result 272 each. All restored.
 // Round 210: Late transition/fade/tag and their three strict pairs give
 // 242/244/266/253/278/291; early tag/fade alone 270/267. Original restored.
+// Round 16: query declarations portals-indices-clusters/portals-clusters-indices 223 each;
+// environment-index lexical name 223; request-field duration workspace 247; plain-inline cue helper 452;
+// forced listener search 223; separate query arrays and count declared after them 223 each.
+// Original body and both helper declarations restored.
 // Lane 10 r11: retail's camera test is `listener * 0x48 == -0x48` (a NONE index test) with
 // the camera address formed after the first-listener scan. NONE-guarded camera lookup 312;
 // camera test dropped, lookup inside the entry test 261 (1033 bytes); first-listener helper as
 // a NONE result set in the scan (retail's scan exactly) 235 (1033); that with the existing
 // local-player test 0x14ddc0 and the lookup inside 293 (retail's cmp/setne tests); with the
 // lookup at each use after the first-listener test 286. Original body and helper restored.
+// Round 16: query declarations portals-indices-clusters/portals-clusters-indices 223 each;
+// environment-index lexical name 223; request-field duration workspace 247; plain-inline cue helper 452;
+// forced listener search 223; separate query arrays and count declared after them 223 each.
+// Original body and both helper declarations restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

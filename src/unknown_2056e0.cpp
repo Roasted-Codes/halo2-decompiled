@@ -191,6 +191,11 @@ PRIVATE __forceinline void motion_inverse_inertia_local(c_vehicle_step_motion *m
 // retail's subtraction from the zero register and retail's length (1265) but 221 fast; with function-scope
 // rotation (frame 0xc4, rotation at +0xac) 232; with one integration loop 221; acceleration folded into the
 // angular loop 270; inverse-mass products reversed 221 (no change). Float register allocation then differs.
+// Round 66 (fast): the inverse-mass products follow definition order: with the reciprocal defined before the
+// force block they scale each component in place as retail and every later SSE register then agrees (aligned
+// 105 -> 58) but 170 is not kept (it moves a memory read past a call, and retail divides late, after the motion
+// load); defined at the top 263 (spilled across the state query); before the velocity call 200; before the
+// motion load 184; written at each use 184; `x = x * reciprocal` 184; `+=` force/torque adds 184.
 // Lane 9 r25: rotation declared in a block around the inertia query and assigned after it 221 (frame
 // 0xc4, raw inertia +0x70, rotation +0xac as retail's; first difference +0xfd: retail loads the motion
 // before the reciprocal and scales each component in place, ours copies the scalar); with the

@@ -713,7 +713,7 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 52 (was 172): only the frame (0xac versus 0xa8) and the order of two join stubs differ. Retail
+// score 52 (was 52): only the frame (0xac versus 0xa8) and the order of two join stubs differ. Retail
 // packs the atan2 temp and range into the direction vector's first dword and puts settings above the
 // vector; ours gives range and settings their own dwords below it (a spilled scalar never shares a vector's
 // home in VC7.1, so retail's yaw/range home may be a memory local of some kind).
@@ -799,6 +799,10 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // 52 (names do not move these homes); direction declared in the bounds block 52; amount/movement
 // declared at camera-block scope 52; to_upper/from_lower declared before range 52 (all identical code);
 // direction and the angle in an inline helper 292 (not inlined; frame 0xa0), forceinline 52 (identical).
+// order) 52; in-place positive-range helper 52.
+// Round 66: direction helper returning the vector by value 185 (frame 0xb8); direction and the angle call in
+// a forceinline helper 52; the clamp's two negated tests as nested ifs 52; settings between the bounds with
+// direction at function scope after maximum/after marker 52/52 (direction stays at +0x24).
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {

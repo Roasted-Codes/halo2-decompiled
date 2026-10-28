@@ -612,7 +612,7 @@ PRIVATE inline void squad_actor_begin_inline(s_squad_actor_iterator *iterator, l
 	}
 }
 
-PRIVATE inline s_actor_datum *squad_actor_next_inline(s_squad_actor_iterator *iterator)
+PRIVATE __forceinline s_actor_datum *squad_actor_next_inline(s_squad_actor_iterator *iterator)
 {
 	s_actor_datum *actor = NULL;
 	if (g_4f55d0->active && iterator->next_actor_index != NONE)
@@ -2568,7 +2568,9 @@ short function_290cd0(short arg_0, long arg_1, long arg_2, short *arg_3, short *
 bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
-// score 109 (was 152): Frame 0x1c agrees; trigger predicate width, pointer retest and iterator head remain.
+// score 50 (was 109): frame 0x1c, the trigger flag, the task pointer test and the actor walk agree. Left: the
+// squad index for the first 0x1fb8a0 call (retail `mov eax, ebp`, ours reloads its home, 2 bytes longer),
+// which shifts the later jump targets and drops the actor loop's alignment nop.
 // Earlier: task zeroing/retest, predicate load and iterator head remained.
 // Earlier: frame 0x1c agrees; task zeroing/retest and iterator head remain; optional producer scope, delay scope, both scopes, native trigger entry, signed entry index, threshold selection, iterator name and native entry with producer scopes each 152.
 // frame 0x1c agrees; task zeroing/retest, optional-output width and iterator head differ.
@@ -2587,54 +2589,55 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // Round 198: On the retained pending-result graph, direct inputs/dword predicate/both
 // 109/109/109; shared actor step alone/with direct inputs/predicate/both 132 each;
 // signed pending/result pair 109. Original input views, predicate and actor walk restored.
+// Round 104: the task pointer as the NONE-guarded ternary 61; the actor walk through the file's step, out of
+// line 72, header step 72, header step with a forceinline declaration 72, the file's step defined forceinline
+// 52 (kept); parameters read directly 52 (kept); the trigger flag as `(... & 1) != 0` 50 (kept); casts dropped
+// on the delay value 50; delay value declared last 50; pending word at each use 50; structured exits for the
+// three gotos 50 (kept); ticks output declared first 50; permuter 600 s, best only by a char delay value.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
-    long const *local_0 = &arg_1;
-    long selected_choice = arg_0;
-    long const *choice = &selected_choice;
-    byte *local_1 = (byte *)squad_get(*local_0);
-    if (*choice != NONE && (!(local_1[2] & 0x40) ||
+    byte *local_1 = (byte *)squad_get(arg_1);
+    if (arg_0 != NONE && (!(local_1[2] & 0x40) ||
         *(short *)(local_1 + 0x2a) == NONE ||
         !((*(byte **)((byte *)g_4e0350 + 0x244) + *(short *)(local_1 + 0x2a) * 0x7c)[0x24] & 1)))
-        function_202e90(*local_0, (short)*choice, false);
+        function_202e90(arg_1, (short)arg_0, false);
     else if ((local_1[2] & 0x40) && *(short *)(local_1 + 0x2a) != NONE)
     {
         short local_2 = NONE;
         short local_3;
         word pending = *(word *)(local_1 + 0x62);
-        word local_4;
+        word local_4 = (word)NONE;
         if (pending != (word)NONE)
         {
-            if (*(short *)(local_1 + 0x64) > 0)
-                goto local_16;
-            local_4 = pending;
-            local_2 = *(short *)(local_1 + 0x66);
+            if (*(short *)(local_1 + 0x64) <= 0)
+            {
+                local_4 = pending;
+                local_2 = *(short *)(local_1 + 0x66);
+            }
         }
         else
         {
-            local_4 = function_290cd0(*(short *)(local_1 + 0x2a), *local_0, NONE, &local_3, &local_2);
-            if (local_4 == (word)NONE)
-                goto local_16;
-            if (local_3 > 0)
+            local_4 = function_290cd0(*(short *)(local_1 + 0x2a), arg_1, NONE, &local_3, &local_2);
+            if (local_4 != (word)NONE && local_3 > 0)
             {
                 *(short *)(local_1 + 0x64) = local_3;
                 *(word *)(local_1 + 0x62) = local_4;
                 *(short *)(local_1 + 0x66) = (short)local_2;
-                goto local_16;
+                local_4 = (word)NONE;
             }
         }
         if (local_4 != (word)NONE)
         {
-            function_202e90(*local_0, (short)local_4, true);
+            function_202e90(arg_1, (short)local_4, true);
             if ((short)local_2 != NONE)
-                function_1fb8a0(*local_0, (short)local_2);
+                function_1fb8a0(arg_1, (short)local_2);
         }
     }
-local_16:
-    if (*(short *)(local_1 + 0x62) == NONE && !local_1[0x60] && *(short *)(local_1 + 0x2a) != NONE)
+    if (*(short *)(local_1 + 0x62) == NONE && !local_1[0x60])
     {
-        byte *local_5 = *(byte **)((byte *)g_4e0350 + 0x244) + *(short *)(local_1 + 0x2a) * 0x7c;
+        byte *local_5 = *(short *)(local_1 + 0x2a) != NONE ?
+            *(byte **)((byte *)g_4e0350 + 0x244) + *(short *)(local_1 + 0x2a) * 0x7c : NULL;
         if (local_5 && *(long *)(local_5 + 0x5c) > 0 && *(long *)(local_5 + 0x64) > 0)
         {
             byte *local_6 = *(byte **)(local_5 + 0x68);
@@ -2649,7 +2652,7 @@ local_16:
                 byte *local_10 = *(byte **)(local_6 + 8) + local_9 * 8;
                 word local_11 = *(word *)(local_10 + 4);
                 if (local_11 != (word)NONE &&
-                    function_290e20((short)local_11, *local_0, NONE) != (bool)(*(dword *)local_10 & 1))
+                    function_290e20((short)local_11, arg_1, NONE) != ((*(dword *)local_10 & 1) != 0))
                 {
                     local_7++;
                     if ((short)local_7 >= (short)local_8)
@@ -2658,15 +2661,11 @@ local_16:
                         short local_13 = local_12 == 0 ? (short)NONE : (short)(local_12 + 0x6e);
                         s_squad_actor_iterator local_14;
                         local_1[0x60] = true;
-                        function_204d30(&local_14, *local_0);
-                        while (g_4f55d0->active && local_14.next_actor_index != NONE)
-                        {
-                            long local_15 = local_14.next_actor_index;
-                            local_14.next_actor_index = actor_datum_get(local_15)->next_actor_index;
-                            function_1e4570(local_15, (s_actor_options const *)local_5);
-                        }
+                        function_204d30(&local_14, arg_1);
+                        while (squad_actor_next_inline(&local_14) != NULL)
+                            function_1e4570(local_14.actor_index, (s_actor_options const *)local_5);
                         if (local_13 != NONE)
-                            function_1fb8a0(*local_0, local_13);
+                            function_1fb8a0(arg_1, local_13);
                         break;
                     }
                 }

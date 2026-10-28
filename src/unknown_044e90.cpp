@@ -47,6 +47,9 @@
 // Round 146 (retail reads the flags inside each branch and the table into ESI before the tag test): entry flags
 // at each use 438; table read once at the top 444; both 447 (the table lands in EDX); flags local per branch 441;
 // entry declared before the workspace 434.
+// Native stride-0x108 frustum source with raw/native count/native ranges/both 434 each;
+// the same four forms with native six-plane array reference 434 each. Original source
+// ownership, real record declarations and fixed-six loop restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

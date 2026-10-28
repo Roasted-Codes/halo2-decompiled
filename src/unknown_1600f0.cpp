@@ -1005,7 +1005,7 @@ struct s_game_engine_globals_connections_view
 };
 
 /* builds a player's row of the scoreboard at a position */
-// score 170 (was 184): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
+// score 170 (was 170): frame 0x6d8 agrees; deferred icon tail and time/connection registers remain;
 // retail tests the score/time widths as dwords but adds them as words, name width (bx) first.
 // Round 75: short widths (casts dropped) 170 (kept: the column sums add the name width first as
 // retail, the width tests become word compares); parenthesised/(short)-summed time left 184/184;
@@ -1086,6 +1086,9 @@ struct s_game_engine_globals_connections_view
 // retail puts the hide-place else arm right after the success arm and the dim arm plus the player/alpha tail
 // after the score column); three stores 207; one nested ternary 212; the place test written `if (hide_place)`
 // first with the arm stores 255, with the original icon 216.
+// Round 104 (plain): long column widths 184 (retail tests them as dwords); hidden-place arm first 216;
+// score column with its hidden arm first 170 (identical); icon value stored after the player index and
+// alpha 170; long icon value 170. Original body restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

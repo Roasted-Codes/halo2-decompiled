@@ -1118,7 +1118,9 @@ void function_c0110()
 // declared before the object 6. Round 95: the loop leaving through `!remaining` in its condition 6;
 // the object read as `*(byte **)(g_4e0300->data + i * 12 + 8)` (the file's form) 6, with `remaining`
 // declared before it 8; a set-or-clear ternary on the field 68; the light index read directly instead
-// of through a reference local 6 (kept).
+// of through a reference local 6 (kept). Round 52: explicit per-arm stores, direct per-arm stores,
+// and direct stores with an index reference 87/87/87; a direct store ternary 6; the object or flags
+// live at entry 6/6; flags declared before the object 6; separate original and updated flag values 6.
 // @retail 0xc3260
 void __stdcall function_c3260(long light_index, bool clear_object_flag)
 {
@@ -1180,6 +1182,10 @@ point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *p
 // forward product reversed and sums the second one up + forward + left. Diagnostics on the shared
 // header (restored): vector-first products 70 (identical), components read at each use 153; const
 // vector arguments 70; a file-private up-first normal transform returning its output (the form other
+// files keep) 70 (identical); the parameter alias dropped 158. Round 147: whichever rotation comes
+// second gets the other order (diagnostics: the two swapped, or a call between them); the arm's locals
+// declared at the top 70 (identical); a named object pointer 72; a named node index 72; the axes as
+// two-element vector arrays 86; a `__forceinline` redeclaration of the rotation helper 70 (identical).
 // files keep) 70 (identical); the parameter alias dropped 158. Round 81: the marker local scoped to
 // its arm 78; the overflow flag declared first 70 (same code); forward/up output pointer locals 86;
 // the location pointer taken at the top 155; the marker flag tested as a byte 70 (same code);
