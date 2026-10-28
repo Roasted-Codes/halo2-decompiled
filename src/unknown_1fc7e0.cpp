@@ -228,7 +228,7 @@ bool function_1e2030(long actor_index);
 void function_1fc710(long actor_index, point3f *position);
 bool function_255ce0(long arg_0);
 short function_cdff0(long unit_index, short grenade_type);
-short function_cccd0(long unit_index, short grenade_type, char delta);
+short function_cccd0(long unit_index, short grenade_type, short delta);
 bool function_1e4310(long actor_index);
 void function_26b770(long clump_index);
 long function_113da0(long unit_index);

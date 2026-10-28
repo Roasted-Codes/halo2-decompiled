@@ -441,6 +441,11 @@ bool function_22acb4(long player_index);
 // Round 60, on the 232 ordered control: long/short first 290/290;
 // long first with short/long second 268/299; long third/fourth 229/229;
 // fourth before second 261; third before second 265. Original 165 body restored.
+// Round 86 (fast, aligned counts in brackets): retail's block order rebuilt 232 [37]; with a short second 283
+// [20: 1 in EDI as retail; only the second mask in ECX with its own slot, from 0xFFFD taking EBX, remains, and
+// that extra slot shifts every lockstep line]; on it the second as (short)(char)/(char)(x & 1)/(signed char)/
+// & (short)1/1 & (char) 283 [20] each, without the char cast 287 [19]; word second stored then masked 232
+// (as the rebuilt order; retail's `and ebx, 0xfffd` says word). Original body restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

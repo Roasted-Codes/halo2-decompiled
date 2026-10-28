@@ -91,6 +91,9 @@ static __forceinline long real_to_long(real value);
 // Round 203: native vector setter for orientation, velocity, both, support/reset, orientation/support,
 // velocity/support and all transfers 377/353/380/371/398/374/395; all with final point setter 395.
 // All keep plain frame 0x8c and grow the code; every transfer and original body restored.
+// Round 237: component/body at uses and one input handle 368/357/356; component-body/
+// component-handle/body-handle/all 398/367/356/359; all with automatic capsule 344, losing seven
+// checked matches (control 353). Original body restored; plain frame and callee propagation remain.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {

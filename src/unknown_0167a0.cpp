@@ -164,6 +164,7 @@ PRIVATE inline byte const *material_parameters(long tag)
 // direct sampler record 47; separate restored packed/next/both words 47/47/47;
 // direct first updater 149; direct second updater 47; entry word at chain 47;
 // direct published entry 294. Original body restored.
+// Round 235: published table snapshot after entry/before entry/after packed 151/231/151; after-entry with distinct packed/chain/both/pass/all restore receivers 151/151/151/151/151.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)

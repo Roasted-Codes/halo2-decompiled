@@ -853,6 +853,11 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // dot length with prezero 463; copied-normal helper with reversed plane dot 265;
 // reversed plane dot alone 245; direction-j pointer 400; early copied-normal helper 272;
 // early dot length in either input order 256/256. Original body restored.
+// Round 84 (lane 5): VC reassociates the timer to (rate / scale) * ticks where retail keeps
+// (ticks * rate) / scale; a named seconds local in the tick helper restores retail's order 388,
+// a named seconds local at the use 384 (lockstep shift); field-of-view fields read at each use 259,
+// with a named start 264, target local with fields elsewhere 254; seconds local plus those fields
+// 380 (retail's instruction count, 462, but zero/value XMM roles swap throughout). Restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

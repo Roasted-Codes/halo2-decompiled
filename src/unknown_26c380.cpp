@@ -181,8 +181,13 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Round 129, traversal-count scope retained: native planar copy with long/bool/short/byte
 // result 479/543/483/427; CRT planar copy with those result types 479/543/483/427.
 // All original executable source restored.
+// Round 223: explicit false results at all three false tails, long/bool/short/byte
+// 554/583/546/561; same result forms with independent planar memcpy 510/544/503/517.
+// Distinct tails collapse further; frame and result homes remain unresolved. All restored.
 // Round 234: normal/endpoint-scan/node-admission consumption endings and combinations
 // 421/418/421/418/421/418/421; all endings with Boolean success 583. Original body restored.
+// Round 226: Complete endpoint/distance, progress-distance and sector-history names,
+// all seven subsets and the complete Boolean-role group 418 each. All names and body restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

@@ -221,8 +221,15 @@ __forceinline short machine_round(real value)
 PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed);
 PRIVATE void machine_release_rigid_bodies(long machine_index);
 
-// score 81 (was 112): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
+// score 81 (was 81): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
 // Round 204: native portal entry 81 kept plain; default-first policy 100; both 106 (subthreshold); shared final update 81; long/unsigned-word policy 102/81; six-use flags 108; flags/default 117; chained clears 81.
+// Round 268: six-use destination flags receiver 81; reset after both clears 81;
+// receiver with six-use source bits 108; receiver with later reset 81; source bits
+// with later reset 108; all three 108; final default-first dispatch with receiver 81;
+// that plus later reset 81. Original portal, policy, flag stores and reads restored.
+// Round 208: early policy declaration 81; descending configured cases 81; both 81;
+// comparison mapping with one short observation/direct fields 132/132; natural portal admission
+// and shared publication 150; with early policy 150; with direct configured comparisons 160.
 // @retail 0x115020
 void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine)
 {
@@ -560,13 +567,15 @@ bool __stdcall function_1152e0(long machine_index)
 }
 
 /* whether any cluster on either side of a machine's portals is set */
-// score 41 (was 58): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
+// score 41 (was 41): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
 // Found return 45; empty return 69; native count 58; native first 62; structure receiver 52;
 // reject unset portals 58; result first 53; admitted result 61; result/found 41 (kept, gain 17);
 // structure/found 60; result/structure 45; native receivers/found 56; shared bit tests 58;
 // structure/shared 52; count/shared 58; result/shared 53; object getter 58; getter/structure 52;
 // getter/shared 58; getter/structure/shared 52; count before false/found 45; count before false 58;
 // result/count/found 41; result/count/structure/found 56.
+// Portal-table/reference-table/both scan bases 56/56/56; paired long/short cluster values
+// 55/73; both bases with long clusters 59; common completion 53, with long clusters 48. All restored.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {
