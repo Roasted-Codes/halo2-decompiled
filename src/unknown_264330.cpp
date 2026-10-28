@@ -24,7 +24,7 @@ bool __stdcall function_265290(long actor_index, long prop_index);
 bool __stdcall function_265550(long actor_index, long prop_index);
 void function_ba1d0(long object_index, vector3f *linear, vector3f *angular);
 void function_cb7e0(long unit_index, vector3f *vector);
-long function_10f8f0(long object_index);
+__declspec(noinline) long function_10f8f0(long object_index);
 struct s_28fb50;
 long function_28fb50(long object_index, s_28fb50 const *context, long target_index);
 __forceinline long real_to_long(real value);

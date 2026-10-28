@@ -2400,13 +2400,14 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
-// score 251 fast (was 252 fast): the pixel-shader RGB output mask is selected before the shift
+// score 251 (was 251): frame 0x28 agrees; zero/sampler homes, bitmap transport and late fallback selection remain.
+// Earlier: 251 fast (was 252 fast): the pixel-shader RGB output mask is selected before the shift
 // ((inverse ? 8 : 0) << 8), which gives retail's and/shl pair instead of a single 0x800 mask.
-// score 252 fast (was 335 fast): the standard marker gives retail's stack convention (ret 0x34,
+// Earlier: 252 fast (was 335 fast): the standard marker gives retail's stack convention (ret 0x34,
 // inverse at E+36) and width/height default to 1.0f before the bitmap test. Still differs: the
 // 0/1/2 constants land in different registers than retail (EBP against EDI), and the call to
 // 0x144f0 uses our callee's convention.
-// score 331 (was 331): Frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
+// Earlier: 331 (was 331): Frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // Frame 0x28 agrees; inverse AL entry save, dimension homes and bitmap-call setup remain.
 // fast control 427; direct inverse 427; selected destination/source pointer 427/427;
@@ -2446,6 +2447,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 60: BLOCKED-BY 0x289e0 (the only caller, under #if 0, so LTCG gives inverse AL). Own-address
 // inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
 // dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
+// Round 204: Tag/bitmap producer, late fallback/draw arrays and paired shader-alpha workspace
+// scopes, masks 1-7: 251/251/251/255/255/255/255; all with coherent dimension/reciprocal names
+// 255. Full-stack transport retained; original scopes, observations, arrays and equations restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2791,6 +2795,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Round 201: split flag/tag rejection, positive flag-first admission, nested flag-first admission and
 // nested flag rejection 334 each; tag-first split/positive/nested/mixed admission 370 each (2023 bytes).
 // Original guard and all sampler, packing, scale, rotation and vertex operations restored.
+// Round 204: Complete dimension/tag, sampler-loop and scale/bounds/trig producer workspace
+// endings, masks 1-7, and all with immutable maximum/reciprocal: 334 each. Original
+// scalar/output lifetimes, helper calls, state order and arithmetic trees restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

@@ -891,6 +891,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 234: destination/selected-send/input-level consumption scopes and all combinations
 // 224/224/224/224/224/224/224; routing-predicate consumption scope 224. Original lifetimes restored.
 // Round 197: Retained word-route graph, per-use gain/offset/both/level/gain-level/offset-level/all inputs 265/257/276/290/312/308/324; all inputs with native phase scope 324. Some forms recover frame 0x18 but regress; original observations restored.
+// Round 204: Native signed/unsigned routing predicate with primary/spilled/all destination
+// promotions 241/241/248/248/245/245/248/248. Independent selectors and scalar-return graph
+// regress; original word route, scalar observations and three local qualifications restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
