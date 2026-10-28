@@ -729,7 +729,7 @@ bool function_2715a0(byte *buffer)
 	return result;
 }
 
-// score 512 (was 533): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
+// score 501 (was 533): two mask tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0x271630
 PRIVATE bool function_271630(s_type_f17a25 *state)
 {
@@ -779,7 +779,7 @@ PRIVATE bool function_271630(s_type_f17a25 *state)
 			{
 				continue;
 			}
-			if (!(link->flags & 1) || (node->flag0c && (link->flags & 0x1000)))
+			if (!(link->flags & 1) || (node->flag0c && TEST_FIELD_BIT((link->flags >> 12) & 1)))
 			{
 				continue;
 			}
@@ -997,10 +997,33 @@ PRIVATE void function_271fd0(s_type_f17a25 *state, short node_index, short cost)
 	}
 }
 
+/* a flag field read as word bits: retail reads these flags with a load, a
+   shift and a test of the low bit */
+struct s_flag_word_bits
+{
+	word bit0 : 1;
+	word bit1 : 1;
+	word bit2 : 1;
+	word bit3 : 1;
+	word bit4 : 1;
+	word bit5 : 1;
+	word bit6 : 1;
+	word bit7 : 1;
+	word bit8 : 1;
+	word bit9 : 1;
+	word bit10 : 1;
+	word bit11 : 1;
+	word bit12 : 1;
+	word bit13 : 1;
+	word bit14 : 1;
+	word bit15 : 1;
+};
+
 /* Surface records interpret their payload differently by type. Retail's
    vertex indices are unsigned words: its comparisons with long NONE do not
    reject 0xffff. Only destination sector words have an effective NONE test.
    Link type stores write the low short; the upper short stays untouched. */
+// score 452 (was 475): flag 1 of the surface read through a word bitfield view gives retail's load-and-shift; the rest still differs.
 // @retail 0x272020
 PRIVATE short function_272020(s_pathfinding_data const *pathfinding,
 	s_path_node_key_view const *node, s_path_link_view *links, s_type_f17a25 const *state)
@@ -1161,7 +1184,7 @@ PRIVATE short function_272020(s_pathfinding_data const *pathfinding,
 					}
 					long flags = state->settings.unknown04;
 					if (!(((flags & 0x400) && (surface->unknown0c & 1)) ||
-						((flags & 0x800) && (surface->unknown0c & 2)) ||
+						((flags & 0x800) && TEST_FIELD_BIT(((s_flag_word_bits *)&surface->unknown0c)->bit1)) ||
 						((flags & 0x1000) && (surface->unknown0c & 4))))
 					{
 						break;

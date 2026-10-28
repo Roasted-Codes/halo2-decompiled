@@ -7073,6 +7073,7 @@ extern short g_47d8e0;
    scripted controls (+0x1ec, +0x1f0); for a vehicle, its driver's
    controls and its gunner's aim and triggers when their animations allow;
    then its boost charge (+0x334, +0x338); whether anything changed */
+// score 439 (was 453): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0xc49b0
 bool __stdcall function_c49b0(long unit_index)
 {
@@ -7128,7 +7129,7 @@ bool __stdcall function_c49b0(long unit_index)
 			real fire;
 
 			unit->unknown148 |= unit->unknown1f0;
-			if (unit->unknown1f0 & 0x10000)
+			if (TEST_FIELD_BIT((unit->unknown1f0 >> 16) & 1))
 			{
 				long period = unit_round(g_510c54->field_2_3 * 0.25f);
 
