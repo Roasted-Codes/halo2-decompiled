@@ -472,6 +472,13 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // Round 257: On the direct snapshot-safe projection graph, one conditional-input shared call
 // 228; signed-int count 144; read-only component 144; call/count, call/receiver, count/receiver
 // and all three 228/228/144/228; signed-int scan/selection ordinals 144. Original body restored.
+// Round 150 (fast): retail tail-merges the two second-cross arms (j/k stores from XMM4/XMM3 and the
+// g_4687b0 reload after the i store are shared), which ours cannot while the first cross keeps i/j/k in
+// XMM0/XMM1/XMM2 (retail XMM1/XMM2/XMM0). The cross's j term spelled b.i * a.k 144 (same code here and in
+// 0x1f1460); average in i/j/k order (retail's store order) 144 (aligned 131 -> 128); average through
+// shape_add 238; lowest declared before selected 142; axis declared at case scope 144. 0x1f2250's call
+// sites load the stepping flag before the base point in our build too, so the loop's ECX/EBX request/count
+// swap is not 0x1f2e60's parameter order.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)

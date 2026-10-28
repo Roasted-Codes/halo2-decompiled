@@ -136,6 +136,9 @@ bool function_a7670(long object_index);
 // Round 244: twice-used pending-field pointer, with original/immutable-count/early-count/
 // found-first lifetimes 181/181/181/274; field-reference counterparts
 // 181/181/181/274. Original field observations, count and flag order restored.
+// Round 218: Indexed 0x81 membership with bool/byte/short/long admission 182/182/182/260;
+// with fresh body bound 249/249/246/245. Original classification and body restored.
+// Frame 0x424 agrees; scratch phase, scalar homes, admission BL and cleanup induction remain.
 // Round 206: Chained initial list-count/list-and-retry resets, with separate/chained retry resets
 // [181, 273, 181, 273]; flat entry rejection on the same four graphs [181, 273, 181, 273]. All restored.
 // @retail 0x278f00

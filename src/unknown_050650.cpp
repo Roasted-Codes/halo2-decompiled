@@ -510,6 +510,9 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 // both 404; entry ray with complete vector setter 338 (retail length); entry
 // collision result 335; split results with entry ray/collision 386/383; split
 // results with one return 404. Restored.
+// Unit-random producer with candidate after/before/between draws 335/336/341;
+// named normalized fractions at those sites 340/341/335 (last retail length).
+// Complete vector-copy setters with early/between candidate 363/363. Restored.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -595,7 +598,7 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 336 (was 397): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
+// score 336 (was 336): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -604,6 +607,9 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // workspace 397, with chained defaults 395; complete point setters 336 (kept,
 // retail length); with chained defaults 334 (extra two-point gain restored);
 // those plus case order 339, plus entry marker 339.
+// Uniform five-point memcpy producers 397; case 2 first 401; chained defaults
+// 395; both 399. Uniform memmove producers with those forms 444/442/442/440.
+// All shorter than retail; original setters, cases and defaults restored.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -862,7 +868,7 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 54 (was 96): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
+// score 54 (was 54): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
 // limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
@@ -875,6 +881,9 @@ real g_55e5cc = 0.08726646f;
 // projections 173/159/170; shared dot 62; projections plus dot/upper-first 170/168.
 // Shared dot with upper-first/later pitch 60/58; reverse dot alone/upper-first/later
 // pitch 58/56/54 (kept). Addition grouping and all marked call arguments are unchanged.
+// Round 162: final-local pitch clamps 207; paired raw angle carriers 56, with clamps 207;
+// existing paired-angle view 54, with clamps 207; byte result 51 (three-point gain, restored);
+// branch-produced result 249, with clamps 253. Scaled pitch and sampler registers still differ.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
@@ -989,6 +998,13 @@ struct s_actor_looking_structure_view
 // candidate/trace scope, entry trace, entry horizontal, all entry workspaces and workspace names 80 each;
 // single short ordinal 137; single long ordinal 198; declaration-time path pointer 214;
 // int angle ordinal 80; two long ordinals 214; two int ordinals 214. Counter homes, rotation schedule and tail remain.
+// Round 162: native trace record 80; full candidate workspace with native/original trace 226/226;
+// native trace with direct array consumers 149; native trace with candidate/all vector copies 80/150;
+// original trace with candidate/all intrinsic copies 80/150. Both ordinals and all original code restored.
+// Existing sine/cosine rotation consumer: named angle 144; sine/cosine locals 80;
+// cosine first 86; trig before candidate 80; fraction after rotation 154;
+// angle ordinal stepped at last use 156; both shared dot products 144 (regrouped,
+// exact-match-only); immediate successful publication return 224. Restored.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
@@ -1126,6 +1142,12 @@ struct s_actor_looking_turn_request
 // out-of-line predicate plus explicit stores 532 fast, 527 plain (restored). Unchanged preview 546 fast.
 // Separate noinline declarations in caller and callee units 570 fast, 590 plain at 1952/2020 (restored);
 // this removes the expansion and recovers the 0xc8 frame, but later scheduling/layout regress.
+// Distinct aiming/looking vector lifetimes, with explicit looking stores,
+// nested aiming validation and case-set looking result 546, 534, 546, 534, 546, 534, 546, 534 fast.
+// Disjoint outputs with explicit looking publication 525 plain at 2020/2020; restored.
+// Uniform 17 aggregate memcpy producers on disjoint outputs, varied by actual
+// predicate boundary and long animation carrier 534/540/562/563 fast; native
+// memmove variants 624/630/670/671. Best memcpy form 525 plain at 2020/2020; restored.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

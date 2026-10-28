@@ -310,6 +310,13 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 250: paired pre-call vehicle snapshot 186; result-first optional target 188;
 // both 188; complete vector CRT copy 186; snapshot/copy 186; target/copy 188;
 // all three 188; vehicle-first target on all three 188. Original body restored.
+// Round 163: both boarding object scopes/movement-first/both/full boarding
+// pawn scope 196/218/219/207; movement with full scope/readonly objects graph/
+// readonly full scope/readonly full movement scope 221/196/207/221.
+// Actor/pool and request tails remain; original scopes and every observation restored.
+// Round 234: complete positive boarding decision to final result, with actor/both-object
+// readonly receiver subsets, 221 each (692 bytes); query-produced function result with
+// the same four receiver graphs 232 each (700 bytes). Original body restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {

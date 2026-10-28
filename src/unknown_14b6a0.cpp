@@ -213,6 +213,10 @@ void function_14bac0()
 // Round 245: shared point setter at translation 230; overlap-safe marker inputs 230;
 // both 230; overlap-safe accepted points 241, with translation/marker inputs/both 241/244/244;
 // complete publication graph with native recipient iterator 262. Original source restored.
+// Round 211: On the retained native-first-iterator graph, one point workspace shared with
+// relocation/probes/both 233/233/230; each with native recipients 262/262/259; complete sharing
+// with earlier bounds declarations 230, with native recipients 259. All restored; frame 0x44/0x3c,
+// readiness and recipient storage remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

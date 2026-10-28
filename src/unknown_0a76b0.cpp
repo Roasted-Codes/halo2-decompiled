@@ -4392,6 +4392,10 @@ void function_edfa0(long unit_index, point2f const *facing)
 // local filled by one point2f copy 19 (x87 squares swap); `= { x, y }` 13; y copied first 21;
 // `inverse` declared at the top 13; each coordinate divided by the length 13; the matched
 // 0x2c1d90 shape (pointer helper, `else magnitude = 0`, test on its result) 13.
+// Round 85: retail loads y only after storing x (an ordered, unfolded load: matched functions with this
+// sequence used volatile casts or real pointer aliasing); every plain shape compiles to the same code here:
+// a `real *` array helper 13; separate in/out pointer helper 13; element pointer local 13; pointer helper
+// with `*=` 13; one point2f copy 19 (as before); y first, `*=`, division by the length all code-identical.
 // @retail 0xedff0
 void function_edff0(long unit_index)
 {
@@ -4621,20 +4625,12 @@ void function_ee680(long user_index, long state, long secondary, long weapon_ind
 // @retail 0xee7f0
 void function_ee7f0(long unit_index, long state)
 {
-	byte *object = (byte *)function_badc0(unit_index, 3);
 	long user_index;
 
-	if (!object || *(long *)(object + 0x13c) == NONE)
-	{
+	if (unit_get_player_index(unit_index) == NONE)
 		user_index = NONE;
-	}
 	else
-	{
-		byte *current = (byte *)function_badc0(unit_index, 3);
-		long player_index = current ? *(long *)(current + 0x13c) : NONE;
-
-		user_index = unit_action_player_value28_get(player_index);
-	}
+		user_index = unit_action_player_value28_get(unit_get_player_index(unit_index));
 
 	long secondary;
 

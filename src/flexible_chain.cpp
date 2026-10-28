@@ -249,6 +249,13 @@ void __stdcall function_1160c0(real dt)
 // Round 249: Complete rest-offset/recurrent-previous/working-position CRT copies,
 // all seven nonempty combinations 179 each; all overlap-safe copies 419 (frame
 // 0xa0, 1266 bytes). Original native copies, homes and arithmetic restored.
+// Complete previous-position scalars, with complete axis/rest-offset/prediction
+// coordinate sets 345, 335, 332, 323, 345, 335, 332, 323.
+// Native segment index before lookup, explicit last-segment arm, uniform
+// rest-offset fields and invariant reciprocal combinations 179, 179, 336, 336, 189, 189, 338, 338.
+// Round 219: Exhaustive segment-pointer result, inner/outer invariant vertical and sine/cosine
+// order 297/297/309/309; default-pointer counterparts 281/281/309/309. All restored;
+// segment/previous/axis homes and rotation schedule remain.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {
