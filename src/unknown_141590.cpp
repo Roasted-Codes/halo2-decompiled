@@ -129,6 +129,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 
 /* the rotation that takes one unit vector to another */
 // score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross spill overlap remain.
+// Lane 6 r85: helper with `s` computed first 302 (s and the doubled scalar hoisted above the matrix copy,
+// the doubled scalar spilled twice as retail, frame 0x20, constants one xmm lower); with vector-first
+// products 302 (identical code); with plain half-angle locals 291; doubled scalar after the cross 301;
+// scalar cross terms 281 (retail's 0x24 frame and first difference +0x71, doubled scalar in the parameter
+// home and [esp+0x10] as retail; quaternion registers permuted); scalar cross with `s` first 306.
 // frame 0x1c versus 0x24 and quaternion/cross-term spill reuse differ;
 // quaternion scale loop 302; shared axis scale loop 294.
 // shared rotation cross 241; shared cross scale loop 294.

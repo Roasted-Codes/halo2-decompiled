@@ -537,7 +537,8 @@ real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
 
-// score 273 (was 273): frame 0x8c versus 0x90, early NONE and held-direction byte home remain.
+// score 192 (was 273): the frame size and the held-direction byte home match; the plane index
+// compare uses a resident -1 instead of an immediate and the point copy loads in a different order.
 // frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
 // direct actor receiver 371; forward scalar names 371; sampled radius 371;
@@ -616,7 +617,7 @@ void function_1e3b60(long actor_index)
 					else
 					{
 						plane3f *plane = (plane3f *)(entry + 4);
-						if (plane->i * point.x + plane->k * point.z + plane->j * point.y - plane->d < 0.0f)
+						if (point.x * plane->i + plane->k * point.z + plane->j * point.y - plane->d < 0.0f)
 							below_plane = true;
 					}
 				}
@@ -660,7 +661,7 @@ void function_1e3b60(long actor_index)
 						else
 						{
 							short mode = *(short *)(definition + 0x1f0);
-							if (mode == 0 || mode == 1 || mode == 2)
+							if (mode == 1 || mode == 0 || mode == 2)
 								*(short *)(actor_bytes + 0x270) = 5;
 						}
 					}
@@ -720,7 +721,10 @@ void function_1e3b60(long actor_index)
 			long held_index = actor->unknown274;
 			s_moving_object_header *header = &((s_moving_object_header *)g_4e0300->data)[held_index & 0xffff];
 			byte *held = header->object;
-			if (header->type == 1 && (*(dword *)(g_4e3b44[*(long *)held & 0xffff].bytes + 0x1ec) & 0x100))
+			byte held_bit = 0;
+			if (header->type == 1)
+				held_bit = (byte)((*(dword *)(g_4e3b44[*(long *)held & 0xffff].bytes + 0x1ec) >> 8) & 1);
+			if (held_bit)
 				function_118e80(held_index, (vector3f *)(actor_bytes + 0x29c));
 			else
 				*(vector3f *)(actor_bytes + 0x29c) = *(vector3f *)(held + 0x168);
@@ -1629,7 +1633,9 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
-// score 270 (was 270): Frame 0x14 and actor ESI agree; input/pool roles and scalar/ammunition homes remain.
+// score 263 (was 270): Frame 0x14 and actor ESI agree; the probability and delay clamps now match
+// retail's code; the actor index stays in EDI instead of EBX and the object pool is reloaded instead
+// of kept in a register.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
 // word two-weapon counter 299 kept (plain); promoted minimum 316.
@@ -1686,28 +1692,29 @@ void function_1e2a90(long actor_index)
 			(function_cbd50(actor->unknown018, ai_object_get(actor->unknown018)->current_weapon) != NONE ||
 			function_cbd50(actor->unknown018, *((signed char *)ai_object_get(actor->unknown018) + 0x213)) != NONE))
 		{
-			real probability = 0.1f;
+			real probability;
 			if (weapon_options)
 			{
 				probability = *(real *)(weapon_options + 0x58) < 0.1f ? 0.1f :
 					(*(real *)(weapon_options + 0x58) > 0.6f ? 0.6f : *(real *)(weapon_options + 0x58));
 			}
+			else
+				probability = 0.1f;
 			if (actor->unknown225 || (*(short *)((byte *)actor + 0x722) > 0 &&
 				*(real *)((byte *)actor + 0x764) < 3.0f))
 			{
 				real increased = probability * 4.0f;
 				if (increased > 0.6f)
 					increased = 0.6f;
-				if (probability <= increased)
-					probability = increased;
+				probability = probability > increased ? probability : increased;
 			}
 			if (probability > function_259a0(&g_4e7408->unknown0))
 			{
 				real delay;
 				if (weapon_options && *(real *)(weapon_options + 0x5c) != 0.0f)
 				{
-					real value = *(real *)(weapon_options + 0x5c);
-					delay = value < 0.8f ? 0.8f : (value > 1.3f ? 1.3f : value);
+					delay = *(real *)(weapon_options + 0x5c) < 0.8f ? 0.8f :
+						(*(real *)(weapon_options + 0x5c) > 1.3f ? 1.3f : *(real *)(weapon_options + 0x5c));
 				}
 				else
 					delay = function_259d0(&g_4e7408->unknown0, NULL, 0, 0.8f, 1.3f);

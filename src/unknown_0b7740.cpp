@@ -1142,7 +1142,12 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // differences are only the esi reload, the count > 0 guard and the no-model lookup): mask copy as a
 // struct assignment 234; sample mask as the storage object's address 234; a named model-mask pointer
 // for the test and the copy 258; a noinline 0xbfed0 declaration here 234; sample mask from memcpy's
-// return 255.
+// return 255. Round 30 (fast): sample mask set in an else arm 250; the no-model parent matrix through a
+// file-local inline copy of 0xb8bd0's body 226 at 1392 bytes (its object lookup then reloads the table
+// as retail does, but also reloads g_4e0300, which retail keeps in ecx), with the count > 0 guard 222
+// at retail's 1394 bytes (left: the esi reload and the g_4e0300 reload; match-only, a one-caller helper);
+// on that, the helper plain inline 222, taking the pool 222, a pool local shared with the current-object
+// lookup 323, the sample mask through an inline address accessor 222, mirrored flag before it 223.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {

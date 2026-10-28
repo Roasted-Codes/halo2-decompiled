@@ -468,6 +468,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // mesh field observations 214. Original records, observations and protected interfaces restored.
 // DH round 189: Native lookup/extraction-array/node-output work-scope lifetimes, singles, pairs,
 // all and reversed all 181 each; all original producer/read phases restored.
+// Round 215: first transform in place 210; with model/section/both const views
+// 210/210/210; const object/mesh views 181/181; in-place with const mesh/all
+// four const views 210/210. Original input point, views and body restored.
 // Round 62: section groups read right after the surface lookup, as retail does 177 (kept; model
 // and collision swap EBX/EDI); after the node count/count test/nodes/sentinel 182/186/186/186;
 // with the stored section index replaced by the local 206; object lookup before the model 202.

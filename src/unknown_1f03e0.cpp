@@ -418,7 +418,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 144 (was 177): Frame 0x14 agrees; request/count registers, projection and cross scheduling remain.
+// score 144 (was 144): Frame 0x14 agrees; request/count registers, projection and cross scheduling remain.
 // Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
@@ -463,6 +463,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // 144; only selected helpers with direct outputs 144 (989/977 bytes, plain confirmed and kept).
 // First-only/zero-only/other-only helper with direct outputs 178/178/175; averaging-only support
 // declaration 144; both average values directly published 221. Original average result join retained.
+// Round 257: On the direct snapshot-safe projection graph, one conditional-input shared call
+// 228; signed-int count 144; read-only component 144; call/count, call/receiver, count/receiver
+// and all three 228/228/144/228; signed-int scan/selection ordinals 144. Original body restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -593,6 +596,62 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // retail, but j*j comes before k*k and the forward result leaves EBX); the rotation dot as
 // i + j + k with limited first 259 (1249 bytes), with axis first 261 (limited first in each
 // product and k + j + i as retail, but k is computed before j).
+// frame 0x28 agrees; initial state-dot displacement bytes and rotation registers differ.
+// Round 90: the state dot through dot3f 262 / through a branch-local pointer 206 (both break caller 0x1e5af0);
+// the rotation dot through shape_dot 182 (same code), through dot3f 248; the plain mode bit test for the
+// one-caller bit helper 299 (breaks 0x1e5af0); the file's contact_cross for the duplicate cross helper 182
+// (same code; kept, the duplicate removed).
+// Earlier 182 (was 195): state/forward registers agree; rotation scheduling differs.
+// Repeated up-field reads 182; native old-up 325; function-scope workspaces 195;
+// vector names 195; shared dot helper 248; plain parameters 182; branch-local up pointer 195.
+// Direct state dot loads still cost six bytes; cross before trig 247; late limited snapshot 190;
+// cosine first 183; shared cosine scale 241; native settings mask 303.
+// Initial-phase up pointer 309; between-trig snapshot 190; early alignment 192;
+// rotation-only snapshot crosses 182; native j/k rotation loop 240.
+// Frame pointer 312; depth zero 654; global optimization off 623; trig scalar names 182; shared final normalization length 180 (two-point gain rejected).
+// Earlier 182 (was 182): direct-dot displacement bytes and rotation scalar lifetimes remain;
+// scaled cross 264; scaled limited input 241; scaled axis projection 267;
+// full component rotation 239; accumulated alignment 245; normalization decision 183;
+// scaled-cross scalars 186; projected-plus-cosine sums 186.
+// Frame 0x28 and state/output registers agree; six direct-dot displacement
+// bytes and rotation scheduling remain. Ground memcpy 182; limited memcpy 182; separate real
+// components 182; cosine complement 180 (two-point gain dropped); separate cross workspaces 182;
+// cosine/complement before sine 181; explicit alignment with complement 182 (fast).
+// direct state dot loads and rotation carriers remain;
+// initial j/k/i products 179/180/179; first-plane subtotal 180; rotation
+// k/j/i products 242/183/237; turn alignment 180; paired jk/ki/ji/all
+// initial products 186/186/187/186. Three-point best rejected.
+// Frame 0x28 and state/output registers agree; direct dot displacement bytes
+// and rotation scheduling differ. Word rotation decision 182; long rotation decision 182; shared
+// entry cross 182; all shared crosses 182; vector home names on recovered state base 182.
+// Frame 0x28 and state/output homes agree; state-dot displacement and rotation schedule remain.
+// Rotation publication ijk/ikj/jik/jki/kji 242/241/244/247/244; cross between trig 247;
+// accepted-up library copy 182; deferred k/i results 247; native state/workspace/both
+// array views 182/182/182. Original scalar expressions, shared helpers and outputs restored.
+// Native dot/up/orientation/full input fields 182/182/182/182; test-produced rotation 183;
+// inactive forward/active forward/both active output library copies 182/182/182.
+// Initial/all snapshot-safe crosses 182/182; ordinary cross inlining 182; both one-use aliases removed 180;
+// fallback axis/default library copies 182/182; initial snapshot with aliases removed 182;
+// all snapshots with fallback copies 182; settings-only/forward-only alias removal 291/291;
+// up-field reference on combined alias removal 195. Two-point gain rejected; original body/helper restored.
+// Round 183 complementary skip decision bool/byte/short/long 182 each; each with consistent
+// old-up field pointer 309 (fast), losing the caller match. All restored; initial dot
+// displacement bytes and rotation schedule remain with EDI state/EBX forward preserved.
+// Round 245 (fast): Shared initial/rotation alignment workspace 288; with cosine complement,
+// both one-use input aliases removed, or both 183/183/180; common normalization result alone,
+// with complement, with alias removal, or all 183/180/180/288. Two-point best rejected;
+// matched caller preserved. Direct-dot displacement bytes and rotation SIMD lifetimes remain.
+// Round 204: Consistent repeated original-up field pointer/reference before settings
+// or after settings 309/309 each; active-entry or after ground-up initialization 196/196 each
+// at retail length. Original field reads restored; direct-dot displacement and SIMD schedule remain.
+// Round 155: Existing flag predicate: forced bool shift/mask, ordinary byte, ordinary bool
+// shift/mask, forced word/long/signed byte: 182/182/182/182/182/182/299/182. Original byte predicate and complete vector body restored.
+// Round 257: Complete rotation/limit/both projection products and each with complete initial
+// products 186 each; all three with their native first subtotal 239; all three native subtotals
+// alone 245. Original expressions restored; matched caller preserved in every preview.
+// Round 158: Whole-dot multiplication operands commuted at initial, rotation and limit sites independently,
+// in pairs, all three, then with every rotation product. Scores [182, 183, 182, 183, 182, 183, 183, 183].
+// Original executable body restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {

@@ -768,6 +768,9 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Complete rotation rows jki/jik/kij/kji/ikj 204/202/204/206/167;
 // complete rotation and cross rows jki/kij/kji 206/200/203. All restored;
 // sampled-vector slot and rotation/output scheduling remain.
+// Round 194: dot producer first/second/both value inputs 320/385/525;
+// first/second/both input references 155/155/155; value/reference and
+// reference/value inputs 320/385. Original dot interface and body restored.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,
