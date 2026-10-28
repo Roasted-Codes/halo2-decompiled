@@ -237,6 +237,10 @@ void function_2705c0(s_path_source *source, point3f const *point,
 // (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
 // function scope 420, the edge iterator at function scope 420; hit at function scope 419; long count 424; line_normal as one struct
 // copy 444 (retail's 0x64 frame), the same with the old exits 478, with bool success 507; none keeps origin on the stack.
+// Separate noinline with complete/original exits 0/28; scan-position result 29; direct view with complete result 0; shifted bit 37; entry-pointer
+// walk 27; walk plus result 39; word index plus result 21. Both matching forms and the word-index form lose the protected caller chain. Ordinary
+// noinline/result confirmation matches here but loses all eight listed callers; all body/declaration trials restored. The pointer walk gains only
+// one and is restored.
 // Inline with original exits 28; inline plus single result MATCH fast, but seven matched reduced-image callers lose
 // their match (the eighth already differs in that image); shared byte/short result 40/45; native index with original/
 // shared exits 32/37; nested tests 28; active-bit-first tests 28 (same caller losses). All restored.
@@ -262,7 +266,15 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 // the loop as `for (; node->parent != NONE; node = ...)` 31; a pathfinding local before the call 34; parent declared after the
 // output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93;
 // the end point named for the call only 31; the call's result in a named bool 31; `parent` as a const pointer 31; a trailing `continue` 31.
-// output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93.
+// Round 268: both library record copies 31; lookup-test result 87; true-first result 105;
+// long result 57; library copies with those three result forms 87/105/57;
+// cached parent advance 95. The 0x24 frame agrees; endpoint argument scheduling remains.
+// Round 270: readonly native receivers 31; promoted lookup index 89; parent-handle
+// traversal 31, readonly 31; complete endpoint 110, with parent handle 110; complete
+// start input 134; word success result 65. All restored; frame 0x24 and call scheduling remain.
+// Round 272: active-node index 101; shared root result/record selection 120; parent reference 31;
+// index plus root result 125; exact-only parent-node/start-space/both captures 31/31/31;
+// byte success result 51. All restored; endpoint scheduling at +0x61 remains.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
@@ -303,10 +315,18 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	return result;
 }
 
-// score 121 (was 146): Frame 0x30 agrees; entry EBP save, target stack transport, x87 carriers/order and loop
+// score 121 (was 121): Frame 0x30 agrees; entry EBP save, target stack transport, x87 carriers/order and loop
 // alignment remain. Fast control 143; shared distance helper 143; result first 143; point homes 143; phase
 // node lifetimes 143; result from lookup 149; long child 142; branch-produced distance 105 fast/121 plain;
 // helper with phase nodes 143.
+// Round 268 (fast control 105 at 472 bytes): all three square terms 105; result in
+// both lookup arms 102; missing-key-first 145; squares with arm result 102; squares
+// with missing-key-first 145; missing-key-first with arm result 145; all three 145;
+// that with entry square declarations 145. The three-point fast gain is not retained.
+// Round 270 (fast control 105): shared attractor receiver 137; separate sqrt result
+// 105; entry point workspaces 105; entry distance outputs 105; attractor with point/
+// distance entry declarations 137/137; failure CRT vector copy 105; all groups 137.
+// All restored; full score 121, frame 0x30 and incoming target/EBP differences remain.
 // @retail 0x270750
 bool function_270750(byte *buffer, long unknown, s_actor_point_target const *target,
 	real *distance, long a, long b)
@@ -385,11 +405,14 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
-// score 372 (was 386): the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
+// score 372 (was 372): the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
 // Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
 // all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
 // point-difference helpers alone/everywhere 398/398; depth-indexed step fields 385; direct data and step fields 372 (kept);
 // that with a short initialization count 402; separate clearing loops 394; both 384.
+// Signed/unsigned Boolean bit 380/372; capped word on unsigned/signed graphs 401/398; signed word/CRT
+// clear 376; signed/CRT clear 393; entry counts 376; origin/target names 380; promoted cap 398, with CRT
+// clear 377. All restored.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,
@@ -528,11 +551,14 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	return count;
 }
 
-// score 239 (was 356): the 0x5ac ESP frame and initial actor sequence now agree; avoidance-flag conversion and tail layout differ.
+// score 168 (was 239): frame 0x5ac, actor lookup and direct avoidance-byte copy agree; retry-mask reload and tail layout differ.
 // Tried: one result exit 308; stage array names 356; both 308; reversed arrays 356; named destination fields 360;
 // direct reconstruction count 357; full avoidance if/else 354; success first 362; shared rounding helper 363; helper plus one exit 314.
 // With direct data/step fields in the callee: original parent 353; original with actor NULL before the index test 350;
 // one exit plus actor NULL before the index test 239 (kept). The callee form alone moved the earlier parent from 308 to 349.
+// Boolean field alone 239; byte local with Boolean/original field 200/200; separate retry increment 239;
+// byte/increment 200; complete final-count selection 239; direct Boolean field 168 (kept, plain), with
+// separate increment 168.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {
@@ -577,7 +603,7 @@ bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view 
 			}
 			else
 			{
-				bool avoid = state->unknownac != 0;
+				bool avoid = state->unknownac;
 				long object_index = NONE, type = NONE;
 				if (!avoid && result->location.flags > 0)
 					avoid = (result->location.flags / (1 << (byte)result->location.count)) % 2 == 1;
@@ -1260,6 +1286,8 @@ short function_272700(s_type_f17a25 *state, long node_index)
 }
 
 // score 16 (was 67): retail computes the segment i, j, k and sums (i + j) + k for the length and (j + k) + i for the projection, ours j, k, i and (k + j) + i for both; tried: `dot3f(&delta, &delta)` for the length 16, `dot3f(&delta, &offset)` 16, the projection written out in y, z, x order 36, all three written out 67, parameters reordered (start, end, attractor, out) 16; compile-only harness: every written-out sum order and grouping 27-64, all 24 parameter orders and the offset computed at the top no better.
+// Complete output object/early admissions/uninitialized offset scope/role names/indexed interpolation/native output aggregate/parallel projection
+// products/combined indexed projection 111/49/16/16/21/99/85/85; all restored.
 // Indexed unit-scale segment/offset differences 16; all three named squares 62; native point publication 31;
 // complete start/end values 139/131; named projection 16; indexed segment plus all named squares 62;
 // all named squares plus named projection 62. Original complete body and noinline declaration retained.

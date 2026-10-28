@@ -1467,6 +1467,9 @@ struct s_133f70;
 // lea where retail adds the record first, so the code after it runs one instruction ahead); with the levels
 // pointer at record + 0xbc as 0x4c450 writes it 325 (then both sites fold); stamp compared on the left 319,
 // on this body 175; the reuse test through the cache local 320.
+// Complete defaults predicate bool/byte/short/long snapshots 291/311/365/368;
+// on that predicate lifetime with signed-byte previous level 295/336/337/357.
+// Expanded unchanged control 175; original observations and previous level restored.
 // Round 262: saved-level short at original/pre-query/function scope 194/195/194;
 // signed-byte at pre-query/function/output scope 321/319/321; long at pre-query/function
 // scope 176/175. All restored; distance staging and cache/result scheduling remain.

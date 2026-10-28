@@ -1,4 +1,6 @@
 #include "unknown_11c920.h"
+#include "matrix_transform.h"
+#include "normalize3d.h"
 #include "unknown_0259d0.h"
 #include <math.h>
 #include "vector_products.h"
@@ -274,7 +276,7 @@ void function_245400(s_source_245400 const *source, long index,
 	function_244ca0(height, radius, list, field_00, field_04, surface->field_08,
 		material->field_04, material->field_05, point, material->field_06);
 }
-// score 204 (was 204): frame 0x24 versus 0x2c; source receiver and side-byte homes remain.
+// score 203 (was 203): frame 0x24 versus 0x2c; source receiver and side-byte homes remain.
 // Earlier: Frame 0x24 versus 0x2c, source receiver and independent side homes remain;
 // frame 0x24 versus 0x2c. Retail receives the source in ecx and keeps it in esi
 // until the plane-table read (scheduled after the edge vector), computes both side flags eagerly (one
@@ -383,6 +385,19 @@ void function_245400(s_source_245400 const *source, long index,
 // second-first 210; first/second alone 211/210; native codes with inner workspace 211; one matrix-address
 // read on that graph 235; signed-byte side carriers on it 211. Native codes move the matrix to ECX, not
 // the source, and give frame 0x28. Original body restored.
+// Lane 4 r106 (fast): ours loads the transform into ebp at entry and packs the plane table into its dead
+// stack slot (frame 0x24); retail reads it at its test. The edge vector's transform through the existing
+// vector3f_scale and matrix_transform_vector 203 (kept: it was those helpers' bodies by hand); uniform rows
+// 204; a vector sibling of 0x245400's point transform, either row order 204/204; on 203, second material
+// read first 206.
+// Round 207: complete mutable/const source values before/after surface-index acquisition
+// 218/218/225/225; with reused complete first-material value 220/220/224/224.
+// Native source plane-pointer declaration included throughout; all restored.
+// Frame 0x24 versus 0x2c, source receiver, matrix and side homes remain.
+// Coupled source-index/material-side/geometry lexical identities, all seven subsets and complete
+// endpoint/transform identities: 203/203/203/203/203/203/203/203. Source receiver, side homes and frame gap
+// remain
+// original identities restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
@@ -422,18 +437,9 @@ void function_245540(long arg_0, s_source_245400 const *arg_1,
 		point3f local_14;
 		if (arg_2)
 		{
-			real local_15 = local_6.i;
-			real local_16 = local_6.j;
-			real local_17 = local_6.k;
 			if (arg_2->scale != 1.f)
-			{
-				local_15 = arg_2->scale * local_15;
-				local_16 = arg_2->scale * local_16;
-				local_17 = arg_2->scale * local_17;
-			}
-			local_6.i = arg_2->forward.i * local_15 + arg_2->left.i * local_16 + arg_2->up.i * local_17;
-			local_6.j = arg_2->up.j * local_17 + local_15 * arg_2->forward.j + arg_2->left.j * local_16;
-			local_6.k = arg_2->forward.k * local_15 + arg_2->left.k * local_16 + arg_2->up.k * local_17;
+				vector3f_scale(&local_6, arg_2->scale, &local_6);
+			matrix_transform_vector(arg_2, &local_6, &local_6);
 			local_4 = function_245400_transform(arg_2, local_4, &local_14);
 		}
 		function_244de0(local_4, &local_6, arg_3, arg_4, arg_5, arg_6, local_1,

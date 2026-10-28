@@ -660,7 +660,13 @@ PRIVATE __forceinline void function_1c2891(short *arg_0, c_havok_reference_count
 	}
 }
 
-// score 45 (was 45): retail zeroes EBX and keeps three callee-saved registers, holds
+// score 45 (was 45): ours keeps both objects in ESI with EDI as the zero; retail
+// keeps the second object in EDI with a separate count pointer (lea esi, [edi + 6])
+// live across the call, EBX as the zero, and no null test before the second delete.
+// Plain havok_reference_remove for the second object 48 (null test gone, still no
+// count pointer); through a local 48; a `delete this` member on the class 48; first
+// object through a local 45, with the plain second release 48.
+// retail zeroes EBX and keeps three callee-saved registers, holds
 // g_47f048 in EDI and &reference_count in ESI; ours zeroes EDI, holds g_47f048 in
 // ESI, folds the count address into the object pointer and tests it before the delete.
 // and clears it in EDI, retail loads it into ESI and clears it in EBX.
@@ -1073,18 +1079,23 @@ local_3:
 struct s_1c4040
 {
 	byte field_0[3];
-	volatile bool field_3;
+	bool field_3;
 	volatile long field_4;
 	long field_8;
 	s_simulation_island_array *field_c;
 	long field_10;
 };
 
-// score 90 (was 90): retail's prologue pushes ebp second and keeps the island-array
-// pointer in edx, so the active flag arrives in al; ours pushes ebp after the first
-// stores, keeps that pointer in eax and takes the flag in dl. The register assignment
-// is settled by the call-cycle order with 0x146bf0 (src/unknown_146a20.cpp), which
-// this lane may not edit, and it also fixes the register the caller uses.
+// score 8 (was 90): only the convention differs: ours takes the active flag in DL
+// (the default /Gr register: our LTCG reaches this function through 0x1c39c0 ->
+// 0x1c51c0 before 0x146bf0 on their call cycle), retail takes it in AL with attempt
+// in ECX. Kept: the existing function_a7670 for the mode test 66; the result field
+// without volatile 8. Tried: plain locals 180; an island-scan helper 180; the priority
+// field without volatile 172; the island-array store without its volatile cast 17;
+// the effect read after the mode test 100; a separate result local 119; an else arm
+// for the mode case 8. With 0x1c51c0's call removed (diagnostic) LTCG gives this
+// function a custom convention, but attempt in EAX and active in CL (30), and the
+// same with the parameters reordered (active, attempt).
 // @retail 0x1c4040
 bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_unknown, long excluded_component_index)
 {
@@ -1144,7 +1155,7 @@ bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_un
 		s_physics_object *object;
 		bool unknown;
 
-		if (g_4e6948->mode == 4 && ((s_physics_object_detach_view *)physics_object_get(local_0.field_8))->unknownd4 != NONE)
+		if (function_a7670(local_0.field_8))
 		{
 			physics_object_get(local_0.field_8)->flags |= 0x20;
 			function_1c3770(local_0.field_8, 0);
@@ -1402,9 +1413,21 @@ public:
   c_contact_shape_container *container, long key);
 };
 
-// score 24 (was 24): retail keeps the contact shape in EAX where the two
-// branches meet and copies it into ESI there, ours keeps it in ESI; retail
-// also computes the metadata flag in CL, ours in EAX.
+/* the flag bit of a contact shape's material data; retail's dead stack byte
+   is this helper's returned hkBool */
+PRIVATE __forceinline hkBool contact_metadata_flag(long metadata)
+{
+ hkBool result;
+ result.m_bool = *(byte *)(metadata + 0x1f) & 1;
+ return result;
+}
+
+// score 4 (was 24): retail joins the two child-shape arms in EAX and copies the
+// shape into ESI there, ours assigns ESI in each arm. Kept: the flag through an
+// hkBool helper 14 (it replaced a volatile byte copy), the root's rigid body as
+// `type == 1 ? entity : NULL` 4. Shape join tried: if/else 14 (before the rigid
+// body form), inverted if/else 19, default shape then child 80, inline shape helper
+// 4, inline unwrap helper 4, child copy 13, inverted ternary 9.
 // @retail 0x1c32d0
 hkBool c_contact_rule_filter::accepts(void const *query, s_contact_body_view const *a, s_contact_body_view const *b,
  c_contact_shape_container *container, long key)
@@ -1425,14 +1448,13 @@ hkBool c_contact_rule_filter::accepts(void const *query, s_contact_body_view con
    long metadata = shape->metadata;
    if (metadata && contact_metadata_pin(shape->metadata, 1, 16) != metadata)
    {
-    dword flag = *(byte *)(metadata + 0x1f) & 1;
-    volatile byte saved_flag = flag;
-    if (flag)
+    if (contact_metadata_flag(metadata).m_bool)
     {
      root = a;
      while (root->parent)
       root = root->parent;
-     if (root->type == 1 && root->entity && ((hkRigidBody *)root->entity)->m_motion->kind_code() == 7)
+     hkRigidBody *rigid_body = root->type == 1 ? (hkRigidBody *)root->entity : NULL;
+     if (rigid_body && rigid_body->m_motion->kind_code() == 7)
      {
       hkBool result;
       result.m_bool = 0;

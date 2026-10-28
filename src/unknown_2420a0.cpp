@@ -1086,6 +1086,9 @@ void c_game_engine_markers::v21(long object_index)
 // player getter as typed pointer arithmetic 40; the team per arm as in the matched v30 (unfolded
 // player data in v30, folded here) 119, with a const player 119, the player before the absolute
 // index 119, the mode and type tests joined 119, an early return on the mode 119 or on either test 119.
+// Round 149: the absolute index inside the flag test 93; the team read before the flag test 89; the
+// flag in a named bool 40; the slot read before the type test 117 (428 bytes); the type test written
+// in this function instead of the inlined 0x101280 40 (the entry swap is not from that inlining).
 // @retail 0x240ff0
 void c_game_engine_markers::v23(long object_index, long unit_index)
 {

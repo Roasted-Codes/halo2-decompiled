@@ -160,6 +160,11 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Round 233, on the recovered range-reference/native-mask graph: published table reference 47;
 // native word range/entry field references 47/47; published pass/table-plus-pass references 47/47;
 // packed entry accessor 47; entry-reference consumption scope 47; unsigned native mask index 47.
+// Round 60: entry reference after its store 293; range reference after its store 61;
+// direct sampler record 47; separate restored packed/next/both words 47/47/47;
+// direct first updater 149; direct second updater 47; entry word at chain 47;
+// direct published entry 294. Original body restored.
+// Round 235: published table snapshot after entry/before entry/after packed 151/231/151; after-entry with distinct packed/chain/both/pass/all restore receivers 151/151/151/151/151.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -1363,7 +1368,11 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 267 (was 267): Frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// score 267 (was 267): frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// Frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// Direct descriptor pointer/reference 267/267; mapped pre-rescale reload 267; mapped descriptor across pack 263 (not kept: a gain under 8);
+// validation descriptor across pack 288; direct pointer on that graph 263; separate mapped output word 268;
+// short mapping base 263 (no added gain, restored).
 // Frame and sampler agree; captured descriptor/index and post-store rereads remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
@@ -1415,6 +1424,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Round 353: short writer index, category/bank-first 266/255; shared complement
 // 286/269; shared masked input 298/270; both mask parts 317/305.
 // Every short-index form loses a matched sibling; original shared writer restored.
+// Round 369: common traversal 845; bounded short counter 844; repeated component/shared color/both on common traversal 845 each, with short counter 844 each. All restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
