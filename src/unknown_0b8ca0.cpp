@@ -668,6 +668,10 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // Round 329: native position/radius fields, readonly object and direct center 239/239/239;
 // direct marker/both points 266/266; shared differences/readonly 239/239; native root observations 252.
 // All use ordinary direct radius operands; both known callers included. Original type and body restored.
+// Round 17: named float angle term 231; separate facing vector 231; second point-difference helper
+// with that vector 231; first point-difference helper 231; second helper with the shared vector 231;
+// component-assignment helper 231; dot-product helper with component assignment 231; point setter 234.
+// All include both known callers. Original position, differences, dot expression and angle restored.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
