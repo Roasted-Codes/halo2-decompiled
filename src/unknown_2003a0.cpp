@@ -1296,11 +1296,12 @@ void __stdcall function_205320(long group_index)
 	}
 }
 
-// score 16 (was 17): the first vehicle is read once through its pointer. Otherwise same instructions
-// as retail, only registers differ after the first call: retail
+// score 18 (was 18): same instructions as retail, only registers differ after the first call: retail
 // loads the squad pool into EAX, builds the index in EDX and forms the squad with lea eax,[edx+ecx] (so the
 // test of the index can sit before it), then uses EDX/ECX for the object reload and EDX for the new index;
 // ours builds the index in EAX (add eax,ecx) and swaps ECX/EDX after it.
+// The first vehicle read once through a volatile pointer, before the object reload as retail orders
+// it, gives 16; not kept, since it isn't a byte match.
 // Tried: squad_get 18; array address 18; index times size plus data 18; index local 18; or operands swapped
 // 18; early return 18; squad declared at the top 18; object reload into a local first 18; field through a
 // long pointer 18; first vehicle saved before the store 19; inverted test 24; squad lookup at each use 33;
@@ -1318,9 +1319,7 @@ void function_201ad0(long squad_index, long object_index)
 	if (squad_index != NONE)
 	{
 		s_squad_datum *squad = (s_squad_datum *)(g_51e9d8->data + (squad_index & 0xffff) * sizeof(s_squad_datum));
-		/* read once through the pointer: retail loads the first vehicle before it reloads the object */
-		long first_vehicle_index = *(volatile long *)&squad->first_vehicle_index;
-		((s_squad_vehicle_header *)g_4e0300->data)[object_index & 0xffff].object->next = first_vehicle_index;
+		((s_squad_vehicle_header *)g_4e0300->data)[object_index & 0xffff].object->next = squad->first_vehicle_index;
 		squad->first_vehicle_index = object_index;
 		if (!(squad_index & 0xffff0000))
 			object->squad_index = (*(short *)squad << 16) | squad_index;
