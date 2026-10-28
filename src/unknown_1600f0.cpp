@@ -1091,6 +1091,9 @@ struct s_game_engine_globals_connections_view
 // alpha 170; long icon value 170. Original body restored.
 // Native widget metadata with glyph enum, immutable complete background and tail store order:
 // eight calibrated scores 170; metadata type and helper graph restored.
+// Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
+// with each field combination, then all with immutable widths: eight calibrated scores 170.
+// Original field domains and declaration lifetimes restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

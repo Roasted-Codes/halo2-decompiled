@@ -1648,7 +1648,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 805 (was 810): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// score 805 (was 805): frame 0xcc versus 0xd4 and first angle/overlay inline allocation remain.
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
 // computes the centred test once with x87 fabs before the blend block, copies the default angles as a
@@ -1694,6 +1694,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // 805 each (all compile to (x + 1) * 0.5; retail multiplies first); overlay loop as a for 875 (3338
 // bytes: the first 0x11df30 is then inlined as in retail, 0x1cb490 still inlined in the loop);
 // `++i < 3` / short index 805/805; `active` declared at the top of the aiming block 805.
+// Round 237: Native real bound fields/array-reference/screen-reference 805/805/805; screen
+// value/native copy/typed copy/const copy 1003 each; native remote box fields 805. Original
+// fields, helper inputs and outputs restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
