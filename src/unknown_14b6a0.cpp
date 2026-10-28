@@ -238,12 +238,12 @@ void function_14b6a0()
 			offset.k = destination->z - origin->z;
 			++g_4de2fc;
 			g_4de2f8 = true;
-			s_data_datum_iterator player_iterator;
-			player_iterator.data = players;
-			player_iterator.index = NONE;
-			while (data_datum_iterator_next_called(&player_iterator))
+			s_data_datum_iterator player_walk;
+			player_walk.data = players;
+			player_walk.index = NONE;
+			while (data_datum_iterator_next_called(&player_walk))
 			{
-				long unit = *(long *)(player_iterator.datum + 0x2c);
+				long unit = *(long *)(player_walk.datum + 0x2c);
 				if (unit != NONE)
 				{
 					byte *headers = g_4e0300->data;
