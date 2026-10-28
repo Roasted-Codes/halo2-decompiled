@@ -258,6 +258,10 @@ bool __stdcall function_1aa990(long actor_index, s_slot *slot)
 // Guarded state/value/both observations 59/11/57; probability result conditional 105;
 // three-first rejection 42; four-first selection 97; both observations with the
 // conditional/four-first result 91/94. Keep the twice-used range value after the prop guard.
+// Round 268 on the two-use range graph: long result 11; entry range declaration 11;
+// entry prop/state declarations 11; unsigned result 11; long result plus entry range 11;
+// entry range/receivers 11; unsigned result plus entry receivers 11; split entry acquisition
+// with unsigned result 11. Loads and call tuples stayed at their original boundaries.
 // @retail 0x1aa9f0
 short __stdcall function_1aa9f0(long actor_index)
 {
