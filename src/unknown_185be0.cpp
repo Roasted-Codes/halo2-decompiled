@@ -236,6 +236,8 @@ union s_185be7
 // Round 241: Shared clamp formal orders (0,2,1)/(1,0,2)/(1,2,0)/(2,0,1)/(2,1,0): 780/780/780/780/780;
 // independent result with orders (0,2,1)/(1,0,2)/(2,0,1): 926/926/926. Original helper, calls and body
 // restored.
+// Round 243: Native latch fields 88/8e/8f/90/93, paired 8e+8f/88+90 and all five:
+// 780/780/780/780/777/780/780/777. Three-point nonmatch gains rejected; original byte fields restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

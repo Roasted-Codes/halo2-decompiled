@@ -3521,7 +3521,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1436 (was 1436): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
+// score 1420 (was 1436): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
 // Earlier: frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
@@ -3564,6 +3564,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 202: Solver-owned finished/stopped outputs, barrel/function scope, output role names,
 // reversed declaration order in both scopes and native byte activity each 1448; both queries
 // without output defaults 1465. Original defaults, lifetimes and all game-call tuples restored.
+// Round 243: Player default before scale override, direct/valid candidate 1439/1420;
+// before unit lookup 1442/1421; before dual query 1447/1428; before first lookup 1447/1428.
+// Kept scale-override default plus valid candidate, plain 1420/5680; frame and pool carriers remain.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
@@ -3572,10 +3575,16 @@ bool __stdcall function_fdfb0(long weapon_index)
     bool dual = function_101690(weapon_index);
     long unit_index = weapon_get_owner_unit_index(weapon_index);
     real scale = function_d1490(unit_index, weapon_index);
+    long player_index = NONE;
     if ((bool)((WEAPON_LONG_AT(definition, 0x12c) >> 27) & 1)) scale = dual ? 1.0f : 0.0f;
     real complement = 1.0f - scale;
     long owner_index = function_101fb0(weapon_index);
-    long player_index = owner_index != NONE ? WEAPON_LONG_AT(WEAPON_GET(owner_index), 0x13c) : NONE;
+    if (owner_index != NONE)
+    {
+        long resolved_player_index = WEAPON_LONG_AT(WEAPON_GET(owner_index), 0x13c);
+        if (resolved_player_index != NONE)
+            player_index = resolved_player_index;
+    }
     if (weapon->object_index_194 != NONE && !function_badc0(weapon->object_index_194, NONE)) weapon->object_index_194 = NONE;
     long result = function_105e80(weapon_index);
     if (WEAPON_GET(weapon_index)->animation_state_offset != NONE)
