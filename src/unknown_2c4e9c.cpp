@@ -1670,6 +1670,8 @@ c_screen_45d2b8::c_screen_45d2b8(long screen_id, long a, long b, word user_flags
 	memcpy(settings, &g_54e5d0.settings, sizeof(settings));
 }
 
+// score 2: the base-call argument push and this-pointer move are reversed;
+// the base handler already matches. Retry baseline: 62 bytes, as in retail.
 // @retail 0x2c87fe
 bool c_screen_45d2b8::v10(s_widget_event *event)
 {

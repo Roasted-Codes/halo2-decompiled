@@ -619,6 +619,7 @@ const unsigned short g_445580[35] =
 // copied into the 32 bit kind, so the copy is a plain register move like
 // retail's; retail still loads the entry with a 16 bit mov ax, this loads it
 // with movzx.
+// Retry baseline: score 1; both direct callees match.
 // @retail 0x1e9720
 real function_1e9720(long kind, short team)
 {

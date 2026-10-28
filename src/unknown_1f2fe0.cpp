@@ -196,6 +196,7 @@ bool function_1f3430(long actor_index)
 // score 2 (was 2): the last product's operands come out the other way round:
 // ours loads the plane's i component and multiplies it by the point's x,
 // retail loads the point's x and multiplies it by the plane's i.
+// Retry baseline: score 2; no outgoing calls.
 // @retail 0x1f34b0
 bool function_1f34b0(long actor_index, point3f const *point, vector3f const *normal, real distance, short ticks)
 {
