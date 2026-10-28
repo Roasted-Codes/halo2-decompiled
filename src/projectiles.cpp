@@ -371,6 +371,13 @@ bool __stdcall function_fa9a0(long *value)
 // time/full arms/conditional time 94/95/70; input/output late/entry time 94/96;
 // native point/output entry time 96; input setter/library output copy 81.
 // The 70 forms change input registers; 81 gains only six. All restored.
+// Complete fallback-source branch/conditional aggregate 122/122; corresponding
+// shared output setters 114/114; conditional output aggregate 122; explicit output
+// arms 103; selected source with conditional seconds 115; with shared delta 117. Restored.
+// Actual speed-predicate ownership at entry/delta/result boundary 92/94/71;
+// entry native width 90; entry seconds 92; selected source 102; shared input 86;
+// shared input/output 105. Result-boundary predicate plain 71 loses six caller
+// matches through its extra stacked input; all predicate forms restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -964,6 +971,9 @@ real function_30bf0(vector3f *v);
 // Entry velocity workspace 244; reversed entry vector declarations 244; output-first
 // vector names 244/244; shared complete delta producer 245; common result exit 258;
 // that with entry velocity 258; result-first with entry velocity 266 (frame 0x2c). Restored.
+// Actual squared-time producer with found test 244; test-derived trajectory result
+// 245; repeated time square alone/with found/result 244/244/245; result with native
+// minimum clamp 246; coefficient home names 245; all scalar producer forms 246. Restored.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1431,17 +1441,18 @@ PRIVATE inline long projectile_object_root(long object_index)
 /* the projectile type's new callback: its target, lifetime, range,
    attachment, starting velocity and spin, whether it starts under water,
    and the seat flags of the unit that fired it */
-// score 360 (was 371): first +6 is pool/input register allocation; the speed update
-// remains a call where the surrounding code expands it, and the body is 85 bytes short.
+// score 332 (was 360): frame 4 agrees; pool/input and tag receiver allocation differ at +0xb.
+// Speed update is still called instead of expanded; 1226/1261 bytes.
 // Native flag tests 380; complete water result 375; both 380; plain velocity-component
 // loop 364 fast, 360 plain (kept); loop/flags 381; loop/water 364; all three 381;
 // chained target initialization with all three 381. Unchanged reduced control 375.
+// Complete object/tag/both observations 550/332/735; shared scaled addition 364;
+// with tag/object/both observations 344/523/715; initial setter on complete graph 713;
+// retained entry tag identity 396. Tag observations alone kept, plain 332; others restored.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
 	s_projectile *projectile = PROJECTILE_GET(projectile_index);
-	s_projectile_definition *definition = PROJECTILE_DEFINITION_GET(projectile->tag_index);
-	byte *definition_bytes = (byte *)definition;
 
 	*(dword *)&projectile->flags |= 2;
 	projectile->target.object_index = NONE;
@@ -1455,49 +1466,49 @@ bool __stdcall function_f8200(long projectile_index, byte const *data, long unus
 	*(short *)((byte *)projectile + 0x1aa) = 0;
 	*(real *)((byte *)projectile + 0x16c) = function_fd8b0(projectile->tag_index, *(long const *)(data + 0x5c));
 
-	if (*(real *)(definition_bytes + 0x184) == *(real *)(definition_bytes + 0x188))
+	if (*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x184) == *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x188))
 	{
-		*(real *)((byte *)projectile + 0x18c) = *(real *)(definition_bytes + 0x184);
+		*(real *)((byte *)projectile + 0x18c) = *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x184);
 	}
 	else
 	{
 		*(real *)((byte *)projectile + 0x18c) =
-			projectile_random_range(*(real *)(definition_bytes + 0x184), *(real *)(definition_bytes + 0x188));
+			projectile_random_range(*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x184), *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x188));
 	}
 
 	real ticks;
 
-	if (definition->flags & 4)
-		ticks = g_510c54->field_2_3 * *(real *)(definition_bytes + 0xd4);
-	else if (*(real *)(definition_bytes + 0xd4) == *(real *)(definition_bytes + 0xd8))
-		ticks = g_510c54->field_2_3 * *(real *)(definition_bytes + 0xd4);
+	if ((PROJECTILE_DEFINITION_GET(projectile->tag_index))->flags & 4)
+		ticks = g_510c54->field_2_3 * *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4);
+	else if (*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4) == *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd8))
+		ticks = g_510c54->field_2_3 * *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4);
 	else
-		ticks = projectile_random_range(*(real *)(definition_bytes + 0xd4), *(real *)(definition_bytes + 0xd8)) *
+		ticks = projectile_random_range(*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4), *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd8)) *
 			g_510c54->field_2_3;
 	if (ticks >= 1.0f)
 		*(real *)((byte *)projectile + 0x15c) = 1.0f / ticks;
 
-	real arming_ticks = g_510c54->field_2_3 * *(real *)(definition_bytes + 0xcc);
+	real arming_ticks = g_510c54->field_2_3 * *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xcc);
 
 	if (arming_ticks >= 1.0f)
 		*(real *)((byte *)projectile + 0x164) = 1.0f / arming_ticks;
 
 	projectile->attachment_index = NONE;
-	for (short i = 0; i < *(long *)(definition_bytes + 0x94); i++)
+	for (short i = 0; i < *(long *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x94); i++)
 	{
-		if (*(long *)(*(byte **)(definition_bytes + 0x98) + i * 0x18) == 'cont')
+		if (*(long *)(*(byte **)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x98) + i * 0x18) == 'cont')
 		{
 			projectile->attachment_index = i;
 			break;
 		}
 	}
 
-	real speed = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
+	real speed = *(real *)((byte *)projectile + 0x16c) * (PROJECTILE_DEFINITION_GET(projectile->tag_index))->unknown17c;
 	vector3f *forward = (vector3f *)((byte *)projectile + 0x70);
 
 	for (long component = 0; component < 3; ++component)
 		projectile->linear_velocity.n[component] += forward->n[component] * speed;
-	*(real *)((byte *)projectile + 0x190) = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
+	*(real *)((byte *)projectile + 0x190) = *(real *)((byte *)projectile + 0x16c) * (PROJECTILE_DEFINITION_GET(projectile->tag_index))->unknown17c;
 	*(dword *)&projectile->flags &= ~0x100;
 
 	bool under_water = false;

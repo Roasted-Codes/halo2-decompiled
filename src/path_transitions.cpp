@@ -500,6 +500,9 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
 // outputs 404, with case table 404, with ordinary result 398. Original body restored.
 // Actor-valid direction scope with whole-vector initialization, readonly surface and
 // ordinary-result interactions: 284/334/284/334/363/357/363/357; restored.
+// Complete external vertex observations in paired/actor/trace cases 427/402/370;
+// paired+actor/paired+trace/actor+trace 475/475/448; all cases 519; all with
+// ordinary result 495. Retained element receivers and original result restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,

@@ -2147,6 +2147,9 @@ static __forceinline long player_round_ticks(real value)
 // Round 235: Native seat bitfield, existing weapon-flag query, both, actual player latch fields, paired
 // latch/metadata and complete native receiver forms 707/707/715/701/707/707/715/715. Original metadata,
 // declarations, player fields and body restored.
+// Complete player/unit/both field observations 1153/772/1221; each with separate
+// request records 1207/860/1332; both receivers with entry point outputs 1221;
+// with separate requests and entry points 1332. Original receiver/request/point graph restored.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
