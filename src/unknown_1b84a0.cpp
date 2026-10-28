@@ -96,10 +96,10 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 
 /* slot type 0x23, update: once the actor stands at its prop's position, it
    turns to face it; then it lets the prop go */
-// score 61 (was 61): retail reads the pool before the registers are pushed,
-// ours reads it
-// afterwards, so the prologue differs.
+// score 61 (was 61): actor/view register ownership, the late EBX save and full-width readiness materialization differ.
 // Round 198: typed slot data block/current/entry 61/62; on that block actor once/at use 66/85; long/word/byte readiness 76/78/77; stored readiness 47 (exact-match-only, restored). Opening body restored.
+// Round 238: actual input/required/done byte fields, all seven subsets, 61 each;
+// completion byte field 61. Original Boolean field types and body restored.
 // @retail 0x1b89d0
 void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 {

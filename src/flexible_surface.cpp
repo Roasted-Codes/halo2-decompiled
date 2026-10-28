@@ -429,12 +429,15 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 168 (was 195): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// score 168 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
 // Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
 // Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
 // three named cross terms 195; named variation 195; scalar declarations first 195;
 // projection before shared cross 182. Shared cross product 168 fast/plain, 880/880 bytes.
+// Round 238: live direction inputs 209; complete output 199, with live inputs 188;
+// all three cosine products 188, with live inputs 183; sine/cosine role names 168/168;
+// separate trigonometric declarations with live inputs 209. Original snapshots and output order restored.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -571,6 +574,9 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // Round 209: Fresh type-field reads/cursors 498/497; with per-scan results 482/498; existing oriented
 // tangent setter 473, tangent and normal setters 472 (one-point lead dropped); both setters with fresh
 // cursors/results 497/482. All restored; frame 0x44/0x2c, descriptor scans and outer D3D expansion remain.
+// Round 238: application inline/force-inline 485/485; format inline/force-inline 526/526;
+// both helpers inline or force-inline, all four combinations 528. Application-inline forms also
+// lose the 0x22a664 reduced control; all original helper declarations and calls restored.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {
