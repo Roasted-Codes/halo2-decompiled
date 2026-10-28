@@ -52,28 +52,6 @@ bool __stdcall function_1697c0(long flags, point3f const *point, vector3f const 
 	long ignore_object_index, long ignore_unit_index, s_collision_result_1697c0 *collision);
 void function_11bed0(s_location *location, point3f const *point);
 
-/* the physics flags as bits */
-struct s_211060_flags_view
-{
-	word bit0 : 1;
-	word bit1 : 1;
-	word bit2 : 1;
-	word bit3 : 1;
-	word bit4 : 1;
-	word bit5 : 1;
-	word bit6 : 1;
-	word bit7 : 1;
-	word bit8 : 1;
-	word bit9 : 1;
-	word bit10 : 1;
-	word bit11 : 1;
-	word bit12 : 1;
-	word bit13 : 1;
-	word bit14 : 1;
-	word bit15 : 1;
-};
-
-// score 246 (was 269): flag 3 of the physics flags read through a word bitfield view; the rest still differs.
 // @retail 0x211060
 long function_211060(vector3f *velocity, dword flags, void const *mover_settings, s_location *location,
 	long cell_slot, point3f *position, vector3f const *force, vector3f *normal, short *material_type, real radius,
@@ -88,7 +66,7 @@ long function_211060(vector3f *velocity, dword flags, void const *mover_settings
 		real unit_mass = physics->unit_mass;
 		real radius_squared = radius * radius;
 		real radius_cubed = radius_squared * radius;
-		long mode = TEST_FIELD_BIT(((s_211060_flags_view *)&physics->flags)->bit3);
+		long mode = (physics->flags >> 3) & 1;
 		if (physics->flags & 0x10)
 			mode |= 2;
 		else
