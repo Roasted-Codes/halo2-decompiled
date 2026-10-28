@@ -10,6 +10,7 @@ detonation. */
 #include "data_array.h"
 #include "unknown_0259d0.h"
 #include "object_markers.h"
+#include "normalize3d.h"
 #include "object_iterator.h"
 #include "effects.h"
 #include "sound_sources.h"
@@ -655,6 +656,11 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 }
 
 /* pushes a projectile, and spins it at random by the push's strength */
+// score 69 (was 95): frame 0x10 and retail length agree; impulse EDX/ESI, axis homes and seed carriers differ.
+// Round 196: direct length 95; fraction 114; complete native scale 98; length/fraction 114;
+// length/scale 98; fraction/scale with either length 83 (one-use fraction, restored); shared magnitude/scale 98.
+// Commuted first product with complete scaled vector 69 (kept); in-place, direct-root in-place,
+// and shared magnitude variants 69 each. Existing calls and multiply grouping preserved.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -667,12 +673,14 @@ void function_fa820(long projectile_index, vector3f const *impulse)
 		projectile->linear_velocity.k += impulse->k;
 
 		vector3f axis = g_4417f0[random_index(&g_4e7408->unknown0, 1026)];
-		real spin = (real)sqrt(length_sq3f(impulse)) * function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) *
+		real spin = function_x82e52f(&g_4e7408->unknown0, __FILE__, __LINE__) * (real)sqrt(length_sq3f(impulse)) *
 			1.5707964f;
 
-		projectile->angular_velocity.i += spin * axis.i;
-		projectile->angular_velocity.j += spin * axis.j;
-		projectile->angular_velocity.k += axis.k * spin;
+		vector3f rotation;
+		vector3f_scale(&axis, spin, &rotation);
+		projectile->angular_velocity.i += rotation.i;
+		projectile->angular_velocity.j += rotation.j;
+		projectile->angular_velocity.k += rotation.k;
 		function_fbd40(projectile_index);
 		function_b9b90(projectile_index, false);
 	}
@@ -1078,6 +1086,11 @@ extern vector3f *g_4687ac;
 
 /* whether a projectile's path to a point hits anything: the line from it,
    and for projectiles with a radius the two lines either side of it */
+// score 163 (was 220): simultaneous offset endpoints recover 757/756 bytes; frame 0x48
+// versus 0x34 and endpoint/query homes still differ. Shared input differences 220;
+// radius at use 224; both 233; simultaneous endpoints 163 plain (kept); endpoints with
+// radius reads 181, plus shared differences 188; shared ray displacement 189, with
+// shared cross product 189; first-ray scope 165, with radius reads 173.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1110,24 +1123,28 @@ bool function_fc030(long projectile_index, point3f const *point, s_collision_res
 			side = *g_4687ac;
 
 		point3f start;
+		point3f end;
+		point3f opposite_start;
+		point3f opposite_end;
 		vector3f offset_vector;
 
 		start.x = side.i * radius + origin->x;
 		start.y = side.j * radius + origin->y;
 		start.z = side.k * radius + origin->z;
-		offset_vector.i = side.i * radius + point->x - start.x;
-		offset_vector.j = side.j * radius + point->y - start.y;
-		offset_vector.k = side.k * radius + point->z - start.z;
+		end.x = side.i * radius + point->x;
+		end.y = side.j * radius + point->y;
+		end.z = side.k * radius + point->z;
+		opposite_start.x = (0.0f - radius) * side.i + origin->x;
+		opposite_start.y = side.j * (0.0f - radius) + origin->y;
+		opposite_start.z = side.k * (0.0f - radius) + origin->z;
+		opposite_end.x = (0.0f - radius) * side.i + point->x;
+		opposite_end.y = side.j * (0.0f - radius) + point->y;
+		opposite_end.z = side.k * (0.0f - radius) + point->z;
+		vector3d_from_points3d(&start, &end, &offset_vector);
 		if (function_1697c0(0x4800008, &start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
 			return true;
-
-		start.x = (0.0f - radius) * side.i + origin->x;
-		start.y = side.j * (0.0f - radius) + origin->y;
-		start.z = side.k * (0.0f - radius) + origin->z;
-		offset_vector.i = (0.0f - radius) * side.i + point->x - start.x;
-		offset_vector.j = side.j * (0.0f - radius) + point->y - start.y;
-		offset_vector.k = side.k * (0.0f - radius) + point->z - start.z;
-		if (function_1697c0(0x4800008, &start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
+		vector3d_from_points3d(&opposite_start, &opposite_end, &offset_vector);
+		if (function_1697c0(0x4800008, &opposite_start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
 			return true;
 	}
 	return false;
@@ -1210,10 +1227,14 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 
 /* a projectile's detonation effects and sounds at a point, attached to an
    object's node when it stuck to one */
+// score 115 (was 148): frame 0x150 and extent agree; point EBX/EDI, zero lifetime and selector call registers differ.
+// Round 196: array-size bounds, unsigned shared ordinal and distinct unsigned ordinals 148 each;
+// word index 115; long node 148; both widths 115 (kept); both widths with array bounds
+// or separate ordinals 115 each. Every declaration coordinated; original loop bodies retained.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
-	point3f const *point, vector3f const *normal, long index, bool attached, long object_index,
-	short node_index, bool alternate)
+	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
+	long node_index, bool alternate)
 {
 	byte *definition = g_4e3b44[definition_index & 0xffff].bytes;
 	long sounds[3];
@@ -1325,6 +1346,11 @@ PRIVATE inline long projectile_object_root(long object_index)
 /* the projectile type's new callback: its target, lifetime, range,
    attachment, starting velocity and spin, whether it starts under water,
    and the seat flags of the unit that fired it */
+// score 360 (was 371): first +6 is pool/input register allocation; the speed update
+// remains a call where the surrounding code expands it, and the body is 85 bytes short.
+// Native flag tests 380; complete water result 375; both 380; plain velocity-component
+// loop 364 fast, 360 plain (kept); loop/flags 381; loop/water 364; all three 381;
+// chained target initialization with all three 381. Unchanged reduced control 375.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
@@ -1384,9 +1410,8 @@ bool __stdcall function_f8200(long projectile_index, byte const *data, long unus
 	real speed = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
 	vector3f *forward = (vector3f *)((byte *)projectile + 0x70);
 
-	projectile->linear_velocity.i += forward->i * speed;
-	projectile->linear_velocity.j += forward->j * speed;
-	projectile->linear_velocity.k += forward->k * speed;
+	for (long component = 0; component < 3; ++component)
+		projectile->linear_velocity.n[component] += forward->n[component] * speed;
 	*(real *)((byte *)projectile + 0x190) = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
 	*(dword *)&projectile->flags &= ~0x100;
 
@@ -1469,6 +1494,11 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
+// score 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
+// Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
+// shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
+// complete spherical direction 401; early index-only salt 377 (five-point gain dropped); target-distance
+// name 382; shared normalizer 382; dot after trigonometry 382; early salt plus field reads 387.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -1620,6 +1650,11 @@ vector3f const g_45326c[1] = { { 0.0f, 0.0f, -1.0f } };
 /* detonates a projectile: (once) its sound, contrail, direct and area
    damage, impact or airburst effects, and the effects of the material
    under it */
+// score 527 (was 527): Frame 0x184 agrees; header-offset home, cached flags and probe/material homes differ.
+// Native definition bit 533; projectile/child flag bits 527; definition bit plus parent field reads 527;
+// common exit 527; saved-position role name 527; distinct direct/area damage names 527;
+// probe-table pointer loop 530; probe declarations reversed 527; all native flag tests/stores 533;
+// unsigned table index 539; material declared at entry 527; parent/Boolean declarations first 527.
 // @retail 0xfc330
 void __stdcall function_fc330(long projectile_index, bool detach_contrail, real contrail_time)
 {

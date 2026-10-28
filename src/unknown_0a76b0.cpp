@@ -14,6 +14,7 @@ The handlers of the unit request table at 0x467564
 #include "unknown_1cafc0.h"
 #include "unknown_1dacb0.h"
 #include "unit_requests.h"
+#include "matrix_transform.h"
 #include "unknown_1cec30.h"
 #include "bit_vector.h"
 #include <math.h>
@@ -3160,9 +3161,7 @@ PRIVATE __forceinline void unit_action_seat_facing_get(s_unit_action_unit *unit,
 		transform4x3f const *matrix = (transform4x3f const *)((byte *)parent +
 			*(short *)((byte *)parent + 0x116) + *((char *)unit + 0x18) * 0x34);
 
-		facing->i = matrix->up.i * unit->forward.k + matrix->left.i * unit->forward.j + matrix->forward.i * unit->forward.i;
-		facing->j = matrix->up.j * unit->forward.k + matrix->left.j * unit->forward.j + matrix->forward.j * unit->forward.i;
-		facing->k = matrix->up.k * unit->forward.k + matrix->left.k * unit->forward.j + matrix->forward.k * unit->forward.i;
+		matrix_transform_vector(matrix, &unit->forward, facing);
 	}
 }
 
@@ -3301,8 +3300,11 @@ bool __stdcall function_ebf20(long unit_index, s_unit_request *request)
 
 	function_b9dd0(unit_index, &point);
 	unit_action_seat_facing_get(UNIT_ACTION_UNIT_GET(unit_index), &facing);
-	return function_ee090(unit_index, *(long *)((byte *)request + 8), *(long *)((byte *)request + 4), 0x5000049,
-		&point, &facing);
+
+	long state_name = *(long *)((byte *)request + 8);
+	long mode = *(long *)((byte *)request + 4);
+
+	return function_ee090(unit_index, state_name, mode, 0x5000049, &point, &facing);
 }
 
 /* sits a unit down from its pose (type 39) */
@@ -4364,7 +4366,10 @@ void function_edfa0(long unit_index, point2f const *facing)
 // score 13 (was 24): retail stores x before it loads y (`movss xmm2, y; mulss xmm2, xmm0`); ours
 // multiplies y into the inverse's register and stores both after. Tried: the products as `*=` or
 // in any operand order 13; normalize2d_fast 13; `else length = 0.0f;` before the test, either arm
-// first 13; a vector2f local 13; the normalisation as a helper inlined from another file 13.
+// first 13; a vector2f local 13; the normalisation as a helper inlined from another file 13; the
+// local filled by one point2f copy 19 (x87 squares swap); `= { x, y }` 13; y copied first 21;
+// `inverse` declared at the top 13; each coordinate divided by the length 13; the matched
+// 0x2c1d90 shape (pointer helper, `else magnitude = 0`, test on its result) 13.
 // @retail 0xedff0
 void function_edff0(long unit_index)
 {

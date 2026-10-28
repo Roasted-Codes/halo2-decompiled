@@ -205,6 +205,10 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // reversed terms and operands 8; helper terms/shared magnitude/named square 8/8/8; squared accumulation 10;
 // dot3f 8; an early final return 83; shared normalization with reversed terms 8; indexed vector2f locals 8;
 // comparison operands reversed 8; an explicit false arm 27; single-product operand swaps 8/8.
+// Complete single-exit dimensional result 4 (two-point gain, restored); horizontal-first dispatch 71; both workspaces
+// at function scope 6; named native vector2f components 6; complete named dot 6; both named products 14; single-exit
+// byte/integer results 57/62; direct horizontal success on that graph 62; full conjunction assignment 83;
+// single exit plus y-first normalization stores 8; single exit plus native fast normalization 4 (restored).
 // @retail 0x296d60
 PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
@@ -492,21 +496,24 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 	actor_looking_rotate_in_place(vector, axis, sine, cosine);
 }
 
+// score 335 (was 386): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
+// Tried: direct collision Boolean 355; initial best vector before normalization 356; result declared first 354;
+// long sample counter 355; axis/sample/range names 355; shared normalizer 330 (sum order changed, restored);
+// shared random-range helper 360; one result return 377; paired span names 355; names plus one return 377;
+// those plus initial best vector first 356; startup values before axis initialization 335 (kept).
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
 {
-	/* retail keeps test_collision on the stack */
-	bool const *test_collision_reference = &test_collision;
-	vector3f pitch_axis = { -forward->j, forward->i, 0.f };
-	if (actor_looking_normalize3d(&pitch_axis) == 0.f)
-		pitch_axis = *g_4687ac;
 	vector3f best_direction = *g_4687a8;
 	bool result = false;
 	real best_fraction = 0.f;
 	real yaw_range = yaw_upper - yaw_lower;
 	real arg_58ecd0 = pitch_upper - pitch_lower;
 	bool clear = true;
+	vector3f pitch_axis = { -forward->j, forward->i, 0.f };
+	if (actor_looking_normalize3d(&pitch_axis) == 0.f)
+		pitch_axis = *g_4687ac;
 	for (short attempt = 0; attempt < 10; ++attempt)
 	{
 		real yaw = (real)random_next(&g_4e7408->unknown0) * (1.f / 65535.f) * yaw_range + yaw_lower;
@@ -515,7 +522,7 @@ PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, boo
 		actor_looking_rotate(&candidate, &pitch_axis, pitch);
 		actor_looking_rotate(&candidate, g_4687b0, yaw);
 		clear = true;
-		if (*test_collision_reference)
+		if (test_collision)
 		{
 			vector3f ray = { candidate.i * 3.f, candidate.j * 3.f, candidate.k * 3.f };
 			s_collision_result_1697c0 collision;
@@ -579,6 +586,11 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
+// score 397 (was 445): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
+// Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
+// default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
+// result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
+// test results plus flag name 397; Boolean declarations reversed 414; tests plus reversed declarations 395 (restored).
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -596,7 +608,7 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	{
 	case 0:
 		if (!actor->movement_aiming)
-			return false;
+			goto done;
 		*direction = actor->field_x6d9d38;
 		if (function_1f8660(actor_index) && actor->object_index == NONE &&
 			actor->field_xe428b1 == 4 && actor->path_index < actor->path_count - 1 &&
@@ -608,11 +620,11 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	case 1:
 		reference = (s_prop_datum *)record_pool_lookup(g_502418, specification->index);
 		if (!reference)
-			return false;
+			goto done;
 		state = function_25d690(reference);
 		point_valid = true;
 		if (reference->state < 1)
-			return false;
+			goto done;
 		if (reference->state <= 2)
 		{
 			long object_index = reference->object_index;
@@ -632,7 +644,7 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 
 	case 2:
 		if (actor->field_x50962e == NONE)
-			return false;
+			goto done;
 		reference = prop_ref_get(actor->field_x50962e);
 		state = function_25d690(reference);
 		point_valid = true;
@@ -674,7 +686,7 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 
 	case 5:
 		if (actor->attention_state <= 0)
-			return false;
+			goto done;
 		point = actor->attention_point;
 		point_valid = true;
 		goto aim_at_point;
@@ -683,10 +695,10 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 		{
 			long object_index = specification->index;
 			if (object_index == actor->unit_index)
-				return false;
+				goto done;
 			s_actor_looking_object *object = (s_actor_looking_object *)function_badc0(object_index, 0xffffffff);
 			if (!object)
-				return false;
+				goto done;
 			if (((1 << object->type) & 3) && !aiming)
 			{
 				if (object->player_index != NONE)
@@ -700,12 +712,12 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 			goto aim_at_point;
 		}
 	default:
-		return false;
+		goto done;
 	}
 
 remembered_prop:
 	if (state->unknown00 == NONE)
-		return false;
+		goto done;
 	function_210850((s_type_c3b527 const *)&state->unknown48, &point);
 	if (aiming)
 		goto local_254539;
@@ -725,26 +737,27 @@ local_254539:
 	if (!result)
 	{
 		vector3d_from_points3d(&origin, &point, direction);
-		if (!(function_30bf0(direction) > 0.f))
-			return false;
-		result = true;
+		result = function_30bf0(direction) > 0.f;
+		if (!result)
+			goto done;
 	}
 	goto output_point;
 
 direction_from_actor:
 	vector3d_from_points3d(&actor->position, &point, direction);
 normalize_direction:
-	if (!(function_30bf0(direction) > 0.f))
-		return false;
-	result = true;
+	result = function_30bf0(direction) > 0.f;
+	if (!result)
+		goto done;
 	if (!point_valid)
-		return result;
+		goto done;
 output_point:
 	if (has_target_point && arg_0e6828)
 	{
 		*has_target_point = true;
 		*arg_0e6828 = point;
 	}
+done:
 	return result;
 }
 
@@ -753,7 +766,8 @@ output_point:
 // Tried: a specification pointer local 9; an if/else chain without the early return 9; the valid
 // flag assigned from the `&&` 22; a valid local stored once 47; the getter as `data + index * size`
 // 9; a temporary caller (its only retail caller 0x1f38c0 is disabled here) 9; a cdecl compile-only
-// build gives ours too.
+// build gives ours too; shared actor getter or type 9 each; direct byte-base 9; offset local 9;
+// getter forceinline 9; data-base or slot locals 9 each; nested actor getter 9; a mode pointer 9.
 // @retail 0x296580
 void function_296580(long actor_index)
 {
@@ -817,6 +831,11 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
+// score 96 (was 205): the 0x38 frame agrees; bounds homes/scheduling, the signed-angle registers and dot order differ.
+// Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
+// both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
+// limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
+// both random spans read once 212; the direct Boolean in the sampler changes this caller from 55 to 96.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
@@ -837,9 +856,10 @@ PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool u
 			base.k = 0.f;
 			if (function_30bf0(&base) == 0.f)
 				base = *g_4687a8;
-			yaw_upper = properties->aiming_yaw * scale;
-			yaw_lower = 0.f - yaw_upper;
+			real yaw = properties->aiming_yaw * scale;
 			real pitch = properties->aiming_pitch * scale;
+			yaw_upper = yaw;
+			yaw_lower = 0.f - yaw;
 			real minimum = 0.f - g_55e5bc;
 			real lower = 0.f - pitch;
 			pitch_lower = minimum > lower ? minimum : lower;
@@ -991,38 +1011,41 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 PRIVATE bool function_2980d0(long actor_index, bool looking, bool use_character_bounds, vector3f *direction)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
-	s_type_952051 *aiming = (s_type_952051 *)&actor->idle_aiming_direction_type;
-	s_type_952051 *look = (s_type_952051 *)&actor->idle_looking_direction_type;
 	if (use_character_bounds && actor->unrestricted_looking && actor->attention_enabled &&
-		function_297d30(actor_index, aiming))
+		function_297d30(actor_index, ((s_type_952051 *)&actor->idle_aiming_direction_type)))
 	{
 		actor->idle_aiming_timer = function_297c10(actor_index, use_character_bounds, true);
 		actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
-		*look = *aiming;
+		*((s_type_952051 *)&actor->idle_looking_direction_type) = *((s_type_952051 *)&actor->idle_aiming_direction_type);
 		actor->attention_selected = true;
 	}
 	else
 	{
-		if (actor->idle_aiming_timer == 0 || !function_297a50(actor_index, use_character_bounds, aiming))
+		if (actor->idle_aiming_timer == 0 || !function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_aiming_direction_type)))
 		{
-			if (use_character_bounds && (random_next(&g_4e7408->unknown0) & 0x8000) != 0 &&
+			if (use_character_bounds && (random_next(&g_4e7408->unknown0) & 0x8000) > 0 &&
 				actor->idle_looking_timer > g_510c54->field_2_3 &&
-				function_297a50(actor_index, use_character_bounds, look))
-				*aiming = *look;
+				function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type)))
+				*((s_type_952051 *)&actor->idle_aiming_direction_type) = *((s_type_952051 *)&actor->idle_looking_direction_type);
 			else
-				function_297660(actor_index, true, use_character_bounds, aiming);
+				function_297660(actor_index, true, use_character_bounds, ((s_type_952051 *)&actor->idle_aiming_direction_type));
 			actor->idle_aiming_timer = function_297c10(actor_index, use_character_bounds, true);
 			actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
-			*look = *aiming;
+			*((s_type_952051 *)&actor->idle_looking_direction_type) = *((s_type_952051 *)&actor->idle_aiming_direction_type);
 		}
 		if (looking && (actor->idle_looking_timer == 0 ||
-			!function_297a50(actor_index, use_character_bounds, look)))
+			!function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type))))
 		{
-			function_297660(actor_index, false, use_character_bounds, look);
+			function_297660(actor_index, false, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type));
 			actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
 		}
 	}
-	if (!function_2967b0(actor_index, looking ? look : aiming, use_character_bounds, direction, NULL, NULL))
+	bool decoded;
+	if (looking)
+		decoded = function_2967b0(actor_index, ((s_type_952051 *)&actor->idle_looking_direction_type), use_character_bounds, direction, NULL, NULL);
+	else
+		decoded = function_2967b0(actor_index, ((s_type_952051 *)&actor->idle_aiming_direction_type), use_character_bounds, direction, NULL, NULL);
+	if (!decoded)
 		*direction = actor->forward;
 	return true;
 }
@@ -1048,6 +1071,13 @@ struct s_actor_looking_turn_request
 	vector3f forward;
 };
 
+// score 530 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
+// Tried the out-of-line predicate declaration 546 fast; horizontal aggregate copies 562 fast; initial native setters 546 fast;
+// explicit looking success/fallback stores 532 fast, 527 plain (three-point gain, restored); target point or selected vector
+// renamed 546 fast each; validity at function scope 546 fast; aggregate inputs plus explicit stores 549 fast;
+// out-of-line predicate plus explicit stores 532 fast, 527 plain (restored). Unchanged preview 546 fast.
+// Separate noinline declarations in caller and callee units 570 fast, 590 plain at 1952/2020 (restored);
+// this removes the expansion and recovers the 0xc8 frame, but later scheduling/layout regress.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

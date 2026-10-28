@@ -419,6 +419,10 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 // return, `!=` + continue, a store after the loop: all keep the found block last. This round:
 // `break` for the found return 22; the found index kept and handled after the loop 51; `!=` +
 // continue in a real build 22; the loop as a plain while 22; an explicit final return 22.
+// Lane 10 r15 (real builds): the search as a forceinline index-or-NONE helper 63 (component in
+// EBX, the NONE test kept); the whole tail as a forceinline helper 22; a contact element pointer
+// 23; the index declared at function scope 22; a bool set at the found break and tested after the
+// loop 22 (the same layout: the size guard still joins the loop's normal exit).
 // @retail 0x1d77d0
 void __stdcall function_1d77d0(s_havok_component *component, s_physics_model_owner *owner)
 {

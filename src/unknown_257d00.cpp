@@ -1658,6 +1658,9 @@ void function_b7360(long object_index);
 // all three 532; field reads with positive point-production admission 530. Original body restored.
 // Complete core-group orders ACB/BAC/BCA/CAB/CBA 474/544/534/478/532;
 // B/A with point case before/between/after the groups 522/546/549. All original case bodies restored.
+// Cross-case same-object comparison result bool/byte/short/long 536/536/527/532;
+// complete complementary result at the same widths 536/536/527/532. Added storage
+// regresses acquisition and dispatch; original comparison observations restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

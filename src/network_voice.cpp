@@ -1243,7 +1243,8 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 	return result;
 }
 
-// score 281 (was 281): sixteen-step rolled loop versus four-by-four unrolling;
+// score 255 (was 281): scratch 8 versus retail 4; grouped inner traversal remains rolled, 186/347 bytes.
+// Earlier: sixteen-step rolled loop versus four-by-four unrolling;
 // expanded loop changes the entry convention and loses the matched caller.
 // Direct getter comparison 281; split header/payload adds 281; arithmetic width 329;
 // counted direct comparison 112; counted split adds 112; counted arithmetic width 161;
@@ -1283,6 +1284,10 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // the flag in al, the mask in ebx and the active byte in cl as retail, and 0x54990 matches;
 // that pointer walk with `i += 4` 113 (caller 13), as a do/while 113 (caller 13); pointer
 // compare loop stays rolled 283. Original body restored.
+// Round 196: shared nested groups for/for and for/while 111 each; for/do 255 (kept);
+// while/for, do/for and descending-for/for 111 each; actual outer array ends/for 122 each.
+// Post-tested inner with outer array ends 258 each, descending or post-tested outer 255 each.
+// All pre-tested-inner forms lose exact caller 0x54990; post-tested-inner forms preserve it.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -1292,14 +1297,18 @@ long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 		long local_0 = voice_get_unknown00();
 		bool is_unknown00 = local_0 == player;
 		total = 2;
-		long i = 0;
-		do
+		s_voice_channel *channel = &channels->channels[0];
+		for (long group = 0; group < 4; group++)
 		{
-			s_voice_channel *channel = &channels->channels[i];
-			if (voice_channel_has_player(channel, player))
-				total += channel->values[player] * (is_unknown00 ? 13 : 11) + 2;
-			i++;
-		} while (i < 16);
+			long step = 0;
+			do
+			{
+				if (voice_channel_has_player(channel, player))
+					total += channel->values[player] * (is_unknown00 ? 13 : 11) + 2;
+				channel++;
+				step++;
+			} while (step < 4);
+		}
 	}
 	return total;
 }
@@ -2675,6 +2684,10 @@ finish:
 
 /* records the session's player mask and identities, and resets the voice
    channels when either has changed since the last call */
+// score 2 (was 2): only mask/source reload order after logging differs; frame and copy graph agree.
+// Round 196: query-carrier names singly/paired, comparison-input names singly/paired,
+// comparison ordinal and copy ordinal names [2, 2, 2, 2, 2, 2, 2, 2]; original source restored.
+// Round 198: read-only mask/source/both 2/2/2; unsigned/signed-word/unsigned-word copy ordinal 123/318/318; unsigned comparison/both ordinals 162/186. Opening body restored.
 // @retail 0x54590
 void function_54590(void)
 {
@@ -2971,6 +2984,9 @@ struct s_voice_route_choice
 // Complete current route value/const value/element reference with bitwise radio
 // 438/438/395; with conditional radio 459/459/410; native three-pair descriptor
 // with current value/reference 431/386. All original observations and workspaces restored.
+// Shared priority call with a nearest-path return, original/choice receiver/three pairs/
+// native descriptor 402/401/419/424; shared priority with a combined routing decision,
+// corresponding forms 402/401/419/424. All original routing and engine calls restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
