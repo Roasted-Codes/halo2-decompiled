@@ -2182,7 +2182,23 @@ void network_session_leave_joining(c_class_58d20 *session)
 	network_session_update_leaving_join(session);
 }
 
-// score 3 (was 3): retail sets the NONE carrier (ebx) after clearing the state block; ours sets
+// score 3 (was 3): retail sets the NONE carrier after clearing the state
+// block; ours sets it before the clear. Tried: the copy as a word loop
+// 49, as a pointer range or a byte loop 0 (not kept: the matched siblings
+// 0x61180 and 0x614a0 copy the same way with memcpy).
+// Complete field construction without scratch clear 48; clock before record
+// 28, after scratch clear 3; immutable initialized record 48; typed state
+// destination 11, without scratch clear 48, with immutable record 48, with
+// earlier clock 28. The original eight-byte frame and memcpy remain.
+// our NONE request sentinel is defined before clearing the
+// state block; retail defines it afterwards. Tried: the copy as a word loop
+// New trials: memmove 42; request field fill 3; clear result as copy target 9;
+// all-one record fill 31; tail-only clear 32; fill with memmove 37;
+// tail clear with fill 30; tail clear with memmove 46. Destination sentinel
+// after copy 30; scratch sentinel after clear 29, as fill 29; sentinel before
+// clock 15; destination fill 30; copy-result sentinel 27; fill before clock 15;
+// typed destination with late sentinel 26.
+// retail sets the NONE carrier (ebx) after clearing the state block; ours sets
 // it before the clear. The carrier must stay live across the clear: set after it in the source,
 // it moves to eax and ebx is no longer saved. Tried: the copy as a word loop 49, as a pointer
 // range or a byte loop 0 (not kept: the matched siblings 0x61180 and 0x614a0 copy the same way

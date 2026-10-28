@@ -270,11 +270,7 @@ struct s_object_header
 #define TAG_FROM_OBJECT(object) ((s_object_tag *)g_4e3b44[(object)->tag_index & 0xffff].bytes)
 
 
-// score 4 (was 92): the second scan's found block sets al after its last store and loads the short
-// through ax; retail sets al before the last store and uses cx. Its `result = true` first or with
-// `return result` 4; `result = true; ...; break;` 62/63; a found flag 4; one shared inline child
-// scan for both halves 312 (inline) / 165 (forceinline); type test inverted to `continue` 4;
-// a 600 s permuter run (52 tries), none below 4.
+/* advances the child iterator to the next child object of type 0 or 1 */
 // @retail 0xd0690
 bool function_d0690(s_object_child_iterator *iterator)
 {
@@ -326,14 +322,15 @@ bool function_d0690(s_object_child_iterator *iterator)
 				iterator->next = child->next_sibling;
 				if ((1 << child->type) & 3)
 				{
+					result = true;
 					iterator->child_index = index;
 					iterator->child_short = child->value1fc;
 					iterator->child_value = child->value14;
-					return true;
+					break;
 				}
 			}
 			if (result)
-				return result;
+				break;
 			long index = OBJECT_FROM_INDEX(iterator->current)->next_sibling;
 			while (index != NONE)
 			{
@@ -929,28 +926,21 @@ bool function_d3630(s_vertex_block *block, long triangle_index, s_mesh *mesh, re
 	return result;
 }
 
-// score 42 (was 42): Root/pool/object homes, missing shift spill and stacked iterator input remain.
-// Header base 42; root handle 45; both 45; ordinary while 59; separate admission guards 42;
-// parent field at every use 59; named parent-type mask 42; root/header with separate guards 45.
-// Retail's loop is not rotated (lookup at the top, `jmp` back): a `while (!done)` loop with
-// `done = true` in the else arm, or `do ... while (object_index != NONE)` with breaks, gives
-// retail's iterator in ebx and the spilled 1 (23 each), but the index then loads into ebp and
-// stays a stack argument (`ret 4`; retail eax copied to edi, object in ebp, pool in esi).
-// With that loop: the declarations in either order, parent declared outside, found/preset
-// flag, a renamed walk index, chained or swapped root/current stores, parent read at each use
-// 23 each; object pointer scoped in the loop 60; tail recursion rotates like the for loop.
 // @retail 0xd0620
 void function_d0620(long object_index, s_object_child_iterator *iterator)
 {
-	s_object *object;
+	s_object *object = OBJECT_FROM_INDEX(object_index);
+	bool done = false;
 
-	for (;;)
+	while (!done)
 	{
-		object = OBJECT_FROM_INDEX(object_index);
-		long parent_index = object->value14;
-		if (parent_index == NONE || !TEST_FIELD_BIT(object->flag26) || !((1 << OBJECT_FROM_INDEX(parent_index)->type) & 3))
-			break;
-		object_index = parent_index;
+		if (object->value14 != NONE && TEST_FIELD_BIT(object->flag26) && ((1 << OBJECT_FROM_INDEX(object->value14)->type) & 3))
+		{
+			object_index = object->value14;
+			object = OBJECT_FROM_INDEX(object_index);
+		}
+		else
+			done = true;
 	}
 
 	iterator->root = object_index;

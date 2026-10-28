@@ -244,7 +244,7 @@ void function_e6a20(long unit_index, long name, bool active, bool keep)
 }
 
 void function_e6b00(long unit_index, long name, long *state_name, long *action_name);
-PRIVATE void function_e70b0(long unit_index, short *value);
+PRIVATE short *function_e70b0(long unit_index, short *state);
 
 /* when an animation of a unit ends: the action it ends, and the state and
    action animations that follow */
@@ -307,8 +307,7 @@ void function_e6b00(long unit_index, long name, long *state_name, long *action_n
 		{
 			short count;
 
-			function_e70b0(unit_index, &count);
-			if (count == 0)
+			if (*function_e70b0(unit_index, &count) == 0)
 			{
 				function_e6960(unit_index, 0x1d);
 				next_state = 0x6000086;
@@ -454,10 +453,13 @@ bool function_e7020(long unit_index, bool *alternate, long name)
 	return false;
 }
 
+/* the unit's action state (its actions' +0x36): stores it and returns where
+   it went, so callers test it through the result */
 // @retail 0xe70b0
-PRIVATE void function_e70b0(long unit_index, short *value)
+PRIVATE short *function_e70b0(long unit_index, short *state)
 {
-	*value = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index))->unknown36;
+	*state = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index))->unknown36;
+	return state;
 }
 
 /* readies the weapon in a unit's hand (the second hand when it's dual
