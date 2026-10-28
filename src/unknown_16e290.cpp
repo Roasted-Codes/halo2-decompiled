@@ -1424,6 +1424,8 @@ void function_170630(long player_index);
 // and three others) 7 each and byte-identical to the inline form, the command pointer as a
 // local 7, the state pointer from the observer element 7: the compiler always prepares the
 // three addresses in the argument-register order, while retail prepares out, first, second.
+// Native observer timer/channel fields 7/7/7; full typed receiver 7; timer end pointer
+// with byte/typed receiver 23/23; word/byte countdown 7/7.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {
