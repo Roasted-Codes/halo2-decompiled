@@ -1577,6 +1577,8 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // Round 227: Native prism/query-origin/initial-sum values, their pairs/all,
 // all with CRT prism construction 779/758/554/886/779/758/886/886. All restored.
 // Round 235: query/candidate/contact consumption scopes, all seven combinations 552 each; midpoint-half consumption scope 552.
+// Round 201: byte inside/face/normal decisions, all seven nonempty subsets, and all three signed
+// bytes 552 each (2898/2882). Original canonical bools, accepted word counts and geometry restored.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

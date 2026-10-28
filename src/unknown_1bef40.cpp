@@ -63,10 +63,12 @@ short *function_e70b0(long unit_index, short *value);
 long function_1469f0(real seconds);
 
 #pragma intrinsic(_ReadWriteBarrier)
-// score 13 (was 18): retail reads the slot reference before actor arithmetic and the object table
+// score 13 (was 13): retail reads the slot reference before actor arithmetic and the object table
 // after index arithmetic; ours has the opposite order in each case.
 // Slot data block 13; without the barrier 90; action helper result 13; actor/state/result 17;
 // result/state/actor 13; state/result/actor 13; result/actor/state 17; actor/result/state 17.
+// Early reference predicate/default-first/wide-result/presence predicate 109/108/111/109;
+// complete current/both reference values 100/104; native word equality logical/bitwise 222/130.
 // @retail 0x1bf0f0
 short __stdcall function_1bf0f0(long actor_index, s_slot *slot, bool active)
 {
