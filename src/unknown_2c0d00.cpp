@@ -1085,6 +1085,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // On that lead: `(bool)` returns 349; one value return only 373; `if (!(c)) return false` 349;
 // nested body with final `return true` 362; shared `return false` after an if/else 361;
 // single-exit result 376; explicit y-first side expressions 358.
+// Vector declaration order 172; split direction declarations 172; second-side declaration first 172;
+// direct distance comparison 172; angle-wrap order 191; named angle sums 172;
+// named side product 172; nested single result 414.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)

@@ -1143,6 +1143,8 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // struct assignment 234; sample mask as the storage object's address 234; a named model-mask pointer
 // for the test and the copy 258; a noinline 0xbfed0 declaration here 234; sample mask from memcpy's
 // return 255.
+// No-model pool/header-array/parent-header/current-header forms 234 each; mask element address 234;
+// all-node root skip/nested 245/245; preincrement while 242.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {
