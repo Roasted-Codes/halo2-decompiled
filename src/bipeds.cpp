@@ -594,7 +594,16 @@ extern vector3f *g_4687a4;
 /* the biped object type's update (+0x40): riding in a vehicle or biped,
    else its controls, its physics mode's movement, its animation, its
    camera and the unit update */
-// score 295 (was 305): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
+// score 281 (was 305): flag 2 of +0x10a through the word bitfield view and the definition flag as a field bit; the rest still differs.
+/* the byte at +0x10a as bits */
+struct s_biped_flags_10a_view
+{
+	word bit0 : 1;
+	word bit1 : 1;
+	word bit2 : 1;
+	word unknown3 : 5;
+};
+
 // @retail 0xdd360
 bool __stdcall function_dd360(long arg_159e6d)
 {
@@ -658,7 +667,7 @@ bool __stdcall function_dd360(long arg_159e6d)
 	{
 		s_biped_physics_output output;
 
-		if (((biped->flags_10a >> 2) & 1) ||
+		if (TEST_FIELD_BIT(((s_biped_flags_10a_view *)&biped->flags_10a)->bit2) ||
 			(biped->physics_mode != 2 && !(TEST_FIELD_BIT((*(dword *)(definition + 0x264) >> 3) & 1))))
 		{
 			biped->facing_goal.k = 0.0f;
@@ -2835,15 +2844,6 @@ void function_1faf30(s_1faf30_timer *timer);
 bool function_1cb920(void *data, long mode);
 bool function_114b60(short entry_index, short fallback_index, long unit_index, long priority, void const *extra);
 void __stdcall function_b8890(long unit_index);
-
-/* the byte at +0x10a as bits */
-struct s_biped_flags_10a_view
-{
-	word bit0 : 1;
-	word bit1 : 1;
-	word bit2 : 1;
-	word unknown3 : 5;
-};
 
 /* counts down the biped's landing (+0x39d); a ragdolling biped that can
    recover gets up when it reaches its last tick */

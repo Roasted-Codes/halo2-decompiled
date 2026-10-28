@@ -276,12 +276,34 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Lane 9 r29 (plain): `real angle` in 0x11f0d0 220 (identical); `real s` there 220 here
 // (--fast showed 200 with the late ESI, a reduced-image artifact; 0x11f0d0 2 -> 89), also as
 // `step / (real)sqrt(dist2)`; the four basis vectors declared in reverse 220; position renamed 220.
+/* a definition's flags as bits */
+struct s_118e80_flags_view
+{
+	word bit0 : 1;
+	word bit1 : 1;
+	word bit2 : 1;
+	word bit3 : 1;
+	word bit4 : 1;
+	word bit5 : 1;
+	word bit6 : 1;
+	word bit7 : 1;
+	word bit8 : 1;
+	word bit9 : 1;
+	word bit10 : 1;
+	word bit11 : 1;
+	word bit12 : 1;
+	word bit13 : 1;
+	word bit14 : 1;
+	word bit15 : 1;
+};
+
+// score 202 (was 220): flag 4 of the definition read through a word bitfield view; the rest still differs.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
 	s_forward_object *object = ((s_forward_object_header *)g_4e0300->data)[object_index & 0xffff].object;
 	s_facing_definition_1197b0 *definition = (s_facing_definition_1197b0 *)g_4e3b44[object->definition_index & 0xffff].bytes;
-	if ((bool)((definition->flags >> 4) & 1))
+	if ((bool)TEST_FIELD_BIT(((s_118e80_flags_view *)&definition->flags)->bit4))
 	{
 		function_1faf80(&object->requested_forward, object_index, definition->settings, &object->control, 0.9f, &object->turn);
 		return;
