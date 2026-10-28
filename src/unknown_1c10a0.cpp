@@ -224,6 +224,9 @@ short __stdcall function_1c10a0(long actor_index)
 // This round: plain slot read 28; plain index read 4; plain index with
 // const pool/data/slot/actor, swapped local names or early mask 4 each;
 // original with const pool/data/actor/slot or swapped local names 2 each.
+// retail, the rest of the function matches. An ordinary pool read puts the
+// pointer in EDX but lets the data load fold into the final add, and a
+// volatile data read keeps the load apart but moves the pointer to ECX.
 // @retail 0x1c10f0
 bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 {

@@ -154,7 +154,7 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 	return index;
 }
 
-// score 886 (was 886): Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice carriers remain.
+// score 886 (was 886): frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice carriers remain.
 // Earlier 919 (was 919): count/array homes and choice registers differ in the 0x4e0 frame;
 // count/array homes and choice registers differ in the 0x4e0 frame;
 // Frame 0x4e0 agrees; entry zero, target/primary/query-array homes and choice registers remain.
@@ -187,6 +187,7 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // helpers, query boundary and complete body restored.
 // Datum consumed-bit/selection bits/both 886/886/886; audible/muted bit assignments alone and with
 // consumed/selection/both 911/911/911/911; all with allocator bits 911. Original word view and statements restored.
+// Round 369: short-query graph choice pointer early/late count 962/922; all query-array names and gains/portal/cluster names individually 886 each; early/late pointers with all names 962/922. All restored.
 // Query arrays, matching records and inactive-pass workspaces ended at their real phase
 // boundaries, all seven subsets and producer-count ending after snapshot: 886 each.
 // Round 224: shared inline iterator first/second/both 968/1007/1103; shared calling iterator

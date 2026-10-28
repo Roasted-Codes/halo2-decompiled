@@ -113,6 +113,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Existing mixbin/final-update inline-noinline declaration contracts, all seven subsets,
 // and the complete inline-only graph 532 each (reduced control 532; full baseline 545).
 // Every declaration and source body restored; frame and math expansion remain.
+// Round 367: Native real exponential/root/logarithm APIs, all seven subsets and the full graph with a
+// native gain value: eight forms all 532 (fast control 532; full baseline 545). Original body and helpers
+// restored.
 // Round 237: one driver/at-use channel/one effects receiver 567/641/539;
 // driver-channel/driver-effects/channel-effects/all 567/555/623/555; all with mode interval 556
 // (fast control 532; full 545). All helpers and body restored; frame and stream/gain homes remain.

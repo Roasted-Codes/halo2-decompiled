@@ -227,6 +227,9 @@ PRIVATE void machine_release_rigid_bodies(long machine_index);
 // receiver with six-use source bits 108; receiver with later reset 81; source bits
 // with later reset 108; all three 108; final default-first dispatch with receiver 81;
 // that plus later reset 81. Original portal, policy, flag stores and reads restored.
+// Round 270: native object-bit pointer/reference receivers 93/93; either with later
+// reset 93; either with default-first policy 91 (first +0x7f), with both 92. All
+// eight restored, including the named real bitfield type; initial carriers and merged clears remain.
 // Round 208: early policy declaration 81; descending configured cases 81; both 81;
 // comparison mapping with one short observation/direct fields 132/132; natural portal admission
 // and shared publication 150; with early policy 150; with direct configured comparisons 160.
@@ -574,8 +577,12 @@ bool __stdcall function_1152e0(long machine_index)
 // structure/shared 52; count/shared 58; result/shared 53; object getter 58; getter/structure 52;
 // getter/shared 58; getter/structure/shared 52; count before false/found 45; count before false 58;
 // result/count/found 41; result/count/structure/found 56.
+// Entry index/end/both declarations 41/41/41; word/long result 61/60; bound fields at use 41; plain
+// ordinal 100, with long result 98. All restored.
 // Portal-table/reference-table/both scan bases 56/56/56; paired long/short cluster values
 // 55/73; both bases with long clusters 59; common completion 53, with long clusters 48. All restored.
+// Portal index long/short 41/41; paired bit predicates 41, unsigned masks 41, shared tests 55;
+// paired native/promoted range inputs 41/65, promoted inputs with both predicates 65. All restored.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {
