@@ -2400,6 +2400,12 @@ void function_0224f0(dword stage, D3DTEXTURESTAGESTATETYPE type, dword value);
 dword function_1cc30(long index);
 dword __cdecl function_131fc0(real alpha);
 
+// score 251 fast (was 252 fast): the pixel-shader RGB output mask is selected before the shift
+// ((inverse ? 8 : 0) << 8), which gives retail's and/shl pair instead of a single 0x800 mask.
+// score 252 fast (was 335 fast): the standard marker gives retail's stack convention (ret 0x34,
+// inverse at E+36) and width/height default to 1.0f before the bitmap test. Still differs: the
+// 0/1/2 constants land in different registers than retail (EBP against EDI), and the call to
+// 0x144f0 uses our callee's convention.
 // score 331 (was 331): Frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // frame 0x28 agrees; inverse entry save, dimension homes and bitmap-call setup remain.
 // Frame 0x28 agrees; inverse AL entry save, dimension homes and bitmap-call setup remain.
@@ -2440,6 +2446,7 @@ dword __cdecl function_131fc0(real alpha);
 // Round 60: BLOCKED-BY 0x289e0 (the only caller, under #if 0, so LTCG gives inverse AL). Own-address
 // inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
 // dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
+// @retail 0x2a8d0 standard
 // @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2452,8 +2459,8 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     if (!g_4b99b0[1] && alternate_target) return;
     real default_source[4];
     real default_destination[4];
-    real width;
-    real height;
+    real width = 1.0f;
+    real height = 1.0f;
     byte *definition = tag != NONE ? g_4e3b44[tag & 0xffff].bytes : NULL;
     if (tag != NONE && bitmap_index >= 0 && bitmap_index < *(long *)(definition + 0x44))
     {
@@ -2463,7 +2470,6 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
         real h = (real)*(short *)(bitmap + 6);
         height = 1.0f > h ? 1.0f : h;
     }
-    else width = height = 1.0f;
     if (alternate_target) function_14bc0(*(short *)(g_4b99b0 + 0x38), 0, false);
     else if (screen_target) function_14bc0(0, 0, false);
     else function_14bc0(*(short *)(g_4b99b0 + 0x34), 0, false);
@@ -2504,7 +2510,7 @@ void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
 #pragma inline_depth(255)
         g_484f68.PSConstant1[0] = 0xff;
         g_484f68.PSRGBInputs[0] = 0x8200211;
-        g_484f68.PSRGBOutputs[0] = inverse ? 0x800 : 0;
+        g_484f68.PSRGBOutputs[0] = (inverse ? 8 : 0) << 8;
         g_484f68.PSConstant0[1] = function_131f40(strength, color);
         g_484f68.PSRGBInputs[1] = 0x8011811;
         g_484f68.PSRGBOutputs[1] = 0xcd;
