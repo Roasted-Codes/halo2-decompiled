@@ -221,6 +221,9 @@ void function_155ed0(void)
 // remaining-first expression 53; shared completion 75; named padding 53;
 // named mask 53; shared completion and mask 75; recomputed start 47;
 // named allocation extent 53; remaining extent with shared completion 86.
+// Round 22: explicit capacity store in the padding path/all paths 9/9; named alignment
+// difference 19; explicit size/result assignments 9/9; integer-address result 9;
+// const remaining/mask 9; reversed result-mask operands 9.
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {
