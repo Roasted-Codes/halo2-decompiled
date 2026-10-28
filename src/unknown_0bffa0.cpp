@@ -1172,7 +1172,10 @@ point3f *transform4x3f_apply_point(transform4x3f const *matrix, point3f const *p
 // forward product reversed and sums the second one up + forward + left. Diagnostics on the shared
 // header (restored): vector-first products 70 (identical), components read at each use 153; const
 // vector arguments 70; a file-private up-first normal transform returning its output (the form other
-// files keep) 70 (identical); the parameter alias dropped 158.
+// files keep) 70 (identical); the parameter alias dropped 158. Round 147: whichever rotation comes
+// second gets the other order (diagnostics: the two swapped, or a call between them); the arm's locals
+// declared at the top 70 (identical); a named object pointer 72; a named node index 72; the axes as
+// two-element vector arrays 86; a `__forceinline` redeclaration of the rotation helper 70 (identical).
 // @retail 0xc2d00
 void __stdcall function_c2d00(long light_index)
 {
