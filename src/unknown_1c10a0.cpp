@@ -247,9 +247,12 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 	return true;
 }
 
-// score 63 (was 63): g_46fbe8 and g_46fbe4 are read as bytes here but as
-// dwords in retail - they are declared short in include/globals.h, which is not
-// mine to change - and the actor is fetched in a different order.
+// score 63 (was 63): frame 0x24 and status loads agree; actor lookup order, early
+// slot retention and object/tag registers differ. Earlier forms: wide result 97;
+// shared predicate 112/115/120; actor-offset form 112; request at entry 70.
+// Round 162: native payload 115, with found-seat result 115; whole-slot found-seat result 65;
+// unsigned-word status with payload/whole-slot 115/65; long found-seat result 114/100;
+// payload/search with direct unit observations 91. Original body and data types restored.
 // @retail 0x1c1160
 short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 {

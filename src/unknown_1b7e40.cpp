@@ -144,6 +144,9 @@ evaluate:
 // prop_node_view wrapper, so the two blocks are laid out differently.
 // Round 371: typed slot payload 73; payload/result first 73; payload/wide result 74;
 // payload/single result 88, with wide result 92. Opening body restored.
+// Round 162: separate view-getter noinline with immutable default status and direct proximity return,
+// combined with native payload, unsigned-word status and complete double speed consumer: eight forms
+// all 102 at 231/264 bytes. Entire body, payload and getter declaration restored.
 // @retail 0x1b81c0
 short __stdcall function_1b81c0(long actor_index, s_slot *slot, bool active)
 {

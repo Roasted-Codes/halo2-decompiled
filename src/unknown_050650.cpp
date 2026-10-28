@@ -862,7 +862,7 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 54 (was 96): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
+// score 54 (was 54): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
 // limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
@@ -875,6 +875,9 @@ real g_55e5cc = 0.08726646f;
 // projections 173/159/170; shared dot 62; projections plus dot/upper-first 170/168.
 // Shared dot with upper-first/later pitch 60/58; reverse dot alone/upper-first/later
 // pitch 58/56/54 (kept). Addition grouping and all marked call arguments are unchanged.
+// Round 162: final-local pitch clamps 207; paired raw angle carriers 56, with clamps 207;
+// existing paired-angle view 54, with clamps 207; byte result 51 (three-point gain, restored);
+// branch-produced result 249, with clamps 253. Scaled pitch and sampler registers still differ.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
@@ -989,6 +992,9 @@ struct s_actor_looking_structure_view
 // candidate/trace scope, entry trace, entry horizontal, all entry workspaces and workspace names 80 each;
 // single short ordinal 137; single long ordinal 198; declaration-time path pointer 214;
 // int angle ordinal 80; two long ordinals 214; two int ordinals 214. Counter homes, rotation schedule and tail remain.
+// Round 162: native trace record 80; full candidate workspace with native/original trace 226/226;
+// native trace with direct array consumers 149; native trace with candidate/all vector copies 80/150;
+// original trace with candidate/all intrinsic copies 80/150. Both ordinals and all original code restored.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
