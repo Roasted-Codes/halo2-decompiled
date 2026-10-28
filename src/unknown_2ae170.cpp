@@ -729,6 +729,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Native-bit scalar early returns retained: split 238 to 224, direct 447 to 453, net eight plain.
 // Positive-mode original/native direct returns 447/447/453/453 (split 235 each, rejected);
 // native routing bit two on retained selector graph 453 (tie, reverted).
+// Round 234: primary/front consumption scopes and right-first destinations
+// 453/453/453/449/449/449/449; special workspace end 453; complete target flag word
+// 453 with right-first 449. Below-margin gains restored.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -874,6 +877,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 201: Const send-input parameter, const receiver method, both, immutable scalar carriers,
 // each contract with those carriers, both contracts/carriers, and coherent scalar names: 224 each.
 // All eight tie; original signatures, selector inputs, scalar lifetimes and dispatcher retained.
+// Round 234: destination/selected-send/input-level consumption scopes and all combinations
+// 224/224/224/224/224/224/224; routing-predicate consumption scope 224. Original lifetimes restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
