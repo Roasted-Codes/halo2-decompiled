@@ -257,6 +257,8 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 // eax/ecx/edx choices are one step off retail's. Tried: a named parent point for the compare and the call 65; the two break tests as one
 // `||` condition 31; trace at function scope 31; no parent local 85; the output arms swapped 34; the permuter (86 tries) found nothing below 31;
 // the loop as `for (; node->parent != NONE; node = ...)` 31; a pathfinding local before the call 34; parent declared after the
+// output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93;
+// the end point named for the call only 31; the call's result in a named bool 31; `parent` as a const pointer 31; a trailing `continue` 31.
 // output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,

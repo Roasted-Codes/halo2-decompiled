@@ -59,7 +59,7 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 	arg_2->k = arg_0->k * arg_1;
 }
 
-// score 396 (was 428): magnitude helpers now give retail's copies, memory-operand products and epsilon;
+// score 396 (was 396): magnitude helpers now give retail's copies, memory-operand products and epsilon;
 // frame 0x5c versus 0x64 and the convention remain: ours takes arg_0 in ECX and arg_2 in EAX (kept in
 // EBX) and folds the +0x290 vector into [ebp+0x290]; retail keeps that pointer in EBX, loads arg_2 into
 // ESI after the position call and takes only arg_0 in EAX. x87 homes also differ.
@@ -110,6 +110,12 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // products 463; plus by-value magnitude 396 (kept); magnitude sum written i,j,k 396; magnitude
 // zero test as an if statement 453 (retail's branch and slot, one instruction off elsewhere).
 // With the disabled caller enabled (diagnostic) the convention stays ECX/EAX.
+// Round 148: the +0x290 pointer through the actor view's field 396; local_4 copied from that field
+// directly 396; the magnitude through length_sq3f 396; local_15 from the field directly 396; the scale
+// helper taking its output first 396 (all the same code). Diagnostic only: arg_2 read once through its own
+// address gives retail's convention (arg_0 in EAX, arg_2 on the stack) and length, 373 (difflib-aligned
+// 402 -> 277); left then: the +0x290 pointer in EBX (ours folds it), frame 0x58/0x64, the magnitude's x87
+// order and its zero test, and the magnitude in a dead parameter home.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
