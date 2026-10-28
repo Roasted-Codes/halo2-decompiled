@@ -577,7 +577,7 @@ bool __stdcall function_cd7b0(long unit_index, long weapon_index, bool *modes);
 void function_a8a30(long unit_index, long definition_index);
 real normalize2d(point2f *v);
 real function_11cc90(vector2f const *a, vector2f const *b);
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *state);
 bool function_10ff40(long unit_index, long type, short side, short value, bool *flag, short *side_out, short *value_out);
 void function_ba350(long object_index, real seconds);
 bool function_101240(long weapon_index);
@@ -671,6 +671,9 @@ bool function_c4970(long unit_index)
 }
 
 /* plays one of the globals' sounds at the object's marker 0x4000095 */
+// score 10 (was 10): BLOCKED-BY 0x189210, whose retail form takes the play record in edi
+// (ours pushes it); play fields tag first 10; named globals pointer 10; 0x189210 parameter
+// orders play first/middle 10/10; 0x189210 reading the play fields at entry 16 (80 bytes).
 // @retail 0xc5890
 void function_c5890(long object_index, short index)
 {
@@ -1011,11 +1014,13 @@ void __stdcall function_ceea0(long unit_index, long object_index)
 // @retail 0xd03b0
 bool function_d03b0(long unit_index)
 {
-	if (UNIT_GET(unit_index)->type != 0)
+	bool result = false;
+
+	if (UNIT_GET(unit_index)->type == 0)
 	{
-		return false;
+		result = function_e4050(unit_index);
 	}
-	return function_e4050(unit_index);
+	return result;
 }
 
 /* starts listing the units among the object's children */
@@ -2691,6 +2696,11 @@ short __stdcall function_cdeb0(long unit_index, long state_name, short slot, sho
 /* starts (state 1, its timer from 0xc5340, flag 3) or ends (state 2, ten
    seconds) the unit's state +0x2bc while its player is in state 1 at
    +0x88 (or the campaign flag allows it), with the globals' sounds */
+// score 15 (was 15): ours keeps unit_index in edi and the player data pointer in esi, retail the
+// reverse: unit_index reaches 0xc5890 in the register that function hands on to 0x189210, which
+// takes the object in edi here and in esi in retail. BLOCKED-BY 0x189210. Tried: a named
+// player-state condition 15; the start arm's tests inverted 15; a player index local 15; the
+// stop arm first 60; the state byte read in the test 15.
 // @retail 0xc5740
 void function_c5740(long unit_index, bool start)
 {
@@ -3187,9 +3197,12 @@ long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool h
 
 /* whether the object's root, simulated by Havok and not keyframed, has
    something in the way (0x168f40 from its main rigid body's position) */
-// score 12 (was 12): root and rigid-body offset saved registers differ;
+// score 12 (was 12): root and rigid-body offset saved registers differ (a short index gives
+// retail's registers but tests at 16 bits before extending: 3 aligned differences, 293 bytes);
 // entry result 89; native short body index 12 at 293 bytes; root cursor/seed 110/96;
-// parent while, existing keyframe method and point first 12; point value copy 46.
+// parent while, existing keyframe method and point first 12; point value copy 46;
+// 0xbaf80 call for the root 121 at 258 bytes (our link keeps the call); one combined
+// index/fixed/keyframed test 12; root getter before the header 12; point read x, y, z 22.
 // @retail 0xcc460
 bool __stdcall function_cc460(long object_index)
 {
@@ -4035,7 +4048,9 @@ store:
    state 1 when it has nowhere to go and is not a predicted copy (0xa7670) */
 // score 13 (was 13): argument setup scheduling and squared-length XMM homes differ;
 // existing length/dot helpers, direction lifetime/name and named angle 13;
-// existing random-real helper 111; scale/add component loops 80/13.
+// existing random-real helper 111; scale/add component loops 80/13; seed global at each
+// use, compound adds, direction-first adds, speed-first scaling 13 each; speed scaled
+// before the cone call 120; every squared-length operand order compiles the same.
 // @retail 0xce6b0
 void function_ce6b0(long unit_index, long name, long object_index, real scale)
 {
@@ -5662,8 +5677,7 @@ void function_c98a0(point2f const *direction, long unit_index, long type, short 
 				{
 					short state;
 
-					function_e70b0(unit_index, &state);
-					if (state == NONE)
+					if (*function_e70b0(unit_index, &state) == NONE)
 					{
 						facing = toward;
 						turn = true;

@@ -189,6 +189,11 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 }
 
 // score 153 (was 153): frame 0x14 versus 0x10 (our color struct copy, made before 0x1cf50, where retail
+// Round 83 on the round-220 near source (color pointer, per-use coordinates, byte alpha, scalar size;
+// still 18 fast): size declared at function scope, const size, scale-first second texture products,
+// size-first sum in the third vertex 18 each; retail loads y before the pushes in the third and fourth
+// vertices (ours copies the size and folds y: 1 byte shorter each), and reloads the lower coordinate
+// before the next vertex's 16777215 constant. All restored.
 // keeps 0x13927e's result in EDI and reads it in the color call after Begin); the half-size texture
 // coordinates (computed before the third reservation, retail after it) and the alpha byte remain.
 // Round 60 lead: the result as a pointer read in the color call 349 alone (frame 0x10); with the
@@ -312,11 +317,24 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // dword/int/const-word/const-long/const-dword 28/28/112/112/112/28/112/112; lower/upper
 // endpoints after the first position 293/330 and at the coordinate phase 363/363.
 // No exact match; every per-use coordinate form restored with the original body.
+// Round 81: the round-220 two-difference source (color pointer, per-use coordinates, byte alpha,
+// scalar size, member entry for the second position) now builds 18 fast and plain: unchanged
+// source, but the last two vertices' `y + size` again copy the size and fold y (other files'
+// changes since; reverting the five changed units in its reduced image keeps 18). On it, member
+// entries for both positions/color too/final quad, `0.5f * arg_1` products, `0.5f + ...` upper
+// sums 18 each (fast). All restored.
 // Round 7 (lane 10) on the two-difference graph (pointer color, byte alpha, per-use coordinates,
 // member second position): C-form Begin 446 (2196 bytes); member color plus member first
 // position 2; first lower coordinate with the product commuted 2; lower as a negated sum 2;
 // half-span as a division by two 2. The two reloads after the second texture reservation stay
 // swapped. All restored.
+// Complete resource outcomes (match-only; fast control 162): ready bool 162; ready byte 162.
+// ready short 162; ready long 162.
+// unavailable bool 162; unavailable byte 162.
+// unavailable short 162; unavailable long 162.
+// Current color/alpha frame: half-span parameter 162; parameter/byte alpha 166.
+// parameter/color pointer 349; parameter/value half-size 162.
+// All executable forms restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

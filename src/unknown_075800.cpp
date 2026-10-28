@@ -964,6 +964,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 /* the out-of-band messages: those that arrive from an address rather than on
    an established channel */
 // score 193 (was 193): selector/message/address convention and dispatch root remain. Round 76: with the
+// Round 9 (lane 10, fast control 191): free function in retail's register order (type, address, handler,
+// message) on the two-switch body, call site updated, 191 (type still ECX, message on the stack);
+// case-scoped connection index 191; direct cases 0,2,3,4 196; residual cases in numeric order 191;
+// first switch without its default 191. All restored.
 // unified retail-order switch and the address read once through its address, the address goes on the stack
 // as in retail and only type/message are swapped (ecx/eax for retail eax/ecx); the 24 missing bytes are
 // exactly retail's edi copy of the address and its three-pop exits, so that body matches once the convention does.
@@ -1083,6 +1087,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // type/message/address declared 218 (identical); one read of the address through its address 220 (address
 // on the stack as retail, type ecx/message eax, retail eax/ecx); that with type/message/address 219 (message
 // also on the stack, 0x7afd0 3 -> 35), with type/address/message 220. Declared order does not move type to eax.
+// Round 50: unified retail-order slot reads 220/220; sender reference 218; full sender value 242
+// (484 bytes, ret 0x14, caller 76); pointer reference 221. Four-byte aggregate with const,
+// register, declaration-swapped or per-case-result pointer forms 242 each (484 bytes, caller MATCH).
+// All restored; selector/message/address convention and repeated sender loads remain.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {

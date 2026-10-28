@@ -310,6 +310,11 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 #define sound_effect_delete function_21dcf1
 // score 204 (was 204): BLOCKED-BY 0x189fe0. Frame eight versus four, the state/tag registers and the
 // opposite start/delete expansion remain (ours takes the tag in EAX and the state on the stack).
+// Round 102: the Round 72 form again 52 (429 B), 0x189fe0 110 -> 135 and its eight callers lost
+// (0x189fe0 then expands the first class lookup and keeps the request in EDX; retail calls both
+// lookups); with the parameters declared tag first, consistently at the caller and header, the same;
+// the private starter forceinline 256 (542 B, callers lost); the priority stored through the effect
+// pointer 220; the allocation as one conditional expression 233.
 // Round 72: both starts as calls to the existing
 // 0x125f70 (reason NULL), which LTCG inlines as retail, plus the out-of-line delete (this file's
 // delete macro moved below this function) give 52 plain (429/427): retail's frame and its
@@ -385,6 +390,10 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // failure-first orders 204 each; all eight sensitive caller controls remain matched.
 // Round 151: Existing two-use starter output result, four private parameter-role orders: final publication 196 each, direct publication 189 each; every form loses eight sensitive callers in the fast image. All restored.
 // Frame eight/four, state/tag homes and opposite start/delete expansion remain; protected caller cycle unchanged.
+// Round 27 (lane 9), each with the Round 72 form (52 at 429 bytes): in 0x189fe0 a named object_index local 52/0x189fe0 135
+// (request still in EDX, the eight callers one to four lines off); with a noinline declaration ahead of 0x221810 52/156 (both
+// arguments on the stack, request homed in EBP, flags in EBX); priority and flags formed from the request before the location
+// copy (retail's order) 52/136, with the noinline declaration 52/151 (stack arguments). Callers lost in every form; restored.
 // Round 63: platform handle by an if statement 211; nested class/flag tests 204; definition query and
 // allocation as one ternary 233; start-result arms swapped (delete first) 206; effect index declared
 // before the definition pointer 204.

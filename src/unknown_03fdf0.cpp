@@ -263,6 +263,10 @@ void function_402b0(long cache_index, long mode)
 // Round 352: native cache-body graph with consistent reversed/unsigned/both mode contracts
 // 201f each; four explicit cdecl combinations 211f each; unsigned reversed stdcall 201f.
 // Fast control 201/946 versus plain 182/947. Original helper signature/call and body restored.
+// Round 64: retail's passes are 0x44370 inlined (contributor file) and its per-light reset is 0x4a780
+// inlined (same file); our LTCG keeps both out of line: the reset as a 0x4a780 call 305 (828 bytes), with
+// a forceinline declaration 305; 0x402b0 parameters (mode, cache_index) 182 (still EAX); flags assigned to
+// g_4ba014 directly 182 (identical); flag arms swapped by a negated test 182 (same layout).
 // Lane 9 r23 (plain): retail's four passes are 0x44370's body inlined with the mode constant and
 // its mode table folded (mode 14's target 1, the culling argument's dead g_485898 load, case 11's
 // `enabled = true` re-store, the stack enable byte at +0x13): BLOCKED-BY 0x44370, which sits in a

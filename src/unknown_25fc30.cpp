@@ -1758,7 +1758,13 @@ struct s_collision_result_25f7b0
 	byte unknown26[0x5c - 0x26];
 };
 
-// score 7 (was 14): the mode local is stored and passed as a dword but retail compares
+// score 4 (was 7): the collision bool's byte home is +0x13 where retail keeps it at +0x10,
+// and the product loads the hit fraction where retail loads the distance.
+// Earlier rounds (7 or worse): byte collision flag, byte allow flag, long initial mode, short
+// collision flag, scoped ray setup/result, guarded collision fraction, hit distance, native
+// collision output, ray/distance endpoints, final query point, projection and displacement
+// workspace forms, product operand swap, flipped comparison, named product local, local_4
+// rename, local declaration orders, uninitialized-early local_22; none beat this score.
 // its low word, so the test reads it as a short (same width pattern as the kept cast in
 // 0x1af5c0); that also cleared the constant/call-address artifacts and the trailing pad.
 // Still differ: the collision bool's byte home (+0x13 against +0x10), the product's load
@@ -1784,7 +1790,6 @@ struct s_collision_result_25f7b0
 // declaration orders, bool declared after the first query call, local_22
 // uninitialized-early, byte-typed local_4: all tie at 7. local_22 initialized before the
 // mode selection 113; the entry type copy reused in the allow test 260.
-// score 7 (was 7): collision byte +0x13/+0x10, product loads and allow-store schedule remain;
 // tried immutable distance 7p; guarded classification 210p; nested hit classification 199p; classification enum 7p;
 // projection first 7p; allow from second type 6p; allow from first type 8p; native query flag 123p.
 // collision byte home, distance product loads and allow store remain;
@@ -1899,9 +1904,7 @@ void __stdcall function_25f7b0(long arg_0, s_type_967e20 *arg_1, s_type_b36ac5 *
 				local_14 = 1;
 			break;
 		}
-		bool local_22 = true;
-		if (*(short *)arg_1 == 2 || *(short *)arg_1 == 1)
-			local_22 = false;
+		bool local_22 = *(short *)arg_1 != 2 && *(short *)arg_1 != 1;
 		short local_23;
 		if (arg_2->definition->flags & 8)
 			local_23 = function_272af0(g_4e0348, &local_21);

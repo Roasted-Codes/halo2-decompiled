@@ -460,8 +460,10 @@ void function_2bdd70(s_spline_2bd *spline, point3f *points, long n, point3f *out
 // before the table 5/5 (439 bytes); after the table 99/99. Native row/direct table, immutable
 // powers, coefficient-slot accumulation and component initialization: eight forms 5 each.
 // The helper recovers the row base and first two terms but not the folded multiply; all restored.
+// The parameters are listed as time, control points and output point so that the caller's
+// arguments are written in the order retail evaluates them.
 // @retail 0x2bde90
-void function_2bde90(real t, point3f *out, point3f *points)
+void function_2bde90(real t, point3f *points, point3f *out)
 {
 	real t3 = t * t * t;
 	real t2 = t * t;
@@ -566,6 +568,9 @@ void function_2bde90(real t, point3f *out, point3f *points)
 // Round 144: sampling output/fraction/points order 67f; inline original and five
 // coordinated orders 219f each; separate noinline declaration 67f. Reduced control
 // 67f versus full 18; first sampling input XMM3/XMM2 and final marker roles remain.
+// The marker loop reads its marker id through a local, and the sampling call takes
+// the control points before the output point, which puts the two address
+// computations in retail's order.
 // @retail 0x2be050
 void hill_build_polygon(s_polygon_2be *hill, long index)
 {
@@ -588,7 +593,7 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 		function_2bdd70((s_spline_2bd *)hill, points, i, control);
 		for (long j = 0; j < steps; j++)
 		{
-			function_2bde90((real)j / (real)steps, &point, control);
+			function_2bde90((real)j / (real)steps, control, &point);
 			hill->vertices[vertex].x = point.x;
 			hill->vertices[vertex].y = point.y;
 			vertex++;
@@ -651,12 +656,13 @@ void hill_build_polygon(s_polygon_2be *hill, long index)
 		}
 	}
 	count = function_19ec40(0, 0.0f, (short)(index + 11), NONE, 1, 8, marker_ids, 0.0f);
+	i = 0;
 	if (count > 0)
 	{
-		i = 0;
 		do
 		{
-			point3f position = g_4e0350->marker_entries[marker_ids[i]].position;
+			long marker_id = marker_ids[i];
+			point3f position = g_4e0350->marker_entries[marker_id].position;
 
 			hill->z_min = hill->z_min > position.z ? position.z : hill->z_min;
 			hill->z_max = hill->z_max > position.z ? hill->z_max : position.z;
@@ -1820,7 +1826,7 @@ void c_game_engine_a::v40()
 }
 
 struct s_spawn_influence_list;
-void function_23ba10(long type, s_spawn_influence_list *list, point3f const *point);
+void function_23ba10(long type, point3f const *point, s_spawn_influence_list *list);
 
 // @retail 0x2bdb00
 void c_game_engine_a::v2(long unused, long list_pointer)
@@ -1831,8 +1837,8 @@ void c_game_engine_a::v2(long unused, long list_pointer)
 	{
 		point3f const *point = (point3f const *)&((s_polygon_2be *)g_51ecc8)->center_x;
 
-		function_23ba10(8, (s_spawn_influence_list *)list_pointer, point);
-		function_23ba10(7, (s_spawn_influence_list *)list_pointer, point);
+		function_23ba10(8, point, (s_spawn_influence_list *)list_pointer);
+		function_23ba10(7, point, (s_spawn_influence_list *)list_pointer);
 	}
 }
 

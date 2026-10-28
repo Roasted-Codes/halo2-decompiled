@@ -933,7 +933,12 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // score 156 (was 156): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
-// Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Retail's homes (frame offsets): selected 0xc, best 0x10, second word 0x14, third 0x18, normal 0x1c,
+// first word 0x28, location 0x2c, point 0x34, sweep 0x40, count 0x4c; ours keep the count at 0x2c and
+// the sweep before the point (0x38/0x44). Round 83: sweep before the query 292 (its products now
+// schedule after a hoisted constant); count declared before the query 156; sweep declared before the
+// buffer 156; saved records declared before the sweep 156; descriptive sweep/impact names 156; first
+// and second word names swapped 156 (homes unchanged).
 // Round 44: short/long-unit adjacent word bitfields 151/339; first-third-second words 153;
 // word/handle acquisition order 218; normal between words 162; sweep in radius/center argument
 // evaluation 293/293; named radius on the current frame 151. Opening body restored.
