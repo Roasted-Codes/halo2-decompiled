@@ -450,6 +450,11 @@ real function_30bf0(vector3f *vector);
 // motion vector; ours the other way), and range comes in xmm0 with delta in xmm5-7 (ours delta xmm2-4, range
 // xmm5). Range renamed to sort after result 184 (identical); range declared at function scope before/after
 // result 184/184; range read after the delta 184; delta declared before range 184.
+// Round 84: retail's `mov ax, word ptr` exits need a short return, and 0x264b50's declaration sits in
+// a file another lane holds this round; in the seat loop retail compares and stores secondary/primary
+// in memory (`comiss xmm0, [mem]`) where ours copies them through xmm1/xmm2. a/b at the seat-loop top
+// 184; secondary/primary at function scope 184; delta at function scope 184; indexed seats instead of
+// the cursor 211; seat array at the facing-block scope 184.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {

@@ -208,6 +208,8 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // outlined inline search with outlined conversion/both noinline 172,172.
 // List-index helper word/masked, word/direct, short/masked, unsigned/masked 51/51/51/30;
 // word/short index local 212/212; word index and helper 212; short index and helper 212.
+// Round 146: type declared second and field_8 by value (which 0x193ba0 and 0x193c70 need) 30;
+// the by-value field_8 needs no address-taken read.
 // Round 31 (lane 12): retail loads the point source into eax before the two field stores; ours keeps it
 // in its stack home (with or without the field_8 read). Plain field_8 read 220; indexed destination with
 // stepped source 30 (same code); stepped destination with indexed source 219 (frame 0x404); string loops
