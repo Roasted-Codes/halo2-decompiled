@@ -112,6 +112,8 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // both terms 406/406/406; complete graph with helper-axis names 406. Frame/index and
 // square-input homes remain; original helpers, names, loops and body restored.
 // Round 366: overwritten endpoint initializer removed 417; early group receiver 432; both 440; complete two-leg distance sum 406; with endpoint/receiver/both 417/432/440; all with scoped best-distance default 474. All restored.
+// Round 232: direct-step pretested inner for, alone and with all seven complete
+// link/directional/selected short-workspace identity subsets, 406 each. All restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

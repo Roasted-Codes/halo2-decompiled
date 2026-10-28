@@ -886,6 +886,8 @@ public:
 // long tint instead 364; without parent color 353. Original restored.
 // Round 206: Two-state completion enum, entry default/entry complete arms/tail default/tail complete arms
 // [292, 366, 361, 366]; with word-pointer/bit-five flag idiom [359, 369, 359, 369]. Original result and flags restored.
+// Round 232: four complete positive/negative factor orders, direct or all six
+// products staged before output, 292 each. Original two-use helper restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

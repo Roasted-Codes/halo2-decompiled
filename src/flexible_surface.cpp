@@ -124,6 +124,8 @@ void function_117080(long);
 // Round 270: native iterator called/inline 89, with CRT scalar clear 89; called/called
 // 124, with CRT 121; inline/inline 89, with CRT 89; original traversal with CRT
 // scalar clear 76, unsigned slot 76. All restored; record-address and search homes remain.
+// Coupled pool/datum/absolute-slot identities, seven subsets and entry-slot lifetime
+// on the complete role-name graph: 50/50/50/50/50/50/50/50. Original body restored.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -338,7 +340,7 @@ void __stdcall function_117790(long index)
 	}
 }
 
-// score 67 (was 81): the pool data base sits in ebp where retail has ebx; the shared difference helper gives
+// score 67 (was 67): the pool data base sits in ebp where retail has ebx; the shared difference helper gives
 // another origin/delta schedule, and the attachment walk and copy registers still differ. Earlier: the first loop
 // entered by a jump where retail falls through. Attachment element pointer 103 (retail's walk and reloads, but
 // the copy's registers rotate and the pinned OR splits into load/or/store, 521 bytes); with a vertex local for
@@ -348,6 +350,9 @@ void __stdcall function_117790(long index)
 // vertex-array base 67 kept; loop-lifetime attachment cursor 90; attachment array base 75; aggregate delta
 // with the array base 83; length helper on the best form 83; correction-only difference helper 83;
 // direct vertex reads through the attachment base 91; entry velocity declaration 67.
+// Complete squared displacement terms 81; point/vector/marker role identities 67; both 81;
+// native word attachment ordinal 96; with squares/roles/both 105/96/105; complete graph
+// with displacement declared before point acquisition 105. Original executable body restored.
 // @retail 0x117a80
 void function_117a80(long index)
 {

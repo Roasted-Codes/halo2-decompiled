@@ -928,6 +928,8 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // 1133 bytes, but the set moves to the stack and every argument slot shifts); only at
 // transition_find 309; only at transition_lookup/the transition channel 223/223 (set stacked);
 // a set local copied after the lookup 210 (identical, read back from names.set).
+// Round 228: entry declaration scopes for fraction/resolved set/combined state,
+// seven subsets 210/210/210/210/210/210/210; all three with entry blend default 266. All restored.
 // Round 202: End found-name/primary-ID lookup workspace before name publication, with
 // byte/bool/short/long result: 210/222/226/227 for either bool or byte prior-loop truth.
 // Original workspace, byte result, loop truth and all constructors restored.

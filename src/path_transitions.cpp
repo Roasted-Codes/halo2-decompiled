@@ -326,7 +326,7 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
-// score 154 (was 167): the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// score 154 (was 154): the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
 // term loads g_4687b0 first where retail loads the marker. Tried: single exit 167;
 // long best 199; long loop index 202; point names 199; vector helper 202;
@@ -334,6 +334,10 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 // pointer based at +0x4c); dot3f operands swapped 154; 0.95f < dot 154; a named alignment
 // 154; the alignment through markers[i] 154 (more x87 differences); both dots written out
 // with the delta and normalize helpers 141 (14 more instructions off once aligned).
+// Candidate/delta/selected-point uninitialized entry storage, all seven subsets and all three with the native
+// marker array: 154/154/154/154/154/154/154/154. Protected query promotion, loop padding and dot allocation
+// remain
+// original declaration scopes restored.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {

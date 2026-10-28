@@ -394,6 +394,10 @@ void function_245400(s_source_245400 const *source, long index,
 // 218/218/225/225; with reused complete first-material value 220/220/224/224.
 // Native source plane-pointer declaration included throughout; all restored.
 // Frame 0x24 versus 0x2c, source receiver, matrix and side homes remain.
+// Coupled source-index/material-side/geometry lexical identities, all seven subsets and complete
+// endpoint/transform identities: 203/203/203/203/203/203/203/203. Source receiver, side homes and frame gap
+// remain
+// original identities restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
