@@ -3918,7 +3918,7 @@ bool function_cb810(long unit_index, vector3f *vector)
 
 /* how the unit reacts to damage it took: sets the report's reaction
    (+0x50) from 0xc9770, after the biped's knockdown checks */
-// score 175 (was 185): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
+// score 166 (was 185): its mask tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0xc9e70
 void function_c9e70(long unit_index, dword flags, s_type_1e6529 const *data, s_damage_report const *report)
 {
@@ -3944,17 +3944,17 @@ void function_c9e70(long unit_index, dword flags, s_type_1e6529 const *data, s_d
 	bool ignore = false;
 	bool held = false;
 	bool force = false;
-	if ((data->flags & 0x10) || (damage[4] & 0x10) || TEST_FIELD_BIT((unit->flags_134 >> 19) & 1))
+	if ((data->flags & 0x10) || TEST_FIELD_BIT((damage[4] >> 4) & 1) || TEST_FIELD_BIT((unit->flags_134 >> 19) & 1))
 	{
 		ignore = true;
 	}
 	header = (byte *)g_4e0300->data + (unit_index & 0xffff) * 0xc;
 	dword type_bit = 1 << header[3];
-	if (((type_bit & 1) && *((byte *)((s_unit_header *)header)->unit + 0x3dc) == 2) || (type_bit & 2))
+	if (((type_bit & 1) && *((byte *)((s_unit_header *)header)->unit + 0x3dc) == 2) || TEST_FIELD_BIT((type_bit >> 1) & 1))
 	{
 		held = true;
 	}
-	else if (TEST_FIELD_BIT((flags >> 1) & 1) || (flags & 0x100))
+	else if (TEST_FIELD_BIT((flags >> 1) & 1) || TEST_FIELD_BIT((flags >> 8) & 1))
 	{
 		force = true;
 	}
@@ -3964,7 +3964,7 @@ void function_c9e70(long unit_index, dword flags, s_type_1e6529 const *data, s_d
 		{
 			held = true;
 		}
-		if (TEST_FIELD_BIT((*(dword *)(local_98b918_2 + 0xbc) >> 7) & 1) && !(damage[4] & 4))
+		if (TEST_FIELD_BIT((*(dword *)(local_98b918_2 + 0xbc) >> 7) & 1) && !TEST_FIELD_BIT((damage[4] >> 2) & 1))
 		{
 			held = true;
 		}
