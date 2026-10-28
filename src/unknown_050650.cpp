@@ -1001,6 +1001,10 @@ struct s_actor_looking_structure_view
 // Round 162: native trace record 80; full candidate workspace with native/original trace 226/226;
 // native trace with direct array consumers 149; native trace with candidate/all vector copies 80/150;
 // original trace with candidate/all intrinsic copies 80/150. Both ordinals and all original code restored.
+// Existing sine/cosine rotation consumer: named angle 144; sine/cosine locals 80;
+// cosine first 86; trig before candidate 80; fraction after rotation 154;
+// angle ordinal stepped at last use 156; both shared dot products 144 (regrouped,
+// exact-match-only); immediate successful publication return 224. Restored.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
