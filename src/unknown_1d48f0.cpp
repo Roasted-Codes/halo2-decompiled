@@ -144,6 +144,9 @@ const dword g_455978[81] = {
 // restored. Original executable body and every external declaration retained.
 // Shared setters for all three native basis rows, with early/late scale publication, entry/local
 // input-output matrix declarations and native/library point publication: all eight 306. All restored.
+// Round 161: Transform opaque/reference ownership, then optional opaque with
+// derived/opaque/reference transform, then optional reference with derived/opaque/reference transform:
+// 306/306/306/306/306/306/306/306. Original persistent pointer types and all casts restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

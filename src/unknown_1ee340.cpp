@@ -228,6 +228,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 222: dominant-axis long/word/dword/signed byte 192/193/192/193;
 // the same four carriers with immutable native origin construction 192/193/192/193.
 // All restored; origin retention and edge homes still leave frame 0x84 versus 0x90.
+// Round 161: Original-ray difference-helper forceinline alone/with point-set/with cross/with both
+// 192/192/192/192; complete origin/start/both setter components 192/192/192;
+// both component captures with difference forceinline 192. Original captures and boundaries restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

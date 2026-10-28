@@ -87,13 +87,16 @@ void function_1bbc00(long player_index, long vehicle_index)
 
 static __forceinline long real_to_long(real value);
 
-// score 8 (was 44): retail moves the vehicle index into EAX before it forms
+// score 8 (was 8): retail moves the vehicle index into EAX before it forms
 // the iterator address in EBX for the first child call, and in the child loop
 // keeps the object pointer in EAX and converts the tick count through ECX/DX
 // where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
 // player vehicle 77; the actor looked up at each store 45; separate conversion
 // locals in the loop 15; the loop product passed straight to the conversion
 // 8; the block locals in two other orders 8.
+// Earlier 8 from 44.
+// Existing slot-query long/short 61/8; guarded long/short 70/38;
+// query-first long/short 77/46; shared-query rounding names/separate loop carriers 61/61.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {
