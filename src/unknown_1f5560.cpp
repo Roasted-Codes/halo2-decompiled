@@ -794,6 +794,9 @@ real normalize2d(point2f *v);
 // false-validity return, overall result and the combined output/result form 174 each; early first-type
 // 230; byte/word trajectory success 189/177. Coordinated trajectory inline declarations on the
 // original/found-bit graphs 171/174. All bodies, call tuples and outside declarations restored.
+// Round 224: Native initial/retry speed pairs with full-width result, seven subsets
+// 174/172/175/199/199/202/202; both pairs with enclosing retry scope 175. No match; all pair
+// storage, result width and body restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

@@ -610,6 +610,9 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // Uniform five-point memcpy producers 397; case 2 first 401; chained defaults
 // 395; both 399. Uniform memmove producers with those forms 444/442/442/440.
 // All shorter than retail; original setters, cases and defaults restored.
+// Round 224: Native external point fields and byte result/point-valid, seven subsets
+// 336/345/345/336/336/345/345; native points plus byte result/word point-valid 356. All source and
+// record declarations restored.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -884,6 +887,9 @@ real g_55e5cc = 0.08726646f;
 // Round 162: final-local pitch clamps 207; paired raw angle carriers 56, with clamps 207;
 // existing paired-angle view 54, with clamps 207; byte result 51 (three-point gain, restored);
 // branch-produced result 249, with clamps 253. Scaled pitch and sampler registers still differ.
+// Round 224: Native yaw/pitch bound records and full-width result, seven subsets
+// 56/70/209/70/72/86/219; both records in pitch/yaw order 210. No exact match; original scalar
+// homes and body restored.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)

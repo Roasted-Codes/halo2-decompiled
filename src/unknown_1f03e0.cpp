@@ -291,7 +291,7 @@ void function_141590(transform4x3f const *in, transform4x3f *out);
 int __fastcall function_142a60(transform4x3f const *a, transform4x3f const *b, transform4x3f *result);
 real function_f5e00(long vehicle_index);
 extern real g_47f05c;
-// score 192 (was 202): frame 0xd0 versus 0xd4; retail keeps the shape in ESI and the count in EBP
+// score 192 (was 192): frame 0xd0 versus 0xd4; retail keeps the shape in ESI and the count in EBP
 // (index and best in their stack homes, the best dot in XMM7), tests the count once and reads the
 // body index byte at each use.
 // Round 68 (kept): the distance from a center point through vector3d_from_points3d, as the file's
@@ -317,6 +317,9 @@ extern real g_47f05c;
 // value with shape reads 233; selected-entry result 272; best comparison first 201; selected index
 // assigned before alignment 202; transform role names 202; inverse/body/relative declarations 202;
 // names with common scope 202; byte success 282; byte validity 202.
+// Round 224: Consistent per-use count/list/component-data observations, seven subsets
+// 229/221/228/190/227/221/228; all with entry selection/result constants 198 at retail length.
+// Two-point component-data form rejected; original snapshots and full body restored.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
