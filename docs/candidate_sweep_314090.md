@@ -61,15 +61,41 @@ rules are changed for existing files.
 The repository Python suite also passes: 424 passed, 14 skipped (optional
 retail/toolchain fixtures and a platform-specific test).
 
-## Follow-up candidates
+## Follow-up results
 
-The most direct continuation is the nullable placement-construction callbacks
-at `0x314140`, `0x3143e0` and `0x3148e0`: their constructors now match, but their
-exception-handling frames need the correct compilation setup. The existing
-`src/lane_a_constraint_placement.cpp` provides a related compiler idiom.
+All four suggested targets now match in the ordinary full-image check:
 
-`0x314650` computes a motion radius from bounds and feeds `0x314710`. Finishing
-that pair would replace another game-facing stub, but needs the object's
-virtual-table model. The six concrete joint constructors should be pursued
-with their common base `0x31bbd0`, whose abstract-class stand-in issue remains.
-Those are better next targets than the previously exhausted scheduling misses.
+| Address | Bytes | Behavior |
+| --- | ---: | --- |
+| `0x314140` | 101 | Nullable placement construction of a ball/socket description |
+| `0x3143e0` | 100 | Nullable placement construction of a motion-limit description |
+| `0x3148e0` | 108 | Nullable placement construction of a spring description |
+| `0x314650` | 143 | Store the squared half-diagonal of a shape's bounds; store -1 without a shape |
+
+The three existing constructor bodies moved unchanged into
+`src/constraint_construction_314140.cpp`, alongside their callbacks. `/O2`
+inlines them in the callbacks, and `/GX` produces the retail exception frames.
+All three constructors retain their own matches. The radius routine is in
+`src/motion_radius_314650.cpp`; `_mm_set_ss` produces the retail half-scale
+load without introducing a pointer temporary. The callbacks matched on the
+first implementation, and the radius routine on its second compilation.
+
+This adds 452 matched bytes and preserves every previous match. The complete
+PR now implements 37 functions: 35 matched (1,870 bytes), with the same two
+unmatched implementations documented above. Against `5156911ab`, game matches
+remain 9,897 and Havok matches reach 1,216; there are 11,116 total matches in
+scope. No checker or compiler-rule changes were needed.
+
+The new matched functions have three automatically verified address fields
+and four fields the checker still reports as unverified. Those four were
+independently checked against the retail executable: all three generated
+handlers dispatch to the same CRT exception handler, their function-info and
+single-state unwind metadata agree, and their cleanup instructions agree
+apart from the relocated call to an empty placement-delete function. The
+radius routine's identity transform agrees with all 64 retail bytes at
+`0x461ea0`, including its homogeneous position lane.
+
+The next dependency is `0x314710`, which calls the now-matched radius routine
+but still needs the object's virtual-table model. The six concrete joint
+constructors should be pursued with their common base `0x31bbd0`, whose
+abstract-class stand-in issue remains.

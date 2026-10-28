@@ -92,6 +92,7 @@ struct s_1d1870
 	s_1d1870(bool value) : field_0(value) {}
 };
 class hkEntity;
+class shape_bounds_314650;
 class c_314710 : public c_a
 {
 public:
@@ -99,6 +100,7 @@ public:
 	c_314710(hkEntity *entity);
 	s_1d1870 function_3144b0(void *body);
 	s_1d1870 function_314580(void *body);
+	float update_radius_squared(shape_bounds_314650 const *shape);
 };
 struct contact_sizes_3155f0 : lane_b_contact_constraint_prefix
 {

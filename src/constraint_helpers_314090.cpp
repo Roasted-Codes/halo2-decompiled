@@ -14,19 +14,6 @@ typedef char ball_results_offset[(offsetof(ball_socket_view_314090, results) == 
 typedef char spring_results_offset[(offsetof(spring_view_314830, results) == 0x44) ? 1 : -1];
 typedef char prismatic_results_offset[(offsetof(prismatic_view_314b80, results) == 0xac) ? 1 : -1];
 
-// @retail 0x3140c0
-c_component_joint_snapshot_4::c_component_joint_snapshot_4()
-{
-	pivot_a = _mm_setzero_ps();
-	pivot_b = _mm_setzero_ps();
-}
-// @retail 0x314860
-c_component_joint_snapshot_3::c_component_joint_snapshot_3()
-{
-	pivot_a = _mm_setzero_ps();
-	pivot_b = _mm_setzero_ps();
-	length = 0.0f;
-}
 // Score 12: the compiler moves the frame's zero/identity stores ahead of the
 // five preceding vector clears. All offsets, values and the base call agree.
 // Stop here: the remaining difference is instruction scheduling.
@@ -155,15 +142,6 @@ void prismatic_view_314b80::info(lane_a_constraint_info *output) const
 	output->result_bytes = 0x40;
 	output->op_bytes = 0x120;
 	output->result_count = 7;
-}
-// @retail 0x314320
-s_314320::s_314320()
-{
-	*(float *)&field_0 = -1.0f;
-	field_4 = 0.01f;
-	field_8 = 0.005f;
-	field_c = 0.1f;
-	field_10 = 0.2f;
 }
 // @retail 0x314450
 void s_314450::function_314450(s_314320 *output)
