@@ -77,7 +77,9 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 
 /* slot type 0x23, update: once the actor stands at its prop's position, it
    turns to face it; then it lets the prop go */
-// score 81 (was 81): retail reads the pool before the registers are pushed,
+// score 47 (was 61): the actor index lives in EDI here and in EBP in retail,
+// the view pointer in EBP here and in EBX there; retail loads the actor
+// pointer with a scaled index and keeps the prop node in another stack slot.
 // ours reads it
 // afterwards, so the prologue differs.
 // @retail 0x1b89d0
@@ -97,9 +99,8 @@ void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 			if (state->unknown0c)
 				return;
 
-			bool ready = state->unknown0d && function_1f86f0(actor_index);
-			state->unknown0c = ready;
-			if (ready)
+			state->unknown0c = state->unknown0d && function_1f86f0(actor_index);
+			if (state->unknown0c)
 			{
 				if (!state->unknown1b || !state->unknown1d || state->unknown1c)
 					return;
@@ -201,8 +202,9 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
 
-// score 323 (was 323): the size we use is 0x1634 where retail uses 0x162c,
+// score 257 (was 323): the size we use is 0x1634 where retail uses 0x162c,
 // and the index is
+// scaled in EAX here and in ESI there, so the actor lookup is a different length.
 // scaled in EAX here and in ESI there, so the loop is a different length.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
@@ -214,40 +216,44 @@ bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
     if (!*((bool *)actor + 0x40))
         return result;
 
-    s_prop_node_view *node = prop_node_get(actor->prop_index);
-    s_prop_view_fields *view = prop_node_view(node);
-    byte *character = (byte *)function_1e4be0(actor_index);
-    s_slot_23 *state = (s_slot_23 *)slot;
-    state->unknown1b = false;
-    state->unknown1c = false;
-    state->unknown1d = 0;
+    byte *character;
+    s_slot_23 *state;
     bool has_markers = false;
     s_object_marker markers[32];
     short marker_indices[32];
-    if (!*((bool *)actor + 0x3c) && actor->unknown227)
-        has_markers = function_1ac610(actor_index, &prop_node_state(node)->position,
-            markers, marker_indices);
-
     s_2605d0_request request;
-    memset(&request, 0, sizeof(request));
-    request.type = 3;
     real distance;
-    if (view && view->unknown70 == 1)
     {
-        function_210850(&view->unknown78, (point3f *)((byte *)&request + 0x24));
-        short sector = *(short *)((byte *)view + 0x84) == NONE ?
-            *(short *)((byte *)view + 0x72) :
-            function_272af0(g_4e0348, (point3f *)((byte *)&request + 0x24));
-        *((bool *)&request + 0x20) = true;
-        *(s_type_c3b527 *)((byte *)&request + 0x30) = view->unknown78;
-        *(long *)((byte *)&request + 0x40) = *(long *)((byte *)view + 0x74);
-        *(short *)((byte *)&request + 0x44) = sector;
-        distance = function_210ac0(&view->unknown78, &actor->position);
-    }
-    else
-    {
-        *((bool *)&request + 0x52) = false;
-        distance = node->unknown28;
+        s_prop_node_view *node = prop_node_get(actor->prop_index);
+        s_prop_view_fields *view = prop_node_view(node);
+        character = (byte *)function_1e4be0(actor_index);
+        state = (s_slot_23 *)slot;
+        state->unknown1b = false;
+        state->unknown1c = false;
+        state->unknown1d = 0;
+        if (!*((bool *)actor + 0x3c) && actor->unknown227)
+            has_markers = function_1ac610(actor_index, &prop_node_state(node)->position,
+                markers, marker_indices);
+
+        memset(&request, 0, sizeof(request));
+        request.type = 3;
+        if (view && view->unknown70 == 1)
+        {
+            function_210850(&view->unknown78, (point3f *)((byte *)&request + 0x24));
+            short sector = *(short *)((byte *)view + 0x84) == NONE ?
+                *(short *)((byte *)view + 0x72) :
+                function_272af0(g_4e0348, (point3f *)((byte *)&request + 0x24));
+            *((bool *)&request + 0x20) = true;
+            *(s_type_c3b527 *)((byte *)&request + 0x30) = view->unknown78;
+            *(long *)((byte *)&request + 0x40) = *(long *)((byte *)view + 0x74);
+            *(short *)((byte *)&request + 0x44) = sector;
+            distance = function_210ac0(&view->unknown78, &actor->position);
+        }
+        else
+        {
+            *((bool *)&request + 0x52) = false;
+            distance = node->unknown28;
+        }
     }
     byte *movement = (byte *)function_1e4db0(actor_index);
     long minimum;
