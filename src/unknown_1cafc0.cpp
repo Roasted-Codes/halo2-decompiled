@@ -934,6 +934,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round P208: native library name-record publication 210; with aggregate input 318;
 // with logical change join 244; with both 320; the same four with forced existing
 // clear helper 210/318/244/320. Original record publication, identifiers and helper restored.
+// Existing primary lookup/transition lookup/channel-start inline declarations,
+// their three pairs, all three, and all three kept out of line: 210 each.
+// Original declaration contracts, identifier homes and complete body restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

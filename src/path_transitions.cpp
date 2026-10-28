@@ -473,12 +473,15 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
-// score 278 (was 299): entry register convention and floating-point scheduling differ;
+// score 278 (was 278): entry root retention and floating-point scheduling differ;
 // result first 299; surface first 299; vector names 299; vector helper 299;
 // case order 300; separate vector declarations 299.
 // Round 24: trace-time state reload, mutable entry, both, coherent pathfinding/surface swap,
 // direct distance arguments and direct projected-origin 299 each; c/b/a/d pointer
 // declarations 278; direct case-5 direction 278 (selected with the declaration order).
+// Entry vertex table at case/dispatch scope 280/340; ordinary result 340;
+// case table with ordinary result 342; early actor predicate 278; common case-5
+// outputs 404, with case table 404, with ordinary result 398. Original body restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,
