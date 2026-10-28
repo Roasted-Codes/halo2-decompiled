@@ -244,6 +244,7 @@ union s_185be7
 // Round 235: Native output flag dword/analog field/trailing bytes, paired and complete layouts
 // 780/780/778/780/778/778/778; complete trailing dword 812. Two-point leads rejected; original output layout
 // and body restored.
+// Round 379: Packed word/dword selectors 820/778; word with selected-input promotion/conditional flags/both 821/820/821; dword with promotion/conditional flags/both 777/778/777. Gains at most three rejected; original layout, helper and body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

@@ -2575,7 +2575,7 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 30 (was 38): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
+// score 30 (was 30): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
 // 0x17e670), the attached light call's register arguments (computed before its pushes, retail after) and the sound
 // arms' scratch registers remain. Round 85: `effect` declared before `up` gives retail's EAX up (38 -> 30, kept);
 // then velocity before location in the detached sound arm 47; light/sound node index in the argument list 30/30;
@@ -2646,6 +2646,7 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // native up CRT copy 38; uniform placement CRT copies 38. Owned up restores the incoming
 // EAX up pointer but adds entry copies; every executable form restored.
 // Round 204: native placement up/forward/both/all transfers 119/221/237/250; placement plus damage vectors/all damage/all sound/velocity 374/416/427/427; definition after caller 38. Original executable source restored.
+// Round 379: Sound point/velocity/both setters 60/57/72; location before point/compressor 36/34; location and velocity before point 36; early location with velocity/point setter 61/61. Original body restored.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, s_effect_datum *effect, vector3f const *up, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
