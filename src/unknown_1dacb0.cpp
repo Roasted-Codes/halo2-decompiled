@@ -1206,6 +1206,8 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Pre-lookup native default conditional 951; class key first 828; type key first 978; index-first
 // native transfers 846; type/class/mode output defaults 828; sorted lookup noinline 828.
 // Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
+// Optional-output formal permutations 828/824/824/829/829; native iterator on three formal-home contexts 826/822/827.
+// Closest six-point gain 822 remains above 30 and fails the eight-point floor; original formals and iterator restored.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

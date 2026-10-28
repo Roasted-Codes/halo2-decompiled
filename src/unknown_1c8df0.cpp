@@ -137,6 +137,12 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // of the in-body inline_depth pragma, 170 (kept; same code); on that, the round-81 five-difference body 5 (same
 // x/z row folds), its plus rows through a point-along-vector helper 5 (identical), every centre read through
 // local_3 26; short category on the kept body 234.
+// Round 30 (plain) on the rebuilt five-difference body: positive-point centre reads through local_3
+// for y 20, x 27, x and y 5, y and z 5; z/x/y written product first 5/5/5 (source order of each sum
+// has no effect); the side vector's centre reads through the cast parameter for both/j/i 33/26/33 (j
+// fixes the mode-1 z row but the 0.1 block then folds its z); x+ centre read as a real array element 5;
+// positive rows in z, x, y / y, z, x order 21/20. Ours always loads the x centre ahead of the first
+// row's multiply. All match-only; restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(long arg_0, point3f const *arg_4, short arg_3, short arg_2,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

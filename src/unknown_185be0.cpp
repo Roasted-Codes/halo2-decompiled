@@ -150,6 +150,12 @@ union s_185be7
 // mask helper 922 at 3740 bytes [310: the repeated tests thread as retail, flag section now retail's length,
 // homes shifted 4]; PIN on the two settings clamps 934/951 (retail's field re-reads, lockstep worse); named
 // clamped rates 789 [401]; magnitude sum terms swapped identical.
+// Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// Retail gives EBX to NONE for its seven early uses (the input test, the three clears, the two index tests and
+// the short `cmp dx, bx`) because it re-reads the control global at the flag test; ours keeps the global
+// there from entry. Round 30 (fast): the flag read through a file-local forceinline accessor 790 (still
+// held); powf 790; settings pointer read after the clears 799; the global named in a local before its test
+// 790; magnitude3d (0x24590) defined inline in its file 821 (still held; 0x24590 matches either way).
 // Round 9 (lane 10): retail clamps the range fraction in place (division result and clamp share its slot)
 // and threads every repeated flag test (one test, both stores per arm), testing the selected input as a
 // dword. Fraction computed then clamped into itself 790 (same code); fraction declared before its bounds

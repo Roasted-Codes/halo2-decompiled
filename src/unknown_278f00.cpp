@@ -102,12 +102,29 @@ bool function_a7670(long object_index);
 // descriptive names for the outer locals 212; second scan with its own found flag 269 (flag materialized,
 // not threaded); index comparison before the first-scan flag 213. Diagnostics, not kept: the predicted-copy
 // test as a one-line inline bool helper 212, as a single-exit helper 281 (gives the setne/test).
+// Round 14 (lane 10): the second scan setting the same found flag (`if (!found)` then jump-threads to the
+// iteration end, and the admission flag takes BL, both as retail) 260; with the inner bound read from
+// local_5->field_40 (no count local; the retry head becomes retail's) 231; plus the plain indexed cleanup
+// loop 233 (957 bytes). Lockstep counts rise, but aligned differences fall from 133 to 60; what remains is
+// spill-slot order (retail: cursor, second count, counter, list, body, selector, index upward), the outer
+// index stored at each definition (retail keeps it in ECX on the skip path), the record address sunk below
+// the `local_9 > 0` branch and loop padding. On that base: body in an if-block 233; index declared outside
+// the loop 233; the category as two comparisons 235.
 // Round 104: retail tests the second scan's hit first (threaded straight past the insert), then the first
 // found flag (CL), then the admission flag (BL). Index compare first 244; a second-scan found flag tested
 // first 260 (retail's scan shape and BL/CL exactly, 83 aligned differences against 93, but the header address
 // is folded after the `local_9 > 0` branch where retail computes it before, so the lockstep count rises);
 // with the header from object_header_get 260 (identical); with the type compared to 0 and 7 249 (address now
 // before the branch, but no bit test); the type comparisons alone 255. Slot order ignores local names.
+// Round 55: swapped count declarations 181; counts before the body-count snapshot 181;
+// retry before that snapshot 181; a fresh indexed cleanup counter 196; outer selector declared
+// after the arrays 181; scan-wide body pointer 181; existing header getter 181; const body count 181.
+// Round 262: function-entry selector/index/island storage, all seven combinations, 181 each;
+// all three with entry body-count storage 181. Every initializer stayed at its original use;
+// original declarations restored. Scratch phase, scalar homes and indexed cleanup remain.
+// Round 218: First/second scratch arrays at island/function, function/island, island/island,
+// list/function, function/list, list/list, island/list and list/island scopes:
+// 181/181/181/181/181/181/181/181 (fast control 181). Original restored.
 // @retail 0x278f00
 void function_278f00()
 {

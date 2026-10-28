@@ -152,7 +152,7 @@ c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, lon
 short function_120850(const vector3f *vector);
 bool function_23a220(const point2f *point, short count, const point2f *points, real epsilon);
 
-// score 192 (was 247): frame 0x84 versus 0x90: retail keeps origin.x/y in xmm6/xmm7 until the
+// score 192 (was 192): frame 0x84 versus 0x90: retail keeps origin.x/y in xmm6/xmm7 until the
 // offset (ours re-reads all three from the shape), so it spills first.i/second.i into homes and puts
 // the found byte at +0x38 and the plane at +4; every later stack offset differs by that. Retail also
 // computes the direction from its start loads (ours from memory operands) and has a dead second
@@ -214,6 +214,17 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // byte 3, fraction 4, direction 8, ray start 0x14, point 0x20, plane 0x2c, polygon 0x3c). Hit point
 // or direction renamed to change name order 247/247 (same code); fraction as a ternary 249;
 // plane d cleared before normalizing 252; clamp as if/else 250.
+// Round 148: start copy first with the direction from the copy 230 (retail's single start loads,
+// but per-component end loads); start copy first with the direction from ray->start 192; start copy
+// as a point assignment 204; direction as an initializer 223; offset from the first vertex in place
+// of origin 259; origin as a reference to the first vertex 275; ray_start renamed 192 (same code:
+// names do not move these slots).
+// Round 262: entry polygon/projected/hit-point storage, all seven combinations, 192 each;
+// all three with entry fraction storage 192. All computations stayed at their original uses;
+// original declarations restored. Frame 0x84 and origin/edge spills remain.
+// Round 218: Direct ray-start observations, polygon inline/noinline, both direct-ray combinations,
+// direct ray with point-set/cross/normalize forceinline declarations:
+// 282/192/192/282/282/282/282/282 (fast control 192). Original restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

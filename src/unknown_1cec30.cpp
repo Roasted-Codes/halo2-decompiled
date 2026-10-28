@@ -2711,6 +2711,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 197: Readonly private linear/angular/both getter inputs 135 each; native signed-int
 // ordinal alone/with each input pair 135 each; readonly pair with common double scale 135.
 // Original native state-zero graph, helpers and ordinal restored.
+// Round 201: Private linear/angular/both per-use body receivers 135/135/196; readonly pair 135;
+// mixed per-use/readonly receivers 135/135; fixed-first pair 151 and per-use fixed-first pair 202
+// (both fixed-first forms lose matched users). Original helpers and body restored; frame/save homes remain.
 // Round 63: kept the loop's bit-2 test as TEST_FIELD_BIT(flag2) (retail's shr/test) 135 -> 114 and the
 // float numerators 100.0f/50.0f (retail's fdivr dword, aligned -2) 114; the first bit-2 test as the
 // bitfield too (retail's form there as well) 168, alone 174, while the entry saves are staged
@@ -2721,6 +2724,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // change's k component first 99. No function of the linked file is on this function's direct call chain
 // in our image, and its frame-aligning callees align themselves, so the entry staging is not a callee's
 // stack-alignment request.
+// Round 195: Native final vector outputs linear/angular/both [241, 244, 314]; paired result before
+// receiver 314; native component-set output linear/angular/both [241, 230, 205]; paired early component
+// result 205. Original private getters restored; staged saves and fixed/zero homes remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

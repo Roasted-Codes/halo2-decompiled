@@ -101,6 +101,11 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // beside a local copy needs a match; the same body without it 437). Left on 188: x87 square orders (retail rotates
 // them per call; a vector-local distance with j, k, i terms gives d1/d2 175), arg_0 in EDX with arg_3 kept in ESI
 // at the 0x29de20 call, AL reused for the found flag, the pass latch's lea, the output loop's entry jump.
+// Round 148: the visited bits through the existing bit_vector_test/bit_vector_set (include/bit_vector.h)
+// 416 at 1577 bytes, but difflib-aligned 378 -> 338: retail's separate test and set (word address and
+// mask recomputed, load/or/store) and its unpadded outer loop; the same on the group bits only 416; with a
+// long group index 513 (the set CSEs again); the length helper's sum written y, x, z 416 (406 without the
+// bit helpers; same code).
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

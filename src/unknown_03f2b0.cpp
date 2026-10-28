@@ -1380,7 +1380,7 @@ struct s_batch_cache_4b5d0
 
 struct s_133f70;
 
-// score 177 (was 213): Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result homes remain.
+// score 175 (was 175): Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result homes remain.
 // Round 15: split entry-count declaration 213; cache levels base with 0xbc at the index 197; native entry
 // arithmetic 197; full second-cache record 325; two-step second cache 197; Boolean builder with wide previous 177;
 // signed-byte previous 319; direct cache publication 348. Levels offset and Boolean builder with wide previous kept.
@@ -1460,6 +1460,18 @@ struct s_133f70;
 // record + offset adds (`add eax, ecx; lea ebx, [eax + 0xbc]`) and the dead entry lea stay unreproduced.
 // Round 224: Signed-short query count/failure count/derived-slot domains, seven combinations,
 // then all with short entry ordinal 368/216/367/229/364/229/364/354 fast. Original count/compaction widths restored.
+// Round 202: Consistent pooled-index/byte-offset expressions at all three acquisitions: long index, long/dword offset, word index, word+offset, dword+offset, split mask, split multiply 175/175/175/356/356/175/175/175 fast.
+// Original executable source restored. Frame 0x33f8 agrees; distance staging, nullable-entry address, cache-member adds and result homes remain.
+// Round 14 (lane 10, plain): signed-char previous with signed-char levels 319 (gives retail's byte store,
+// byte level load, `cmp byte` test and `movsx ax` publication, but ours folds the cache-slot address into one
+// lea where retail adds the record first, so the code after it runs one instruction ahead); with the levels
+// pointer at record + 0xbc as 0x4c450 writes it 325 (then both sites fold); stamp compared on the left 319,
+// on this body 175; the reuse test through the cache local 320.
+// Round 262: saved-level short at original/pre-query/function scope 194/195/194;
+// signed-byte at pre-query/function/output scope 321/319/321; long at pre-query/function
+// scope 176/175. All restored; distance staging and cache/result scheduling remain.
+// Round 218: Count/writer/projection/coefficient inline and noinline declarations:
+// 175/175/175/175/175/175/175/175 (fast control 175). Original restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

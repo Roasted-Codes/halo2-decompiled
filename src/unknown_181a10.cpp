@@ -554,6 +554,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // switch's shape; VC folds an if on (data >> 29) into a mask compare). Arms swapped as an if 323; with
 // the plane distance in a local 323; distance local alone 321; switch with case 1 first/default first
 // 316/315 (not kept: a switch for an if).
+// Round 230: shared discarded coefficient output with branch/entry scratch and original/shared
+// material scope 319/319/319/319; consuming the material return on those four graphs
+// 317/317/320/320. Two/four-point gains rejected; original outputs and scopes restored.
 // Lane 5 r77: retail's 1..16 clamp keeps each constant in the result register (`mov ecx, 1;
 // cmp ecx, edx; jg`) and threads both clamped arms straight to the byte test, which keeps a
 // `setne; test`. Entity as `type == 1 ? entity : NULL` 321; clamp as if/else-if on the local,
@@ -562,6 +565,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Round 23: property count/base/both observations 321/338/338; next-link snapshot 364;
 // link plus count/base/both 364/348/347; all with native property reference 346.
 // Frame stays 0x48 versus 0x44; original input scans and helper contracts restored.
+// Round 203: final native vector setter with transformed-normal construction, plane-normal
+// publication and complete named exclusion combinations 321/321/334/334/321/321/334/334.
+// Plane publication reaches 1243 bytes but regresses; frame 0x48 remains. All restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
