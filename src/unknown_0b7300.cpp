@@ -522,20 +522,31 @@ __forceinline void object_placement_unhide(long object_index)
 }
 
 /* hides an object that isn't on the current structure bsp, or deletes it */
+// score 17 (was 89): retail stores the flag word twice (hidden, then hidden_by_bsp from the same
+// register) where ours computes hidden_by_bsp from hidden with shl/xor, and it materializes the
+// placed test with setne before testing it. Retail re-reads the object array after the first
+// test, so the second lookup reads data through a volatile pool (89 -> 59); the persistent test
+// as a bool local gives retail's block order (44); hidden_by_bsp copied from hidden gives
+// retail's length (17). No effect: the flags as dword ors in either order or both, the value
+// stored twice by hand, a volatile first store, a fresh lookup for the second store (40); the
+// placed test as a bool, byte, long or 0/1 local, negated, as == false, != true or !(&&).
 // @retail 0xd52b0
 void function_d52b0(long object_index)
 {
 	s_placement_object *object = PLACEMENT_OBJECT(object_index);
 
-	if (object->unknownac != NONE || function_d5990(object->type, object->tag_index))
+	bool persistent = object->unknownac != NONE || function_d5990(object->type, object->tag_index);
+
+	if (persistent)
 	{
-		s_placement_object *current = PLACEMENT_OBJECT(object_index);
+		// retail reloads the object array here
+		s_placement_object *current = ((s_placement_object_header *)((s_record_pool volatile *)g_4e0300)->data)[object_index & 0xffff].object;
 
 		function_b7300(object_index);
 		if (TEST_FIELD_BIT(current->flags.unknown8))
 			function_b87b0(object_index);
 		current->flags.hidden = true;
-		current->flags.hidden_by_bsp = true;
+		current->flags.hidden_by_bsp = current->flags.hidden;
 	}
 	else if (g_4e6948->mode != 4 || object->unknownd4 == NONE)
 	{
