@@ -177,6 +177,9 @@ struct s_object_flags_256bd0
 // Noinline initializer plus ordinary step reaches frame 0x110 at 194/1070;
 // seven-point form restored. Original declarations, bodies and calls restored;
 // activity spill remains.
+// Round 208: actual entry-result output through pointer/reference, each formal order and bool/byte
+// success, 201 each. All original step and caller contracts restored; frame 0x114/0x110, cached
+// activity and geometry/selection homes remain.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

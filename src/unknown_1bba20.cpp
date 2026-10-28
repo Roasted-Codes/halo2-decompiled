@@ -97,6 +97,9 @@ static __forceinline long real_to_long(real value);
 // Earlier 8 from 44.
 // Existing slot-query long/short 61/8; guarded long/short 70/38;
 // query-first long/short 77/46; shared-query rounding names/separate loop carriers 61/61.
+// 8; the block locals in two other orders 8. Separately, from the 44 form: the clock
+// local moved into the player block with the slot local declared first, 8 (the same
+// lines); pointer, type, scope, direct-store and helper forms on it give the same bytes.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {

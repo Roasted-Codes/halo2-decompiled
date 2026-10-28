@@ -3,6 +3,8 @@
 /* UNKNOWN_12A1B0.CPP: controllers and looping playback. */
 
 #include "unknown_11c920.h"
+#include "normalize3d.h"
+#include "vector_angles.h"
 #include "data_array.h"
 #include "local_cameras.h"
 #include "sound_sources.h"
@@ -331,9 +333,14 @@ void looping_sound_controllers_synchronize(bool initial_playback)
 
 void function_11bed0(s_location *location, point3f const *point);
 
-// score 93 (was 161): native iterator keeps the initial called scan and subsequent inline scan; location lookup still expands.
+// score 93 (was 93): native iterator keeps the initial called scan and subsequent inline scan; location lookup still expands.
 // Published pool per use 161; shared bitmap scan 161; plain for 161; reused absolute slot 161;
 // shared next-datum advance 116; source receiver 160; bool datum iterator 134 (fast). Native iterator 93 fast/plain.
+// Native iterator aggregate 93; datum-index receiver 83 (one-use call-result pointer; unmatched, restored);
+// absolute-slot receiver 110; absolute slot/source receiver 110; aggregate/absolute slot 110;
+// shared salted getter 117; native while 93; absolute-slot continue 110;
+// returned-datum eligibility/native index 147; typed returned datum 147; typed datum/aggregate 147;
+// returned-datum eligibility/shared getter 192. Location expansion and datum/element register ownership remain.
 // @retail 0x21a100
 void looping_sound_update_locations(void)
 {
@@ -1081,12 +1088,17 @@ struct s_looping_promotion_table
 	s_looping_promotion *entries;
 };
 
-// score 52 (was 72): frame and loop head now retail's; the body's element and definition registers differ;
+// score 52 (was 52): frame and loop head now retail's; the body's element and definition registers differ;
 // short curve 76; long curve 80; count renamed 72; table snapshot 72; pool snapshot 76;
 // count first 74; plain for 74; flag mask 72; shared lookup 72; short curve and lookup 76;
 // bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65;
 // shared iterator helper reading the next link at each use 69; the shared iterator record
 // (first, index, count; next link read at each use) 52 (kept).
+// Canonical iterator: short curve 56; shared class lookup 52; both 56; native for 88;
+// per-iteration tag table 52; curve declaration first 52; shifted word flag 52;
+// shared class lookup/one-use short class index 30 (unmatched, restored).
+// Native definition getter 52; both native getters 52; both/short curve 56; composed getters 52.
+// Element/definition registers, class-load position and curve widening remain.
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {
@@ -1114,7 +1126,7 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	}
 }
 
-// score 35 (was 35): the state load is folded before the element pointer is formed and the
+// score 25 (was 35): the state load is folded before the element pointer is formed and the
 // final looping store is scheduled early;
 // pool at each use 66; count declared first 66; count renamed 66; state guard 66;
 // plain for 66; iterator record 66; count-first iterator record 66; flag mask 66;
@@ -1123,6 +1135,10 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 // playing at function scope, const playing, reversed state comparison, pool declared after
 // the iterator, index before the iterator and looping before the duration store 35 each;
 // conditional fade gain and named fade-gain result 37 each; getter repeated for the final store 81.
+// Consistent per-use element receivers 94; canonical iterator for 59; both 113;
+// canonical iterator continue 35; curve after endpoints 35; computed endpoint first 35;
+// native word flag store 35; native word flag test/store 25, plain confirmed at 207/210 bytes.
+// Element/state fold and early flag store remain.
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {
@@ -1137,23 +1153,27 @@ void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 			s_looping_track_sound *playing = track_sound_get(data, index);
 			if (playing->state == 2)
 			{
-				if (TEST_FIELD_BIT(playing->looping))
+				if ((playing->flags & 0x80))
 					playing->fade_gain_bits = function_12a810(index);
 				else
 					playing->fade_gain_bits = 0xc2800000;
 				playing->fade_curve = curve;
 				playing->fade_start_time = NONE;
 				playing->fade_end_time = (long)(duration * 1000.f);
-				playing->looping = true;
+				playing->flags |= 0x80;
 			}
 		}
 	}
 }
 
-// score 97 (was 97): each inlined range ends in a fused faddp where retail exchanges, adds and pops
-// separately; the rest is aligned. Round 58: split declarations and assignments 97; assignment in the
+// score 87 (was 97): the range additions still fuse; the 0x10 frame versus 4 and direction stores differ.
+// Before the shared direction workspace, only the range tails differed. Round 58:
+// split declarations and assignments 97; assignment in the
 // distance test 97; force-inline helper declaration 97; const results 97; entry-scope results 97;
 // zero-initialized results 97; explicit trigonometric result locals 97; shared vector setter 97.
+// Zero-first exit/if-else 102/102; double range/trig consumers 97/79 (precision form restored);
+// shared direction and scale in-place/workspace 97/87 (workspace kept); cosine before yaw 97;
+// complete offset before publication 94. Original real casts and component grouping are preserved.
 // @retail 0x21ce60
 void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 {
@@ -1162,10 +1182,9 @@ void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 	{
 		real pitch = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, detail->pitch_lower, detail->pitch_upper);
 		real yaw = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, detail->yaw_lower, detail->yaw_upper);
-		real cosine_pitch = (real)cos(pitch);
-		offset->i = (real)cos(yaw) * cosine_pitch * distance;
-		offset->j = (real)sin(yaw) * cosine_pitch * distance;
-		offset->k = (real)sin(pitch) * distance;
+		vector3f direction;
+		direction_from_angles(&direction, yaw, pitch);
+		vector3f_scale(&direction, distance, offset);
 	}
 	else
 		*offset = *g_4687a4;
@@ -1246,6 +1265,13 @@ bool looping_sound_prepare_detail(s_type_a82d9f const *detail, long looping_soun
 bool g_4e636d;
 real sound_get_minimum_distance(s_sound const *sound, long definition_index);
 
+// score 101 (was 101): the minimum query expands and the unused maximum query vanishes,
+// removing retail's spill. Caller noinline/inline declarations, separately/both, and
+// direct field reads 101 each; native receiver 103. Definition-side minimum/maximum/both
+// noinline 87/120/83; direct/native receivers with both 73/65. Maximum/both inline with
+// noinline 11/11; minimum inline 65. Guarded receiver/distinct ordinals 0/0, but the
+// matched declaration form loses other matches; detail cursor 10. Caller noinline with
+// provider inline 101. All provider declarations and the original body restored.
 // @retail 0x21d060
 void function_21d060(long definition_index, s_type_99c531 const *source)
 {

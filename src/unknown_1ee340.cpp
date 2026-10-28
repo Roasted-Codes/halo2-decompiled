@@ -231,6 +231,14 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 161: Original-ray difference-helper forceinline alone/with point-set/with cross/with both
 // 192/192/192/192; complete origin/start/both setter components 192/192/192;
 // both component captures with difference forceinline 192. Original captures and boundaries restored.
+// Round 207: existing array-based unit-scaled differences for ray direction, both edges,
+// ray plus edges, offset, edges plus offset, ray plus offset, all differences and second
+// edge alone: 192 each at 1007/1001. All exact-match-only forms restored;
+// frame 0x84 versus 0x90 and origin/edge homes remain.
+// Coupled origin-start/edge-pair/plane-result lexical identities, all seven subsets and complete
+// projection/ray identities: 192/192/192/192/192/192/192/192. Origin retention and edge spills still leave
+// the short frame
+// original identities restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

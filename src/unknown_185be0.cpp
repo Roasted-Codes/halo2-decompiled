@@ -142,7 +142,7 @@ union s_185be7
 };
 
 #pragma inline_depth(1)
-// score 780 (was 790): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
+// score 780 (was 780): Frame 0xe0 and state/output carriers agree; the flag bits are now set with retail's branches. Left: settings/zero homes, clamp-arm placement and unthreaded repeated flag tests.
 // Round 86 (fast, aligned counts in brackets, 383 at the start): turn rates assigned in both arms (retail loads
 // the stored rates on the else path) 788 [367] and the attachment index NONE per path (retail sets it on each
 // failure path) 780 [356], both kept; on 780: selected input as long (retail movzx/test edx/setg) 779 [348];
@@ -233,6 +233,11 @@ union s_185be7
 // 934, on every clamp but the magnitude one 971; the selected input byte as a long (retail's movzx edx /
 // test edx / setg / jle) 790, aligned 289 -> 281, the repeated test still not threaded; long input plus
 // early copy 789. Retail also reads the two selector bytes as one dword (EBX, then BL/BH).
+// Round 241: Shared clamp formal orders (0,2,1)/(1,0,2)/(1,2,0)/(2,0,1)/(2,1,0): 780/780/780/780/780;
+// independent result with orders (0,2,1)/(1,0,2)/(2,0,1): 926/926/926. Original helper, calls and body
+// restored.
+// Round 243: Native latch fields 88/8e/8f/90/93, paired 8e+8f/88+90 and all five:
+// 780/780/780/780/777/780/780/777. Three-point nonmatch gains rejected; original byte fields restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

@@ -358,6 +358,9 @@ bool __stdcall function_fa9a0(long *value)
 // Shared point producer 81; shared inline normalize 84; shared scale-normalize 86;
 // point producer with those normalizers 78/80; conditional seconds with private/inline/scale
 // normalization 80/80/83. Shared arithmetic regrouping is exact-match-only; restored.
+// Same-arithmetic private normalizer: one magnitude exit 86; separate result 93;
+// native failure guard 87; direct complete-vector output with those 122/116/122,
+// alone 122; one magnitude exit with local home names 86. Restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -577,7 +580,7 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
-// score 34 (was 69): Input index load width, loop entry alignment and response cursor calculation differ.
+// score 34 (was 34): Input index load width, loop entry alignment and response cursor calculation differ.
 // Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
 // direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
 // native current ancestry index 69; entry result/current index 67.
@@ -587,6 +590,9 @@ s_projectile_material_response g_547660;
 // direct table bound 36, with result first 34; without unused parameter reference 49/49.
 // Kept direct table bound/result-first 34 (147/145 bytes), plain confirmed;
 // input index width, loop entries and cursor arithmetic remain.
+// Short ancestry with direct endpoint 34; positive ordinal/body cursor 49; unguarded ordinal 55;
+// positive while ordinal 49; short ancestry/ordinal 48; per-use count/ordinal 66;
+// multiply-used response base 34; response base/short ancestry 34. Word input and cursor/loop entries remain.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
@@ -671,11 +677,15 @@ PRIVATE inline void projectile_effect_parameters_initialize(s_effect_parameters 
 }
 
 /* pushes a projectile, and spins it at random by the push's strength */
-// score 69 (was 95): frame 0x10 and retail length agree; impulse EDX/ESI, axis homes and seed carriers differ.
+// score 69 (was 69): frame 0x10 and retail length agree; impulse EDX/ESI, axis homes and seed carriers differ.
 // Round 196: direct length 95; fraction 114; complete native scale 98; length/fraction 114;
 // length/scale 98; fraction/scale with either length 83 (one-use fraction, restored); shared magnitude/scale 98.
 // Commuted first product with complete scaled vector 69 (kept); in-place, direct-root in-place,
 // and shared magnitude variants 69 each. Existing calls and multiply grouping preserved.
+// Round 212: native linear/angular/both component loops 71/77/79; earlier separate
+// vector declarations alone/linear/angular/both 69/71/77/79; renamed spin vectors 69.
+// Shared linear/angular/both sums 68/63/76; scaled angular sum with/without
+// the linear helper 121/121; complete linear/both/scaled angular outputs 112/130/117.
 // @retail 0xfa820
 void function_fa820(long projectile_index, vector3f const *impulse)
 {
@@ -835,6 +845,9 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // native fields/conditional seconds 73.
 // Two-use parent owner after its native type guard 72; with chained child zero
 // stores 74, named flags 72/74, complete seconds arms 73/75/73/75. Restored.
+// Early attachment counter 109; native while cursor 72; both 109; parent declaration
+// at entry 72; parent/tag names 72; incoming operand names 72; all-use parent
+// observations 72; those with early counter 109. Restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)
@@ -901,7 +914,7 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 244 (was 237): the convention now agrees with retail (target EAX, origin ECX, direction
+// score 244 (was 244): the convention now agrees with retail (target EAX, origin ECX, direction
 // ESI, the rest on the stack, `ret 0x2c`): the forced-speed and time-scale pointers are each read
 // once through their addresses, which keeps them on the stack as retail reads them at their uses
 // and matches the callers 0xfa6a0, 0x1f8100, 0x26f150 and 0x2900b0 (each passed the time scale in
@@ -920,6 +933,9 @@ real function_30bf0(vector3f *v);
 // delta.k after the gravity product 236; the time scale read once into a value (`time_scale ?
 // *time_scale : 0.0f`) 262; both pointers through their addresses 244 (kept, see above), with
 // the forced-speed read before the minimum-speed store 244.
+// Entry velocity workspace 244; reversed entry vector declarations 244; output-first
+// vector names 244/244; shared complete delta producer 245; common result exit 258;
+// that with entry velocity 258; result-first with entry velocity 266 (frame 0x2c). Restored.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1103,11 +1119,15 @@ extern vector3f *g_4687ac;
 
 /* whether a projectile's path to a point hits anything: the line from it,
    and for projectiles with a radius the two lines either side of it */
-// score 163 (was 220): simultaneous offset endpoints recover 757/756 bytes; frame 0x48
+// score 163 (was 163): simultaneous offset endpoints recover 757/756 bytes; frame 0x48
 // versus 0x34 and endpoint/query homes still differ. Shared input differences 220;
 // radius at use 224; both 233; simultaneous endpoints 163 plain (kept); endpoints with
 // radius reads 181, plus shared differences 188; shared ray displacement 189, with
 // shared cross product 189; first-ray scope 165, with radius reads 173.
+// Round 212: shared negative radius 173; plain endpoint loop 204; side producer
+// scope 163; negative/loop 204; negative/scope 173; loop/scope and all three 204.
+// Negative with initial-ray scope 175 (frame 0x3c); consistent radius at use with
+// initial scope alone/side scope/endpoint loop 173/173/201. Frame and ray homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1249,10 +1269,16 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 
 /* a projectile's detonation effects and sounds at a point, attached to an
    object's node when it stuck to one */
-// score 115 (was 148): frame 0x150 and extent agree; point EBX/EDI, zero lifetime and selector call registers differ.
+// score 115 (was 115): frame 0x150 and extent agree; point EBX/EDI, zero lifetime and selector call registers differ.
 // Round 196: array-size bounds, unsigned shared ordinal and distinct unsigned ordinals 148 each;
 // word index 115; long node 148; both widths 115 (kept); both widths with array bounds
 // or separate ordinals 115 each. Every declaration coordinated; original loop bodies retained.
+// Round 212: chained defaults 119; early loop ordinal 188; outer effect storage 153;
+// defaults/ordinal 187; defaults/storage 157; ordinal/storage and all three 206;
+// aggregate defaults with ordinal/storage 206. Native zero and point lifetimes remain.
+// Existing request builder 251; direct spatial output 201; builder with point snapshot 250;
+// point/direction/both snapshots 195/210/235; defaults before markers 189;
+// matched sibling request-store order 120. Original body and all call roles restored.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
 	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,

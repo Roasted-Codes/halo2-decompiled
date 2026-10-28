@@ -849,6 +849,10 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // Round 82: length as dot3f(direction, &plane.n) 375 (retail's d.j preload, normal i/j/k in xmm3/4/5
 // and offset products, but the sum stays i-first and the rest shifts); dot3f(&plane.n, direction) 375;
 // t as a ternary 245; ternary with dot3f 375; dot3f with direction declared first 375. Body restored.
+// Round 60: length_sq3f(direction) 464; length_sq3f(&plane.n) 265;
+// dot length with prezero 463; copied-normal helper with reversed plane dot 265;
+// reversed plane dot alone 245; direction-j pointer 400; early copied-normal helper 272;
+// early dot length in either input order 256/256. Original body restored.
 // Round 84 (lane 5): VC reassociates the timer to (rate / scale) * ticks where retail keeps
 // (ticks * rate) / scale; a named seconds local in the tick helper restores retail's order 388,
 // a named seconds local at the use 384 (lockstep shift); field-of-view fields read at each use 259,
