@@ -1112,11 +1112,15 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	}
 }
 
-// score 35 (was 66): frame and loop head now retail's; the body's element pointer (ours ESI, retail EDX) differs;
+// score 35 (was 35): the state load is folded before the element pointer is formed and the
+// final looping store is scheduled early;
 // pool at each use 66; count declared first 66; count renamed 66; state guard 66;
 // plain for 66; iterator record 66; count-first iterator record 66; flag mask 66;
 // shared iterator helper reading the next link at each use 64; the shared iterator record
 // (first, index, count; next link read at each use) 35 (kept).
+// playing at function scope, const playing, reversed state comparison, pool declared after
+// the iterator, index before the iterator and looping before the duration store 35 each;
+// conditional fade gain and named fade-gain result 37 each; getter repeated for the final store 81.
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {

@@ -464,6 +464,12 @@ void function_e5930(long unit_index);
 
 /* resets the biped's state: its flags, landing and melee timers, its ground
    contact and its physics mode */
+// score 118 (was 118): frame 8 and reset/getter prefix agree through +0x10a; shifted flag materialization,
+// flag-store scheduling and the final helper's unwanted expansion remain.
+// Boolean predicate 121; native word flags 114; reset zero/NONE/both chains 118;
+// chains with Boolean predicate 121; counter/index/initial block library clear or fill
+// 129/138/127; second receiver scope 118; native tag dword or bit member 121;
+// either tag form with native word stores 113 (subthreshold, restored).
 // @retail 0xde4c0
 void __stdcall function_de4c0(long arg_159e6d)
 {
@@ -1797,10 +1803,10 @@ void function_dfdb0(long arg_159e6d, long *surface, long *location, point3f *poi
 	{
 		if (biped->unknown354 != NONE && !function_ddf60(arg_159e6d))
 		{
-			if (biped->unknown360 != NONE && !function_badc0(biped->unknown360, NONE))
-			{
-				function_dfd70(arg_159e6d);
-			}
+			bool object_valid = true;
+			if (biped->unknown360 != NONE)
+				object_valid = function_badc0(biped->unknown360, NONE) != NULL;
+			if (!object_valid) function_dfd70(arg_159e6d);
 		}
 		else if (g_510c54->game_time > biped->unknown350)
 		{
@@ -1859,6 +1865,12 @@ bool __stdcall function_c5460(long object_index, long ignore_index, point3f cons
 
 /* drops the biped out of a vehicle: level and upright, at a clear spot
    by the vehicle (or anywhere clear) */
+// score 76 (was 76): frame 0x1c versus 0x20 and input/ignore ESI/EDI homes are exchanged.
+// Complete bool retry result 134; iteration-local result 76; long result 109; capsule/fallback
+// role names 76; names with bool result 134; fallback-only point scope 76; function-scoped
+// workspaces 76; those workspaces with bool result 134. Original body restored.
+// Fallback radius reuse 74 (350 bytes); retry result started at the loop boundary 73
+// (350 bytes); both 86 (356 bytes). Two/three-point gains and one-use field copies restored.
 // @retail 0xe0070
 void function_e0070(long arg_159e6d, long vehicle_index)
 {
@@ -1905,32 +1917,40 @@ bool function_1d5120(s_havok_component *component, long rigid_body_index, long a
 void __stdcall function_1c3770(long object_index, dword flags);
 
 /* steps a dead biped's ragdoll settling (+0x3aa) toward rest */
+// score 63 (was 117): EBX input agrees; the extra EBP save, body-index selection and flag-store scheduling remain.
+// Native index 108; word flags 87; both 82; signed two-use count with word flags 73;
+// native index plus signed count 67, promoted body input 63 kept. Shared short/long getter
+// 118/122; explicit short 118; output scope, separate admissions and read-only tag 117;
+// shared getter with word flags 89/99; common exit 97; unsigned/native count 87;
+// word bitfields 87; named byte 117; byte/count forms 121/115/118; alternative result
+// 83; component-first and handle name 67; byte-bitfield forms 103/117/115.
 // @retail 0xe0c70
 void function_e0c70(long arg_159e6d)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
 	byte *definition = BIPED_DEFINITION_GET(biped);
 
-	if (biped->unknown3aa && biped->havok_component_index != NONE)
+	long steps = (char)biped->unknown3aa;
+	if (steps && biped->havok_component_index != NONE)
 	{
 		s_havok_component *component = havok_component_get(biped->havok_component_index);
-		char body = *((char *)component + 0x18);
-		short rigid_body = body >= 0 && body < component->rigid_bodies.size ? body : NONE;
+		long body = component->unknown18;
+		long rigid_body = body >= 0 && body < component->rigid_bodies.size ? body : NONE;
 		long settled;
 
 		if (rigid_body != NONE &&
 			function_1d5120(component, rigid_body, 9, *(long *)(definition + 0x290) + 0x20, g_510c54->rate * 0.15f,
-				&settled, (long)(char)biped->unknown3aa))
+				&settled, steps))
 		{
 			biped->unknown3aa = settled;
-			*((byte *)&biped->flags_348 + 1) &= 0x9f;
+			biped->flags_348 &= ~0x6000;
 			function_1c3770(arg_159e6d, 0);
-			*((byte *)&biped->flags_348 + 1) &= 0x9f;
+			biped->flags_348 &= ~0x6000;
 			return;
 		}
 	}
 	biped->flags_134 |= 0x800000;
-	*((byte *)&biped->flags_348 + 1) &= 0x9f;
+	biped->flags_348 &= ~0x6000;
 }
 
 /* retail calls this out of line from 0x1d43d0 */
@@ -3003,6 +3023,10 @@ void function_e4300(long arg_159e6d)
 }
 
 /* gets the biped up and puts its Havok to sleep, unless it already sleeps */
+// score 91 (was 91): reset-mode dispatch expands instead of retail calling it out of line (113/61 bytes).
+// Separate reset noinline declaration 91; Boolean flag test 98; both 98; noinline with
+// field-use object lookup 94; Boolean lookup with/without noinline 101/101; both call-boundary
+// declarations with Boolean test 98, with field-use lookup 101. Original body/declarations restored.
 // @retail 0xe4bd0
 void function_e4bd0(long arg_159e6d)
 {
@@ -3761,6 +3785,12 @@ void function_e5790(long arg_159e6d);
 /* lands or is knocked to the ground: a crouching biped standing up into a
    ceiling is lifted clear, the hit is remembered (+0x44c..), and a flag
    plays the knocked-down animation */
+// score 124 (was 124): frame 0xc agrees; point/index input registers, upward-sum scheduling and cap loading remain.
+// Native word flags, entry point/velocity workspaces, explicit lift arms, separate contact
+// admissions, contact-index name, state scope, library point copy and immutable receiver
+// all 124; lift initialized from room 121 (subthreshold, restored). Complete upward sum
+// and its first pair 124; native overlapping contact fields, native state offset, both,
+// both with the upward pair and both with word flags 124. All executable forms restored.
 // @retail 0xe4a20
 void __stdcall function_e4a20(point3f const *point, long arg_159e6d, long object_index, bool knocked)
 {
