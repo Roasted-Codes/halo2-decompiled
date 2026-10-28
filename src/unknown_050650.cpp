@@ -975,12 +975,16 @@ struct s_actor_looking_structure_view
 };
 
 /* Name inferred from the path traces and the idle-direction caller. */
-// score 80 (was 142): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
+// score 80 (was 80): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
 // Result first 139; existing angular wrapper 468; vector producer 261; both 466;
 // native header/body induction with those producers 137/468/266/466.
 // Separate forced angular declaration 78/265/85/270; earlier cursor step 88;
 // real indexed candidate producer 80, kept at 924/924 bytes after plain confirmation.
 // The 78 form retains the old comma-stepped loop and is not kept.
+// Angle ordinal renamed, candidate ordinal renamed, both renamed and candidate declared first 80 each;
+// candidate/trace scope, entry trace, entry horizontal, all entry workspaces and workspace names 80 each;
+// single short ordinal 137; single long ordinal 198; declaration-time path pointer 214;
+// int angle ordinal 80; two long ordinals 214; two int ordinals 214. Counter homes, rotation schedule and tail remain.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
