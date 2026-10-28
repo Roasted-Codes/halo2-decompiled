@@ -153,6 +153,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 197: Coherent defining-unit/caller final-phase inline and inline/noinline
 // declarations, each with bool/byte/short/long private completion, 164 each. Original
 // provider declarations, private step and both traversals restored.
+// Round 56: Caller pool plus result-published step 200; const pool 200; negative-or-equal predicate 163;
+// reversed comparison 164; direct datum with that predicate 163; nonnegative continue 164;
+// existing squad accessor in the first traversal 164 and in both traversals 164. Original restored.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

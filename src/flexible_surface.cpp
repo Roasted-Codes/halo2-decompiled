@@ -190,10 +190,6 @@ bool function_117100(long index)
 	return result;
 }
 
-// score 23 (was 137): the prologue schedule; retail adds the pool base before reading the tag index and
-// loads the object index first, then the marker name after clearing the order tail. A one-use marker-name
-// local before the call 7 (not a match); order declared after the call 99, first 28, between record and
-// definition 24; arrays before the record 28.
 // @retail 0x1171a0
 bool function_1171a0(long index)
 {
@@ -201,7 +197,9 @@ bool function_1171a0(long index)
 	s_surface_definition *definition = surface_definition(record);
 	s_object_marker markers[6];
 	long order[6] = {0, 1, 2, 3};
-	record->attachment_count = function_b8d30(record->object_index, definition->marker_name, markers, 6, false);
+	long marker_name = definition->marker_name;
+	long object_index = record->object_index;
+	record->attachment_count = function_b8d30(object_index, marker_name, markers, 6, false);
 	long axis = 2;
 	if (definition->flags & 2) axis = 0;
 	for (long i = 0; i < record->attachment_count; ++i)
