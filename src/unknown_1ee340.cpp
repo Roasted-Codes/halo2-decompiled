@@ -219,6 +219,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // as a point assignment 204; direction as an initializer 223; offset from the first vertex in place
 // of origin 259; origin as a reference to the first vertex 275; ray_start renamed 192 (same code:
 // names do not move these slots).
+// Round 218: Direct ray-start observations, polygon inline/noinline, both direct-ray combinations,
+// direct ray with point-set/cross/normalize forceinline declarations:
+// 282/192/192/282/282/282/282/282 (fast control 192). Original restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
