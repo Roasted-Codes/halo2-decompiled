@@ -30,6 +30,16 @@ struct s_e6830_request_block
     dword active[2];
 };
 
+// score 3 (was 3): only the register order in the request word's address differs: retail
+// [esi + ebx + 4] (the byte offset as the base), ours [ebx + esi + 4], at the test, the reload
+// and the store. Retail's explicit shl esi, 2 rather than a scaled index suggests the byte
+// offset form is right. Tried, all 3: the sum's text order (block + offset + 4, block + 4 +
+// offset, offset + 4 + block), block->active plus the offset either way, a bits pointer plus the
+// offset either way, [1] off the word, the mask and offset declared at the top or the offset
+// before the block, the loop variable at the top, the result before the block, the block
+// through a byte pointer, an offset local or offset first, an unsigned offset, a signed mask.
+// Worse: an array index (scaled address) 10/22/27; bit_vector_test and bit_vector_set 22/37;
+// (type >> 5) << 2 5; the offset before the mask 37. 120 permuter variants: best 3.
 // @retail 0xe6830
 bool __stdcall function_e6830(long unit_index)
 {
