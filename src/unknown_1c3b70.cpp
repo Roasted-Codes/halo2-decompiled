@@ -74,6 +74,8 @@ void havok_entity_component_index_set(hkEntity *entity, s_havok_property_word co
 // later differences are the two-byte shift. Unqualified global 76; entry construction 124;
 // construction before the final allocation 77; default construction there 71;
 // earlier/later local names and declaration before the descriptor 71 each.
+// Round 218: Property/descriptor/final-owner/shape-owner inline and noinline declarations:
+// 71/71/71/71/71/71/71/71 (fast control 71). Original restored.
 // @retail 0x1c3b70
 void function_1c3b70()
 {

@@ -285,6 +285,16 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // unqualified result 207; separate false store and result read 208.
 // Actor/query, object/approach and movement output workspace names, all seven combinations,
 // each 194; all names with the two uninitialized query outputs at entry 194. Original body restored.
+// frame 0x38 agrees; actor pool data is loaded into EBX here and
+// ECX in retail. Early actor-index retention, request tails and distance scheduling differ.
+// Round 262: one native request buffer at entry/decision, with original/entry approach
+// storage, 199 each (frame 0x58); those four with both returns through the existing result
+// 204 each, 682 bytes. Original separate requests, storage and return paths restored.
+// the actor-pool data is loaded into EBX here and into ECX
+// in retail, and the index is scaled after the mask in one and before it in the other.
+// Round 218: Both request names, reversed lookups with original/first/second/both request names,
+// target lookup first with original/first/both request names: 194/202/202/202/202/205/205/205
+// (fast control 194). Original restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {

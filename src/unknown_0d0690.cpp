@@ -51,7 +51,7 @@ PRIVATE __forceinline real pinned_real(real const &value, real minimum, real max
 	return value;
 }
 
-// score 93 (was 150): at retail's length; frame, sky/count homes, trig temporaries, blend registers
+// score 93 (was 93): at retail's length; frame, sky/count homes, trig temporaries, blend registers
 // and the color0 store now match. Left: the three x87 direction adds load the direction first
 // (retail adds it as the memory operand), 0x131c20's `&color` is formed in edi and copied to ecx
 // (retail ecx, then edi), and the collision test's sete.
@@ -100,6 +100,8 @@ PRIVATE __forceinline real pinned_real(real const &value, real minimum, real max
 // Round 193: Scenario/data/both/value/data+value/scenario+value/all source pointers
 // read at each use, then all plus light table: 213/192/192/213/231/213/231/247.
 // Data-only plain 192 adds reloads and has a farther aligned sequence; original restored.
+// Round 202: Native direction accumulation with long/dword/short/byte ordinals, direction/contribution/paired cursors, contribution-first indexed adds, complete updated-direction publication and the shared vector setter 106/106/192/192/205/195/171/106/182/93 fast.
+// Original executable source restored. Frame 0x8c agrees; x87 accumulator operand order, blend-address reuse and collision predicate remain.
 // Round 215: native light cursor 224; cursor with const light/value views 224;
 // cursor with positive-light strength lifetime, mutable/const views 223/223;
 // plain count with cursor, const views, scoped strength or both 233 each.
@@ -1355,6 +1357,9 @@ real function_30bf0(vector3f *vector);
 // Round 184: direct-field normal initializer 473; early normal snapshot/native initializer
 // 488/507; native query vector view 364; view with shared snapshot/direct reads/library copy
 // 488/364/364; early normal plus direct magnitude reads 517. Original observations restored.
+// Round 217: Repeated primary direction/secondary direction/both/reflected color/secondary+color/
+// both+color/primary+color/secondary+all-colors views 367/468/468/368/471/471/370/471 fast.
+// In-place direction views recover frame 0x40 but regress; original fields, scratch and helpers restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

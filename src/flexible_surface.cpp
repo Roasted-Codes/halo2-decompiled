@@ -114,6 +114,9 @@ void function_117080(long);
 // registers (result edx, count edi, bitmap esi). Pool read directly at each use as in 0x1160c0 54 (reload
 // now after the `lea` as retail); with typed record arithmetic 54; with no slot local 54; with record and
 // definition locals 54; the for-loop next-index helper 50 (identical code).
+// Round 57: no slot with next before the reload 64; no slot alone 50; next with slot 54;
+// slot at function scope 50; typed record-array base 50; outer for-loop 50; alternate next
+// helper with next 54; record pointer on the pool-local body 50.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -190,10 +193,6 @@ bool function_117100(long index)
 	return result;
 }
 
-// score 23 (was 137): the prologue schedule; retail adds the pool base before reading the tag index and
-// loads the object index first, then the marker name after clearing the order tail. A one-use marker-name
-// local before the call 7 (not a match); order declared after the call 99, first 28, between record and
-// definition 24; arrays before the record 28.
 // @retail 0x1171a0
 bool function_1171a0(long index)
 {
@@ -201,7 +200,9 @@ bool function_1171a0(long index)
 	s_surface_definition *definition = surface_definition(record);
 	s_object_marker markers[6];
 	long order[6] = {0, 1, 2, 3};
-	record->attachment_count = function_b8d30(record->object_index, definition->marker_name, markers, 6, false);
+	long marker_name = definition->marker_name;
+	long object_index = record->object_index;
+	record->attachment_count = function_b8d30(object_index, marker_name, markers, 6, false);
 	long axis = 2;
 	if (definition->flags & 2) axis = 0;
 	for (long i = 0; i < record->attachment_count; ++i)
@@ -498,7 +499,6 @@ void function_1cd90();
 byte *g_485a80;
 // Render-state storage read by the two external state helpers.
 // Attribute pairs terminated by 255, as consumed by the retail state helper.
-byte g_43f8df[] = {59, 0, 2, 4, 2, 6, 2, 5, 2, 3, 1, 255};
 
 class c_surface_reference_view
 {
