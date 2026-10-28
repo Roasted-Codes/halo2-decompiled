@@ -326,7 +326,10 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
-// score 154 (was 154): the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// score 31 (was 154): frame 0xe34 and retail length agree; collector flags, scan/selected-index
+// comparison and copy widths, and alignment-dot j ordering remain. Earlier at 154:
+// the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
 // term loads g_4687b0 first where retail loads the marker. Tried: single exit 167;
 // long best 199; long loop index 202; point names 199; vector helper 202;
@@ -334,6 +337,11 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 // pointer based at +0x4c); dot3f operands swapped 154; 0.95f < dot 154; a named alignment
 // 154; the alignment through markers[i] 154 (more x87 differences); both dots written out
 // with the delta and normalize helpers 141 (14 more instructions off once aligned).
+// Input-only marker/actor/character/all receivers 154 each; wide count 106; word selection 156;
+// word induction 106; combined native scan 113; wide count with wide scan/selection/both 66/120/33;
+// actual marker cursor with wide count 67, with wide scan 63, with short count 153;
+// paired wide scan/selection with short count 31 kept; unsigned-word scan on that graph 120
+// with either count; all-wide marker cursor 30 (sub-threshold addition, discarded).
 // Candidate/delta/selected-point uninitialized entry storage, all seven subsets and all three with the native
 // marker array: 154/154/154/154/154/154/154/154. Protected query promotion, loop padding and dot allocation
 // remain
@@ -348,10 +356,10 @@ bool function_26f990(long actor_index, long object_index, real distance, s_objec
     {
         s_object_marker markers[32];
         real best_distance = FLT_MAX;
-        short best = NONE;
+        long best = NONE;
         point3f best_point;
         short count = function_26f930(object_index, markers, 32, character->marker_flags);
-        for (short i = 0; i < count; i++)
+        for (long i = 0; i < count; i++)
         {
             s_object_marker *marker = &markers[i];
             if (dot3f(&marker->matrix.forward, g_4687b0) > 0.95f)
@@ -477,15 +485,21 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
-// score 278 (was 278): entry root retention and floating-point scheduling differ;
+// score 278 (was 278): frame 0x40 agrees; early pathfinding EBX ownership and float scheduling differ.
+// entry root retention and floating-point scheduling differ;
 // result first 299; surface first 299; vector names 299; vector helper 299;
 // case order 300; separate vector declarations 299.
 // Round 24: trace-time state reload, mutable entry, both, coherent pathfinding/surface swap,
 // direct distance arguments and direct projected-origin 299 each; c/b/a/d pointer
 // declarations 278; direct case-5 direction 278 (selected with the declaration order).
+// Round 210: Four consistent vertex-index values in word/long/dword 338/344/344; word/long with
+// the actor value at entry 338/344; word/long with both shared differences 346/360;
+// both shared differences on the original c/b/a/d graph 297. All restored.
 // Entry vertex table at case/dispatch scope 280/340; ordinary result 340;
 // case table with ordinary result 342; early actor predicate 278; common case-5
 // outputs 404, with case table 404, with ordinary result 398. Original body restored.
+// Actor-valid direction scope with whole-vector initialization, readonly surface and
+// ordinary-result interactions: 284/334/284/334/363/357/363/357; restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,
