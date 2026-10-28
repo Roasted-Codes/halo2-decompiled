@@ -3072,7 +3072,6 @@ struct s_ammo_conversion_entry
 
 // score 198 (was 198): Frame 0x24 versus 0x20; destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
-
 // Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
 // Earlier: Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
 // Earlier: frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
@@ -3136,6 +3135,13 @@ struct s_ammo_conversion_entry
 // observation and result restored; extra frame word, destination/tag and conversion homes remain.
 // Round 196: Ordinary/inline/noinline post-transfer updater and retention-query declaration
 // pairs, excluding the original pair, 198 each. Original declarations and body restored.
+// Lane 10 r11: source transfer clamp computed in int (retail's movsx/sub/cmp/cmovle shape) 197;
+// with bool acquisition 202 (718 bytes, frame 0x20); plus conversion work inside the search
+// loop with an index test after it 202; found-flag search (retail's lea-before-je, no NULL test)
+// 211; bool/int clamp with the tag byte read at each of its three uses 213 (731); that with the
+// found flag 207; source sum operands swapped 207 (no change); short acquisition with clamp and
+// rereads 237; short with clamp and found flag 216. Retail keeps the other weapon in EBX
+// throughout and spills the weapon and loop index instead. Original body restored.
 // Round 14: byte result 200 (frame 0x20); early conversion publication 206; candidate entry 210;
 // declaration order, capacity, table at use and offered count 200 each; source scope 211;
 // complementary early publication 199; complementary early publication with offered count 204.
