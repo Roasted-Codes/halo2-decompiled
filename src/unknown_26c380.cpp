@@ -143,7 +143,10 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 	return success;
 }
 
-// score 419 (was 419): Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit tails remain.
+// score 418 (was 418): the frame is 0x5c against retail's 0x64; retail keeps the
+// pathfinding pointer in EBP and the -1 edge seed in EDX where ours keeps them in EBX
+// and EDI, and retail keeps a byte local at [esp+0xe] where ours has a long zero at
+// [esp+0x14].
 // Earlier 419 (was 419): frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
 // Frame 0x5c versus 0x64, independent normal homes, memory flags and distinct output tails remain.
 // Earlier: frame 0x5c versus 0x64, independent normal homes, memory flags and distinct exit
@@ -172,9 +175,19 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // planar and magnitude 419; cross and magnitude 453; all three 455; point offsets 418. All restored.
 // Edge-test / iterator / passability call boundaries, ordinary inline versus noinline,
 // eight combinations 419/435/460/460/435/435/460/460. All contracts and bodies restored.
+// Complete endpoint stages 421; planar sum accumulator 421; normal-first products 419;
+// stages with accumulator / normal-first products 421/421; named completed projection 421;
+// stages with forced planar expansion 421; stages with native planar memcpy 483. All restored.
 // Round 129, traversal-count scope retained: native planar copy with long/bool/short/byte
 // result 479/543/483/427; CRT planar copy with those result types 479/543/483/427.
 // All original executable source restored.
+// Round 223: explicit false results at all three false tails, long/bool/short/byte
+// 554/583/546/561; same result forms with independent planar memcpy 510/544/503/517.
+// Distinct tails collapse further; frame and result homes remain unresolved. All restored.
+// Round 234: normal/endpoint-scan/node-admission consumption endings and combinations
+// 421/418/421/418/421/418/421; all endings with Boolean success 583. Original body restored.
+// Round 226: Complete endpoint/distance, progress-distance and sector-history names,
+// all seven subsets and the complete Boolean-role group 418 each. All names and body restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,
@@ -183,7 +196,6 @@ bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origi
 	s_sector_trace_result *result = (s_sector_trace_result *)trace;
 	long success = false;
 	long current_sector_index = sector_index;
-	real last_distance = -0.1f;
 	s_pathfinding_edge *edge = NULL;
 
 	result->unknown20 = 3.4028235e38f;
@@ -192,6 +204,7 @@ bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origi
 	result->edge_index = (word)NONE;
 	result->distance = distance;
 	result->unknown1c = false;
+	real last_distance = -0.1f;
 	if (pathfinding && sector_index != target_sector_index && sector_index >= 0 && sector_index < pathfinding->node_count)
 	{
 		vector3f normal;

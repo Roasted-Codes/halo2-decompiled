@@ -73,7 +73,7 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
     arg_3->k = local_6;
 }
 
-// score 389 (was 389): frame 0x2c and length agree; early J load and magnitude/angle homes differ; K first 389, shared axis cross 409, magnitude return 406, global optimization off 2150, float consistency 656, K first plus return 399.
+// score 389 (was 389): frame 0x2c and length agree; early J load and magnitude/yaw homes differ.
 // early J preload and magnitude/yaw home remain; indexed long/short normalization
 // loops 417/421; pointer loop 423; loop common result 423; real absolute first/both 399/395; loop with
 // real absolute first/both 421/416.
@@ -110,6 +110,22 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // Native real vector/point/both roots 399/401/395; exact-factor shared scale 414, with both real roots 412
 // (sibling 59 in both); all-row axis/input/both terms 401/394/389. Original helpers and bodies restored; early
 // J and magnitude/yaw homes remain.
+// Round 142: shared XY magnitude for vector/point/both 389/389/389;
+// with common numeric results 405/389/405; equivalent ordered epsilon tests
+// on shared vector/both magnitudes 389/389. Early J and magnitude/yaw homes remain.
+// Round 169: Clamp outputs projection/inverse-cosine/both/paired limits/paired steps
+// 395/399/395/395/395; all pointer/reference/output-first 395/395/395.
+// Branch-owned angles on the current rotation graph 397; all restored. Early J and scalar homes remain.
+// Round 160: default numeric length at entry/root 386/396;
+// native numeric truth alone/with entry default 397/394; rotation input/axis/both
+// native copies 466/502/553; both copies with root default 557. All restored.
+// Round 251: Rotation helper role orders axis-input-angle-output, input-angle-axis-output, axis-angle-input-output, angle-axis-input-output, input-output-axis-angle, axis-output-input-angle, output-axis-input-angle, output-angle-axis-input: 389/389/389/389/389/389/389/389. Original helper contract and both alias-safe calls restored.
+// Round 373: All-row sine-cross parts, with rounded reciprocal, input parts,
+// input+reciprocal, axis parts, axis+reciprocal, all parts, all+reciprocal
+// 395/393/389/400/398/404/395/393. Reciprocal forms lose the matched sibling; all restored.
+// Round 211: Caller-side CRT copies for first/second/rotation inputs, all seven combinations, 389
+// each; all three plus planar input copy 404/1696. Original copies and helpers restored; early J
+// and magnitude/yaw home reuse remain. All three matched controls survived.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

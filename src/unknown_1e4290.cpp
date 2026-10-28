@@ -64,7 +64,7 @@ void function_1e4220(long actor_index, bool enabled)
 }
 
 // @retail 0x1e4260
-void function_1e4260(long actor_index)
+inline void function_1e4260(long actor_index)
 {
 	s_actor_view *actor = actor_get(actor_index);
 	dword flags = actor->flags810;
@@ -72,7 +72,7 @@ void function_1e4260(long actor_index)
 }
 
 // @retail 0x1e4290
-void function_1e4290(long actor_index, bool value)
+inline void function_1e4290(long actor_index, bool value)
 {
 	bool *enable = &value;
 	s_actor_view *actor = actor_get(actor_index);
@@ -266,11 +266,6 @@ bool function_1e11b0(long actor_index, bool active)
  return result;
 }
 
-// score 1 (was 1): absent-cluster branch still reaches the result test; absent-cluster continue 1; object bound first 104; complete membership result 38; success assignment 56; native cluster 54; continue/native cluster 54; explicit link state 1; success/object bound 106; membership break 98; De Morgan condition 1; shared bit test 1; shared bit test/De Morgan 1; guarded do/shared bit test 98; unsigned traversal 1; nested result/shared bit test 1; success-only/shared bit test 56; const traversal/shared bit test 1.
-// absent-cluster branch still reaches the result test; absent-cluster continue 1; object bound first 104; complete membership result 38; success assignment 56; native cluster 54; continue/native cluster 54; explicit link state 1; success/object bound 106; membership break 98.
-// Absent false arm 33; accumulated membership 38; cluster lifetime 1; index for scope 1; retained result arm 1; named membership mask 1; negative cluster arm 48; traversal role names 1.
-// validity guard 91; perception guard 111; both entry guards 110; direct object first 90; guard direct
-// first 99; next after membership 82; guard next after 80; direct first next after 100.
 // @retail 0x1e12b0
 bool function_1e12b0(long actor_index, const dword *clusters)
 {
@@ -284,15 +279,19 @@ bool function_1e12b0(long actor_index, const dword *clusters)
    if (perception_index != NONE)
    {
     long object_index = perception_get(perception_index)->object_index;
-    while (!result && object_index != NONE)
+    while (object_index != NONE)
     {
      s_actor_object_query *object = actor_query_object(object_index);
      long current = object_index;
      byte *links = object->flags134 == 0 ? (byte *)object + object->link_offset : NULL;
      object_index = links ? *(long *)(links + 0xc) : NONE;
      long cluster = *(short *)((byte *)actor_query_object(actor_query_root(current)) + 0x2c);
-     if (cluster != NONE)
-      result = (clusters[cluster >> 5] & (1 << (cluster & 31))) != 0;
+     if (cluster == NONE)
+      continue;
+     result = (clusters[cluster >> 5] & (1 << (cluster & 31))) != 0;
+     if (!result)
+      continue;
+     break;
     }
    }
   }

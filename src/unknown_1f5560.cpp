@@ -213,13 +213,6 @@ real function_1f8050(long actor_index, bool *fast)
 	return result;
 }
 
-static inline void vector3d_set(vector3f *vector, real i, real j, real k)
-{
-	vector->i = i;
-	vector->j = j;
-	vector->k = k;
-}
-
 /* takes the pending facing (+0x622) unless the actor rides a vehicle */
 // @retail 0x1f5560
 bool function_1f5560(long actor_index, vector3f *facing)
@@ -227,7 +220,7 @@ bool function_1f5560(long actor_index, vector3f *facing)
 	s_actor_moving *actor = actor_moving_get(actor_index);
 
 	if (actor->unknown26c == NONE && actor->unknown622)
-		vector3d_set(facing, actor->unknown624 * actor->unknown62c, actor->unknown628 * actor->unknown62c, actor->unknown630);
+		vector3f_assign(facing, actor->unknown624 * actor->unknown62c, actor->unknown628 * actor->unknown62c, actor->unknown630);
 	actor->unknown622 = false;
 	return true;
 }
@@ -731,9 +724,6 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
 	real *speed_out, real *time_out, real *distance, real *vertical_speed, real *horizontal_speed);
 
-// score 5 (was 5): the arguments of the ballistics call are pushed in another
-// order and the high arc flag goes into EDX; retail's function_fa1a0 takes the
-// target before the origin and is defined in src/projectiles.cpp.
 // @retail 0x1f8100
 bool function_1f8100(long actor_index, point3f const *origin, point3f const *target)
 {
@@ -748,70 +738,69 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 
 real normalize2d(point2f *v);
 
-// score 172 (was 172): frame 0x48 agrees; query-byte zero and trajectory call/output homes remain.
-// Frame 0x48 agrees; fast-byte zero, protected trajectory convention and retry/output homes remain.
-// frame 0x48 agrees; fast-byte zero source and protected trajectory convention remain.
-// Earlier 172 (was 191): fast-byte initialization and trajectory call convention;
-// search then selection 172; unsigned scan 178; fixed do/while 191;
-// types arm first 191; fallback setters 195; split plus unsigned scan 223.
-// signed-long search 192; signed-byte search 188; exact exhaustion 210;
-// named first normalization result 172; global optimization off 542.
-// low-bit presence guard 228; native type clamp 236; branch-defined chosen speed 220;
-// target snapshot 234; inline depth zero 231. Frame 0x48 still agrees.
-// Bounded for search 172; unsigned byte scan 233; chosen speed after query 190;
-// planar component stores 265; native masks/metadata snapshot 172 each;
-// retry requirement 196; first type from bits 277. Fast-byte zero and trajectory convention
-// still differ; original body restored.
-// Earlier: Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
-// result homes differ. Validity initialized in typed arm 241; first type initialized by branch
-// 198; read-only metadata 172; read-only speed tables 172; vertical output branches 187; shared
-// movement flag stores 174; retry speed first 172; native planar output copies 172.
-// Earlier: frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
-// Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
-// frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
-// Earlier 172 (was 172): Frame 0x48 agrees; fast-byte initialization, trajectory arguments and retry
-// Earlier 172 (was 172): frame 0x48 agrees; fast-byte zero source and trajectory convention still differ.
-// Query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
-// first-type state 172/208; decisions after query 177; both byte decisions 172.
-// Word validity reaches 935 bytes but gains only two points and is restored.
-// Frame 0x48 agrees; fast-byte zero, trajectory arguments and retry/result homes differ.
-// separate retry force 196; long first-type result 235.
-// minimum after speed query 228; first type after speed query 175.
-// shared movement destination 172; native request copy 172.
-// earlier result declaration 172; minimum and retry force 227.
-// Earlier: query-byte zero, trajectory setup and scalar homes remain;
-// query-byte zero, trajectory setup and scalar homes remain;
-// Earlier 172 (was 172): query-byte zero, trajectory setup and scalar homes remain;
-// retry/movement/both threshold products 172/172/172; clamped upward result
-// 172, with both products 172; retry/movement/both eligibility results 172/172/172.
-// frame 0x48 agrees; fast-byte zero and trajectory convention remain.
-// Validation after query 220; with late minimum 220; early query output 171;
-// minimum first 174; early output/minimum 170; first-type first 172;
-// shared Boolean initialization 173; early output with late validation 218.
-// Fast-byte memset 172; actual actor/requested-type/maximum-type references 172 each;
-// actual destination/origin references 172 each; read-only unit view 172;
-// native two-component normalization workspace 206. Zero source and trajectory convention remain.
-// Both lookup globals at each use 172; request point setter 175; entry direction workspace 172;
-// globals/setter 175; globals/workspace 172; setter/workspace 175; all 175; word trajectory
-// result 211 (fast).
-// Round 199: Initial/retry/both scalar outputs at method entry 172 each; retry outputs at valid scope
-// 172; first entry plus retry valid 172; both entry with false validity return 172; retry valid with
-// false validity return 172; false validity return alone 172 (fast). All restored.
-// Round 180 complementary
-// validation/base-check/trajectory/validation-base/validation-trajectory/base-trajectory/all/byte trajectory
-// 217/173/223/172/212/226/225/223 (fast); all restored. Frame 0x48 agrees; immediate query zero and protected
-// trajectory convention remain.
-// Post-query force OR/guarded/conditional/complete arms 303/197/172/273; exact search bound 211;
-// mask-first search 228; complete requested-byte snapshot 240; snapshot plus force OR 300.
-// Shared validation/query result 172; two-use unit index 172; native origin value 229; result+index 172;
-// result+origin 229; index+origin 229; all 229; complete origin memcpy 229. All restored.
+// score 171 (was 171): frame 0x48, entry initialization and trajectory convention agree.
+// The found-type scan has an extra bound test; trajectory result registers, retry scalar homes,
+// object/query allocation and separate movement-return tails still differ.
+// Forms tried: search then selection 172; unsigned scan 178; fixed do/while 191; types arm first 191;
+// fallback setters 195; split plus unsigned scan 223; signed-long search 192; signed-byte search 188;
+// exact exhaustion 210; named first normalization result 172; low-bit presence guard 228; native type
+// clamp 236; branch-defined chosen speed 220; target snapshot 234; bounded for search 172; unsigned
+// byte scan 233; chosen speed after query 190; planar component stores 265; native masks/metadata
+// snapshot 172 each; retry requirement 196; first type from bits 277; validity initialized in typed arm
+// 241; first type initialized by branch 198; read-only metadata 172; read-only speed tables 172;
+// vertical output branches 187; shared movement flag stores 174; retry speed first 172; native planar
+// output copies 172; query inline/noinline declarations 174/172; byte/word validity 172/170; byte/word
+// first-type state 172/208; decisions after query 177; both byte decisions 172; separate retry force
+// 196; long first-type result 235; minimum after speed query 228; first type after speed query 175;
+// shared movement destination 172; native request copy 172; earlier result declaration 172; minimum
+// and retry force 227; retry/movement/both threshold products 172 each; clamped upward result 172, with
+// both products 172; retry/movement/both eligibility results 172 each; validation after query 220, with
+// late minimum 220; early query output 171; minimum first 174; early output/minimum 170; first-type
+// first 172; shared Boolean initialization 173; early output with late validation 218; fast-byte memset
+// 172; actual actor/requested-type/maximum-type references 172 each; actual destination/origin
+// references 172 each; read-only unit view 172; native two-component normalization workspace 206; both
+// lookup globals at each use 172; request point setter 175; entry direction workspace 172;
+// globals/setter 175; globals/workspace 172; setter/workspace 175; all 175; word trajectory result 211;
+// initial/retry/both scalar outputs at method entry 172 each; retry outputs at valid scope 172; first
+// entry plus retry valid 172; both entry with false validity return 172; retry valid with false
+// validity return 172; false validity return alone 172; complementary validation/base-check/trajectory/
+// validation-base/validation-trajectory/base-trajectory/all/byte trajectory 217/173/223/172/212/226/
+// 225/223; post-query force OR/guarded/conditional/complete arms 303/197/172/273; exact search bound
+// 211; mask-first search 228; complete requested-byte snapshot 240; snapshot plus force OR 300; shared
+// validation/query result 172; two-use unit index 172; native origin value 229; result+index 172;
+// result+origin 229; index+origin 229; all 229; complete origin memcpy 229; word validity with early
+// query, early query/minimum, post-query first type and all three 169/169/173/174 (best at 935 bytes);
+// byte validity with the same four 171/171/175/177; global optimization off 542; inline depth zero 231.
+// Round 61: selection inside a `for` scan with `break` 191; the flag declared first 171; declarations
+// in retail's store order (actor, minimum, flag, validity, first type) 168, kept; then the scan with
+// the selection and `break` inside 183 (matches retail up to the first 0xfa1a0 call at +0x111; the
+// six saved bytes shift the rest); retry outputs declared horizontal first 168; first normalization
+// tested `> 0.0f` with an early store-return 215 (890 B, our stores merge), in if/else arms 215;
+// `base_speed * 1.2f >= chosen_speed` early return 212 (retail's jae polarity).
+// Round 151: two-use retry success with logical/bitwise/reversed logical joins before/after publication
+// 216/239/218/254/215/243; promoted long/word result joins 200/203. Native vector setter for planar
+// zeros/actor fallback/default axis 172/218/187; zero-actor/zero-axis/actor-axis/all 218/187/211/211; all
+// plus request setter 222.
+// Round 63: validity and trajectory result in one success variable 229 (908 B); `!(base_speed * 1.2f >=
+// chosen_speed)` (retail's comiss/jae) 167; `return valid;` on the invalid path 168 (folded to xor al, al);
+// retry outputs assigned horizontal first 168 (retail's slot sharing with the speed, aligned 83 -> 79);
+// those two with the `for` scan and break 183 (aligned 75; matches retail through +0x111).
+// Round 31 (lane 12): first normalization as `!(... > 0.0f)` 167; with `!(base_speed * 1.2f >= chosen_speed)`
+// 166; then the success store as the `if` arm 192 (942 B); the scan with selection and break on that graph
+// 183 (matches through +0x111); 0xfa1a0 time scale read once into a value 166 (0xfa1a0 262, still EDX).
+// Round 10 (lane 11): both of those with `return valid` 167; with a plain `for`/`break` scan 167; with a
+// bottom-tested scan 207; with the selection inside the scan 183; retry vertical renamed to sort first 168.
+// Round 162, with the corrected trajectory convention: found-bit selection, both output-pair orders,
+// false-validity return, overall result and the combined output/result form 174 each; early first-type
+// 230; byte/word trajectory success 189/177. Coordinated trajectory inline declarations on the
+// original/found-bit graphs 171/174. All bodies, call tuples and outside declarations restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
-    bool valid = false;
     s_actor_view *actor = actor_get(actor_index);
     real minimum = 0.0f;
     bool fast = false;
+    bool valid = false;
     bool first_type = false;
     real speed = function_1f8050(actor_index, &fast);
     if (!types)
@@ -1038,7 +1027,11 @@ done:
         *movement_out = movement;
 }
 
-// score 307 (was 307): Frame 0x18 versus 0x1c; actor/object roles, factor homes and x87 scheduling remain.
+real function_50650(real cosine);
+#define MIN(a, b) ((a) > (b) ? (b) : (a))
+
+// score 137 (was 137): frame 0x1c agrees; two excess bytes, actor/object roles (EDI/ESI), the hoisted velocity j load,
+// the first clamp's x87 order and the epilogue pops' place in the final minimum remain.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following
 // factor 335; frame pointer 399; inline depth one 308 (fast). Scalar velocity 309;
 // approach/following squared sums 308/308; combined radius 308; nested minimum 314 (fast). object
@@ -1053,6 +1046,24 @@ done:
 // Round 124: Existing shared magnitude/normalizer 308/308; parallel double turning products 308;
 // paired complete speed projections 308; both scalar boundaries 308 (fast control 308, full baseline 307).
 // Original body and every math operation restored.
+// Round 54: all four factors 1.0 at entry 333; outer/inner MIN macro 327, inner MIN with a named
+// scale 206 (kept); float pow arguments 203; clamped arccosine call 269; float approach offsets 137;
+// float gap with `!(gap > 0)` 128; shared normalize 117 fast, 137 plain (kept); ternary first clamp
+// 304; inverse-first products 312; velocity copy j first 123; facing factor declared first 115;
+// actor offset first 117 (fast; plain base 137).
+// Round 245 (fast control 117): Native indexed actor fields 117; actor/current-object/both accessors
+// at every use 383/383/444; radius at every use 319; all observations 425; native actor plus
+// shared inner minimum 335; all observations plus shared inner minimum 381. Original receivers restored.
+// Round 342 (fast control 117): Shared X/Y/XY offsets 117/129/117; shared separation 135;
+// X/Y/XY plus separation 135/147/135; all with native velocity initializer 135. Original full-score 137 body restored.
+// Round 59 (fast control 117): offset-first actor expression 117; actor through the actor getter 117;
+// object before actor 118; speed factor declared last 117; ternary first clamp 117 (same code). The
+// velocity j preload matches the shape the in-place 3-D normalize gives in matched 0x179fb0 (every
+// component but the first preloaded before fsqrt); a hand-written 2-D copy of that shape 128.
+// Direct speed-factor default 302; all minimum spans 117; speed/spans 302; paired closing
+// projections 117; speed/projections 302; spans/projections 117; all 302; all with facing default
+// first 300 (fast control 117, full 137). All restored; actor/object homes, velocity preload
+// and the final minimum/epilogue placement remain.
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1065,8 +1076,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
     byte *settings = (byte *)function_1e5450(actor_index, object->tag_index);
     real speed_scale;
     real turning_scale = 1.0f;
-    real facing_scale;
-    real velocity_scale;
+    real facing_scale = 1.0f;
+    real velocity_scale = 1.0f;
     real following_scale = 1.0f;
     speed_scale = *(real *)(actor + 0x4b4) != 0.0f ? *(real *)(actor + 0x4b4) : 1.0f;
     if (!ignore_facing)
@@ -1079,19 +1090,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
         vector2f velocity;
         velocity.i = object->velocity.i;
         velocity.j = object->velocity.j;
-        real length = (real)sqrt(velocity.j * velocity.j + velocity.i * velocity.i);
-        if (!(fabs(length) < 0.0001f))
-        {
-            real inverse = 1.0f / length;
-            velocity.i *= inverse;
-            velocity.j *= inverse;
-        }
+        normalize2d_fast(&velocity);
         velocity_scale = (desired->i * velocity.i + desired->j * velocity.j + 2.0f) * 0.3333333432674408f;
-    }
-    else
-    {
-        facing_scale = 1.0f;
-        velocity_scale = 1.0f;
     }
     real radius = *(real *)(settings + 0x1c);
     if (next_direction && radius * 2.0f > distance)
@@ -1100,10 +1100,7 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
         double dot = (double)desired->j * next_direction->j + (double)desired->i * next_direction->i;
         if (dot < -1.0) dot = -1.0;
         else if (dot > 1.0) dot = 1.0;
-        real value = (real)dot;
-        if (value < -1.0f) value = -1.0f;
-        else if (value > 1.0f) value = 1.0f;
-        real angle = (real)(acos(value) * 0.31830987334251404f);
+        real angle = function_50650((real)dot) * 0.31830987334251404f;
         real fraction = 1.0f - (angle > 1.0f ? 1.0f : angle);
         real scale = (1.0f - minimum) * fraction * fraction + minimum;
         turning_scale = (1.0f - scale) * distance / (radius * 2.0f) + scale;
@@ -1111,8 +1108,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
     real approach_scale = 1.0f;
     if (!actor[0x4ae])
     {
-        double x = (double)*(real *)(actor + 0x510) - position->x;
-        double y = (double)*(real *)(actor + 0x514) - position->y;
+        real x = *(real *)(actor + 0x510) - position->x;
+        real y = *(real *)(actor + 0x514) - position->y;
         real remaining = (real)sqrt(y * y + x * x);
         if (radius > remaining)
         {
@@ -1122,8 +1119,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
     }
     else if (*(real *)(actor + 0x4b0) != 0.0f)
     {
-        double x = (double)*(real *)(actor + 0x510) - position->x;
-        double y = (double)*(real *)(actor + 0x514) - position->y;
+        real x = *(real *)(actor + 0x510) - position->x;
+        real y = *(real *)(actor + 0x514) - position->y;
         real remaining = (real)sqrt(y * y + x * x);
         if (radius > remaining)
         {
@@ -1135,11 +1132,11 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
         *(long *)(actor + 0x5ac) != NONE)
     {
         s_slot_object_view *other = object_get(*(long *)(actor + 0x5ac));
-        double x = (double)object->unknown030.x - other->unknown030.x;
-        double y = (double)object->unknown030.y - other->unknown030.y;
-        double z = (double)object->unknown030.z - other->unknown030.z;
-        real gap = (real)(sqrt(z * z + y * y + x * x) - ((double)other->unknown03c + *(real *)(settings + 0x14)));
-        if (gap <= 0.0f)
+        real x = object->unknown030.x - other->unknown030.x;
+        real y = object->unknown030.y - other->unknown030.y;
+        real z = object->unknown030.z - other->unknown030.z;
+        real gap = (real)sqrt(z * z + y * y + x * x) - (other->unknown03c + *(real *)(settings + 0x14));
+        if (!(gap > 0.0f))
             gap = 0.0f;
         if (*(real *)(settings + 0x1c) > gap)
         {
@@ -1149,7 +1146,7 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
             {
                 real fraction = (*(real *)(settings + 0x1c) - gap) / *(real *)(settings + 0x1c);
                 fraction = fraction < 0.0f ? 0.0f : fraction > 1.0f ? 1.0f : fraction;
-                following_scale = (real)pow(1.0 - fraction, (double)closing * 0.5f);
+                following_scale = (real)pow(1.0f - fraction, closing * 0.5f);
             }
             if (gap < 2.0f)
             {
@@ -1159,10 +1156,8 @@ real function_1f9e70(long actor_index, long object_index, point2f const *positio
             }
         }
     }
-    real scale = turning_scale > approach_scale ? approach_scale : turning_scale;
-    scale = facing_scale > scale ? scale : facing_scale;
-    scale = scale > following_scale ? following_scale : scale;
-    return scale * velocity_scale * speed_scale;
+    real scale = MIN(facing_scale, MIN(turning_scale, approach_scale));
+    return MIN(scale, following_scale) * velocity_scale * speed_scale;
 }
 
 
@@ -1299,7 +1294,7 @@ real normalize2d(point2f *v);
 
 PRIVATE inline real movement_normalize2d(point2f *v)
 {
-    real length = (real)sqrt((double)v->x * v->x + (double)v->y * v->y); // retail sums on the x87 stack
+    real length = (real)sqrt(v->x * v->x + v->y * v->y);
     if (!(fabs(length) < 0.0001f))
     {
         real inverse = 1.0f / length;
@@ -1310,22 +1305,11 @@ PRIVATE inline real movement_normalize2d(point2f *v)
     return 0.0f;
 }
 
-PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
-{
-    real local_0 = arg_0->x;
-    real local_1 = arg_0->y;
-    real local_2 = (real)sqrt((double)local_0 * local_0 + (double)local_1 * local_1); // retail sums on the x87 stack
-    if (!(fabs(local_2) < 0.0001f))
-    {
-        real local_3 = 1.0f / local_2;
-        arg_0->x *= local_3;
-        arg_0->y *= local_3;
-        return local_2;
-    }
-    return 0.0f;
-}
-
-// score 298 (was 298): Frame 0x3c agrees; radius/result homes and initial direction materialization differ.
+// score 252 (was 252): Frame 0x3c, length, result/flag homes and exits agree. Retail's zero, radius and
+// direction sit in other SSE registers (xmm1/xmm5/xmm2-3; it keeps the result in xmm0 up to the type exit),
+// shares the left type-0 arm's `+ target.y` and flag re-test with the type-1 arm (ours threads that arm),
+// spills the lateral term to the type slot, and puts radius/desired, then direction, below the
+// difference/transformed-origin slot.
 // With ordinary input/side lifetimes: persistent target 313, both input points 297, shared
 // arccosine 296, late radius 312, frame pointer 401. Ordinary lifetimes: facing value 307; scalar
 // side 309; scalar center 306; origin constructed first 306; reused negative radius 329. Ordinary
@@ -1337,6 +1321,52 @@ PRIVATE __forceinline real function_1f99d1(point2f *arg_0)
 // references 305; full-width side state 301 (fast). Sector before transforms 306; origin transform
 // first 306; pathfinding result first 306; late result on ordinary convention 307; redundant upper
 // clamp removed 318 (fast).
+// Round 54: float magnitudes 295; plain side flag 315; per-arm centre 294; shared point difference
+// with float magnitudes and per-arm centre 278 (kept); with plain flag 301; result/radius renames 298;
+// trace-hit single exit (goto or nested if) 278, with plain flag 275; negated early return 288;
+// facing reference 302; difference through the point-difference helper 278/275 (plain flag).
+// Round 218, recovered direction graph with ordinary inputs/side: radius at each use
+// 274 at retail length (gain four rejected); negative radius 295; reused threshold 302;
+// negative/field radius with threshold 295/279; direct side result alone/with negative
+// radius/with negative and threshold 302/295/295. Actual trace common exit with field/
+// negative radius 278/299. All restored; zero/radius registers and side threading remain.
+// Round 152: Ordinary origin/side with symmetric lateral/forward x products 285, y products 302, all products 302; complete dot terms 302, with x/y/all products 285/302/302; complete terms with shared trace exit 276 (1175 bytes). Two-point exit gain rejected; original body restored.
+// Round 221: common radial-offset target addition 281/278/292/291;
+// target-seeded center 319/303/315/299. Each group varies early
+// side-radius and common trace exit on ordinary inputs/side; all restored.
+// Round 347: ordinary origin with direct byte/short left state 302/305, Boolean/byte right 281/281;
+// complete facing scalar observations with those four states 284/298/300/300.
+// Last two reach 1173 bytes, but input/SSE register ownership regresses; original body restored.
+// Round 61 (lane 7): plain flag with the not-left arm assigning y first 306; trace hit through a
+// `blocked` result plus a negated direct return 288, with a plain flag 287; radius declared before
+// the result 278; plain flag declared first 269 (kept), then declared just before the result 262
+// (kept: flag in the origin slot as retail), declared there without a value 301; trace hit by one
+// `goto done` plus `if (left) return 0.0f - result;` 252 at 1173 bytes (kept); type exit also by
+// goto 264; transformed origin declared first 252; result declared first 275; trace_origin/
+// trace_direction names 252; origin read directly 267.
+// Round 151: Existing normalizer value/pointer inputs with output pointer 348/302, returned point 359/359, scalar input/output or return 319/298; void/value and returned/value movement contracts 350/339. All ordinary origin/side forms restored.
+// Frame 0x3c and original homes agree; zero/radius registers, facing transport and type-zero continuation remain.
+// Round 63: the direction normalized by the file's existing movement normalizer (identical code; the
+// duplicate forceinline normalizer removed) 252, kept; the side offset as if/else arms with the products
+// in each arm 263 (aligned 217 -> 197: zero in xmm1 and the left type-zero arm joining the type-one tail
+// as retail, but the flag's `true` stays at entry, one line ahead of retail's); with the flag declared
+// or assigned at the side test 293/293 (flag then in the facing slot, result in the origin slot); with
+// that and the result declared first 303.
+// Round 26 (lane 9): new names for the stack points (desired, direction, difference, 3D origin) 252
+// each, no home moves; flag declared at the side test 287 (direction then at retail's 0x1c, but
+// result takes the origin slot, length the facing slot and facing moves to ebp); with result/radius/
+// flag renamed 287 each; with origin read directly 288; with facing read once through its address 287.
+// Round 31 (lane 12): retail stores the flag's `true` after the inlined normalization, whose length
+// takes the origin slot first; the flag declared after the normalization 287 (direction in retail's
+// slots, but the result takes the origin slot and facing EBP), with the result declared there too 296;
+// radius read at each use 277 (1165 B); not-left type-zero arm assigning y first 285; type exit
+// returning 0.0f 252 (identical).
+// Round 10 (lane 11): one signed offset for the type-zero arm 293 (1140 bytes); `return 0.0f` at the type
+// exit 252 (same code); direction renamed to sort last 252 (same code); flag declared after the
+// normalization 287; side dot product with the side terms first 252 (same code).
+// Ordinary origin with existing 2D product producer across paired projections,
+// cosine and side classification 267 in all seven combinations; complete products
+// plus side-offset arms 278. Exact length throughout; original body restored.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)
@@ -1345,21 +1375,29 @@ real function_1f99d0(long actor_index, long object_index, short type, point2f co
     point2f const *local_1 = *local_0;
     s_actor_view *actor = actor_get(actor_index);
     byte *entry = (byte *)function_1e5450(actor_index, object_get(object_index)->tag_index);
+    bool left = true;
     real result = 0.0f;
     real radius = *(real *)(entry + 0x28);
-    point2f direction = { target->x - local_1->x, target->y - local_1->y };
-    function_1f99d1(&direction);
+    point2f direction;
+    vector2d_from_points2d(local_1, target, &direction);
+    movement_normalize2d(&direction);
     point2f side = { 0.0f - direction.y, direction.x };
-    volatile bool left = true;
     if (!(facing->y * side.y + facing->x * side.x > 0.0f))
         left = false;
     point2f center;
     if (type == 0)
     {
         point2f perpendicular = { 0.0f - facing->y, facing->x };
-        real signed_radius = left ? radius : 0.0f - radius;
-        center.x = target->x + perpendicular.x * signed_radius;
-        center.y = target->y + perpendicular.y * signed_radius;
+        if (left)
+        {
+            center.x = target->x + perpendicular.x * radius;
+            center.y = target->y + perpendicular.y * radius;
+        }
+        else
+        {
+            center.x = target->x + perpendicular.x * (0.0f - radius);
+            center.y = target->y + perpendicular.y * (0.0f - radius);
+        }
     }
     else if (type == 1)
     {
@@ -1392,14 +1430,15 @@ real function_1f99d0(long actor_index, long object_index, short type, point2f co
             s_avoidance_trace trace;
             if (function_26ccb0(pathfinding, obstacles, NONE, (point2f *)&local_origin, sector, NONE,
                 (point2f *)&local_direction, *(real *)(entry + 0x14), distance, false, false, false, 0, &trace))
-                return result;
+                goto done;
         }
         real cosine = desired.x * direction.x + desired.y * direction.y;
         cosine = (real)(cosine > 1.0f ? 1.0 : cosine);
         cosine = cosine < -1.0f ? -1.0f : (cosine > 1.0f ? 1.0f : cosine);
         result = (real)acos(cosine);
-        if (left) result = 0.0f - result;
+        if (left) return 0.0f - result;
     }
+done:
     return result;
 }
 

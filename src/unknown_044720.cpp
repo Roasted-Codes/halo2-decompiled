@@ -207,7 +207,13 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
         }
     }
 }
-// score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain.
+// score 190 (was 190): Frame 0x1094 agrees; entry/index carriers, entry spill and sphere/position homes remain;
+// retail also keeps a separate center point (+0x30) beside the sphere query (+0x20).
+// Round 81 (fast): a `visible_word` pointer for the test and both marks 190 (same code); one marking
+// site after the bound branch with `if (!(r * r >= d)) continue;` 210 (the marks become retail's single
+// tail block, word pointer reloaded), with `<` 210; on that a function-scope center copy and the query
+// local to the list branch 211, unaligned 209 (entry then in esi spilled at +0x44 as retail); plus a
+// long index local for the table and call 216/209.
 // frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes differ.
 // Earlier 190 (was 196): frame 0x1094 agrees; entry/index registers, entry spill and sphere/position homes still differ.
 // Transform inline/noinline declarations separately and together 196; chained counts
@@ -252,6 +258,54 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // 236, with one final geometry result 236. Entry/index and point homes remain.
 // Round 324: index/radius/center contract 192; radius/index/center 192; center/index/radius 190;
 // radius/center/index 192; the same orders with a full absolute ordinal 193/193/191/193.
+// Round 207: native list-storage construction in pointer/count/capacity, count/capacity/pointer,
+// value-initialized-header and shared member forms 247 each; the same four with uniform
+// at-use geometry selection 1000 each. All lose the matched caller; complete original restored.
+// Round 214: complete native large sphere, point-copy/component initial center, after/before lists
+// 207/235/205/234; component sphere initializer on those four graphs 199/247/201/247. All restored.
+// Round 148: coherent inline point/node/dispatch, point+node, point+dispatch, node+dispatch and
+// all three 190 each; coherent inline point with separate noinline 190.
+// Round 232: first header split 220; second header split 216.
+// both headers split 235; natural headers/aligned buffers 236.
+// all natural split storage 236; all aligned split storage 235.
+// first natural header/aligned buffer 220; second natural header/aligned buffer 216.
+// Round 240: reversed ordered sphere comparison alone/with distance/radius/both squares 189/189/189/189;
+// those forms with the existing point-difference helper 190/190/190/190. One-point gain rejected; original comparison restored.
+// Round 179: link snapshot 190; bitmap field at each use 257; both 215;
+// geometry at each use alone/with link/bitmap/both 1004/1004/1042/1057;
+// all receiver forms with short node cache 1061. Original observations restored.
+// Round 331: dispatch inline/noinline, node query inline/noinline, both inline,
+// both noinline and either mixed pair: all eight 190f. Entry/index and point
+// homes remain; both caller-local declarations and original body restored.
+// Round 153: one complete query at entry/original capture 264/260; each with shared marking 254/220; removing only query alignment gives 263/259/253/219. Aligned forms grow frame to 0x10a4; best remains worse than 190. Original query, marking sites and alignments restored.
+// Round 76: retail callers (here and 0x44e90) sign-extend the index before pushing it to 0x458d0, which
+// fits a long parameter there: 0x458d0 long index stays matched but 191 here, 0x44e90 434 -> 449. On top of it:
+// geometry from the element before the entry pointer 220f (index edi/entry esi as retail, frame 0x10a4);
+// query after the entry/geometry 191f; entry as pointer sum 191f; entry scoped to the loop branch 220f; with a
+// separate entry-time center point for the loop 221f, and the query in the list branch 221f. All restored.
+// Round 155: Real part-table byte/record cursors, mutable/read-only, each with original
+// or successful-query-local transform lifetime: 222/222/222/222/222/222/222/222. Original indexed walk and transform lifetime restored.
+// Lane 4 r98: retail reads the node byte at each of its three uses (bound kept in ebx, geometry
+// reloaded from its slot). Node byte at each use with long casts 219 (frame 0x10a4), without 202 (with a
+// long index local, bound now in ebx as retail); a long index local alone 191 (retail's single movsx
+// pushed for the 0x458d0 call); a function-scope plain center copy beside the branch-scoped aligned query
+// 199 (frame 0x10a4: the query no longer shares the bound position's slot), with the long index 200.
+// Round 224: Uniform node-byte observations with branch/broad count, initialized/filled output
+// and original/success-local transform lifetimes 219/199/223/199/219/199/223/199. Original node snapshot and scopes restored.
+// Round 230: native list count/capacity signedness and readonly release-input metadata,
+// four header forms and their readonly-release pairs, all eight 190. Original types restored.
+// Round 28 (m3 lane 12): retail's frame: query +0x20 shared with the loop's position, function-scope center
+// copy +0x30, loop bit mask +0x3c; its marking block is one tail-merged copy of the two sites. Long index
+// used for table and call 191 (index esi/entry edi, retail the other way); indexed entry at each use 271;
+// function-scope center copy with the query local to the list branch 199 (frame 0x10a4), unaligned 192;
+// one marking site with a `continue` 210 (comparison flips). All restored.
+// Round 30 (m3 lane 12): query declared after entry/geometry 190 (identical); geometry helper taking the
+// index (as the sibling file's) 228, 0x44c90 140; geometry helper with one result exit 188 but 0x44c90 107->132;
+// bound position read at each use 198; transform at function scope 190.
+// Lane 4 r106 (fast): a named visibility-word pointer for the test and both marks 190; with the
+// function-scope center copy and the query in the list branch 199 (frame 0x10a4), with that query
+// unaligned 192; the word pointer with a long index for table and call 191; the existing
+// bit_vector_test/bit_vector_set 222 (890 bytes). Retail still shares one marking block.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

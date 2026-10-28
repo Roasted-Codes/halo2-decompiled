@@ -25,17 +25,17 @@ void lane_a_simple_contact_manager::processed(lane_a_contact_body const *first,
 {
 	if (--remaining == 0)
 	{
+		lane_a_contact_entity *entity_a = first->entity;
 		lane_a_contact_entity *entity_b = second->entity;
 		unsigned short delay = lane_a_contact_delay(entity_b);
-		lane_a_contact_entity *entity_a = first->entity;
 		if (lane_a_contact_delay(entity_a) < delay)
 			delay = lane_a_contact_delay(entity_a);
 		remaining = delay + 1;
 		event_315d20 event;
 		lane_a_contact_processed_payload payload = {this, first, second, input};
-		memcpy(event.unknown0+12,&payload.input,4);
 		memcpy(event.unknown0,&payload.manager,4);
 		memcpy(event.unknown0+4,&payload.a,8);
+		memcpy(event.unknown0+12,&payload.input,4);
 		function_318440(world,&event);
 		if (entity_a->listeners_60.size)
 			function_315e00((listener_world_315d20 *)entity_a,&event);

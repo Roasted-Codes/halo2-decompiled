@@ -36,15 +36,11 @@ static inline s_looping_sound_datum *looping_sound_get(long index)
 	return (s_looping_sound_datum *)g_4ed28c->data + (index & 0xffff);
 }
 
-// score 10 (was 10): the second lookup scales ESI directly; retail copies it to EAX first.
-// Ordinary/unsigned index copies 9 each (copy fixed, saved registers swapped); direct formal
-// second index 39; call-first/split declarations 9/9; local rename, const local/parameters,
-// first-record reference and reversed tag tests 9 each; second plain copy/guard 10 each;
-// force-inline/array/result getter forms 10 each; getter slot local 10 (sibling two worse).
+/* moves the tag's bit-5 mark from the looping sound found for it to the given one, when
+   that one plays the tag (retail's callers load the index register before the tag's) */
 // @retail 0x18d290
-void function_18d290(long looping_sound_index, long tag_index)
+void function_18d290(long tag_index, long looping_sound_index)
 {
-	long local_0 = *(long const volatile *)&looping_sound_index;
 	long index = function_18d1c0(tag_index);
 
 	if (index != NONE)
@@ -55,9 +51,9 @@ void function_18d290(long looping_sound_index, long tag_index)
 			looping_sound->flag5 = false;
 		}
 	}
-	if (local_0 != NONE)
+	if (looping_sound_index != NONE)
 	{
-		s_looping_sound_datum *looping_sound = looping_sound_get(local_0);
+		s_looping_sound_datum *looping_sound = looping_sound_get(looping_sound_index);
 		if (looping_sound->tag_index == tag_index)
 		{
 			looping_sound->flag5 = true;

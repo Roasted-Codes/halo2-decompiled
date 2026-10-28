@@ -5,6 +5,7 @@
    their particles, emitters and locations */
 
 #include "unknown_11c920.h"
+#include "bit_vector.h"
 #include "visibility_storage.h"
 #include "camera_storage.h"
 #include "frame_storage.h"
@@ -705,10 +706,6 @@ s_effect_particle_system_definition *s_particle_system_datum::function_1751d0()
 	return 0;
 }
 
-// score 21 (was 21): the or-ed mask is written into the local after the call arguments are pushed
-// here and before them in retail.
-// The final callee takes its flag on the stack, not in AL; inline+noinline, noinline and inline 21;
-// force-inline 21 with caller regressions; late values, flag, location and successor-reference forms 21.
 // @retail 0x175270
 void function_175270(s_particle_system_datum *particle_system, s_particle_system_spawn *spawn, transform4x3f const *matrix, bool field_b4)
 {
@@ -759,6 +756,10 @@ void function_175270(s_particle_system_datum *particle_system, s_particle_system
 // Shared double scale 58; immutable/ordinary complete products 23/23;
 // product value copy 74; decode value copy 63; exchanged decode workspaces 17;
 // two decode-result lifetimes 45; double scale with in-place result 64.
+// Standalone unpack before scaling 41; unpacked pointer for scale and pack 42 (204 bytes);
+// vector half buffer 17; half names buffer/scaled 17/17; product declarations swapped 17;
+// second input alternate with declarations swapped/original 17/17.
+// Scale from the buffer through the unpacked result 42 (204 bytes); a 2400 s permuter run, no result.
 // @retail 0x175a80
 void function_175a80(bool tinted, dword color_a, dword color_b, s_particle_system_datum *particle_system, bool multiplied)
 {
@@ -824,69 +825,76 @@ public:
 	virtual long const *names() = 0;
 };
 
-// score 308 (was 308): Frame 0x60 agrees; result/flag clear, child homes and selective tag expansion remain.
-// Earlier: frame agrees; byte flag clear, child carriers and selective inlining differ.
-// Ordinary pooled accesses in all trials: reversed-component loops 394; normalization loop 394;
-// perpendicular call 394; inline depth one 394, zero 517.
-// Earlier context: frame 0x64 versus 0x60; flag clear and selective calls differ.
-// Ordinary pooled accesses: spawn initializer 394; early matrix values 393;
-// child tag scalar 394; long result 329; dword flags 401.
-// Frame 0x60 now agrees; flag transfer, child carriers and selective calls
-// remain. Ordinary local parent 366; word result 338; direct final result 388; direct parent color
-// 308 (plain verified); child for-loop 338.
-// Native fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364; native
-// orientation result 373, with shared cross 373.
-// frame 0x60 agrees; early long-result store, flag transfer and child/call homes remain.
-// Ordinary local parent 366; word result 338; direct final result 388; direct parent color
-// Late long result 411; entry/late complete result arms 395/395; late result from tests 395;
-// child/location-stage result 315/316; late successful default 411; signed flags with late result 411.
-// Original entry result, ordinary pooled flags and all child calls restored.
-// Native flag bytes 382; flag-stage result 378; native flag overlay 382;
-// Overlay with flag-stage result 378; named byte transfer 411; transfer/result 411;
-// byte flags with ordinal observations 388; overlay/ordinal/result 384.
-// All native byte layouts lose five matched controls; original word flags retained.
-// Flag-stage long result/native bitfield transfer/direct visibility and combinations
-// 305,368,308,368,305,368,368; post-visibility result 315. Original flag/result boundary restored; three-point gain rejected.
-// native-definition 308; shared-velocity-address 308.
-// native-definition-shared-velocity-address 308; readonly-particle 308.
-// native-definition-readonly-particle 308; shared-velocity-address-readonly-particle 308.
-// native-definition-shared-velocity-address-readonly-particle 308; native-receivers-location-for 308.
-// Native location/child/successor/all handle domains 308/308/308/308; byte/signed-byte/word/bool
-// canonical results 374/374/308/375 on the recovered frame. Original body restored.
-// Native memcpy forward/up/left/position transfers 308/308/308/308; all basis,
-// forward plus position, up plus left and all transfers 308 each. Native copy boundaries
-// leave early result/flag allocation and child transport unchanged; original aggregates restored.
-// Round 329: cleanup/count/spawn/unlink inline or outlined inline: all 308; full-EAX
-// return with long/bool/complete-arm results 405/371/405. All declarations and return types restored.
-// frame 0x60 agrees; the early result store, the flag 8 clear (retail
-// stores the word, clears the bit with a byte and, then reloads), the location-loop and child
-// registers, and retail's inlined 0x137bd0 at the child-loop call (EBX then holds the tag
-// object and the tinted byte spills) differ. 0x137bd0's file is built /Ob1, which keeps it out
-// of line; moved to a file without /Ob1, LTCG inlines it at every caller (all matched callers
-// grow about 30 bytes), so retail's one inlined site is not a whole-program inlining choice.
-// Tried this round (aligned differences, addresses masked, in brackets; baseline [179]): one
-// bool-expression return 405 [239] (32-bit exits agree, frame 0x5c); 0x137bd0 moved out of
-// its /Ob1 file 457; the volatile parent removed 371 [247] (frame 0x64: the first-child address
-// is hoisted and spilled; retail forms it with lea at the call); both 392 [178] (frame 0x60);
-// flag 9/8 update through the bitfields 368 [200].
-// Round 88: the child loop's type lookup through an inline copy of 0x137bd0 294 (not kept: a
-// copy of an existing body, kept only with a match).
-// Earlier: reversed-component loops 394; normalization loop 394; perpendicular call 394;
-// inline depth one 394, zero 517; spawn initializer 394; early matrix values 393; child tag
-// scalar 394; long result 329; dword flags 401; ordinary local parent 366; word result 338;
-// direct final result 388; direct parent color 308 (kept); child for-loop 338; native
-// fallback/default/both perpendicular results 354/354/364; published before cross 354/354/364;
-// native orientation result 373, with shared cross 373; late long result 411; entry/late
-// complete result arms 395/395; late result from tests 395; child/location-stage result
-// 315/316; late successful default 411; signed flags with late result 411; native flag bytes
-// 382; flag-stage result 378; native flag overlay 382; overlay with flag-stage result 378;
-// named byte transfer 411; transfer/result 411; byte flags with ordinal observations 388;
-// overlay/ordinal/result 384 (all native byte layouts lose five matched controls); flag-stage
-// long result/native bitfield transfer/direct visibility and combinations 305-368;
-// post-visibility result 315; native definition, shared velocity address, readonly particle
-// and their combinations 308; native receivers/location for 308; native location/child/
-// successor/all handle domains 308; byte/signed-byte/word/bool canonical results
-// 374/374/308/375.
+// score 292 (was 292): frame 0x60, 1372 bytes against 1355. Left: our entry stores a `result`
+// slot (retail has none and returns `xor eax, eax` / `mov eax, 1` from the bool expression);
+// ours merges the flag-9 word update with the flag-8 clear (retail stores the word, clears flag 8
+// with `and byte ptr [ebp+0xd], 0xfe` and reloads); retail keeps the child index in EDI from the
+// loop head into the recursion block (so the particle and the tag object go to EBX), spills the
+// tinted byte to the bottom slot and the parent color to a stack local read before the child
+// definition call; ours keeps the index on the stack, the particle and tag in EDI and the tint in
+// BL. 0x248750 and (since round 67) 0x175270 now take retail's registers.
+// Kept: child-loop tag lookup through the inline particle_object_for_tag 294 (direct parent
+// color 308 earlier); the cluster test through the existing bit_vector_test 292 (identical).
+// Round 67 (with 0x248970's location now stacked and its flag in AL, so 0x175270 matches and
+// takes the child in EBX as retail): bool-expression return 356 (1355 bytes, frame 0x5c); that
+// with the parent color read into a local before the child definition call 355 (color spilled as
+// retail, tint still in BL); that without the volatile parent 345 (frame 0x60, 1362 bytes; VC then
+// hoists and shares `&particle_system->first_child_index` with the first-child reads, which
+// retail computes at the unlink call).
+// Round 139: the flag word through a `word *` local (read, set/clear 0x200, flag8 bitfield clear)
+// gives retail's word store + byte clear 292, and testing 0x20 through the flag5 bitfield then
+// reproduces retail's `mov ax, [ebp+0xc]; test al, 0x20` exactly, but our entry `result = false`
+// store still sits there and every later instruction shifts (352); with the pointer and a value
+// local 292/292; the bitfield test on the value form 294; result declared at the end or direct
+// returns on top of the exact flag form 345/351 (frame 0x5c). Round 137: an inline flag-word
+// setter on the word's address per bit gives retail's store/byte clear/reload (306 alone, 292 with
+// the lookup; a new one-caller helper); with the lookup, boolean return / plain parent / both
+// 350/344/345 (frame 0x60, 1362 bytes), with the setter too 353/345/344; 0x248970 flag-first
+// parameter order 294 (its convention unchanged); 0x248970 flag store after its definition call /
+// after the position copy 294/294; child index declared before the matrix 294.
+// Round 195: tint byte/word/long/dword carriers 298/301/299/299, the same declared before the
+// matrix 298/301/299/299. Round 183: five fixed-basis column-order permutations
+// 320/320/326/326/320; three default-position permutations 308/308/308. Round 174: existing cross
+// input references 308; forward/up/both values 411/409/507; reference inputs/output 308; native
+// result with pointer/reference/value inputs 369/369/624; fallback normalization vector/scalar/
+// working-vector/computed-input forms 349/308/349/359, with result after flags 346/305/346/356.
+// Earlier forms: reversed-component loops 394; normalization loop 394; perpendicular call 394;
+// inline depth one 394, zero 517; spawn initializer 394; early matrix values 393; child tag scalar
+// 394; long result 329; dword flags 401; ordinary local parent 366; word result 338; direct final
+// result 388; child for-loop 338; native fallback/default/both perpendicular results 354/354/364;
+// published before cross 354/354/364; native orientation result 373, with shared cross 373; late
+// long result 411; entry/late complete result arms 395/395; late result from tests 395; child/
+// location-stage result 315/316; late successful default 411; signed flags with late result 411;
+// native flag bytes 382; flag-stage result 378; native flag overlay 382, with flag-stage result
+// 378; named byte transfer 411; transfer/result 411; byte flags with ordinal observations 388;
+// overlay/ordinal/result 384 (all native byte layouts lose five matched controls); flag-stage long
+// result/native bitfield transfer/direct visibility and combinations 305-368; post-visibility
+// result 315; native definition, shared velocity address, readonly particle and their
+// combinations 308; native receivers/location for 308; native location/child/successor/all
+// handle domains 308; byte/signed-byte/word/bool canonical results 374/374/308/375; native memcpy
+// forward/up/left/position transfers and combinations 308; cleanup/count/spawn/unlink inline or
+// outlined inline 308; full-EAX return with long/bool/complete-arm results 405/371/405; one
+// bool-expression return 405 (frame 0x5c); 0x137bd0 moved out of its /Ob1 file 457; the volatile
+// parent removed 371 (frame 0x64), with the bool return 392; flag 9/8 update through the
+// bitfields 368.
+// Round 270: both real color predicates 327; reversed readonly queries 323; both
+// declared before pose 327; predicates with parent color 333; direct result with
+// predicates 357, reversed 361, with color 374, entry predicates/color 374. All
+// eight match-only capture forms restored; early result/flag stores and child/tint homes remain.
+// Round 24: scoped flags 292; plus direct Boolean result 356; plus early parent color 355;
+// plus function-entry tint 355; word-pointer flags instead 354; ordinary parent instead 344;
+// long tint instead 364; without parent color 353. Original restored.
+// Round 206: Two-state completion enum, entry default/entry complete arms/tail default/tail complete arms
+// [292, 366, 361, 366]; with word-pointer/bit-five flag idiom [359, 369, 359, 369]. Original result and flags restored.
+// Round 232: four complete positive/negative factor orders, direct or all six
+// products staged before output, 292 each. Original two-use helper restored.
+// Round 163: recursive inline/cross forceinline/both/recursive noinline
+// boundaries 292 each; complete ordered completion on each graph 356 each
+// (1355 bytes, frame 0x5c). Original result, declarations and boundaries restored;
+// entry completion storage, word/byte publication and child/tint homes remain.
+// Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
+// 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
+// All record, request and completion forms restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -899,9 +907,7 @@ bool function_174a30(s_particle_system_datum *particle_system, real dt)
 	*((word *)particle_system + 6) = flags;
 	particle_system->flag8 = false;
 	flags = *((word *)particle_system + 6);
-	if (!(flags & 0x20) &&
-		!(g_4c56c0[particle_system->location.cluster_index >> 5] &
-		(1 << (particle_system->location.cluster_index & 31))))
+	if (!(flags & 0x20) && !bit_vector_test(g_4c56c0, particle_system->location.cluster_index))
 		function_1753f0(particle_system);
 	s_effect_particle_system_definition *definition = particle_system->function_1751d0();
 	long location_index = particle_system->location_index;
@@ -995,7 +1001,7 @@ bool function_174a30(s_particle_system_datum *particle_system, real dt)
 			spawn.scale = *(real *)(particle + 8) / *(real *)(particle + 0xc) - dt;
 			spawn.unknown = dt;
 			spawn.location_index = child->location_index;
-			c_type_4e7709 *child_tag = function_137bd0(child->function_1751d0()->tag_index);
+			c_type_4e7709 *child_tag = particle_object_for_tag(child->function_1751d0()->tag_index);
 			bool tinted = child_tag->tinted();
 			function_175a80(tinted, particle_system->color, 0xffffffff, child, child_tag->multiplied());
 			function_175270(child, &spawn, &matrix, false);
@@ -1067,6 +1073,18 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 }
 
 // score 213 (was 213): Frame/length agree; early EDI, tag/mask and child-render homes remain.
+// Round 57: the child flag copy as a set/clear if/else (retail's `test word; or word / and byte`)
+// gives retail's entry saves (the early exits reach the child loop, which then uses edi) and
+// child loop, but the inner tag value lands in eax (retail edx) and the extra `mov edx, eax`
+// before 0x137bd0 shifts everything after: 219. On that form: tag/reference/group declaration
+// orders 219, group read twice 228, a forceinline reference helper (tag, definition or system
+// argument, early return or if/else) 219, inverted or ternary selection 217, 0x23ea80's group
+// read 217, definition-pointer reads 219, TEST_FIELD_BIT set/clear 220; with request.system and
+// the location index read before the camera block (retail's order) 218, plus the bit-5 test in
+// this function's word-flag form (retail's `mov dl; shr dl, 5; test dl, 1`) 217, plus the cross
+// product's second products written b-first (retail's xmm0/xmm1) 217; camera inputs from the
+// copied locals 242. The tag register stays eax in every form (also compile-only with 0x137bd0
+// modelled as an edx argument).
 // Native draw 354; native membership 213; translation component loop 312; bias component loop 222; delta component loop 226.
 // native request initialization 211; immutable render inputs 213; native definition bit five 317; native
 // definition flag word 317; native location fields 211; frame pointer 402; global optimization 434; size
@@ -1078,11 +1096,21 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // predicates 287; signed render mask 213. Original source restored.
 // Unsigned tag handle 213; word draw 354; word visibility 334; word membership 213;
 // availability result before the work guard 355. Early EDI/tag lifetimes remain.
+// Group-test order, high-bit shift/equality and combinations 213; other-bit OR test 222.
 // Round 329: shared pool/data 339/354; group/render-mask/both observations 222/331/331;
 // pool with group/mask/both 275/364/364. Original receivers and every memory observation restored.
 // Round 376: Independent child cursor/receiver/both entry declarations 213/213/213; native
 // request with cursor/receiver/both 211/211/211; both with native request and positive/negative
 // child bit stores 340/340. Original lifetimes and stores restored.
+// Round 223: Real request parent aggregate/assignment receivers 235/238; with child bit stores
+// 369/255; location receiver 230; both aggregate/assignment 244/247; location with child stores 250.
+// Metadata lifetimes ending at the shader/table, reference chain or full tag chain give
+// 213/213/213; with native request initialization 211/211/211 (two-count gains rejected);
+// full tag scope with child set/clear stores 219, with native request as well 217.
+// Complete original scopes, request and child-bit copy restored.
+// Round 217: Selector inline/noinline/inline-out-of-line boundaries 213/213/213;
+// with child set/clear 219/219/219; with word bit five and child stores 316/316
+// (fast). Original selector declarations, complete body and call tuples restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

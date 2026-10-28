@@ -212,21 +212,8 @@ void function_248450(matrix3x3 *rotation, s_particle_frame const *frame, point3f
 }
 
 /* a new particle location at the origin */
-// score 5 (was 13): the frame-count load is still hoisted above the float stores;
-// pool local 13; byte-offset record 13; native vector assignment 13; function-scope record 13;
-// unsigned location 13; link array loop 5 (plain 5); plain frame store 6; frame-count local 5;
-// plain float stores 6.
-// tried native record receiver 14f; shared position setter 45f; shared vector setter 47f; both shared setters 49f;
-// scalars before copies 33f; links reverse order 14f; allocation failure return 48f; origin value 61f;
-// immutable allocation index 14f; seed input lifetime 14f.
-// Earlier link-store base and seed/constant scheduling:
-// link assignment chain 13; forward link chain 13; native link fill 50; shared origin pointer
-// 13; position memcpy 13; vector memcpy 13; both copies 13; native fill and both copies 50.
-// Without the three volatile casts 14 (the frame-count load and store move above the two float
-// stores; a pool data pointer local with indexed link stores 20; the data pointer before the
-// location pointer 14; the frame count stored first 14; 1c before 2c 13 by position only). The
-// frame counter defined in a /GL- file changes nothing. Retail keeps that load after the float
-// stores but hoists the random-seed pointer above them.
+// Matches once g_4ba034 is treated as address-taken (0x117dd0 reads it through its address, as retail
+// reloads it there): the frame-count load then stays below the float stores.
 // @retail 0x248620
 long function_248620()
 {
@@ -240,9 +227,9 @@ long function_248620()
 			particle_location->link_indices[link_index] = NONE;
 		particle_location->position = *g_468788;
 		*(point3f *)&particle_location->vector = *g_468788;
-		*(real volatile *)&particle_location->unknown2c = 0.5f;
-		*(real volatile *)&particle_location->unknown1c = 1.0f;
-		*(dword volatile *)&particle_location->unknown30 = g_4ba034;
+		particle_location->unknown2c = 0.5f;
+		particle_location->unknown1c = 1.0f;
+		particle_location->unknown30 = g_4ba034;
 		particle_location->random = (byte)random_index(&g_4e7408->seed, 0xff);
 	}
 

@@ -156,7 +156,7 @@ __forceinline void spawn_influence_add(s_spawn_influence_list *list, point3f con
 
 /* adds an influence of this type at the point */
 // @retail 0x23ba10
-void function_23ba10(long type, s_spawn_influence_list *list, point3f const *point)
+void function_23ba10(long type, point3f const *point, s_spawn_influence_list *list)
 {
 	s_spawn_influence_globals *globals = (s_spawn_influence_globals *)g_502258;
 	s_spawn_influence_type *definition = &globals->types[type];
@@ -530,11 +530,11 @@ void function_23b8e0(long player_index, s_spawn_influence_list *list)
 			{
 				if (other->team == player->team)
 				{
-					function_23ba10(1, list, &unit->position);
+					function_23ba10(1, &unit->position, list);
 				}
 				else
 				{
-					function_23ba10(0, list, &unit->position);
+					function_23ba10(0, &unit->position, list);
 				}
 			}
 		}
@@ -546,7 +546,7 @@ void function_23b8e0(long player_index, s_spawn_influence_list *list)
 
 				if (state->valid && state->value10)
 				{
-					function_23ba10(10, list, &state->position);
+					function_23ba10(10, &state->position, list);
 				}
 			}
 		}
@@ -564,8 +564,10 @@ struct s_spawn_moving_object_23b500
 	byte unknown94[0xaa - 0x94];
 	byte type;
 	byte unknownab[0x10a - 0xab];
-	byte unit_flags;
-	byte unknown10b[0x13c - 0x10b];
+	word unit_flag0 : 1;
+	word unit_flag1 : 1;
+	word unit_dead : 1;
+	byte unknown10c[0x13c - 0x10c];
 	long player_index;
 };
 
@@ -590,51 +592,7 @@ static inline void point_along_vector_23b500(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 201 (was 201): frame 0x50/0x54, early EBX and child-iterator convention remain.
-// Frame 0x50/0x54 and protected child-iterator register contract remain.
-// frame 0x50/0x54, early EBX and child-iterator convention remain.
-// Earlier at 211 (was 232): frame 0x50/0x54 and child-iterator registers differ;
-// frame 0x50/0x54 and child-iterator registers differ;
-// iterator initializer 231; dword friendliness 229; speed snapshot 231; sqrtf 232;
-// child category equality 251; dword friendliness plus speed snapshot 229.
-// Predicted-point force-inline 232; depth zero 510; size policy 355;
-// global optimization off 629; projectile category first 242.
-// frame 0x50/0x54 and child-iterator register contract remain.
-// Positive occupied/hostile/both results 232/232/232; word empty/friendly/both
-// 253/233/254; external child record and positive-results combination 232/232.
-// Nonunit/playerless/both child exits 232/232/232;
-// actual unit-child count 211 kept (plain); hostile-child count 233.
-// Settings at use 233; player-team lookup at use 264; signed-byte empty 232; signed-byte friendly 232; both signed
-// bytes 232. Frame 0x50/0x54 and protected child-iterator register contract remain; original body restored.
-// Point helper output return 232; point value return 232; output-first helper 231 (one-point gain rejected);
-// complete vehicle velocity 238; speed guard 232. Frame/child convention remains; original body/helper restored.
-// Native signed/word/short unit counts 211/210/210f; count/friendly/both defaults after
-// child initialization 211/211/211f; word count with later defaults 210f;
-// native friendliness with actual unit count 230f. One-point gains rejected; all restored.
-// Count-first friendliness AND/logical/conditional/explicit forms 201/232/211/211;
-// count-last counterparts 223/233/252/252. Boolean AND keeps every qualifying-child
-// team test and counter; 201 kept after ordinary check. Frame/child convention remain.
-// Existing predicted-point point/velocity/both value inputs 295/238/328; shared
-// real/double scale then point addition 232/251; real scale with point/velocity
-// value inputs 306/242; double scale with both value inputs 353. All restored;
-// frame and protected child-initializer register contract remain.
-// Round 143: occupied/empty Boolean and byte results on retained AND graph 232 each;
-// both byte results with AND 232/232; twice-used child-player input with count/occupied 202/233.
-// Original count/AND body restored; protected child-iterator contract remains.
-// word unit count with Boolean AND reduction 202; signed unit count with Boolean AND reduction 201; long
-// friendliness AND with retained unit count 228; word friendliness AND with retained unit count 209; signed
-// byte friendliness AND with retained unit count 201; word count and long friendliness AND 229; named
-// complete child friendliness predicate 201; word count and word friendliness AND 210.
-// Round 185 hostility OR bool/byte/short/long with count first 231/231/247/248; count last
-// 224/224/236/235 (fast). All restored; frame and protected child contract remain.
-// Retained count/AND graph: outer/child/both workspace names 201/201/201; friendly name/all names 201/201;
-// child workspace first/friendly before count/both with role names 201/201/201.
-// Retained count/AND graph: native dead/attached/both bits 246/201/246;
-// shared square alone/with dead/attached/both 202/247/202/247;
-// independent current-object and iterator locals 249. Original view and body restored.
-// Point publication xzy/yxz/yzx/zxy/zyx 204/204/232/207/232;
-// complete displacement products/coordinates 205/205; uniform per-row products 205.
-// Original helper/body restored; frame and protected child convention remain.
+
 // @retail 0x23b500
 void function_23b500(long player_index, s_spawn_influence_list *list)
 {
@@ -657,9 +615,9 @@ void function_23b500(long player_index, s_spawn_influence_list *list)
 		long type_mask = 1 << object->type;
 		if (type_mask & 2)
 		{
-			if ((bool)((object->unit_flags >> 2) & 1) || (bool)((object->flags >> 26) & 1))
+			if (TEST_FIELD_BIT(object->unit_dead) || (bool)((object->flags >> 26) & 1))
 				continue;
-			dword unit_count = 0;
+			bool no_unit_child = true;
 			bool friendly = true;
 			s_object_child_iterator children;
 			function_d0620(objects.iterator.object_index, &children);
@@ -669,19 +627,19 @@ void function_23b500(long player_index, s_spawn_influence_list *list)
 					((s_spawn_object_header_view *)g_4e0300->data)[children.child_index & 0xffff].object;
 				if ((1 << child->type) & 1)
 				{
-					++unit_count;
-					friendly &= child->player_index == NONE ||
-						((s_spawn_player_view *)g_4e8c24->data)[child->player_index & 0xffff].team == player->team;
+					no_unit_child = false;
+					if (child->player_index != NONE &&
+						((s_spawn_player_view *)g_4e8c24->data)[child->player_index & 0xffff].team != player->team)
+						friendly = false;
 				}
 			}
-			if (unit_count == 0)
-				function_23ba10(4, list, &object->position);
+			if (no_unit_child)
+				function_23ba10(4, &object->position, list);
 			else if (friendly)
-				function_23ba10(3, list, &object->position);
+				function_23ba10(3, &object->position, list);
 			else
-				function_23ba10(2, list, &object->position);
-			real speed_squared = object->velocity.i * object->velocity.i +
-				object->velocity.j * object->velocity.j + object->velocity.k * object->velocity.k;
+				function_23ba10(2, &object->position, list);
+			real speed_squared = length_sq3f(&object->velocity);
 			if (speed_squared > settings->minimum_speed * settings->minimum_speed)
 			{
 				real radius = (real)sqrt(speed_squared);

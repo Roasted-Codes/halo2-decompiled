@@ -363,7 +363,13 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
-// score 195 (was 195): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// score 184 (was 184): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// Round 57: retail's result stores are a spill of a long result (dword store, `mov ax, word` reload at
+// each tail-duplicated exit). Plain long result 241 (result home +0xc); short return type with every
+// declaration 186 (1311 B), with a plain long result 245; volatile short result 179 (aligned listing count
+// worse: 92 against 86), with the short return 186; else-arm secondary before primary 195; the two
+// out-of-range stores as else-if arms 184.
 // the register allocation differs from the first block
 // the register allocation differs from the first block
 // on (retail keeps delta in xmm5-7 and the motion in xmm2-4, ours the other way
@@ -392,6 +398,8 @@ real function_30bf0(vector3f *vector);
 // Earlier trial set: Frame/result and inverse SIMD homes remain. Fraction reuse 211; plane distance first 304; cursor displacement 271; threshold defaults 265; reverse delta assignments 233 (fast; seat increments in body).
 // Earlier trial set: Frame 0x350 agrees; result/range homes, inverse SIMD groups and threshold reloads remain. Early range square 266; scaled-range square 221; threshold maxima 221; bounded seat end 245; plane initializer 221 (fast; seat increments in body).
 // Round 138: clipped vector/in-place/receiver 276/276/276; read-only actor/occupant 195/195; facing value 258; both values 311; motion square 229.
+// Native external settings with byte mask/bitfield 221/221; per-use range 225/225;
+// those four records with both existing vector difference helpers 221/221/245/245 (body cursor step).
 // Shared scaled differences for delta/motion/both 234/233/225; shared magnitudes 221;
 // with delta/motion/both shared producers 234/265/257; staged native inputs with both helpers 366.
 // Seat cursor advanced in body for each trial; all original producers, grouping and cursor restored.
@@ -401,16 +409,61 @@ real function_30bf0(vector3f *vector);
 // Round 71: renaming result/secondary/primary/range and a long result compile identically (slot order is not
 // name-driven here); separate `result = K; return result;` exits 269 (1333 bytes), with a long result 269;
 // if/else 3-or-2 with a long result 259; separate exits with a plain short result 328.
+// Round 167: Consistent long/dword return contracts with short/word result storage 200 each;
+// long/dword storage 195 each at retail length. On the complete long return/result graph,
+// separate 3/2 stores 255; projection fraction clamped in place 184 (plain, kept); both 241;
+// direct threshold accumulators 230. Keep long return/result, one projection fraction and
+// seat cursor stepped in the body; both external declarations agree, exact caller preserved.
+// Round 145: Vector role names/vector plus plane-fraction names 184/184; mode failure at
+// one result exit with existing/plain result 184/241; settings failure likewise 184/241;
+// plain mode/settings early-result returns 340/350. Original body restored.
+// Round 243: Native point/origin/both/endpoint values 351/363/396/327; point-endpoint
+// 366, origin-endpoint 378; all inputs in either declaration order 432/432. Original body
+// restored.
+// Round 205: Plain component loops for delta/motion/both 429/407/431; projected output
+// 221; projected with delta/motion/both 432/411/425; all with short ordinals 438.
+// Original producers restored; result/range homes and inverse SIMD groups remain.
+// Posture cases reversed 184; exhaustive scale switch, ordered arms and
+// complete conditional scale 202/253/253; each of the four with per-use range
+// reads 273/311/306/306. Original scale, range observations and body restored.
+// Round 249: coordinated projection inline/noinline 294/184; threshold inline/noinline
+// 184/184; both inline, projection-inline/threshold-noinline, projection-noinline/threshold-inline,
+// both noinline 294/294/184/184. Original declarations and bodies restored.
+// Round 212: outer/scaled/both range-failure returns with inherited result 216/219/253;
+// both plus missing-settings return 253; the four with ordinary result 329/314/273/275.
+// Frame 0x350 persists, entry roles move; original admission, result and observations restored.
+// Round 252: Final primary-test/complete-conditional/primary-first/distance-first results
+// 249/283/235/230; ordinary result storage 281/281/220/221. Original result graph and inherited storage
+// restored; result/range homes and SIMD allocation remain.
+// Round 196: Normalizer inline/noinline/combined/forceinline declarations, each with original
+// and post-normalization up lifetime, 184 each. Original declarations and body restored.
+// Round 28 (m3 lane 12): retail returns a short (`mov ax, word ptr [esp + 8]`) through separate result
+// exits; the 3/2 choice as if/else stores gives those exits and moves result toward retail's +0 slot
+// (241, 1327 bytes); with a short return 245 (needs 0x25c9d0's declaration changed too). Motion declared
+// before delta 184; result before the references 184; maxima as conditionals 184; a/b beside the maxima 184.
+// Ours also keeps secondary/primary in xmm registers across the seat loop; retail compares them in memory.
+// Lane 9 r25: retail returns a short (`mov ax, word ptr [esp + 8]` at each exit) from a long result
+// slot; the prototype in src/unknown_25d690.cpp (another lane's file this round) keeps the return
+// long. Result renamed level 184 and secondary/primary renamed 184 (identical code: names do not
+// move these slots); range read after delta 184; primary declared before secondary 184.
+// Round 30 (m3 lane 12): retail's frame swaps result and range (result at frame 0x0, range at 0x20 above the
+// motion vector; ours the other way), and range comes in xmm0 with delta in xmm5-7 (ours delta xmm2-4, range
+// xmm5). Range renamed to sort after result 184 (identical); range declared at function scope before/after
+// result 184/184; range read after the delta 184; delta declared before range 184.
+// Round 84: retail's `mov ax, word ptr` exits need a short return, and 0x264b50's declaration sits in
+// a file another lane holds this round; in the seat loop retail compares and stores secondary/primary
+// in memory (`comiss xmm0, [mem]`) where ours copies them through xmm1/xmm2. a/b at the seat-loop top
+// 184; secondary/primary at function scope 184; delta at function scope 184; indexed seats instead of
+// the cursor 211; seat array at the facing-block scope 184.
+// Lane 4 r106 (fast): the six parameter reference locals had no effect (removed: 184, one product's
+// operands swap); without the `volatile` result 241 (the result still lives in memory as a spilled long,
+// so retail's `mov ax, word ptr` exits need only the short return: BLOCKED-BY the 0x25c9d0 declaration in
+// src/unknown_25d690.cpp); the clipped delta as point + motion * amount through a point helper and
+// vector3d_from_points3d 254, with the first delta and motion through vector3d_from_points3d too 255.
 // @retail 0x263810
-short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
+long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
-	long const *actor_reference = &actor_index;
-	point3f const *const *endpoint_reference = &endpoint;
-	char const *posture_reference = &posture;
-	short const *mode_reference = &mode;
-	bool const *facing_reference = &use_facing;
-	bool *const *range_reference = &out_of_range;
-	volatile short result = 0;
+	volatile long result = 0;
 	if (mode == 0 || mode == 1)
 	{
 		s_actor_view *actor = actor_get(actor_index);
@@ -422,7 +475,7 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 			delta.i = point->x - origin->x;
 			delta.j = point->y - origin->y;
 			delta.k = point->z - origin->z;
-			if (*endpoint_reference && !actor->unknown007)
+			if (endpoint && !actor->unknown007)
 			{
 				vector3f motion;
 				motion.i = endpoint->x - point->x;
@@ -436,13 +489,12 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 					real amount;
 					if (function_26d370(point, &motion, &plane, &amount) && !(0.0f > amount))
 					{
-						real clipped_amount = amount;
-						if (clipped_amount > 1.0f) clipped_amount = 1.0f;
-						if (clipped_amount > 0.0f)
+						if (amount > 1.0f) amount = 1.0f;
+						if (amount > 0.0f)
 						{
-							delta.i = motion.i * clipped_amount + point->x - origin->x;
-							delta.j = motion.j * clipped_amount + point->y - origin->y;
-							delta.k = motion.k * clipped_amount + point->z - origin->z;
+							delta.i = motion.i * amount + point->x - origin->x;
+							delta.j = motion.j * amount + point->y - origin->y;
+							delta.k = motion.k * amount + point->z - origin->z;
 						}
 					}
 				}
@@ -453,7 +505,7 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 				real scale = 1.0f;
 				if (!(*settings & 1))
 				{
-					switch (*posture_reference)
+					switch (posture)
 					{
 					case 0: scale = 0.3f; break;
 					case 1: scale = 0.7f; break;
@@ -463,9 +515,9 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 				if (scaled_range * scaled_range > distance_squared)
 				{
 					real secondary, primary;
-					if (!actor->unknown007 && *facing_reference)
+					if (!actor->unknown007 && use_facing)
 					{
-						function_263740(*actor_reference, &delta, (vector3f *)((byte *)actor + 0x2a8),
+						function_263740(actor_index, &delta, (vector3f *)((byte *)actor + 0x2a8),
 							(vector3f *)((byte *)actor + 0x2b4), (vector3f *)((byte *)actor + 0x2c0),
 							range, scale, &secondary, &primary);
 						long object_index = *(long *)((byte *)actor + 0x26c);
@@ -474,7 +526,7 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 							s_object_seat seats[64];
 							short count = function_c8b80(object_index, seats, 64);
 							s_object_seat *seat = seats;
-							for (short i = 0; i < count; ++i, ++seat)
+							for (short i = 0; i < count; ++i)
 							{
 								long occupant = function_c8f60(seat->object_index, seat->seat_index);
 								if (occupant != NONE)
@@ -488,11 +540,12 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 										function_30bf0(&side);
 										cross3f(forward, &side, &up);
 										real a, b;
-										function_263740(*actor_reference, &delta, forward, &side, &up, range, scale, &a, &b);
+										function_263740(actor_index, &delta, forward, &side, &up, range, scale, &a, &b);
 										if (a > secondary) secondary = a;
 										if (b > primary) primary = b;
 									}
 								}
+								++seat;
 							}
 						}
 					}
@@ -501,19 +554,19 @@ short function_263810(point3f const *origin, long actor_index, point3f const *po
 						primary = scaled_range;
 						secondary = scaled_range * 0.7f;
 					}
-					if (*mode_reference == 0 && secondary * secondary > distance_squared)
+					if (mode == 0 && secondary * secondary > distance_squared)
 						result = distance_squared < 36.0f ? 3 : 2;
 					else if (primary * primary > distance_squared)
 						result = 1;
 				}
 				else
 				{
-					if (*range_reference) **range_reference = true;
+					if (out_of_range) *out_of_range = true;
 				}
 			}
 			else
 			{
-				if (*range_reference) **range_reference = true;
+				if (out_of_range) *out_of_range = true;
 			}
 		}
 	}
@@ -1613,9 +1666,22 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Native cursor/selection/all datum handles 684/684/684; existing prop receiver 707;
 // single strength observation 685; all handles with prop/strength/both 707/685/732.
 // Original complete body and all inherited input/helper declarations restored.
+// Round 212: Common notice dispatch with short/word/long/dword selected event 734 each;
+// player admission shared before selection 711 each. Frame 0x7c remains; original calls restored.
 // Round 376: Native transform pointer/value 684/774; all nine row products with
 // raw/pointer/value receivers 684/684/774; direct output with native pointer/value/value-and-
 // products 717/724/724. Calibrated fast; original body restored.
+// Round 140: Sequential absolute/relative velocity workspace with parent observation/shared player
+// ordinal/native established interactions 701/701/701/701/683/683/683/683; native visible/positive/retain
+// combinations and full-width player slot on that graph 682/704/682/707/685/707/710/706. Best 682 gains only
+// two, frame 0x74 versus 0x80; all original vectors, observations, result widths, ordinal lifetimes and input
+// access restored.
+// Round 354: shared dot at absolute/relative/facing/absolute-relative/absolute-facing/relative-facing/all
+// scoring sites 684 each; all with native signed-word maximum 707. Original complete body restored.
+// Native-word established/visible, positive, both, retain, pair-retain, positive-retain,
+// all scoring, all six predicates 699/711/728/684/703/715/732/751 (calibrated fast).
+// Word established/visible separately 694/685; pair with short best level/early
+// sentinels 700/700. Established word recovers frame 0x80, but all gains fail; restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

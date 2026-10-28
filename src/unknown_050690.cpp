@@ -189,6 +189,19 @@ static __forceinline real noise_curve_value(const s_noise_curve *curve, real inp
 // Round 171 reduced control 680: short exponent 699; coefficient aggregate 680; symmetric weighted products
 // 691; short/aggregate 699; short/products 698; aggregate/products 691; all native boundaries 698; readonly
 // coefficients/native boundaries 698.
+// Round 174 reduced control 680: native curve reference 680; endpoints after saturation 681;
+// named remap span 680; reference/late 681; reference/span 680; late/span 681; all 681;
+// all with named scaled range 693. Original curve producer restored; full 626 baseline,
+// unaligned 0x1490 frame and stacked mode remain.
+// Stride, level seed, random state, seed offset, point count, level count, reciprocal count,
+// and random/level seed slot names 680 each (fast control 680); original names restored.
+// Round 78: BLOCKED-BY 0x508d0 (the only retail caller, a stub in a contributor range): the build's
+// stand-in is our only caller, and with it in the image LTCG neither realigns the frame nor passes the
+// flag in a register (the fast image, without the stand-in, realigns either way). Retail's order is
+// (seed, definition, draw, basis, amplitude, points) with the flag in CL, i.e. the flag declared last:
+// that reorder 625 plain; with `definition->exponent - 2 < 0 ? 0 : definition->exponent - 2` (retail's
+// add -2/xor/test/setl sequence exactly) 632 plain; ternary/else-first/read-first exponent forms 687/687/673
+// fast. The flag stays a stack load into AL in every form.
 // @retail 0x516d0
 long __stdcall function_516d0(bool reduced, dword seed,
 	const s_noise_draw_definition *definition, const s_random_draw *draw,

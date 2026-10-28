@@ -170,7 +170,8 @@ s_button_block *function_253cc8(c_class_19b8b1 *button)
 	return result;
 }
 
-// score 37 (was 37): height conversion and independent-axis SIMD homes still differ.
+// score 33 (was 37): the source width is stored after the target bounds are read, as retail
+// orders it. Before that: height conversion and independent-axis SIMD homes still differ.
 // height word move and independent-axis SIMD residency still differ.
 // Native short height retained at retail length. Real screen offsets
 // x/y/both/early 103/103/102/114; short width/height/both 40/37/119;
@@ -229,9 +230,9 @@ void c_class_19b8b1::v4(long screen_rect_address)
         real width = element->width;
         short height = element->height;
         from.x0 = from.y0 = 0.0f;
-        from.x1 = width;
         from.y1 = height;
         get_real_bounds((box2f *)&to);
+        from.x1 = width;
         real px = *(short *)definition->unknown2c + to.x0;
         to.x0 = x + px;
         to.x1 = x + (width + px);
@@ -371,17 +372,6 @@ void c_class_19b8b1::v3()
 	c_class_1a2c81::v3();
 }
 
-// score 14 (was 14): common sound tail sits after both direction tails;
-// tried guarded event arms 16f; primary owned fallback 50f; guards and primary fallback 50f;
-// local failure returns 22f; boolean sound 33f; byte sound 33f; sound before actions 39f;
-// guarded boolean sound 33f.
-// the shared sound tail follows both action tails rather than separating them;
-// default sound 51; shared action groups 43; reversed action groups 45; shared actions and
-// default sound 65; sound selection result 16; single result exit 14; shared event type 50;
-// shared direction flags 40; sound call and return in every arm 24; primary arm with its own
-// sound and a shared sound 0 after the chain 24; sound selector before the action 36; inverted
-// flag tests with else goto 14; direction chain nested with one sound assignment 24;
-// permuter 600 s found nothing.
 // @retail 0x2540e8
 bool c_class_19b8b1::v10(s_widget_event *event)
 {
@@ -426,7 +416,8 @@ bool c_class_19b8b1::v10(s_widget_event *event)
 			goto not_handled;
 		}
 		v9();
-		sound = 0;
+		function_236299(0);
+		return true;
 	}
 	else
 	{

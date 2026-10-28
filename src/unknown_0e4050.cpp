@@ -28,10 +28,15 @@ struct s_e4050_object_header
 	s_e4050_object *object;
 };
 
+// score 18 (was 30): retail holds the constant 1 in edx (a dword) and reuses it for both flag
+// tests, the state compare and the return (mov eax, edx); ours tests with immediates and returns
+// through setne. A long result 18; a bool result 28; return 1 / 0 30; the flags through word,
+// dword or long bitfield views 30 (18 with the long result).
 // @retail 0xe4050
 bool function_e4050(long object_index)
 {
 	s_e4050_object *object = ((s_e4050_object_header *)g_4e0300->data)[object_index & 0xffff].object;
+	long result = 0;
 
 	if (!TEST_FIELD_BIT(object->flag_c1_0) && TEST_FIELD_BIT(object->flag_348_0))
 	{
@@ -49,11 +54,11 @@ bool function_e4050(long object_index)
 			if (object->state_3dc == 1 || object->state_3dc == 3)
 			{
 				if (object->parent_index == NONE)
-					return true;
+					result = 1;
 			}
 		}
 	}
-	return false;
+	return result != 0;
 }
 
 /* inline keeps it out of the callers' register tracking: retail's callers
@@ -83,29 +88,10 @@ real function_12aff0(real a, real b, real c, bool flag)
 c_type_4e7709 g_479868;
 c_type_4e7709 g_479874;
 
-struct s_137bd0_tag_instance
-{
-	dword group_tag;
-	byte unknown04[12];
-};
-
 // @retail 0x137bd0
 c_type_4e7709 *function_137bd0(long tag_index)
 {
-	c_type_4e7709 *result = 0;
-
-	switch (((s_137bd0_tag_instance *)g_4e3b44)[(short)tag_index].group_tag)
-	{
-	case 'prt3':
-		result = &g_479868;
-		break;
-	case 'PRTM':
-		result = &g_479874;
-		break;
-	}
-	if (result)
-		result->initialize(tag_index);
-	return result;
+	return particle_object_for_tag(tag_index);
 }
 
 // @retail 0x15e020

@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "unknown_0259a0.h"
 #include "unknown_20fe20.h"
+#include "normalize3d.h"
 #include <float.h>
 
 real function_30bf0(vector3f *v);
@@ -20,7 +21,7 @@ struct s_transition_settings
 {
     byte unknown00[0x80];
     real speeds[6];
-    real maximum_rises[6];
+    real maximum_drops[6];
     real_bounds type_bounds[3];
     byte unknownc8[0xe0 - 0xc8];
     real_bounds mode_bounds[2];
@@ -64,25 +65,24 @@ bool function_26f150(short type, point3f const *start, point3f const *end,
     point3f const *alternate_start, point3f const *alternate_end)
 {
     real speed = 0.f;
-    s_transition_globals *globals = (s_transition_globals *)g_4e034c;
-    if (type >= 0 && type < 6 && globals && globals->count > 0)
-        speed = globals->settings->speeds[type];
-    if (end->z > start->z || (alternate_start && alternate_end && alternate_start->z > alternate_end->z))
+    if (type >= 0 && type < 6 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
+        speed = ((s_transition_globals *)g_4e034c)->settings->speeds[type];
+    if (start->z > end->z || (alternate_start && alternate_end && alternate_start->z > alternate_end->z))
     {
         real maximum = 0.f;
-        if (type >= 0 && type < 6 && globals && globals->count > 0)
-            maximum = globals->settings->maximum_rises[type];
-        real rise = end->z - start->z;
-        if (alternate_start && alternate_end && !(rise > alternate_start->z - alternate_end->z))
-            rise = alternate_start->z - alternate_end->z;
-        if (maximum != 0.f && !(maximum > rise))
+        if (type >= 0 && type < 6 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
+            maximum = ((s_transition_globals *)g_4e034c)->settings->maximum_drops[type];
+        real drop = start->z - end->z;
+        if (alternate_start && alternate_end && !(drop > alternate_start->z - alternate_end->z))
+            drop = alternate_start->z - alternate_end->z;
+        if (maximum != 0.f && !(maximum > drop))
             return false;
     }
     vector3f direction;
     bool result = function_fa1a0(speed, 1.f, start, end, NULL, NULL, NULL, true,
         &direction, NULL, NULL, NULL, NULL, NULL);
     if (result && alternate_start && alternate_end)
-        result = function_fa1a0(speed, 1.f, alternate_end, alternate_start, NULL, NULL, NULL,
+        result = function_fa1a0(speed, 1.f, alternate_start, alternate_end, NULL, NULL, NULL,
             true, &direction, NULL, NULL, NULL, NULL, NULL);
     return result;
 }
@@ -100,17 +100,16 @@ real function_26f290(short type)
 // @retail 0x26f2d0
 bool function_26f2d0(s_path_settings const *settings, point3f const *start, point3f const *end)
 {
-    long flags = ((dword)settings->unknown04 >> 10) & 6;
-    s_transition_globals *globals = (s_transition_globals *)g_4e034c;
     bool result = false;
+    long flags = ((dword)settings->unknown04 >> 10) & 6;
     for (short i = 0; i < 3; i++)
     {
-        if ((flags & (1 << i)) && i >= 0 && i < 3 && globals && globals->count > 0)
+        if ((flags & (1 << i)) && i >= 0 && i < 3 && ((s_transition_globals *)g_4e034c) && ((s_transition_globals *)g_4e034c)->count > 0)
         {
-            real lo = globals->settings->type_bounds[i].lo;
-            real hi = globals->settings->type_bounds[i].hi;
+            real_bounds bounds = { ((s_transition_globals *)g_4e034c)->settings->type_bounds[i].lo,
+                ((s_transition_globals *)g_4e034c)->settings->type_bounds[i].hi };
             real height = end->z - start->z;
-            result = height >= lo && height <= hi;
+            result = height >= bounds.lo && height <= bounds.hi;
             if (result) break;
         }
     }
@@ -120,17 +119,16 @@ bool function_26f2d0(s_path_settings const *settings, point3f const *start, poin
 // @retail 0x26f360
 bool function_26f360(s_path_settings const *settings, point3f const *start, point3f const *end)
 {
+    bool result = false;
     long flags = settings->unknown04 & 3;
     s_transition_globals *globals = (s_transition_globals *)g_4e034c;
-    bool result = false;
     for (short i = 0; i < 2; i++)
     {
         if ((flags & (1 << i)) && i >= 0 && i < 2 && globals && globals->count > 0)
         {
-            real lo = globals->settings->mode_bounds[i].lo;
-            real hi = globals->settings->mode_bounds[i].hi;
+            real_bounds bounds = { globals->settings->mode_bounds[i].lo, globals->settings->mode_bounds[i].hi };
             real height = end->z - start->z;
-            result = height >= lo && height <= hi;
+            result = height >= bounds.lo && height <= bounds.hi;
             if (result) break;
         }
     }
@@ -182,17 +180,22 @@ short function_26fe20(long object_index, s_object_marker *markers, short capacit
     return count;
 }
 
+/* the point at distance t along a vector from a point */
+static inline void point_along_vector(point3f const *point, vector3f const *vector, real t, point3f *result)
+{
+    result->x = vector->i * t + point->x;
+    result->y = vector->j * t + point->y;
+    result->z = vector->k * t + point->z;
+}
+
 // @retail 0x270130
 bool function_270130(s_object_marker const *marker, point3f const *position, real margin, point3f *out)
 {
     if (marker->unknown6c > 0.f)
     {
         vector3f delta;
-        delta.k = position->z - marker->matrix.position.z;
-        delta.j = position->y - marker->matrix.position.y;
-        delta.i = position->x - marker->matrix.position.x;
-        real distance = marker->matrix.up.k * delta.k + marker->matrix.up.j * delta.j +
-            delta.i * marker->matrix.up.i;
+        vector3d_from_points3d(&marker->matrix.position, position, &delta);
+        real distance = dot3f(&delta, &marker->matrix.up);
         if (distance < 0.f) distance = 0.f;
         else if (distance > marker->unknown6c) distance = marker->unknown6c;
         if (marker->unknown6c > margin * 2.f)
@@ -205,18 +208,31 @@ bool function_270130(s_object_marker const *marker, point3f const *position, rea
             if (distance < 0.f) distance = 0.f;
             else if (distance > marker->unknown6c) distance = marker->unknown6c;
         }
-        out->x = distance * marker->matrix.up.i + marker->matrix.position.x;
-        out->y = distance * marker->matrix.up.j + marker->matrix.position.y;
-        out->z = distance * marker->matrix.up.k + marker->matrix.position.z;
+        point_along_vector(&marker->matrix.position, &marker->matrix.up, distance, out);
     }
     else
         *out = marker->matrix.position;
     return true;
 }
 
+// score 20 (was 20): Flags promotion and marker-query/loop-entry scheduling remain; protected helper interface unchanged.
+// Alignment pointer snapshot 55; actor point snapshot 131; direct marker indexing 20;
+// selected marker memcpy 20; unsigned-word ordinal 111; long best index 76;
+// entry best sentinel 46; both vector observations 114.
+// retail passes the marker flags to 0x26fbf0 as a 16-bit argument
+// (`xor edx, edx; mov dx, [eax + 0x1c]`); declaring that parameter `word` gives 4 and keeps
+// 0x26fbf0 matched, but 0x26fbf0 is contributor code: BLOCKED-BY 0x26fbf0. The squared distance
+// through vector3d_from_points3d/length_sq3f 30; difference orders xzy/yzx/zxy/zyx 24/26/26/24;
+// best before best_distance 20; the marker query before both 99; dot3f alignment 26; sum
+// x + y + z 20; nested point test 20; flags through a word local 22; alignment k + i + j 20;
+// the markers array after best 20; long count 111; const character 20.
+// A direct word cast 20; the existing orientation predicate forced inline 22; count declared before
+// best_distance and assigned in place 20; const count 20; the loop ordinal declared outside 20;
+// const actor 20; success result assigned before the point query 106; const marker 20.
 // @retail 0x26fc80
 bool function_26fc80(long actor_index, long object_index, real distance, void *path, point3f *point)
 {
+    bool result = false;
     s_actor_view *actor = actor_get(actor_index);
     s_transition_character *character = (s_transition_character *)function_1e4a50(actor->unknown054);
     if (character)
@@ -232,8 +248,8 @@ bool function_26fc80(long actor_index, long object_index, real distance, void *p
                 marker->matrix.forward.k * g_4687b0->k + g_4687b0->j * marker->matrix.forward.j;
             if (alignment > 0.95f)
             {
-                real y = actor->position.y - marker->matrix.position.y;
                 real x = actor->position.x - marker->matrix.position.x;
+                real y = actor->position.y - marker->matrix.position.y;
                 real z = actor->position.z - marker->matrix.position.z;
                 real squared = z * z + y * y + x * x;
                 if (best_distance > squared) { best_distance = squared; best = i; }
@@ -245,10 +261,10 @@ bool function_26fc80(long actor_index, long object_index, real distance, void *p
             *out = markers[best];
             if (point && !function_270130(out, &actor->position, distance, point))
                 *point = out->matrix.position;
-            return true;
+            result = true;
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x26fe90
@@ -310,41 +326,50 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
+// score 31 (was 154): frame 0xe34 and retail length agree; collector flags, scan/selected-index
+// comparison and copy widths, and alignment-dot j ordering remain. Earlier at 154:
+// the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
+// term loads g_4687b0 first where retail loads the marker. Tried: single exit 167;
+// long best 199; long loop index 202; point names 199; vector helper 202;
+// single exit with long best 181; the helpers with the alignment written out 154 (loop
+// pointer based at +0x4c); dot3f operands swapped 154; 0.95f < dot 154; a named alignment
+// 154; the alignment through markers[i] 154 (more x87 differences); both dots written out
+// with the delta and normalize helpers 141 (14 more instructions off once aligned).
+// Input-only marker/actor/character/all receivers 154 each; wide count 106; word selection 156;
+// word induction 106; combined native scan 113; wide count with wide scan/selection/both 66/120/33;
+// actual marker cursor with wide count 67, with wide scan 63, with short count 153;
+// paired wide scan/selection with short count 31 kept; unsigned-word scan on that graph 120
+// with either count; all-wide marker cursor 30 (sub-threshold addition, discarded).
+// Candidate/delta/selected-point uninitialized entry storage, all seven subsets and all three with the native
+// marker array: 154/154/154/154/154/154/154/154. Protected query promotion, loop padding and dot allocation
+// remain
+// original declaration scopes restored.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {
+    bool result = false;
     s_actor_view *actor = actor_get(actor_index);
     s_transition_character *character = (s_transition_character *)function_1e4a50(actor->unknown054);
     if (character)
     {
         s_object_marker markers[32];
         real best_distance = FLT_MAX;
-        short best = NONE;
+        long best = NONE;
         point3f best_point;
         short count = function_26f930(object_index, markers, 32, character->marker_flags);
-        for (short i = 0; i < count; i++)
+        for (long i = 0; i < count; i++)
         {
             s_object_marker *marker = &markers[i];
-            if (marker->matrix.forward.i * g_4687b0->i + marker->matrix.forward.k * g_4687b0->k +
-                marker->matrix.forward.j * g_4687b0->j > 0.95f)
+            if (dot3f(&marker->matrix.forward, g_4687b0) > 0.95f)
             {
                 point3f candidate;
                 function_270130(marker, &actor->position, distance, &candidate);
                 vector3f delta;
-                delta.i = actor->position.x - candidate.x;
-                delta.j = actor->position.y - candidate.y;
-                delta.k = actor->position.z - candidate.z;
-                real length = (real)sqrt(delta.k * delta.k + delta.j * delta.j + delta.i * delta.i);
-                if (!(fabs(length) < 0.0001f))
-                {
-                    real inverse = 1.f / length;
-                    delta.i = inverse * delta.i;
-                    delta.j = delta.j * inverse;
-                    delta.k = delta.k * inverse;
-                }
-                else length = 0.f;
-                real dot = delta.k * marker->matrix.left.k + delta.j * marker->matrix.left.j +
-                    delta.i * marker->matrix.left.i;
+                vector3d_from_points3d(&candidate, &actor->position, &delta);
+                real length = normalize3d(&delta);
+                real dot = dot3f(&delta, &marker->matrix.left);
                 length *= (real)(3.f / (1.f + 2.f * fabs(dot)));
                 if (best_distance > length)
                 {
@@ -358,10 +383,10 @@ bool function_26f990(long actor_index, long object_index, real distance, s_objec
         {
             *out = markers[best];
             if (point) *point = best_point;
-            return true;
+            result = true;
         }
     }
-    return false;
+    return result;
 }
 
 // @retail 0x270240
@@ -387,7 +412,6 @@ bool function_2702a0(long actor_index, long mode, long set, long target_mode, lo
     long *location, vector3f *out_forward, long *node_index)
 {
     /* retail keeps out_position and position on the stack */
-    point3f *const *reference = &out_position;
     bool result = false;
     point3f const *const *position_reference = &position;
     s_actor_view *actor = actor_get(actor_index);
@@ -397,7 +421,7 @@ bool function_2702a0(long actor_index, long mode, long set, long target_mode, lo
     {
         function_141590(&matrices.local, &matrices.inverse);
         function_142a60(&matrices.source, &matrices.inverse, &matrices.local);
-        if (*reference) **reference = matrices.local.position;
+        if (out_position) *out_position = matrices.local.position;
         if (out_forward) *out_forward = matrices.local.forward;
         if (location || node_index)
         {
@@ -461,6 +485,21 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
+// score 278 (was 278): frame 0x40 agrees; early pathfinding EBX ownership and float scheduling differ.
+// entry root retention and floating-point scheduling differ;
+// result first 299; surface first 299; vector names 299; vector helper 299;
+// case order 300; separate vector declarations 299.
+// Round 24: trace-time state reload, mutable entry, both, coherent pathfinding/surface swap,
+// direct distance arguments and direct projected-origin 299 each; c/b/a/d pointer
+// declarations 278; direct case-5 direction 278 (selected with the declaration order).
+// Round 210: Four consistent vertex-index values in word/long/dword 338/344/344; word/long with
+// the actor value at entry 338/344; word/long with both shared differences 346/360;
+// both shared differences on the original c/b/a/d graph 297. All restored.
+// Entry vertex table at case/dispatch scope 280/340; ordinary result 340;
+// case table with ordinary result 342; early actor predicate 278; common case-5
+// outputs 404, with case table 404, with ordinary result 398. Original body restored.
+// Actor-valid direction scope with whole-vector initialization, readonly surface and
+// ordinary-result interactions: 284/334/284/334/363/357/363/357; restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,
@@ -479,9 +518,9 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
         if (parent_point && (long)surface->vertices[0] != NONE && (long)surface->vertices[1] != NONE &&
             (long)surface->vertices[2] != NONE && (long)surface->vertices[3] != NONE)
         {
-            point3f const *a = &pathfinding->vertices[surface->vertices[0]];
-            point3f const *b = &pathfinding->vertices[surface->vertices[1]];
             point3f const *c = &pathfinding->vertices[surface->vertices[2]];
+            point3f const *b = &pathfinding->vertices[surface->vertices[1]];
+            point3f const *a = &pathfinding->vertices[surface->vertices[0]];
             point3f const *d = &pathfinding->vertices[surface->vertices[3]];
             vector3f first, second;
             first.i = b->x - a->x;
@@ -510,12 +549,8 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
                     else fraction = 0.5f;
                     real first_distance = fraction * first_length;
                     real second_distance = fraction * second_length;
-                    start_out->point.x = first.i * first_distance + a->x;
-                    start_out->point.y = first.j * first_distance + a->y;
-                    start_out->point.z = first.k * first_distance + a->z;
-                    out->point.x = second.i * second_distance + c->x;
-                    out->point.y = second.j * second_distance + c->y;
-                    out->point.z = second.k * second_distance + c->z;
+                    point_along_vector(a, &first, first_distance, &start_out->point);
+                    point_along_vector(c, &second, second_distance, &out->point);
                     start_out->output_index = parent_point->output_index;
                     out->output_index = surface->destination_output;
                     *parent_node_index_out = parent_node_index;
@@ -536,8 +571,7 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     case 5:
         {
             point3f const *position = &pathfinding->vertices[surface->vertices[2]];
-            point3f const *direction_point = &pathfinding->vertices[surface->vertices[3]];
-            vector3f direction = *(vector3f const *)direction_point;
+            vector3f direction = *(vector3f const *)&pathfinding->vertices[surface->vertices[3]];
             direction.i = direction.i * -1.f;
             direction.j = direction.j * -1.f;
             direction.k = direction.k * -1.f;
@@ -570,7 +604,7 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
                 (vector3f const *)direction_point, NULL, (long *)start_out, NULL, parent_node_index_out))
             {
                 s_path_trace_result trace;
-                function_26c590(data, position, parent_node_index, NONE,
+                function_26c590((s_pathfinding_data *)state->pathfinding, position, parent_node_index, NONE,
                     (vector3f const *)direction_point, 0.2f, NULL, &trace);
                 start_out->point = trace.point;
                 start_out->output_index = parent_point->output_index;

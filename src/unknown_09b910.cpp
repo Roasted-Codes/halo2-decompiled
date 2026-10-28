@@ -973,7 +973,7 @@ bool c_projectile_effect_event::v10(long a, void *data, s_bitstream *stream)
 
 struct s_effect_owner;
 __declspec(noinline) void *function_122c10(long group_tag, long tag_index);
-void function_fcbc0(point3f const *point, vector3f const *normal, long definition_index,
+void function_fcbc0(long definition_index, point3f const *point, vector3f const *normal,
  s_effect_owner const *owner, bool attached, bool airburst);
 void function_fcdd0(long definition_index, point3f const *point, vector3f const *forward);
 void function_fcea0(long effects_index, point3f const *point, vector3f const *direction,
@@ -987,8 +987,8 @@ bool c_projectile_effect_event::v11(long a, long const *entities, long c, void c
  if (event->flags && event->object_name != NONE && function_122c10(0x70726f6a, event->object_name))
  {
   if (event->flags & 3)
-   function_fcbc0((point3f const *)event->position, (vector3f const *)event->direction,
-    event->object_name, 0, (event->flags & 2) != 0, false);
+   function_fcbc0(event->object_name, (point3f const *)event->position,
+    (vector3f const *)event->direction, 0, (event->flags & 2) != 0, false);
   if (event->flags & 8)
    function_fcdd0(event->object_name, (point3f const *)event->position, (vector3f const *)event->direction);
   if (event->flags & 4)
@@ -1221,8 +1221,8 @@ void function_107840(long device_index, long unit_index);
 bool __stdcall function_cd4e0(long unit_index, short hand, bool flag);
 __declspec(noinline) void *function_122c10(long group_tag, long tag_index);
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
-    point3f const *point, vector3f const *normal, long index, bool attached, long object_index,
-    short node_index, bool alternate);
+    point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
+    long node_index, bool alternate);
 void function_fd560(long projectile_index, long object_index, short node_index,
     point3f const *point, vector3f const *forward);
 

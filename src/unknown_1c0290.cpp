@@ -192,9 +192,26 @@ short __stdcall function_1c04f0(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 143 (was 143): retail inlines function_1f4460, which lives in a file
-// that is not mine,
-// so our frame is 16 bytes smaller and the call is still there.
+// score 143 (was 143): Frame 0xa0 versus 0xb0; native homes, request/collision argument
+// allocation and point/goal publication differ. The movement helper now expands; the current
+// shared collision output is 0x4c while the writer reaches the word at +0x5a.
+// Native slot data 143; local full collision output 140 (frame 0xb0), with slot data 140;
+// complete point setter/vector setter/position-add/both vector producers 140 each;
+// material initialized at declaration 138; native slot/point/vector producers 140.
+// Partial unit copy 104, with aggregate target or CRT point copy 104 each (all restored);
+// CRT point copy/aggregate target alone 140/140; aggregate target/early material 138;
+// uniform unit copy at entry 234, after position 161, with early material/slot data 161/161.
+// frame 0xa0 versus 0xb0; action/collision argument registers
+// and destination publication scheduling differ. The movement helper already expands.
+// Earlier: complete 0x5c collision 140, with early material 138; uniform unit index
+// captures 234/161; native slot-data 143; target/request/point/probe names on full output 140.
+// Full output with shared scaled target, whole-point initialization or shared distance
+// difference, alone and together with native slot-data: eight forms 140 each; restored.
+// frame 0xa0 versus 0xb0; target copy and goal registers differ.
+// Movement helper already inlines; the collision output still reserves 0x4c, not 0x5c.
+// Round 210: Complete shared collision extent with native slot-data access 140; destination, request,
+// paired destination/request, hit/probe, both point names, target/request/probe names and
+// all workspace names 140 each. The three-point frame correction is restored.
 // @retail 0x1c0670
 bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 {
@@ -265,6 +282,10 @@ bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 // opposite
 // registers here, and the shared actor_reset_state helper stores its fields in
 // another order.
+// Round 272: native slot-data block 26; with one clock 34, chained false stores 26,
+// readonly actor 26, late actor 36, actor at use 36; existing reset with data/full slot 85/85.
+// All bodies/types restored; entry actor/slot and reset-store scheduling remain.
+// another order (retail keeps the two NONE stores between the zero stores).
 // @retail 0x1c0430
 bool __stdcall function_1c0430(long actor_index, s_slot *slot)
 {

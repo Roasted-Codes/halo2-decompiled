@@ -3878,6 +3878,20 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 131: word special/different/both/team/special-team/different-team/all
 // decision carriers 477/528/540/470/477/528/540; dword subtype 470.
 // Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
+// Round 235: elapsed/timer/classification consumption scopes, all seven combinations 470 each; statistics-to-message consumption scope 470.
+// Complementary category bool/byte/short/long 470/470/477/550; with self-player result
+// 470, opposing-team result 526, both 526, word category with both 480. Original
+// category, decision bytes and all event/timing work restored; extra frame dword remains.
+// Round 239: actual penalty/ticks/both field references 469/470/469; existing
+// nonnegative helper with positive selection 518, with penalty/ticks/both references
+// 521/518/521; all with award after engine admission 522. One-point gain dropped;
+// original fields, helpers, shared award update and body restored.
+// Round 225: chained award/subtype defaults at entry, admission and victim lookup 549/548/548;
+// award/message 470, all three at entry 549, subtype/message 549; all three
+// after admission/lookup 548/548. Original result defaults and complete body restored.
+// Round 218: Exhaustive award result, entry declaration with before/after subtype leaves and
+// ordinary/excluded category first 579/591/584/602; selection declaration counterparts 579/591/584/602.
+// All restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4104,7 +4118,7 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-// score 472 (was 472): Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
+// score 440 (was 440): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
 // Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
@@ -4131,6 +4145,28 @@ struct s_score_zone_view
 // zone/charge allocation remain; opening executable body restored.
 // Round 364: Native player/team/both statistics arrays 472/472/472; fresh statistics 686;
 // fresh player 790; both fresh bases 792; native arrays plus fresh statistics/player 686/790.
+// Round 233: own-score text consumption scopes 464; rival scopes 472; all text scopes 472;
+// individual/zone/both iterator consumption scopes 472/472/472; all text plus iterators 472;
+// four native palette/color consumption scopes 472. Minimal own-score scopes retained.
+// Team-only own-text scope 471; individual-only 466 (small gains dropped); both scopes with
+// all palette scopes or both iterator scopes 464/464. Only the two own-text scopes retained.
+// Round 267: On recovered own-text scopes, existing bounded copies for own team/individual/
+// both texts 534/440/536; score publication inside both text scopes 464; copy forms with
+// those scopes 534/440/536; team copy plus team publication scope 534. Keep only the
+// individual own-text bounded-copy call (plain 440, 2688 B); extra scopes restored.
+// Round 241: Consistently retained team-mode result bool/byte/short/long at selection and at team entry:
+// 771/771/745/770/771/771/745/770. Original field reads, output store and complete body restored.
+// Round 207: seven color-helper inline-declaration subsets and all noinline 440 each.
+// Complete returned color values: rival/own/both team, held/free/both zones,
+// all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
+// forms rejected despite the 423 first-transfer recovery. Existing rival output
+// object consumed directly 493. All restored; team-color/zone/charge allocation remains.
+// Round 219: Rival metadata before color, team/individual/both 566/518/566; own score before text
+// alone/with team/with individual/with both 476/545/523/564; all rival metadata before text 590.
+// All restored; native color transfers, zone homes and charge spills remain.
+// Round 209: Returned-color memcpy rival/own/both/zones/all 440 each; overlap-safe rival/own/both copies
+// 548/418/427. Own copy plain 418 but introduces a library call absent from the native retail transfer;
+// discarded as the wrong copy boundary. Frame, palette/zone homes and charge spills remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4209,13 +4245,15 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     display->rival = true;
                 }
                 else { display->rival = false; display->leading = true; }
-                word text[256];
-                text[0] = 0;
-                long mode = g_4e6948->mode_180;
-                if ((mode >= 3 && mode <= 4) || mode == 8) game_engine_format_time(score, text);
-                else function_1630e0(text, (word const *)L"%d", score);
-                wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                display->score_text[7] = 0;
+                {
+                    word text[256];
+                    text[0] = 0;
+                    long mode = g_4e6948->mode_180;
+                    if ((mode >= 3 && mode <= 4) || mode == 8) game_engine_format_time(score, text);
+                    else function_1630e0(text, (word const *)L"%d", score);
+                    wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
+                    display->score_text[7] = 0;
+                }
                 display->score = score;
                 color3f color;
                 display->color = *function_7f720(&color, player->team);
@@ -4255,11 +4293,12 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     display->rival = true;
                 }
                 else { display->rival = false; display->leading = true; }
-                word text[256];
-                text[0] = 0;
-                function_159130(score, text);
-                wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                display->score_text[7] = 0;
+                {
+                    word text[256];
+                    text[0] = 0;
+                    function_159130(score, text);
+                    unicode_string_copy(display->score_text, text, 8);
+                }
                 display->score = score;
                 color3f colors[4];
                 function_7f790(display->teams ? player->team : NONE, false, (s_player_appearance *)((byte *)player + 0x84), colors);
@@ -5163,7 +5202,7 @@ void function_159880(void)
 
 void __stdcall function_d6bc0(long object_index);
 
-// score 153 (was 153): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
+// score 144 (was 144): Frame 0x14 versus 0x18; timer spill and entry-base reloads remain.
 // Frame 0x14 versus 0x18 and timer/base homes remain; delay/reset/radius
 // inline or noinline declarations, separately and together, all 167.
 // Earlier: Frame 0x14 versus 0x18 and countdown/base homes remain; shared
@@ -5198,6 +5237,29 @@ void __stdcall function_d6bc0(long object_index);
 // 153. Independent vector/sum form kept after plain validation; frame and timer/base homes remain.
 // Round 329: eligibility inline/noinline, creation inline/noinline, both inline/noinline,
 // all five call boundaries inline/noinline: all 153; every declaration restored.
+// Round 142: scheduling-scoped timer 148; eligibility-scoped timer 153; wide reset
+// with those timer scopes 188/191; scheduling-scoped word/bool schedule 144/167;
+// scheduling-scoped positive reset bool/long 201/198.
+// Round 206: Nested expiry query/admitted removal 153/153; independent expiry index with either 153/153;
+// nested removal eligibility alone/with query/with admission 153/153/153; independent index plus nested removal 153.
+// Round 166: Complete entry/placement/both byte displacements 172/315/306;
+// with direct countdown 175/325/324; both with later timer/native reset result 324/272.
+// All fast versus unchanged 153; complete original body restored.
+// Round 169: Countdown/spawn timer homes, each with independent displacement/accumulation
+// role names in all four combinations, 153 each. Frame 0x14/0x18 and timer/base homes remain.
+// Round 331: typed scenario/equipment views 153f; time-slice field at each use 243f;
+// views plus field 243f; shared squared length at first/second/both tests 153f each;
+// shared dot products 153f; views/field/length together 243f. All eight restored.
+// Round 144, word-schedule/shared-displacement graph: native eligible entry 176f;
+// external timer reference 144f; both 176f. Countdown-only timer pointer/reference,
+// each with eligible entry, and earlier entry with countdown reference: all 176f.
+// Original body restored; frame 0x14/0x18 and independent timer spill remain.
+// Round 146: Reset short/word/byte/signed-byte carriers 195/195/144/144; with a complete retained radius
+// 230/230/228/228. Original observations and body restored.
+// Lane 3 r142: retail never keeps `entries` in a register and holds the timer pointer in edi (sixth
+// frame slot); ours keeps `entries` in edi and folds the timer. A c_engine_equipment method 144;
+// `entries` read through its address 144; timer pointer before the reset block (used there) 155;
+// char kind with long modifier 178; timer pointer at the loop top 249.
 // @retail 0x15ae70
 void __stdcall function_15ae70(s_netgame_entry_state *entries)
 {
@@ -5210,7 +5272,6 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
     {
         byte *placement = *(byte **)(scenario + 0x124) + i * 0x90;
         if (i % arg_642c39 != g_510c54->game_time % arg_642c39) continue;
-        short *timer = &entries[i].value04;
         long type = NONE;
         c_engine_peer *engine = game_engine_get();
         if (engine)
@@ -5238,12 +5299,13 @@ void __stdcall function_15ae70(s_netgame_entry_state *entries)
                 }
                 if (!reset) ++entries[i].value06;
                 else entries[i].value06 = 0;
-                if (entries[i].value06 > *(short *)(placement + 0x10)) *timer = 1;
+                if (entries[i].value06 > *(short *)(placement + 0x10)) entries[i].value04 = 1;
             }
         }
+        short *timer = &entries[i].value04;
         if (*timer == 0)
         {
-            long schedule = entries[i].index == NONE;
+            short schedule = entries[i].index == NONE;
             if (entries[i].index != NONE)
             {
                 switch (*(short *)(placement + 0x12))

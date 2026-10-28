@@ -4,6 +4,7 @@
 
 #include "unknown_11c920.h"
 #include "globals.h"
+#include "game_loop.h"
 #include <string.h>
 #include <xmmintrin.h>
 
@@ -37,7 +38,9 @@ struct s_request_transition
 struct s_local_player_state_view
 {
 	s_request_transition transitions[32];
-	byte unknown080[0x150 - 0x80];
+	long current_request;
+	long elapsed_ticks;
+	byte unknown088[0x150 - 0x88];
 	s_time_entry requests[4];
 	dword request_flags[8];
 	long version;
@@ -663,59 +666,17 @@ PRIVATE inline long request_weapon(s_player_request_view *player, bool secondary
 }
 
 long function_1469f0(real seconds);
-// score 279 (was 279): frame 4/12, early slot spill and state/displacement/final-cursor homes remain.
-
-// Earlier: frame 4 versus 12; early slot spill, state displacement and transition/flag homes remain.
-// Earlier: Frame 4/12, early slot spill and state/transition/flag homes remain.
-// Earlier: frame 4/12 and slot/state/transition/flag homes remain.
-// frame four/twelve and slot/state/transition homes remain.
-// Integer query 358; three/four indexed timers 342/342; three/four timer cursors 296/291;
-// query with four/three indexed timers 361/361, four cursor timers 311.
-// Reduced control 280; all restored.
-// frame 4/12 and slot/state/transition/flag homes remain.
-// Query, cancellation and execution separate inline/noinline declarations, individually
-// and together, all 280 fast, tying the unchanged preview (full 279). All restored.
-// First +0 is frame 4 versus retail 12; slot/state and final flag/transition carriers still differ.
-// Native signed-word slot 283 fast/290 plain; full-width difficulty 308; shared elapsed 309;
-// cooldown-first 296; fixed initial do scan 340; slot plus cooldown-first 281.
-// frame 4/12 and slot/transition/flag homes remain; cooldown case first reaches retail length.
-// Selected-state orders 01324/02134/03124/02314/03214/04213/04312/40123: 292/287/280/293/298/302/277/280 fast; last order 279 plain.
-// Byte/word request value 298/293; missing-bit test 317; final byte scan 304 (fast control 293).
-// frame 4 versus 12 and slot/state/flag homes remain.
-// Restriction result 293; selection-field references 290; state reference 290;
-// initial state gates 288; byte scan 319; gates with native slot 307 (plain).
-// Shared state displacement late/early/direct flags/with native difficulty 347/353/347/359 fast;
-// entry selected/shared transition/entry descriptor workspaces 280/280/280; native difficulty 286.
-// Unchanged fast control 280 versus plain 279; all executable forms restored.
-// Selected workspace orders entry/current/transition 285, current/entry/transition 287,
-// transition/current/entry 280, entry/transition/current 285, transition/entry/current 280;
-// promoted slot alone/with entry-first 291/296; final post-tested scan 280 (fast control 280). All restored.
-// Round 187: admission exit 280; selection after timers 292; selection phase scope 280;
-// native countdown results alone/with admission/with scope 317/317/317, with late selection 326;
-// admission plus late scoped selection 292. Fast control 280; all restored.
-// Current dispatch/query context: native current/elapsed/both fields 280/280/308 fast;
-// byte/signed-byte restriction 280/280; nested restriction result 286; unsigned/signed-word
-// initial scan 335/335. Reduced control 280, full baseline 279; real state layout and
-// executable body restored.
-// Round 167: Cooldown-first selected-case orders 41023/41203/41302/42013/42103/
-// 42301/43012/43102 score 279/283/279/277/282/290/280/278 fast (control 280, full 279).
-// Best gains at most three; original 40123 order restored; inherited score headers merged.
-// Round 375: Shared active-state 2/3 actions with word/short/long/unsigned state
-// 316/316/325/325; shared 1/2/3 actions 341/341/350/350 (fast control 280).
-// Frame eight versus twelve; shorter bodies and initial slot spill remain; restored.
 // @retail 0x1e6bd0
 void function_1e6bd0(long player_index)
 {
+ long local_index = ((s_player_request_view *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c))->local_player_index;
  s_game_options_view *options = g_4e6948;
- s_player_request_view *player = (s_player_request_view *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c);
- short local_index = player->local_player_index;
- bool restricted = options->state == 1 && (options->difficulty == 3 || options->difficulty == 2);
+ bool restricted = options->state == _game_state_campaign &&
+  (game_options_difficulty(options) == 3 || game_options_difficulty(options) == 2);
  if (local_index != NONE && *((byte *)g_51e9c0 + 0x6c5) && !restricted)
  {
   s_local_player_state_view *state = &((s_local_player_state_view *)g_51e9c0)[local_index];
-  long *current = (long *)((byte *)state + 0x80);
-  long *elapsed = (long *)((byte *)state + 0x84);
-  long selected = *current;
+  long selected = state->current_request;
   if (state->field_195 > 0) --state->field_195;
   if (state->field_196 > 0 && --state->field_196 == 0) state->field_197 = 0;
   if (state->timer198 > 0) --state->timer198;
@@ -742,9 +703,9 @@ void function_1e6bd0(long player_index)
   }
   if (selected != NONE)
   {
-   long old_current = *current;
-   s_request_transition *transition = &state->transitions[selected];
    s_entry_420 *entry = entry_420_get(selected);
+   long old_current = state->current_request;
+   s_request_transition *transition = &state->transitions[selected];
    if (selected != old_current)
    {
     if (old_current != NONE)
@@ -752,23 +713,20 @@ void function_1e6bd0(long player_index)
      state->transitions[old_current].ticks = 0;
      state->transitions[old_current].state = 0;
     }
-    *current = selected;
-    *elapsed = 0;
+    state->current_request = selected;
+    state->elapsed_ticks = 0;
    }
    switch ((word)transition->state)
    {
-   case 4:
-    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
-    break;
    case 0:
     transition->state = 1;
-    transition->ticks = entry ? (short)function_1469f0(*(real *)entry->field_0c) : 0;
+    transition->ticks = entry ? function_1469f0(*(real *)entry->field_0c) : 0;
     break;
    case 1:
     if (function_1e83c0(local_index, selected))
     {
      function_1e8d80(selected, state, entry, transition);
-     *current = NONE;
+     state->current_request = NONE;
     }
     else if (function_1e7ab0(local_index, selected))
     {
@@ -778,30 +736,30 @@ void function_1e6bd0(long player_index)
     {
      transition->state = 0;
      transition->ticks = 0;
-     *current = NONE;
+     state->current_request = NONE;
     }
     break;
    case 2:
-    ++*elapsed;
+    ++state->elapsed_ticks;
     if (function_1e83c0(local_index, selected))
     {
      function_1e8d80(selected, state, entry, transition);
-     *current = NONE;
-     *elapsed = 0;
+     state->current_request = NONE;
+     state->elapsed_ticks = 0;
     }
     else if (!function_1e7ab0(local_index, selected))
     {
      transition->state = 3;
-     transition->ticks = entry ? (short)(g_510c54->field_2_3 * entry->field_08) : 0;
+     transition->ticks = entry ? g_510c54->field_2_3 * entry->field_08 : 0;
     }
     break;
    case 3:
-    ++*elapsed;
+    ++state->elapsed_ticks;
     if (function_1e83c0(local_index, selected))
     {
      function_1e8d80(selected, state, entry, transition);
-     *current = NONE;
-     *elapsed = 0;
+     state->current_request = NONE;
+     state->elapsed_ticks = 0;
     }
     else if (function_1e7ab0(local_index, selected))
     {
@@ -812,20 +770,20 @@ void function_1e6bd0(long player_index)
     {
      transition->ticks = 0;
      transition->state = 0;
-     *current = NONE;
-     *elapsed = 0;
+     state->current_request = NONE;
+     state->elapsed_ticks = 0;
     }
+    break;
+   case 4:
+    if (--transition->ticks <= 0) { transition->ticks = 0; transition->state = 0; }
     break;
    }
   }
   for (long i = 0; i < 32; ++i)
   {
-   if (i != *current)
+   if (i != state->current_request)
    {
-    s_local_player_state_view *local_8da5ff = state;
-    long value = ((local_8da5ff->request_flags[1] & (1 << i)) ? 2 : 0) +
-     ((local_8da5ff->request_flags[0] & (1 << i)) ? 1 : 0);
-    if (value != 3)
+    if (!function_1e7a10(local_index, i))
     {
      switch (i)
      {

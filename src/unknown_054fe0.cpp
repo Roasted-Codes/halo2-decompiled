@@ -1259,7 +1259,16 @@ struct s_player_properties
 
 /* the host gives the players their properties: unique names, and teams when
    the game has teams */
-// score 184 (was 184): Frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// score 184 (was 184): frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
+// Round 75: our zero stays in edx from the parameters test (cmp edi, edx) through both loops, so the
+// name count is spilled and the owner leaves edx. Count increment as its own statement 184; long mask
+// 184; inverted parameters test (clear first) 217; count declared after the index 184; `== 0` memcmp
+// test 184.
+// Round 90: a zero constant stays in edx from the parameters test to the record defaults, so the name count
+// lives in memory (retail: test edi, edi; the count in esi). Requested-record pointer first in the loop 199;
+// current as requested + 1 184; a player-record pointer 184; the record zero-initialised with braces 241;
+// the missing-parameters case as an early return 217.
+// Frame 0xe4 agrees; owner/count/zero allocation and requested cursor remain.
 // Earlier: frame 0xe4 agrees; owner/count registers and requested cursor differ.
 // Fast control 224; owner after getter 243; collected-name end pointer 236;
 // byte/prefix/tail copies 224; tail/byte/prefix copies 224; two-stage team clamp 237.
@@ -1305,6 +1314,58 @@ struct s_player_properties
 // Existing player getter in collection/update/both phases 222/215/219;
 // update getter with word/short collection mask 216/216; native word/short masks
 // alone 184/184; both getters with bounded byte name count 218. All restored.
+// Round 208: positive cache-update scope 184; absent-input exit 217; team metadata first 231;
+// cache/input guards 217; cache/metadata 231; input/metadata and all three 220; all plus wide team 223.
+// Round 214: native array-end traversal collection/update/both 299/344/395; shifted collection/update/both
+// 202/341/347; collected-name output end with collection/both input ends 325/418. All restored.
+// Round 240: literal default groups first-array/second-array/zero-bytes/byte-sentinel/long-sentinel/short-sentinels;
+// orders ACBDEF/ABDEFC/DEFCAB/FCABDE/EABCFD/BFEDCA/CDEFAB/FEDCBA 184/184/186/186/184/186/184/186. Original store order restored.
+// Native short/word/signed-byte/byte collection ordinals 235 each; corresponding
+// update ordinals 227/227/231/231. Both original long traversals restored.
+// Round 179: first/second/both default arrays after name output 194/205/234;
+// two zero bytes after names 197; first/second/both arrays plus bytes 226/232/245;
+// all scalar/array defaults after names 296. Original store phases restored.
+// Round 81: the record's explicit zero stores keep the hoisted zero (a compile-only build without them
+// gives retail's `test edi, edi`); retail takes the first default array from the memset's eax and the
+// second array, team and byte from a fresh ecx. First/second/both default arrays as `real`
+// 214/215/187; getter NULL in an else arm 184 (0x649c0 stops matching); previous-record pointer
+// before the getter 190 (916 bytes). All restored.
+// Round 76: separate counters per loop 184; name loop on the player mask field 184; record declared once
+// before the loops 184; previous record before the parameters getter 190; getter before the owner 225.
+// Round 190: Existing session-data/name-producer/property-update forceinline declarations singly,
+// in three pairs and together 184 each; all three separate noinline declarations 237. Original
+// declarations and body restored; owner/count/zero allocation and requested cursor remain.
+// Round 198: Native parameter block alone/with native cache receiver 184/184;
+// with multi-use requested receiver/both 199/199; bounded word name count on
+// those four graphs 214/214/228/228. Original byte views, count and complete body restored.
+// Round 225: real packed byte-quartet/byte-pair/short-pair declarations
+// 221/204/210; quartet-byte/quartet-short/byte-short pairs 208/217/221;
+// all groups 216, with promoted team 215. Byte-pair form reaches retail length
+// but regresses; original record declaration and team carrier restored.
+// Round 7 (lane 10, plain checks; the fast check builds this differently): the zero in edx is the
+// second loop's hoisted invariant for the dword zero stores (retail uses the memset's eax for the
+// four-long group and a fresh ecx for the three-long group). Three-long group as real 0.0f 215;
+// both groups as memsets 235 (941 bytes; the parameters test becomes `test`, but the zero registers
+// land on the wrong groups); three-long/four-long memset alone 240/240; both memsets reversed 235.
+// Round 66 (plain): no `current` pointer (its fields read through the player entry at each use) 198: retail's
+// owner in EDX, `test` parameters check and requested-record cursor (+0x1138), 917 bytes, but the zero is then
+// hoisted into ESI for the second loop where retail keeps the name count (ESI, reloaded at the latch); with a
+// named requested pointer 199 (890 bytes); with the four-long group as a memset 226, both groups 224 (930
+// bytes, aligned 101 -> 55: the zeros are local again, the name count still in memory); with the mask read
+// from the field 198.
+// Lane 9 r25 (plain; the fast check gives 211 for the unchanged body here): ternary data getter 184
+// (fast) but 0x649c0 30; previous buffer read at each use 184; mask before the names 184; const owner
+// 184; state read at each test 184. Retail holds the owner in edx from the parameters test on, so no
+// zero register is free there.
+// Round 25 on the no-current graph: both byte zeros removed 207; first/second/all
+// redundant zero groups removed 222/207/259; first/second small reset calls 226/229;
+// separate count publication and separate loop indices 198 each. Original body restored.
+// Lane 4 r106 (plain): the 0x40 group is a 16-byte player appearance (bytes) and retail's dword zeros
+// fit small memsets: the 12-byte group's memset then the appearance's give retail's zero block (the
+// big memset's eax for 0x40, a fresh zero for 0x70) with no `current` 224 (930 bytes), with retail's
+// default store order 224; no `current` with both/0x40/0x70 groups typed real 204/179/182 (not real
+// types). The name count stays in memory through the first loop in every form (the per-player memset
+// alone decides it); retail keeps it in esi. Retail also compares the clamped team as a movsx'd long.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

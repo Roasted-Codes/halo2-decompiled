@@ -347,7 +347,7 @@ struct s_path_result_view;
 struct s_29e730;
 struct s_29de21;
 struct s_29e0f9;
-void function_e70b0(long unit_index, short *value);
+short *function_e70b0(long unit_index, short *value);
 long function_1e4a50(long character_index);
 void __stdcall function_26c2d0(long prop_index);
 bool function_1f9490(long actor_index, s_reference reference, s_actor_move_request *request);
@@ -368,7 +368,7 @@ struct s_1f8a70_actor
 	s_1f8a70_frame frame;
 };
 
-// score 399 (was 399): Frame 0x80 agrees; pool/data entry schedule, protected unit-mode boundary and route/result homes remain.
+// score 398 (was 398): frame 0x80 agrees; pool/data staging and returned-unit-output/route/result homes differ.
 // Earlier 399 (was 399): Frame 0x80 agrees; pool/data schedule, protected unit-mode boundary and result/route homes remain.
 
 // Earlier 399 (was 399): Frame 0x80 agrees; pool/data ordering, protected unit-mode boundary and result/route homes remain.
@@ -435,6 +435,19 @@ struct s_1f8a70_actor
 // Movement flags byte/dword/long 396/399/399; state const pointer/reference 399/399;
 // state reference with flags byte/dword/long 396/399/399; long result/long route/both on byte flags
 // and state reference 421/410/427. Three-point reductions rejected; all restored.
+// Round 142: separate noinline declarations for radius/position/root/directed route/
+// path source/path settings/scratch get/scratch release all 399. Every boundary restored;
+// pool/data entry and protected unit-mode/result homes remain.
+// Round 169: Nonzero route producer with initial/reference/both bounded mode predicates
+// 399/414/406/413; canonical zero tests on those four forms 399/414/406/413. All restored.
+// Round 160: native refreshed reset/direct owner observations 402/464;
+// coherent cleanup inline alone/with native reset 402/402; native reset with single
+// exit/escaped mode name/both/cleanup 408/402/408/408. All restored.
+// Round 251: Unit-output phase scope, with source/settings early end, wide route, both, late result, source+late, wide+late, all: 402/402/410/410/429/429/439/439. Original scopes, route/result types, calls and protected unit-mode interface restored.
+// Round 373: Existing returned unit-output test with deferred result, output scope,
+// both, long route, long+deferred, long+scope and all lifetime forms
+// 404/433/404/433/412/440/412/440. Callee already matches and returns the output pointer;
+// original caller/body restored, with no interface edit.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
