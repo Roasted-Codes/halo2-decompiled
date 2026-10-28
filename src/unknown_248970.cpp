@@ -132,6 +132,12 @@ public:
 // Round 195: Queued-function inline/noinline/combined/forceinline declarations 215 each;
 // each with closed coordinate-double lifetime 215. Original boundary and body restored;
 // frame and activation/location transport remain.
+// Lane 10 r11: retail takes the activation in AL with the location as the first stack
+// argument (ours: location in EBX, activation on the stack). Activation-first parameter
+// order with a forwarding definition for the caller 215 (location still in EBX, forwarder
+// not inlined); location read once through its address 233 (both on the stack, ret 0x18);
+// both 233; activation store after the getter and position copy 251 (724 bytes); with the
+// activation-first order 251. Original order and body restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
