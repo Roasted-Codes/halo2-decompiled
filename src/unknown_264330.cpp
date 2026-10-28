@@ -835,6 +835,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // Round 358: Complete different-target bool/byte/short/long carriers 376/341/376/375; before
 // suppression 376/341/364/366 (preview 341). Exact-length 364 regresses; original current predicate
 // and body restored.
+// Round 237: shared initial view lookup 372; actor/reference/prop at uses 414/503/415;
+// actor-reference/actor-prop/reference-prop/all 573/468/570/657 (fast control 372; full 331).
+// All restored; actor ESI and saved/squad/flag homes remain.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

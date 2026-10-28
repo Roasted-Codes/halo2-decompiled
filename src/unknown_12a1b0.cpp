@@ -331,18 +331,21 @@ void looping_sound_controllers_synchronize(bool initial_playback)
 
 void function_11bed0(s_location *location, point3f const *point);
 
+// score 93 (was 161): native iterator keeps the initial called scan and subsequent inline scan; location lookup still expands.
+// Published pool per use 161; shared bitmap scan 161; plain for 161; reused absolute slot 161;
+// shared next-datum advance 116; source receiver 160; bool datum iterator 134 (fast). Native iterator 93 fast/plain.
 // @retail 0x21a100
 void looping_sound_update_locations(void)
 {
-	s_record_pool *data = LOOPING_SOUNDS;
-	long index = next_sound_datum(data, NONE);
-	while (index != NONE)
+	s_record_pool_iterator iterator;
+	iterator.data = LOOPING_SOUNDS;
+	iterator.datum_index = NONE;
+	iterator.index = -1;
+	for (s_type_5ef569 *sound = (s_type_5ef569 *)data_iterator_next_calling(&iterator); sound;
+		sound = (s_type_5ef569 *)data_iterator_next_inlined(&iterator))
 	{
-		s_type_5ef569 *sound = (s_type_5ef569 *)data->data + (index & 0xffff);
 		if (sound->source.audible == 1)
 			function_11bed0(&sound->source.spatial.location, &sound->source.spatial.position);
-		long start = index == NONE ? 0 : (index & 0xffff) + 1;
-		index = data_datum_index(data, data_next_absolute_index_inlined(data, start));
 	}
 }
 
@@ -1182,14 +1185,17 @@ struct s_looping_detail_request
 	short tracking_data_size;
 };
 
+// score 138 (was 154): return result first restores entry load allocation; source-copy scheduling and first-player expansion remain.
+// Shared offset 170f; direct source 192f; memcpy 170f; tag first 192f; mode arms/type last 168f;
+// offset publication last 167f; camera-position receiver 169f. Fast control 170, result first 154f/138 plain.
 // @retail 0x21cc60
 bool looping_sound_prepare_detail(s_type_a82d9f const *detail, long looping_sound_index, s_looping_detail_request *request)
 {
+	bool result = false;
 	s_type_5ef569 *sound = (s_type_5ef569 *)LOOPING_SOUNDS->data + (looping_sound_index & 0xffff);
 	byte const *definition = g_4e3b44[detail->sound_definition_index & 0xffff].bytes;
 	s_type_99c531 *source = &request->source;
 	*source = sound->source;
-	bool result = false;
 	source->unknown02 = 0;
 	request->type = 0x10;
 	request->mode = definition[4] ? 0 : 2;
@@ -1313,6 +1319,9 @@ static inline dword looping_sound_take_permutations(s_type_5ef569 *sound, loopin
 	return function_2194c0((s_packed_value *)&g_51ebd4->sets[playback->pitch_range_base + arg_58ecd0], (s_animation_ref *)playback);
 }
 
+// score 166 (was 176): native short previous permutation removes extension traffic; tag/mask/range homes and entry scheduling remain.
+// Result first 176; tag per use 236; tag/range/mask names 176; outputs declared first 176;
+// counts at entry 176; reasons before span selection 176; native selected voice group 188. Short previous 166 fast/plain.
 // @retail 0x21c190
 bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_index, dword *seed)
 {
@@ -1330,7 +1339,7 @@ bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_inde
 	   function_21b940. Keep the same shared/local mask rules. */
 	dword permutations = looping_sound_take_permutations(sound, definition, playback, playing->loop.track_index, arg_58ecd0);
 
-	long previous = !(definition->flags & 0x30) ?
+	short previous = !(definition->flags & 0x30) ?
 		(short)function_219370((s_animation_state *)&g_51ebd4->sets[playback->pitch_range_base + playing->pitch_range_index], (s_animation_ref *)playback) : NONE;
 	short permutation = function_219110((s_set_ref *)playback, arg_58ecd0, &permutations, (short)previous, seed, NULL, false);
 	if ((definition->flags & 0x30) && sound->controller_index != NONE)
