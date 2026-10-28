@@ -1703,6 +1703,9 @@ bool __stdcall function_c6fb0(long unit_index, long a, short seat_index)
 
 /* whether a rider of the unit sits in a seat with bit 11 whose +0x3e is
    the given value */
+// score 2 (was 33): only the order of the two argument loads before function_d0620 differs
+// (retail moves unit_index into eax before taking the iterator's address). Flag 11 read as a field
+// bit gives the rest. Iterator first, result first or an iterator pointer local 2; result after the call 77.
 // @retail 0xc9200
 bool __stdcall function_c9200(long unit_index, short value)
 {
@@ -1717,7 +1720,7 @@ bool __stdcall function_c9200(long unit_index, short value)
 		{
 			s_unit_seat_definition *seat = &UNIT_SEATS(definition)[iterator.child_short];
 
-			if ((*(dword *)&seat->flags >> 11) & 1 && *(short *)((byte *)seat + 0x3e) == value)
+			if (TEST_FIELD_BIT((*(dword *)&seat->flags >> 11) & 1) && *(short *)((byte *)seat + 0x3e) == value)
 			{
 				result = true;
 			}
