@@ -2669,9 +2669,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
-// score 147 (was 147): BLOCKED-BY 0xe70b0 (retail passes the unit in ecx and the action pointer
-// in eax and compares through the pointer it returns); frame 0x3c versus 0x38: retail packs the
-// address-taken action short at +2 beside the two flag bytes, ours gives it a 4-byte slot.
+// score 155 (was 155): frame 0x3c versus 0x38; action/decision homes, input carrier roles and
+// call materialization remain. The action query now matches, but its returned-pointer test
+// grows the frame to 0x40 on this caller; the original executable body is retained.
 // Tried: native channel workspace 139; copy return to play 152; accumulated channel failure 177;
 // unsigned word result 173; short table index 188; dword channel backing 152; direct copy chain 152;
 // mode at use 196 (frame 56); repeated table index 152; mode after animation 157; direct action
@@ -2686,6 +2686,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // lookup/animation/mode 147 each; action-result assignment/positive completion 161/161; direct
 // success return 154; copy statement before the play call 162 (aligned diff 71 -> 65); copy with
 // direct success return 165; bool result 152, with the copy 162, with copy and return 162.
+// Returned action query with Boolean-result/copy-boundary/direct-return combinations
+// 196/207/198/209/200/200/202/202; three-field decision records 198/212/220 (exact-only, discarded);
+// returned query with entry result/result-and-force/result-and-action homes 200/200/200.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
