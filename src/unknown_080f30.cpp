@@ -286,6 +286,9 @@ struct s_pending_message_storage : s_pending_message_header
 // start assigned after its declaration, unsigned start, unsigned time stamp, named second reading 14
 // each; capacity read from the request at each use 14. The unused &capacity pointer was dropped
 // (identical bytes).
+// Direct capacity field reads 14; storage-first guard 40; full-width unsigned result 92;
+// optimistic result with failure arms 98; request/allocation shared exits 14/14;
+// native int capacity 14; direct capacity with full-width result 92.
 // @retail 0x80e10
 bool function_80e10(s_pending_message_storage *request, void **output, long *size)
 {

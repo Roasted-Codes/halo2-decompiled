@@ -195,8 +195,13 @@ void function_155ed0(void)
 // remaining-first expression 53; shared completion 75; named padding 53;
 // named mask 53; shared completion and mask 75; recomputed start 47;
 // named allocation extent 53; remaining extent with shared completion 86.
+// Round 22: explicit capacity store in the padding path/all paths 9/9; named alignment
+// difference 19; explicit size/result assignments 9/9; integer-address result 9;
+// const remaining/mask 9; reversed result-mask operands 9.
 // Further forms: unsigned-mask zero-alignment guard 28; aligned guard 20; flat guards 28;
 // named padding test 9. Signed-mask counterparts 36/45/36/40. Original body restored.
+// Initial base/capacity address ownership also differs. One captured capacity with
+// delta/shared-mask/early-publication combinations: 45/44/54/54/44/44/54/54; restored.
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {
@@ -356,7 +361,7 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	__asm rdtsc
 }
 
-// score 256 (was 287): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
+// score 244 (was 244): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
 // Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
 // arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
 // format-size query declaration 287. Original body and declaration restored.
@@ -367,9 +372,20 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 219: early texture outputs, output names, timestamp names and both names
 // 287 each; earlier large decision 286 (rejected); earlier size plus decision 295;
 // common void exit 287; SSE ownership original/Boolean 287/266, restored.
+// Round 212: allocation result first 244 (plain kept); retry ordinal/clock declaration
+// first 256/256; result+ordinal/result+clock/ordinal+clock/all 260/244/256/260;
+// direct skip result 286; full-width mask/Boolean decisions 289/290, with result
+// first 273/274. The frame remains 0x3c versus 0x40.
+// Round 223: two-use sound-interface value 274; allocation-size branches 256;
+// both 274; consistent movie-global reads 256; sound/movie 274; size/movie 256;
+// all three 274; per-branch volume arrays before channel arrays 256. All restored.
+// Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
+// parameter-derived decision at entry 306/306/305/298. Original large decision restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {
+	void *block = NULL;
+
 	bink_update_memory_available();
 
 	if (!g_4e9188.initialized)
@@ -393,7 +409,6 @@ void function_156090(char const *name, dword flags)
 
 	bool large = (flags & 0x100) != 0;
 	long size = large ? 0x1400000 : 0x400000;
-	void *block = NULL;
 
 	g_4e9188.permanent_memory_size = size;
 	g_4e9188.permanent_memory_used = 0;

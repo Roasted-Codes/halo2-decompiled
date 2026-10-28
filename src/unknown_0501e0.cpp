@@ -35,7 +35,9 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
         ++output;
     }
 }
-// score 221 (was 221): frame 0x18 versus 0x14; retail loads the view scale once (xmm6) for
+// score 221 (was 221): frame 0x18 versus 0x14; retail keeps both transformed points in
+// registers and the second point's offset (with its scaled copy) in the frame, ours gives
+// the second view's x a frame slot of its own at [esp+8].
 // both inlined transforms, keeps the second point's offset in the frame and the first in
 // registers, and scales copies of the inputs; coefficient/result/tail homes differ. Tried:
 // global optimization off 961; depth zero 555; frame pointer 300; input-first products 255;
@@ -132,6 +134,10 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Round 358: Input-copy/scale orders ikj, jik, jki, kij 220/221/257/220; with live forward
 // coefficients 253/241/253/253. One-count gain rejected; exact-length 241 still regresses. Original
 // helper/body restored.
+// Round 23 on the forward-cursor body: shared scale 242; reference scale parameter 243;
+// scale-field pointer 264; descending first displacement 241; scale pointer and descending
+// first 262; explicit second/first-kij displacement components 270/280; scale-last helper 241.
+// Original helper and body restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

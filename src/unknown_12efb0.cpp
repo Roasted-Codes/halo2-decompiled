@@ -226,6 +226,7 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // a lookup helper that also tests g_4e0350 (NULL result, then the global, bounds, entry) 614, 3830
 // bytes: it gives retail's lookup control flow (every failure through the `test record` join),
 // leaving register choice; the same with a char test and a long index at the top 753.
+// Round 235: query-table/tag-input/falloff-radius consumption scopes, all seven combinations 616 each; source-selection consumption scope 616.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

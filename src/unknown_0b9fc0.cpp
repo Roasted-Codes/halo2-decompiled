@@ -221,8 +221,18 @@ __forceinline short machine_round(real value)
 PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed);
 PRIVATE void machine_release_rigid_bodies(long machine_index);
 
-// score 81 (was 112): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
+// score 81 (was 81): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
 // Round 204: native portal entry 81 kept plain; default-first policy 100; both 106 (subthreshold); shared final update 81; long/unsigned-word policy 102/81; six-use flags 108; flags/default 117; chained clears 81.
+// Round 268: six-use destination flags receiver 81; reset after both clears 81;
+// receiver with six-use source bits 108; receiver with later reset 81; source bits
+// with later reset 108; all three 108; final default-first dispatch with receiver 81;
+// that plus later reset 81. Original portal, policy, flag stores and reads restored.
+// Round 270: native object-bit pointer/reference receivers 93/93; either with later
+// reset 93; either with default-first policy 91 (first +0x7f), with both 92. All
+// eight restored, including the named real bitfield type; initial carriers and merged clears remain.
+// Round 208: early policy declaration 81; descending configured cases 81; both 81;
+// comparison mapping with one short observation/direct fields 132/132; natural portal admission
+// and shared publication 150; with early policy 150; with direct configured comparisons 160.
 // @retail 0x115020
 void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine)
 {
@@ -365,6 +375,7 @@ void __stdcall function_115220(long machine_index)
 	}
 }
 
+// score 368 (was 473): its flag tests and the type-mask test read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0x1152e0
 bool __stdcall function_1152e0(long machine_index)
 {
@@ -375,11 +386,11 @@ bool __stdcall function_1152e0(long machine_index)
 	bool changed = false;
 	word object_flags = machine->flags_c0;
 
-	if (((object_flags >> 12) & 1) && (!(0.0001f > (real)fabs(machine->position)) || ((object_flags >> 10) & 1)) &&
+	if ((TEST_FIELD_BIT((object_flags >> 12) & 1)) && (!(0.0001f > (real)fabs(machine->position)) || (TEST_FIELD_BIT((object_flags >> 10) & 1))) &&
 		machine->havok_component_index != NONE)
 	{
 		s_havok_component *component = havok_component_get(machine->havok_component_index);
-		real position = ((object_flags >> 10) & 1) ? 1.0f : 0.0f;
+		real position = (TEST_FIELD_BIT((object_flags >> 10) & 1)) ? 1.0f : 0.0f;
 
 		if (machine->position > position)
 			position = machine->position;
@@ -449,11 +460,11 @@ bool __stdcall function_1152e0(long machine_index)
 					(s_machine_unit_definition_view *)g_4e3b44[unit->definition_index & 0xffff].bytes;
 				bool can_open = true;
 
-				if (((1 << header->type) & 2) && !((local_98b918->unit_flags >> 20) & 1))
+				if (TEST_FIELD_BIT(((1 << header->type) >> 1) & 1) && !(TEST_FIELD_BIT((local_98b918->unit_flags >> 20) & 1)))
 					can_open = false;
-				else if ((unit->flags_10a >> 2) & 1)
+				else if (TEST_FIELD_BIT((unit->flags_10a >> 2) & 1))
 					continue;
-				if (((local_98b918->object_flags >> 14) & 1) || !can_open)
+				if ((TEST_FIELD_BIT((local_98b918->object_flags >> 14) & 1)) || !can_open)
 					continue;
 				if ((machine->flags & 4) || (machine->flags & 8) && *(long *)((byte *)unit + 0x13c) != NONE)
 				{
@@ -528,7 +539,7 @@ bool __stdcall function_1152e0(long machine_index)
 		}
 	}
 
-	bool moved = (machine->device_flags >> 2) & 1;
+	bool moved = TEST_FIELD_BIT((machine->device_flags >> 2) & 1);
 
 	if (moved)
 	{
@@ -560,13 +571,19 @@ bool __stdcall function_1152e0(long machine_index)
 }
 
 /* whether any cluster on either side of a machine's portals is set */
-// score 41 (was 58): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
+// score 41 (was 41): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
 // Found return 45; empty return 69; native count 58; native first 62; structure receiver 52;
 // reject unset portals 58; result first 53; admitted result 61; result/found 41 (kept, gain 17);
 // structure/found 60; result/structure 45; native receivers/found 56; shared bit tests 58;
 // structure/shared 52; count/shared 58; result/shared 53; object getter 58; getter/structure 52;
 // getter/shared 58; getter/structure/shared 52; count before false/found 45; count before false 58;
 // result/count/found 41; result/count/structure/found 56.
+// Entry index/end/both declarations 41/41/41; word/long result 61/60; bound fields at use 41; plain
+// ordinal 100, with long result 98. All restored.
+// Portal-table/reference-table/both scan bases 56/56/56; paired long/short cluster values
+// 55/73; both bases with long clusters 59; common completion 53, with long clusters 48. All restored.
+// Portal index long/short 41/41; paired bit predicates 41, unsigned masks 41, shared tests 55;
+// paired native/promoted range inputs 41/65, promoted inputs with both predicates 65. All restored.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {

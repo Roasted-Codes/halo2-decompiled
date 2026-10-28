@@ -232,18 +232,27 @@ void __stdcall function_1160c0(real dt)
 	}
 }
 
-// score 190 (was 194): attachment/previous/axis homes and rotation scheduling differ;
+// score 179 (was 179): previous/axis homes, segment ownership and rotation scheduling differ;
 // seven local-name sets, declaration reversals and entry/loop scopes 194;
 // shared cross 207, both point differences 286, both helpers 280;
 // scaled difference 212, all vector helpers 285.
-// frame 0xa4 agrees; three pairs of same-size stack homes are exchanged (retail:
-// origin below forward, offset below previous, the scalar temporaries below the axis), the segment
+// frame 0xa4 agrees; attachment homes now agree. Retail keeps the rest offset
+// below previous and the scalar temporaries below the axis; those still differ. The segment
 // pointer lives in edx (ours edi) and the rotation's products are scheduled in another order.
 // Round 62: the existing normalize3d for the axis and dot3f for the projection give the same code (194)
 // but cost 0x73360 its match (this file links ahead of unknown_058dd0.cpp), so not kept; forward
 // declared before origin 194; the three rotation cross terms as one vector 275; previous/predicted at
 // function scope 194. Earlier: origin/forward, previous/offset and axis/length/scale names, singly and
 // combined, 194 each.
+// Round 371: first-node position copied before direction 179, kept; previous-first
+// publication, complete scalar cross/axial terms and their combinations 179 each.
+// Complete previous-position scalars, with complete axis/rest-offset/prediction
+// coordinate sets 345, 335, 332, 323, 345, 335, 332, 323.
+// Native segment index before lookup, explicit last-segment arm, uniform
+// rest-offset fields and invariant reciprocal combinations 179, 179, 336, 336, 189, 189, 338, 338.
+// Round 219: Exhaustive segment-pointer result, inner/outer invariant vertical and sine/cosine
+// order 297/297/309/309; default-pointer counterparts 281/281/309/309. All restored;
+// segment/previous/axis homes and rotation schedule remain.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {
@@ -265,8 +274,8 @@ void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *defin
 			vector3f direction;
 			if (i == 0)
 			{
-				direction = forward;
 				position = origin;
+				direction = forward;
 			}
 			else
 			{

@@ -3878,9 +3878,20 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 131: word special/different/both/team/special-team/different-team/all
 // decision carriers 477/528/540/470/477/528/540; dword subtype 470.
 // Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
+// Round 235: elapsed/timer/classification consumption scopes, all seven combinations 470 each; statistics-to-message consumption scope 470.
 // Complementary category bool/byte/short/long 470/470/477/550; with self-player result
 // 470, opposing-team result 526, both 526, word category with both 480. Original
 // category, decision bytes and all event/timing work restored; extra frame dword remains.
+// Round 239: actual penalty/ticks/both field references 469/470/469; existing
+// nonnegative helper with positive selection 518, with penalty/ticks/both references
+// 521/518/521; all with award after engine admission 522. One-point gain dropped;
+// original fields, helpers, shared award update and body restored.
+// Round 225: chained award/subtype defaults at entry, admission and victim lookup 549/548/548;
+// award/message 470, all three at entry 549, subtype/message 549; all three
+// after admission/lookup 548/548. Original result defaults and complete body restored.
+// Round 218: Exhaustive award result, entry declaration with before/after subtype leaves and
+// ordinary/excluded category first 579/591/584/602; selection declaration counterparts 579/591/584/602.
+// All restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4107,7 +4118,7 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-// score 464 (was 472): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
+// score 440 (was 440): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
 // Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
@@ -4139,6 +4150,23 @@ struct s_score_zone_view
 // four native palette/color consumption scopes 472. Minimal own-score scopes retained.
 // Team-only own-text scope 471; individual-only 466 (small gains dropped); both scopes with
 // all palette scopes or both iterator scopes 464/464. Only the two own-text scopes retained.
+// Round 267: On recovered own-text scopes, existing bounded copies for own team/individual/
+// both texts 534/440/536; score publication inside both text scopes 464; copy forms with
+// those scopes 534/440/536; team copy plus team publication scope 534. Keep only the
+// individual own-text bounded-copy call (plain 440, 2688 B); extra scopes restored.
+// Round 241: Consistently retained team-mode result bool/byte/short/long at selection and at team entry:
+// 771/771/745/770/771/771/745/770. Original field reads, output store and complete body restored.
+// Round 207: seven color-helper inline-declaration subsets and all noinline 440 each.
+// Complete returned color values: rival/own/both team, held/free/both zones,
+// all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
+// forms rejected despite the 423 first-transfer recovery. Existing rival output
+// object consumed directly 493. All restored; team-color/zone/charge allocation remains.
+// Round 219: Rival metadata before color, team/individual/both 566/518/566; own score before text
+// alone/with team/with individual/with both 476/545/523/564; all rival metadata before text 590.
+// All restored; native color transfers, zone homes and charge spills remain.
+// Round 209: Returned-color memcpy rival/own/both/zones/all 440 each; overlap-safe rival/own/both copies
+// 548/418/427. Own copy plain 418 but introduces a library call absent from the native retail transfer;
+// discarded as the wrong copy boundary. Frame, palette/zone homes and charge spills remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4269,8 +4297,7 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     word text[256];
                     text[0] = 0;
                     function_159130(score, text);
-                    wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                    display->score_text[7] = 0;
+                    unicode_string_copy(display->score_text, text, 8);
                 }
                 display->score = score;
                 color3f colors[4];

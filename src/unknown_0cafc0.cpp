@@ -160,7 +160,12 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 199 (was 309): Frame 0xb0 versus 0xa4, receiver homes and collision-point scheduling differ.
+// score 55 (was 55): frame 0xa4 and entry agree; height loads, dot input carriers and marker/parent tails differ.
+// frame 0xa4 and entry allocation agree; height-load order, dot-input carriers,
+// selected-seat/marker tails and parent-table scheduling differ. Earlier allocation/collision forms follow.
+// Frame 0xa4 agrees; object-data/tag-table allocation
+// and collision-point scheduling differ.
+// frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
 // Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
 // 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
 // initialization alone/with all three narrowed lifetimes 309/310. Original body restored.
@@ -191,11 +196,27 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // output with query/final/both point-set calls [199, 199, 199]; common result, both setters and
 // collision-first comparison 211. Original queries and output graph restored; tag-table retention and
 // fraction component reuse remain.
+// Complete coordinate products scalar/vector/scaled-point/original-point 199/206/206/237;
+// the same four point producers with collision-first comparison 200/206/206/238.
+// Round 225: object-table/sentinel-before-forward or origin 190/190; native backward assignment 78;
+// with either sentinel move 76/76; sentinel and collision-first 191/191; all three 59.
+// Paired height terms 55 (plain, kept); collision production first 61; native marker copies 125;
+// twice-used seated object 146; first three boundaries 116; all four 154. Retain object-table,
+// existing backward-vector assignment, sentinel before forward, collision-first and paired height terms.
+// Round 373: Offset-first contact/origin/both dot inputs 55/55/55;
+// each with paired contact/origin role names 55/55/55; symmetric dots with
+// a common exit, without/with paired names 55/55. Original graph restored.
+// Paired raw height inputs 55; resolved marker seat short/long 55/100; conditional short/long 55/100;
+// marker handle 55; handle with short/long/conditional-short seat 55/100/55. All restored.
+// Default-first crouch 59; named standing complement 55; both 59; complete paired
+// distance results 55; with crouch/complement/both 59/55/59; entry distance declarations
+// 55. Unmatched distance captures restored; original height and collision graph retained.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {
-	s_unit_eye_object *unit = EYE_OBJECT(unit_index);
-	s_unit_eye_definition *definition = EYE_DEFINITION(EYE_OBJECT(unit_index)->definition_index);
+	s_unit_eye_object_header *objects = (s_unit_eye_object_header *)g_4e0300->data;
+	s_unit_eye_object *unit = objects[unit_index & 0xffff].object;
+	s_unit_eye_definition *definition = EYE_DEFINITION(objects[unit_index & 0xffff].object->definition_index);
 
 	if (unit->parent_index == NONE && !TEST_FIELD_BIT(unit->flags10a_2) && !unit->type)
 	{
@@ -208,10 +229,12 @@ void function_cafc0(long unit_index, point3f *position)
 
 		function_b9dd0(unit_index, position);
 		crouch = function_e0dc0(unit_index) ? 0.0f : unit->crouch;
-		position->z += ((1.0f - crouch) * local_98b918->standing_height + local_98b918->crouching_height * crouch) * unit->scale;
+		real standing_height = (1.0f - crouch) * local_98b918->standing_height;
+		real crouching_height = local_98b918->crouching_height * crouch;
+		position->z += (standing_height + crouching_height) * unit->scale;
 		origin = *position;
-		forward = unit->forward;
 		collision.unknown24 = NONE;
+		forward = unit->forward;
 		{
 			vector3f up;
 
@@ -225,9 +248,7 @@ void function_cafc0(long unit_index, point3f *position)
 		{
 			point3f point;
 
-			forward.i = offset.i * -0.25f;
-			forward.j = offset.j * -0.25f;
-			forward.k = offset.k * -0.25f;
+			vector3f_assign(&forward, offset.i * -0.25f, offset.j * -0.25f, offset.k * -0.25f);
 			if (function_1697c0(0x4808c2d, position, &forward, NONE, NONE, &collision))
 			{
 				real t = *(real *)&collision.unknown00[4] * 0.9f;
@@ -247,7 +268,7 @@ void function_cafc0(long unit_index, point3f *position)
 
 				vector3d_from_points3d(&point, &origin, &to_origin);
 				vector3d_from_points3d(&point, &collision.point, &to_collision);
-				if (dot3f(&to_origin, &offset) + 0.05f > dot3f(&to_collision, &offset))
+				if (dot3f(&to_collision, &offset) < dot3f(&to_origin, &offset) + 0.05f)
 				{
 					position->x = collision.point.x - offset.i * 0.05f;
 					position->y = collision.point.y - offset.j * 0.05f;
@@ -262,9 +283,9 @@ void function_cafc0(long unit_index, point3f *position)
 	{
 		s_object_marker marker;
 
-		if (unit->unknown24c != NONE && EYE_OBJECT(unit->unknown24c)->seat_index != NONE)
+		if (unit->unknown24c != NONE && objects[unit->unknown24c & 0xffff].object->seat_index != NONE)
 		{
-			function_b8d30(unit_index, definition->seats[EYE_OBJECT(unit->unknown24c)->seat_index].marker_name,
+			function_b8d30(unit_index, definition->seats[objects[unit->unknown24c & 0xffff].object->seat_index].marker_name,
 				&marker, 1, false);
 		}
 		else

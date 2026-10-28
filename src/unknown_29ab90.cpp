@@ -59,7 +59,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 	arg_2->k = arg_0->k * arg_1;
 }
 
-// score 396 (was 396): frame 0x5c versus 0x64, actor/input transport and x87 homes differ.
+// score 383 (was 383): frame 0x5c versus 0x64, actor/input transport and x87 homes differ.
+// frame 0x5c/0x64, actor/requested-vector transport and x87 homes differ.
+// Earlier: frame 0x5c versus 0x64, actor/input transport and x87 homes differ.
 // Earlier 396 from 428: magnitude helpers now give retail's copies, memory-operand products and epsilon;
 // magnitude helpers now give retail's copies, memory-operand products and epsilon;
 // magnitude helpers now give retail's copies, memory-operand products and epsilon;
@@ -128,6 +130,26 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // private helpers and sole disabled declaration unchanged. Frame/input and x87 homes remain.
 // Named ratio numerator 395; both complete turn factors 389; both forms together 383 kept.
 // All three computed parts retain the original floating grouping and operands; frame/input homes remain.
+// Round 267: scale vector return 412; planar vector return with length output 568;
+// both vector returns 589; entry working-vector declarations 383; those three return
+// graphs with entry declarations 412/568/589; both plus scale value input 710.
+// Original helper interfaces, body and declarations restored; frame/input homes remain.
+// Round 366: returned position producer 408; shared scale 383; both 408; full vector setter 399; position/setter 426; scale/setter 399; all 426; all with earlier reused magnitude 413. All restored.
+// Round 245: existing scale formal orders 021/102/120/210 and clamp orders
+// 102/120/201/210 all 383. Original helper definitions and every call restored.
+// Frame 0x5c/0x64, actor/requested-vector transport and x87 homes remain.
+// Round 208: all three native square-product carriers in six declaration orders 383 each;
+// successive original K/J/I sum with those carriers 383; first-declared epsilon result on the
+// product graph 439. All helper/body text restored; frame 0x5c/0x64, actor/input transport and x87
+// homes remain.
+// Round 368: settings-only magnitude 390; in-place epsilon result 454; separate turn/speed 385;
+// scope/result 388; scope/separate 384; result/separate 448; all and native length names 382/382 (one-point
+// gain rejected).
+// Round 370: complete/default sign results with homogeneous planar multiplier placement and
+// widened reciprocal carrier 383/383/441/441/383/383/441/441; original body and helpers restored.
+// Round 211: Complete history value alone/with shared current add/history scale/both
+// 401/402/411/411; those four with a shared current coefficient 401/401/411/406. All original
+// helpers, fields and arithmetic restored; frame/input and magnitude homes remain.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

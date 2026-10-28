@@ -324,7 +324,7 @@ PRIVATE __forceinline void function_1b9201(long arg_0, vector3f *arg_1)
 
 // score 11 (was 11): the seat loop keeps the seat count in EBP and the index
 // in ESI here, retail keeps the count in ESI and the index in EBP, so the loop
-// preamble is laid out differently.
+// preamble is laid out differently. The rest of the function matches.
 // @retail 0x1b9200
 bool function_1b9200(long object_index, long prop_index)
 {
@@ -374,9 +374,6 @@ bool function_1b9200(long object_index, long prop_index)
 	return result;
 }
 
-// score 32 (was 32): retail passes the child iterator in EBX, the register
-// argument of function_d0620 under LTCG, ours passes it on the stack; the
-// declaration in include/unknown_0d0690.h is not mine to change.
 // @retail 0x1b9420
 bool function_1b9420(long actor_index)
 {
@@ -389,13 +386,15 @@ bool function_1b9420(long actor_index)
 	s_object_child_iterator iterator;
 
 	function_d0620(actor->unknown26c, &iterator);
-	if (!function_d0690(&iterator))
-		return result;
-	do
+	if (function_d0690(&iterator))
 	{
-		if (object_get(iterator.child_value)->player_index != NONE)
-			return true;
-	} while (function_d0690(&iterator));
+		do
+		{
+			if (object_get(iterator.child_index)->player_index != NONE)
+				return true;
+		} while (function_d0690(&iterator));
+		return result;
+	}
 	return result;
 }
 
@@ -538,6 +537,9 @@ extern "C" void _ReadWriteBarrier(void);
 // score 6 (was 6): retail loads the slot pointer into ECX before the actor
 // index is masked, ours loads it after the actor lookup and after the branch
 // that tests the actor, so the two builds are one instruction out of step.
+// This round: slot data block 29, without barrier 50, actor-first 31;
+// const actor 6; const state without barrier 44; data block/const actor
+// without barrier 50; const data state 29; actor object reference 6.
 // @retail 0x1ba8c0
 void __stdcall function_1ba8c0(long actor_index, s_slot *slot, s_slot_target_list *list)
 {
@@ -902,7 +904,8 @@ short __stdcall function_1b9890(long actor_index, s_slot *slot)
    object has more than one seat to take */
 // score 17 (was 17): retail loads the element pool data into EDX before the
 // actor is fetched and keeps the element record in ECX, ours loads the data
-// later into ESI and the record in EAX.
+// later into ESI and the record in EAX. Both read the actor pool global
+// first, so the difference is the order of the two data loads.
 // @retail 0x1bb3a0
 short __stdcall function_1bb3a0(long actor_index, long joint_index, long a, long b)
 {
@@ -1004,9 +1007,16 @@ s_slot_handler_2x g_47e9d0 =
 	1, 10, 1.5f, 0x5b
 };
 
-// score 47 (was 47): g_46fbe4 and g_46fbe8 are read as bytes here but as
-// dwords in retail; they are declared short in include/globals.h, which is not
-// mine to change.
+// score 47 (was 47): pool/status carriers and return scheduling differ; conversion homes agree at 216/212 bytes.
+// Prior narrow status 60 at 212 bytes; retail uses wide status loads while only low words are returned.
+// Slot data block: actor-first long/short status with nested or rejection guards 47/47 and 60/60;
+// block-first long 63/63; block-first short 45/45 at 214/212, a two-point gain restored.
+// g_46fbe4 and g_46fbe8 have signed-word loads here versus
+// dword loads in retail; their shared declarations remain short.
+// Single-observation continuation selected by complementary tests, slot-data
+// view with long if/ternary result 86/86 and short result 77/77;
+// whole-slot receiver with the same choices 86/86/77/77.
+// Native pool/status carriers and the shared status load width remain.
 // @retail 0x1ba4e0
 short __stdcall function_1ba4e0(long actor_index, s_slot *slot, bool active)
 {

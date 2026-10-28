@@ -18,7 +18,8 @@ extern byte g_485a47;
 extern real g_485a0c[8];
 extern real g_4c9798[36];
 
-// score 252 (was 295): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
+// score 239 (was 252): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
+// frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
 // Earlier form: frame 0x20 versus 0x28; input registers and rounding-call scalar reloads differ.
 // Branch-defined extent 321; two-vector copy loop 311; frame pointer 372; size policy 497; inline depth one 311.
 // Global optimization off 1009; expansion depth zero 349; late mode 350;
@@ -91,6 +92,15 @@ extern real g_4c9798[36];
 // 314. Ours keeps size and aspect in xmm registers across the 0x48e70
 // calls where retail reloads them; the tag test's constant 1 (ecx, reused for mode = 1) puts the state
 // record in esi where retail tests with movsx/dec and passes it in ecx.
+// Round 245: short/word mode with short-width/long-height limits 269/269;
+// with long-width/short-height limits 239/239; both short limits 267/267;
+// both word limits 267/267. Original long mode with short/word height 243/243.
+// Short mode and short height limit kept: 239 plain, 1483/1479 bytes; all call values unchanged.
+// Frame 0x24/0x28, state transport and protected rounding reloads remain.
+// Round 208 on the late-direction/complemented-mode graph: early zero border 322 (frame 0x28);
+// complete bounded-size result 252; reused native pixel area 342; zero+size 322; zero+area 354;
+// size+area 342; all three 354; all with zero declared after mode 353. All restored; state
+// transport, protected rounding reloads and far-plane stores remain.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
@@ -108,12 +118,12 @@ void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
     g_4c9798[5] = 0.0f - ((vector3f const *)(matrix + 0x28))->j;
     g_4c9798[6] = 0.0f - ((vector3f const *)(matrix + 0x28))->k;
     g_4c9798[7] = 0.0f;
-    long mode = (bool)((~(g_4c1a80 >> 10)) & 1) ? 2 : g_485a40 > 0.0f && *(short const *)(tag + 0x14) == 0 ? 1 : 0;
+    short mode = (bool)((~(g_4c1a80 >> 10)) & 1) ? 2 : g_485a40 > 0.0f && *(short const *)(tag + 0x14) == 0 ? 1 : 0;
     real extent = *(real const *)(state + 4);
     if (*(real const *)(state + 0xc) > 0.0f)
         extent += (real)tan(*(real const *)(state + 0xc) * 0.5f) * distance * 2.0f;
     long max_width = (bool)((g_4ba014 >> 4) & 1) && !(bool)((g_4ba014 >> 5) & 1) ? 128 : 512;
-    long max_height = (bool)((g_4ba014 >> 4) & 1) && !(bool)((g_4ba014 >> 5) & 1) ? 128 : 512;
+    short max_height = (bool)((g_4ba014 >> 4) & 1) && !(bool)((g_4ba014 >> 5) & 1) ? 128 : 512;
     real maximum = (real)max_width;
     real size = ((real)sqrt(extent * extent * *(real const *)(state + 8)) * 0.33333334f + *(real const *)(tag + 0x10) * 0.125f) *
         (maximum - 128.0f) * g_485a34 + 128.0f;

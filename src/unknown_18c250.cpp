@@ -111,6 +111,8 @@ static inline vector3f *function_x84d9e8(vector3f *vector, vector3f const *axis,
 // void rotation return 6; cosine-in-place i/j/k/i+j/i+k/j+k 12 each;
 // sine-in-place cross i 15; single-precision trig 46; scalar trig results 6;
 // value-returning cross 123; reference cross interface 6; array component cross 6.
+// Axis/input/both scalar snapshots 48/53/56; paired products 34;
+// cross inputs by value axis/input/both 150/157/193; rotation axis by value 150.
 // @retail 0x18c250
 bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
@@ -594,6 +596,11 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // (diagnostic) that form gives retail's ESI datum and EBP definition (frame 0x84), the pointer pair does not
 // (frame 0x88): retail passes 0xba300 the object in ECX and the location in EAX, ours the location in ESI.
 // Failure flag from the bit test, then from the call 333.
+// Round 150 (fast): without the root-location call the frame is 0x88, and 0x84 with the addresses
+// written at each use (297/316); the 4 bytes left are a spill of the constant 1, which ours holds in
+// EBX from the datum flag test on (`test bl, al`, every type compare, `1 << type`) where retail tests
+// with immediates and loads `mov bl, 1` only in the marker part. The flag test as the flag0 bitfield
+// 280; as `== 0` 280; the object index local dropped from the type test 280 (all identical code).
 // Round 231: spatial/cluster/both/flags/spatial-flags/cluster-flags/all field references and all
 // plus pooled-datum reference each 280. Original body restored.
 // Round 233: cluster/spatial/both receivers bounded to their consuming kind phases 309/293/311;

@@ -708,15 +708,21 @@ PRIVATE inline void seat_direction_from_yaw_187510(vector3f *direction, real yaw
 }
 
 /* moves the value toward the target by at most one step */
-PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
+PRIVATE inline void seat_pitch_approach_187510(real target, real *value)
 {
 	*value += control_pitch_pin(target - *value, -0.012271847f, 0.012271847f);
 }
 
-// score 52 (was 52): only the frame (0xac versus 0xa8) and the order of two join stubs differ. Retail
-// packs the atan2 temp and range into the direction vector's first dword and puts settings above the
-// vector; ours gives range and settings their own dwords below it (a spilled scalar never shares a vector's
-// home in VC7.1, so retail's yaw/range home may be a memory local of some kind).
+// score 9 (was 52): only the order of two join stubs differs (retail places the no-seat stub `movss xmm3`
+// before the in-range stub `xorps xmm1`), and settings is stored after maximum (2 of the 9).
+// Round 69: the yaw read from a yaw_pitch2f filled by function_x9a60c1 (retail's atan2 home is the direction
+// vector's first dword, an aggregate home) 52 -> 29, frame 0xa8 as retail; the approach helper's parameters
+// as (target, value) 29 -> 9 (the tail's register roles); `real yaw = angles.yaw` 92 (scalar-replaced);
+// angles declared at the block/function top 27/27 (with settings between the bounds); the existing 0x11df30
+// instead 27 (identical); approach helper as `*value = *value + pin`/returning/forceinline 27/61/27; named
+// difference in it 54; if/else pin helper 71; De Morgan in-range test 7; range wrap first 321; fabs test
+// swapped 222; the in-range test through a two-use bool helper or a named bool 55 (stubs as retail, but the
+// rate arms' merged add loads the pitch first); rate as one ternary/if-else update 83/83 (89/93 with it).
 // Round 141: retail packs the yaw block's spilled turn differences into the direction vector's slots
 // (range with direction.i) and keeps maximum/minimum at 0x10/0x14 (ours: to_upper, maximum, minimum,
 // range, settings, then direction). Direction declared in the camera block / at the top 172/172;
@@ -824,9 +830,10 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 		if (seat->minimum != 0.0f || seat->maximum != 0.0f)
 		{
 			function_b8d30(camera.unit_index, seat->field_8, &marker, 1, false);
-			real yaw = (real)atan2(marker.matrix.forward.j, marker.matrix.forward.i);
-			real lower = seat->minimum + yaw;
-			real upper = seat->maximum + yaw;
+			yaw_pitch2f angles;
+			function_x9a60c1(&angles, &marker.matrix.forward);
+			real lower = seat->minimum + angles.yaw;
+			real upper = seat->maximum + angles.yaw;
 			real range = control_turn_difference(upper, lower);
 			real to_upper = control_turn_difference(upper, entry->facing.yaw);
 			real from_lower = control_turn_difference(entry->facing.yaw, lower);
@@ -880,8 +887,8 @@ void __stdcall function_187510(long player_index, real yaw_delta, real pitch_del
 			}
 		}
 	}
-	seat_pitch_approach_187510(&entry->minimum_pitch, minimum);
-	seat_pitch_approach_187510(&entry->maximum_pitch, maximum);
+	seat_pitch_approach_187510(minimum, &entry->minimum_pitch);
+	seat_pitch_approach_187510(maximum, &entry->maximum_pitch);
 	entry->facing.pitch += pitch_delta;
 	entry->facing.pitch = entry->minimum_pitch > entry->facing.pitch ? entry->minimum_pitch :
 		(entry->facing.pitch > entry->maximum_pitch ? entry->maximum_pitch : entry->facing.pitch);

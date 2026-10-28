@@ -62,7 +62,7 @@ struct s_object_flags_256bd0
 	word unknown0 : 6;
 	word bit6 : 1;
 };
-// score 201 (was 205): frame 0x114 versus 0x110, cached activity and actor/geometry/selection homes remain.
+// score 201 (was 201): frame 0x114 versus 0x110, cached activity and actor/geometry/selection homes remain.
 // Round 15: shared iterator declaration 205; base-record view 208; conditional entry selection 263;
 // existing point-distance helper 204; variant field reread 207; character field reread 202;
 // both fields reread 281; character reread and base-record view on the helper graph 201 (kept).
@@ -172,6 +172,21 @@ struct s_object_flags_256bd0
 // retail's frame 0x110 and loop: 187 fast (aligned 112 -> 67), not kept. The object index copied
 // only while active (retail skips the copy when inactive) 209; with the diagnostic 187; the step
 // helper forceinline 205; both 209.
+// Round 27: initializer inline/noinline [201,201]; those boundaries
+// with ordinary/inline/noinline datum step [217,201,217,194,201,194].
+// Noinline initializer plus ordinary step reaches frame 0x110 at 194/1070;
+// seven-point form restored. Original declarations, bodies and calls restored;
+// activity spill remains.
+// Round 245: overlap-safe selected-position/direction/both transfers 280/256/279;
+// placement transfer alone/with position/with direction/all three 280/282/283/283;
+// fallback-direction transfer alone 208. Original copies and iterator restored.
+// Round 208: actual entry-result output through pointer/reference, each formal order and bool/byte
+// success, 201 each. All original step and caller contracts restored; frame 0x114/0x110, cached
+// activity and geometry/selection homes remain.
+// Round 211: Placement constructed before marker/after position/after direction 219/210/210; each
+// with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
+// placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and
+// iterator restored; activity spill and native geometry homes remain.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

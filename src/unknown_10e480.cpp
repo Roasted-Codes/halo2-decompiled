@@ -144,7 +144,9 @@ void function_10ec00(long object_index, s_animation_state *state, long unused, d
 extern real g_547648;
 void c_animation_channel_data_get(c_animation_channel const *channel, s_animation_data *data);
 
-// score 215 (was 215): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// score 207 (was 207): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Lane 8 r64: countdown weight with the `>= 3` case first (retail's fall-through) 215, kept; frame
 // byte in a long local 260 (32-bit compare as retail, aligned 119, 969 bytes); char/word loop index
@@ -206,6 +208,28 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Weighted output after admission/getter/result-zero/loop 213/213/261/215;
 // before admission at its natural positive-phase scope 207 (950 bytes), selected.
 // Frame 0x30, getter expansion and pointer/countdown induction remain.
+// Round 239: fixed frames/weights/both array bases 250/250/287; channel lookup at each
+// frame-count test 284, with frames/weights/both bases 262/262/319; both bases and
+// lookup with full-width sample frame 300. Array bases recover frame 0x2c but regress;
+// original body, weighted-output lifetime and all separate constructors restored.
+// Round 225: bounded ordinal stepped at its input read with char/short/long sample frames
+// 256/251/250; with actual sample count 264/260/259; full-width frame before weight 250,
+// with count 259. Weighted output construction remains before admission; original loop restored.
+// Round 364: independent data outputs at entry, base/weighted/countdown and
+// pairs/all 295/304/304/294/283/304/290; all with long sample frame 312.
+// Original separate construction points restored; frame and getter expansion remain.
+// Native frame-array references, mutable/const with extent bounds, 250 each at 940 bytes; with
+// twice-used full-width frames 222 each at 964 bytes. Frame 0x2c recovered, original loop and
+// observations restored.
+// Round 241: Sample occupancy dword/word at weighted scope 301/299; before getter 301/299; with a
+// twice-used full-width frame 273/274; at positive entry 331/329. All masks and original body restored.
+// Round 207: distinct weighted channel with native copy/default-assignment/member copy
+// 308/308/380; each with twice-used long sample frame 332/332/375;
+// copy/member copy with native sample-result enum 316/390. All exact-match-only
+// storage forms restored; frame 0x30, getter expansion and ordinal spill remain.
+// Round 246: signed-char frame/weight/both fields 207/207/207; each with a twice-used long
+// frame 257/257/257; both with short frame/immutable frame-count snapshot 258/254. Original
+// field identities, observations and body restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

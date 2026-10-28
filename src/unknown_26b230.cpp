@@ -2179,7 +2179,7 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 283 (was 296): frame 0x6a4 and length agree; the early reset-word load,
+// score 283 (was 283): frame 0x6a4 and length agree; the early reset-word load,
 // visibility/marking registers and selection/cleanup allocation still differ.
 // Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
@@ -2223,6 +2223,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Native word dispatch zero-first/direct field 283/283; one-first 354; unsigned
 // eligibility 342. Early state result with those forms 323/323/325/329. Guarded
 // nonzero word dispatch 283 retained; original state-result lifetime kept.
+// Round 27: actor-step/getter expansion boundaries, ordinary/inline/forced
+// in all eight non-original pairs [283,283,283,283,283,283,283,283]. Original
+// declarations and bodies restored; early reset SI and later homes remain.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

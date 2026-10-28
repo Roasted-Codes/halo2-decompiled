@@ -1461,6 +1461,8 @@ void looping_sound_controller_release(long index);
 // Round 107: a dword decrement moves the pool to EBX (diagnostic); tests swapped 40; index parameter
 // read through its address 46; `(word)` controller index 31; `(count + 0xff) & 0x7f` 5; controller
 // pool local 5; decrement helper (kept out of line by the pragma) 29, forced inline 29.
+// Final pool-release inline/noinline declarations 5/5; controller/playback/both direct lookups
+// 58/59/81; unsigned cyclic remainder 5; shared cleanup exit 5; controller-first predicate 40.
 // @retail 0x127390
 void sound_playback_delete(long sound_index)
 {
@@ -1478,6 +1480,7 @@ void sound_playback_delete(long sound_index)
 
 /* stops a playing sound: frees its voice, lets go of its chunk, tells its
    source why it stopped and deletes it */
+__declspec(noinline) void __stdcall function_127320(long sound_index, long reason);
 // @retail 0x127320
 void __stdcall function_127320(long sound_index, long reason)
 {
@@ -3659,6 +3662,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // g_44a2a0 with only the helper loop head 637; the helper loop head alone 597. All restored.
 // Native rotation return, pointer/quaternion-value/vector-value/both-value inputs 1009/948/965/912;
 // those native returns with the existing fallback constant 1217/1162/1176/1126. All restored.
+// Round 364: raw cross parts at each row/before outputs/before coefficients
+// 535/1050/1050; named dot parts 544; with those raw-cross boundaries
+// 542/1050/1050; joint entry coefficient declarations 1050. Original helper restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

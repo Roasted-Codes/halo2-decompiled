@@ -1467,11 +1467,19 @@ struct s_133f70;
 // lea where retail adds the record first, so the code after it runs one instruction ahead); with the levels
 // pointer at record + 0xbc as 0x4c450 writes it 325 (then both sites fold); stamp compared on the left 319,
 // on this body 175; the reuse test through the cache local 320.
+// Complete defaults predicate bool/byte/short/long snapshots 291/311/365/368;
+// on that predicate lifetime with signed-byte previous level 295/336/337/357.
+// Expanded unchanged control 175; original observations and previous level restored.
 // Round 262: saved-level short at original/pre-query/function scope 194/195/194;
 // signed-byte at pre-query/function/output scope 321/319/321; long at pre-query/function
 // scope 176/175. All restored; distance staging and cache/result scheduling remain.
 // Round 218: Count/writer/projection/coefficient inline and noinline declarations:
 // 175/175/175/175/175/175/175/175 (fast control 175). Original restored.
+// Round 87 (plain; fast now gives 353): the tail from the 0x23690 call on (about 80 of the 175) follows
+// that callee's convention: ours passes the level in AX, retail pushes all seven arguments (`ret 0x1c`,
+// `movsx ecx` of the level), BLOCKED-BY 0x23690. Head forms: the 0x4ed284 test nested with an entry
+// pointer 175, nested without it 175; a cached-flag pointer at every access 175; the header as table
+// pointer + masked index 175; entries declared before the failure count 175.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
