@@ -1412,7 +1412,6 @@ void function_170630(long player_index);
 // state before the array pointer 36. This round: forwarder with the (second, first, out)
 // order 7; the three channel addresses as named locals in five orders 7 each; the observer
 // element through a local 28; the command test before the state pointer 18. Earlier:
-// state before the array pointer 36. Earlier:
 // three channel-pointer orders 7/7/7; delta pointer early/late 7/7;
 // command pointer 7; guard return 7; motion-channel view 7.
 // scalar channel addresses 7; timer cursor after delta 11; countdown for 7;
@@ -1463,10 +1462,7 @@ struct s_camera_clip_reference_16ebf0
 	byte field_14[4];
 };
 
-// score 201 (was 209): the narrow predicate now follows retail's sign bit and plane order;
-// the stack homes of the saved state, the forward copy and the point differ, and the held
-// narrow/fraction call convention for 0x171d00 differs.
-// Earlier 209 (was 209): Frame 0x98 agrees; saved-state/input-output direction homes and clipping convention remain.
+// score 209 (was 209): Frame 0x98 agrees; saved-state/input-output direction homes and clipping convention remain.
 // Earlier: Frame 0x98 agrees; saved-state and native direction/point homes plus the held narrow/fraction convention remain.
 // Earlier 209 (was 209): Frame 0x98 now agrees; saved-state/direction homes and narrow/fraction convention differ.
 // Frame 0x98 agrees; saved-state/direction homes and clipping convention remain.
@@ -1502,11 +1498,6 @@ struct s_camera_clip_reference_16ebf0
 // and declaration forms restored.
 // Input/axis/output/all order 209 each; point/point-axis order 209/209; cross ji/kj 209/209;
 // input-axis order 209.
-// This round: retail's whole-struct direction copies alone 221, through a copy helper 221/249
-// (both parameter orders), the up copy declared first 228, the volatile saved state declared
-// late 232, the state pointer itself volatile 261. The copies move the up copy to E+0x10 as
-// retail has it, but the forward copy lands at E+0x24 instead of E+0x1c because the saved
-// state takes that slot.
 // On frame 0x98, separate input and output direction values: split scalar input/output values
 // 209; split native input/output values 222; split library input/output copies 222; split scalar
 // values and native basis inputs 246; split native values and native basis inputs 222; split
@@ -1543,14 +1534,19 @@ void function_16ebf0(long user_index)
 		}
 	}
 	point3f *original_position = (point3f *)(state + 0xb8);
-	vector3f forward = *((vector3f const *)(state + 0xd8));
-	vector3f *state_up = (vector3f *)(state + 0xe4);
-	vector3f up = *state_up;
+	vector3f forward;
+	forward.i = ((vector3f *)(state + 0xd8))->i;
+	forward.j = ((vector3f *)(state + 0xd8))->j;
+	forward.k = ((vector3f *)(state + 0xd8))->k;
+	vector3f up;
+	up.i = ((vector3f *)(state + 0xe4))->i;
+	up.j = ((vector3f *)(state + 0xe4))->j;
+	up.k = ((vector3f *)(state + 0xe4))->k;
 	transform4x3f matrix;
 	matrix.scale = 1.0f;
 	matrix.forward = *((vector3f *)(state + 0xd8));
-	matrix.up = *state_up;
-	matrix.position = *original_position;
+	matrix.up = *((vector3f *)(state + 0xe4));
+	real_point3d_set(&matrix.position, original_position->x, original_position->y, original_position->z);
 	matrix.left.i = forward.k * up.j - up.k * forward.j;
 	matrix.left.j = up.k * forward.i - forward.k * up.i;
 	matrix.left.k = forward.j * up.i - up.j * forward.i;
@@ -1583,8 +1579,8 @@ void function_16ebf0(long user_index)
 					&((s_camera_clip_reference_16ebf0 *)geometry->references)[reference & 0x7f];
 				if (entry->index != NONE)
 				{
-					narrow = (reference & 0x80) &&
-						entry->plane.i * point.x + entry->plane.k * point.z + entry->plane.j * point.y - entry->plane.d < 0.0f;
+					narrow = !(reference & 0x80) ||
+						entry->plane.j * point.y + entry->plane.k * point.z + entry->plane.i * point.x - entry->plane.d < 0.0f;
 				}
 				else narrow = false;
 			}
@@ -1604,7 +1600,7 @@ void function_16ebf0(long user_index)
 	}
 	*original_position = point;
 	*((vector3f *)(state + 0xd8)) = forward;
-	*state_up = up;
+	*((vector3f *)(state + 0xe4)) = up;
 }
 void function_3f450(long cluster_index);
 void function_3f500(long cluster_index);
