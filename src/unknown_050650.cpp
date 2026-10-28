@@ -836,11 +836,15 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 96 (was 205): the 0x38 frame agrees; bounds homes/scheduling, the signed-angle registers and dot order differ.
+// score 96 (was 96): the 0x38 frame agrees; bounds homes/scheduling, the signed-angle registers and dot order differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
 // limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
 // both random spans read once 212; the direct Boolean in the sampler changes this caller from 55 to 96.
+// Round 212: yaw names/result-first/both 96; chained zero initialization and
+// its name/result/declaration combinations 98; lower-first character stores 96.
+// Upper-first yaw initialization 94; plus later scaled pitch/shared pitch limit/both
+// 202/94/202. Two-point form rejected; yaw homes, pitch scheduling and call registers remain.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
