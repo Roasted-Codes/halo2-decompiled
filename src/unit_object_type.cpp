@@ -674,6 +674,8 @@ bool function_c4970(long unit_index)
 // score 10 (was 10): BLOCKED-BY 0x189210, whose retail form takes the play record in edi
 // (ours pushes it); play fields tag first 10; named globals pointer 10; 0x189210 parameter
 // orders play first/middle 10/10; 0x189210 reading the play fields at entry 16 (80 bytes).
+// Full/partial/const aggregate records 10/10/10; entry record 10; lookup assigned in the test 10;
+// 0x189210 inline with test assignment/original body 10/10; noinline declaration 10.
 // @retail 0xc5890
 void function_c5890(long object_index, short index)
 {
