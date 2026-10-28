@@ -85,6 +85,10 @@ void __stdcall function_1d24a0(s_havok_component *component, real position);
 // where retail keeps `or dword ptr [edi+0x12c], 2`. Tried: the bit as a dword bitfield sharing the
 // word 6; the clear as memset 54 (EDI becomes a field pointer); the crate read at each use 70; a
 // flags pointer local 42; the field as long 6.
+// Library clear with first result / first model workspace / both 54/54/54; repeated receiver
+// lookup 54; receiver acquired after clear 81; genuine body cursor 51;
+// complete positive body-classification result 54; exhaustive final result with library clear 88.
+// Original body and include restored.
 // @retail 0x11bbf0
 bool __stdcall function_11bbf0(long object_index, s_crate_placement_view const *placement, long creation_argument2)
 {
