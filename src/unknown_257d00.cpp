@@ -1590,7 +1590,7 @@ bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 
 #pragma inline_depth(2)
-// score 466 (was 466): the body is 36 bytes short; retail loads the actor and cs-datum
+// score 471 (was 471): the body is 40 bytes short; retail loads the actor and cs-datum
 // table globals before the actor index and keeps the actor base in EBX, ours loads the
 // index first and keeps the actor base in ESI.
 // Actor/output registers, dispatch layout and rounding homes still differ.
@@ -1658,6 +1658,9 @@ void function_b7360(long object_index);
 // all three 532; field reads with positive point-production admission 530. Original body restored.
 // Complete core-group orders ACB/BAC/BCA/CAB/CBA 474/544/534/478/532;
 // B/A with point case before/between/after the groups 522/546/549. All original case bodies restored.
+// Round 223: shared initial truncation 509; complete direction assignment helper 477;
+// both 509; named-entry inline declaration 471; with truncation/direction/both
+// 509/477/509; separate named-entry noinline declaration 471. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
