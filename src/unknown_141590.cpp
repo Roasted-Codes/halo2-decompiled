@@ -186,6 +186,9 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // and helpers restored.
 // Round 82: sine-branch axis k/j/i 327; transform scalars s/w2/dot 289, s/dot/w2 302; w assigned
 // before the axis 302; scale computed before the axis 301. Original body and helpers restored.
+// Round 259: Complete native cross-vector initializer with all six coefficient
+// schedules 237/285/240/240/302/289; immutable cross with dot/w2/s and s/w2/dot
+// 237/289. Original helper/body restored; frame and quaternion/cross spill reuse remain.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

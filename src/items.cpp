@@ -1331,6 +1331,9 @@ static __forceinline void item_release_impulse_10b4d0(long object_index)
 // 183/183; native/const/library paired values 190/190/190. All one-use snapshots restored; matrix
 // gain only three, despite retail length. Original helper, contact/event code and includes
 // retained.
+// Round 259: Complete contact/event/owner/impulse workspace-name families, eight
+// lexical home orders 154 each. Original helper and all workspaces restored; release
+// byte RMW/tail and event-point homes remain.
 // @retail 0x10b4d0
 bool __stdcall function_10b4d0(long object_index)
 {
