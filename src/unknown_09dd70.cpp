@@ -456,9 +456,13 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 101 (was 229): player field_92 scheduling, the attachment record base and final update layout remain.
-// BLOCKED-BY 0xd09c0 (contributor code, unmatched): retail passes its first argument in ebx while ours pushes it,
-// so the attachment call's setup and record cursor still differ.
+// score 12 (was 101): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
+// object lookup gives 4, kept out: one use) and copies field_f4 at the end through EAX (ours ECX).
+// Round 84: 0xd09c0's own body now keeps its unit index in EBX, so it takes it there as retail (with the
+// field_92 local 93 -> 11); a loop-top element pointer for every slot field gives retail's +0xb8 cursor
+// (11 -> 4 with that local, 12 without); a field_c pointer 11, a field_6 pointer 11 (+0xb2). Final
+// copy: store in both arms 31, handle read at each use 4, dword copy 4, camo-arm object lookup at each
+// use 39/55.
 // Round 74: mask local for the shared attachment call (as the matched sibling overrides) 196; word slot
 // counter 196; long flags local 196; slot record pointer 224; signed slot loop test 196.
 // retail keeps the flags in ebx (reloaded from the parameter after calls), the weapon-slot loop
@@ -562,15 +566,16 @@ void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
     dword local_14;
     do
     {
+        s_9d360::s_9d361 const *local_21 = &local_2->field_ac[local_13];
         local_14 = local_1 & (1 << (local_13 + 14));
         if (local_14)
         {
-            long local_15 = local_2->field_ac[local_13].field_0;
+            long local_15 = local_21->field_0;
             if (local_15 == NONE || function_122c10(0x77656170, local_15))
-                function_d09c0(arg_0, local_13, local_2->field_ac[local_13].field_0, local_2->field_ac[local_13].field_4, (dword const *)&local_2->field_a8);
+                function_d09c0(arg_0, local_13, local_21->field_0, local_21->field_4, (dword const *)&local_2->field_a8);
         }
         if ((local_1 & (1 << (local_13 + 14))) || (local_1 & (1 << (local_13 + 18))))
-            function_d0b70(arg_0, local_2->field_ac[local_13].field_6, local_2->field_ac[local_13].field_8, local_2->field_ac[local_13].field_c, local_13);
+            function_d0b70(arg_0, local_21->field_6, local_21->field_8, local_21->field_c, local_13);
         ++local_13;
     } while ((dword)local_13 < 4);
     if (local_1 & 0x400000)

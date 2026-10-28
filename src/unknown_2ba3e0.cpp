@@ -337,7 +337,7 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
     }
 }
 
-// score 196 (was 249): frame 0xb4 and length agree; retail scales the attraction direction's j and k in
+// score 196 (was 196): frame 0xb4 and length agree; retail scales the attraction direction's j and k in
 // place where ours computes them into temporaries (three instructions), and its second velocity normalize
 // multiplies j and k from memory with deferred stores; loop-top reload order of the definition/first.
 // Round 9 (lane 11): steering record replaced by plain locals 291 (frame 0xac); the distance estimate with
@@ -386,6 +386,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // independent delta/previous/both 432/382/406; all vectors 431; all limits 399;
 // maximum-speed/change pair 397; all independent 415. Every form aligns the
 // frame to 16 and loses four matched siblings in preview; original helper/storage restored.
+// Round 84: velocity block through a named velocity pointer 430 (1290 bytes); attraction amount
+// through the existing scale helper 196 (same code); an inline pointer-parameter vector add for both
+// velocity additions 234 (1541 bytes); next declared at the loop 242; attraction normalize through the
+// header's vector3f_scale 213. Restored.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
