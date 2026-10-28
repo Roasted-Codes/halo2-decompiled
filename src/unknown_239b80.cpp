@@ -329,6 +329,9 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // departure branches with Boolean state and early heading, with memmove/memcpy 253/286; existing
 // displacement helper 203; shared start-point pointer 253; read-once start index 265, with memmove 263.
 // Original body restored.
+// Round 239: separate lowest-scan/hull-pass/candidate-scan bound values, all
+// seven combinations 203 each; all bounds with overlapping CRT compaction 230.
+// Original bounds, equality helper, compaction and body restored; caller intact.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {

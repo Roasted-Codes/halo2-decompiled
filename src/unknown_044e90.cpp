@@ -50,6 +50,9 @@
 // Native stride-0x108 frustum source with raw/native count/native ranges/both 434 each;
 // the same four forms with native six-plane array reference 434 each. Original source
 // ownership, real record declarations and fixed-six loop restored.
+// Round 240: Complete whole-query decision bool/byte/short/long 437/437/443/436;
+// equivalent ordered alternatives 437/437/443/436. Entry/table and list/plane
+// homes remain; all original selection observations and body restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

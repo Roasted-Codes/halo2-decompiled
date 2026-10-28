@@ -1220,6 +1220,9 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Round 225: ordered original/resolved request tuples and native records, mutable/const
 // with long/dword ordinals, 2174 each (1657/2825 bytes). All eight table forms restored;
 // preserve the original two resource calls, native iterator and identifier workspaces.
+// Round 243: Immutable complete candidate, readonly named source, both, readonly iterator entry,
+// candidate/entry, both readonly sources, all three and one final result exit:
+// 978/828/978/828/978/828/978/1011. Complete original body and declarations restored.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

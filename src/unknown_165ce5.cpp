@@ -1873,6 +1873,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // All eight forms restored; ordinary baseline remains 410/2154.
 // Blend-producer scope, paired Boolean role names, duration/query names and their combinations
 // 411 each; reversed declarations with all scope/names 411 (fast control 411; full 410).
+// Round 243: Owner-mediated state, handle at every use, both, buffer root at every use,
+// state/buffer, handle/buffer, all three and state with immutable buffer snapshot:
+// 497/529/494/743/742/775/767/497 (fast control 411/2166). Complete original body restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

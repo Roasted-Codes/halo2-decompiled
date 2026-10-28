@@ -1554,6 +1554,9 @@ struct s_camera_clip_reference_16ebf0
 // Round 202: Existing saved-state lifetime after view/basis/composition/output-copy/validation
 // phases 239/239/239/239/256; view/composition/validation with entry fraction 239/239/256.
 // Original saved-state initialization, qualifier and fraction lifetime restored.
+// Typed state/saved-state/both field receivers 209/209/209; each with native
+// directions 221/221/221; both with native position 232, with complete native
+// direction/position copies 204 (five-point gain dropped). Original types and body restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {
