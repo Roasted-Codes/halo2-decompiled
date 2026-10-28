@@ -3553,6 +3553,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round P208: ordinary inline request/reset/visible-owner helpers 1503/1436/1436;
 // request-reset/request-owner/reset-owner/all inline 1503/1503/1436/1503;
 // direct native input-table initialization 1436. Original helper declarations and body restored.
+// Existing visible-owner result, with request guard/reset chain/both 1436/1436/1436/1436;
+// each graph with Boolean activity 1477/1477/1477/1477. All helpers and body restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

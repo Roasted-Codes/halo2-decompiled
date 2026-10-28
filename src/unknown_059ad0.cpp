@@ -2209,6 +2209,9 @@ void network_session_leave_joining(c_class_58d20 *session)
 // memmove 37; tail clear with fill 30; tail clear with memmove 46; NONE set after the state
 // clear 29; NONE before the clock 15; field fill (0xff memset) after the state clear 29; zero
 // initializer for the record 27; state-block pointer local for the clear and the copy 11.
+// Scratch source pointer: direct clear with record/pointer fields 3/3;
+// with returned state-copy destination 9/9. Source from scratch clear with
+// record/pointer fields 38/35; with returned state destination 40/37.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {
@@ -4362,7 +4365,29 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
 
-// score 370 (was 370): Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
+// score 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
+// instead of going through the shared exit, so each one gets its own epilogue and the extent matches
+// retail's 1264 bytes. The three boolean stack homes are still rotated relative to retail.
+// score 310 (was 318): the acknowledgement block returns the result directly instead of going through
+// the shared exit, so its epilogue is the one retail emits. The three boolean stack homes are still
+// rotated relative to retail and the invalid-state exit is still emitted twice.
+// score 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
+// it into a named flag, so the comparison is tested once as retail does. The three boolean stack homes
+// are still rotated relative to retail and the invalid-state exit is still emitted twice.
+// score 325 (was 335): the acceptance test is written as the no-sender case followed by the
+// acknowledgement, so the acknowledgement block stays out of line at the end of the function instead of
+// being pulled into the middle of it. The three boolean stack homes are still rotated relative to retail.
+// score 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
+// distinct arm, the peer-map update takes the remote member first (the callee is symmetric in its two
+// member arguments), and the channel-state test is split into a named flag. The three boolean stack
+// homes are still rotated relative to retail and the invalid-state exit is still duplicated.
+// score 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
+// separate arm instead of a merged join, and the identity pointer is taken before the member-state
+// pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
+// score 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
+// separate arms; the extent is 1265/1264 bytes. Acceptance/identity homes and acknowledgement
+// placement remain.
+// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
 // Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
 // Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
@@ -4415,61 +4440,87 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  long *reason, bool *has_identity, s_session_member_identity *identity)
 {
  long sender = network_session_find_member_by_address(session, address);
- bool result = false;
  long state = session->state;
+ bool result = false;
  if (!state || state == 10)
  {
   *reason = 1;
-  goto done;
+  return result;
  }
  if (state != 9)
  {
-  if (state <= 2 || state > 8)
+  if (state > 2)
+  {
+   if (state > 8)
+   {
+    *reason = 2;
+    return result;
+   }
+   else
+   {
+    if (function_058d90(session))
+    {
+     if (!session->function_058d20())
+     {
+      *reason = 3;
+      goto done;
+     }
+    }
+    if (state == 8)
+    {
+     if (sender != NONE)
+      goto acknowledge;
+     result = true;
+     goto done;
+    }
+    long host = session->member_index;
+    const s_session_member_identity *host_identity = (const s_session_member_identity *)&session->members[host];
+    s_network_session_member_state *host_state = &session->member_states[host];
+    bool identity_equal = memcmp(host_identity, (const byte *)message + 8, 0x24) == 0;
+    if (session->function_058d20())
+    {
+     if (sender == NONE)
+     {
+      *reason = 5;
+      *has_identity = true;
+      *identity = *host_identity;
+      goto done;
+     }
+     goto acknowledge;
+    }
+    if (network_observer_channel_timed_out(session->observer, host_state->unknown04))
+    {
+     if (identity_equal)
+     {
+      *reason = 4;
+      *has_identity = true;
+      *identity = *host_identity;
+      goto done;
+     }
+     *reason = 6;
+     *has_identity = true;
+     *identity = *host_identity;
+     goto done;
+    }
+    if (session->value4c == NONE)
+    {
+     *reason = 8;
+     goto done;
+    }
+    if (session->observer->channels[host_state->unknown04].state == 7)
+    {
+     if (!identity_equal)
+     {
+      result = true;
+      goto done;
+     }
+    }
+   }
+  }
+  else
   {
    *reason = 2;
-   goto done;
-  }
-  if (function_058d90(session) && !session->function_058d20())
-  {
-   *reason = 3;
-   goto done;
-  }
-  if (state == 8)
-  {
-   if (sender != NONE)
-    goto acknowledge;
-   result = true;
-   goto done;
-  }
-  long host = session->member_index;
-  const s_session_member_identity *host_identity = (const s_session_member_identity *)&session->members[host];
-  s_network_session_member_state *host_state = &session->member_states[host];
-  long identity_order = memcmp(host_identity, (const byte *)message + 8, 0x24);
-  if (session->function_058d20())
-  {
-   if (sender != NONE)
-    goto acknowledge;
-   *reason = 5;
-   *has_identity = true;
-   *identity = *host_identity;
-   goto done;
-  }
-  if (network_observer_channel_timed_out(session->observer, host_state->unknown04))
-  {
-   *reason = !identity_order ? 4 : 6;
-   *has_identity = true;
-   *identity = *host_identity;
-   goto done;
-  }
-  if (session->value4c == NONE)
-  {
-   *reason = 8;
-   goto done;
-  }
-  if (session->observer->channels[host_state->unknown04].state == 7 && identity_order)
-  {
-   result = true;
-   goto done;
+   return result;
   }
  }
  if (session->state != 9)
@@ -4477,19 +4528,19 @@ bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *addr
  if (sender == NONE || sender == session->current_member)
  {
   *reason = 9;
-  goto done;
+  return result;
  }
  {
   byte received[0xc0];
   s_session_member_header *remote = (s_session_member_header *)&session->members[sender];
-  s_session_member_header *local = (s_session_member_header *)&session->members[session->current_member];
   memcpy(received, (const byte *)message + 8, sizeof(received));
+  s_session_member_header *local = (s_session_member_header *)&session->members[session->current_member];
   s_session_peer_transition *transition = (s_session_peer_transition *)&session->value7420;
   s_session_peer_map *map = (s_session_peer_map *)transition->map;
   bool better = false;
   bool same = false;
   session_peer_map_update_reachable(local, (s_session_peer_map *)received, remote);
-  session_peer_map_update_reachable(local, map, remote);
+  session_peer_map_update_reachable(remote, map, local);
   long selected = network_session_find_member(session, (const s_session_member_identity *)(received + 0x24));
   long version = *(long *)(received + 0x48);
   long old_version = *(long *)(transition->map + 0x48);
@@ -4564,7 +4615,7 @@ acknowledge:
   if (session->state == 7)
    network_session_clear_peer(session, sender);
   result = true;
-  goto done;
+  return result;
  }
 done:
  return result;

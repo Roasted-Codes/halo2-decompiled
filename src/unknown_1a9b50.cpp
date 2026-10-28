@@ -490,6 +490,9 @@ extern point2f *g_468778;
 // Boolean fields, output-pointer contracts and request discriminator restored.
 // Round 226: complete settings native/memcpy values with bool/byte result, original/actor-first
 // acquisition 441, 441, 413, 413, 422, 422, 394, 394. All restored; frame and early carrier homes remain.
+// Round 217: Prop-state inline/noinline, prop-view inline/noinline, both inline/noinline
+// boundaries 375/375/375/375/375/375; state/both inline with actor-first acquisition 413/413
+// fast. Original declarations, acquisitions, pointer homes and complete body restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
