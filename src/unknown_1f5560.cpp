@@ -724,9 +724,6 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
 	real *speed_out, real *time_out, real *distance, real *vertical_speed, real *horizontal_speed);
 
-// score 5 (was 5): the arguments of the ballistics call are pushed in another
-// order and the high arc flag goes into EDX; retail's function_fa1a0 takes the
-// target before the origin and is defined in src/projectiles.cpp.
 // @retail 0x1f8100
 bool function_1f8100(long actor_index, point3f const *origin, point3f const *target)
 {

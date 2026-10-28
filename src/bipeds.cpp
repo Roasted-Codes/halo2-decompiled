@@ -1793,10 +1793,10 @@ void function_dfdb0(long arg_159e6d, long *surface, long *location, point3f *poi
 	{
 		if (biped->unknown354 != NONE && !function_ddf60(arg_159e6d))
 		{
-			if (biped->unknown360 != NONE && !function_badc0(biped->unknown360, NONE))
-			{
-				function_dfd70(arg_159e6d);
-			}
+			bool object_valid = true;
+			if (biped->unknown360 != NONE)
+				object_valid = function_badc0(biped->unknown360, NONE) != NULL;
+			if (!object_valid) function_dfd70(arg_159e6d);
 		}
 		else if (g_510c54->game_time > biped->unknown350)
 		{
@@ -1855,6 +1855,12 @@ bool __stdcall function_c5460(long object_index, long ignore_index, point3f cons
 
 /* drops the biped out of a vehicle: level and upright, at a clear spot
    by the vehicle (or anywhere clear) */
+// score 76 (was 76): frame 0x1c versus 0x20 and input/ignore ESI/EDI homes are exchanged.
+// Complete bool retry result 134; iteration-local result 76; long result 109; capsule/fallback
+// role names 76; names with bool result 134; fallback-only point scope 76; function-scoped
+// workspaces 76; those workspaces with bool result 134. Original body restored.
+// Fallback radius reuse 74 (350 bytes); retry result started at the loop boundary 73
+// (350 bytes); both 86 (356 bytes). Two/three-point gains and one-use field copies restored.
 // @retail 0xe0070
 void function_e0070(long arg_159e6d, long vehicle_index)
 {
@@ -3006,6 +3012,10 @@ void function_e4300(long arg_159e6d)
 }
 
 /* gets the biped up and puts its Havok to sleep, unless it already sleeps */
+// score 91 (was 91): reset-mode dispatch expands instead of retail calling it out of line (113/61 bytes).
+// Separate reset noinline declaration 91; Boolean flag test 98; both 98; noinline with
+// field-use object lookup 94; Boolean lookup with/without noinline 101/101; both call-boundary
+// declarations with Boolean test 98, with field-use lookup 101. Original body/declarations restored.
 // @retail 0xe4bd0
 void function_e4bd0(long arg_159e6d)
 {

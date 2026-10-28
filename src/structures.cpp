@@ -505,6 +505,8 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // Round 62: section groups read right after the surface lookup, as retail does 177 (kept; model
 // and collision swap EBX/EDI); after the node count/count test/nodes/sentinel 182/186/186/186;
 // with the stored section index replaced by the local 206; object lookup before the model 202.
+// Round 202: Native mesh node/strip/parts fields, seven combinations, and all with const receiver 78/78/78/78/78/78/78/78 fast.
+// Original executable source restored. Frame 0x58 agrees; model/collision roles, bounds acquisition, lookup-address reuse and triangle-test inputs remain.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)
