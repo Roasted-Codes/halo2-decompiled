@@ -120,6 +120,9 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // absolute/magnitude-first 531; native quadrant 564; value-input application 564. All restored.
 // Round 368: complete four-axis scaled/normalized/both products 501/501/501; shared snap attenuation alone
 // or with each/all product forms and angle role names 566 each. Original body and helpers restored.
+// Raw coordinates reused as first/second/both normalized component locals 501/501/501;
+// vertical normalized components first on original/first/second/both reuse 551/551/551/551;
+// both coordinate reuses with shared trig magnitudes 501. All restored; frame 0x38 remains.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {

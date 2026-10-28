@@ -6,6 +6,7 @@
 #include "data_array.h"
 #include "object_markers.h"
 #include "effects.h"
+#include "vector_products.h"
 #include <math.h>
 #include <xtl.h>
 
@@ -117,6 +118,9 @@ void function_117080(long);
 // Round 57: no slot with next before the reload 64; no slot alone 50; next with slot 54;
 // slot at function scope 50; typed record-array base 50; outer for-loop 50; alternate next
 // helper with next 54; record pointer on the pool-local body 50.
+// Round 268: explicit search result 50; unsigned slot 50; word slot 51; unsigned
+// datum handle 50; explicit search result with those three carriers 50/51/50;
+// shared out-of-line datum conversion 102. All original helper and field reads restored.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -327,29 +331,34 @@ void __stdcall function_117790(long index)
 	}
 }
 
-// score 81 (was 81): the pool data base sits in ebp where retail has ebx, and retail loads origin.y before
-// forming the record pointer; the first loop is entered by a jump (padding) where retail falls through. In the
-// attachment loop retail walks a pointer at the attachment, reads the marker, then the vertex again after the
-// copy, and still ORs the pinned word in place. Attachment element pointer 103 (retail's walk and reloads, but
+// score 67 (was 81): the pool data base sits in ebp where retail has ebx; the shared difference helper gives
+// another origin/delta schedule, and the attachment walk and copy registers still differ. Earlier: the first loop
+// entered by a jump where retail falls through. Attachment element pointer 103 (retail's walk and reloads, but
 // the copy's registers rotate and the pinned OR splits into load/or/store, 521 bytes); with a vertex local for
 // the pin 103; with the existing bit_vector_set 103; fields in full with bit_vector_set 103 (identical code);
 // the definition read after the origin delta 80; between the origin copy and the delta 80.
+// Round 58: shared length-squared helper 81; shared point-difference helper 72; typed record lookup 72;
+// vertex-array base 67 kept; loop-lifetime attachment cursor 90; attachment array base 75; aggregate delta
+// with the array base 83; length helper on the best form 83; correction-only difference helper 83;
+// direct vertex reads through the attachment base 91; entry velocity declaration 67.
 // @retail 0x117a80
 void function_117a80(long index)
 {
 	s_surface_record *record = surface_record(index);
 	s_surface_definition *definition = surface_definition(record);
 	point3f origin = *(point3f *)(surface_object_header(record->object_index)->object + 0x30);
-	vector3f delta = {record->origin.x-origin.x, record->origin.y-origin.y, record->origin.z-origin.z};
+	vector3f delta;
+	vector3d_from_points3d(&origin, &record->origin, &delta);
 	if (delta.k*delta.k + delta.j*delta.j + delta.i*delta.i > 0.1600000113248825f)
 	{
 		delta.i = origin.x-record->origin.x; delta.j = origin.y-record->origin.y; delta.k = origin.z-record->origin.z;
+		s_surface_vertex *vertices = record->vertices;
 		for (long i = 0; i < definition->vertex_count; ++i)
 		{
-			record->vertices[i].position.x += delta.i;
-			record->vertices[i].position.y += delta.j;
-			record->vertices[i].position.z += delta.k;
-			record->vertices[i].previous = record->vertices[i].position;
+			vertices[i].position.x += delta.i;
+			vertices[i].position.y += delta.j;
+			vertices[i].position.z += delta.k;
+			vertices[i].previous = vertices[i].position;
 		}
 	}
 	vector3f velocity;
@@ -391,8 +400,12 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 195 (was 209): frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
+// score 168 (was 195): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
+// Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
+// three named cross terms 195; named variation 195; scalar declarations first 195;
+// projection before shared cross 182. Shared cross product 168 fast/plain, 880/880 bytes.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -411,10 +424,12 @@ void function_117dd0(long index, vector3f *wind)
 		real sine = (real)sin(angle), cosine = (real)cos(angle);
 		vector3f axis = g_4417f0[(short)((surface_random() * 1026) >> 16)];
 		vector3f old = g_55ecd4;
+		vector3f cross;
+		cross3f(&old, &axis, &cross);
 		real projection = (axis.k*old.k + axis.j*old.j + axis.i*old.i) * (1.0f-cosine);
-		g_55ecd4.i = old.i*cosine + axis.i*projection - (axis.k*old.j-axis.j*old.k)*sine;
-		g_55ecd4.j = old.j*cosine + axis.j*projection - (axis.i*old.k-axis.k*old.i)*sine;
-		g_55ecd4.k = old.k*cosine + axis.k*projection - (axis.j*old.i-axis.i*old.j)*sine;
+		g_55ecd4.i = old.i*cosine + axis.i*projection - cross.i*sine;
+		g_55ecd4.j = old.j*cosine + axis.j*projection - cross.j*sine;
+		g_55ecd4.k = old.k*cosine + axis.k*projection - cross.k*sine;
 		function_117c80(&g_55ecd4, &g_55ecd4, 0.34906584f);
 		/* retail reloads the frame count after the call, as for an address-taken global (0x4a7c0, 0x248620) */
 		g_55e710 = *(dword const *)&g_4ba034;

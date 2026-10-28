@@ -160,6 +160,7 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Round 233, on the recovered range-reference/native-mask graph: published table reference 47;
 // native word range/entry field references 47/47; published pass/table-plus-pass references 47/47;
 // packed entry accessor 47; entry-reference consumption scope 47; unsigned native mask index 47.
+// Round 235: published table snapshot after entry/before entry/after packed 151/231/151; after-entry with distinct packed/chain/both/pass/all restore receivers 151/151/151/151/151.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -1364,6 +1365,10 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 // score 267 (was 267): frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// Frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// Direct descriptor pointer/reference 267/267; mapped pre-rescale reload 267; mapped descriptor across pack 263 (not kept: a gain under 8);
+// validation descriptor across pack 288; direct pointer on that graph 263; separate mapped output word 268;
+// short mapping base 263 (no added gain, restored).
 // Frame and sampler agree; captured descriptor/index and post-store rereads remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.

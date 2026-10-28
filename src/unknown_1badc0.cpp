@@ -65,6 +65,9 @@ real normalize2d(point2f *arg_0);
 // Round 195: Normalizer inline/noinline/combined/forceinline declarations 220 each;
 // with radius before center 215 each. Five-point best restored; original output access,
 // scalar spill, radius lifetime and body retained, output/vector homes unresolved.
+// Round 23: direct const/nonconst parameter reads 279 each; separate output pointer 279;
+// nonconst output reference and actor-first order 220 each; far/near/both output point
+// setters 226/262/262; actor-first with near setter 262. Original body restored.
 // Round 259: Collision-branch-only completion results false-first bool/byte/short/long
 // 269/247/275/276; true-first 262/258/258/260. Direct-output exits unchanged.
 // Original result graph and entire body restored; output EBP and vector homes remain.

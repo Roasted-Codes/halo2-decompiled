@@ -169,6 +169,8 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Record value fixes entry registers, point setter fixes the second byte home; all restored.
 // Record memmove, center/input/initial-vector library copies and combinations
 // 999/920/920/920/999/999/920/999; record copy recovers entry registers but frame grows to 0x1f4. All restored.
+// Round 202: Linear workspace ending 920; rotation/quaternion endings, their pairs with linear,
+// both endings, all three and all with tag-chain ending 938 each. Original lifetimes restored.
 // Round 364: second activity word/admission byte/both/first activity word
 // 997/920/997/993; first-second/first-admission/all/all words
 // 988/993/988/987. Word activity can recover entry registers but not frame; all restored.

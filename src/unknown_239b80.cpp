@@ -496,7 +496,8 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 	return fabs((double)a->x - b->x) < epsilon && fabs((double)a->y - b->y) < epsilon;
 }
 
-// score 129 (was 129): aligned frame and stride/prior homes agree; prior-side byte and SIMD homes differ.
+// score 129 (was 129): Retail length and the mask update agree; retail keeps the previous side in memory
+// aligned frame and stride/prior homes agree; prior-side byte and SIMD homes differ.
 // Earlier: Retail length and the mask update agree; retail keeps the previous side in memory
 // (ours CL across the back edge, one instruction short from the side test on), loads count once into ECX
 // for the scaled index and the guard, and keeps zero in XMM2. Earlier: count/stride/prior homes remained
@@ -555,6 +556,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // pointer with signed ordinal 254; false-first entry side with signed/unsigned ordinal 272/246;
 // previous-point lexical name 254; shared copy extent 265; output-mask lexical name with that extent
 // 265. Original declarations, qualifier, ordinal, names and body restored.
+// Round 267: On the native mask graph, prior true-first/false-first side results 132/130;
+// current true-first/false-first 284/284; paired true/true, true/false, false/true,
+// false/false results 284 each. Count ECX and prior-side byte home remain; original body restored.
 // Round 366: previous-distance carry 156; two-use intersection pointer 129; both 156; shared 2-D difference 129, with distance/pointer/both 156/129/156; joint point cursor 262. All restored.
 // Round 369: prior/current/both outside values 257/268/325; outside values with test-assigned fraction 253/266/316; both with negative accumulation 344; complementary side presence 134. All restored.
 // @retail 0x23a6f0

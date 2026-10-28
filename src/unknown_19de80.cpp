@@ -345,6 +345,9 @@ static inline bool teams_enabled_19e1c0()
 // plain result 701/701.
 // Round 367: Inline length/copy/comparison/variadic-format declarations 433 each; ordinary result on the
 // same four boundaries 701 each. All declarations, result storage and copy/format paths restored.
+// Round 224: ordinary result completed on every no-output path: all failure tails 715;
+// name/score/name+score entry defaults 713/707/692; timer/name+timer/score+timer/all entry
+// defaults 716/712/712/710 (fast). Frame 0x204 recovers, copy tails still merge; all restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

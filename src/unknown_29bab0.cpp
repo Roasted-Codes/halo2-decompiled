@@ -101,6 +101,9 @@ PRIVATE __forceinline real function_29bab4(vector3f const *arg_0, vector3f const
 // Round 367: Returned position receiver/shared two-dimensional difference/both 838/750/838; immutable pre-
 // blend snapshot 804; snapshot with position/difference/both 838/750/838; all with native position
 // workspace name 838. Direct input in every form; all restored.
+// Round 224: direct input plus shared cross/speed/publication 748/750/881; cross+speed 748;
+// cross+publication, speed+publication, all, all+native normalizer setter 886 each. Two-point
+// cross gains rejected; original input access, helpers and outputs restored.
 // @retail 0x29bab0
 void __stdcall function_29bab0(long arg_0, long arg_1, vector3f const *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

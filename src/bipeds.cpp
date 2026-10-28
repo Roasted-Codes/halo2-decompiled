@@ -2040,11 +2040,14 @@ real function_1d1230(long rigid_body_index, s_havok_component *component);
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value);
 
 /* starts a fallen biped's ragdoll from its main rigid body */
-// score 2 (was 61): only argument preparation before the extent call differs: mov ecx,esi precedes mov eax,ebx.
+// score 2 (was 2): only argument preparation before the extent call differs: mov ecx,esi precedes mov eax,ebx.
 // Shared main-index helper with short 34, with long 31; long ternary 76; shared point setter 52; long helper/setter 24;
 // typed body getter 61; short helper/setter 27; both typed body helpers/setter 24; typed three-use point source 2, kept; earlier uninitialized index declaration 2.
 // Setter result as point argument 2; returned pointer 2; returned reference 2; split extent declaration 2;
 // point storage first 2; source pointer declared first 2; initialized point-first declarations 2; const extent result 2.
+// Extent formal order reversed 0 but loses its matched callee (1, address base/index); separate noinline and inline
+// extent declarations original/reversed 2/0 with the same callee loss; outer early exit, split inner guard, both early exits 2/2/2;
+// explicit cdecl and stdcall original/reversed 2/0 with the same callee loss; signed int extent index original/reversed 2/0, same loss.
 // @retail 0xe1a80
 void function_e1a80(long arg_159e6d)
 {
@@ -2995,11 +2998,14 @@ void __stdcall function_e2e90(long arg_159e6d, long *field_7c, long *state_name,
 
 /* starts the biped's landing: its landing time, and for one that can
    collapse, a ragdoll for a random part of it */
-// score 4 (was 27): the range is widened in CX, but ours tests CL before the seed pointer; retail
+// score 4 (was 4): the range is widened in CX, but ours tests CL before the seed pointer; retail
 // tests AL, then loads the seed pointer before widening CX. A signed range also deriving the byte
 // test 4; an independent byte 8; an unsigned range 4; explicit byte narrowing 4; a two-view union 4;
 // range assigned inside/before the byte test 27/27; long/dword range 16/16; a low-byte mask 4.
 // Earlier: retail widens the halved landing time to 16 bits (`movzx cx, al`) before the seed step and sign-extends it at the multiply, ours folds both into `movzx edx, al` (seed then in ecx, not eax); tried: `(short)half` as the argument 27, a named seed pointer 28, `x = x + random_index(...)` 27, a one-use `short` range local 27, a file-local `__forceinline` short-parameter copy of the helper 27.
+// Shared bounded-range helper short/byte 60/59; consistent inline/forceinline short 60/4, forceinline byte 27;
+// range divided by two 4; short read then halved 4; signed-byte test 4; short positive/nonzero tests 10/10;
+// shared bounded-range helper with a short positive test 59.
 // @retail 0xe3f00
 void function_e3f00(long arg_159e6d)
 {
@@ -3397,6 +3403,10 @@ real magnitude3d(vector3f const *v);
 /* an actor riding a fast vehicle that is about to leave the ground (no
    ground under it, or none along its flight) says so, at most once every
    half second: falling (0x54), flipping over (0x56) or a jump (0x55) */
+// score 105 (was 169): Frame 0x84 agrees; byte/word read, float scheduling and normal-copy homes differ.
+// First/second/both branch-selected collision calls 215/225/105 fast; both retained.
+// On both calls: state at test 105; shared vector/point/both setters 107/110/111; carrier name 105.
+// Complete branch-selected calls 105 plain; original operands and helper roles preserved.
 // @retail 0xe3380
 void __stdcall function_e3380(long arg_159e6d)
 {
@@ -3427,8 +3437,11 @@ void __stdcall function_e3380(long arg_159e6d)
 			vector.j = g_4687bc->j * 8.0f;
 			vector.k = g_4687bc->k * 8.0f;
 			collision.unknown24 = NONE;
-			if (!function_1697c0(function_ddf60(arg_159e6d) ? 0x800001 : 0x84000d, &start, &vector, NONE, NONE,
-				(s_collision_result_1697c0 *)&collision))
+			if (!(function_ddf60(arg_159e6d) ?
+				function_1697c0(0x800001, &start, &vector, NONE, NONE,
+					(s_collision_result_1697c0 *)&collision) :
+				function_1697c0(0x84000d, &start, &vector, NONE, NONE,
+					(s_collision_result_1697c0 *)&collision)))
 			{
 				vector3f flight;
 
@@ -3446,8 +3459,11 @@ void __stdcall function_e3380(long arg_159e6d)
 					vector.j = flight.j * 8.0f;
 					vector.k = flight.k * 8.0f;
 					collision.unknown24 = NONE;
-					if (function_1697c0(function_ddf60(arg_159e6d) ? 0x800001 : 0x84000d, &start, &vector, NONE, NONE,
-						(s_collision_result_1697c0 *)&collision) && collision.normal.k > 0.3f)
+					if ((function_ddf60(arg_159e6d) ?
+						function_1697c0(0x800001, &start, &vector, NONE, NONE,
+							(s_collision_result_1697c0 *)&collision) :
+						function_1697c0(0x84000d, &start, &vector, NONE, NONE,
+							(s_collision_result_1697c0 *)&collision)) && collision.normal.k > 0.3f)
 					{
 						falling = false;
 					}
@@ -3477,6 +3493,10 @@ void __stdcall function_e3380(long arg_159e6d)
 
 /* the dead biped's animation: its getting-up animation once it can stand,
    the ragdoll's pose while it lies, or its landing */
+// score 171 (was 171): Frame 0xc agrees; receiver/index operand order, repeated flag test and result/SSE homes differ.
+// Result first 174; explicit status exits 173; current/primary/tag receivers at uses 182/177/206;
+// initial success joined to result 201; current observations/status exits 185; result first too 186.
+// Original body and every callee contract restored.
 // @retail 0xe3c90
 bool __stdcall function_e3c90(long arg_159e6d, long *names, s_biped_physics_output *output)
 {

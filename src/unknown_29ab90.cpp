@@ -59,7 +59,8 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 	arg_2->k = arg_0->k * arg_1;
 }
 
-// score 383 (was 383): frame 0x5c/0x64, actor/requested-vector transport and x87 homes differ.
+// score 383 (was 383): frame 0x5c versus 0x64, actor/input transport and x87 homes differ.
+// frame 0x5c/0x64, actor/requested-vector transport and x87 homes differ.
 // Earlier: frame 0x5c versus 0x64, actor/input transport and x87 homes differ.
 // Earlier 396 from 428: magnitude helpers now give retail's copies, memory-operand products and epsilon;
 // magnitude helpers now give retail's copies, memory-operand products and epsilon;
@@ -129,6 +130,10 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // private helpers and sole disabled declaration unchanged. Frame/input and x87 homes remain.
 // Named ratio numerator 395; both complete turn factors 389; both forms together 383 kept.
 // All three computed parts retain the original floating grouping and operands; frame/input homes remain.
+// Round 267: scale vector return 412; planar vector return with length output 568;
+// both vector returns 589; entry working-vector declarations 383; those three return
+// graphs with entry declarations 412/568/589; both plus scale value input 710.
+// Original helper interfaces, body and declarations restored; frame/input homes remain.
 // Round 366: returned position producer 408; shared scale 383; both 408; full vector setter 399; position/setter 426; scale/setter 399; all 426; all with earlier reused magnitude 413. All restored.
 // Round 368: settings-only magnitude 390; in-place epsilon result 454; separate turn/speed 385;
 // scope/result 388; scope/separate 384; result/separate 448; all and native length names 382/382 (one-point

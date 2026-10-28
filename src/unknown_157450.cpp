@@ -3878,9 +3878,13 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 131: word special/different/both/team/special-team/different-team/all
 // decision carriers 477/528/540/470/477/528/540; dword subtype 470.
 // Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
+// Round 235: elapsed/timer/classification consumption scopes, all seven combinations 470 each; statistics-to-message consumption scope 470.
 // Complementary category bool/byte/short/long 470/470/477/550; with self-player result
 // 470, opposing-team result 526, both 526, word category with both 480. Original
 // category, decision bytes and all event/timing work restored; extra frame dword remains.
+// Round 225: chained award/subtype defaults at entry, admission and victim lookup 549/548/548;
+// award/message 470, all three at entry 549, subtype/message 549; all three
+// after admission/lookup 548/548. Original result defaults and complete body restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4107,7 +4111,7 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-// score 464 (was 472): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
+// score 440 (was 464): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
 // Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
@@ -4139,6 +4143,10 @@ struct s_score_zone_view
 // four native palette/color consumption scopes 472. Minimal own-score scopes retained.
 // Team-only own-text scope 471; individual-only 466 (small gains dropped); both scopes with
 // all palette scopes or both iterator scopes 464/464. Only the two own-text scopes retained.
+// Round 267: On recovered own-text scopes, existing bounded copies for own team/individual/
+// both texts 534/440/536; score publication inside both text scopes 464; copy forms with
+// those scopes 534/440/536; team copy plus team publication scope 534. Keep only the
+// individual own-text bounded-copy call (plain 440, 2688 B); extra scopes restored.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4269,8 +4277,7 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     word text[256];
                     text[0] = 0;
                     function_159130(score, text);
-                    wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                    display->score_text[7] = 0;
+                    unicode_string_copy(display->score_text, text, 8);
                 }
                 display->score = score;
                 color3f colors[4];
