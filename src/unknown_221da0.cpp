@@ -757,7 +757,7 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
-// score 155 (was 155): frame 0x8ac agrees; camera/gain-view ownership and scalar homes differ.
+// score 155 (was 155): frame 0x8ac agrees; camera/gain-view allocation and maximum-tail registers differ.
 // Earlier: Frame 0x8ac agrees; camera ESI/EBP, table-view and side homes remain.
 // Earlier: aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes differed.
 // reversed side guard 225; missing-door continue 225; camera-cluster continue 225;
@@ -817,6 +817,9 @@ real function_18cac0(long arg_0);
 // Membership helper at door/camera/inner only 207/155/207; door-camera/door-inner/camera-inner
 // 155/207/155. The camera membership role accounts for the retained change.
 // Round 366: final-array ownership 219; consistent audibility 167; both 239; native per-door camera cluster 155; array/cluster 221; audibility/cluster 167; all 239; direct native array throughout 190. All restored.
+// Round 210: On the shared membership graph: door-default maximum 216; conditional expression/complete
+// result arms 230/230; branch publication 541; outer maximum workspace 155; indexed
+// element pointer with table-default/door-default/complete-arm results 155/216/230. All restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

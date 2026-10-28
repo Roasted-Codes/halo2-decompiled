@@ -473,12 +473,15 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
-// score 278 (was 299): entry register convention and floating-point scheduling differ;
+// score 278 (was 278): frame 0x40 agrees; early pathfinding EBX ownership and float scheduling differ.
 // result first 299; surface first 299; vector names 299; vector helper 299;
 // case order 300; separate vector declarations 299.
 // Round 24: trace-time state reload, mutable entry, both, coherent pathfinding/surface swap,
 // direct distance arguments and direct projected-origin 299 each; c/b/a/d pointer
 // declarations 278; direct case-5 direction 278 (selected with the declaration order).
+// Round 210: Four consistent vertex-index values in word/long/dword 338/344/344; word/long with
+// the actor value at entry 338/344; word/long with both shared differences 346/360;
+// both shared differences on the original c/b/a/d graph 297. All restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,
