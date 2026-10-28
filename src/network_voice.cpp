@@ -1268,6 +1268,12 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Round 76 (counted loop, fast with 0x54990/0x56160): bool from the getter compare without local_0 112;
 // operands swapped 112; 2 + product 112; multiplier first 112; channel indexed at each use 120;
 // identity compare inside the loop 324 (rolled). Each counted form pushes the channels pointer in 0x54990.
+// Round 82: four channels per pass on `&channels->channels[i]`, i += 4: 111 (caller 0x54990 1);
+// the same indexed in full 120 (caller 6); a channel pointer from channel 0 walked by four with
+// four tests per pass and `i < 4`: fully unrolled to 1021 bytes (987), but channels stays in ebx,
+// the flag in al, the mask in ebx and the active byte in cl as retail, and 0x54990 matches;
+// that pointer walk with `i += 4` 113 (caller 13), as a do/while 113 (caller 13); pointer
+// compare loop stays rolled 283. Original body restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2662,35 +2668,8 @@ finish:
  output->unknown02 = deferred;
 }
 
-PRIVATE __forceinline byte *function_54592(void *arg_0, const s_network_session_player *arg_1, const dword *arg_4)
-{
- dword *local_0 = (dword *)arg_0;
- if (arg_1)
- {
-  memcpy(local_0, arg_1, 3 * sizeof(dword));
- }
- else
- {
-  local_0[0] = *(const volatile dword *)&arg_4[0];
-  local_0[1] = *(const volatile dword *)&arg_4[1];
-  local_0[2] = arg_4[2];
- }
- return (byte *)arg_0;
-}
-
-// score 157 (was 179): mask/player homes, zero register and grouped source cursor differ;
-// empty-word order 193; third-index groups 193; both 193; word groups 179
-// signed or unsigned. The bounded unsigned-word group index is kept.
-// previous mask 179; ordinary empty/mask-empty 208/208; active memcpy 174;
-// selected input 172; selected/ordinary 204; selected/memcpy 157;
-// mask-selected/mask-memcpy 172/174; typed output/selected/ordinary 179/172/208.
-// score 157 (was 157): player/mask homes, separate zero and selected-pointer tests remain.
-// Active-Boolean copy contract 174; const empty 157; byte group 157; word compare 195;
-// source-local name 157; grouped source cursor 181 (fast). Original kept.
-// mask/player homes, zero carrier and grouped cursors remain;
-// mask/reason/empty declared first 157/157/157; chained empty values 157;
-// native selected-copy output 157; empty arm first 162; void copy result 157;
-// native output with empty arm first 162.
+/* records the session's player mask and identities, and resets the voice
+   channels when either has changed since the last call */
 // @retail 0x54590
 void function_54590(void)
 {
@@ -2698,7 +2677,8 @@ void function_54590(void)
  dword mask = voice_get_player_mask_inlined();
  char reason[0x80];
  reason[0] = 0;
- dword empty[3] = {0, 0, 0};
+ dword empty[3];
+ memset(empty, 0, sizeof(empty));
  if ((dword)g_4c9878.unknown20 != mask)
  {
   strncpy(reason, "session player mask change", sizeof(reason));
@@ -2706,24 +2686,28 @@ void function_54590(void)
  }
  else
  {
-  long i;
-  for (i = 0; i < 16; i++)
+  bool changed = false;
+  for (long i = 0; i < 16; i++)
   {
+   const long *previous = &g_4c9878.unknown24[i * 3];
    const void *identity = mask & (1 << i) ? (const void *)&players[i] : empty;
-   if (memcmp(&g_4c9878.unknown24[i * 3], identity, sizeof(empty)))
+   if (memcmp(previous, identity, sizeof(empty)))
+   {
+    changed = true;
     break;
+   }
   }
-  if (i == 16)
+  if (!changed)
    return;
   voice_sprintf(reason, "player identifier change");
  }
  g_4c9878.unknown20 = mask;
- for (unsigned short i = 0; i < 16; i += 4)
+ for (long i = 0; i < 16; i++)
  {
-  byte *local_0 = function_54592(&g_4c9878.unknown24[i * 3], mask & (1 << (i)) ? &players[i] : NULL, empty);
-  function_54592(local_0 + 0xc, mask & (1 << (i + 1)) ? &players[i + 1] : NULL, empty);
-  function_54592(local_0 + 0x18, mask & (1 << (i + 2)) ? &players[i + 2] : NULL, empty);
-  function_54592(local_0 + 0x24, mask & (1 << (i + 3)) ? &players[i + 3] : NULL, empty);
+  if (mask & (1 << i))
+   memcpy(&g_4c9878.unknown24[i * 3], &players[i], sizeof(empty));
+  else
+   memcpy(&g_4c9878.unknown24[i * 3], empty, sizeof(empty));
  }
  voice_channels_reset(&g_525a00);
 }
