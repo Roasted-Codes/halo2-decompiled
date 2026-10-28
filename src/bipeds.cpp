@@ -15,6 +15,7 @@ files; 0xdc370, at the start of the range, is c_a's destructor
 #include "unknown_0259d0.h"
 #include "unknown_1cec30.h"
 #include "object_markers.h"
+#include "slot_handler.h"
 #include "unknown_11cc90.h"
 #include "unknown_1efac0.h"
 #include "unknown_1eb550.h"
@@ -355,6 +356,11 @@ void havok_component_rigid_body_position_get(long rigid_body_index, s_havok_comp
 
 /* fills the biped's character physics input for its current physics mode
    (+0x3dc): its node matrix, facing, controls and Havok body */
+// score 134 (was 134): frame 0x4c versus 0x44, Boolean argument staging and mode dispatch remain.
+// Long airborne/landing/both 162/161/135; native-short body ordinal 135, with long
+// airborne/landing/both 152/152/128; paired word results and short ordinal 128.
+// The 128 forms recover frame 0x44 but are below the keep margin. Consistent biped
+// flag word with animation-word/native-result/native-ordinal subsets: 148/183/155/174/147/171/147/173. All restored.
 // @retail 0xdd0d0
 void __stdcall function_dd0d0(long arg_159e6d, s_biped_physics_input *input, bool flag)
 {
@@ -425,6 +431,12 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 
 /* moves the biped's camera offset (+0x3cc) toward its head marker,
    relative to its root node, a little each tick */
+// score 24 (was 127): frame 0x9c and native entry now agree at retail length; cross-component
+// scheduling and the final float load remain. Existing node query 34; point difference 129;
+// both 48; coherent vector homes 127/34/129/48; outputs first 48. Clamped steps 34;
+// destination pointer 24; both 34; delta-first 34, with steps/pointer/both 34/24/34;
+// plain component loop 24 (kept, plain); raw differences 24; current components 87;
+// current components and differences 87; point setter 34.
 // @retail 0xde190
 void function_de190(long arg_159e6d)
 {
@@ -432,7 +444,7 @@ void function_de190(long arg_159e6d)
 
 	if (biped->unknown13c != NONE && !function_10f820(arg_159e6d))
 	{
-		transform4x3f const *nodes = (transform4x3f const *)((byte *)biped + biped->node_matrices_offset);
+		transform4x3f const *nodes = object_node_matrix(object_get(arg_159e6d), 0);
 		s_object_marker marker;
 		vector3f offset;
 		vector3f aim;
@@ -455,9 +467,11 @@ void function_de190(long arg_159e6d)
 		local.z = offset.k;
 		if (biped->unknown3c8)
 		{
-			biped->unknown3cc.x += PIN(local.x - biped->unknown3cc.x, -0.01f, 0.01f);
-			biped->unknown3cc.y += PIN(local.y - biped->unknown3cc.y, -0.01f, 0.01f);
-			biped->unknown3cc.z += PIN(local.z - biped->unknown3cc.z, -0.01f, 0.01f);
+			for (long component = 0; component < 3; ++component)
+			{
+				biped->unknown3cc.n[component] +=
+					PIN(local.n[component] - biped->unknown3cc.n[component], -0.01f, 0.01f);
+			}
 		}
 		else
 		{
@@ -1581,19 +1595,23 @@ void __stdcall function_def60(point3f *point, long arg_159e6d, short mode, point
 
 /* a biped's collision capsule: its bottom point, the vector to its top and
    its radius, from its two capsule nodes when its definition names them */
+// score 105 (was 134): one-dword frame, stack object index and retail length now agree;
+// pool/definition and output-register roles remain. Existing node queries 105;
+// vector difference and fallback names 134 each, node combinations and entry locals 105.
+// Direct definition producer removes the one-use object alias at 105 (kept, plain);
+// cached object/shared entry 126 each; direct shared entry 105; those four with
+// vector difference 105/126/126/105. Header getter at entry/nodes/both and vector pair 105 each.
 // @retail 0xdf6c0
 void __stdcall function_df6c0(point3f *bottom, vector3f *axis, long arg_159e6d, real *radius)
 {
-	s_biped *biped = BIPED_GET(arg_159e6d);
-	byte *definition = BIPED_DEFINITION_GET(biped);
+	byte *definition = BIPED_DEFINITION_GET(BIPED_GET(arg_159e6d));
 	short node_a = *(short *)(definition + 0x254);
 	short node_b = *(short *)(definition + 0x256);
 
 	if (node_a != NONE && node_b != NONE)
 	{
-		transform4x3f const *nodes = (transform4x3f const *)((byte *)biped + biped->node_matrices_offset);
-		point3f const *a = &nodes[node_a].position;
-		point3f const *b = &nodes[node_b].position;
+		point3f const *a = &object_node_matrix(object_get(arg_159e6d), node_a)->position;
+		point3f const *b = &object_node_matrix(object_get(arg_159e6d), node_b)->position;
 
 		if (TEST_FIELD_BIT((*(dword *)(definition + 0x264) >> 1) & 1))
 		{
