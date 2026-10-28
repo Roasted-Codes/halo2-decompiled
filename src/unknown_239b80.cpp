@@ -275,7 +275,12 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 
 /* gift wrapping: the indices of the convex hull of the points, starting from
    the lowest */
-// score 203 (was 203): Frame 0x14 agrees; retail keeps `count` in memory (ebx only as temporaries:
+// score 203 (was 203): Frame 0x14 agrees; count/departure homes, scan bound, equality and compaction differ.
+// Round 27 (lane 9): memmove for the compaction (retail calls the CRT) with a bool flag and the heading set before the scan gives
+// retail's count home +0x10, scan bound EDX and early heading/flag stores, but points takes EBP and the flag lands in points' home
+// (retail: indices in EBP, the flag in its home) 265 (759 B); with the flag declared first 265; long flag 242; memcpy kept 250;
+// `left_start = left_start || !points2d_equal(...)` 273.
+// Frame 0x14 agrees; retail keeps `count` in memory (ebx only as temporaries:
 // the call argument, then the hull count), ours gives `count` ebx for the whole body.
 // Earlier: scan/count registers, equality scheduling and compaction inline boundary differ. Tried direct index output 261; plain lowest scan 250; full current index 299; full candidate counter 256; native completion returns 279; plain scan direct output 250; plain scan append then count 250.
 // Full count tests 274; current-point snapshot 271; byte start state 250; float workspace names 250; still-at-origin state 264; inline classifier declaration 250; forced equality declaration 250.

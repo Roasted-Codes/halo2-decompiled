@@ -1,30 +1,13 @@
 // @flags /O2 /Gr /arch:SSE
 #include "unknown_044e90.h"
 #include "normalize3d.h"
-// score 434 (was 434): aligned frame and retail length agree; entry/table ownership and plane/list homes remain.
 
-// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// Earlier 434 (was 434): Entry/tag-table registers and plane/list homes remain.
-// Earlier: aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
-// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// Entry/tag-table registers and plane/list homes remain.
-// Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// Aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
-// Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
-// aligned frame 0x74a4 agrees; entry/table registers and plane/list homes remain.
-// Earlier: entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
-// Entry/tag-table registers and plane/list homes remain.
-// Earlier score 434 (was 438): entry/table saved registers and plane/list homes still differ; the six-plane for unrolls, and earlier field/copy forms do not improve.
+// score 434 (was 434): aligned frame and retail length agree; entry/table ownership and plane/list homes remain.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
 // capacity snapshot 438; guarded native input records 445 (plain). Entry/table and plane/list homes remain.
-// Earlier: entry/table registers and plane/list homes differ; plane ordinal word 438;
-// Earlier score 434 (was 438): entry/table registers and plane/list homes differ; plane ordinal word 438;
-// entry/table registers and plane/list homes differ; plane ordinal word 438;
-// view ordinal word 438; frustum ordinal word 437; byte parts predicate 438; early containment byte
+// Plane ordinal word 438; view ordinal word 438; frustum ordinal word 437; byte parts predicate 438; early containment byte
 // 436 (plain).
 // Entry-data cursor 438; selection flags 434; query count 438; inverse per frustum 525;
 // captured frustum/view bounds 481/483; entry data plus inverse 525; complete matrix value 527.
@@ -47,9 +30,6 @@
 // entry/output planes 449; entry/live transform 472; planes/live transform 459; all three boundaries 449;
 // entry/live selection flags 575.
 // Round 317: Native rotation result 472; native center initializer 434; both 472; member alignment 435; aligned rotation/center/both 473/435/473; aligned rotation with shared normal scale 473. Header fully restored.
-// Round 166: query data result/conditional/negative-first 438/463/455; shared normal products
-// 436; query result with products 440; const query 434; query result/products with const query
-// 438/436. All product regroupings restored.
 // Round 142: native tag/table/both observations 434/444/444; on the latter graph,
 // workspace after selection/branch scope, signed flags, query count and entry-data receiver
 // all 444; uniform selection-flag reads with tag-table/tag/tag-table-data 447/438/447.
@@ -64,7 +44,9 @@
 // with input/output end do 486/451; input/output end for 473/451; input/output
 // end while 473/451. Original fixed-six ordinal loop and all plane observations restored.
 // Round 150: Native first/second, third/fourth and transform-array handles, seven subsets 434 each; all descriptor lifetimes beginning at first use 434. All handles restored.
-// Aligned frame 0x74a4 and retail length agree; entry/table ownership and plane/list homes remain.
+// Round 146 (retail reads the flags inside each branch and the table into ESI before the tag test): entry flags
+// at each use 438; table read once at the top 444; both 447 (the table lands in EDX); flags local per branch 441;
+// entry declared before the workspace 434.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {
