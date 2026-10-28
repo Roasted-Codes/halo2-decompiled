@@ -64,7 +64,7 @@ bool balance_teams(long arg_0, long arg_1, bool arg_2, long arg_3, long arg_4,
 void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 	const s_match_player_list *arg_2, const long *arg_3);
 
-// score 439 (was 439): retail length; frame 1000 versus 996, result byte home and second state/getter handling differ.
+// score 439 (was 439): retail length; frame 0x3e8/0x3e4, result byte and getter/readiness handling differ.
 // Refreshed first balance inputs 454; fallback balance inputs 466; both phases 513;
 // native state-value getter 449; final transition-result union 449.
 // frame 0x3e8 versus 0x3e4, result-byte home and getter boundary differ;
@@ -130,6 +130,7 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // 0x72140, 448 (1580 bytes); that with the noinline getter and time-since helper 461 (1573 bytes,
 // frame, entry and failure stores now retail's; left: the property value and both flag bytes
 // cleared before the player-count branch, a separate mode-7 exit per missing pointer).
+// Round 369: ready/getter interaction 504; byte reset 511; early property 502; property/reset 511; separate missing-input exits 488, with reset/property/both 493/501/493. Match-only carrier forms, header and body restored.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

@@ -1363,7 +1363,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 
 
 
-// score 267 (was 267): Frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// score 267 (was 267): frame and sampler agree; deferred index and post-store descriptor rereads remain.
 // Frame and sampler agree; captured descriptor/index and post-store rereads remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and dirty-store scheduling remain.
 // Earlier: Frame and sampler carriers agree; captured descriptors and store scheduling remain.
@@ -1415,6 +1415,7 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Round 353: short writer index, category/bank-first 266/255; shared complement
 // 286/269; shared masked input 298/270; both mask parts 317/305.
 // Every short-index form loses a matched sibling; original shared writer restored.
+// Round 369: common traversal 845; bounded short counter 844; repeated component/shared color/both on common traversal 845 each, with short counter 844 each. All restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

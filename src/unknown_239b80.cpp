@@ -556,6 +556,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // previous-point lexical name 254; shared copy extent 265; output-mask lexical name with that extent
 // 265. Original declarations, qualifier, ordinal, names and body restored.
 // Round 366: previous-distance carry 156; two-use intersection pointer 129; both 156; shared 2-D difference 129, with distance/pointer/both 156/129/156; joint point cursor 262. All restored.
+// Round 369: prior/current/both outside values 257/268/325; outside values with test-assigned fraction 253/266/316; both with negative accumulation 344; complementary side presence 134. All restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
