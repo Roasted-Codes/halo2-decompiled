@@ -448,6 +448,8 @@ struct s_1f8a70_actor
 // both, long route, long+deferred, long+scope and all lifetime forms
 // 404/433/404/433/412/440/412/440. Callee already matches and returns the output pointer;
 // original caller/body restored, with no interface edit.
+// Round 239: direct three-route decision chains 210/201/120/102/021/012
+// 417/416/420/398/420/416; 210 with long route/returned unit output 423/414. All restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {

@@ -191,6 +191,9 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // Round 236: shared vector type / squared-length helper / point setter / vector+length /
 // vector+point / length+point / all / all with native normal initialization
 // 418/418/469/418/469/469/469/469; all restored.
+// Round 239: actual blocked/admission/both byte fields with long result 418/418/418;
+// with bool result 577/583/577; both char fields with long/bool result 418/577. All restored.
+// Blocked-field forms also move the matched edge helper to 10.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,

@@ -483,6 +483,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Two-point forms and added phase flags rejected without a match; all restored.
 // Round 226: Consumption scopes for update, tracking and each real view, all seven subsets
 // 420 each; all scopes with run-wide constant initialization before actor lookup 420. All restored.
+// Round 239: original shared actor/reference/prop getter force-inline declarations,
+// all seven subsets and all three with unsigned full next/current handles: 420 each.
+// Original getters, handle domains and body restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
