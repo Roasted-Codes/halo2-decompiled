@@ -3529,7 +3529,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
     return weapon_index;
 }
 
-// score 1420 (was 1436): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
+// score 1420 (was 1420): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
 // Earlier: frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
@@ -3577,6 +3577,8 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 243: Player default before scale override, direct/valid candidate 1439/1420;
 // before unit lookup 1442/1421; before dual query 1447/1428; before first lookup 1447/1428.
 // Kept scale-override default plus valid candidate, plain 1420/5680; frame and pool carriers remain.
+// Round 246: complementary activity result bool/byte/short/long 1440/1440/1459/1459; the same
+// with entry declaration 1440/1440/1459/1459. Original persistent result restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

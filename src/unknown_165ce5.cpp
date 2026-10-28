@@ -1472,6 +1472,8 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // all plus primary-pointer admission 587. Original complementary states and all calls restored.
 // Round 370 (fast control 234): scope-factored clear decision with active-default, callback
 // and member-rate interactions 434/410/434/410/401/397/401/397; original body restored.
+// Round 246: complementary activity bool/byte/short/long 424/424/423/425; the same with
+// callback selection at update 424/424/423/425 (fast). Original activity and callback restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
