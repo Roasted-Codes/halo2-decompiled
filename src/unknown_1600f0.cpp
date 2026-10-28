@@ -1081,6 +1081,11 @@ struct s_game_engine_globals_connections_view
 // Native column-enable values serve width and visibility: score/time/both bool
 // 304/298/298; score/time/both byte 304/298/298; bool-byte/byte-bool 298/298
 // (calibrated fast). Original derived-width gates and frame restored.
+// Round 14 (lane 10, plain, on the short-width body): store 1 in the success arm and `dim ? 2 : 0` in the
+// else arm 207 (both arms then are retail's code, neg/sbb/and included, but laid out in source order where
+// retail puts the hide-place else arm right after the success arm and the dim arm plus the player/alpha tail
+// after the score column); three stores 207; one nested ternary 212; the place test written `if (hide_place)`
+// first with the arm stores 255, with the original icon 216.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

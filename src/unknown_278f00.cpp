@@ -102,6 +102,14 @@ bool function_a7670(long object_index);
 // descriptive names for the outer locals 212; second scan with its own found flag 269 (flag materialized,
 // not threaded); index comparison before the first-scan flag 213. Diagnostics, not kept: the predicted-copy
 // test as a one-line inline bool helper 212, as a single-exit helper 281 (gives the setne/test).
+// Round 14 (lane 10): the second scan setting the same found flag (`if (!found)` then jump-threads to the
+// iteration end, and the admission flag takes BL, both as retail) 260; with the inner bound read from
+// local_5->field_40 (no count local; the retry head becomes retail's) 231; plus the plain indexed cleanup
+// loop 233 (957 bytes). Lockstep counts rise, but aligned differences fall from 133 to 60; what remains is
+// spill-slot order (retail: cursor, second count, counter, list, body, selector, index upward), the outer
+// index stored at each definition (retail keeps it in ECX on the skip path), the record address sunk below
+// the `local_9 > 0` branch and loop padding. On that base: body in an if-block 233; index declared outside
+// the loop 233; the category as two comparisons 235.
 // @retail 0x278f00
 void function_278f00()
 {

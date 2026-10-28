@@ -1406,7 +1406,10 @@ extern s_object_list *g_4de2f4;
 // before the pushes; the colour struct given an rgb member (shared header, restored) 49 (same code);
 // the pointer declared at the function top 93 (it then takes edi and the late store moves as
 // retail's); the pointer also for the second call and/or the blend 49/49/49 (same code);
-// `&light->fraction` passed with no pointer 214.
+// `&light->fraction` passed with no pointer 214. Round 14 (lane 10): a typed definition struct for
+// every offset 49 (identical code); alphas after each copy 50; pair copies after the second/first alphas
+// 49; second/first alphas between the copies 49; the fraction pointer before the alphas / after the tint
+// / between the alphas 49/75/49 (retail keeps it in EBX across both calls; ours rematerialises it).
 // @retail 0xc0c80
 void __stdcall function_c0c80(long light_index)
 {
