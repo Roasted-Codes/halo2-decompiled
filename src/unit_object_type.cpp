@@ -1149,18 +1149,20 @@ short function_c5340()
 // @retail 0xcfe40
 short function_cfe40(long unit_index)
 {
+	short result = NONE;
 	s_unit *unit = UNIT_GET(unit_index);
 
 	for (long i = 0; i < 4; i++)
 	{
 		long weapon_index = unit->weapon_object_indices[i];
 
-		if (weapon_index != NONE && (*(dword *)(UNIT_DEFINITION_GET(UNIT_GET(weapon_index)) + 0x12c) >> 3) & 1)
+		if (weapon_index != NONE && TEST_FIELD_BIT((*(dword *)(UNIT_DEFINITION_GET(UNIT_GET(weapon_index)) + 0x12c) >> 3) & 1))
 		{
-			return (short)i;
+			result = (short)i;
+			break;
 		}
 	}
-	return NONE;
+	return result;
 }
 
 /* the next grenade type the unit has, from the given one in a direction
