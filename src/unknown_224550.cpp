@@ -166,6 +166,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // 463; flip as bool/if-else 517/517; interval count before the count test 532; shared input-array
 // pointer 517. Retail spills the cache (reloaded into EBX) and keeps the count in EBX for idiv;
 // ours keeps the cache in EBP. Original body restored.
+// Scalar x/y/all four UV bound observations 421 each; all four with role names 421.
+// Caller tint output with x/y/all four scalar observations 463 each; complete scalar
+// bounds with native reference input 421. Original helper contracts and captures restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

@@ -737,17 +737,22 @@ bool function_c70b0(long unit_index)
 	return result;
 }
 
-/* the last object of the chain the units' +0x24c links */
+/* the last object of the chain the units' +0x24c links. The link is tested
+   through the unit and the result read through the pointer, as retail reloads it */
 // @retail 0xc7100
 long function_c7100(long unit_index)
 {
 	long result = NONE;
-	long *next = &UNIT_GET(unit_index)->unknown24c;
+	s_unit *unit = UNIT_GET(unit_index);
+	long *next = &unit->unknown24c;
+	long value = *next;
 
-	while (*next != NONE)
+	while (value != NONE)
 	{
 		result = *next;
-		next = &UNIT_GET(result)->unknown24c;
+		unit = UNIT_GET(result);
+		value = unit->unknown24c;
+		next = &unit->unknown24c;
 	}
 	return result;
 }

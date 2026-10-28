@@ -3146,6 +3146,14 @@ struct s_ammo_conversion_entry
 // declaration order, capacity, table at use and offered count 200 each; source scope 211;
 // complementary early publication 199; complementary early publication with offered count 204.
 // Original word result and body restored.
+// Lane 10 r13: retail keeps the other weapon in EBX across the inner scan and spills the scan
+// count instead (all seven registers busy there). Ternary retention result (retail's je/call/jmp/
+// xor al,al and other index in EDI) 203, with bool acquisition 208; that with the type byte at
+// each use 239; bool, ternary, int loaded clamp, type byte at each use and scan count/table read
+// at use 215 (731 bytes, frame 0x20; the count still gets a register); same with count/table
+// locals 215; short acquisition with those 240; short with int clamp and ternary 202.
+// Lead: retail sign-extends the passed round total (movsx) where ours zero-extends it; 0xa88a0's
+// count taken as long would give the movsx (its file was not edited this round).
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
