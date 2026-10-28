@@ -1185,15 +1185,18 @@ void function_7e100(long current, const s_member_quality_collection *collection,
 long function_1931a0(long count, s_surface_description *variant);
 
 #pragma inline_depth(0)
-// score 15 (was 30): the group-identity copy matches retail's bytes now;
+// score 15 (was 15): the group-identity copy matches retail's bytes now;
 // still differ: the elapsed store is ordered after the stack cleanup, the
 // 0x7e210 call passes the session on the stack, and the summary stores load
 // their ratings in another order.
-// transport, summary loads and copy-tail alignment differ. Fast control 32;
+// Earlier transport, summary-load and copy-tail forms had fast control 32;
 // native rating record, native role names, native capacity expression, native
 // minimum observations, array minimum observations, capacity expression,
 // inline rating declaration and inline quality declaration 32/32/60/32/32/60/32/32.
 // Native output-record graph; maximum/population/both snapshots; record with maximum/population/both; native address assignment: 32 each (fast control 32). Original output graph and all calls restored.
+// Further forms (fast control 17): ordinary summary/elapsed/both stores 19/17/19;
+// elapsed accumulator/named expression 17/17; ratings at entry/before time 17/17;
+// complete range-state observations 17. Original body and inherited qualifications restored.
 // @retail 0x73530
 void function_73530(c_helper_a *helper, void *description)
 {
@@ -1329,90 +1332,68 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 202 (was 202): frame 0xfc agrees; key/statistic/group homes, statistic cursor bias and grouped dispatch remain.
-// Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
-// Frame 0xfc agrees; key/statistic/group homes, six-byte cursor shift and grouped team dispatch remain.
-// Earlier 202 (was 206): Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
-
-// Earlier 202 (was 202): frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
-// Earlier: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain.
-// Earlier: Key/statistic homes, cursor and grouped team dispatch remain; live
-// key/player/team/both skills 348/320/199/317; key plus player/team/both 379/374/388; player-only
-// key phase 266. Three-point team-read gain rejected.
-// Earlier: Frame 0xfc agrees; key/statistic homes, statistic cursor and grouped team dispatch remain.
-// Earlier: frame 0xfc agrees; key/statistic homes and grouped team dispatch remain.
-// key/statistic homes, statistic cursor and grouped team dispatch differ.
-// frame 0xfc agrees; key/statistic homes, six-byte statistic cursor shift and grouped dispatch remain.
-// Earlier: key/statistic homes, statistic cursor and grouped team dispatch differ.
-// key/statistic homes, statistic cursor and grouped team dispatch differ.
-// existing converter 371; converter inline boundary 367; native summary fields 231; native skill snapshot 302;
-// immutable query inputs 231; native counter bits 231; native session fields 231; frame pointer 412; team value
-// snapshots 225; team promoted skill snapshot 239; native player statistics array 231; native statistics arrays
-// 231.
-// key/statistic homes, statistic cursor and grouped team dispatch remain.
-// Earlier: key/statistic homes, statistic cursor and grouped team dispatch remain.
-// Earlier trial set: key/statistic homes, statistic cursor and grouped team dispatch remain.
-// External player/team/both record references 225/220/220; early player identity 234;
-// native records plus formatted identity 219 (one-point follow-up dropped); UTF-16 input 220;
-// shared eligibility 353; bounded name conversion 332; direct native team pointer 220;
-// native team pointer/reference plus formatted identity 219/219 (one-point follow-ups dropped).
-// key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
-// frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
-// key/statistic homes and grouped team dispatch remain; frame 0xfc agrees.
-// Shared short/promoted skill 284/220; entry/shared statistics 206/206; entry group 206;
-// shared statistics with short/promoted skill 284/220; statistics plus entry group 206 (fast).
-// Shared identity/statistic views 206/206; both 206; name-source advance at load 218;
-// identity/statistic-view plus source advance 218/218; shared outer statistics cursor 206;
-// both views plus source advance 218.
-// Earlier: key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
-// Earlier: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
-// Bounded character countdown 326; group guards 206; player admission scope 206; team guards 206;
-// group guards plus character countdown 326; player/team admission 206; all admissions plus character countdown 326;
-// negative-first lower selection 212.
-// Unsigned name capacity 207; capacity-first continuation 216; ordinary-slot-first output 213;
-// capacity/continuation, capacity/output, continuation/output, all three 241/214/220/248;
+// score 177 (was 202): frame 0xfc agrees; 1192 bytes against 1212. Left: the spill homes of the key,
+// statistics cursor, change and group cursor are rotated (ours 0x18/0x1c/0x2c/0x38, retail
+// 0x1c/0x2c/0x38/0x18); our statistics cursor is biased +6 (retail +0xf44 unbiased); retail keeps
+// the name character as a word and its countdown in ECX; the summary stores and 0x73e00's argument
+// setup are scheduled differently. Round 67: the team count switch with one statement per hopper
+// type (0x66050's form; retail's jump table) 202 -> 177 (kept); on it: word character 183; `key`
+// renamed (slot order by name) 177, no slot moved; statistics reads third/second/first 179; the
+// statistics pointer computed at its use without the copy 174 (three points, not kept), with the
+// team pointer too 179.
+// Forms tried before (on 202 unless noted): live key/player/team/both skills 348/320/199/317; key plus
+// player/team/both 379/374/388; player-only key phase 266; existing converter 371; converter inline
+// boundary 367; native summary fields 231; native skill snapshot 302; immutable query inputs 231;
+// native counter bits 231; native session fields 231; frame pointer 412; team value snapshots 225; team
+// promoted skill snapshot 239; native player statistics array 231; native statistics arrays 231;
+// external player/team/both record references 225/220/220; early player identity 234; native records
+// plus formatted identity 219; UTF-16 input 220; shared eligibility 353; bounded name conversion 332;
+// direct native team pointer 220; native team pointer/reference plus formatted identity 219/219;
+// byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239;
+// dword key 220; shared value/change/level/lower declarations: value 220, change 220, level 206,
+// lower 220, value/change 220, level/lower 206, value/level 206, change/lower 220; shared short/promoted
+// skill 284/220; entry/shared statistics 206/206; entry group 206; shared statistics with short/promoted
+// skill 284/220; statistics plus entry group 206; shared identity/statistic views 206/206, both 206;
+// name-source advance at load 218, with the views 218/218/218; shared outer statistics cursor 206;
+// bounded character countdown 326; group guards 206; player admission scope 206; team guards 206;
+// guards plus countdown 326; player/team admission 206; all admissions plus countdown 326; negative-first
+// lower selection 212; unsigned name capacity 207; capacity-first continuation 216; ordinary-slot-first
+// output 213; capacity/continuation, capacity/output, continuation/output, all three 241/214/220/248;
 // copied-character ordinal with native pointers 207.
-// Earlier trial set: key/statistic slots and grouped team dispatch remain; byte/word player ordinal 335/335; byte group 319; both byte 339; word/byte character budget 215/239; dword key 220; shared value/change/level/lower declarations 206 plain.
-// Earlier trial set: frame 0xfc agrees; key/statistic homes, cursor and grouped dispatch remain; shared value/change 220; level/lower 206; value 220; change 220; level 206; lower 220; value/level 206; change/lower 220.
-// Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205; table/player result 206; current player value 206; early summary ratings 303.
-// Summary count/lookup/formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three 316. Full-width character retained at 1167/1212 after plain whole-image confirmation.
-// Round 148: Existing bound helper in bounded for, caller ordinary/force-inline/inline 323/323/323; direct
-// bound-helper break 224; native player pointer 325; whole summary clear 353; outer summary workspace 323;
-// native player plus summary clear 353; definition-side force-inline with bounded for/direct break 323/216.
-// Key/statistic homes and helper expansion remain.
-// Round 317: Late player/team/both statistic producers 199/207/204; late player plus native indexing 199; ascending/descending reads on late player 203/201; both late with ascending/native indexing 208/204. On late player: key first 199; shared carrier names 199; word character 203; positive character-budget for 320. Three-point reduction excluded.
-// Player-change/rating/group-add/group-set inline and noinline call declarations 202 each
-// (eight forms); all declarations restored; key/statistic homes and cursor remain.
-// Signed full-width character 203; entry query-table workspace 202; test-derived translated
-// character 264; signed character plus query workspace 203; signed/entry/both with
-// translation 264/264/264; entry name-capacity workspace 202 (fast). All restored.
-// Native unsigned masked statistics 202; shared player/team ordinal 220 (key home recovered);
-// contiguous summary prefix fill 217; counts/ordinal 220; counts/prefix 217; ordinal/prefix 214;
-// all three 214; read-only query table 202.
-// Round 230: Promoted membership 335; group/team identity-first tests 350/202;
-// membership with group/team/both identity-first 345/336/345;
-// both identity-first without membership 349; native-byte membership with both 343.
-// Round 366: Native fifteen-bit player/team/both statistic fields 195/207/200 fast;
-// word/short player results 279/279, with both arrays 283/283; native statistic receiver 199.
-// On the recovered +0xf44 cursor: native player indexing/shared counts/query-key name 195/195/195;
-// entry statistic receiver 202. Seven-point gain rejected; original body and types restored.
-// Round 130: stored summary change/count-set/level consumers, individually and all
-// combinations, 202 each; complete stored consumers with word character 206.
-// Native fifteen-bit fields with one player/team ordinal: late receiver with dword/word character
-// 216/202; completed-summary consumers 216/202. Early receiver with dword/word character 220/206;
-// completed-summary consumers 220/206. Direct native fields with dword/word character 213/199;
-// the last restores key +0x1c and cursor +0xf44 but gains only three; all restored.
-// Native full-width unsigned/signed status fields 202/202; native word/bitfield
-// admission with full sentinel 350/350; split sentinel halves 335/335; native
-// status with player indexing 202, with fifteen-bit counters 199 (rejected).
-// Round 188: Variant-lookup/team-change/query-emission/group-bound inline and noinline declarations:
-// 202,202,202,202,202,202,202,202 fast; reduced control 202, full 202. Original executable source restored.
-// DL159: uniform name-input field observations, crossed with shared pass ordinal, shared three-count results and two-word prefix clear, 235/236/235/236/234/234/234/234. Shared ordinal recovers key home but regresses total; original character snapshot and body restored.
-// Round 210: Query-count table publication 123/132/213/231/312/321 gives
-// 202/206/213/344/214/345; entry table with 123/321 gives 202/345. Original restored.
-// Round 194: On native fifteen-bit player statistics and a shared pass ordinal,
-// byte/short/word/dword group counters with dword or word characters all 311;
-// original body and native collection extent restored. Key/group homes remain.
+// Round 138: player/team/both adjusted values 206/206/206; player table loop 206; zero chain 205;
+// table/player result 206; current player value 206; early summary ratings 303; summary count/lookup/
+// formatter/completion call declarations 206 each; dword group/player/character 314/206/202; all three
+// 316 (full-width character kept at 1167 bytes). Round 148: existing bound helper in a bounded for,
+// caller ordinary/force-inline/inline 323/323/323; direct bound-helper break 224; native player pointer
+// 325; whole summary clear 353; outer summary workspace 323; native player plus summary clear 353;
+// definition-side force-inline with bounded for/direct break 323/216.
+// Round 317: late player/team/both statistic producers 199/207/204; late player plus native indexing
+// 199; ascending/descending reads on late player 203/201; both late with ascending/native indexing
+// 208/204; on late player: key first 199, shared carrier names 199, word character 203, positive
+// character budget for 320. Player-change/rating/group-add/group-set inline and noinline declarations
+// 202 each. Signed full-width character 203; entry query-table workspace 202; test-derived translated
+// character 264; signed character plus query workspace 203; signed/entry/both with translation
+// 264/264/264; entry name-capacity workspace 202. Native unsigned masked statistics 202; shared
+// player/team ordinal 220 (key home recovered); contiguous summary prefix fill 217; counts/ordinal 220;
+// counts/prefix 217; ordinal/prefix 214; all three 214; read-only query table 202.
+// Round 230: promoted membership 335; group/team identity-first tests 350/202; membership with
+// group/team/both identity-first 345/336/345; both identity-first without membership 349; native-byte
+// membership with both 343. Round 366: native fifteen-bit player/team/both statistic fields 195/207/200
+// fast; word/short player results 279/279, with both arrays 283/283; native statistic receiver 199; on
+// the recovered +0xf44 cursor: native player indexing/shared counts/query-key name 195/195/195; entry
+// statistic receiver 202. Round 130: stored summary change/count-set/level consumers, individually and
+// all combinations, 202 each; complete stored consumers with word character 206. Native fifteen-bit
+// fields with one player/team ordinal: late receiver with dword/word character 216/202;
+// completed-summary consumers 216/202; early receiver with dword/word character 220/206; completed-
+// summary consumers 220/206; direct native fields with dword/word character 213/199 (the last restores
+// key +0x1c and cursor +0xf44). Native full-width unsigned/signed status fields 202/202; native word/
+// bitfield admission with full sentinel 350/350; split sentinel halves 335/335; native status with
+// player indexing 202, with fifteen-bit counters 199. Round 188: variant-lookup/team-change/query-
+// emission/group-bound inline and noinline declarations 202 each. DL159: uniform name-input field
+// observations, crossed with shared pass ordinal, shared three-count results and two-word prefix clear,
+// 234-236. Round 210: query-count table publication 123/132/213/231/312/321 202/206/213/344/214/345;
+// entry table with 123/321 202/345. Round 194: on native fifteen-bit player statistics and a shared
+// pass ordinal, byte/short/word/dword group counters with dword or word characters all 311.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1506,13 +1487,12 @@ void __stdcall function_741f0(s_match_player_rating_collection *collection, s_qu
             long count = NONE;
             switch (variant->type)
             {
-            case 1: case 2:
-                break;
-            case 3: case 4: case 5:
-                count = variant->width;
-                break;
-            default:
-                __assume(0);
+            case 1: break;
+            case 2: break;
+            case 3: count = variant->width; break;
+            case 4: count = variant->width; break;
+            case 5: count = variant->width; break;
+            default: __assume(0);
             }
             if (i >= count)
                 break;

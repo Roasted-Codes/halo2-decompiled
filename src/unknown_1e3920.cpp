@@ -1083,6 +1083,8 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // (aligned 233 against 243). All restored.
 // Round 149: Substitution producer/test ordinary inline, noinline, paired and mixed contracts [320, 320,
 // 320, 320, 320, 320, 320, 320]; all restored.
+// Round 196: Initial definition/cleanup/squad/lookup observation schedules
+// [331, 333, 368, 342, 368, 342, 336, 348]; original observation order and all mutable work restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

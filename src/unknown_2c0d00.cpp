@@ -873,7 +873,7 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // score 385 (was 385): frame 0x28 agrees; zero/radius schedule, history homes and indexed node-word lowering remain.
 
 // Earlier: frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
-// score 385 (was 385): Frame 0x28 and length agree; zero/radius schedule, history homes and indexed node loads differ.
+// Earlier: Frame 0x28 and length agree; zero/radius schedule, history homes and indexed node loads differ.
 // frame 0x28 agrees; zero/radius schedule, history homes and indexed node loads remain.
 // Earlier: frame 0x30 versus 0x28; zero register, history homes and adjacent-node access differ.
 // Ordinary edge with shared scaling 401; short surface 405; portal source at use 405; depth one 405; unsigned count 405.
@@ -920,6 +920,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Native helper side/promoted node/both 385/385/385; word/unsigned node input 409/385; byte/long openness result 417/410; native side and word node 409.
 // Round 187: indexed node array plus Boolean side, native/promoted return and direct/cached flags
 // all 462 with force-inline openness or 429 with ordinary-inline openness. All eight forms and shared type restored.
+// Round 234: native current edge/node/portal-surface records and combinations
+// 395/437/429/392/478/411/486; native portal query edges 392. Original receivers restored.
+// Round 197: Cached selected/portal/both node words 442/385/442; selected/portal/both with Boolean ring direction 414/399/414; both words with word first-openness 410, plus Boolean ring 396. All restored; frame 0x28 remains.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1088,6 +1091,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // On that lead: `(bool)` returns 349; one value return only 373; `if (!(c)) return false` 349;
 // nested body with final `return true` 362; shared `return false` after an if/else 361;
 // single-exit result 376; explicit y-first side expressions 358.
+// Vector declaration order 172; split direction declarations 172; second-side declaration first 172;
+// direct distance comparison 172; angle-wrap order 191; named angle sums 172;
+// named side product 172; nested single result 414.
 // Native unsigned/signed byte returns with original tests, terminal comparison values and
 // a shared narrow result 172/172/172/172/172/172; shared-dot second-side-first ordinary
 // storage with narrow value returns 350/350 at 1465 bytes. Original bool contract restored.
@@ -1282,6 +1288,8 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // bytes); plus the output count declared at the top 473; plus the count > 1 arm first 478; count at
 // the top alone 444 (same code); plus the output element formed at the emit point 509/505 (with arm).
 // Retail's EBX is a zero register from entry to the loop (data tests, index/count/flag stores).
+// Round 234: entry-snapshot/displacement/conversion scope endings and combinations
+// 442/444/442/444/442/444/442; tangent consumption scope 444. Two-point gains rejected; original body restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

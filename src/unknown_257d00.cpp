@@ -1661,6 +1661,9 @@ void function_b7360(long object_index);
 // Round 223: shared initial truncation 509; complete direction assignment helper 477;
 // both 509; named-entry inline declaration 471; with truncation/direction/both
 // 509/477/509; separate named-entry noinline declaration 471. All restored.
+// Cross-case same-object comparison result bool/byte/short/long 536/536/527/532;
+// complete complementary result at the same widths 536/536/527/532. Added storage
+// regresses acquisition and dispatch; original comparison observations restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

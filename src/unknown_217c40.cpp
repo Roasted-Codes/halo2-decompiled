@@ -114,6 +114,7 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // Separate rounded-angle double formal 541; paired clamps before stores 548;
 // reversed final axis stores 541 at retail length; double/paired, double/reversed,
 // paired/reversed, all three and native quadrant on all three 548/541/548/548/548.
+// Round 197: Eight snap-helper pointer/real-angle/double-angle/threshold formal orders 501 each. Frame 0x38, helper and complete original body restored; both callers remain matched.
 // Shared prepare/apply stages, each called twice: immediate 501; both prepared 564; magnitude
 // first 561; original double-angle preparation 559 (retail frame 0x40); absolute offset 531;
 // absolute/magnitude-first 531; native quadrant 564; value-input application 564. All restored.

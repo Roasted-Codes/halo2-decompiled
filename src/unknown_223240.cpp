@@ -75,7 +75,7 @@ void function_2232a0(void)
 	function_2c8a0((byte const *)function_2232a1(&g_47f0f8[0]));
 }
 
-// score 124 (was 151): one-dword frame agrees; the count block, the count/layout join and the layout
+// score 109 (was 124): one-dword frame agrees; the count block, the count/layout join and the layout
 // arms now have retail's code: the clamp is the ternary the other player-count clamps use, and the
 // loop counter's zero assigned before the layout test keeps the join from being jump-threaded (with
 // it anywhere later every count-one path threads straight to the layout stores); the slot scan uses
@@ -174,6 +174,14 @@ void function_2232a0(void)
 // short min/max with equality join 181; long min/max with equality join 176.
 // short max/min with equality join 181; long max/min with equality join 176.
 // All executable forms restored.
+// Round 67: the slot data assigned in every arm (no initializer; NULL before the NONE store on the
+// empty scan) 109 kept: the found arm is now inline as in retail; NULL after the NONE store 117;
+// arms inverted 118; NULL arm + ternary found arm 117/109; initializer + ternary 122; found arm as
+// NULL then test 124; a default-NULL inline getter 124; with a pretested while loop 138; the
+// pointer declared before the outer loop 109. Activating
+// 0x2b5d0's disabled body 127 (it takes the mode in EAX and the count on the stack; retail count
+// EAX, mode ECX; its frame does not self-align as retail's `and esp, -8`), with formals
+// players/layout/source/count/mode 123; reverted.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
@@ -204,16 +212,21 @@ void function_2234e0(void)
 		local_3 = 0;
 	do
 	{
-		byte const *local_5 = 0;
+		byte const *local_5;
 		for (++local_1; local_1 < 4; ++local_1)
 		{
 			if (local_player_exists(local_1))
 				break;
 		}
 		if (local_1 >= 4)
+		{
+			local_5 = 0;
 			local_1 = NONE;
+		}
 		else if (g_4686c4 != NONE)
 			local_5 = g_4e9c8c[local_1].field_0;
+		else
+			local_5 = 0;
 		function_223080(0, local_0, local_1, (s_223080 *)&g_47f0f8[local_0 + 1],
 			local_2, local_3, (s_223081 const *)local_5);
 		++local_0;
