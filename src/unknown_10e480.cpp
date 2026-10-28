@@ -213,6 +213,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Round 364: independent data outputs at entry, base/weighted/countdown and
 // pairs/all 295/304/304/294/283/304/290; all with long sample frame 312.
 // Original separate construction points restored; frame and getter expansion remain.
+// Native frame-array references, mutable/const with extent bounds, 250 each at 940 bytes; with
+// twice-used full-width frames 222 each at 964 bytes. Frame 0x2c recovered, original loop and
+// observations restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

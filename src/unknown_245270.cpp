@@ -394,6 +394,8 @@ void function_245400(s_source_245400 const *source, long index,
 // endpoint/transform identities: 203/203/203/203/203/203/203/203. Source receiver, side homes and frame gap
 // remain
 // original identities restored.
+// Full native transform values, mutable/const with native plane field and point workspace
+// subsets: 223 each; source enters ECX but frame grows to 0x58 and length 796. Original restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
