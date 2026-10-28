@@ -160,7 +160,11 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 199 (was 199): frame 0xa4 and the marker branch agree; retail keeps the object data base in EBP
+// score 309 (was 309): Frame 0xb0 versus 0xa4, receiver homes and collision-point scheduling differ.
+// Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
+// 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
+// initialization alone/with all three narrowed lifetimes 309/310. Original body restored.
+// frame 0xa4 and the marker branch agree; retail keeps the object data base in EBP
 // (ours the tag table), and the collision point's last component reuses the fraction register, which
 // shifts the tail by one instruction. Retail reloads the tag table after the 0xb9ef0 call (parent
 // branch); ours treats that call as unable to change it and keeps it in EBP from entry.
