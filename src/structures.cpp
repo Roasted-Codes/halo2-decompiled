@@ -464,6 +464,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // mesh field observations 214. Original records, observations and protected interfaces restored.
 // DH round 189: Native lookup/extraction-array/node-output work-scope lifetimes, singles, pairs,
 // all and reversed all 181 each; all original producer/read phases restored.
+// Round 215: first transform in place 210; with model/section/both const views
+// 210/210/210; const object/mesh views 181/181; in-place with const mesh/all
+// four const views 210/210. Original input point, views and body restored.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

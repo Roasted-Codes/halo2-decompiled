@@ -93,6 +93,10 @@ static __forceinline long weapon_get_zoom_out_sound(long weapon_index)
 	return result;
 }
 
+// score 131 (was 131): frameless entry saves, unit reload and sentinel carriers differ.
+// Native player-table stride and byte eligibility/prior-state combinations 131
+// each (seven forms); full-width eligibility 127 (four-point gain rejected).
+// Original record view, result types, observations and body restored.
 // @retail 0xc86e0
 void function_c86e0(long unit_index, bool keep_weapon_zoom)
 {
