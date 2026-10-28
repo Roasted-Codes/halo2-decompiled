@@ -1683,6 +1683,10 @@ void function_cffc0(long unit_index)
 }
 
 /* whether 0xc9040 holds for any of the seat's markers on the unit */
+// score 77 (was 99): retail takes unit_index in esi, keeps i in ebp and found in a stack byte,
+// tests i < count at the loop's top and found at its bottom, after the increment. The loop as a
+// guarded do-while 77; !found first in the for 85; a do-while breaking on the count 85; a while
+// breaking at the end 106; a for breaking inside 103.
 // @retail 0xc6fb0
 bool __stdcall function_c6fb0(long unit_index, long a, short seat_index)
 {
@@ -1691,12 +1695,17 @@ bool __stdcall function_c6fb0(long unit_index, long a, short seat_index)
 	s_object_marker markers[4];
 	long count = function_b8d30(unit_index, marker_name, markers, 4, false);
 
-	for (long i = 0; i < count && !found; i++)
+	long i = 0;
+
+	if (count > 0)
 	{
-		if (function_c9040(unit_index, a, seat_index, &markers[i].matrix.forward, &markers[i].matrix.position))
+		do
 		{
-			found = true;
+			if (function_c9040(unit_index, a, seat_index, &markers[i].matrix.forward, &markers[i].matrix.position))
+				found = true;
+			i++;
 		}
+		while (i < count && !found);
 	}
 	return found;
 }
