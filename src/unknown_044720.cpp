@@ -300,6 +300,10 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Round 30 (m3 lane 12): query declared after entry/geometry 190 (identical); geometry helper taking the
 // index (as the sibling file's) 228, 0x44c90 140; geometry helper with one result exit 188 but 0x44c90 107->132;
 // bound position read at each use 198; transform at function scope 190.
+// Lane 4 r106 (fast): a named visibility-word pointer for the test and both marks 190; with the
+// function-scope center copy and the query in the list branch 199 (frame 0x10a4), with that query
+// unaligned 192; the word pointer with a long index for table and call 191; the existing
+// bit_vector_test/bit_vector_set 222 (890 bytes). Retail still shares one marking block.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {
