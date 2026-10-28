@@ -595,6 +595,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // nonempty subsets 572 each; all exchanges with factor-first axis normalization 572.
 // All original products restored; frame remains 0x21e4 versus 0x21dc and rotation spills differ.
 // Round 204: complete rotation input with direct/native result 611/831; direct input plus pivot/axis scale/both 607/607/608; native axis scale 613; native input/result plus pivot/plus scale 760/761. Original whole body and helpers restored.
+// Round 241: Actual emitted-face total short/word/long/dword at secondary pass entry and before initial
+// projection: 735/723/723/723/749/626/626/626. Original outstanding count, face indices and body
+// restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
