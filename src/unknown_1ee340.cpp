@@ -236,6 +236,7 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // projection/ray identities: 192/192/192/192/192/192/192/192. Origin retention and edge spills still leave
 // the short frame
 // original identities restored.
+// Round 222: Intrinsic origin/start/both copies 282/204/270; complete vector constructors 192; origin/start/both with constructors 282/204/270; all with normal-output constructor 269. All restored; frame 0x84 versus 0x90 and retained-origin/edge homes remain.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

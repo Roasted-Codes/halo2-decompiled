@@ -296,7 +296,7 @@ vector3f *function_143070(matrix3x3 const *arg_1, vector3f const *arg_0, vector3
 void placement_set(s_placement *arg_0, vector3f const *arg_1, point3f const *arg_2, vector3f const *arg_3, short arg_4);
 void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_object_246eb0 const *arg_3, long arg_4);
 
-// score 356 (was 368): frame 0xb0, 1643 bytes against 1652. Left: retail saves EBP at entry and
+// score 356 (was 356): frame 0xb0, 1643 bytes against 1652. Left: retail saves EBP at entry and
 // shares one epilogue (ours saves it after the early exits); retail keeps the blend in XMM2-4
 // across the first 0x143070 call (here it goes through the grouped local's memory); retail's
 // frame holds probe point f0x14, probe direction f0x20, collision result f0x2c, 16 unreferenced
@@ -404,6 +404,7 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Round 218: Shared vector sums blend/velocity/both/motion/blend-motion/velocity-motion/all
 // 368/368/368/356/356/363/363; all plus trace-vector setter 366. Motion helper alone
 // 356 kept plain; frame 0xb0 and 1643/1652 bytes remain, with late EBP save and random/blend/getter homes.
+// Round 222: Native initial-position/both-blend-source/both/normal/initial-normal/blend-normal/all inputs 396/420/478/372/412/432/478; all with point constructors 396. Every input snapshot and constructor restored; late EBP save and random/blend/getter homes remain.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

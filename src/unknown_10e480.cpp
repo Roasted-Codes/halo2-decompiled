@@ -224,6 +224,7 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // 308/308/380; each with twice-used long sample frame 332/332/375;
 // copy/member copy with native sample-result enum 316/390. All exact-match-only
 // storage forms restored; frame 0x30, getter expansion and ordinal spill remain.
+// Round 222: Native datum accessor/direct object/both 207/207/207; record at each use, with accessor 411/411; direct object and record, with accessor 674/674; all with promoted sample frame 648. All restored; frame 0x30 versus 0x2c, weighted getter and ordinal spill remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
