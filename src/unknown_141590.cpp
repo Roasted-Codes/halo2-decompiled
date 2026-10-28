@@ -194,6 +194,11 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // Round 259: Complete native cross-vector initializer with all six coefficient
 // schedules 237/285/240/240/302/289; immutable cross with dot/w2/s and s/w2/dot
 // 237/289. Original helper/body restored; frame and quaternion/cross spill reuse remain.
+// Round 25: paired native point storage 237; independent scalar crosses on it 281;
+// shared axis construction with scalar crosses 237 (frame 0x24, first +0x7d);
+// pre-copy doubled scalar/quadratic scalar 302/347; scalar-first construction 272;
+// shared input dot and shared repair crosses on the shared-axis base 237 each.
+// Original body and both helpers restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,
