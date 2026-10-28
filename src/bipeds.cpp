@@ -836,6 +836,11 @@ extern long *g_51e9cc;
 /* the biped's physics callback: its crouch, kill volumes, its character
    physics move, and the ground (structure, instanced geometry or object)
    its contact rests on */
+// score 350 (was 383): Frame 0xb8 and length 1481 agree; component/index carriers, native homes,
+// the first call boundary and later contact/store scheduling differ. Native workspace names 383;
+// word flags 377, with names 377; shared velocity norm 383; unsigned key 383; full-width physics
+// result 361; object case first 383; flags/norm/key 377; clamp admission 392, with flags 386;
+// owned crouch 383, with clamp/flags 386; wide physics/flags 371; wide physics/clamp 350 (kept).
 // @retail 0xdd990
 void __stdcall function_dd990(long arg_159e6d)
 {
@@ -847,7 +852,7 @@ void __stdcall function_dd990(long arg_159e6d)
 		s_biped *root = BIPED_GET(function_baf80(arg_159e6d));
 		real crouch_change = function_dd7d0(arg_159e6d);
 		real height_change;
-		bool physics;
+		long physics;
 
 		function_e30c0(arg_159e6d);
 		if (!(*((byte *)root + 0xc1) & 1) && function_1ec500(arg_159e6d))
@@ -906,7 +911,7 @@ void __stdcall function_dd990(long arg_159e6d)
 				function_1e5a60(&result, &input, &biped->physics_mode);
 				contact = result.contact_index;
 				if (!(*((byte *)biped + 0xc1) & 1) && contact != NONE &&
-					contact >= 0 && contact <= component->unknown88.size)
+					contact == PIN(contact, 0, component->unknown88.size))
 				{
 					byte *entry = (byte *)component->unknown88.data + contact * 0x48;
 					long key = *(long *)(entry + 4);
@@ -2756,6 +2761,15 @@ PRIVATE inline point3f *biped_rigid_body_position(s_havok_component *component, 
 /* places one of the ragdoll's bodies: hanging from its constraint's pivot on
    the body placed before it (kept within reach of the ragdoll's center and
    out of the world, turned to follow), or the first body at the point */
+// score 488 (was 488): Frame 0xfc versus 0x12c; origin/index carriers, pivot-transform
+// expansion, native homes and final rotation/translation scheduling differ. Early collision material
+// initialization/lifetime 499; with entry false result 499, point setter 504, workspace names 499;
+// origin setter alone 486; existing point-transform calls 1108; guarded single result 514;
+// limited-scope material initialization 500; full point-difference producers 504;
+// late parameter-only travel limit 482 (frame 0x12c, below keep margin).
+// Native origin source view 512, with guarded result 527; named limit result 507;
+// native origin/limit result/differences 527; explicit existing-helper inline 488,
+// with late limit 482; late limit/native origin 496; late limit/native origin/result 512.
 // @retail 0xe1c40
 bool __stdcall function_e1c40(long arg_159e6d, point3f const *point, real value, long rigid_body_index,
 	long contact_index, long parent_body_index, bool started)

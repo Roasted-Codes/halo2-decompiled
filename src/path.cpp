@@ -327,6 +327,10 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 // 105; entry point workspaces 105; entry distance outputs 105; attractor with point/
 // distance entry declarations 137/137; failure CRT vector copy 105; all groups 137.
 // All restored; full score 121, frame 0x30 and incoming target/EBP differences remain.
+// Round 273 (fast control 105): direct optional-output parameters 105; full lookup
+// result 117, full traversal cursor 126, lookup/direct outputs 117; double offset names
+// 105; full success carrier 140; complete squared-sum local 105, accumulated z-x-y sum
+// 101; natural tested parent walk 105, with lookup/direct outputs 138. All restored.
 // @retail 0x270750
 bool function_270750(byte *buffer, long unknown, s_actor_point_target const *target,
 	real *distance, long a, long b)

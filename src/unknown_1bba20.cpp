@@ -155,6 +155,10 @@ __declspec(noinline) bool function_f5dc0(long object_index);
 // pointer 49; second field pointer 67; typed vehicle 67; no final refresh 123.
 // Native squad full/low-word fields alone/with timer/with flag/with both 49/49/49/49;
 // the same native field forms with a saved second actor read 67/67/67/67.
+// Round 273: one tick-rate short/long carrier 129/129; multiplier-first
+// products 49; explicit transition/distance call boundaries 49/49;
+// short rate/transition boundary 129; failed-entry-first 49, with short rate 129;
+// actor observed at every field use 199. All restored; full/low-word reuse remains.
 // @retail 0x1bba70
 void function_1bba70(long actor_index, long vehicle_index, long seat_index)
 {
