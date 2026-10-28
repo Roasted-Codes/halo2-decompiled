@@ -3283,6 +3283,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Round 337 (fast control 637): direct short/promoted barrel values 637/634;
 // direct weapon value/both short values 637/637; both promoted values 634;
 // first-use promoted barrel/both/immutable values 634/634/634. Gain 3 rejected; all restored.
+// Round 367: Test-produced shot result 642; holder scalar name 637; both 642; shared notification on two-
+// branch holder graph 637; shot/shared 642; holder/shared 637; all 642; all with shot-result name 642 (fast
+// control 637). Original body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {

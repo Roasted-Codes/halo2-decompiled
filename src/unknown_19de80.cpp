@@ -343,6 +343,8 @@ static inline bool teams_enabled_19e1c0()
 // keeps token_length in EDI and remaining in EBP and reloads token); with token read through
 // its address 701 (identical code); clamp as >=, remaining <, remaining <= 433 each, with the
 // plain result 701/701.
+// Round 367: Inline length/copy/comparison/variadic-format declarations 433 each; ordinary result on the
+// same four boundaries 701 each. All declarations, result storage and copy/format paths restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {
