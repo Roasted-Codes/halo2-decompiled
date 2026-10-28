@@ -220,7 +220,9 @@ short __stdcall function_1c10a0(long actor_index)
 }
 
 // score 2 (was 2): the pool pointer is loaded into ECX here and into EDX in
-// retail, the rest of the function matches.
+// retail, the rest of the function matches. An ordinary pool read puts the
+// pointer in EDX but lets the data load fold into the final add, and a
+// volatile data read keeps the load apart but moves the pointer to ECX.
 // @retail 0x1c10f0
 bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 {
