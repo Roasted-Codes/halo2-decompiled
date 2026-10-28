@@ -3936,6 +3936,12 @@ PRIVATE inline void vehicle_iterator_new(s_type_f1af8e *iterator)
 
 /* whether a moving vehicle is within ten world units of a player on foot,
    and which */
+// score 131 (was 131): frame 0x114 agrees; player-scan allocation and scheduling still differ.
+// Bounded short/word/char/byte player counts 137/130/134/129;
+// those four with result-first common exit 137/130/134/129;
+// existing velocity magnitude helper 131, native difference with/without it
+// 135/135 (match-only), plain vehicle for loop 131.
+// Original body restored.
 // @retail 0xf7a60
 bool __stdcall function_f7a60(long *vehicle_index)
 {
