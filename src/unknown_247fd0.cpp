@@ -400,6 +400,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // an inline interpolation helper 466; a 0x5c-byte collision result (the size 0x0b8ca0 and 0x26bfa0
 // give it) 369 alone, 463 with plain locals (frame 0xb0, but collision above the placement);
 // placement renamed 463; trace locals in the trace block 466. All restored.
+// Round 244: direct existing real producer assigned at original draws 1/2/3/4/last-three/
+// all/first-third/second-fourth 368/368/368/368/368/368/368/368. Original output assignments
+// and reference helper restored; late EBP save, first-sample store and geometry homes remain.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

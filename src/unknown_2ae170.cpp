@@ -650,6 +650,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // both copied-level field references 378, with original buffers 398; native settings-copy producer
 // 384, with original buffers 426; native buffer-record snapshot 390 (fast control 378).
 // Original settings observations 396 plain, worse than full 393; all restored. Frame 0x130 remains.
+// Round 244: early native header initialization before the member copy, first/second/both/third/
+// first-third/last-two/all 381/378/375/371/368/374/374 fast; all before settings copy 374
+// (control 378/967). First-third 399/952 plain versus 393/951; original phases restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
