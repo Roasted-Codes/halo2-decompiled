@@ -1011,11 +1011,13 @@ void __stdcall function_ceea0(long unit_index, long object_index)
 // @retail 0xd03b0
 bool function_d03b0(long unit_index)
 {
-	if (UNIT_GET(unit_index)->type != 0)
+	bool result = false;
+
+	if (UNIT_GET(unit_index)->type == 0)
 	{
-		return false;
+		result = function_e4050(unit_index);
 	}
-	return function_e4050(unit_index);
+	return result;
 }
 
 /* starts listing the units among the object's children */
@@ -2691,6 +2693,11 @@ short __stdcall function_cdeb0(long unit_index, long state_name, short slot, sho
 /* starts (state 1, its timer from 0xc5340, flag 3) or ends (state 2, ten
    seconds) the unit's state +0x2bc while its player is in state 1 at
    +0x88 (or the campaign flag allows it), with the globals' sounds */
+// score 15 (was 15): ours keeps unit_index in edi and the player data pointer in esi, retail the
+// reverse: unit_index reaches 0xc5890 in the register that function hands on to 0x189210, which
+// takes the object in edi here and in esi in retail. BLOCKED-BY 0x189210. Tried: a named
+// player-state condition 15; the start arm's tests inverted 15; a player index local 15; the
+// stop arm first 60; the state byte read in the test 15.
 // @retail 0xc5740
 void function_c5740(long unit_index, bool start)
 {
