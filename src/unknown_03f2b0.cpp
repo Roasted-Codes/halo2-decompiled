@@ -1380,7 +1380,10 @@ struct s_batch_cache_4b5d0
 
 struct s_133f70;
 
-// score 213 (was 213): Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result homes remain.
+// score 177 (was 213): Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result homes remain.
+// Round 15: split entry-count declaration 213; cache levels base with 0xbc at the index 197; native entry
+// arithmetic 197; full second-cache record 325; two-step second cache 197; Boolean builder with wide previous 177;
+// signed-byte previous 319; direct cache publication 348. Levels offset and Boolean builder with wide previous kept.
 // distance load, nullable-entry address and cache/level scheduling differ;
 // distance snapshot 219; wide previous level 219; fallback clear 362; common buffer 219; wide success 254.
 // frame 0x33f8 agrees; distance load and cache/result scheduling differ.
@@ -1487,14 +1490,14 @@ void function_4b5d0(bool force, long override, long object_index, real distance,
             tag, &nodes, &node_count, object_index);
         /* the level the object's cache entry was last drawn at (-1 without a mode) */
         long drawn_object = *source_object;
-        signed char previous = -1;
+        long previous = -1;
         if (g_4ba050 >= 0 && g_4ba050 < 4)
         {
             byte *levels = NULL;
             long cache_index = function_3ddd0(drawn_object);
             if (cache_index != NONE)
-                levels = g_509434->data + (cache_index & 0xffff) * 0x100 + 0xbc;
-            previous = (signed char)levels[g_4ba050];
+                levels = g_509434->data + (cache_index & 0xffff) * 0x100;
+            previous = (signed char)levels[g_4ba050 + 0xbc];
         }
         function_3d430(*source_object);
         s_batch_cache_4b5d0 *cache = NULL;
@@ -1509,7 +1512,7 @@ void function_4b5d0(bool force, long override, long object_index, real distance,
             *(short *)(output + 0x164) = previous;
         bool fallback;
         signed char *sections = (signed char *)(output + 0x71 + slot * 16);
-        long built = function_4c190(count, object_index, *(bool *)(output + 0x168), *tag,
+        bool built = function_4c190(count, object_index, *(bool *)(output + 0x168), *tag,
             (short *)(output + 0x164), previous, sections, &fallback);
         reuse &= !fallback;
         bool level_changed = *(short *)(output + 0x164) != initial_level;
