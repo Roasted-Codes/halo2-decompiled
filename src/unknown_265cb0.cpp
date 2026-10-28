@@ -455,15 +455,14 @@ real function_30bf0(vector3f *vector);
 // in memory (`comiss xmm0, [mem]`) where ours copies them through xmm1/xmm2. a/b at the seat-loop top
 // 184; secondary/primary at function scope 184; delta at function scope 184; indexed seats instead of
 // the cursor 211; seat array at the facing-block scope 184.
+// Lane 4 r106 (fast): the six parameter reference locals had no effect (removed: 184, one product's
+// operands swap); without the `volatile` result 241 (the result still lives in memory as a spilled long,
+// so retail's `mov ax, word ptr` exits need only the short return: BLOCKED-BY the 0x25c9d0 declaration in
+// src/unknown_25d690.cpp); the clipped delta as point + motion * amount through a point helper and
+// vector3d_from_points3d 254, with the first delta and motion through vector3d_from_points3d too 255.
 // @retail 0x263810
 long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
-	long const *actor_reference = &actor_index;
-	point3f const *const *endpoint_reference = &endpoint;
-	char const *posture_reference = &posture;
-	short const *mode_reference = &mode;
-	bool const *facing_reference = &use_facing;
-	bool *const *range_reference = &out_of_range;
 	volatile long result = 0;
 	if (mode == 0 || mode == 1)
 	{
@@ -476,7 +475,7 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 			delta.i = point->x - origin->x;
 			delta.j = point->y - origin->y;
 			delta.k = point->z - origin->z;
-			if (*endpoint_reference && !actor->unknown007)
+			if (endpoint && !actor->unknown007)
 			{
 				vector3f motion;
 				motion.i = endpoint->x - point->x;
@@ -506,7 +505,7 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 				real scale = 1.0f;
 				if (!(*settings & 1))
 				{
-					switch (*posture_reference)
+					switch (posture)
 					{
 					case 0: scale = 0.3f; break;
 					case 1: scale = 0.7f; break;
@@ -516,9 +515,9 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 				if (scaled_range * scaled_range > distance_squared)
 				{
 					real secondary, primary;
-					if (!actor->unknown007 && *facing_reference)
+					if (!actor->unknown007 && use_facing)
 					{
-						function_263740(*actor_reference, &delta, (vector3f *)((byte *)actor + 0x2a8),
+						function_263740(actor_index, &delta, (vector3f *)((byte *)actor + 0x2a8),
 							(vector3f *)((byte *)actor + 0x2b4), (vector3f *)((byte *)actor + 0x2c0),
 							range, scale, &secondary, &primary);
 						long object_index = *(long *)((byte *)actor + 0x26c);
@@ -541,7 +540,7 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 										function_30bf0(&side);
 										cross3f(forward, &side, &up);
 										real a, b;
-										function_263740(*actor_reference, &delta, forward, &side, &up, range, scale, &a, &b);
+										function_263740(actor_index, &delta, forward, &side, &up, range, scale, &a, &b);
 										if (a > secondary) secondary = a;
 										if (b > primary) primary = b;
 									}
@@ -555,19 +554,19 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 						primary = scaled_range;
 						secondary = scaled_range * 0.7f;
 					}
-					if (*mode_reference == 0 && secondary * secondary > distance_squared)
+					if (mode == 0 && secondary * secondary > distance_squared)
 						result = distance_squared < 36.0f ? 3 : 2;
 					else if (primary * primary > distance_squared)
 						result = 1;
 				}
 				else
 				{
-					if (*range_reference) **range_reference = true;
+					if (out_of_range) *out_of_range = true;
 				}
 			}
 			else
 			{
-				if (*range_reference) **range_reference = true;
+				if (out_of_range) *out_of_range = true;
 			}
 		}
 	}
