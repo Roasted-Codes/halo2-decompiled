@@ -1143,6 +1143,10 @@ void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 	}
 }
 
+// score 97 (was 97): each inlined range ends in a fused faddp where retail exchanges, adds and pops
+// separately; the rest is aligned. Round 58: split declarations and assignments 97; assignment in the
+// distance test 97; force-inline helper declaration 97; const results 97; entry-scope results 97;
+// zero-initialized results 97; explicit trigonometric result locals 97; shared vector setter 97.
 // @retail 0x21ce60
 void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 {
