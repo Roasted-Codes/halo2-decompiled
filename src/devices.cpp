@@ -1275,6 +1275,10 @@ bool function_0b6760(s_index_pair const *pair);
 // Round 23: distinct phase/block/channel previous owners 307/307/303; short first/second/both
 // completion 387/335/408; phase plus first short 388; channel plus both shorts 408.
 // Frame stays 0x1c versus 0x20; original scalar lifetimes and bool completions restored.
+// Round 239: actual power/position/both field references 386/391/373;
+// velocity reference 396, with power/position/both 401/396/414; all references
+// with result initialized before lookup 414. Frame and index/state/result homes
+// remain; original field observations, producers, qualifiers and body restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

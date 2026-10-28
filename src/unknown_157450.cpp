@@ -3882,6 +3882,10 @@ static __forceinline long nonnegative_15ce70(long value)
 // Complementary category bool/byte/short/long 470/470/477/550; with self-player result
 // 470, opposing-team result 526, both 526, word category with both 480. Original
 // category, decision bytes and all event/timing work restored; extra frame dword remains.
+// Round 239: actual penalty/ticks/both field references 469/470/469; existing
+// nonnegative helper with positive selection 518, with penalty/ticks/both references
+// 521/518/521; all with award after engine admission 522. One-point gain dropped;
+// original fields, helpers, shared award update and body restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

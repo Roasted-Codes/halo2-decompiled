@@ -144,7 +144,7 @@ void function_10ec00(long object_index, s_animation_state *state, long unused, d
 extern real g_547648;
 void c_animation_channel_data_get(c_animation_channel const *channel, s_animation_data *data);
 
-// score 215 (was 215): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// score 207 (was 207): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Lane 8 r64: countdown weight with the `>= 3` case first (retail's fall-through) 215, kept; frame
 // byte in a long local 260 (32-bit compare as retail, aligned 119, 969 bytes); char/word loop index
@@ -206,6 +206,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Weighted output after admission/getter/result-zero/loop 213/213/261/215;
 // before admission at its natural positive-phase scope 207 (950 bytes), selected.
 // Frame 0x30, getter expansion and pointer/countdown induction remain.
+// Round 239: fixed frames/weights/both array bases 250/250/287; channel lookup at each
+// frame-count test 284, with frames/weights/both bases 262/262/319; both bases and
+// lookup with full-width sample frame 300. Array bases recover frame 0x2c but regress;
+// original body, weighted-output lifetime and all separate constructors restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
