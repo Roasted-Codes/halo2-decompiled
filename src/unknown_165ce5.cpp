@@ -1860,6 +1860,8 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // query-produced result at four widths and early bool/byte defaults (fast control 411; plain baseline 410).
 // Scores [393, 393, 426, 428, 411, 411, 434, 435, 441, 441, 471, 470, 441, 441]. Original executable body
 // restored.
+// Blend-producer scope, paired Boolean role names, duration/query names and their combinations
+// 411 each; reversed declarations with all scope/names 411 (fast control 411; full 410).
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

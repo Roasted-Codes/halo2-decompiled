@@ -777,6 +777,8 @@ void function_143250(
 // Round 349: Independent basis pairs [1,2] 2323; [2,6] 2355; [0,7] 2287; [3,7] 2290; [5,6] 2317 (fast; control 2266).
 // Round 357: Separate first/second/third band tables 2268/2268/2266; independent
 // basis pairs [0,2] 2314, [1,4] 2288 (fast; control 2266). Opening body restored.
+// Band-exclusive scalar workspaces scoped across each actual 3/5/7 matrix producer,
+// all seven subsets and earlier shared declarations: 2266 each (fast control 2266; full 2265).
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
