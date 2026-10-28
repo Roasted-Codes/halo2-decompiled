@@ -43,7 +43,11 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 306 (was 306): aligned frame 0x1d4 and incoming registers agree; small stack homes
+// score 306 (was 306): aligned frame 0x1d4 agrees; first +0x21 is bounds/exclusion homes.
+// Earlier: the sample count matches (retail's
+// setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack). Structural cause of
+// the register differences: our LTCG inlines 0x11bed0 here (retail calls it, esi = location), and the
+// aligned frame 0x1d4 and incoming registers agree; small stack homes
 // and selective location/range expansion remain. Count is `27 - (flag ? 0 : 9)`. Earlier graph:
 // The register differences came from our LTCG inlining 0x11bed0 here (retail calls it, esi = location), and the
 // inlined copy takes esi, which swaps the optional inputs (esi/edi) and evicts the table cursor from esi
@@ -131,10 +135,15 @@ const dword g_455978[81] = {
 // factor with radius scale 331; factor with blend setter 331.
 // all three producers 331; complete normalized-vector setter 321.
 // All executable forms restored.
+// Round 222: scan-lifetime transform description, original/late construction with set/native
+// copies 320/320/330/330; description-owned pose on the same four graphs 382/382/391/391.
+// Original description scope, standalone pose and copies restored; scalar homes and selective expansion remain.
 // Current query/radial/all scalar identities 306; shared planar normalization and its
 // three identity combinations 307; presence object identity 306. Coordinated range-helper
 // inline 419, plus shared planar normalization 416; both lose matched controls and are
 // restored. Original executable body and every external declaration retained.
+// Shared setters for all three native basis rows, with early/late scale publication, entry/local
+// input-output matrix declarations and native/library point publication: all eight 306. All restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

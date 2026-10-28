@@ -130,6 +130,12 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // 0x72140, 448 (1580 bytes); that with the noinline getter and time-since helper 461 (1573 bytes,
 // frame, entry and failure stores now retail's; left: the property value and both flag bytes
 // cleared before the player-count branch, a separate mode-7 exit per missing pointer).
+// Round 235: ratings/assignment/admission consumption scopes, all seven combinations 439 each; readiness-output consumption scope 439.
+// Round 201: signed/unsigned outstanding roster counts 463/463; missing counts 447/447;
+// direct lookup-result accumulation 469/469; bool/byte all-found results 443/443 (exact-only).
+// Original complete lookup count and signed zero/negative admission restored.
+// Round 226: Property/balance defaults before count observation 457/439; both 457; each/both
+// with Boolean reset 472/469/472; property with Boolean balance 462; all with both Booleans 479. All restored.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

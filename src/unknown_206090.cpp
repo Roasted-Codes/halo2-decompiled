@@ -190,6 +190,9 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // the pointer 1570 (frame 0x590) [1449]; normalizer only through the pointer 1480 (0x5b4)
 // [1460]; cross product without the scalar captures 1423 [1463]; both pointer forms 1585
 // (0x590) [1442]; contact arrays declared at function scope 1402 [1470].
+// Round P208: complete magnitude/cross/second-normalizer product terms 1471/1429/1410;
+// magnitude-cross/magnitude-normalizer/cross-normalizer/all terms 1452/1435/1404/1461;
+// library copy of repeated magnitude input 1402. All original producer bodies restored.
 // Shared point/contact/both scales 1446/1467/1455; shared remaining crosses 1422; crosses with point/contact/both
 // scales 1432/1478/1497; two output library copies 1402. Contact-scale frames 0x5c8, others 0x5cc; all restored.
 // @retail 0x206090

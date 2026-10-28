@@ -129,6 +129,8 @@ word *unicode_string_append(word *destination, word const *source, long maximum_
 // Prefix lexical name 8; declaration after output clear 8; direct prefix clear 8;
 // nested language guards 8; string-list local 8; result local 8;
 // display/language input homes removed separately 8/8.
+// Copy-result destination 22; output rebound to copy/delimiter/both 46/49/47;
+// output rebound to suffix/both appends/all returns 9/49/47; copy-and-append destination 22.
 // @retail 0x216da0
 bool function_216da0(long type, wchar_t *name, wchar_t const *display_name, long language)
 {
