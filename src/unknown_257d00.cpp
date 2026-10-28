@@ -1666,6 +1666,9 @@ void function_b7360(long object_index);
 // regresses acquisition and dispatch; original comparison observations restored.
 // Round 226: Per-use actor pool/getter 501/501; command pool/getter 786/787; both direct/getters 798/793;
 // mixed direct/getter acquisitions 798/793. All original acquisitions and body restored.
+// Round 159: Nine/eleven action tables with range admission 656/695 and switch dispatch 646/690;
+// notification membership table 534; membership with eleven/nine ranged action tables 772/738 and eleven
+// switched actions 771. All restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

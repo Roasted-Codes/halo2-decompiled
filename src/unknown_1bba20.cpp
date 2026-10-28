@@ -155,6 +155,9 @@ __declspec(noinline) bool function_f5dc0(long object_index);
 // the distance-call argument order differs. Split entry branch 67; first fresh
 // actor 90; second fresh actor 49 (kept); both fresh actors 81; first field
 // pointer 49; second field pointer 67; typed vehicle 67; no final refresh 123.
+// Native tag field 49; squad-first admission 74; squad before entry flag 77;
+// distance-first admission 70; entry declaration lifetime/constant pointer/role names/unsigned tag handle 49.
+// Tag field and all body forms restored; the full/low-word reuse and later schedules remain.
 // Native squad full/low-word fields alone/with timer/with flag/with both 49/49/49/49;
 // the same native field forms with a saved second actor read 67/67/67/67.
 // @retail 0x1bba70

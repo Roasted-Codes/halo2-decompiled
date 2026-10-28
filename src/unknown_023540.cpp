@@ -3147,6 +3147,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // 1185/934/980; short-input with byte-alpha 935; unsigned-input with byte-alpha 934.
 // Byte alpha selector alone kept plain at 934; its only values remain 4 and 24.
 // Round 366: blend/depth/both indexed state tables 1395/1417/1484; shared sampler 1223; sampler with blend/depth/both tables 1413/1410/1550; all with Boolean capabilities 1448. All restored.
+// Round 159: Upper/lower/both byte channels 1119/1202/1178; upper/lower/both word channels
+// 1161/1202/1231; rounded result read once 1375; read once with byte channels 1325. All restored.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

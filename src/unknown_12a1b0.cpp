@@ -1301,7 +1301,7 @@ struct s_looping_voice_view
 };
 
 void function_126960(s_sound_playback *sound);
-void __stdcall function_127320(long datum, long count);
+__declspec(noinline) void __stdcall function_127320(long datum, long count);
 void function_128500(long sound_index, s_looping_voice_counts *counts);
 short function_128a60(long sound_index, short count, short const *voice_indices);
 
@@ -1396,6 +1396,12 @@ bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_inde
 long function_125f70(long definition_index, s_looping_detail_request *request, long *reason);
 void function_126df0(long new_sound, long old_sound, short curve, real duration);
 
+// score 501 (was 801): frame 0x128 now matches with the stop helper out of line;
+// index homes, definition register and ring traversal still differ.
+// Separate noinline declaration 501; wide selection full 502 (reduced 315);
+// reduced control 429; indexed tracks 495; loop pool 427; ring pool 429; all pools 427;
+// indexed fills 389; shared lower pitch 427; array creation order 430; early ring plus wide selection 315.
+// Reduced-only improvements restored; the full image did not validate the width gain.
 // @retail 0x21b0e0
 void function_21b0e0(bool update)
 {
@@ -1715,6 +1721,11 @@ void function_21f8a0(long channel_index, s_looping_channel_properties const *pro
 void __stdcall function_21f720(s_looping_impulse_parameters const *parameters);
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects, bool force);
 
+// score 532 (was 550): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
+// Full-width permutation selection keeps its values; both index widths 529 (three-point tail dropped),
+// chunk width alone 560, state width 550, frame names/property declaration 550; existing next-chunk
+// helper with short/long/wide selection 556/568/536; direct gain fields 526 (six-point tail dropped),
+// direct modifier fields 529 (three-point tail dropped), direct voice index/shared lower pitch 532.
 // @retail 0x21c400
 void function_21c400(short voice_index, real gain, s_looping_channel_spatialization const *spatialization)
 {
@@ -1792,7 +1803,7 @@ void function_21c400(short voice_index, real gain, s_looping_channel_spatializat
 				dword *seed = &g_4e7408->seed;
 				if (definition->flags & 0x30)
 					seed = primary ? &track->field_8_4 : &playing->loop.field_8_4;
-				short permutation_index = playing->permutation_index;
+				long permutation_index = playing->permutation_index;
 				s_looping_playback_definition *current = (s_looping_playback_definition *)g_4e3b44[playing->definition_index & 0xffff].bytes;
 				s_permutation_set *current_range = &g_51ebd4->sets[current->pitch_range_base + playing->pitch_range_index];
 				s_looping_permutation *permutation = &((s_looping_permutation *)g_51ebd4->chances)[current_range->first_index + playing->permutation_index];
@@ -1884,6 +1895,10 @@ point3f *function_142700(transform4x3f const *matrix, point3f const *point, poin
 real function_30bf0(vector3f *vector);
 void function_192ce0(point3f const *direction, real *gains, bool linear);
 
+// score 759 (was 776): frame 0x38 versus 0x3c, definition/identifier carriers, later flag and result lifetimes differ.
+// The fixed four-entry energy traversal is rolled; both gain loops rolled 795, listener loop alone 798,
+// entry-result region 788, full result/single exit 792; direct impulse fields/shared setter/field setter
+// 781/776/781; derived lookup key in either form 775, key with energy loop 770, entry with energy 772.
 // @retail 0x21a250
 bool function_21a250(long definition_index, dword sound_flags, long identifier, long controller_definition_index,
 	s_type_99c531 *source, long state, dword flags, real fade_duration)
@@ -1946,11 +1961,13 @@ bool function_21a250(long definition_index, dword sound_flags, long identifier, 
 			function_192ce0(&position, gains, true);
 			real scale = 1.f;
 			real total = 0.f;
-			for (long i = 0; i < 4; ++i)
+			long gain_index = 0;
+			do
 			{
-				real value = gains[i] * gain;
+				real value = gains[gain_index] * gain;
 				total += value * value;
-			}
+				++gain_index;
+			} while (gain_index < 4);
 			if (total > 1.f)
 				scale = 1.f / total;
 			for (long i = 0; i < 4; ++i)
