@@ -160,7 +160,9 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 55 (was 199): frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
+// score 199 (was 199): Frame 0xa4 agrees; object-data/tag-table allocation
+// and collision-point scheduling differ.
+// frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
 // Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
 // 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
 // initialization alone/with all three narrowed lifetimes 309/310. Original body restored.
@@ -191,6 +193,8 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // output with query/final/both point-set calls [199, 199, 199]; common result, both setters and
 // collision-first comparison 211. Original queries and output graph restored; tag-table retention and
 // fraction component reuse remain.
+// Complete coordinate products scalar/vector/scaled-point/original-point 199/206/206/237;
+// the same four point producers with collision-first comparison 200/206/206/238.
 // Round 225: object-table/sentinel-before-forward or origin 190/190; native backward assignment 78;
 // with either sentinel move 76/76; sentinel and collision-first 191/191; all three 59.
 // Paired height terms 55 (plain, kept); collision production first 61; native marker copies 125;

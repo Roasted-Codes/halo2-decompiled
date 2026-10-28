@@ -146,6 +146,7 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 
 // score 207 (was 207): frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Lane 8 r64: countdown weight with the `>= 3` case first (retail's fall-through) 215, kept; frame
 // byte in a long local 260 (32-bit compare as retail, aligned 119, 969 bytes); char/word loop index
 // 215 (identical: the loop stays a pointer plus spilled countdown); sampled flag declared before
@@ -209,6 +210,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Round 225: bounded ordinal stepped at its input read with char/short/long sample frames
 // 256/251/250; with actual sample count 264/260/259; full-width frame before weight 250,
 // with count 259. Weighted output construction remains before admission; original loop restored.
+// Round 364: independent data outputs at entry, base/weighted/countdown and
+// pairs/all 295/304/304/294/283/304/290; all with long sample frame 312.
+// Original separate construction points restored; frame and getter expansion remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

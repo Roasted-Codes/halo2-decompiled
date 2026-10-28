@@ -250,11 +250,18 @@ bool __stdcall function_1aa990(long actor_index, s_slot *slot)
 	return result;
 }
 
-// score 17 (was 17): retail loads the prop pool pointer into EAX, one byte
-// shorter than our ECX, and passes entry->unknown24 in ECX where we pass it in
-// EDX; the one-byte difference moves every later jump target.
+// score 11 (was 17): extent now agrees at 352 bytes; the pool pointer still uses ECX
+// instead of EAX, the fraction uses EDX instead of ECX, and the shared range-value
+// load/compare schedule differs.
 // Tried (r35): prop_ref_get and the real record types 17; the state assigned after declaration 17;
 // prop_node_state 17; the reversed probability comparison 35; const entry, state, or actor/unit 17.
+// Guarded state/value/both observations 59/11/57; probability result conditional 105;
+// three-first rejection 42; four-first selection 97; both observations with the
+// conditional/four-first result 91/94. Keep the twice-used range value after the prop guard.
+// Round 268 on the two-use range graph: long result 11; entry range declaration 11;
+// entry prop/state declarations 11; unsigned result 11; long result plus entry range 11;
+// entry range/receivers 11; unsigned result plus entry receivers 11; split entry acquisition
+// with unsigned result 11. Loads and call tuples stayed at their original boundaries.
 // @retail 0x1aa9f0
 short __stdcall function_1aa9f0(long actor_index)
 {
@@ -270,12 +277,17 @@ short __stdcall function_1aa9f0(long actor_index)
 	{
 		s_prop_datum_view *prop = (s_prop_datum_view *)prop_node_get(actor->prop_index);
 		s_prop_state_64 *state = (s_prop_state_64 *)function_25d690((s_prop_datum *)prop);
-		if (prop->unknown27 >= 1 && (state->unknown64 || prop->unknown28 > entry->unknown1c) && entry->unknown20 > prop->unknown28)
+		if (prop->unknown27 >= 1)
 		{
-			if (state->unknown64 && !function_1e2030(actor_index))
-				result = 4;
-			else if (function_1c9ee0(entry->unknown24) > function_259a0(&g_4e7408->unknown0))
-				result = 3;
+			real prop_value = prop->unknown28;
+
+			if ((state->unknown64 || prop_value > entry->unknown1c) && entry->unknown20 > prop_value)
+			{
+				if (state->unknown64 && !function_1e2030(actor_index))
+					result = 4;
+				else if (function_1c9ee0(entry->unknown24) > function_259a0(&g_4e7408->unknown0))
+					result = 3;
+			}
 		}
 	}
 	return result;

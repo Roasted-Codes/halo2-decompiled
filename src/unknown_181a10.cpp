@@ -570,6 +570,9 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Plane publication reaches 1243 bytes but regresses; frame 0x48 remains. All restored.
 // Round 227: Positive admission byte/short/long/dword, rejected bool/byte/short/long 321/331/331/331/321/321/331/331.
 // Original body and all helpers restored.
+// Round 237: root/component/classifier noinline 359/358/349; root-component/root-classifier/
+// component-classifier/all 384/365/401/414; all ordinary inline 401 (control 321).
+// Entire original helper graph restored; frame and plane/output homes remain.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {
