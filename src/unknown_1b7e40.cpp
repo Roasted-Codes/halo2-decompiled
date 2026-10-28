@@ -72,6 +72,9 @@ bool function_25d9b0(long prop_index);
 // the invitation type in EDI, ours passes them in EAX and ESI; that choice also swaps
 // the prop index and the node between ESI/EBP and EBP/EDI through the body. The
 // convention is set by function_26f060 (src/unknown_26e370.cpp), not editable here.
+// Tested iterator for with native priority/node-getters/length graph: fast
+// 170/169/170/169/170/169/170/169 versus fast control 170; full baseline 131 retained; one-point
+// reductions rejected.
 // Round 371: actual participant array 170 reduced; long invitation index 168 reduced;
 // shared result 154 reduced / 169 plain; long index/shared result 156 reduced;
 // existing view helper ties each form. Opening body restored at 131.
@@ -142,6 +145,8 @@ evaluate:
 // score 73 (was 73): retail calls function_25d740, our build inlines it
 // through the
 // prop_node_view wrapper, so the two blocks are laid out differently.
+// Native node/view plus payload/self-dot/final-result graphs 73/73/73/73/78/78/78/78; delayed
+// saves and getter boundary remain.
 // Round 371: typed slot payload 73; payload/result first 73; payload/wide result 74;
 // payload/single result 88, with wide result 92. Opening body restored.
 // Round 162: separate view-getter noinline with immutable default status and direct proximity return,

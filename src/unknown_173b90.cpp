@@ -892,6 +892,9 @@ public:
 // boundaries 292 each; complete ordered completion on each graph 356 each
 // (1355 bytes, frame 0x5c). Original result, declarations and boundaries restored;
 // entry completion storage, word/byte publication and child/tint homes remain.
+// Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
+// 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
+// All record, request and completion forms restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

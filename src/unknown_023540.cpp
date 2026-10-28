@@ -2450,6 +2450,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 204: Tag/bitmap producer, late fallback/draw arrays and paired shader-alpha workspace
 // scopes, masks 1-7: 251/251/251/255/255/255/255; all with coherent dimension/reciprocal names
 // 255. Full-stack transport retained; original scopes, observations, arrays and equations restored.
+// Round 235: Direct enum-range address/filter/disabled-state loops, seven subsets and complete while form
+// [926, 883, 685, 1104, 1159, 1089, 1240, 681] fast. Runtime SDK setter specialization grows the body; all
+// original ordered direct calls, arrays, fields, directives and body restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,

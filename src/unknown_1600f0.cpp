@@ -1092,6 +1092,8 @@ struct s_game_engine_globals_connections_view
 // Round 219: Shared numeric width/score origin/both/time origin/width-time/both origins/all short
 // geometry 258/291/294/302/283/310/295; all long geometry 291. All restored; deferred icon tail
 // and time/connection homes remain.
+// Native widget metadata with glyph enum, immutable complete background and tail store order:
+// eight calibrated scores 170; metadata type and helper graph restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
