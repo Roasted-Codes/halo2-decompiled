@@ -1208,6 +1208,9 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
 // Optional-output formal permutations 828/824/824/829/829; native iterator on three formal-home contexts 826/822/827.
 // Closest six-point gain 822 remains above 30 and fails the eight-point floor; original formals and iterator restored.
+// Round 225: ordered original/resolved request tuples and native records, mutable/const
+// with long/dword ordinals, 2174 each (1657/2825 bytes). All eight table forms restored;
+// preserve the original two resource calls, native iterator and identifier workspaces.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
