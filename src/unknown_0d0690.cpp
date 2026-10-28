@@ -104,10 +104,15 @@ PRIVATE __forceinline real pinned_real(real const &value, real minimum, real max
 // Round 193: Scenario/data/both/value/data+value/scenario+value/all source pointers
 // read at each use, then all plus light table: 213/192/192/213/231/213/231/247.
 // Data-only plain 192 adds reloads and has a farther aligned sequence; original restored.
+// Round 202: Native direction accumulation with long/dword/short/byte ordinals, direction/contribution/paired cursors, contribution-first indexed adds, complete updated-direction publication and the shared vector setter 106/106/192/192/205/195/171/106/182/93 fast.
+// Original executable source restored. Frame 0x8c agrees; x87 accumulator operand order, blend-address reuse and collision predicate remain.
 // Round 215: native light cursor 224; cursor with const light/value views 224;
 // cursor with positive-light strength lifetime, mutable/const views 223/223;
 // plain count with cursor, const views, scoped strength or both 233 each.
 // Original indexed traversal, strength lifetime and inherited count qualifier restored.
+// Round 360: Complete trig factors, existing contribution setter, returning color-result copy,
+// all pairs and all three 162/162/179/162/180/180/180; original real-narrowed terms
+// in double scalar carriers 186. Original contribution and color ownership restored.
 // @retail 0xd1a30
 long __stdcall function_d1a30(long ignore_object_index, point3f const *point, s_sky_surface_record *record)
 {
@@ -1243,6 +1248,8 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Incoming lightmap value before normal: native/component/library copy 551/546/551;
 // after length: native/component/library copy 556/554/556;
 // reused channel scalars 555; native adjusted-value construction 551. All restored.
+// Curve helper per-use header/bounds/both 534/545/529; clamp in mapping expression 529;
+// with per-use header/bounds/both 534/576/564; header guard return 529. All restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1354,6 +1361,9 @@ real function_30bf0(vector3f *vector);
 // Round 184: direct-field normal initializer 473; early normal snapshot/native initializer
 // 488/507; native query vector view 364; view with shared snapshot/direct reads/library copy
 // 488/364/364; early normal plus direct magnitude reads 517. Original observations restored.
+// Round 217: Repeated primary direction/secondary direction/both/reflected color/secondary+color/
+// both+color/primary+color/secondary+all-colors views 367/468/468/368/471/471/370/471 fast.
+// In-place direction views recover frame 0x40 but regress; original fields, scratch and helpers restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1748,6 +1758,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // with material noinline, plus magnitude noinline/material inline: all seven 790f;
 // requested magnitude boundary with all shared vector scales 824f (3069 bytes).
 // Caller-local contracts do not resolve the expansion; all declarations and scales restored.
+// Cross-path shared mesh/texture coordinates/material/mesh-texture/mesh-material/texture-material/all
+// 790/787/790/787/790/787/787; all with result first 787. Shared texture coordinates with
+// short/word/signed-byte/byte status 790/790/820/820. Three-point gain rejected; all restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

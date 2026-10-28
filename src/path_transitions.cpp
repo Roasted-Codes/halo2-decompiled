@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "unknown_0259a0.h"
 #include "unknown_20fe20.h"
+#include "normalize3d.h"
 #include <float.h>
 
 real function_30bf0(vector3f *v);
@@ -59,17 +60,6 @@ struct s_transition_collision
     byte unknown4c[0x10];
 };
 
-// score 9 (was 15): only the two calls' setup differs, BLOCKED-BY 0xfa1a0: ours passes the time-scale pointer
-// in EDX (`xor edx, edx`) where retail pushes it (one more push, ret 0x2c).
-// Existing speed getter 126; direct globals 15; reused alternate rise 32; entry result/shared exit 108;
-// early rise 38; common widened index 82; direction at entry 32; entry result plus alternate rise 108.
-// Round 144: the drop tests and the second call in retail's direction (start above end; the alternate
-// pair passed start first, as 0x272020 passes start on the stack and end in ECX) 15 -> 9 (kept: it
-// fixes the values, not just the bytes); both calls' ends swapped instead 33. On 0xfa1a0 (all
-// reverted, the pointer stays in EDX): scale read once 262, delta.k with i/j 247, gravity operands
-// swapped 266. Round 52: a noinline callee declaration 9; the result declaration split 9; a
-// short-circuit return 46; nested result/alternate branches 9; alternate tests first 106; the second
-// call returned directly 106; a separate alternate result 9; the direction renamed 9.
 // @retail 0x26f150
 bool function_26f150(short type, point3f const *start, point3f const *end,
     point3f const *alternate_start, point3f const *alternate_end)
@@ -336,9 +326,18 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
-// score 167 (was 199): entry and loop register allocation differ; single exit 167;
+// score 154 (was 154): the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
+// BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
+// term loads g_4687b0 first where retail loads the marker. Tried: single exit 167;
 // long best 199; long loop index 202; point names 199; vector helper 202;
-// single exit with long best 181.
+// single exit with long best 181; the helpers with the alignment written out 154 (loop
+// pointer based at +0x4c); dot3f operands swapped 154; 0.95f < dot 154; a named alignment
+// 154; the alignment through markers[i] 154 (more x87 differences); both dots written out
+// with the delta and normalize helpers 141 (14 more instructions off once aligned).
+// Candidate/delta/selected-point uninitialized entry storage, all seven subsets and all three with the native
+// marker array: 154/154/154/154/154/154/154/154. Protected query promotion, loop padding and dot allocation
+// remain
+// original declaration scopes restored.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {
@@ -355,26 +354,14 @@ bool function_26f990(long actor_index, long object_index, real distance, s_objec
         for (short i = 0; i < count; i++)
         {
             s_object_marker *marker = &markers[i];
-            if (marker->matrix.forward.i * g_4687b0->i + marker->matrix.forward.k * g_4687b0->k +
-                marker->matrix.forward.j * g_4687b0->j > 0.95f)
+            if (dot3f(&marker->matrix.forward, g_4687b0) > 0.95f)
             {
                 point3f candidate;
                 function_270130(marker, &actor->position, distance, &candidate);
                 vector3f delta;
-                delta.i = actor->position.x - candidate.x;
-                delta.j = actor->position.y - candidate.y;
-                delta.k = actor->position.z - candidate.z;
-                real length = (real)sqrt(delta.k * delta.k + delta.j * delta.j + delta.i * delta.i);
-                if (!(fabs(length) < 0.0001f))
-                {
-                    real inverse = 1.f / length;
-                    delta.i = inverse * delta.i;
-                    delta.j = delta.j * inverse;
-                    delta.k = delta.k * inverse;
-                }
-                else length = 0.f;
-                real dot = delta.k * marker->matrix.left.k + delta.j * marker->matrix.left.j +
-                    delta.i * marker->matrix.left.i;
+                vector3d_from_points3d(&candidate, &actor->position, &delta);
+                real length = normalize3d(&delta);
+                real dot = dot3f(&delta, &marker->matrix.left);
                 length *= (real)(3.f / (1.f + 2.f * fabs(dot)));
                 if (best_distance > length)
                 {
@@ -490,9 +477,15 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
-// score 299 (was 299): entry register convention and floating-point scheduling differ;
+// score 278 (was 278): entry root retention and floating-point scheduling differ;
 // result first 299; surface first 299; vector names 299; vector helper 299;
 // case order 300; separate vector declarations 299.
+// Round 24: trace-time state reload, mutable entry, both, coherent pathfinding/surface swap,
+// direct distance arguments and direct projected-origin 299 each; c/b/a/d pointer
+// declarations 278; direct case-5 direction 278 (selected with the declaration order).
+// Entry vertex table at case/dispatch scope 280/340; ordinary result 340;
+// case table with ordinary result 342; early actor predicate 278; common case-5
+// outputs 404, with case table 404, with ordinary result 398. Original body restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,
@@ -511,9 +504,9 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
         if (parent_point && (long)surface->vertices[0] != NONE && (long)surface->vertices[1] != NONE &&
             (long)surface->vertices[2] != NONE && (long)surface->vertices[3] != NONE)
         {
-            point3f const *a = &pathfinding->vertices[surface->vertices[0]];
-            point3f const *b = &pathfinding->vertices[surface->vertices[1]];
             point3f const *c = &pathfinding->vertices[surface->vertices[2]];
+            point3f const *b = &pathfinding->vertices[surface->vertices[1]];
+            point3f const *a = &pathfinding->vertices[surface->vertices[0]];
             point3f const *d = &pathfinding->vertices[surface->vertices[3]];
             vector3f first, second;
             first.i = b->x - a->x;
@@ -564,8 +557,7 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     case 5:
         {
             point3f const *position = &pathfinding->vertices[surface->vertices[2]];
-            point3f const *direction_point = &pathfinding->vertices[surface->vertices[3]];
-            vector3f direction = *(vector3f const *)direction_point;
+            vector3f direction = *(vector3f const *)&pathfinding->vertices[surface->vertices[3]];
             direction.i = direction.i * -1.f;
             direction.j = direction.j * -1.f;
             direction.k = direction.k * -1.f;
@@ -598,7 +590,7 @@ bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
                 (vector3f const *)direction_point, NULL, (long *)start_out, NULL, parent_node_index_out))
             {
                 s_path_trace_result trace;
-                function_26c590(data, position, parent_node_index, NONE,
+                function_26c590((s_pathfinding_data *)state->pathfinding, position, parent_node_index, NONE,
                     (vector3f const *)direction_point, 0.2f, NULL, &trace);
                 start_out->point = trace.point;
                 start_out->output_index = parent_point->output_index;

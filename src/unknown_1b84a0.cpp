@@ -21,6 +21,22 @@ struct s_slot_23
 	byte unknown3c[0x40 - 0x3c];
 };
 
+struct s_slot_23_data
+{
+    bool unknown00;
+    bool unknown01;
+    short unknown02;
+    real unknown04;
+    byte unknown08[0x0f - 0x08];
+    bool unknown0f;
+    bool unknown10;
+    char unknown11;
+    byte unknown12[2];
+    s_type_c3b527 point;
+    vector3f facing;
+    byte unknown30[0x34 - 0x30];
+};
+
 short __stdcall function_1b84a0(long actor_index);
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot);
 void __stdcall function_1b89d0(long actor_index, s_slot *slot);
@@ -69,6 +85,9 @@ void *function_1e4db0(long actor_index);
 struct s_character_db0_flags
 {
 	byte flags;
+	byte unknown01[0xc - 1];
+	real unknown0c;
+	real unknown10;
 };
 
 bool function_1f86f0(long index);
@@ -77,9 +96,10 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 
 /* slot type 0x23, update: once the actor stands at its prop's position, it
    turns to face it; then it lets the prop go */
-// score 81 (was 81): retail reads the pool before the registers are pushed,
+// score 61 (was 61): retail reads the pool before the registers are pushed,
 // ours reads it
 // afterwards, so the prologue differs.
+// Round 198: typed slot data block/current/entry 61/62; on that block actor once/at use 66/85; long/word/byte readiness 76/78/77; stored readiness 47 (exact-match-only, restored). Opening body restored.
 // @retail 0x1b89d0
 void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 {
@@ -207,9 +227,12 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
 
-// score 323 (was 323): the size we use is 0x1634 where retail uses 0x162c,
-// and the index is
-// scaled in EAX here and in ESI there, so the loop is a different length.
+// score 257 (was 323): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
+// slot/scratch homes and the 52-byte length deficit remain.
+// Round 198: payload/native input/read-only input/input scope 323 each; clamp 322;
+// typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
+// ordinary result/receiver with ordinary result 325/325; search outputs first 257.
+// Typed payload/native input and preparation scope kept at 257 plain; all follow-ups restored.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
 {
@@ -220,49 +243,53 @@ bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
     if (!*((bool *)actor + 0x40))
         return result;
 
-    s_prop_node_view *node = prop_node_get(actor->prop_index);
-    s_prop_view_fields *view = prop_node_view(node);
-    byte *character = (byte *)function_1e4be0(actor_index);
-    s_slot_23 *state = (s_slot_23 *)slot;
-    state->unknown1b = false;
-    state->unknown1c = false;
-    state->unknown1d = 0;
+    byte *character;
+    s_slot_23_data *state;
     bool has_markers = false;
     s_object_marker markers[32];
     short marker_indices[32];
-    if (!*((bool *)actor + 0x3c) && actor->unknown227)
-        has_markers = function_1ac610(actor_index, &prop_node_state(node)->position,
-            markers, marker_indices);
-
     s_2605d0_request request;
-    memset(&request, 0, sizeof(request));
-    request.type = 3;
     real distance;
-    if (view && view->unknown70 == 1)
     {
-        function_210850(&view->unknown78, (point3f *)((byte *)&request + 0x24));
-        short sector = *(short *)((byte *)view + 0x84) == NONE ?
-            *(short *)((byte *)view + 0x72) :
-            function_272af0(g_4e0348, (point3f *)((byte *)&request + 0x24));
-        *((bool *)&request + 0x20) = true;
-        *(s_type_c3b527 *)((byte *)&request + 0x30) = view->unknown78;
-        *(long *)((byte *)&request + 0x40) = *(long *)((byte *)view + 0x74);
-        *(short *)((byte *)&request + 0x44) = sector;
-        distance = function_210ac0(&view->unknown78, &actor->position);
+        s_prop_node_view *node = prop_node_get(actor->prop_index);
+        s_prop_view_fields *view = prop_node_view(node);
+        character = (byte *)function_1e4be0(actor_index);
+        state = (s_slot_23_data *)slot->unknownc;
+        state->unknown0f = false;
+        state->unknown10 = false;
+        state->unknown11 = 0;
+        if (!*((bool *)actor + 0x3c) && actor->unknown227)
+            has_markers = function_1ac610(actor_index, &prop_node_state(node)->position,
+                markers, marker_indices);
+
+        memset(&request, 0, sizeof(request));
+        request.type = 3;
+        if (view && view->unknown70 == 1)
+        {
+            function_210850(&view->unknown78, (point3f *)((byte *)&request + 0x24));
+            short sector = *(short *)((byte *)view + 0x84) == NONE ?
+                *(short *)((byte *)view + 0x72) :
+                function_272af0(g_4e0348, (point3f *)((byte *)&request + 0x24));
+            *((bool *)&request + 0x20) = true;
+            *(s_type_c3b527 *)((byte *)&request + 0x30) = view->unknown78;
+            *(long *)((byte *)&request + 0x40) = *(long *)((byte *)view + 0x74);
+            *(short *)((byte *)&request + 0x44) = sector;
+            distance = function_210ac0(&view->unknown78, &actor->position);
+        }
+        else
+        {
+            *((bool *)&request + 0x52) = false;
+            distance = node->unknown28;
+        }
     }
-    else
-    {
-        *((bool *)&request + 0x52) = false;
-        distance = node->unknown28;
-    }
-    byte *movement = (byte *)function_1e4db0(actor_index);
+    s_character_db0_flags const *movement = (s_character_db0_flags const *)function_1e4db0(actor_index);
     long minimum;
     if (movement)
     {
-        real limit = *(real *)(movement + 0xc);
+        real limit = movement->unknown0c;
         minimum = (long)(limit > distance ? distance : limit);
         *(long *)((byte *)&request + 0x684) = minimum;
-        *(long *)((byte *)&request + 0x688) = (long)*(real *)(movement + 0x10);
+        *(long *)((byte *)&request + 0x688) = (long)movement->unknown10;
     }
     else
     {
@@ -276,8 +303,8 @@ bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
     *((bool *)&request + 0x50) = true;
     *((bool *)&request + 0x59) = character && (*character & 1);
     *(s_object_marker **)((byte *)&request + 0x64) = has_markers ? markers : NULL;
-    if (*(real *)((byte *)state + 0x10) != 0.0f)
-        *(real *)((byte *)&request + 0x1c) = *(real *)((byte *)state + 0x10);
+    if (state->unknown04 != 0.0f)
+        *(real *)((byte *)&request + 0x1c) = state->unknown04;
     if (actor->unknown50c && actor_get(actor_index)->unknown504 != 2 &&
         !REFERENCE_EQUAL(actor->unknown418, g_470fa0))
     {
@@ -302,11 +329,11 @@ bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
         {
             success = function_1f4a20((s_1f4a20_entry const *)&entry, actor_index, reference,
                 (s_1f4a20_source const *)scratch, true, &state->point, &state->facing,
-                (signed char *)&state->unknown1d, &available);
+                (signed char *)&state->unknown11, &available);
             if (success)
             {
-                state->unknown1b = true;
-                state->unknown1c = false;
+                state->unknown0f = true;
+                state->unknown10 = false;
             }
             else if (available)
                 reference = g_470fa0;
@@ -315,13 +342,13 @@ bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
             reference = function_2626b0(actor_index, reference, other_actor, scratch, unknown, true);
         if (!REFERENCE_EQUAL(reference, g_470fa0))
         {
-            state->unknown0d = true;
+            state->unknown01 = true;
             actor->unknown4ae = true;
             ai_scratch_buffer_release(scratch);
             return result;
         }
     }
-    state->unknown0c = true;
+    state->unknown00 = true;
     g_46eeb8[0x23]->unknown8 = g_46f348;
     ai_scratch_buffer_release(scratch);
     return result;

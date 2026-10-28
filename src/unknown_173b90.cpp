@@ -877,6 +877,17 @@ public:
 // bool-expression return 405 (frame 0x5c); 0x137bd0 moved out of its /Ob1 file 457; the volatile
 // parent removed 371 (frame 0x64), with the bool return 392; flag 9/8 update through the
 // bitfields 368.
+// Round 270: both real color predicates 327; reversed readonly queries 323; both
+// declared before pose 327; predicates with parent color 333; direct result with
+// predicates 357, reversed 361, with color 374, entry predicates/color 374. All
+// eight match-only capture forms restored; early result/flag stores and child/tint homes remain.
+// Round 24: scoped flags 292; plus direct Boolean result 356; plus early parent color 355;
+// plus function-entry tint 355; word-pointer flags instead 354; ordinary parent instead 344;
+// long tint instead 364; without parent color 353. Original restored.
+// Round 206: Two-state completion enum, entry default/entry complete arms/tail default/tail complete arms
+// [292, 366, 361, 366]; with word-pointer/bit-five flag idiom [359, 369, 359, 369]. Original result and flags restored.
+// Round 232: four complete positive/negative factor orders, direct or all six
+// products staged before output, 292 each. Original two-use helper restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1090,6 +1101,9 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // 213/213/213; with native request initialization 211/211/211 (two-count gains rejected);
 // full tag scope with child set/clear stores 219, with native request as well 217.
 // Complete original scopes, request and child-bit copy restored.
+// Round 217: Selector inline/noinline/inline-out-of-line boundaries 213/213/213;
+// with child set/clear 219/219/219; with word bit five and child stores 316/316
+// (fast). Original selector declarations, complete body and call tuples restored.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

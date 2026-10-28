@@ -3878,6 +3878,17 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 131: word special/different/both/team/special-team/different-team/all
 // decision carriers 477/528/540/470/477/528/540; dword subtype 470.
 // Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
+// Round 235: elapsed/timer/classification consumption scopes, all seven combinations 470 each; statistics-to-message consumption scope 470.
+// Complementary category bool/byte/short/long 470/470/477/550; with self-player result
+// 470, opposing-team result 526, both 526, word category with both 480. Original
+// category, decision bytes and all event/timing work restored; extra frame dword remains.
+// Round 239: actual penalty/ticks/both field references 469/470/469; existing
+// nonnegative helper with positive selection 518, with penalty/ticks/both references
+// 521/518/521; all with award after engine admission 522. One-point gain dropped;
+// original fields, helpers, shared award update and body restored.
+// Round 225: chained award/subtype defaults at entry, admission and victim lookup 549/548/548;
+// award/message 470, all three at entry 549, subtype/message 549; all three
+// after admission/lookup 548/548. Original result defaults and complete body restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4104,7 +4115,7 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-// score 472 (was 472): Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
+// score 440 (was 440): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
 // Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
@@ -4131,6 +4142,22 @@ struct s_score_zone_view
 // zone/charge allocation remain; opening executable body restored.
 // Round 364: Native player/team/both statistics arrays 472/472/472; fresh statistics 686;
 // fresh player 790; both fresh bases 792; native arrays plus fresh statistics/player 686/790.
+// Round 233: own-score text consumption scopes 464; rival scopes 472; all text scopes 472;
+// individual/zone/both iterator consumption scopes 472/472/472; all text plus iterators 472;
+// four native palette/color consumption scopes 472. Minimal own-score scopes retained.
+// Team-only own-text scope 471; individual-only 466 (small gains dropped); both scopes with
+// all palette scopes or both iterator scopes 464/464. Only the two own-text scopes retained.
+// Round 267: On recovered own-text scopes, existing bounded copies for own team/individual/
+// both texts 534/440/536; score publication inside both text scopes 464; copy forms with
+// those scopes 534/440/536; team copy plus team publication scope 534. Keep only the
+// individual own-text bounded-copy call (plain 440, 2688 B); extra scopes restored.
+// Round 241: Consistently retained team-mode result bool/byte/short/long at selection and at team entry:
+// 771/771/745/770/771/771/745/770. Original field reads, output store and complete body restored.
+// Round 207: seven color-helper inline-declaration subsets and all noinline 440 each.
+// Complete returned color values: rival/own/both team, held/free/both zones,
+// all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
+// forms rejected despite the 423 first-transfer recovery. Existing rival output
+// object consumed directly 493. All restored; team-color/zone/charge allocation remains.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4209,13 +4236,15 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     display->rival = true;
                 }
                 else { display->rival = false; display->leading = true; }
-                word text[256];
-                text[0] = 0;
-                long mode = g_4e6948->mode_180;
-                if ((mode >= 3 && mode <= 4) || mode == 8) game_engine_format_time(score, text);
-                else function_1630e0(text, (word const *)L"%d", score);
-                wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                display->score_text[7] = 0;
+                {
+                    word text[256];
+                    text[0] = 0;
+                    long mode = g_4e6948->mode_180;
+                    if ((mode >= 3 && mode <= 4) || mode == 8) game_engine_format_time(score, text);
+                    else function_1630e0(text, (word const *)L"%d", score);
+                    wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
+                    display->score_text[7] = 0;
+                }
                 display->score = score;
                 color3f color;
                 display->color = *function_7f720(&color, player->team);
@@ -4255,11 +4284,12 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     display->rival = true;
                 }
                 else { display->rival = false; display->leading = true; }
-                word text[256];
-                text[0] = 0;
-                function_159130(score, text);
-                wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                display->score_text[7] = 0;
+                {
+                    word text[256];
+                    text[0] = 0;
+                    function_159130(score, text);
+                    unicode_string_copy(display->score_text, text, 8);
+                }
                 display->score = score;
                 color3f colors[4];
                 function_7f790(display->teams ? player->team : NONE, false, (s_player_appearance *)((byte *)player + 0x84), colors);

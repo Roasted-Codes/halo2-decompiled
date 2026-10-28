@@ -518,8 +518,10 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 572 (was 587): the axis now comes from vector3d_from_points3d with the length summed in
+// score 572 (was 572): the axis now comes from vector3d_from_points3d with the length summed in
 // retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
+// Aligned frame 0x21e4 versus 0x21dc, count/plane/axis homes and rotation scheduling remain.
+// The axis uses vector3d_from_points3d with length summed in retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
 // does; that frame is 0x21e4 against retail's 0x21dc (8 bytes more below the plane), 3631 bytes against
 // 3647. The definition/output registers agree with the pivot offset rotated in place, the mode read at
 // each use and the plane flip tested as bit 15. Retail increments the first loop's index before its
@@ -587,6 +589,17 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // mode field at every use 796; both 806; shared pivot-offset difference 753; promoted index plus
 // shared offset 716 (kept, plain); mode plus offset 783; all three 787; all with shared normalizer 775.
 // Retain the signed index promotion and existing offset helper; frame 0x2204 and entry carriers remain.
+// Earlier 572 from 587. Shared-axis graph: uninitialized group-scope first/candidate/selected plane declarations in
+// all seven nonempty subsets, then complete plane-role names, 572 each. All writes stay in place.
+// Round 222: complete rotation/sign/angle product operand exchanges in all seven
+// nonempty subsets 572 each; all exchanges with factor-first axis normalization 572.
+// All original products restored; frame remains 0x21e4 versus 0x21dc and rotation spills differ.
+// Round 204: complete rotation input with direct/native result 611/831; direct input plus pivot/axis scale/both 607/607/608; native axis scale 613; native input/result plus pivot/plus scale 760/761. Original whole body and helpers restored.
+// Round 241: Actual emitted-face total short/word/long/dword at secondary pass entry and before initial
+// projection: 735/723/723/723/749/626/626/626. Original outstanding count, face indices and body
+// restored.
+// Round 243: Existing tag record with native signed mode, const/mutable 572/572; actual limit
+// flags byte/word/bool 572 each; tag plus each native flag declaration 572 each. All restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

@@ -113,7 +113,7 @@ struct s_type_181dea
 	byte unknown00[0x3c];
 	dword flags;
 	long portal_count;
-	struct
+	struct s_portal_entry
 	{
 		short unknown0;
 		short portal_index;
@@ -221,6 +221,18 @@ __forceinline short machine_round(real value)
 PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed);
 PRIVATE void machine_release_rigid_bodies(long machine_index);
 
+// score 81 (was 81): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
+// Round 204: native portal entry 81 kept plain; default-first policy 100; both 106 (subthreshold); shared final update 81; long/unsigned-word policy 102/81; six-use flags 108; flags/default 117; chained clears 81.
+// Round 268: six-use destination flags receiver 81; reset after both clears 81;
+// receiver with six-use source bits 108; receiver with later reset 81; source bits
+// with later reset 108; all three 108; final default-first dispatch with receiver 81;
+// that plus later reset 81. Original portal, policy, flag stores and reads restored.
+// Round 270: native object-bit pointer/reference receivers 93/93; either with later
+// reset 93; either with default-first policy 91 (first +0x7f), with both 92. All
+// eight restored, including the named real bitfield type; initial carriers and merged clears remain.
+// Round 208: early policy declaration 81; descending configured cases 81; both 81;
+// comparison mapping with one short observation/direct fields 132/132; natural portal admission
+// and shared publication 150; with early policy 150; with direct configured comparisons 160.
 // @retail 0x115020
 void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine)
 {
@@ -272,10 +284,10 @@ void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine
 	case 1:
 		if (g_4686c4 >= 0 && g_4686c4 < scenario_machine->portal_count)
 		{
-			short const *portal_index = &scenario_machine->portals[g_4686c4].portal_index;
+			s_type_181dea::s_portal_entry const *portal = &scenario_machine->portals[g_4686c4];
 
-			machine->placement_index = *portal_index;
-			if (*portal_index != NONE)
+			machine->placement_index = portal->portal_index;
+			if (portal->portal_index != NONE)
 			{
 				machine->object_flags.unknown22 = true;
 
@@ -283,7 +295,7 @@ void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine
 
 				if (table)
 				{
-					short index = *portal_index;
+					short index = portal->portal_index;
 
 					if (index >= 0 && index < *(long *)(table + 0x30) &&
 						(*(byte *)(*(long *)(table + 0x34) + index * 0x1c) & 1))
@@ -558,11 +570,24 @@ bool __stdcall function_1152e0(long machine_index)
 }
 
 /* whether any cluster on either side of a machine's portals is set */
+// score 41 (was 41): Portal/global receiver carriers and portal-base spill remain; one-word frame agrees.
+// Found return 45; empty return 69; native count 58; native first 62; structure receiver 52;
+// reject unset portals 58; result first 53; admitted result 61; result/found 41 (kept, gain 17);
+// structure/found 60; result/structure 45; native receivers/found 56; shared bit tests 58;
+// structure/shared 52; count/shared 58; result/shared 53; object getter 58; getter/structure 52;
+// getter/shared 58; getter/structure/shared 52; count before false/found 45; count before false 58;
+// result/count/found 41; result/count/structure/found 56.
+// Entry index/end/both declarations 41/41/41; word/long result 61/60; bound fields at use 41; plain
+// ordinal 100, with long result 98. All restored.
+// Portal-table/reference-table/both scan bases 56/56/56; paired long/short cluster values
+// 55/73; both bases with long clusters 59; common completion 53, with long clusters 48. All restored.
+// Portal index long/short 41/41; paired bit predicates 41, unsigned masks 41, shared tests 55;
+// paired native/promoted range inputs 41/65, promoted inputs with both predicates 65. All restored.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {
-	s_machine *machine = MACHINE_GET(machine_index);
 	bool result = false;
+	s_machine *machine = MACHINE_GET(machine_index);
 
 	if (machine->portal_reference_count > 0)
 	{
@@ -577,7 +602,7 @@ bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bo
 				cluster_bits[portal->back_cluster_index >> 5] & (1 << (portal->back_cluster_index & 0x1f)))
 			{
 				*found = true;
-				break;
+				return true;
 			}
 		}
 		result = true;
@@ -604,27 +629,29 @@ PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed)
 			component->rigid_bodies[i].node_count > 0)
 		{
 			byte *physics = (byte *)matrices.node_indices;
-			short const *node_index =
+			short const *node_mapping =
 				(short const *)(*(byte **)(physics + 0x3c) + component->rigid_bodies[i].nodes[0] * 0x90);
 
 			if (keyframed)
 			{
 				havok_component_rigid_body_linear_velocity_set(i, component, g_4687a4);
 				havok_component_rigid_body_angular_velocity_set(i, component, g_4687a4);
+				long node_index = *node_mapping;
 				havok_component_rigid_body_matrix_set(i, component,
-					*node_index == NONE ? &matrices.root_matrix : &matrices.field_50[*node_index]);
+					node_index == NONE ? &matrices.root_matrix : &matrices.field_50[node_index]);
 			}
 			else
 			{
+				long node_index = *node_mapping;
 				function_1d0ee0(i, component,
-					*node_index == NONE ? &matrices.root_matrix : &matrices.field_50[*node_index]);
+					node_index == NONE ? &matrices.root_matrix : &matrices.field_50[node_index]);
 			}
 		}
 	}
-	if (keyframed)
-		machine->flags &= ~0x40;
-	else
+	if (!keyframed)
 		machine->flags |= 0x40;
+	else
+		machine->flags &= ~0x40;
 }
 
 /* stops a machine's keyframed Havok bodies once it stops moving */

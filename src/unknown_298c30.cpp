@@ -127,6 +127,9 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // (frame 0x6c); existing outlined normalizer at both 549. One-point forms rejected;
 // original helpers, calls and includes restored. Entry/XY homes and cleanup remain.
 // Sum/direction/evaluation point-name order, eight combinations 408.
+// Round 240: Shared normalizer factor-first, early uninitialized factor and role names,
+// all seven combinations 408; native epsilon-rejection return 408. Internal magnitude/
+// reciprocal lifetime forms do not recover entry/XY homes or cleanup; helper restored.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -341,6 +344,14 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // 803/798/858; center-first/reverse-first initial points 836/802; reverse-first with late forward 792;
 // center-first with late reverse 797. Original geometry production restored; frame 0x11c/0x114,
 // eager radius and trace/pivot/point homes remain.
+// Split-output planar frame with native trace/sample-point/state role-name groups,
+// their pairs/all and reversed trace declarations: 755 each (fast control 749). All restored.
+// Separate transform/planar pivot plus all sweep-rotation products, with complete
+// normalizer-square/distance-square/obstacle-rotation product phases: all eight 755
+// (3351 bytes, frame 0x114, first +0x14). Eager radius remains; all restored.
+// Unsigned-word edge pair/center/both/facing/edge-facing/center-facing/all results
+// 776/779/776/775/775/790/756; all four native-dword results 752 (fast control 749).
+// Frame/radius and trace/pivot homes remain; original result widths and body restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

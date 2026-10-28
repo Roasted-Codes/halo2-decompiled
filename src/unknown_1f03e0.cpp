@@ -463,6 +463,8 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // 144; only selected helpers with direct outputs 144 (989/977 bytes, plain confirmed and kept).
 // First-only/zero-only/other-only helper with direct outputs 178/178/175; averaging-only support
 // declaration 144; both average values directly published 221. Original average result join retained.
+// Round 202: Paired projection multiplication operand orders i/k/ik/j/ij/kj/all, then all with average-dot-first evaluation 144/144/144/144/144/144/144/144 fast.
+// Original executable source restored. Frame 0x14 agrees; request/count homes, initial cross and selected cross/projection scheduling remain.
 // Round 257: On the direct snapshot-safe projection graph, one conditional-input shared call
 // 228; signed-int count 144; read-only component 144; call/count, call/receiver, count/receiver
 // and all three 228/228/144/228; signed-int scan/selection ordinals 144. Original body restored.

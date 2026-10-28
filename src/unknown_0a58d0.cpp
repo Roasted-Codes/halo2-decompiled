@@ -319,6 +319,8 @@ bool function_a9820(long *block, long index)
 // score 11 (was 11): the database pointer takes ECX, so the active byte cannot fold into the scaled address.
 // Early definitions 31; direct dispatch 13; const record 11; record reference 11; separate index mask 11;
 // short type 22; definitions first 13; definition local 13; function-scope database 11; function-scope type 11.
+// Signed accepted-state range 12; state/all rejection guards 11/11; database reference/const
+// receivers 11/11; complete payload inputs 11; native active byte with nested/rejection guards 11/11.
 // @retail 0xa99f0
 void function_a99f0(long index, long *block)
 {

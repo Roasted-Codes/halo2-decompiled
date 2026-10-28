@@ -2724,6 +2724,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // change's k component first 99. No function of the linked file is on this function's direct call chain
 // in our image, and its frame-aligning callees align themselves, so the entry staging is not a callee's
 // stack-alignment request.
+// Round 195: Native final vector outputs linear/angular/both [241, 244, 314]; paired result before
+// receiver 314; native component-set output linear/angular/both [241, 230, 205]; paired early component
+// result 205. Original private getters restored; staged saves and fixed/zero homes remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

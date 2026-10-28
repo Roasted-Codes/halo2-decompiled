@@ -158,6 +158,8 @@ struct s_vehicle_header
 
 #define VEHICLE_GET(index) (((s_vehicle_header *)g_4e0300->data)[(index) & 0xffff].vehicle)
 #define VEHICLE_HEADER_GET(index) (&((s_vehicle_header *)g_4e0300->data)[(index) & 0xffff])
+#define VEHICLE_OVERLAY(vehicle, index) (*(c_type_709360 *)&(vehicle)->unknown404[(index) * 2])
+#define VEHICLE_OVERLAY41C(vehicle, index) (*(c_type_709360 *)(vehicle)->unknown41c[index])
 #define VEHICLE_DEFINITION_GET(vehicle) (g_4e3b44[(vehicle)->definition_index & 0xffff].bytes)
 
 /* a flags word read as bits */
@@ -316,6 +318,7 @@ void __stdcall vehicle_place(long vehicle_index, byte const *placement)
 void __stdcall function_ee9b0(long vehicle_index)
 {
 	s_vehicle *vehicle = VEHICLE_GET(vehicle_index);
+	c_type_709360 *overlay;
 	long i;
 
 	vehicle->unknown34a = 0;
@@ -352,7 +355,8 @@ void __stdcall function_ee9b0(long vehicle_index)
 	memset(vehicle->unknown398, 0, sizeof(vehicle->unknown398));
 	memset(vehicle->unknown390, 0, sizeof(vehicle->unknown390));
 	vehicle->unknown3ac = 0;
-	vehicle->flags349 |= 1;
+	word *flags = (word *)&vehicle->flags348;
+	*flags |= FLAG(8);
 	function_b9ef0(vehicle_index, &vehicle->unknown3d0);
 	vehicle->unknown3b8 = NONE;
 	vehicle->unknown3bc = NONE;
@@ -360,12 +364,24 @@ void __stdcall function_ee9b0(long vehicle_index)
 	vehicle->unknown3c0 = NONE;
 	vehicle->unknown3cc = NONE;
 	vehicle->unknown400 = NONE;
-	for (i = 0; i < 12; i++)
-		vehicle->unknown404[i] = NONE;
+	VEHICLE_OVERLAY(vehicle, 0).graph_index = NONE;
+	VEHICLE_OVERLAY(vehicle, 0).index = NONE;
+	VEHICLE_OVERLAY(vehicle, 1).graph_index = NONE;
+	VEHICLE_OVERLAY(vehicle, 1).index = NONE;
+	VEHICLE_OVERLAY(vehicle, 2).graph_index = NONE;
+	VEHICLE_OVERLAY(vehicle, 2).index = NONE;
+	VEHICLE_OVERLAY(vehicle, 3).graph_index = NONE;
+	VEHICLE_OVERLAY(vehicle, 3).index = NONE;
+	VEHICLE_OVERLAY(vehicle, 4).graph_index = NONE;
+	VEHICLE_OVERLAY(vehicle, 4).index = NONE;
+	VEHICLE_OVERLAY(vehicle, 5).graph_index = NONE;
+	VEHICLE_OVERLAY(vehicle, 5).index = NONE;
+	overlay = &VEHICLE_OVERLAY41C(vehicle, 0);
 	for (i = 0; i < 3; i++)
 	{
-		vehicle->unknown41c[i][0] = NONE;
-		vehicle->unknown41c[i][1] = NONE;
+		overlay->graph_index = NONE;
+		overlay->index = NONE;
+		overlay++;
 	}
 }
 
@@ -1344,8 +1360,6 @@ void __stdcall function_f06e0(long vehicle_index, s_graph_tag *graph, c_animatio
 
 bool function_1dceb0(s_graph_iterator3c *iterator, s_graph_tag *graph);
 
-#define VEHICLE_OVERLAY(vehicle, index) (*(c_type_709360 *)&(vehicle)->unknown404[(index) * 2])
-#define VEHICLE_OVERLAY41C(vehicle, index) (*(c_type_709360 *)(vehicle)->unknown41c[index])
 
 /* a speed as a fraction of the definition's maximum forward or reverse
    speed, 0.5 at rest */
@@ -1791,13 +1805,20 @@ real function_f14f0(short gear, long vehicle_index)
 }
 
 /* a torque curve's torque at an engine angular velocity */
+// score 32 (was 77): in the last block retail gives xmm0 to the slope/fraction chain and xmm1 to
+// the shared zero (and the clamp result); ours the other way round, so the fabs/clamp registers
+// swap and the fraction is copied to xmm0 at the return. Tried (on the definition's maximum read at
+// each use, which took 77 to 32): `torque * fraction` 32; early `return 0.0f` per failed test 32;
+// the zero return inside the else 32, in each arm 32; `torque`/`fraction` declared at the top 32;
+// the fraction divided in a second statement 32; the intercept written into the fraction 85;
+// slope/intercept declared first 32; the clamp in a named local 32; the parameters reordered 32
+// (either order); a single `result` 81; peak operands swapped 77 (before the field read).
 // @retail 0xf15d0
 real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, real angular_velocity)
 {
 	byte *definition = VEHICLE_DEFINITION_GET(VEHICLE_GET(vehicle_index));
 	real peak_scale = 0.001f > curve->peak_torque_scale ? 0.001f : curve->peak_torque_scale;
 	real peak = VEHICLE_MAX_ANGULAR_VELOCITY(definition) * peak_scale;
-	real maximum;
 
 	if (peak > angular_velocity)
 	{
@@ -1807,16 +1828,17 @@ real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, rea
 		}
 		return 0.0f;
 	}
-	maximum = VEHICLE_MAX_ANGULAR_VELOCITY(definition);
-	if (angular_velocity >= maximum)
+	if (angular_velocity >= VEHICLE_MAX_ANGULAR_VELOCITY(definition))
 	{
-		real slope = (curve->torque_at_2x_max_angular_velocity - curve->torque_at_max_angular_velocity) / maximum;
+		real slope = (curve->torque_at_2x_max_angular_velocity - curve->torque_at_max_angular_velocity) /
+			VEHICLE_MAX_ANGULAR_VELOCITY(definition);
 
-		return curve->torque_at_max_angular_velocity - maximum * slope + slope * angular_velocity;
+		return curve->torque_at_max_angular_velocity - VEHICLE_MAX_ANGULAR_VELOCITY(definition) * slope +
+			slope * angular_velocity;
 	}
 	else
 	{
-		real range = maximum - peak;
+		real range = VEHICLE_MAX_ANGULAR_VELOCITY(definition) - peak;
 
 		if ((range >= 0.0f ? range : 0.0f - range) > 0.0001f)
 		{
@@ -2954,13 +2976,6 @@ real function_f4250(long vehicle_index)
 }
 
 /* whether the vehicle is flipping */
-// score 8 (was 33): pointer/flip-kind registers, the shared outer kind test and final false lifetime differ;
-// reversed comparison 33; duration local before/after elapsed 33/33; direct returns 31;
-// result first 36; direct comparison assignment 31; combined/nested conditions 33/33;
-// force-inline duration helper 33; product operands swapped 33; const vehicle 33; byte result 30.
-// retail reads the tick count into eax (clobbering the false
-// result, which it zeroes again on the false path) and loads the time globals
-// after the flip type test; ours uses edx and keeps al. Tried: direct returns 30.
 // @retail 0xf42f0
 bool function_f42f0(long vehicle_index)
 {
@@ -2971,10 +2986,7 @@ bool function_f42f0(long vehicle_index)
 	{
 		real elapsed = vehicle->unknown351 * g_510c54->rate;
 
-		if (vehicle_flip_duration(vehicle_index) > elapsed)
-		{
-			result = true;
-		}
+		result = vehicle_flip_duration(vehicle_index) > elapsed;
 	}
 	return result;
 }
@@ -3263,6 +3275,13 @@ long __stdcall effect_new_from_parameters(s_effect_parameters *parameters);
 /* a hovering vehicle's wash: from each of its engine markers, a ray down a
    cone around the marker's forward, and the definition's effect where it
    hits, fading with the distance */
+// score 53 (was 53): from the marker count sum on, retail's scratch registers run one step
+// ahead of ours (retail `movsx ecx, ax; add edi, ecx`, ours `movsx eax, ax; add eax, edi`; in the
+// loop retail dx/eax/ecx where ours use cx/edx/eax), plus the 0x146320 set-up pair (its declared
+// order, BLOCKED-BY 0x146320: seed declared first fixes the pair only, 51). Tried: the sum's
+// operands swapped 53; `count += second` 53; a short local for the second count 53; `i` declared
+// first 53; declarations without initialisers 53; `long i` 117; the loop bound written as the sum
+// of the two counts 52; a short count 128; the speed choice as an if/else 53, into a named local 53.
 // @retail 0xf6060
 void __stdcall function_f6060(long vehicle_index)
 {
@@ -3604,6 +3623,12 @@ PRIVATE __forceinline real vehicle_larger(real a, real b)
 /* one of the vehicle definition's limits: its forward and reverse speeds
    (0, 1, the larger 2), its left and right turn speeds (3, 4, 5) and its
    steering angles in degrees (6, 7, 8) */
+// score 109 (was 109): retail returns in xmm0 (`fstp [esp + 8]; movss xmm0, [esp + 8]` in each case),
+// which only one `return result;` gives; it then cross-jumps case 6 into case 7's `fmul` and
+// keeps cases 2 and 5 as their own `jbe` diamonds. Tried: single exit 123 (xmm0 as retail, but
+// cases 2 and 5 jump into case 8 and 6/7 stay apart); returns in cases 6/7 161 (x87 again);
+// the larger as if/else 119; a radians inline for 6/7 123; case 2 with block locals 123;
+// double fabs in 6/7 123; cases 6/7 sharing one body 138; a shared angle local for 6/7 123.
 // @retail 0xf78e0
 real __stdcall function_f78e0(long vehicle_index, long limit)
 {

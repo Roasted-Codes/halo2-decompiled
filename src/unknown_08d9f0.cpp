@@ -203,6 +203,9 @@ void function_8dd70(void);
 // unused, so the address-take was folded away in retail. Entry flag set by if/else (true first or false
 // first), by a ternary, or as `!= true` 230/230/230/229; an early return in place of the wrapping
 // block 230.
+// Round 197: Definite short observer/list/both else 244/226/239; canonical link with observer/list/both else 240/229/237; both else with bool/byte link 232/232. All restored.
+// Uninitialized function-scope link/observer/session/link-observer/link-session/observer-session/all
+// short declarations and complete stage-role names 230 each; every assignment kept at its stage.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

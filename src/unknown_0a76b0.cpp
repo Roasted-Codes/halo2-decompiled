@@ -14,7 +14,9 @@ The handlers of the unit request table at 0x467564
 #include "unknown_1cafc0.h"
 #include "unknown_1dacb0.h"
 #include "unit_requests.h"
+#include "matrix_transform.h"
 #include "unknown_1cec30.h"
+#include "bit_vector.h"
 #include <math.h>
 #include <string.h>
 
@@ -551,26 +553,17 @@ bool __stdcall function_e7280(long unit_index, s_unit_request *request)
 	return result;
 }
 
-// score 25 (was 44): about 14 of the count is the jump table read as code. Retail
-// keeps the data pointer and the hand index in edx and the weapon in esi to the
-// call; ours swaps them (esi, then edx). Tried: the hand index declared first 44;
-// the hand index renamed 25; a ternary for it 43; the weapon default before the
-// result 26; a 600 s permuter run, best 23 (volatile only).
 // @retail 0xe7320
 bool __stdcall function_e7320(long unit_index, long type)
 {
 	bool result = false;
-	long weapon_index = NONE;
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-	short index;
+	long weapon_index;
 	long slot_index;
 
 	if (type > 1)
-		index = unit->current_secondary_weapon_index;
+		weapon_index = function_cbd50(unit_index, UNIT_ACTION_UNIT_GET(unit_index)->current_secondary_weapon_index);
 	else
-		index = unit->current_weapon_index;
-	if (index != NONE)
-		weapon_index = unit->weapon_object_indices[index];
+		weapon_index = function_cbd50(unit_index, UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index);
 
 	switch (type)
 	{
@@ -1422,13 +1415,16 @@ bool __stdcall function_e8b20(long unit_index, long type)
 
 /* a weapon switch interrupted: the old weapon is put away at once and the
    new one taken out */
+// score 11 (was 29): only the entry block's order differs (retail loads the global and the
+// actions pointer before `cmp ecx, 8; sete bl`). Tried: unit_action_active() 95; primary
+// declared first 11; primary inside the block 82; a unit local 90; an early-return guard 11.
 // @retail 0xe8c10
 void __stdcall unit_action_weapon_switch_interrupted(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
 	bool primary = type == 8;
 
-	if (UNIT_ACTION_ACTIVE(actions, type))
+	if (bit_vector_test(actions->active, type))
 	{
 		function_e8510(unit_index, true, false, primary);
 		function_e8720(unit_index, 0x7000101, false, false, primary);
@@ -3165,9 +3161,7 @@ PRIVATE __forceinline void unit_action_seat_facing_get(s_unit_action_unit *unit,
 		transform4x3f const *matrix = (transform4x3f const *)((byte *)parent +
 			*(short *)((byte *)parent + 0x116) + *((char *)unit + 0x18) * 0x34);
 
-		facing->i = matrix->up.i * unit->forward.k + matrix->left.i * unit->forward.j + matrix->forward.i * unit->forward.i;
-		facing->j = matrix->up.j * unit->forward.k + matrix->left.j * unit->forward.j + matrix->forward.j * unit->forward.i;
-		facing->k = matrix->up.k * unit->forward.k + matrix->left.k * unit->forward.j + matrix->forward.k * unit->forward.i;
+		matrix_transform_vector(matrix, &unit->forward, facing);
 	}
 }
 
@@ -3306,8 +3300,11 @@ bool __stdcall function_ebf20(long unit_index, s_unit_request *request)
 
 	function_b9dd0(unit_index, &point);
 	unit_action_seat_facing_get(UNIT_ACTION_UNIT_GET(unit_index), &facing);
-	return function_ee090(unit_index, *(long *)((byte *)request + 8), *(long *)((byte *)request + 4), 0x5000049,
-		&point, &facing);
+
+	long state_name = *(long *)((byte *)request + 8);
+	long mode = *(long *)((byte *)request + 4);
+
+	return function_ee090(unit_index, state_name, mode, 0x5000049, &point, &facing);
 }
 
 /* sits a unit down from its pose (type 39) */
@@ -4369,7 +4366,10 @@ void function_edfa0(long unit_index, point2f const *facing)
 // score 13 (was 24): retail stores x before it loads y (`movss xmm2, y; mulss xmm2, xmm0`); ours
 // multiplies y into the inverse's register and stores both after. Tried: the products as `*=` or
 // in any operand order 13; normalize2d_fast 13; `else length = 0.0f;` before the test, either arm
-// first 13; a vector2f local 13; the normalisation as a helper inlined from another file 13.
+// first 13; a vector2f local 13; the normalisation as a helper inlined from another file 13; the
+// local filled by one point2f copy 19 (x87 squares swap); `= { x, y }` 13; y copied first 21;
+// `inverse` declared at the top 13; each coordinate divided by the length 13; the matched
+// 0x2c1d90 shape (pointer helper, `else magnitude = 0`, test on its result) 13.
 // @retail 0xedff0
 void function_edff0(long unit_index)
 {

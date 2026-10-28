@@ -1121,6 +1121,16 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
 // Round 357: Output defaults before class guard 979; traversal-only defaults before
 // guard 1007; both 1005; selector-only setup before result 832; selector/output setup 833.
+// Entry-owned optional mode/class/type output pointers, all three pairs and all
+// three jointly 828 each; immutable joint pointers 828. All aliases restored.
+// Loop-lived native candidate reset with guaranteed-mode default omitted, condition-scoped
+// lookup, shortened traversal phase, their combinations and traversal-first defaults: 932 each.
+// Return object after the class guard, with native iterator/post-lookup candidate/guaranteed
+// mode-write combinations: 988/1001/999/1001/989/1000/999/1001 (2825 bytes, first +0).
+// Original constructor timing, iterator, candidate, output order and resource requests restored.
+// Partial traversal-zero subsets before requested keys (step/mode-entry/both/class-entry/
+// step-class/both-entry) 828/827/828/828/828/827; interleaved key/zero stores 828/828
+// (fast control 828). Small gains rejected; original initialization and body restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1206,6 +1216,18 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // Pre-lookup native default conditional 951; class key first 828; type key first 978; index-first
 // native transfers 846; type/class/mode output defaults 828; sorted lookup noinline 828.
 // Result/output/candidate homes and later zero carrier remain; original body/declaration restored.
+// Entry-owned optional mode/class/type output pointers, all three pairs and all
+// three jointly 828 each; immutable joint pointers 828. All aliases restored.
+// Optional-output formal permutations 828/824/824/829/829; native iterator on three formal-home contexts 826/822/827.
+// Closest six-point gain 822 remains above 30 and fails the eight-point floor; original formals and iterator restored.
+// Round 225: ordered original/resolved request tuples and native records, mutable/const
+// with long/dword ordinals, 2174 each (1657/2825 bytes). All eight table forms restored;
+// preserve the original two resource calls, native iterator and identifier workspaces.
+// Round 243: Immutable complete candidate, readonly named source, both, readonly iterator entry,
+// candidate/entry, both readonly sources, all three and one final result exit:
+// 978/828/978/828/978/828/978/1011. Complete original body and declarations restored.
+// Round 228: flat class rejection to the final return, with member/native iterator
+// and original/early iterator/output-default lifetimes 1011/1009/1016/1016/1011/1011/1016/1016. All restored.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)

@@ -78,6 +78,9 @@ void havok_entity_component_index_set(hkEntity *entity, s_havok_property_word co
 // earlier/later local names and declaration before the descriptor 71 each; copy-initialised,
 // member-assigned or const local 71/71/71; the local declared at entry 124, after the global
 // store 71.
+// earlier/later local names and declaration before the descriptor 71 each.
+// Round 218: Property/descriptor/final-owner/shape-owner inline and noinline declarations:
+// 71/71/71/71/71/71/71/71 (fast control 71). Original restored.
 // @retail 0x1c3b70
 void function_1c3b70()
 {
