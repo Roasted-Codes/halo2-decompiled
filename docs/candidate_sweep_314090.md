@@ -34,8 +34,11 @@ executable. No SDK or retail executable material is contributed.
 
 The full-image checker confirms 31 new matches, covering 1,418 retail bytes,
 with no lost matches. All 26 address fields in the new matched functions are
-verified; none differs or remains unverified. Game matches remain 9,895;
-Havok matches increase from 1,181 to 1,212 (11,110 total matches in scope).
+verified; none differs or remains unverified. Initial validation on `d377cd5e`
+retained 9,895 game matches. Upstream then incorporated the previous batch's
+two matches; validation was repeated against `5156911ab`, retaining all 9,897
+game matches. Havok matches increase from 1,181 to 1,212 (11,112 total matches
+in scope on the updated base).
 
 | Family | Matched retail addresses |
 | --- | --- |
