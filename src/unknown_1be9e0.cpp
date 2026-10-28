@@ -123,6 +123,8 @@ static __forceinline long real_to_long(real value);
 // score 88 (was 88): retail loads the pool pointer first and keeps the record
 // count in ECX,
 // ours reads a different global before the pool.
+// Round 371: typed slot payload and short counters 88; payload/single exit 88;
+// payload/entry counters 111, with single exit 111. Opening body restored.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {
@@ -188,32 +190,26 @@ short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 	return g_46fbe4;
 }
 
-// score 70 (was 70): the record count is loaded into EDX before the index is
-// masked here and
-// into EDI after it in retail, so the two blocks are out of step.
 // @retail 0x1bee40
 short __stdcall function_1bee40(long actor_index, long leader_index, long a, long b)
 {
 	s_actor_view *actor = actor_get(actor_index);
 	long count = 0;
 
-	if (actor->unknown07c == NONE)
-		return 0;
-
-	long index = element_502420_get(actor->unknown07c)->first_actor_index;
-
-	while (index != NONE)
+	if (actor->unknown07c != NONE)
 	{
-		s_actor_view *other = actor_get(index);
-		long other_index = index;
-		real distance;
-		short ticks;
-
-		index = other->next_index;
-		if (other != actor && function_1be9e0(actor_index, other_index, &distance, &ticks) &&
-			function_26eae0(leader_index, other_index, 3, 1.0f / (distance * 10.0f + (real)ticks)))
+		s_element_502420_member_iterator iterator;
+		iterator.next_index = element_502420_get(actor->unknown07c)->first_actor_index;
+		s_actor_view *other;
+		while ((other = element_502420_member_next(&iterator)) != NULL)
 		{
-			count++;
+			real distance;
+			short ticks;
+			if (other != actor && function_1be9e0(actor_index, iterator.index, &distance, &ticks) &&
+				function_26eae0(leader_index, iterator.index, 3, 1.0f / (distance * 10.0f + (real)ticks)))
+			{
+				count++;
+			}
 		}
 	}
 	return (short)count;
