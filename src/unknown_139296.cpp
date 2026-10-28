@@ -438,6 +438,10 @@ bool function_22acb4(long player_index);
 // Original scalar masks restored; extra second-mask spill and persistent constants remain.
 // Round 210: First-mask high-byte orders 2134/1324/1243/4123/4321/3412/2341/3142
 // all 165; original producers restored, extra second-mask spill remains.
+// Round 205: Second/third/fourth domains short-word-word, word-long-word, short-long-word,
+// word-word-long, short-word-long, word-long-long, short-long-long, short-short-long
+// 202/270/270/295/300/285/297/297. On short-long-word, first enum reordered 296;
+// plus independent second 287; plus third 123 292; plus native fourth 269. All restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

@@ -261,7 +261,7 @@ void function_264940(long actor_index, long prop_ref_index)
 	}
 }
 
-// score 353 (was 358): the frame is still 0x24 against retail's 0x20, ours keeps the
+// score 353 (was 353): the frame is still 0x24 against retail's 0x20, ours keeps the
 // object in EBP where retail keeps it in EDI, and the prop-index field is still read
 // before the object-index field. The body is 1540 bytes against retail's 1538.
 // Frame 0x24 versus 0x20; object/view allocation and cached object index differ.
@@ -289,6 +289,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 358: Shared expiry/buildup/both tick conversions 358/358/358; both with state word/separate
 // current state/both state forms 358/357/357; unit predicate 447; disjoint vectors 358. One-count
 // gains rejected; body restored.
+// Round 205: Complete actor/reference/prop getter receiver masks 1/2/3/4/5/6/7
+// 353/586/586/499/499/778/778; all with current-time observations 748. Original
+// object snapshot and complete body restored; frame and object/view homes remain.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -473,6 +476,8 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // with success at consumption 434/430/438/434. Byte states recover frame 0xa0 and 1616 bytes.
 // Complementary run-wide availability bool/byte/short/long 424/424/422/443;
 // per-node skip/defer/both 429/424/433; all three complements 436 at retail length. All restored.
+// Round 205: Shared planar difference with native state, early planar output and both
+// reused progress-result combinations 424 each in eight forms (control 420); all restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -835,6 +840,8 @@ real function_296600(long actor_index, long prop_ref_index);
 // Round 358: Complete different-target bool/byte/short/long carriers 376/341/376/375; before
 // suppression 376/341/364/366 (preview 341). Exact-length 364 regresses; original current predicate
 // and body restored.
+// Round 205: Special copied-result byte/char/short/long 372 each; with complete ancestry
+// producer scope 372 each (fast control 372, full 331). Original body restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
