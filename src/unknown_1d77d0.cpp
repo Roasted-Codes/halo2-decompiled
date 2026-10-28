@@ -1,3 +1,4 @@
+#include "constraint_helpers_314090.h"
 #include "unknown_11c920.h"
 #include "unknown_1cec30.h"
 #include "globals.h"
@@ -168,24 +169,6 @@ struct c_component_joint_snapshot_2
 {
 	__m128 data[9];
 	c_component_joint_snapshot_2();
-};
-
-struct c_component_joint_snapshot_3
-{
-	__m128 data[4];
-	c_component_joint_snapshot_3();
-};
-
-struct c_component_joint_snapshot_4
-{
-	__m128 data[3];
-	c_component_joint_snapshot_4();
-};
-
-struct c_component_joint_snapshot_5
-{
-	__m128 data[10];
-	c_component_joint_snapshot_5();
 };
 
 /* the setters that fill a snapshot from the two bodies and their frames */
@@ -367,17 +350,17 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 			c_component_joint_snapshot_3 info;
 			((s_1ce8d0 *)&info)->function_1ce8d0(local_560343, rigid_body_b,
 				&frame_a.m_translation.m_quad, &frame_b.m_translation.m_quad);
-			info.data[3].m128_f32[0] = joint3->unknown78;
+			info.length = joint3->unknown78;
 			constraint = (s_havok_contact_entities *)new c_component_joint_3(&info);
 		}
 		break;
 	case 4:
 		{
 			c_component_joint_snapshot_4 info;
-			((hkRigidBody **)&info.data[0])[0] = local_560343;
-			((hkRigidBody **)&info.data[0])[1] = rigid_body_b;
-			info.data[1] = frame_a.m_translation.m_quad;
-			info.data[2] = frame_b.m_translation.m_quad;
+			info.body_a = local_560343;
+			info.body_b = rigid_body_b;
+			info.pivot_a = frame_a.m_translation.m_quad;
+			info.pivot_b = frame_b.m_translation.m_quad;
 			constraint = (s_havok_contact_entities *)new c_component_joint_4(&info);
 		}
 		break;
@@ -389,9 +372,9 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 				&frame_a.m_translation.m_quad, &frame_b.m_translation.m_quad,
 				&frame_a.m_rotation.m_col2.m_quad, &frame_b.m_rotation.m_col2.m_quad,
 				&frame_a.m_rotation.m_col1.m_quad, &frame_b.m_rotation.m_col1.m_quad);
-			info.data[9].m128_f32[1] = joint5->unknown7c;
-			info.data[9].m128_f32[0] = joint5->unknown78;
-			info.data[9].m128_f32[2] = joint5->unknown80;
+			info.maximum = joint5->unknown7c;
+			info.minimum = joint5->unknown78;
+			info.friction = joint5->unknown80;
 			constraint = (s_havok_contact_entities *)new c_component_joint_5(&info);
 		}
 		break;
