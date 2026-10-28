@@ -2070,6 +2070,9 @@ static inline void approach_126660(real *value, real delta, real lower, real upp
 /* moves the sound system's two environments toward the two requested:
    each request takes the slot already holding it or a faded-out one and
    fades it in over its transition time; slots no request takes fade out */
+// score 17 (was 17): retail adds the clamped unknown18 step through a copy
+// register and adds the clamped unknown14 step in place; ours does the
+// opposite, so the two sites trade xmm1 and xmm2.
 // @retail 0x126660
 void sound_environments_update(s_sound_environment const *requests)
 {

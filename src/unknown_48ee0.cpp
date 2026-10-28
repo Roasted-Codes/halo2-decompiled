@@ -84,6 +84,13 @@ extern real g_4c9798[36];
 // straight into the output 344; depth fields read at each use 253; 0.75 first in the border 252.
 // Retail reloads the size after each 0x48e70 call (ours keeps it in xmm0: LTCG knows the callee
 // leaves xmm alone; BLOCKED-BY 0x48e70, in a file this lane does not edit).
+// ternary 309. Round 103: retail stores 0.0 to a frame slot at entry and loads it as the border's
+// else value: `real border = 0.0f;` at the top (or after the distance/offset) with `if (mode > 0)
+// border = ...` reproduces those entry stores and holds matrix in one register as retail does, but
+// 318 (1489; aligned 223 -> 214), with the origin reference at entry 318, declared after the mode
+// 314. Ours keeps size and aspect in xmm registers across the 0x48e70
+// calls where retail reloads them; the tag test's constant 1 (ecx, reused for mode = 1) puts the state
+// record in esi where retail tests with movsx/dec and passes it in ecx.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
