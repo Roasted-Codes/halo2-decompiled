@@ -160,7 +160,7 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 309 (was 309): Frame 0xb0 versus 0xa4, receiver homes and collision-point scheduling differ.
+// score 199 (was 309): Frame 0xb0 versus 0xa4, receiver homes and collision-point scheduling differ.
 // Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
 // 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
 // initialization alone/with all three narrowed lifetimes 309/310. Original body restored.
