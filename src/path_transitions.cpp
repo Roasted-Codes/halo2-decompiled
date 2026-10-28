@@ -59,15 +59,6 @@ struct s_transition_collision
     byte unknown4c[0x10];
 };
 
-// score 9 (was 15): only the two calls' setup differs, BLOCKED-BY 0xfa1a0: ours passes the time-scale pointer
-// in EDX (`xor edx, edx`) where retail pushes it (one more push, ret 0x2c).
-// Existing speed getter 126; direct globals 15; reused alternate rise 32; entry result/shared exit 108;
-// early rise 38; common widened index 82; direction at entry 32; entry result plus alternate rise 108.
-// Round 144: the drop tests and the second call in retail's direction (start above end; the alternate
-// pair passed start first, as 0x272020 passes start on the stack and end in ECX) 15 -> 9 (kept: it
-// fixes the values, not just the bytes); both calls' ends swapped instead 33. On 0xfa1a0 (all
-// reverted, the pointer stays in EDX): scale read once 262, delta.k with i/j 247, gravity operands
-// swapped 266.
 // @retail 0x26f150
 bool function_26f150(short type, point3f const *start, point3f const *end,
     point3f const *alternate_start, point3f const *alternate_end)
