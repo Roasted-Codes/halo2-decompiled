@@ -233,6 +233,9 @@ union s_185be7
 // 934, on every clamp but the magnitude one 971; the selected input byte as a long (retail's movzx edx /
 // test edx / setg / jle) 790, aligned 289 -> 281, the repeated test still not threaded; long input plus
 // early copy 789. Retail also reads the two selector bytes as one dword (EBX, then BL/BH).
+// Round 209: Caller-local inline declarations for magnitude/curve/response, all seven nonempty subsets, and
+// all three with separate noinline declarations: 780 each. All restored; frame/state/output agree, but
+// control-root reload, NONE/settings/zero homes and repeated flag tests remain.
 // Round 241: Shared clamp formal orders (0,2,1)/(1,0,2)/(1,2,0)/(2,0,1)/(2,1,0): 780/780/780/780/780;
 // independent result with orders (0,2,1)/(1,0,2)/(2,0,1): 926/926/926. Original helper, calls and body
 // restored.

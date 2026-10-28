@@ -207,6 +207,11 @@ short __stdcall function_1c04f0(long actor_index, s_slot *slot, bool active)
 // captures 234/161; native slot-data 143; target/request/point/probe names on full output 140.
 // Full output with shared scaled target, whole-point initialization or shared distance
 // difference, alone and together with native slot-data: eight forms 140 each; restored.
+// frame 0xa0 versus 0xb0; target copy and goal registers differ.
+// Movement helper already inlines; the collision output still reserves 0x4c, not 0x5c.
+// Round 210: Complete shared collision extent with native slot-data access 140; destination, request,
+// paired destination/request, hit/probe, both point names, target/request/probe names and
+// all workspace names 140 each. The three-point frame correction is restored.
 // @retail 0x1c0670
 bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 {

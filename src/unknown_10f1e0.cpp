@@ -1649,11 +1649,12 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 }
 
 // score 805 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// frame 0xcc versus 0xd4 and first angle expansion remain.
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
 // computes the centred test once with x87 fabs before the blend block, copies the default angles as a
-// struct and duplicates the seat-weight call setup in both arms. 0x1c6470's convention (graph in ECX in
-// retail) still differs: BLOCKED-BY 0x1c6470 at its four call sites.
+// struct and duplicates the seat-weight call setup in both arms. 0x1c6470 takes graph in ECX in
+// both builds; its save placement and store scheduling still differ at the four calls.
 // Tried: depth zero 1428, depth one 833, projection inline 833, bounds inline 1055, native centered 834,
 // separate secondary activity 833; two inline levels 833, sequential channel construction 833, activity
 // byte 833, short overlay counter 833, channels before curve weights 833; seat-weight branches 874,
@@ -1697,6 +1698,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Complementary activity across both aim stages, bool/byte/signed-byte/short at the
 // original declaration 850/850/850/824; constant entry initialization 850/850/850/836.
 // Original activity, input snapshots, helper boundaries and all smoothing values restored.
+// Round 210: Animation-ID fields at every use: overlay/primary pair/secondary 867/863/833;
+// overlay-primary/overlay-secondary/primary-secondary/all 879/857/856/874;
+// graph at every use 873. Original ID ownership and all executable source restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2678,6 +2682,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // frame 0x3c versus 0x38; the escaped action short has its own
 // aligned slot. The action and seat queries match; returned action-pointer comparison
 // and channel-copy/play argument scheduling still differ.
+// frame 0x3c versus 0x38; action/decision packing and copy schedule differ.
+// Retail packs the address-taken action short at +2 beside the two flag bytes;
+// ours gives it a 4-byte slot. The action query now matches and returns its output pointer.
 // Tried: native channel workspace 139; copy return to play 152; accumulated channel failure 177;
 // unsigned word result 173; short table index 188; dword channel backing 152; direct copy chain 152;
 // mode at use 196 (frame 56); repeated table index 152; mode after animation 157; direct action
@@ -2698,6 +2705,10 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Complementary success/overlay decisions, individually and together with native widths
 // and constant entry initialization: 207/198/207/207/207/207/215/207; restored.
 // Unchanged reduced control 198/684 differs from full 155/668; original code retained.
+// Round 210: State/control/tag reads at every use 196/202/222; state-control/state-tag/control-tag/all
+// 205/216/202/217; unit at every use 188, plain 195. Reduced unchanged control 198;
+// all restored against full baseline 155. Action query now matches; its return-use forms
+// previously grew the frame and remain excluded.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
