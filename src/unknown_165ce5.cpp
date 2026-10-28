@@ -1381,6 +1381,7 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 
 // score 241 (was 241): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal differ.
 // Earlier 241 from 241: frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
+// frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // restoring them at the loop exit), the two shared spill slots 0x18/0x1c swapped, and the look rates'
 // shared reciprocal (retail divides twice and reloads the time global) differ.
 // Round 139: the look rates as one s_view_angles local give retail's 0x2c/0x28 homes 237 (a local-
@@ -1453,6 +1454,10 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 231: Aiming/look/paired field references 574/248/572; animation reference 400; aiming-
 // animation/look-animation/all receiver references 550/405/548; all plus user-flag field 421.
 // Original body restored.
+// Round 262 (fast control 243, full 241): complementary scoped bool/byte/short/long
+// 242/242/447/457; both zoom/scoped complements 234/234/440/450. Dual bool gives 232 plain;
+// direct short-circuit scope complement also 234 fast / 232 plain, kept. Frame 0x28,
+// unit/mode homes and shared look reciprocal remain; every smoothing input is unchanged.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1537,8 +1542,8 @@ void __stdcall function_166d75(long user_index)
 				animation_event_callback callback = field_x11c898 ? (animation_event_callback)first_person_weapon_sound_event_left :
 					(animation_event_callback)first_person_weapon_sound_event_right;
 				real zoom;
-				bool zoomed;
-				bool scoped;
+				bool no_zoom;
+				bool no_scope;
 				c_animation_channel *channel;
 
 				if (weapon->animation.update(callback, user_index, weapon->orientation_count,
@@ -1548,28 +1553,28 @@ void __stdcall function_166d75(long user_index)
 					first_person_weapon_animation_finished(user_index, field_x11c898);
 				}
 				zoom = magnitude3d(&unit->aiming_velocity);
-				zoomed = zoom > 0.1f;
-				scoped = zoomed && function_c8a10(user->unit_index);
+				no_zoom = !(zoom > 0.1f);
+				no_scope = no_zoom || !function_c8a10(user->unit_index);
 				if (function_d03b0(user->unit_index))
 				{
-					zoomed = false;
-					scoped = false;
+					no_zoom = true;
+					no_scope = true;
 				}
-				if (scoped)
+				if (!no_scope)
 				{
 					c_type_709360 animation_id = weapon->animation.overlay_get(0x60000d8);
 
 					if (animation_id.index == NONE)
 					{
-						scoped = false;
+						no_scope = true;
 					}
 				}
 				channel = &weapon->channel98;
 				if (function_0b6760((s_index_pair *)channel))
 				{
-					if (zoomed)
+					if (!no_zoom)
 					{
-						if (!scoped)
+						if (no_scope)
 						{
 							channel->rate = PIN(zoom, 0.5f, 1.0f);
 						}
@@ -1578,17 +1583,17 @@ void __stdcall function_166d75(long user_index)
 							channel->rate = 1.0f;
 						}
 					}
-					else if (scoped)
+					else if (!no_scope)
 					{
 						channel->rate = 1.0f;
 					}
 					weapon->animation.channel_update(channel, NULL, 0);
-					if (!zoomed && !scoped ||
-						scoped && channel->unknown08 != 0x60000d8 ||
-						zoomed && !scoped && channel->unknown08 == 0x60000d8)
+					if (no_zoom && no_scope ||
+						!no_scope && channel->unknown08 != 0x60000d8 ||
+						!no_zoom && no_scope && channel->unknown08 == 0x60000d8)
 					{
 						channel->clear();
-						if (!zoomed && !scoped)
+						if (no_zoom && no_scope)
 						{
 							if (weapon->animation.animation_name != 0x400000c)
 							{
@@ -1598,12 +1603,12 @@ void __stdcall function_166d75(long user_index)
 						}
 					}
 				}
-				if ((zoomed || scoped) && !function_0b6760((s_index_pair *)channel))
+				if ((!no_zoom || !no_scope) && !function_0b6760((s_index_pair *)channel))
 				{
 					long set;
 					dword channel_flags;
 
-					if (scoped)
+					if (!no_scope)
 					{
 						channel_flags = 0x3f;
 						set = 0x60000d8;

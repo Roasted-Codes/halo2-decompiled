@@ -219,6 +219,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // as a point assignment 204; direction as an initializer 223; offset from the first vertex in place
 // of origin 259; origin as a reference to the first vertex 275; ray_start renamed 192 (same code:
 // names do not move these slots).
+// Round 262: entry polygon/projected/hit-point storage, all seven combinations, 192 each;
+// all three with entry fraction storage 192. All computations stayed at their original uses;
+// original declarations restored. Frame 0x84 and origin/edge spills remain.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

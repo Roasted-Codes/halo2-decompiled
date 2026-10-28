@@ -215,12 +215,14 @@ void function_155ed0(void)
 	}
 }
 
-// score 9 (was 53): in the padding path retail computes the alignment difference
+// score 9 (was 9): in the padding path retail computes the alignment difference
 // before pushing ebx and reloads the capacity global into ecx after the mask, ours
 // pushes ebx first and reloads the capacity global into edi earlier.
 // remaining-first expression 53; shared completion 75; named padding 53;
 // named mask 53; shared completion and mask 75; recomputed start 47;
 // named allocation extent 53; remaining extent with shared completion 86.
+// Further forms: unsigned-mask zero-alignment guard 28; aligned guard 20; flat guards 28;
+// named padding test 9. Signed-mask counterparts 36/45/36/40. Original body restored.
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {

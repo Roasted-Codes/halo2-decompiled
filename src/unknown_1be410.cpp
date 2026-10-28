@@ -44,11 +44,14 @@ bool function_1be410(long actor_index, long object_index, point3f *point);
 point3f *function_b9dd0(long object_index, point3f *result);
 bool function_1f8100(long actor_index, point3f const *origin, point3f const *target);
 
-// score 10 (was 23): the path call reuses ESI for its point argument where retail loads the object
+// score 10 (was 10): the path call reuses ESI for its point argument where retail loads the object
 // index first and recomputes the point address; ours is two bytes shorter.
 // x/y/z declarations 21; last terms swapped 21; y/x/z declarations 21; successive z/x/y sum 10;
 // call object index 10; nested distance test 10; returned point pointer 121; point setter copy 76;
 // scoped call result 10; call-only point pointer 10; two-call point pointer 10.
+// Further forms with the matched path interface and scalar sum: independent origin-first/
+// point-first points 25/25; late origin 25; late source/path names 25; shared vector difference/
+// native vector initializer 10/10; either vector form with late origin 25/25. Original restored.
 // @retail 0x1be4b0
 short __stdcall function_1be4b0(long actor_index)
 {

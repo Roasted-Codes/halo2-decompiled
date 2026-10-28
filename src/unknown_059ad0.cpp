@@ -2209,6 +2209,9 @@ void network_session_leave_joining(c_class_58d20 *session)
 // memmove 37; tail clear with fill 30; tail clear with memmove 46; NONE set after the state
 // clear 29; NONE before the clock 15; field fill (0xff memset) after the state clear 29; zero
 // initializer for the record 27; state-block pointer local for the clear and the copy 11.
+// Scratch source pointer: direct clear with record/pointer fields 3/3;
+// with returned state-copy destination 9/9. Source from scratch clear with
+// record/pointer fields 38/35; with returned state destination 40/37.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {

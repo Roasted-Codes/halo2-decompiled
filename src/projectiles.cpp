@@ -1086,6 +1086,11 @@ extern vector3f *g_4687ac;
 
 /* whether a projectile's path to a point hits anything: the line from it,
    and for projectiles with a radius the two lines either side of it */
+// score 163 (was 220): simultaneous offset endpoints recover 757/756 bytes; frame 0x48
+// versus 0x34 and endpoint/query homes still differ. Shared input differences 220;
+// radius at use 224; both 233; simultaneous endpoints 163 plain (kept); endpoints with
+// radius reads 181, plus shared differences 188; shared ray displacement 189, with
+// shared cross product 189; first-ray scope 165, with radius reads 173.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1118,24 +1123,28 @@ bool function_fc030(long projectile_index, point3f const *point, s_collision_res
 			side = *g_4687ac;
 
 		point3f start;
+		point3f end;
+		point3f opposite_start;
+		point3f opposite_end;
 		vector3f offset_vector;
 
 		start.x = side.i * radius + origin->x;
 		start.y = side.j * radius + origin->y;
 		start.z = side.k * radius + origin->z;
-		offset_vector.i = side.i * radius + point->x - start.x;
-		offset_vector.j = side.j * radius + point->y - start.y;
-		offset_vector.k = side.k * radius + point->z - start.z;
+		end.x = side.i * radius + point->x;
+		end.y = side.j * radius + point->y;
+		end.z = side.k * radius + point->z;
+		opposite_start.x = (0.0f - radius) * side.i + origin->x;
+		opposite_start.y = side.j * (0.0f - radius) + origin->y;
+		opposite_start.z = side.k * (0.0f - radius) + origin->z;
+		opposite_end.x = (0.0f - radius) * side.i + point->x;
+		opposite_end.y = side.j * (0.0f - radius) + point->y;
+		opposite_end.z = side.k * (0.0f - radius) + point->z;
+		vector3d_from_points3d(&start, &end, &offset_vector);
 		if (function_1697c0(0x4800008, &start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
 			return true;
-
-		start.x = (0.0f - radius) * side.i + origin->x;
-		start.y = side.j * (0.0f - radius) + origin->y;
-		start.z = side.k * (0.0f - radius) + origin->z;
-		offset_vector.i = (0.0f - radius) * side.i + point->x - start.x;
-		offset_vector.j = side.j * (0.0f - radius) + point->y - start.y;
-		offset_vector.k = side.k * (0.0f - radius) + point->z - start.z;
-		if (function_1697c0(0x4800008, &start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
+		vector3d_from_points3d(&opposite_start, &opposite_end, &offset_vector);
+		if (function_1697c0(0x4800008, &opposite_start, &offset_vector, *(long *)((byte *)projectile + 0x140), NONE, collision))
 			return true;
 	}
 	return false;
@@ -1337,6 +1346,11 @@ PRIVATE inline long projectile_object_root(long object_index)
 /* the projectile type's new callback: its target, lifetime, range,
    attachment, starting velocity and spin, whether it starts under water,
    and the seat flags of the unit that fired it */
+// score 360 (was 371): first +6 is pool/input register allocation; the speed update
+// remains a call where the surrounding code expands it, and the body is 85 bytes short.
+// Native flag tests 380; complete water result 375; both 380; plain velocity-component
+// loop 364 fast, 360 plain (kept); loop/flags 381; loop/water 364; all three 381;
+// chained target initialization with all three 381. Unchanged reduced control 375.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
@@ -1396,9 +1410,8 @@ bool __stdcall function_f8200(long projectile_index, byte const *data, long unus
 	real speed = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
 	vector3f *forward = (vector3f *)((byte *)projectile + 0x70);
 
-	projectile->linear_velocity.i += forward->i * speed;
-	projectile->linear_velocity.j += forward->j * speed;
-	projectile->linear_velocity.k += forward->k * speed;
+	for (long component = 0; component < 3; ++component)
+		projectile->linear_velocity.n[component] += forward->n[component] * speed;
 	*(real *)((byte *)projectile + 0x190) = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
 	*(dword *)&projectile->flags &= ~0x100;
 

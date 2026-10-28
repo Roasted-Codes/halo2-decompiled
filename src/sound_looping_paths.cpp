@@ -508,6 +508,9 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // environment-index lexical name 223; request-field duration workspace 247; plain-inline cue helper 452;
 // forced listener search 223; separate query arrays and count declared after them 223 each.
 // Original body and both helper declarations restored.
+// Round 259: Two independent caller-owned cue requests at entry/listener/active/branch
+// scope, each with initializer output first/last, 223 each. Original helper-owned
+// requests and complete body restored; frame, BSP/camera/query and duration homes remain.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
