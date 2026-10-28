@@ -69,6 +69,8 @@ short __stdcall function_1c8df0(long object_index, point3f const *point, short t
 // still differ. Slot data 23 (kept); late state store 41; position pointer 23;
 // origin pointer 23; late object lookup 61; direct slot data 35; query-result
 // local 23; late store with shared object index 55.
+// Reduced control 26; same-size actor/slot/object receiver role-name masks 1-7,
+// then all with both output roles: 26/26/26/26/26/26/26/26. Slot-data graph and original body restored.
 // @retail 0x1be120
 bool __stdcall function_1be120(long actor_index, s_slot *slot)
 {

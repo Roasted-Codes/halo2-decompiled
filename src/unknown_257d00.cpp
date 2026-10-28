@@ -1585,7 +1585,7 @@ struct s_258cf0
 struct s_named_entry_owner;
 short named_entry_find(s_named_entry_owner const *owner, char const *name);
 void *function_1e5380(long actor_index);
-short function_cccd0(long unit_index, short grenade_type, char delta);
+short function_cccd0(long unit_index, short grenade_type, short delta);
 bool function_1fb360(long unit_index, short recording_index, long flags);
 void function_b7360(long object_index);
 

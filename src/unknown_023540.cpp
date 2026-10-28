@@ -2783,6 +2783,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // field/aggregate producers 334/334; each clamp with native rectangle 353. Original body restored.
 // Round 219: Normalized first/second/maximum scalar role-name masks 1-7 and all plus both trig
 // names: 334/334/334/334/334/334/334/334. Original body restored.
+// Signed integral corner inputs char/short/int/long in the existing rotation helper
+// 334/334/334/334; each with native coordinate outputs
+// 334/334/334/334. Original helper and all eight calls restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,

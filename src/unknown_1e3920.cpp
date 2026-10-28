@@ -993,7 +993,7 @@ long function_1e4990(long character_index);
 void function_d5c90(long unit_index, real *body, real *shield);
 void __stdcall function_ccff0(long unit_index);
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode);
-short function_cccd0(long unit_index, short type, char count);
+short function_cccd0(long unit_index, short type, short count);
 struct s_effect_owner;
 void function_b7930(void *data, long tag_index, long object_index, s_effect_owner const *owner);
 long __stdcall function_b7b40(void *creation);
