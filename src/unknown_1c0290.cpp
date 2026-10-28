@@ -262,13 +262,15 @@ bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 }
 
 // score 26 (was 26): the slot pointer and the actor index are loaded into the
-// opposite
-// registers here, and the shared actor_reset_state helper stores its fields in
-// another order.
+// opposite registers here (index ECX, slot EAX; retail EAX/ECX, so retail scales the
+// index before the actor-table load and its `and` is one byte shorter), and the reset
+// stores are scheduled in another order (retail keeps the two NONE stores between the
+// zero stores). 0x1b3ee0 has the same entry difference.
 // Round 272: native slot-data block 26; with one clock 34, chained false stores 26,
 // readonly actor 26, late actor 36, actor at use 36; existing reset with data/full slot 85/85.
-// All bodies/types restored; entry actor/slot and reset-store scheduling remain.
-// another order (retail keeps the two NONE stores between the zero stores).
+// Round 70: array-index actor lookup 26; slot declared first 26; reset stores in retail's
+// order 26 (identical code: the order is the scheduler's); existing reset function through a
+// forceinline declaration 85 (stays a call: its file is /Ob1); prop copy first 37.
 // @retail 0x1c0430
 bool __stdcall function_1c0430(long actor_index, s_slot *slot)
 {
