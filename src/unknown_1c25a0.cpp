@@ -666,6 +666,10 @@ PRIVATE __forceinline void function_1c2891(short *arg_0, c_havok_reference_count
 // Plain havok_reference_remove for the second object 48 (null test gone, still no
 // count pointer); through a local 48; a `delete this` member on the class 48; first
 // object through a local 45, with the plain second release 48.
+// retail zeroes EBX and keeps three callee-saved registers, holds
+// g_47f048 in EDI and &reference_count in ESI; ours zeroes EDI, holds g_47f048 in
+// ESI, folds the count address into the object pointer and tests it before the delete.
+// and clears it in EDI, retail loads it into ESI and clears it in EBX.
 // @retail 0x1c2890
 void function_1c2890(void)
 {
@@ -843,6 +847,12 @@ void function_1c54b0(char const *variants, long object_index)
 // island index before the world pointer and retail reloads the world pointer first;
 // ours stores the removed flag before the discard call and retail stores it after the
 // call (moving that store after the call always swaps ebx/ebp in the entity loop).
+// Further trials: local names count to flagged_entities 4; local names island_index to
+// group_index 4; local names entity_count to total_entities 4; local names i to
+// entity_index 4; local names count to flagged_entities, island_index to group_index 4;
+// local names island_index to island_ordinal, entity_count to entity_total, count to
+// accepted_count, i to entity_index 4; all named loop state with flag after discard 18;
+// named loop state, flag after discard, native int entity counts 18.
 // @retail 0x1c50c0
 void function_1c50c0(void)
 {
@@ -911,6 +921,10 @@ bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_un
 // score 1 (was 1): the only difference is the force flag handed to function_1c4040:
 // ours goes in dl and retail passes it in al. That register belongs to
 // function_1c4040's own convention (see the note there).
+// Further trials: byte force, long attempt 24; signed char force, long attempt 24; int
+// force, long attempt 31; bool force, unsigned long attempt 2; bool force, short attempt
+// 11; bool force, unsigned short attempt 12; byte force, unsigned short attempt 26; int
+// force, unsigned long attempt 31.
 // @retail 0x1c51c0
 void function_1c51c0(long component_index)
 {
@@ -1485,6 +1499,10 @@ PRIVATE inline void contact_motion_vector(vector3f *out, hkVector4 const *value)
 // ours compares it with the index register; retail sets up the register arguments of
 // the 0x1d10b0 call with ecx first and ours with edx first, an order that follows
 // the callee's declared parameter order in src/unknown_1cec30.cpp (not editable here).
+// Further trials: shared scale helper for both vectors 3; shared scale and output
+// assignment helpers 65; shared scale plus named progress and body count 3; native int
+// selected count 3; named saved iteration index 3; named selected and available counts 3;
+// shared scale plus all named loop state 3; available count read at every use 3.
 // @retail 0x1c4c50
 bool __stdcall function_1c4c50(long object_index, long node_index, point3f const *point,
  vector3f const *change_a, vector3f const *change_b, long *result_object, vector3f *linear, vector3f *angular)

@@ -70,9 +70,12 @@ volatile byte g_47f06d = 1;
 c_shape_owner *function_1c3b20(c_havok_reference_counted *arg_0);
 void havok_entity_component_index_set(hkEntity *entity, s_havok_property_word component_index);
 
-// score 71 (was 71): the -1 is built with OR here and pushed as a constant
-// there, and the
-// global it is stored to is a different one.
+// score 71 (was 71): the -1 is built with OR here and pushed as a constant there;
+// later differences are the two-byte shift. Unqualified global 76; entry construction 124;
+// construction before the final allocation 77; default construction there 71;
+// earlier/later local names and declaration before the descriptor 71 each.
+// Round 218: Property/descriptor/final-owner/shape-owner inline and noinline declarations:
+// 71/71/71/71/71/71/71/71 (fast control 71). Original restored.
 // @retail 0x1c3b70
 void function_1c3b70()
 {

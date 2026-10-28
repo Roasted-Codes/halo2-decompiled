@@ -182,6 +182,8 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // Round 180 current gain active/inactive/outside state/both gains/active-outside/inactive-outside/all/byte
 // outside 890/889/887/893/891/890/894/887 (fast); all restored. Frame 0x4e0 agrees; entry zero,
 // query-array/count and primary homes remain.
+// Datum consumed-bit/selection bits/both 886/886/886; audible/muted bit assignments alone and with
+// consumed/selection/both 911/911/911/911; all with allocator bits 911. Original word view and statements restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
@@ -508,6 +510,9 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // environment-index lexical name 223; request-field duration workspace 247; plain-inline cue helper 452;
 // forced listener search 223; separate query arrays and count declared after them 223 each.
 // Original body and both helper declarations restored.
+// Round 259: Two independent caller-owned cue requests at entry/listener/active/branch
+// scope, each with initializer output first/last, 223 each. Original helper-owned
+// requests and complete body restored; frame, BSP/camera/query and duration homes remain.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
