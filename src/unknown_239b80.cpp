@@ -314,6 +314,10 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // plus heading/flag stored before the scan and a done flag in the hull condition (retail's
 // unrotated loop and j-loop registers) 229; best declaration order of those 227; lowest_y
 // declared first 203. One use of `count` fewer moves it to memory (diagnostic only).
+// Round 16: count read through its address at the first-scan/hull bounds 203 each; explicit false/true
+// departure branches with Boolean state and early heading, with memmove/memcpy 253/286; existing
+// displacement helper 203; shared start-point pointer 253; read-once start index 265, with memmove 263.
+// Original body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {

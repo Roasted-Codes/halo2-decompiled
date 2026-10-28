@@ -2954,7 +2954,11 @@ real function_f4250(long vehicle_index)
 }
 
 /* whether the vehicle is flipping */
-// score 8 (was 33): retail reads the tick count into eax (clobbering the false
+// score 8 (was 33): pointer/flip-kind registers, the shared outer kind test and final false lifetime differ;
+// reversed comparison 33; duration local before/after elapsed 33/33; direct returns 31;
+// result first 36; direct comparison assignment 31; combined/nested conditions 33/33;
+// force-inline duration helper 33; product operands swapped 33; const vehicle 33; byte result 30.
+// retail reads the tick count into eax (clobbering the false
 // result, which it zeroes again on the false path) and loads the time globals
 // after the flip type test; ours uses edx and keeps al. Tried: direct returns 30.
 // @retail 0xf42f0

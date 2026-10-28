@@ -165,8 +165,8 @@ PRIVATE void function_297560(long actor_index)
 	}
 	actor->idle_aiming_timer = (short)rounded_ticks;
 	actor->idle_looking_timer = (short)rounded_ticks;
-	actor->idle_aiming_direction = actor->forward;
 	actor->idle_aiming_direction_type = 4;
+	actor->idle_aiming_direction = actor->forward;
 	actor->idle_looking_direction_type = 4;
 	actor->idle_looking_direction = actor->forward;
 }
@@ -738,6 +738,12 @@ output_point:
 	return result;
 }
 
+// score 9 (was 9): only the prologue differs: retail builds the actor offset in EAX
+// (`mov eax, ecx`) and moves the actor to ESI with `lea esi, [eax + edx]`; ours builds it in ESI.
+// Tried: a specification pointer local 9; an if/else chain without the early return 9; the valid
+// flag assigned from the `&&` 22; a valid local stored once 47; the getter as `data + index * size`
+// 9; a temporary caller (its only retail caller 0x1f38c0 is disabled here) 9; a cdecl compile-only
+// build gives ours too.
 // @retail 0x296580
 void function_296580(long actor_index)
 {
@@ -761,12 +767,6 @@ real function_50650(real cosine);
 
 /* Name inferred from the yaw/pitch tests. Failure to decode or normalize
    leaves the direction accepted, as does the actor's bypass flag. */
-// score 4 (was 8): the cosine's first two products (retail j then i, each
-// direction * horizontal). Tried: yaw helper called (forward, horizontal) 6;
-// forward.k cleared before the horizontal copy 4; `dot3f(&direction, &horizontal)`
-// 6; `dot3f(&horizontal, &direction)` 0 (match) but it loses matched 0x73360
-// (a new inline function linked ahead of its file), BLOCKED-BY 0x73360; the
-// expression in dot3f's operand order 4.
 // @retail 0x297a50
 PRIVATE bool function_297a50(long actor_index, bool aiming, s_type_952051 *specification)
 {
@@ -784,7 +784,7 @@ PRIVATE bool function_297a50(long actor_index, bool aiming, s_type_952051 *speci
 		horizontal.k = 0.f;
 		if (function_30bf0(&horizontal) != 0.f && function_30bf0(&forward) != 0.f)
 		{
-			real cosine = direction.j * horizontal.j + direction.i * horizontal.i + direction.k * horizontal.k;
+			real cosine = dot3f(&horizontal, &direction);
 			cosine = cosine < -1.f ? -1.f : (cosine > 1.f ? 1.f : cosine);
 			real pitch = function_50650(cosine);
 			if (direction.k < 0.f)

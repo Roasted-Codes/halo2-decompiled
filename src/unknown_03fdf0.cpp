@@ -421,6 +421,13 @@ bool function_404b0(long mode)
 // `g_485898 >= 4 && g_485898 <= 7 ? 0 : 1` 226; pass-8 `g_4ba022 != 0` 193; material as a
 // ternary 269; `(void)&single_pass` removed 193 (identical code, plain; kept). 0x14b60 written
 // from the disabled draft with a noinline declaration (plain): 255, and matched 0x14ac0 drops to 2.
+// Round 12 (lane 10, fast): the real 0x14b60 body in this file (stub removed) breaks matched 0x14ac0
+// (2), builds 93 bytes against 91 and takes this to 245, as the disabled contributor copy warns;
+// culling argument as `g >= 4 && g <= 7 ? 0 : 1` 226 (1181 B), the call written in both arms in either
+// condition sense 226/226 (two call sites as retail, but our 0 arm falls through where retail's 1 arm
+// does: that arm was still the table's cull-mode load when retail laid the blocks out); pass 8 as
+// `selected = bit; if (selected) selected = g_4ba022 != 0;` 176 (1196 B; a flag set inside a test,
+// match-only; retail stores the raw byte, so the global is a bool in retail). All restored.
 // @retail 0x3fdf0
 bool function_3fdf0(long mode, bool single_pass)
 {

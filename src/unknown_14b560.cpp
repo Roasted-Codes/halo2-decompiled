@@ -654,6 +654,10 @@ long players_first_active_local_player(void)
 	return result;
 }
 
+/* out of line, as retail calls it from 0x1391ed, 0x219ed0 and 0x240820; the callers retail
+   inlines it into use local_player_next_inline (globals.h) */
+__declspec(noinline) long function_14de10(long index);
+
 // @retail 0x14de10
 long function_14de10(long index)
 {
@@ -2670,6 +2674,7 @@ void function_153cd0(long);
 void function_153bd0(long, real);
 void function_1521d0(long);
 bool function_11c470(long, point3f const *);
+bool function_11c5b0(long object_index, long trigger_volume_index);
 void function_12b850(short);
 void __stdcall function_1508e0(long);
 void function_1e6bd0(long);
@@ -2693,7 +2698,17 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
-// score 153 (was 160): iterator store/test and rate/tick scheduling differ;
+// score 21 (was 153): at retail's length; left: the iterator index store sits before the
+// flag test, the tick store sits after the rate multiply (retail stores, then multiplies the
+// rate unfolded), the damage-type pointer load after the 7c store, the 0x29 store after
+// the flags (statement swap 19, under the keep threshold), and register choice in the second mode
+// test, the countdown's engine-slot block and the root walk's table load.
+// Round 32: the trigger test through 0x11c5b0 148; the damage-type pointer read in the call 130;
+// long user index 19 with it (both loops get retail's padding). Then: typed byte decrements 19;
+// one inline helper for both slot notifications 19; `time = rate; time *= ticks` 226 (folds);
+// rate read after the increment, either product order, 223 (folds); root initialised NONE 19;
+// a 600 s permuter run (13 tries), none below 19.
+// Earlier at 153: iterator store/test and rate/tick scheduling differ;
 // flag snapshot 155; long timer 204; parent-carried root walk 182;
 // low-time arm first 179; inline depth one 155. Damage call convention differs: BLOCKED-BY 0xd66d0
 // (retail pushes both arguments; ours passes the object in eax).
@@ -2793,10 +2808,9 @@ void function_14d8b0(void)
                         event.effect_player_index = index;
                         function_a7c50(&event);
                         function_19eb30(&event);
-                        byte *globals = *(byte **)((byte *)g_4e034c + 0x144);
                         s_type_1e6529 damage;
                         damage.unknown7c = NONE;
-                        function_d6660(&damage, *(long *)(globals + 0x28));
+                        function_d6660(&damage, *(long *)(*(byte **)((byte *)g_4e034c + 0x144) + 0x28));
                         damage.flags |= 4;
                         *(byte *)&damage.unknown84 = 0x29;
                         object_get_damage_owner(*(long *)(player + 0x2c), &damage.owner);
@@ -2815,7 +2829,7 @@ void function_14d8b0(void)
                 long slot = function_xaee93d()->slots[(short)index];
                 if (slot != NONE) function_b58c0(slot, 8);
             }
-            short user = player_get(index)->user_index;
+            long user = player_get(index)->user_index;
             if (user != NONE)
             {
                 g_502120->entries[user].value80 = 0.0f;
@@ -2826,8 +2840,7 @@ void function_14d8b0(void)
         if (*(signed char *)(player + 0x40) > 0) --player[0x40];
         if (g_4e6948->mode != 4)
         {
-            short timer = *(short *)(player + 0x180);
-            if (timer > 0 && (*(short *)(player + 0x180) = --timer) == 0)
+            if (*(short *)(player + 0x180) > 0 && --*(short *)(player + 0x180) == 0)
             {
                 player[3] &= ~8;
                 if (game_engine_get())
@@ -2851,8 +2864,7 @@ void function_14d8b0(void)
                     byte *volume = *(byte **)(scenario + 0x134) + trigger*0xe;
                     if (*(short *)(volume + 2) == g_4686c4)
                     {
-                        unit = *(long *)(player + 0x2c);
-                        if (unit != NONE && function_11c470(*(short *)volume, (point3f *)(object_get_unchecked(unit) + 0x30)))
+                        if (function_11c5b0(*(long *)(player + 0x2c), *(short *)volume))
                         {
                             byte *globals = (byte *)g_4e8c20;
                             *(short *)(globals + 0xa4) = trigger;

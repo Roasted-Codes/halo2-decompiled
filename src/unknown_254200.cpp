@@ -189,6 +189,11 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 }
 
 // score 153 (was 153): frame 0x14 versus 0x10 (our color struct copy, made before 0x1cf50, where retail
+// Round 83 on the round-220 near source (color pointer, per-use coordinates, byte alpha, scalar size;
+// still 18 fast): size declared at function scope, const size, scale-first second texture products,
+// size-first sum in the third vertex 18 each; retail loads y before the pushes in the third and fourth
+// vertices (ours copies the size and folds y: 1 byte shorter each), and reloads the lower coordinate
+// before the next vertex's 16777215 constant. All restored.
 // keeps 0x13927e's result in EDI and reads it in the color call after Begin); the half-size texture
 // coordinates (computed before the third reservation, retail after it) and the alpha byte remain.
 // Round 60 lead: the result as a pointer read in the color call 349 alone (frame 0x10); with the
@@ -334,6 +339,12 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // (2260 bytes; color copy exact, half-span hoisted again); with per-use coordinates 28, plus byte
 // alpha 18 at 2252 (lower-coordinate/constant reload order and the `y + size` fold remain); on it
 // plain real size 18, `size + y` 18, member second position 18 (fast); permuter 51 tries, best 18.
+// Round 12 (lane 10, fast control 162): parameter address taken (`(void)&arg_1;`) 162; the half
+// size read once through the parameter's address 162 (the product still lands ahead of the third
+// reservation); byte alpha 166; color pointer with the parameter address taken 349 (on the pointer
+// body everything through the second reservation matches; ours then loads the size and computes the
+// half span before the third reservation, retail after its call); color pointer with the lower
+// coordinate first 372. All restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

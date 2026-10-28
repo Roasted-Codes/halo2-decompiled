@@ -195,10 +195,10 @@ PRIVATE inline long unit_action_hand_weapon_get(s_unit_action_unit *unit, long h
 void function_e6960(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	t_unit_request_end_proc finished = g_4677c8[type]->finished;
+	s_unit_request_definition *definition = g_4677c8[type];
 
-	if (finished)
-		finished(unit_index, type);
+	if (definition->finished)
+		definition->finished(unit_index, type);
 	actions->active[type >> 5] &= ~(1 << (type & 0x1f));
 }
 
@@ -207,10 +207,10 @@ void function_e6960(long unit_index, long type)
 void function_e69c0(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	t_unit_request_end_proc interrupted = g_4677c8[type]->interrupted;
+	s_unit_request_definition *definition = g_4677c8[type];
 
-	if (interrupted)
-		interrupted(unit_index, type);
+	if (definition->interrupted)
+		definition->interrupted(unit_index, type);
 	actions->active[type >> 5] &= ~(1 << (type & 0x1f));
 }
 
@@ -4366,6 +4366,10 @@ void function_edfa0(long unit_index, point2f const *facing)
 }
 
 /* faces a unit along its aiming direction */
+// score 13 (was 24): retail stores x before it loads y (`movss xmm2, y; mulss xmm2, xmm0`); ours
+// multiplies y into the inverse's register and stores both after. Tried: the products as `*=` or
+// in any operand order 13; normalize2d_fast 13; `else length = 0.0f;` before the test, either arm
+// first 13; a vector2f local 13; the normalisation as a helper inlined from another file 13.
 // @retail 0xedff0
 void function_edff0(long unit_index)
 {
@@ -4379,12 +4383,11 @@ void function_edff0(long unit_index)
 
 	if (!(0.0001f > (real)fabs(length)))
 	{
-		bool positive = length > 0.0f;
 		real inverse = 1.0f / length;
 
 		facing.x = inverse * facing.x;
 		facing.y = facing.y * inverse;
-		if (positive)
+		if (length > 0.0f)
 			function_edfa0(unit_index, &facing);
 	}
 }
