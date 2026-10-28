@@ -982,7 +982,7 @@ struct s_item_flags_view_10b850
     byte flag6 : 1;
     byte flag7 : 1;
 };
-// score 813 (was 813): Frame 0x154 versus 0x12c, entry Boolean bytes and carrier/collision/rotation homes remain.
+// score 813 (was 813): frame 0x154 versus 0x12c, entry Boolean bytes and carrier/collision/rotation homes remain.
 
 // Earlier: Frame 0x154 versus 0x12c, entry Boolean bytes and collision/carrier/rotation homes still differ.
 // Earlier: Frame 0x154 versus 0x12c and Boolean/vector homes remain.
@@ -1040,6 +1040,9 @@ struct s_item_flags_view_10b850
 // Round 219: Independent motion-copy/gravity-update/floor-speed observation order masks 1-7; all
 // with projection role names; existing direct-output side cross helper:
 // 812/813/812/863/862/863/862/862/921. Original body restored.
+// Round 373: Reused scalar axis components in ijk order, with sine/cosine/both
+// snapshots 850/894/879/909; kji axis input order with the same four forms
+// 864/845/879/909. Frame remains 0x154; all original helpers and body restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
