@@ -3796,14 +3796,16 @@ bool __stdcall function_eccc0(long unit_index, s_unit_request *request)
 		state_name = 0x12000547;
 		break;
 	default:
-		return result;
+		goto done;
 	}
 
 	long state = *((byte *)UNIT_ACTION_UNIT_GET(unit_index) + 0x3dc);
 	long action_name = state == 5 || state == 4 ? 0x400000c : 0x5000049;
 
-	return function_ee090(unit_index, state_name, 5, action_name, (point3f const *)((byte *)request + 8),
+	result = function_ee090(unit_index, state_name, 5, action_name, (point3f const *)((byte *)request + 8),
 		(vector3f const *)((byte *)request + 0x14));
+done:
+	return result;
 }
 
 /* sits a unit down from its pose, keeping a vector (type 46) */
