@@ -123,6 +123,8 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // Raw coordinates reused as first/second/both normalized component locals 501/501/501;
 // vertical normalized components first on original/first/second/both reuse 551/551/551/551;
 // both coordinate reuses with shared trig magnitudes 501. All restored; frame 0x38 remains.
+// Round 370: double threshold, rounded absolute-angle carrier and rounded-angle formal
+// domains, then all with short quadrant 501/508/508/501/501/508/508/508; helpers and body restored.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {
