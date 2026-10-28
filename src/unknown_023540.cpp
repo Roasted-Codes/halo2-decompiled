@@ -2447,7 +2447,6 @@ dword __cdecl function_131fc0(real alpha);
 // inverse read at entry/first use 348/348 (ret 0x34 as retail, load hoisted, frame 0x24); early
 // dimension defaults 349; with the own-address read 316 (exact-only); unconditional rectangles 439.
 // @retail 0x2a8d0 standard
-// @retail 0x2a8d0
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
     real strength, bool blend, bool inverse, bool alternate_target,
