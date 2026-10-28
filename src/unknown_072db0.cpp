@@ -1659,6 +1659,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Round 248: Complete returned-property extent and received total, signed/unsigned
 // with indexed access and before/after accumulation 737/754 each; native property
 // cursor with the same pairs 737/760 each. Original bound and accumulation restored.
+// Native admission/returned-value/both validity bytes and signed admission byte 737 each;
+// admission byte with immutable identity, byte admission/team/both results 737 each.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

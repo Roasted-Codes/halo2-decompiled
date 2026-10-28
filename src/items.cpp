@@ -1034,6 +1034,9 @@ struct s_item_flags_view_10b850
 // Rotation cross-term declaration orders ikj/jik/jki/kij/kji 814/813/813/814/814;
 // cross-first orders jki/kij/kji 814/815/815. Frame 0x154/0x12c and Boolean/native
 // rotation homes remain. Original complete body and all helpers restored.
+// Record-returning cross pointer/reference inputs 813/813/813; first/second native
+// values 894/863, with opposite pointer 894/863; both native values 927. Original
+// result publication, helpers and complete body restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

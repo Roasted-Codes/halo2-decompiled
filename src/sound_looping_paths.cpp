@@ -182,6 +182,9 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // Round 180 current gain active/inactive/outside state/both gains/active-outside/inactive-outside/all/byte
 // outside 890/889/887/893/891/890/894/887 (fast); all restored. Frame 0x4e0 agrees; entry zero,
 // query-array/count and primary homes remain.
+// Native floating decibel fields/conversions 998 (frame 0x4dc); all seven ordinary-
+// inline conversion-helper combinations 998 each. Original integer-bit fields,
+// helpers, query boundary and complete body restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
