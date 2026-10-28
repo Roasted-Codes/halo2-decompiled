@@ -777,6 +777,9 @@ void function_143250(
 // Round 349: Independent basis pairs [1,2] 2323; [2,6] 2355; [0,7] 2287; [3,7] 2290; [5,6] 2317 (fast; control 2266).
 // Round 357: Separate first/second/third band tables 2268/2268/2266; independent
 // basis pairs [0,2] 2314, [1,4] 2288 (fast; control 2266). Opening body restored.
+// Round 224: complete input matrix copy with retained workspace, library/value/aggregate
+// 2275/2275/2289; direct matrix library/const/aggregate 2371/2367/2364; direct input table
+// library/const 2371/2366 (fast control 2266). Original workspace and expressions restored.
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
