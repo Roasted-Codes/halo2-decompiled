@@ -327,29 +327,34 @@ void __stdcall function_117790(long index)
 	}
 }
 
-// score 81 (was 81): the pool data base sits in ebp where retail has ebx, and retail loads origin.y before
-// forming the record pointer; the first loop is entered by a jump (padding) where retail falls through. In the
-// attachment loop retail walks a pointer at the attachment, reads the marker, then the vertex again after the
-// copy, and still ORs the pinned word in place. Attachment element pointer 103 (retail's walk and reloads, but
+// score 67 (was 81): the pool data base sits in ebp where retail has ebx; the shared difference helper gives
+// another origin/delta schedule, and the attachment walk and copy registers still differ. Earlier: the first loop
+// entered by a jump where retail falls through. Attachment element pointer 103 (retail's walk and reloads, but
 // the copy's registers rotate and the pinned OR splits into load/or/store, 521 bytes); with a vertex local for
 // the pin 103; with the existing bit_vector_set 103; fields in full with bit_vector_set 103 (identical code);
 // the definition read after the origin delta 80; between the origin copy and the delta 80.
+// Round 58: shared length-squared helper 81; shared point-difference helper 72; typed record lookup 72;
+// vertex-array base 67 kept; loop-lifetime attachment cursor 90; attachment array base 75; aggregate delta
+// with the array base 83; length helper on the best form 83; correction-only difference helper 83;
+// direct vertex reads through the attachment base 91; entry velocity declaration 67.
 // @retail 0x117a80
 void function_117a80(long index)
 {
 	s_surface_record *record = surface_record(index);
 	s_surface_definition *definition = surface_definition(record);
 	point3f origin = *(point3f *)(surface_object_header(record->object_index)->object + 0x30);
-	vector3f delta = {record->origin.x-origin.x, record->origin.y-origin.y, record->origin.z-origin.z};
+	vector3f delta;
+	vector3d_from_points3d(&origin, &record->origin, &delta);
 	if (delta.k*delta.k + delta.j*delta.j + delta.i*delta.i > 0.1600000113248825f)
 	{
 		delta.i = origin.x-record->origin.x; delta.j = origin.y-record->origin.y; delta.k = origin.z-record->origin.z;
+		s_surface_vertex *vertices = record->vertices;
 		for (long i = 0; i < definition->vertex_count; ++i)
 		{
-			record->vertices[i].position.x += delta.i;
-			record->vertices[i].position.y += delta.j;
-			record->vertices[i].position.z += delta.k;
-			record->vertices[i].previous = record->vertices[i].position;
+			vertices[i].position.x += delta.i;
+			vertices[i].position.y += delta.j;
+			vertices[i].position.z += delta.k;
+			vertices[i].previous = vertices[i].position;
 		}
 	}
 	vector3f velocity;
