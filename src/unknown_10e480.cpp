@@ -144,7 +144,7 @@ void function_10ec00(long object_index, s_animation_state *state, long unused, d
 extern real g_547648;
 void c_animation_channel_data_get(c_animation_channel const *channel, s_animation_data *data);
 
-// score 215 (was 221): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// score 215 (was 215): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
 // Lane 8 r64: countdown weight with the `>= 3` case first (retail's fall-through) 215, kept; frame
 // byte in a long local 260 (32-bit compare as retail, aligned 119, 969 bytes); char/word loop index
 // 215 (identical: the loop stays a pointer plus spilled countdown); sampled flag declared before
@@ -193,6 +193,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // the second arm's data/publish calls into the first arm's (retail keeps both). Weight product
 // reordered, short and int index 221 each (identical); weighted id copied into the id local or its
 // own local 301/301 (the tail un-merges as retail but the state pointer leaves EBP).
+// Round 195: Native channel copy initialization and default-assigned identifier subsets [215, 215, 215,
+// 215, 215, 215, 215]; joint construction with sample zero before getter 285. Original independent
+// constructors restored; frame, destination/ordinal homes and weighted getter expansion remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

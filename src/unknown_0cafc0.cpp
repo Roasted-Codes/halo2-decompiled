@@ -179,6 +179,10 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // displacement/word/name 290; separate backward query vector 309; complete vector
 // graph/word 290; native copies on that graph 290; local-up name 309; word/local-up 290.
 // Retain the actual flag-word declaration with unchanged following field offsets.
+// Round 195: Common collision result, query/final/both point-set calls [211, 211, 211, 211]; original
+// output with query/final/both point-set calls [199, 199, 199]; common result, both setters and
+// collision-first comparison 211. Original queries and output graph restored; tag-table retention and
+// fraction component reuse remain.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {
