@@ -432,12 +432,15 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 
 /* moves the biped's camera offset (+0x3cc) toward its head marker,
    relative to its root node, a little each tick */
-// score 24 (was 127): frame 0x9c and native entry now agree at retail length; cross-component
-// scheduling and the final float load remain. Existing node query 34; point difference 129;
+// score 7 (was 24): frame 0x9c, native entry and length agree; cross-component
+// add/store scheduling remains. Existing node query 34; point difference 129;
 // both 48; coherent vector homes 127/34/129/48; outputs first 48. Clamped steps 34;
 // destination pointer 24; both 34; delta-first 34, with steps/pointer/both 34/24/34;
 // plain component loop 24 (kept, plain); raw differences 24; current components 87;
 // current components and differences 87; point setter 34.
+// Native low/high loop clamp 7 plain (kept); upper/lower clamp 12; low/high with
+// current-component reuse 83; full clamped correction macro/branches 61/54; shared
+// smoothing difference with macro/low-high/high-low 63/62/62. Cross-store scheduling remains.
 // @retail 0xde190
 void function_de190(long arg_159e6d)
 {
@@ -470,8 +473,12 @@ void function_de190(long arg_159e6d)
 		{
 			for (long component = 0; component < 3; ++component)
 			{
-				biped->unknown3cc.n[component] +=
-					PIN(local.n[component] - biped->unknown3cc.n[component], -0.01f, 0.01f);
+				real difference = local.n[component] - biped->unknown3cc.n[component];
+				if (difference < -0.01f)
+					difference = -0.01f;
+				else if (difference > 0.01f)
+					difference = 0.01f;
+				biped->unknown3cc.n[component] += difference;
 			}
 		}
 		else
@@ -1929,6 +1936,9 @@ bool __stdcall function_c5460(long object_index, long ignore_index, point3f cons
 // workspaces 76; those workspaces with bool result 134. Original body restored.
 // Fallback radius reuse 74 (350 bytes); retry result started at the loop boundary 73
 // (350 bytes); both 86 (356 bytes). Two/three-point gains and one-use field copies restored.
+// Multi-use forward subobject 77; native ignore assignment branches 76; separate
+// selected vehicle 76; forward/ignore and forward/selected vehicle 77 each; ignore with
+// selected vehicle 76; all three 77; all three with fallback point setter 80. Frame/input homes remain.
 // @retail 0xe0070
 void function_e0070(long arg_159e6d, long vehicle_index)
 {
@@ -1975,13 +1985,16 @@ bool function_1d5120(s_havok_component *component, long rigid_body_index, long a
 void __stdcall function_1c3770(long object_index, dword flags);
 
 /* steps a dead biped's ragdoll settling (+0x3aa) toward rest */
-// score 63 (was 117): EBX input agrees; the extra EBP save, body-index selection and flag-store scheduling remain.
+// score 63 (was 63): EBX input agrees; the extra EBP save, body-index selection and flag-store scheduling remain.
 // Native index 108; word flags 87; both 82; signed two-use count with word flags 73;
 // native index plus signed count 67, promoted body input 63 kept. Shared short/long getter
 // 118/122; explicit short 118; output scope, separate admissions and read-only tag 117;
 // shared getter with word flags 89/99; common exit 97; unsigned/native count 87;
 // word bitfields 87; named byte 117; byte/count forms 121/115/118; alternative result
 // 83; component-first and handle name 67; byte-bitfield forms 103/117/115.
+// Settling field at both uses 82; tag receiver at use 64; both 81; settling reads
+// with shared promoted/native-short getter 99/89; both reads with those getters 102/100;
+// both reads with direct valid-body admission 72. Entry count/convention and flag stores remain.
 // @retail 0xe0c70
 void function_e0c70(long arg_159e6d)
 {

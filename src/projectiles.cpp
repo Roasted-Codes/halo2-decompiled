@@ -1156,6 +1156,9 @@ extern vector3f *g_4687ac;
 // scope 163; negative/loop 204; negative/scope 173; loop/scope and all three 204.
 // Negative with initial-ray scope 175 (frame 0x3c); consistent radius at use with
 // initial scope alone/side scope/endpoint loop 173/173/201. Frame and ray homes remain.
+// Original-producer all-ray vector reuse 163; side/query workspace reuse 163; complete
+// vector reuse 166 (756 bytes, frame 0x3c); with shared inputs 165, radius reads 179,
+// both 189; complete reuse with early admission 183, plus shared inputs 186. Restored.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1310,6 +1313,9 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 // Attachment bitfield/word/complete conditional results 190/188/192; attachment/all
 // overrides after selector 121/176; bitfield/complete conditional attachment after
 // selector 163/179; all overrides with word result after selector 175. Restored.
+// Coherent workspace names 115; paired-table initialization loop 249; sound-table
+// reads at use 115; names with loop/reads 249/115; loop with reads and all three 249;
+// separate direct-counter table initialization loops 249. Original body restored.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
 	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
