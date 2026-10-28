@@ -1475,6 +1475,7 @@ void sound_playback_delete(long sound_index)
 
 /* stops a playing sound: frees its voice, lets go of its chunk, tells its
    source why it stopped and deletes it */
+__declspec(noinline) void __stdcall function_127320(long sound_index, long reason);
 // @retail 0x127320
 void __stdcall function_127320(long sound_index, long reason)
 {

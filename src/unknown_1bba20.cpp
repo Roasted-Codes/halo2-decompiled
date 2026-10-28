@@ -146,11 +146,14 @@ real function_204950(long actor_index, long squad_index, short mode);
 void function_26def0(long actor_index, long owner_index);
 __declspec(noinline) bool function_f5dc0(long object_index);
 
-// score 49 (was 67): the first squad test still reuses its full-width load;
+// score 49 (was 49): the first squad test still reuses its full-width load;
 // the second call reloads the actor where retail uses its saved pointer, and
 // the distance-call argument order differs. Split entry branch 67; first fresh
 // actor 90; second fresh actor 49 (kept); both fresh actors 81; first field
 // pointer 49; second field pointer 67; typed vehicle 67; no final refresh 123.
+// Native tag field 49; squad-first admission 74; squad before entry flag 77;
+// distance-first admission 70; entry declaration lifetime/constant pointer/role names/unsigned tag handle 49.
+// Tag field and all body forms restored; the full/low-word reuse and later schedules remain.
 // @retail 0x1bba70
 void function_1bba70(long actor_index, long vehicle_index, long seat_index)
 {
