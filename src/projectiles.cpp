@@ -580,7 +580,8 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
-// score 34 (was 34): Input index load width, loop entry alignment and response cursor calculation differ.
+// score 34 (was 34): word input, material-pointer formation and ordinal/loop entries still differ.
+// Prior: Input index load width, loop entry alignment and response cursor calculation differ.
 // Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
 // direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
 // native current ancestry index 69; entry result/current index 67.
@@ -593,6 +594,8 @@ s_projectile_material_response g_547660;
 // Short ancestry with direct endpoint 34; positive ordinal/body cursor 49; unguarded ordinal 55;
 // positive while ordinal 49; short ancestry/ordinal 48; per-use count/ordinal 66;
 // multiply-used response base 34; response base/short ancestry 34. Word input and cursor/loop entries remain.
+// Typed material table: cached header endpoint/count once or per-use 34/65; cached header ordinal 49/66;
+// per-use header endpoint 34/71 and ordinal 69/66. Typed parent member does not repair the word input.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
