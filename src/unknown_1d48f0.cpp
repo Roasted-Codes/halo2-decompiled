@@ -156,6 +156,10 @@ const dword g_455978[81] = {
 // Round 232: shared affine candidate alone/radius/blend/both 306 each;
 // with planar normalization on the same four graphs 307/307/307/304.
 // Two-point gain rejected; original producers and all helper contracts restored.
+// Round 163: shared endpoint sum into point/native copy/float-set copy/vector
+// 306/341/314/306; each with shared optional-ray difference 306/341/314/306.
+// Native copies lengthen the body; optional-state homes and selective
+// location/range expansion remain. All endpoint producers and helpers restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

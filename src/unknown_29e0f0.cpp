@@ -119,6 +119,10 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // Original executable body restored.
 // Round 370: shared point-array base with long group index, captured point count and shared
 // bitmap operations 429/428/410/432/515/515/464/464; body, helpers and original includes restored.
+// Round 163: selected-index chain/per-group index chain/explicit native bitmap
+// defaults, all seven subsets and complete graph with separate bitmap stores:
+// 406 each at 1596 bytes. Frame 0x68/0x64 and bound/endpoint homes remain;
+// original default initializers and every helper restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

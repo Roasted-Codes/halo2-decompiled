@@ -239,6 +239,10 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // projection/ray identities: 192/192/192/192/192/192/192/192. Origin retention and edge spills still leave
 // the short frame
 // original identities restored.
+// Round 163: endpoint float setters, second/first/both/both before edges,
+// 260/251/216/214; with shared ray-start input 260/247/217/215.
+// Paired endpoints recover frame 0x90 but retain entry/edge scheduling differences;
+// every one-use endpoint capture and original ray input restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
