@@ -1636,17 +1636,32 @@ bool __stdcall function_cc010(long object_index, vector3f const *direction)
 	return result;
 }
 
+/* the byte at +0x10a as bits */
+struct s_unit_flags_10a_view
+{
+	word bit0 : 1;
+	word bit1 : 1;
+	word bit2 : 1;
+	word unknown3 : 5;
+};
+
 /* the unit's death outside mode 4: clears its flags, applies the globals'
    damage at +0x144 to it and, unless flag 2 at +0x10a, marks it */
+// score 35 (was 39): retail clears flags 21 and 5 of +0x134 with two stores (the second from the
+// first's register) and flag 7 of +0x10a in memory, before it reads the globals; ours merges the
+// two clears. Flag 2 of +0x10a read through a word bitfield view gives retail's load and shift
+// (37); the globals read after the first clear 35. No effect: the clears through a dword or long
+// bitfield view (37); worse: the first clear through a fresh lookup 39, the second 67, all three 63.
 // @retail 0xcffc0
 void function_cffc0(long unit_index)
 {
 	if (g_4e6948->mode != 4)
 	{
 		s_unit *unit = UNIT_GET(unit_index);
-		byte *globals = *(byte **)((byte *)g_4e034c + 0x144);
 
 		unit->flags_134 &= ~0x200000;
+		byte *globals = *(byte **)((byte *)g_4e034c + 0x144);
+
 		unit->flags_134 &= ~0x20;
 		unit->flags_10a &= ~0x80;
 		if (globals && *(long *)(globals + 0x48) != NONE)
@@ -1657,7 +1672,7 @@ void function_cffc0(long unit_index)
 			damage.material_index = NONE;
 			function_d7b80(&damage, unit_index, NONE, NONE, NONE, 0);
 		}
-		if (!((unit->flags_10a >> 2) & 1))
+		if (!TEST_FIELD_BIT(((s_unit_flags_10a_view *)&unit->flags_10a)->bit2))
 		{
 			unit->flags_10a |= 0x20;
 			function_b7360(unit_index);
