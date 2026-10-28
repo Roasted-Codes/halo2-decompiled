@@ -1941,6 +1941,9 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // system in EDI, retail ESI; color B in EBX, retail EDI; tinted spilled, retail BL); its colors named
 // to sort after location_index 177; parameters reordered 177; colors read from the effect inside 177;
 // const color parameters 177.
+// Round 222: native-long cluster 139; word/dword zone 151/151; native cluster with
+// word/dword zone 157/157; all point-first products 130, with native cluster 139, with word zone 151.
+// Original zone producer and complete body restored; color/query frame remains 0x40 versus 0x44.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
