@@ -576,6 +576,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // ordinary urgent while alone/with direct fields/with native index 399 each; earlier native
 // ordinal/resource declarations separately/together 399 each. Original helpers restored.
 // Round 251: Query-produced success at primary/alternate/both/fallback/primary+fallback/alternate+fallback/all 410/452/605/558/543/621/499; all with Boolean status 506. Original status assignments, hidden records and request expansions restored.
+// Round 224: ordered five-request tuple/name tables, mutable/const with byte status
+// 1320/1177/1320/1177; Boolean status 1325/1182/1325/1182 (fast). Extra table storage
+// and rolled request expansions regress; original helper and status restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
@@ -928,6 +931,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 202: End found-name/primary-ID lookup workspace before name publication, with
 // byte/bool/short/long result: 210/222/226/227 for either bool or byte prior-loop truth.
 // Original workspace, byte result, loop truth and all constructors restored.
+// Round P208: native library name-record publication 210; with aggregate input 318;
+// with logical change join 244; with both 320; the same four with forced existing
+// clear helper 210/318/244/320. Original record publication, identifiers and helper restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

@@ -390,6 +390,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // through the existing scale helper 196 (same code); an inline pointer-parameter vector add for both
 // velocity additions 234 (1541 bytes); next declared at the loop 242; attraction normalize through the
 // header's vector3f_scale 213. Restored.
+// Round 27: native scale/direction/scale+direction/velocity input-output contracts
+// 199/196/199/243; scale+velocity/direction+velocity/all 255/243/255; all with
+// shared velocity squared length 255. Direction contracts lose two matched
+// siblings in preview; every original helper contract and body restored.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

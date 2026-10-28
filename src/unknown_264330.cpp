@@ -478,6 +478,11 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // per-node skip/defer/both 429/424/433; all three complements 436 at retail length. All restored.
 // Round 205: Shared planar difference with native state, early planar output and both
 // reused progress-result combinations 424 each in eight forms (control 420); all restored.
+// Round 223: original independent admission flags with a separate query-completion
+// bool/byte/short/long at its consumer 418/418/430/438; at node entry 433/433/449/457.
+// Two-point forms and added phase flags rejected without a match; all restored.
+// Round 226: Consumption scopes for update, tracking and each real view, all seven subsets
+// 420 each; all scopes with run-wide constant initialization before actor lookup 420. All restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -842,6 +847,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // and body restored.
 // Round 205: Special copied-result byte/char/short/long 372 each; with complete ancestry
 // producer scope 372 each (fast control 372, full 331). Original body restored.
+// Round 237: shared initial view lookup 372; actor/reference/prop at uses 414/503/415;
+// actor-reference/actor-prop/reference-prop/all 573/468/570/657 (fast control 372; full 331).
+// All restored; actor ESI and saved/squad/flag homes remain.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

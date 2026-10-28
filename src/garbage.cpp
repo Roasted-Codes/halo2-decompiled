@@ -42,6 +42,9 @@ void function_bb950(long object_index, bool add, long delta);
 // ticks declared first 2; named expiration result 2. Round 14 (lane 10): `ticks + current_time`
 // 2; the existing real_to_long with a forceinline declaration 2; game time through the existing
 // 0x146650 2; the sample call folded into the seconds product 2; rate-first product 2.
+// ticks declared first 2; named expiration result 2. Round 22: early time declaration 2;
+// early/late expiration pointers 2/2; early expiration accumulator 16; result-first
+// initialized/uninitialized 2/2; ticks before seconds 2; early duration declaration 2.
 // ticks declared first 2; named expiration result 2.
 // Further trials: local names ticks to tick_delta 2; local names current_time to
 // start_tick 2; local names ticks to tick_delta, current_time to start_tick 2; local names

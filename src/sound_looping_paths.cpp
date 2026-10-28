@@ -189,6 +189,8 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // consumed/selection/both 911/911/911/911; all with allocator bits 911. Original word view and statements restored.
 // Query arrays, matching records and inactive-pass workspaces ended at their real phase
 // boundaries, all seven subsets and producer-count ending after snapshot: 886 each.
+// Round 224: shared inline iterator first/second/both 968/1007/1103; shared calling iterator
+// first/second/both 905/915/899; real iterator-step first/second 953/919. Original scans restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

@@ -1379,7 +1379,7 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 241 (was 241): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal differ.
+// score 232 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal differ.
 // Earlier 241 from 241: frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
@@ -1462,6 +1462,10 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 360 (fast base 243): native double aiming-limit/look-limit/look-rate
 // pairs, combinations and all three 574/543/259/584/574/531/584; native 64-bit
 // user flags 388. Original scalar widths and every smoothing input restored.
+// Round 225 (fast control 234, full 232): direct negative overlay result 414;
+// complete scope-first rate selection 416; native countdown store/test 234;
+// overlay/rate, overlay/countdown, rate/countdown and all three 422/414/416/422;
+// all plus primary-pointer admission 587. Original complementary states and all calls restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1860,6 +1864,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // query-produced result at four widths and early bool/byte defaults (fast control 411; plain baseline 410).
 // Scores [393, 393, 426, 428, 411, 411, 434, 435, 441, 441, 471, 470, 441, 441]. Original executable body
 // restored.
+// Signed-char blend consumer 411; uninitialized blend result at entry 411; full user/weapon/both
+// receivers at each use 599/603/796; with signed-char consumer 599/603/796 (fast control 411/2166).
+// All eight forms restored; ordinary baseline remains 410/2154.
 // Blend-producer scope, paired Boolean role names, duration/query names and their combinations
 // 411 each; reversed declarations with all scope/names 411 (fast control 411; full 410).
 // @retail 0x16760c
