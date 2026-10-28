@@ -192,9 +192,15 @@ short __stdcall function_1c04f0(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 143 (was 143): retail inlines function_1f4460, which lives in a file
-// that is not mine,
-// so our frame is 16 bytes smaller and the call is still there.
+// score 143 (was 143): Frame 0xa0 versus 0xb0; native homes, request/collision argument
+// allocation and point/goal publication differ. The movement helper now expands; the current
+// shared collision output is 0x4c while the writer reaches the word at +0x5a.
+// Native slot data 143; local full collision output 140 (frame 0xb0), with slot data 140;
+// complete point setter/vector setter/position-add/both vector producers 140 each;
+// material initialized at declaration 138; native slot/point/vector producers 140.
+// Partial unit copy 104, with aggregate target or CRT point copy 104 each (all restored);
+// CRT point copy/aggregate target alone 140/140; aggregate target/early material 138;
+// uniform unit copy at entry 234, after position 161, with early material/slot data 161/161.
 // @retail 0x1c0670
 bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 {
