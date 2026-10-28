@@ -1040,6 +1040,10 @@ struct s_item_flags_view_10b850
 // Round 219: Independent motion-copy/gravity-update/floor-speed observation order masks 1-7; all
 // with projection role names; existing direct-output side cross helper:
 // 812/813/812/863/862/863/862/862/921. Original body restored.
+// Round 159: Native attachment fields 813; step field at each use and with attachment fields 893/893;
+// named bounce coefficient and with attachment fields 887/887; step/coefficient and all three 893/893;
+// direct bound selection 813. Native collision location/object-node/material/all layouts 887/863/859/894.
+// All restored. Coefficient and collision layouts reach frame 0x148 without an eligible gain.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

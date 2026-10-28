@@ -438,6 +438,13 @@ bool function_22acb4(long player_index);
 // Original scalar masks restored; extra second-mask spill and persistent constants remain.
 // Round 210: First-mask high-byte orders 2134/1324/1243/4123/4321/3412/2341/3142
 // all 165; original producers restored, extra second-mask spill remains.
+// Round 60, on the 232 ordered control: long/short first 290/290;
+// long first with short/long second 268/299; long third/fourth 229/229;
+// fourth before second 261; third before second 265. Original 165 body restored.
+// Round 205: Second/third/fourth domains short-word-word, word-long-word, short-long-word,
+// word-word-long, short-word-long, word-long-long, short-long-long, short-short-long
+// 202/270/270/295/300/285/297/297. On short-long-word, first enum reordered 296;
+// plus independent second 287; plus third 123 292; plus native fourth 269. All restored.
 // Round 86 (fast, aligned counts in brackets): retail's block order rebuilt 232 [37]; with a short second 283
 // [20: 1 in EDI as retail; only the second mask in ECX with its own slot, from 0xFFFD taking EBX, remains, and
 // that extra slot shifts every lockstep line]; on it the second as (short)(char)/(char)(x & 1)/(signed char)/
