@@ -68,6 +68,9 @@ real normalize2d(point2f *arg_0);
 // Round 23: direct const/nonconst parameter reads 279 each; separate output pointer 279;
 // nonconst output reference and actor-first order 220 each; far/near/both output point
 // setters 226/262/262; actor-first with near setter 262. Original body restored.
+// Round 259: Collision-branch-only completion results false-first bool/byte/short/long
+// 269/247/275/276; true-first 262/258/258/260. Direct-output exits unchanged.
+// Original result graph and entire body restored; output EBP and vector homes remain.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

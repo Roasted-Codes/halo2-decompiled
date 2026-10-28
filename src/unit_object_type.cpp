@@ -2243,6 +2243,10 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 
 /* once: sets the unit's flag 21 and a random angle at +0x2d8 around its
    actor's direction (or its own facing) */
+// score 20 (was 20): Frame 0xc versus 0x10; flag-word preservation, angle/random scratch homes and final x87
+// adds differ. Native vector, 12-byte scratch and real[3] 23; bool flag 60; native/bool 60; outer workspace
+// 23; field angle 57; random-first native/bool 60; outer angle 23; real flag view 60; native view 60; scoped
+// vector/view/random-first 60; scoped vector 23; scoped view 60; native/scoped bitfield setter 60.
 // @retail 0xcfec0
 void function_cfec0(long unit_index)
 {
@@ -2380,7 +2384,7 @@ void function_d0c10(long unit_index)
 			request.type = 0x1c;
 			request.type1c.object_index = unit->unknown2a0;
 			request.type1c.seat_index = unit->unknown2a4;
-			request.type1c.unknowna = unit_action_active(unit_index, 0x1f);
+			request.type1c.unknowna = unit_action_active(unit_index, 0x1f) != false;
 			request.type1c.unknownb = true;
 			function_e6900(unit_index, &request);
 		}
@@ -2527,6 +2531,10 @@ struct s_unit_placement
 /* places the unit from the scenario: its +0xec and flags, and, when the
    placement says so, starts it dead (animation, damage, no weapons or
    grenades) */
+// score 22 (was 22): Frameless entry and animation lookup agree; 0xc98a0 takes the unit in EDX versus a
+// retail push, 0xcaa60 in EAX versus a push. Animation owner 22; initial scale local 65; scale/owner 65;
+// chained zero stores 22; dead-placement guard 22; const animation 22; owner/const animation 22;
+// owner/scale/chained stores 65.
 // @retail 0xc42e0
 void __stdcall function_c42e0(long unit_index, void const *placement)
 {

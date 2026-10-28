@@ -803,6 +803,9 @@ PRIVATE inline void seat_pitch_approach_187510(real *value, real target)
 // Round 66: direction helper returning the vector by value 185 (frame 0xb8); direction and the angle call in
 // a forceinline helper 52; the clamp's two negated tests as nested ifs 52; settings between the bounds with
 // direction at function scope after maximum/after marker 52/52 (direction stays at +0x24).
+// Complete shared angle output: direct field local/forced/outer/forced outer 181f each
+// (preview 192f); twice-used scalar yaw on those four graphs 203f each. Direct output 29 plain
+// at 1323 bytes with frame 0xa8, restored: native record storage requires an exact match.
 // @retail 0x187510
 void __stdcall function_187510(long player_index, real yaw_delta, real pitch_delta)
 {
