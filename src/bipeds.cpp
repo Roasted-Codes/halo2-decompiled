@@ -79,7 +79,15 @@ struct s_biped
 	byte unknown2e8[0x33e - 0x2e8];
 	short unknown33e;
 	byte unknown340[0x348 - 0x340];
-	word flags_348;
+	union
+	{
+		word flags_348;
+		struct
+		{
+			word : 15;
+			word flag_348_15 : 1;
+		};
+	};
 	byte unknown34a;
 	byte unknown34b;
 	short unknown34c;
@@ -2073,6 +2081,9 @@ void function_1d1540(s_havok_component *component);
 
 /* turns the biped into a ragdoll: lifted a little when it fell through
    something, its nodes placed from its Havok bodies */
+// score 125 (was 125): frame 0x18 agrees; header-offset, biped/component roles and packed result homes differ.
+// Boolean word conditions 154; result first 125; both 154; ragdoll/reach names 125;
+// conditions/names 154; result/names 125; all three 154; all with indexed nodes 292.
 // @retail 0xe16b0
 bool __stdcall function_e16b0(long arg_159e6d)
 {
@@ -3164,6 +3175,10 @@ void function_e3910(long arg_159e6d);
 /* a walking biped falling faster than the globals' falling speed takes
    falling damage, unless it rides a vehicle that protects it; a falling
    object leaves its cluster */
+// score 98 (was 130): frame 0x9c and length 518 agree; high-byte immunity test, load order and damage-result roles differ.
+// Native byte high/lower/both bitfield tests 130 each; native high word bitfield store 98;
+// with high/lower/both byte tests 98 each; all fields with immunity set from tests 134.
+// The native high word bitfield store is kept; all input/call expressions retain their original roles.
 // @retail 0xe3700
 void function_e3700(long arg_159e6d)
 {
@@ -3210,7 +3225,7 @@ void function_e3700(long arg_159e6d)
 		{
 			s_type_1e6529 data;
 
-			*((byte *)&biped->flags_348 + 1) |= 0x80;
+			biped->flag_348_15 = true;
 			if (biped->unknown13c != NONE)
 			{
 				function_155b60(arg_159e6d);

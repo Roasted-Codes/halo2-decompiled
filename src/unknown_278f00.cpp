@@ -119,6 +119,8 @@ bool function_a7670(long object_index);
 // Round 55: swapped count declarations 181; counts before the body-count snapshot 181;
 // retry before that snapshot 181; a fresh indexed cleanup counter 196; outer selector declared
 // after the arrays 181; scan-wide body pointer 181; existing header getter 181; const body count 181.
+// Retry-head body-count snapshot before/after the local resets, with original/first/second/both
+// list-count declarations at function scope: eight at 181. Original snapshot and scopes restored.
 // @retail 0x278f00
 void function_278f00()
 {

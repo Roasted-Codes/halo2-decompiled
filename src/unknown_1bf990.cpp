@@ -278,11 +278,13 @@ bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6);
 bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool arg_3);
 
-// score 194 (was 194): the record count is loaded into EBX here and into ECX
-// in retail, and the index is scaled after the mask in one and before it in the other.
+// score 194 (was 194): frame 0x38 agrees; actor-pool data takes EBX instead of retail ECX,
+// with early actor-handle retention, request-tail sharing and x87 scheduling still different.
 // Round 55: later-only and entry parameter references 194 each; point-difference and
 // magnitude helpers 194 each; direct stack reads at the first and all later calls 194 each;
 // unqualified result 207; separate false store and result read 208.
+// Actor/query, object/approach and movement output workspace names, all seven combinations,
+// each 194; all names with the two uninitialized query outputs at entry 194. Original body restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {
