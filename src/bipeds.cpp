@@ -2084,6 +2084,12 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 	long rigid_body_index, bool started);
 
 /* places the biped's ragdoll bodies, from its root rigid body outward */
+// score 91 (was 134): frame 0x114 versus 0x110; escaped result byte, zero/save staging and root admission differ.
+// Native one-word visited mask 91 kept; root clamp 143, with native mask 100; common result 123;
+// declaration-time zero 100, with common result 123; result first 100, with common result 123.
+// Lookup/output scope 86 (five-point incremental gain, 11 extra bytes; restored); with root clamp 101;
+// mask initialized after admission 96; output-only Boolean 103; result after first placement 122;
+// output-only after placement 103. Native mask body retained.
 // @retail 0xe1b60
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 {
@@ -2099,7 +2105,7 @@ bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 
 		if (root >= 0 && root <= count - 1)
 		{
-			dword visited[8];
+			dword visited[1];
 			bool started;
 
 			memset(visited, 0, sizeof(visited));
@@ -3751,6 +3757,10 @@ bool function_1f5560(long actor_index, vector3f *facing);
 /* jumps: an upward kick to the definition's jump speed (less for a tired
    player), relative to what the biped stands on; an actor may refuse.
    Retail keeps the biped on the stack (ret 4): its address is taken */
+// score 224 (was 224): frame 0x24 versus 0x28; ground/result homes, entry saves and state observations differ.
+// Natural parameter 239; late success 221 (subthreshold), shared vector producers 224; CRT relative
+// copy 224; common result exit 222 (subthreshold); all velocity names 224; late/shared 221;
+// natural parameter/common result/shared/CRT 234. All executable forms restored.
 // @retail 0xe4770
 bool __stdcall function_e4770(long arg_159e6d)
 {

@@ -581,6 +581,8 @@ bool __stdcall function_1152e0(long machine_index)
 // ordinal 100, with long result 98. All restored.
 // Portal-table/reference-table/both scan bases 56/56/56; paired long/short cluster values
 // 55/73; both bases with long clusters 59; common completion 53, with long clusters 48. All restored.
+// Portal index long/short 41/41; paired bit predicates 41, unsigned masks 41, shared tests 55;
+// paired native/promoted range inputs 41/65, promoted inputs with both predicates 65. All restored.
 // @retail 0x115a40
 bool __stdcall function_115a40(long machine_index, dword const *cluster_bits, bool *found)
 {
