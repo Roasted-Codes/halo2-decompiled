@@ -2834,6 +2834,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Scalar accumulator/contribution/output names, alone and combined, 398 each;
 // combined names with late constant found declaration 398. All eight restored.
 // Round 251: Case-scoped barrel/trigger/both/magazine/barrel+magazine/trigger+magazine/all selectors 398/398/398/398/398/398/398; all with full-width selectors 424. Original shared word selector restored.
+// Round 202: Full name switch with unknown-name exit/classifier/upper-first output subsets
+// 430/412/409/414/411/415/403; all with direct activity publication 411.
+// Original activity admission, dispatch, classifier and output normalization restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3283,6 +3286,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Round 337 (fast control 637): direct short/promoted barrel values 637/634;
 // direct weapon value/both short values 637/637; both promoted values 634;
 // first-use promoted barrel/both/immutable values 634/634/634. Gain 3 rejected; all restored.
+// Complete native tag-reference arrays with short/long/byte/word mode, raw/native interval
+// fields: 637/637, 639/639, 632/632, 637/637 (fast control 637). Five-point gains rejected;
+// original effect type, fields, body, parameter aliases and local qualification restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3550,8 +3556,14 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Branch-owned three query outputs 1436; direct barrel selectors 1537; direct input selector 1448;
 // all direct tag selectors 1542; integer input tables 1457; branch outputs/all selectors 1540;
 // unsigned-byte effect decisions 1436; branch outputs/integer tables 1457. Original body restored.
+// Round P208: ordinary inline request/reset/visible-owner helpers 1503/1436/1436;
+// request-reset/request-owner/reset-owner/all inline 1503/1503/1436/1503;
+// direct native input-table initialization 1436. Original helper declarations and body restored.
 // Existing visible-owner result, with request guard/reset chain/both 1436/1436/1436/1436;
 // each graph with Boolean activity 1477/1477/1477/1477. All helpers and body restored.
+// Round 202: Solver-owned finished/stopped outputs, barrel/function scope, output role names,
+// reversed declaration order in both scopes and native byte activity each 1448; both queries
+// without output defaults 1465. Original defaults, lifetimes and all game-call tuples restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

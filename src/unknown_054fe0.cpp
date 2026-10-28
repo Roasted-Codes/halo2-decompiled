@@ -1360,6 +1360,12 @@ struct s_player_properties
 // Round 25 on the no-current graph: both byte zeros removed 207; first/second/all
 // redundant zero groups removed 222/207/259; first/second small reset calls 226/229;
 // separate count publication and separate loop indices 198 each. Original body restored.
+// Lane 4 r106 (plain): the 0x40 group is a 16-byte player appearance (bytes) and retail's dword zeros
+// fit small memsets: the 12-byte group's memset then the appearance's give retail's zero block (the
+// big memset's eax for 0x40, a fresh zero for 0x70) with no `current` 224 (930 bytes), with retail's
+// default store order 224; no `current` with both/0x40/0x70 groups typed real 204/179/182 (not real
+// types). The name count stays in memory through the first loop in every form (the per-player memset
+// alone decides it); retail keeps it in esi. Retail also compares the clamped team as a movsx'd long.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

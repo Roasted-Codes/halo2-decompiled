@@ -78,6 +78,8 @@
 // frame 0x64/0x60 and shape/basis/wave homes remain.
 // Camera-shift homes, alternate shift homes, wave-result homes, wave-scale homes,
 // and four paired combinations all 594; frame and initial shape homes unchanged.
+// Round 201: basis/camera/input-copy consumer scopes, all seven nonempty combinations,
+// and the independent wave-scratch end scope 594 each (2631/2622). Original scopes and values restored.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -440,6 +442,9 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Native upper bound/point scale/both 615/626/626; state-array receiver/with upper bound 615/615; scale
 // plus array/all inputs/all role homes 626/626/626. All restored.
 // U/V entry ordering, seven combinations 615; definition then source 615.
+// Round 201: state/geometry/both consumer-end scopes 615/615/615; per-point scratch end,
+// with state/geometry/both endings, and combined scopes with library tint copy 624 each (2604 bytes).
+// Original scratch scopes, tint initialization, helper calls and endpoint masks restored.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

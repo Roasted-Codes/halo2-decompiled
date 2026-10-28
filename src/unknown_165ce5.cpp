@@ -1466,6 +1466,10 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // active-result preset 425; look/flags declarations at assignment 234; const first-assignment
 // look outputs 234; per-weapon scalar/channel declarations at assignment 234;
 // outer active/zoom declarations 234/234. Original body restored.
+// Round 225 (fast control 234, full 232): direct negative overlay result 414;
+// complete scope-first rate selection 416; native countdown store/test 234;
+// overlay/rate, overlay/countdown, rate/countdown and all three 422/414/416/422;
+// all plus primary-pointer admission 587. Original complementary states and all calls restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1864,6 +1868,11 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // query-produced result at four widths and early bool/byte defaults (fast control 411; plain baseline 410).
 // Scores [393, 393, 426, 428, 411, 411, 434, 435, 441, 441, 471, 470, 441, 441]. Original executable body
 // restored.
+// Signed-char blend consumer 411; uninitialized blend result at entry 411; full user/weapon/both
+// receivers at each use 599/603/796; with signed-char consumer 599/603/796 (fast control 411/2166).
+// All eight forms restored; ordinary baseline remains 410/2154.
+// Blend-producer scope, paired Boolean role names, duration/query names and their combinations
+// 411 each; reversed declarations with all scope/names 411 (fast control 411; full 410).
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

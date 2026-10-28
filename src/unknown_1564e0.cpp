@@ -88,12 +88,22 @@ void __stdcall function_35b90(void *material);
 void __stdcall function_363a0(void *vertices);
 void __stdcall function_1e930(long a);
 
-// score 75 (was 109): Frame 0x64 and retail length recovered with SSE playback ownership
+// score 64 (was 75): Frame 0x64 and retail length recovered with SSE playback ownership
+// Frame 0x64 and retail length recovered with SSE playback ownership
 // and centered-first rectangle selection; fullscreen word loads, vertex conversion/loop homes remain.
 // Earlier form used x87 conversions at frame 0x68. SSE body 103; direct screen fields 98;
 // centered-first 75; UV stores first 94; long ordinal 117; short corner 114; vertex storage first
 // 103; named bounds 103. Four-component publication orders uvxy/xyuv/uxvy/xuyv 65/73/75/74;
 // real conditional arms 38, exact-only one-use/cast forms restored. Plain centered-first 75.
+// Round 223: native edge defaults 116; all-long edges 77; independent corner 75;
+// two-use side predicates 85; output cursor 75; defaults/wide/cursor with predicates
+// 121/82/85. Position branches 73; UV then position branches 66; all branch stores
+// 65; UV then position branch stores 64 (plain, kept). Rectangle result 106; native
+// vertex initializer 109; rectangle with position branches in either store order
+// 54/64, match-only record forms restored. Fullscreen word loads and loop homes remain.
+// Complete independent short screen inputs 108; with native UV/position branches 119;
+// input scalars plus native cursor 107/119; unsigned bounded ordinals 108/119/107/119.
+// These shrink the frame to 0x58; original aggregate frame 0x64 and body restored.
 // @retail 0x156960
 void function_156960(void)
 {
@@ -123,10 +133,22 @@ void function_156960(void)
 	{
 		long corner = i + 1;
 
-		vertices[i].x = (corner & 2) ? right : left;
-		vertices[i].y = i > 1 ? bottom : top;
-		vertices[i].u = (corner & 2) ? g_4e9188.width : 0.0f;
-		vertices[i].v = i > 1 ? g_4e9188.height : 0.0f;
+		if (corner & 2)
+			vertices[i].u = g_4e9188.width;
+		else
+			vertices[i].u = 0.0f;
+		if (i > 1)
+			vertices[i].v = g_4e9188.height;
+		else
+			vertices[i].v = 0.0f;
+		if (corner & 2)
+			vertices[i].x = right;
+		else
+			vertices[i].x = left;
+		if (i > 1)
+			vertices[i].y = bottom;
+		else
+			vertices[i].y = top;
 		vertices[i].color = 0xffffffff;
 	}
 

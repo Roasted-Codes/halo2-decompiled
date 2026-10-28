@@ -101,6 +101,9 @@ static inline void sound_track_start_impulse(long index, long handle)
 // first, and the two calls take their argument in the other register.
 // typed/constant-size/forced element helpers 16/16/16; forced impulse helper 16;
 // parameter pointer 16; early handle 16; const track 16; no default 61; indexed byte address 16.
+// Member memcpy 16; entry value/reference 80/16; shared impulse input order 16;
+// short impulse index 45; index before parameter fill 17; short/unsigned loop index 57/16.
+// The scaled entry address still folds into the member load; the impulse pointer uses EDX.
 // @retail 0x225ab0
 void function_225ab0(void)
 {

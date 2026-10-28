@@ -278,11 +278,17 @@ bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6);
 bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool arg_3);
 
-// score 194 (was 194): frame 0x38 agrees; actor pool data is loaded into EBX here and
+// score 186 (was 194): frame 0x38 agrees; actor pool data is loaded into EBX here and
 // ECX in retail. Early actor-index retention, request tails and distance scheduling differ.
+// frame 0x38 agrees; actor-pool data takes EBX instead of retail ECX,
+// with early actor-handle retention, request-tail sharing and x87 scheduling still different.
 // Round 55: later-only and entry parameter references 194 each; point-difference and
 // magnitude helpers 194 each; direct stack reads at the first and all later calls 194 each;
 // unqualified result 207; separate false store and result read 208.
+// Actor/query, object/approach and movement output workspace names, all seven combinations,
+// each 194; all names with the two uninitialized query outputs at entry 194. Original body restored.
+// frame 0x38 agrees; actor pool data is loaded into EBX here and
+// ECX in retail. Early actor-index retention, request tails and distance scheduling differ.
 // Round 262: one native request buffer at entry/decision, with original/entry approach
 // storage, 199 each (frame 0x58); those four with both returns through the existing result
 // 204 each, 682 bytes. Original separate requests, storage and return paths restored.
@@ -291,6 +297,9 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 218: Both request names, reversed lookups with original/first/second/both request names,
 // target lookup first with original/first/both request names: 194/202/202/202/202/205/205/205
 // (fast control 194). Original restored.
+// Round 267: boarding/animation/approach failure guards, singly and all combinations,
+// 194 each; all guards with the existing request result 186; minimal request result
+// alone 186 (plain, 680 B). Neutral guards removed; pool/actor-index and x87 homes remain.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {
@@ -345,7 +354,8 @@ bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
                 local_11.type1c.seat_index = local_1->vehicle_seat_index;
                 local_11.type1c.unknowna = false;
                 local_11.type1c.unknownb = false;
-                return function_e6900(local_0->unknown018, &local_11);
+                local_5 = function_e6900(local_0->unknown018, &local_11);
+                return local_5;
             }
             if (local_0->unknown040)
             {
