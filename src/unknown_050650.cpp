@@ -492,6 +492,8 @@ static inline void actor_looking_rotate_in_place(vector3f *vector, vector3f cons
 	vector->k = vector->k * cosine + axis->k * parallel - cross.k * sine;
 }
 
+static __forceinline void actor_looking_rotate(vector3f *vector, vector3f const *axis, real angle);
+
 static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, real angle)
 {
 	real sine = (real)sin(angle);
@@ -771,6 +773,9 @@ done:
 // 9; a temporary caller (its only retail caller 0x1f38c0 is disabled here) 9; a cdecl compile-only
 // build gives ours too; shared actor getter or type 9 each; direct byte-base 9; offset local 9;
 // getter forceinline 9; data-base or slot locals 9 each; nested actor getter 9; a mode pointer 9.
+// Further forms: direct decoder result 42; low-mode rejection 38, with direct result 45;
+// path-first reset 21, with direct result 45; nested independent guards 9; native mode
+// snapshot 9; uniform getter observations 58. Original reset path and call values restored.
 // @retail 0x296580
 void function_296580(long actor_index)
 {
@@ -943,13 +948,19 @@ struct s_actor_looking_structure_view
 };
 
 /* Name inferred from the path traces and the idle-direction caller. */
+// score 80 (was 142): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
+// Result first 139; existing angular wrapper 468; vector producer 261; both 466;
+// native header/body induction with those producers 137/468/266/466.
+// Separate forced angular declaration 78/265/85/270; earlier cursor step 88;
+// real indexed candidate producer 80, kept at 924/924 bytes after plain confirmation.
+// The 78 form retains the old comma-stepped loop and is not kept.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
+	bool result = false;
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	s_actor_looking_structure_view *structure = (s_actor_looking_structure_view *)g_4e0348;
 	s_pathfinding_data *pathfinding = NULL;
-	bool result = false;
 	if (structure->pathfinding_count > 0)
 		pathfinding = structure->pathfinding;
 	if (actor->object_index == NONE && !actor->unknown229 && !actor->direction_locked)
@@ -972,14 +983,12 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 					short best_index = NONE;
 					real best_score = 0.f;
 					long rotation_index = 0;
-					vector3f *direction = directions;
-					for (short i = 0; i < 8; i++, rotation_index++, direction++)
+					for (short i = 0; i < 8; ++i)
 					{
+						vector3f *direction = &directions[i];
 						*direction = actor->forward;
 						real fraction = 1.f;
-						real sine = (real)sin((real)rotation_index * 0.785398185f);
-						real cosine = (real)cos((real)rotation_index * 0.785398185f);
-						actor_looking_rotate_in_place(direction, g_4687b0, sine, cosine);
+						actor_looking_rotate(direction, g_4687b0, (real)rotation_index * 0.785398185f);
 						function_26c590(actor->location.unknown10, NULL, &trace, pathfinding,
 							&actor->location.point.point, NONE, direction, 5.f, 0);
 						if (*(byte *)&trace.unknown00)
@@ -991,6 +1000,7 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 							best_score = score;
 							best_index = i;
 						}
+						++rotation_index;
 					}
 					if (best_index != NONE)
 					{

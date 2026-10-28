@@ -354,6 +354,10 @@ bool __stdcall function_fa9a0(long *value)
 }
 
 /* the direction, distance and time to a target in a straight line */
+// score 87 (was 87): normalizer result lifetime moves the zero carrier before EBP and delays ESI; retail has separate zero/fallback tails.
+// Shared point producer 81; shared inline normalize 84; shared scale-normalize 86;
+// point producer with those normalizers 78/80; conditional seconds with private/inline/scale
+// normalization 80/80/83. Shared arithmetic regrouping is exact-match-only; restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -392,6 +396,9 @@ bool function_fa580(real speed, point3f const *origin, point3f const *target, ve
 // store). Axis after sine/cosine 21; axis by components 71; double angle 3;
 // named sine/cosine 3; dword OR 3; helper reading its parameter through its
 // address 11 (flag order right, copy-in wrong).
+// Further forms: shared output setter 81; shared input setter 68; both setters 90;
+// complete normalizer input snapshots 163, with output/both setters 147/125;
+// all squared terms named 3; plain array-index input copy 68.
 // @retail 0xfbd40
 void function_fbd40(long projectile_index)
 {
@@ -570,21 +577,27 @@ struct s_projectile_material_response
 
 s_projectile_material_response g_547660;
 
-// score 69 (was 69): Material index/pointer and response cursor registers differ; both aligned loop entries are missing.
+// score 34 (was 69): Input index load width, loop entry alignment and response cursor calculation differ.
 // Indexed responses 69; pointer stepped in body 69; entry result 67; direct count 75;
 // direct material global 72; body range validation 69; single exit 69; entry result/indexed 67;
 // native current ancestry index 69; entry result/current index 67.
+// Native table-end traversal: cached count / result-gated 54/36, relational 54/36;
+// per-use count 60/65/60/65; result-gated ordinal 57/55, nullable material 57/55;
+// indexed producer/result-first/current-short combinations 58/56/58/56;
+// direct table bound 36, with result first 34; without unused parameter reference 49/49.
+// Kept direct table bound/result-first 34 (147/145 bytes), plain confirmed;
+// input index width, loop entries and cursor arithmetic remain.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
 {
+	s_projectile_material_response *result = NULL;
 	/* retail keeps material_index on the stack */
 	short const *reference = &material_index;
 	long response_count = definition->material_response_count;
 	byte *materials = (byte *)g_4e034c;
-	s_projectile_material_response *result = NULL;
 
-	while (material_index != NONE && material_index >= 0 &&
+	while (!result && material_index != NONE && material_index >= 0 &&
 		material_index < *(long *)(materials + 0x150))
 	{
 		byte *material = *(byte **)(materials + 0x154) + material_index * 0xb4;
@@ -592,19 +605,21 @@ s_projectile_material_response *__stdcall projectile_get_material_response(s_pro
 		if (!material)
 			break;
 
-		s_projectile_material_response *response = (s_projectile_material_response *)definition->material_responses;
-
-		for (long i = 0; i < response_count; i++, response++)
+		if (response_count > 0)
 		{
-			if (response->material_index == material_index)
+			s_projectile_material_response *response = (s_projectile_material_response *)definition->material_responses;
+
+			while (response != (s_projectile_material_response *)definition->material_responses + response_count)
 			{
-				result = response;
-				break;
+				if (response->material_index == material_index)
+				{
+					result = response;
+					break;
+				}
+				++response;
 			}
 		}
 		material_index = *(short *)(material + 8);
-		if (result)
-			return result;
 	}
 	if (!result)
 		result = &g_547660;
@@ -818,6 +833,8 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // Native real fields 72; named flag stores 72; conditional seconds 73; entry seconds 128;
 // seconds-first product 72; direct maximum reads 72; direct definition reads 219;
 // native fields/conditional seconds 73.
+// Two-use parent owner after its native type guard 72; with chained child zero
+// stores 74, named flags 72/74, complete seconds arms 73/75/73/75. Restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)
@@ -1156,12 +1173,17 @@ long function_189fe0(s_sound_request const *request, long tag_index);
 
 /* the effects and sounds of an effects block (a material's response) at
    a point */
-// score 4 (was 19): only the register arguments of the 0xfd740 call differ (retail
+// score 4 (was 4): only the register arguments of the 0xfd740 call differ (retail
 // passes the first sound in esi, the second effect in ecx, the second sound in edi
 // and the third effect in edx; ours ebx/edi/esi/edx), set by that callee's own body.
 // BLOCKED-BY 0xfd740. NUMBEROF loop bounds 17; parameter defaults in the effects
 // file's order 14; request filled in 0x1895f0's order 10; scale and audible bits
 // before the rest 4.
+// Coordinated selector output-parameter orders (original roles 0..5): 024135/042135 3;
+// 024315/042315/014325/032145 4; 041235/021435 3. Definition and both
+// callers changed together; every order restored because gains are at most one.
+// Caller body: separate unsigned ordinals 4; array names/order combinations 4/4/4;
+// both plain pointer walks with array names/order combinations 114/114/114/114.
 // @retail 0xfcea0
 void function_fcea0(long effects_index, point3f const *point, vector3f const *direction,
 	s_effect_owner const *owner, long index, vector3f const *normal)

@@ -195,8 +195,13 @@ void function_155ed0(void)
 // remaining-first expression 53; shared completion 75; named padding 53;
 // named mask 53; shared completion and mask 75; recomputed start 47;
 // named allocation extent 53; remaining extent with shared completion 86.
+// Round 22: explicit capacity store in the padding path/all paths 9/9; named alignment
+// difference 19; explicit size/result assignments 9/9; integer-address result 9;
+// const remaining/mask 9; reversed result-mask operands 9.
 // Further forms: unsigned-mask zero-alignment guard 28; aligned guard 20; flat guards 28;
 // named padding test 9. Signed-mask counterparts 36/45/36/40. Original body restored.
+// Initial base/capacity address ownership also differs. One captured capacity with
+// delta/shared-mask/early-publication combinations: 45/44/54/54/44/44/54/54; restored.
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {
@@ -367,6 +372,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 219: early texture outputs, output names, timestamp names and both names
 // 287 each; earlier large decision 286 (rejected); earlier size plus decision 295;
 // common void exit 287; SSE ownership original/Boolean 287/266, restored.
+// Round 223: two-use sound-interface value 274; allocation-size branches 256;
+// both 274; consistent movie-global reads 256; sound/movie 274; size/movie 256;
+// all three 274; per-branch volume arrays before channel arrays 256. All restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

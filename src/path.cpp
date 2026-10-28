@@ -266,7 +266,9 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 // the loop as `for (; node->parent != NONE; node = ...)` 31; a pathfinding local before the call 34; parent declared after the
 // output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93;
 // the end point named for the call only 31; the call's result in a named bool 31; `parent` as a const pointer 31; a trailing `continue` 31.
-// output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93.
+// Round 268: both library record copies 31; lookup-test result 87; true-first result 105;
+// long result 57; library copies with those three result forms 87/105/57;
+// cached parent advance 95. The 0x24 frame agrees; endpoint argument scheduling remains.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
@@ -311,6 +313,10 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 // alignment remain. Fast control 143; shared distance helper 143; result first 143; point homes 143; phase
 // node lifetimes 143; result from lookup 149; long child 142; branch-produced distance 105 fast/121 plain;
 // helper with phase nodes 143.
+// Round 268 (fast control 105 at 472 bytes): all three square terms 105; result in
+// both lookup arms 102; missing-key-first 145; squares with arm result 102; squares
+// with missing-key-first 145; missing-key-first with arm result 145; all three 145;
+// that with entry square declarations 145. The three-point fast gain is not retained.
 // @retail 0x270750
 bool function_270750(byte *buffer, long unknown, s_actor_point_target const *target,
 	real *distance, long a, long b)
