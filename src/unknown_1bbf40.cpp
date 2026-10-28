@@ -101,7 +101,7 @@ inline real distance3d_fast(point3f const *a, point3f const *b)
 	real j = a->y - b->y;
 	real k = a->z - b->z;
 
-	return (real)sqrt(j * j + (i * i + k * k));
+	return (real)sqrt(i * i + j * j + k * k);
 }
 
 void function_26c180(long actor_index);
