@@ -42,20 +42,25 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // per-row copies (x, z, x and z) on the 5 body 27/5/27; distance blocks through the copy 20/5.
 // Compile-only screens reproduce the folds: no read path, row order, declaration order, literal or
 // operand order makes the x row fold. All match-only forms restored.
-// Earlier 170 (was 175): frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
+// Round 83 on the 5 body (plain): re-measured 5; rows interleaved plus/minus per axis 53; side
+// vector scaled in place, then added 36 (1177 bytes); rows through the copy with the side j term
+// negated-first 5; const centre-pointer copy 5; side vector as a rotated point difference 257 (1182
+// bytes). Retail's x and y rows (centre components the side
+// vector already read) fold, the z row loads first; ours keep x loading first. All restored.
+// Earlier: frame 0x8c versus 0x94; secondary-result home and probe-tail normalization differ.
 // Word category 225; native clear state 170; direct origin 172; distance category 175; side workspace 175.
 // Native clear with direct origin 171, word category 234, short return result 178.
-// Earlier 170 (was 170): frame 0x8c versus 0x94; secondary-result home and probe tail differ.
+// Earlier: frame 0x8c versus 0x94; secondary-result home and probe tail differ.
 // Native clear with byte probe result 74 (not matched); fraction/index names 170/170;
 // earlier native clear declaration 170; short clear state 237; short clear with byte result 240 (not matched).
-// Earlier 170 (was 170): frame 0x8c versus 0x94; raw secondary-result home and common probe tail still differ.
+// Earlier: frame 0x8c versus 0x94; raw secondary-result home and common probe tail still differ.
 // Early clear/blocked/triple test results 221/173/179; all early test results 241;
 // shared preliminary predicate 186; floating consistency 415; size policy 402; target pointer 187.
 // frame 0x8c versus 0x94; secondary byte and quarter-point scheduling remain.
 // Shared byte plus product-first X/Z/XZ/XYZ/Y 241 each; native point 241;
 // axis-wise points 250; offset vector 244; original-arm publication 26 (not matched);
 // native category with publication 28; probe/result names 26/26 (not matched).
-// Earlier 170 (was 170): frame 0x8c versus 0x94 and secondary-result/point schedules remain;
+// Earlier: frame 0x8c versus 0x94 and secondary-result/point schedules remain;
 // first-point copy/add 273; displacement then add 5.
 // center then add 5; first-point initializer 26.
 // shared scalar offsets 47; external origin reference 26.
@@ -74,13 +79,13 @@ __declspec(noinline) short __stdcall function_1c8df0(long arg_0, point3f const *
 // Staged byte-flow positive/negative/both point names 5/5/5; native positive/
 // negative component arrays 5/5; existing shared scale for positive/both points
 // 276/210; direct quarter constant 5. All unmatched added-byte forms restored.
-// Earlier 170 (was 170): Frame 0x8c/0x94 and secondary-result tail remain; byte-flow quarter-point
+// Earlier: Frame 0x8c/0x94 and secondary-result tail remain; byte-flow quarter-point
 // XZY/YXZ/YZX/ZXY/ZYX completion 12/23/20/21/18; XYZ products then XYZ/ZXY centers 36/37; ZYX
 // products then XYZ centers 47. All added-byte forms restored without a match.
-// Earlier 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
+// Earlier: frame 0x8c/0x94 and secondary-result tail remain;
 // staged-byte negative point first 230; negative XZY/YXZ/YZX/ZXY/ZYX 11/17/14/18/18;
 // staged paired axes 53; both points staged 5. All added-byte forms restored.
-// Earlier 170 (was 170): frame 0x8c/0x94 and secondary-result tail remain;
+// Earlier: frame 0x8c/0x94 and secondary-result tail remain;
 // staged-byte center-left completion X/Z/XZ/Y 5/5/5/5; constant-left products X/Z/XZ 5/5/5;
 // both operand affinities on XZ 5. All unmatched added-byte forms restored.
 // Late length/classification/output/both direction workspaces at entry 170 each;
