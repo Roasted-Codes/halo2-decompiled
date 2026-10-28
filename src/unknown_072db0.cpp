@@ -1185,15 +1185,18 @@ void function_7e100(long current, const s_member_quality_collection *collection,
 long function_1931a0(long count, s_surface_description *variant);
 
 #pragma inline_depth(0)
-// score 15 (was 30): the group-identity copy matches retail's bytes now;
+// score 15 (was 15): the group-identity copy matches retail's bytes now;
 // still differ: the elapsed store is ordered after the stack cleanup, the
 // 0x7e210 call passes the session on the stack, and the summary stores load
 // their ratings in another order.
-// transport, summary loads and copy-tail alignment differ. Fast control 32;
+// Earlier transport, summary-load and copy-tail forms had fast control 32;
 // native rating record, native role names, native capacity expression, native
 // minimum observations, array minimum observations, capacity expression,
 // inline rating declaration and inline quality declaration 32/32/60/32/32/60/32/32.
 // Native output-record graph; maximum/population/both snapshots; record with maximum/population/both; native address assignment: 32 each (fast control 32). Original output graph and all calls restored.
+// Further forms (fast control 17): ordinary summary/elapsed/both stores 19/17/19;
+// elapsed accumulator/named expression 17/17; ratings at entry/before time 17/17;
+// complete range-state observations 17. Original body and inherited qualifications restored.
 // @retail 0x73530
 void function_73530(c_helper_a *helper, void *description)
 {

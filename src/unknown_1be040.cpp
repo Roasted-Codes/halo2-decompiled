@@ -64,11 +64,14 @@ point3f *function_b9dd0(long object_index, point3f *result);
 short __stdcall function_1c8df0(long object_index, point3f const *point, short team, short type,
 	void const *origin, long count, bool unknown, bool unknown2, bool unknown3, long *arg_9);
 
-// score 23 (was 35): the entry registers now agree; the object-pool load,
+// score 23 (was 23): the entry registers now agree; the object-pool load,
 // object-index reload before the position call and second-query argument setup
 // still differ. Slot data 23 (kept); late state store 41; position pointer 23;
 // origin pointer 23; late object lookup 61; direct slot data 35; query-result
 // local 23; late store with shared object index 55.
+// Further forms (fast control 26): existing header lookup 42; read-only object 26; both 42;
+// both output buffers at entry 26; byte/char completion 51/51; completion in both branches 47;
+// completion from admission tests 88. Original body and slot-data form restored.
 // @retail 0x1be120
 bool __stdcall function_1be120(long actor_index, s_slot *slot)
 {

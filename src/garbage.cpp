@@ -33,7 +33,7 @@ struct s_garbage_header_view
 
 void function_bb950(long object_index, bool add, long delta);
 
-// score 2 (was 16): only the expiration addition/store uses the ticks register
+// score 2 (was 2): only the expiration addition/store uses the ticks register
 // instead of the time register. Earlier: named `seconds` 14; `ticks + current_time` 14;
 // second flag before expiration 14; `real_to_long` plain/forceinline 45/14;
 // game time read in the expression 27. Union alone 16; final/both direct masks 16/16;
@@ -48,6 +48,9 @@ void function_bb950(long object_index, bool add, long delta);
 // ticks to duration_ticks, current_time to base_tick 2; local names duration to
 // tick_duration 2; native int conversion result 2; unsigned time carrier 2; staged seconds
 // product 2.
+// Further forms: time-first/ticks-first destination accumulation 2/2; time read after
+// seconds/duration 2/16; immutable sample products 2; conversion-only duration scope 2;
+// immutable object pointer 2; immutable flag pointer and time 2. Original body restored.
 // @retail 0x11bb40
 bool __stdcall function_11bb40(long object_index, long creation_argument1, long creation_argument2)
 {
