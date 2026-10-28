@@ -738,12 +738,9 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 
 real normalize2d(point2f *v);
 
-// score 168 (was 168): BLOCKED-BY 0xfa1a0. Frame 0x48 and the prologue agree. Our 0xfa1a0 takes its
-// time-scale pointer in EDX where retail pushes it (retail spends EDX on the gravity pointer and keeps
-// the distance output in EDI), so both trajectory call setups differ, and with them the result's
-// register (retail DL), the object-table register (retail ESI), the request copy and the exits; the type
-// scan's found exit re-tests `i < 6`; retail keeps three separate direction stores and returns the
-// validity flag (`mov al, bl`) on the invalid exit.
+// score 171 (was 171): frame 0x48 and entry stores agree; the found-search re-test,
+// trajectory result DL, retry homes, object/query allocation and movement tails differ.
+// The trajectory helper uses retail ret 0x2c; the older extra-EDX blocker is absent.
 // Forms tried: search then selection 172; unsigned scan 178; fixed do/while 191; types arm first 191;
 // fallback setters 195; split plus unsigned scan 223; signed-long search 192; signed-byte search 188;
 // exact exhaustion 210; named first normalization result 172; low-bit presence guard 228; native type
@@ -793,6 +790,8 @@ real normalize2d(point2f *v);
 // 183 (matches through +0x111); 0xfa1a0 time scale read once into a value 166 (0xfa1a0 262, still EDX).
 // Round 10 (lane 11): both of those with `return valid` 167; with a plain `for`/`break` scan 167; with a
 // bottom-tested scan 207; with the selection inside the scan 183; retry vertical renamed to sort first 168.
+// Round 236: native request/movement/selected-type result and all combinations, then native table
+// fields 171 each; all restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {

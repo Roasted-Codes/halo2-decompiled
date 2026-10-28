@@ -378,7 +378,7 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 {
 	return (real)fabs(plane->normal.k * point->z + plane->normal.j * point->y + plane->normal.i * point->x - plane->d);
 }
-// score 404 (was 404): frameless entry and the result in EDI agree. Left: retail keeps the
+// score 404 (was 404): frameless guard and EDI output agree; camera/corners EBX/EBP and initial store scheduling differ.
 // camera in EBP and the corner array in EBX (here exchanged); retail reads the copied rectangle
 // through the copy's address (`[eax+4]`...) after the identifier store, where ours reads
 // `[edi+0x14]`... ahead of it; plane input/product residency and the first store schedule.
@@ -480,6 +480,8 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // expansion 654/755. Original diagnostic and transform helpers restored.
 // Round 149: Split native normal/distance outputs with all matrix, normal-input and distance-output
 // pointer/reference contracts [476, 476, 476, 476, 476, 476, 476, 476]; all restored.
+// Round 236: conditional diagnostic pointer updates for right/top/tip/all
+// corner/right+tip/top+tip/all/all including initial result 404 each; all restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {
