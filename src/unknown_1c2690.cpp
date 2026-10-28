@@ -86,6 +86,12 @@ void function_1c2690()
 // score 4 (was 4): retail loads the three pointers before the two writes of
 // the valid flag and pushes the deleted one after both writes, ours pushes it
 // between them.
+// Further trials: complete pointer observations first/second/listener 4; complete pointer
+// observations first/listener/second 4; complete pointer observations
+// second/first/listener 4; complete pointer observations second/listener/first 4; complete
+// pointer observations listener/first/second 4; complete pointer observations
+// listener/second/first 4; both pool pointers before the stores 4; both pool pointers with
+// byte saved entry state 4.
 // @retail 0x1c27a0
 void function_1c27a0()
 {

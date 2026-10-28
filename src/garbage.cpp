@@ -40,6 +40,11 @@ void function_bb950(long object_index, bool add, long delta);
 // shared flag-word pointer 4; pointer and named seconds 2; expiration accumulator 2;
 // flag pointer before the call 2; direct late game time 27; settings pointer 25;
 // ticks declared first 2; named expiration result 2.
+// Further trials: local names ticks to tick_delta 2; local names current_time to
+// start_tick 2; local names ticks to tick_delta, current_time to start_tick 2; local names
+// ticks to duration_ticks, current_time to base_tick 2; local names duration to
+// tick_duration 2; native int conversion result 2; unsigned time carrier 2; staged seconds
+// product 2.
 // @retail 0x11bb40
 bool __stdcall function_11bb40(long object_index, long creation_argument1, long creation_argument2)
 {
