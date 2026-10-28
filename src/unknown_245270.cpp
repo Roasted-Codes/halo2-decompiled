@@ -403,6 +403,9 @@ void function_245400(s_source_245400 const *source, long index,
 // 207/207. Original producers, equality and all body operations restored.
 // Full native transform values, mutable/const with native plane field and point workspace
 // subsets: 223 each; source enters ECX but frame grows to 0x58 and length 796. Original restored.
+// Round 380: two-use masked plane ordinals as word/short, original/signed-code
+// side tests and production after/before the edge: 222/222/203/203/207/207/209/209.
+// Original full-width masked expressions and complete executable body restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
