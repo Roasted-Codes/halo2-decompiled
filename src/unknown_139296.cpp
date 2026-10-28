@@ -428,6 +428,9 @@ bool function_22acb4(long player_index);
 // Round 347: complete second result as unsigned byte on retained/first-enum/second-enum/both
 // producer graphs 269/204/250/280; signed byte repeats 269/204/250/280.
 // The second-enum byte form recovers the one-slot prologue, but later operations regress; body restored.
+// Round 257: Plain four-entry source/destination mapping loops, original/source-bit order,
+// byte fields 304/304; word fields 286/286; dword fields 292/292; int fields 292/292.
+// Original scalar masks restored; extra second-mask spill and persistent constants remain.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

@@ -145,6 +145,9 @@ PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 // Round 204: Actual state-owner input to the existing step, owner last/first with
 // bool/byte/short/long completion, 164 each. Original helper and both traversals restored;
 // separate pool/iterator homes, early null and successor EBP remain.
+// Round 257: Real shared squad fields at declared offsets, existing getter/direct indexing,
+// each with native iterator datum/second-pass actor/both: all eight 164. Shared header, private
+// iterator and body restored; separate pool/iterator, early null and successor homes remain.
 // @retail 0x1c7bb0
 void function_1c7bb0()
 {

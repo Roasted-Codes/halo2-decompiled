@@ -1426,6 +1426,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // `movzx eax, byte [edi+0x19]; test al, 0xa` after the update call, where ours folds `test byte`
 // (`!= 0`, two bit tests, a bool local, bitfield/word/shift views and a bool cast all fold).
 // Apply that set once the movzx form is found.
+// Round 257 (fast base 243): Active int/byte/signed-byte carriers 418/417/417;
+// each with complete idle-settings observations at uses 414/413/413; original bool with
+// those observations 270; int active with read-only idle settings 418. Original body restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

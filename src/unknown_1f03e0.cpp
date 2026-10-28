@@ -407,7 +407,7 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
     out->k = a->i * b->j - a->j * b->i;
 }
 
-// score 144 (was 177): Frame 0x14 agrees; request/count registers, projection and cross scheduling remain.
+// score 144 (was 144): Frame 0x14 agrees; request/count registers, projection and cross scheduling remain.
 // Earlier: Frame 0x14 agrees; request/count/table registers and cross publication still differ.
 // Earlier: frame 0x14 agrees; request/count registers and cross scheduling differ.
 // Word component handle 207; unsigned selection 203; final scale helper 203;
@@ -452,6 +452,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // 144; only selected helpers with direct outputs 144 (989/977 bytes, plain confirmed and kept).
 // First-only/zero-only/other-only helper with direct outputs 178/178/175; averaging-only support
 // declaration 144; both average values directly published 221. Original average result join retained.
+// Round 257: On the direct snapshot-safe projection graph, one conditional-input shared call
+// 228; signed-int count 144; read-only component 144; call/count, call/receiver, count/receiver
+// and all three 228/228/144/228; signed-int scan/selection ordinals 144. Original body restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -590,6 +593,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // at retail length. Original field reads restored; direct-dot displacement and SIMD schedule remain.
 // Round 155: Existing flag predicate: forced bool shift/mask, ordinary byte, ordinary bool
 // shift/mask, forced word/long/signed byte: 182/182/182/182/182/182/299/182. Original byte predicate and complete vector body restored.
+// Round 257: Complete rotation/limit/both projection products and each with complete initial
+// products 186 each; all three with their native first subtotal 239; all three native subtotals
+// alone 245. Original expressions restored; matched caller preserved in every preview.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
