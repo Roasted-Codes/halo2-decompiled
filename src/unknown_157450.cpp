@@ -3879,6 +3879,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // decision carriers 477/528/540/470/477/528/540; dword subtype 470.
 // Scalar stack-home names for cause, modifier, special test, elapsed, interval, delay, total and mode each 470.
 // Round 235: elapsed/timer/classification consumption scopes, all seven combinations 470 each; statistics-to-message consumption scope 470.
+// Complementary category bool/byte/short/long 470/470/477/550; with self-player result
+// 470, opposing-team result 526, both 526, word category with both 480. Original
+// category, decision bytes and all event/timing work restored; extra frame dword remains.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

@@ -43,9 +43,9 @@ const dword g_455978[81] = {
  0x0, 0x3f3504f3, 0xbf3504f3, 0x0, 0xbf3504f3, 0xbf3504f3, 0x3f13cd3a, 0x3f13cd3a, 0xbf13cd3a,
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
-// score 306 (was 317): aligned frame 0x1d4 agrees; the sample count matches (retail's
-// setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack). Structural cause of
-// the register differences: our LTCG inlines 0x11bed0 here (retail calls it, esi = location), and the
+// score 306 (was 306): aligned frame 0x1d4 and incoming registers agree; small stack homes
+// and selective location/range expansion remain. Count is `27 - (flag ? 0 : 9)`. Earlier graph:
+// The register differences came from our LTCG inlining 0x11bed0 here (retail calls it, esi = location), and the
 // inlined copy takes esi, which swaps the optional inputs (esi/edi) and evicts the table cursor from esi
 // in the loop; retail also inlines 0x279740's range check at the first release only, ours calls it twice.
 // A separate noinline declaration of 0x11bed0 in its own file keeps the call (entry registers then match
@@ -131,6 +131,10 @@ const dword g_455978[81] = {
 // factor with radius scale 331; factor with blend setter 331.
 // all three producers 331; complete normalized-vector setter 321.
 // All executable forms restored.
+// Current query/radial/all scalar identities 306; shared planar normalization and its
+// three identity combinations 307; presence object identity 306. Coordinated range-helper
+// inline 419, plus shared planar normalization 416; both lose matched controls and are
+// restored. Original executable body and every external declaration retained.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

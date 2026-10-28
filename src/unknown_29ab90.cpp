@@ -62,6 +62,7 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // score 396 (was 396): frame 0x5c versus 0x64, actor/input transport and x87 homes differ.
 // Earlier 396 from 428: magnitude helpers now give retail's copies, memory-operand products and epsilon;
 // magnitude helpers now give retail's copies, memory-operand products and epsilon;
+// magnitude helpers now give retail's copies, memory-operand products and epsilon;
 // frame 0x5c versus 0x64 and the convention remain: ours takes arg_0 in ECX and arg_2 in EAX (kept in
 // EBX) and folds the +0x290 vector into [ebp+0x290]; retail keeps that pointer in EBX, loads arg_2 into
 // ESI after the position call and takes only arg_0 in EAX. x87 homes also differ.
@@ -121,6 +122,12 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // address gives retail's convention (arg_0 in EAX, arg_2 on the stack) and length, 373 (difflib-aligned
 // 402 -> 277); left then: the +0x290 pointer in EBX (ours folds it), frame 0x58/0x64, the magnitude's x87
 // order and its zero test, and the magnitude in a dead parameter home.
+// File default convention and complete scalar selections 396; result-first reusable
+// clamp 439, with scalar joins/default convention/both 439. Clamp result assigned on
+// all paths 451, with default convention or scalar joins 451. Those ten trial forms restored;
+// private helpers and sole disabled declaration unchanged. Frame/input and x87 homes remain.
+// Named ratio numerator 395; both complete turn factors 389; both forms together 383 kept.
+// All three computed parts retain the original floating grouping and operands; frame/input homes remain.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
@@ -174,10 +181,13 @@ void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 			real local_19 = local_14 * local_14;
 			if (!(local_19 > 0.001f)) local_19 = 0.001f;
 			real local_20 = local_2->field_1c * 0.5f;
-			local_20 = local_20 * local_20 / local_19;
+			real numerator = local_20 * local_20;
+			local_20 = numerator / local_19;
 			real local_21 = local_13.i * local_15.i + local_13.j * local_15.j;
 			if (!(local_21 > 0.0f)) local_21 = 0.0f;
-			local_18 = (1.0f - local_21) * 0.5f * (local_20 * 0.5f) * 4.0f;
+			real turn_weight = (1.0f - local_21) * 0.5f;
+			real scaled_ratio = local_20 * 0.5f;
+			local_18 = turn_weight * scaled_ratio * 4.0f;
 		}
 		real local_19 = local_2->field_4c > 0.05f ? local_2->field_4c : 0.05f;
 		local_18 = function_29ab93(local_18, local_19, 1.0f);

@@ -852,6 +852,9 @@ bool function_1f8660(long arg_0);
 // block with the buffer outside 52; the actor looked up at every use 243; the slot and entry-guard
 // conditions written as nested ifs 7/7. Only the actor and buffer homes remain exchanged; the
 // opening body is restored.
+// Round 206: complete position after/before orientation 143/150; position plus post-clear buffer 215;
+// buffer after request clear/constants 198/198; each with real reference-field equality 224/224;
+// renewed actor view for the complete direction phase 223. Actor/buffer homes remain exchanged.
 // @retail 0x1ad6a0
 bool __stdcall function_1ad6a0(long arg_0, s_slot *arg_1)
 {

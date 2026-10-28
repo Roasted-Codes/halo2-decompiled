@@ -205,6 +205,10 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // reversed terms and operands 8; helper terms/shared magnitude/named square 8/8/8; squared accumulation 10;
 // dot3f 8; an early final return 83; shared normalization with reversed terms 8; indexed vector2f locals 8;
 // comparison operands reversed 8; an explicit false arm 27; single-product operand swaps 8/8.
+// Complete single-exit dimensional result 4 (two-point gain, restored); horizontal-first dispatch 71; both workspaces
+// at function scope 6; named native vector2f components 6; complete named dot 6; both named products 14; single-exit
+// byte/integer results 57/62; direct horizontal success on that graph 62; full conjunction assignment 83;
+// single exit plus y-first normalization stores 8; single exit plus native fast normalization 4 (restored).
 // @retail 0x296d60
 PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
@@ -1007,38 +1011,41 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 PRIVATE bool function_2980d0(long actor_index, bool looking, bool use_character_bounds, vector3f *direction)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
-	s_type_952051 *aiming = (s_type_952051 *)&actor->idle_aiming_direction_type;
-	s_type_952051 *look = (s_type_952051 *)&actor->idle_looking_direction_type;
 	if (use_character_bounds && actor->unrestricted_looking && actor->attention_enabled &&
-		function_297d30(actor_index, aiming))
+		function_297d30(actor_index, ((s_type_952051 *)&actor->idle_aiming_direction_type)))
 	{
 		actor->idle_aiming_timer = function_297c10(actor_index, use_character_bounds, true);
 		actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
-		*look = *aiming;
+		*((s_type_952051 *)&actor->idle_looking_direction_type) = *((s_type_952051 *)&actor->idle_aiming_direction_type);
 		actor->attention_selected = true;
 	}
 	else
 	{
-		if (actor->idle_aiming_timer == 0 || !function_297a50(actor_index, use_character_bounds, aiming))
+		if (actor->idle_aiming_timer == 0 || !function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_aiming_direction_type)))
 		{
-			if (use_character_bounds && (random_next(&g_4e7408->unknown0) & 0x8000) != 0 &&
+			if (use_character_bounds && (random_next(&g_4e7408->unknown0) & 0x8000) > 0 &&
 				actor->idle_looking_timer > g_510c54->field_2_3 &&
-				function_297a50(actor_index, use_character_bounds, look))
-				*aiming = *look;
+				function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type)))
+				*((s_type_952051 *)&actor->idle_aiming_direction_type) = *((s_type_952051 *)&actor->idle_looking_direction_type);
 			else
-				function_297660(actor_index, true, use_character_bounds, aiming);
+				function_297660(actor_index, true, use_character_bounds, ((s_type_952051 *)&actor->idle_aiming_direction_type));
 			actor->idle_aiming_timer = function_297c10(actor_index, use_character_bounds, true);
 			actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
-			*look = *aiming;
+			*((s_type_952051 *)&actor->idle_looking_direction_type) = *((s_type_952051 *)&actor->idle_aiming_direction_type);
 		}
 		if (looking && (actor->idle_looking_timer == 0 ||
-			!function_297a50(actor_index, use_character_bounds, look)))
+			!function_297a50(actor_index, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type))))
 		{
-			function_297660(actor_index, false, use_character_bounds, look);
+			function_297660(actor_index, false, use_character_bounds, ((s_type_952051 *)&actor->idle_looking_direction_type));
 			actor->idle_looking_timer = function_297c10(actor_index, use_character_bounds, false);
 		}
 	}
-	if (!function_2967b0(actor_index, looking ? look : aiming, use_character_bounds, direction, NULL, NULL))
+	bool decoded;
+	if (looking)
+		decoded = function_2967b0(actor_index, ((s_type_952051 *)&actor->idle_looking_direction_type), use_character_bounds, direction, NULL, NULL);
+	else
+		decoded = function_2967b0(actor_index, ((s_type_952051 *)&actor->idle_aiming_direction_type), use_character_bounds, direction, NULL, NULL);
+	if (!decoded)
 		*direction = actor->forward;
 	return true;
 }
@@ -1064,6 +1071,13 @@ struct s_actor_looking_turn_request
 	vector3f forward;
 };
 
+// score 530 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
+// Tried the out-of-line predicate declaration 546 fast; horizontal aggregate copies 562 fast; initial native setters 546 fast;
+// explicit looking success/fallback stores 532 fast, 527 plain (three-point gain, restored); target point or selected vector
+// renamed 546 fast each; validity at function scope 546 fast; aggregate inputs plus explicit stores 549 fast;
+// out-of-line predicate plus explicit stores 532 fast, 527 plain (restored). Unchanged preview 546 fast.
+// Separate noinline declarations in caller and callee units 570 fast, 590 plain at 1952/2020 (restored);
+// this removes the expansion and recovers the 0xc8 frame, but later scheduling/layout regress.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

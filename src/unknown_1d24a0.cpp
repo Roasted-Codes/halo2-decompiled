@@ -105,6 +105,16 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  return function_30bf0(arg_3);
 }
 // score 920 (was 920): Frame 0x1f0 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// Round 105: retail has 23 more mulss, 22 more movss and 15 more movaps, ours ~10 extra counted loops
+// (xor/dec/jne/add): retail's scale helper is unrolled. The helper as three statements gives retail's frame
+// 0x1d4 and the same 32 calls with matching instruction counts between calls in all but four segments, but
+// 4008 bytes and 1199: our build keeps the scaled/residual vectors (local_37, local_40, local_50, local_52) in
+// XMM registers where retail keeps them in memory (it loads and stores each component). On that base: the
+// residual subtract written in both arms 1181/1161 (retail's layout, frame 0x1d0), the add/subtract helpers as
+// loops 1074-1192 (frame grows), all three last-block loops unrolled 1233, plain external helpers 1199. On the
+// loop base: locals renamed in either order 920 (identical code), local_1 declared after local_2/local_3
+// 1010, local_3 before local_2 920, the record pointer as `data + index` 920, a shared simulating-state
+// helper for both body tests 939, a word scale counter 920 (not unrolled).
 // Round 97: offset vector built in place (no copy) 1019 (frame 0x1e4, 4167 bytes); body position
 // through its pointer 1046 (0x1e4, 4153 bytes): retail is longer, so it has more copies, not fewer;
 // marker, accumulated velocity and response output at function scope 920 each (no frame change).
