@@ -366,6 +366,9 @@ void __stdcall function_117790(long index)
 // Complete squared displacement terms 81; point/vector/marker role identities 67; both 81;
 // native word attachment ordinal 96; with squares/roles/both 105/96/105; complete graph
 // with displacement declared before point acquisition 105. Original executable body restored.
+// Round 221: Origin pointer observed at use 148; definition at every use 168; both 171;
+// record at every use 270; with origin/definition/both 252/321/303; all plus shared correction
+// difference helper 303. Original captures restored; pool-base and copy carriers remain.
 // @retail 0x117a80
 void function_117a80(long index)
 {
@@ -478,6 +481,9 @@ void function_117dd0(long index, vector3f *wind)
 // All restored.
 // Complete late normal snapshot 189; with symmetric displacement 226, direct drag field 194, both 186;
 // early normal snapshot 192, with displacement 225, direct drag 194, both 186. Snapshots grow the frame.
+// Round 221: Shared point-setter boundaries for both weights/both sums/both 108/108/108;
+// complete tangent/force assignment boundaries alone/with either/both point phases 195 each;
+// all with intrinsic fast-history copy 194. One-point gains rejected; all original source restored.
 // @retail 0x118140
 void function_118140(long index)
 {

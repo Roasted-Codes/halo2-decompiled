@@ -456,7 +456,7 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 12 (was 101): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
+// score 12 (was 12): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
 // object lookup gives 4, kept out: one use) and copies field_f4 at the end through EAX (ours ECX).
 // Lane 10 r15: 0xd0e00 arm first 37; camo arm as a (unit, flag) inline helper 12; final store
 // indexed from the +0x2b0 field 12; field_f4 read through the parameter 12; field_92 local with a
@@ -518,6 +518,8 @@ static __forceinline byte *function_9d952(long arg_0)
 // Round 14: raw mask 229; raw mask with long counter 178; Boolean with long counter 206;
 // parent/tail/both pool sharing 207/178/207; outer mask 178; second mask reread 101 kept;
 // original helper 101; early field_92 local 169; value cursor 223.
+// Round 221: Scalar memcpy tail/both publications 12/12; with branch-produced player result 153/153;
+// memmove tail/both 34/89, with branch-produced player result 158/172. All restored.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {
