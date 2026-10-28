@@ -81,19 +81,6 @@ struct s_search_result
 	long field200;
 };
 
-/* the search result's details block: kind, count, value, score, distance, bounded */
-struct s_search_details
-{
-	long field_0;
-	byte unknown04[0x10 - 0x04];
-	long field_10;
-	long field_14;
-	byte unknown18[0xec - 0x18];
-	long field_ec;
-	long field_f0;
-	long field_f4;
-};
-
 /* a session search */
 struct s_session_search
 {
@@ -718,10 +705,7 @@ done:
 	return result;
 }
 
-// score 103 (was 104): the count is read through the entry pointer instead of the details
-// pointer, which moves the loop cursor to entry+0x1fc (retail entry+0x10c); the field
-// displacements still differ.
-// Cursor taken from the results before the
+// score 113 (was 113): the details cursor is entry+0x1f8 (retail entry+0x10c), so every field
 // offset differs, and the kind/count homes differ. Cursor taken from the results before the
 // end pointer gave retail's results reuse after the compare (128 -> 113). Round 52:
 // single-exit compare 128; typed details block 128; separate details cursor 154, with the typed
@@ -764,8 +748,8 @@ void __stdcall session_search_score_and_sort(s_session_search *search)
 	s_search_result *local_0 = entry + MAXIMUM_SEARCH_RESULTS;
 	for (; entry < local_0; entry++)
 	{
-		s_search_details *local_1 = (s_search_details *)&entry->field10c;
-		entry->field1f8 = 0;
+		byte *local_1 = (byte *)entry + 0x10c;
+		(*(long *)(local_1 + 0xec)) = 0;
 		if (entry->valid && entry->unknown01 && !session_search_result_allowed(search, entry))
 			entry->unknown01 = false;
 		if (entry->valid && entry->unknown01)
@@ -776,9 +760,9 @@ void __stdcall session_search_score_and_sort(s_session_search *search)
 			long count;
 			if (has_details)
 			{
-				kind = local_1->field_0;
-				value = local_1->field_14;
-				count = SEARCH_LONG(entry, 0x11c);
+				kind = (*(long *)local_1);
+				value = (*(long *)(local_1 + 0x14));
+				count = (*(long *)(local_1 + 0x10));
 			}
 			else
 			{
@@ -786,20 +770,20 @@ void __stdcall session_search_score_and_sort(s_session_search *search)
 				value = SEARCH_LONG(entry, 0x5c);
 				count = SEARCH_LONG(entry, 0x6c);
 			}
-			local_1->field_f0 = abs(value - SEARCH_LONG(search, 0x4c));
-			if (local_1->field_f0 <= g_4ce230)
-				entry->field1f8 += g_4ce234 - ((g_4ce234 - g_4ce238) / (g_4ce230 + 1)) * local_1->field_f0;
+			(*(long *)(local_1 + 0xf0)) = abs(value - SEARCH_LONG(search, 0x4c));
+			if ((*(long *)(local_1 + 0xf0)) <= g_4ce230)
+				(*(long *)(local_1 + 0xec)) += g_4ce234 - ((g_4ce234 - g_4ce238) / (g_4ce230 + 1)) * (*(long *)(local_1 + 0xf0));
 			if (kind == SEARCH_LONG(search, 0x38))
-				entry->field1f8 += g_4ce380;
+				(*(long *)(local_1 + 0xec)) += g_4ce380;
 			long bounded = count < 0 ? 0 : (count > g_4ce384 ? g_4ce384 : count);
-			local_1->field_f4 = bounded;
-			entry->field1f8 = (long)(entry->field1f8 + bounded * g_4ce388);
+			(*(long *)(local_1 + 0xf4)) = bounded;
+			(*(long *)(local_1 + 0xec)) = (long)((*(long *)(local_1 + 0xec)) + bounded * g_4ce388);
 			if (has_details)
 			{
 				if ((SEARCH_LONG(entry, 0xf8) < g_4ce11c || SEARCH_LONG(entry, 0xfc) < g_4ce118) &&
 					SEARCH_LONG(search, 0x58) >= g_4ce11c && SEARCH_LONG(search, 0x5c) >= g_4ce118)
-					entry->field1f8 += g_4ce390;
-				entry->field1f8 += g_4ce23c[SEARCH_LONG(search, 0x6c)][SEARCH_LONG(entry, 0xb8)];
+					(*(long *)(local_1 + 0xec)) += g_4ce390;
+				(*(long *)(local_1 + 0xec)) += g_4ce23c[SEARCH_LONG(search, 0x6c)][SEARCH_LONG(entry, 0xb8)];
 			}
 			if (entry->unknown74)
 			{
@@ -815,7 +799,7 @@ void __stdcall session_search_score_and_sort(s_session_search *search)
 				}
 				else
 					score = g_4ce200[9];
-				entry->field1f8 += score;
+				(*(long *)(local_1 + 0xec)) += score;
 			}
 		}
 	}
