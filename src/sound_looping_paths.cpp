@@ -494,6 +494,10 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // uniform cluster at use 272, with bool/short/long result 272 each. All restored.
 // Round 210: Late transition/fade/tag and their three strict pairs give
 // 242/244/266/253/278/291; early tag/fade alone 270/267. Original restored.
+// Round 16: query declarations portals-indices-clusters/portals-clusters-indices 223 each;
+// environment-index lexical name 223; request-field duration workspace 247; plain-inline cue helper 452;
+// forced listener search 223; separate query arrays and count declared after them 223 each.
+// Original body and both helper declarations restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
