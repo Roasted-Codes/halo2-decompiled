@@ -1477,13 +1477,13 @@ real function_dfa60(long arg_159e6d)
 
 	if (biped->unknown13c != NONE)
 	{
-		byte *player = g_4e8c24->data + (biped->unknown13c & 0xffff) * 0x21c;
+		real sprint = 0.0f;
 		byte *globals = *(byte **)((byte *)g_4e034c + 0xf4);
+		byte *player = g_4e8c24->data + (biped->unknown13c & 0xffff) * 0x21c;
 		long delay = vehicle_round_ticks(g_510c54->field_2_3 * *(real *)(globals + 0x20));
 		long duration = vehicle_round_ticks(g_510c54->field_2_3 * *(real *)(globals + 0x24));
 		long used = vehicle_round_ticks(*(short *)(player + 0x17e) * *(real *)(globals + 0x28));
 		long remaining = *(short *)(player + 0x17c) - used;
-		real sprint = 0.0f;
 
 		speed = *(real *)(player + 0x19c);
 		if (remaining > delay)
@@ -1916,18 +1916,22 @@ void function_e0c70(long arg_159e6d)
 	*((byte *)&biped->flags_348 + 1) &= 0x9f;
 }
 
+/* retail calls this out of line from 0x1d43d0 */
+__declspec(noinline) bool __stdcall function_e0d70(long arg_159e6d, real *seconds);
+
 /* how long the dead biped's ragdoll has been settling */
 // @retail 0xe0d70
 bool __stdcall function_e0d70(long arg_159e6d, real *seconds)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
+	bool result = false;
 
 	if (biped->unknown3aa)
 	{
-		*seconds = g_510c54->rate * 0.15f * (real)(char)biped->unknown3aa;
-		return true;
+		*seconds = (real)(char)biped->unknown3aa * (g_510c54->rate * 0.15f);
+		result = true;
 	}
-	return false;
+	return result;
 }
 
 real function_1ec5f0(void *ragdoll);
@@ -2931,30 +2935,22 @@ void __stdcall function_e2e90(long arg_159e6d, long *field_7c, long *state_name,
 
 /* starts the biped's landing: its landing time, and for one that can
    collapse, a ragdoll for a random part of it */
+// score 27 (was 39): retail widens the halved landing time to 16 bits (`movzx cx, al`) before the seed step and sign-extends it at the multiply, ours folds both into `movzx edx, al` (seed then in ecx, not eax); tried: `(short)half` as the argument 27, a named seed pointer 28, `x = x + random_index(...)` 27, a one-use `short` range local 27, a file-local `__forceinline` short-parameter copy of the helper 27.
 // @retail 0xe3f00
 void function_e3f00(long arg_159e6d)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
 	byte *definition = BIPED_DEFINITION_GET(biped);
-	long ticks = vehicle_round_ticks(g_510c54->field_2_3 * *(real *)(definition + 0x214));
 
-	if (ticks > 0xff)
-	{
-		ticks = 0xff;
-	}
-	else
-	{
-		ticks = vehicle_round_ticks(g_510c54->field_2_3 * *(real *)(definition + 0x214));
-	}
-	biped->unknown39d = (byte)ticks;
+	biped->unknown39d = (byte)MIN(vehicle_round_ticks(g_510c54->field_2_3 * *(real *)(definition + 0x214)), 0xff);
 	function_114b60(NONE, 0x14, arg_159e6d, 0xd, 0);
-	if (biped->unknown39d > 1 && ((*(dword *)(definition + 0x1f0) >> 10) & 1) && biped->physics_mode != 3)
+	if (biped->unknown39d > 1 && TEST_FIELD_BIT((*(dword *)(definition + 0x1f0) >> 10) & 1) && biped->physics_mode != 3)
 	{
 		byte half = biped->unknown39d >> 1;
 
-		if (half)
+		if (half > 0)
 		{
-			biped->unknown39d += (byte)((random_next(&g_4e7408->unknown0) * (short)half) >> 16);
+			biped->unknown39d += (byte)random_index(&g_4e7408->unknown0, half);
 		}
 		function_b9b90(arg_159e6d, false);
 		function_1e54d0(&biped->physics_mode, 3);
@@ -3554,8 +3550,7 @@ void function_e4330(long arg_159e6d, real height)
 	}
 }
 
-struct s_unknown_13bf00;
-extern s_unknown_13bf00 *g_510c50;
+bool function_13cb40(void);
 void __stdcall function_e4d90(long arg_159e6d, long type, real scale, long a);
 
 /* steps the biped's landing recovery and picks its landing animation */
@@ -3566,37 +3561,27 @@ void __stdcall function_e4450(long arg_159e6d, long *names)
 	char ticks = (char)++biped->unknown34e;
 	char duration = (char)biped->unknown34f;
 	bool first = (ticks < duration ? duration : (ticks > 1 ? 1 : ticks)) == ticks;
-	byte *state;
 
 	if (ticks >= duration)
 	{
-		s_biped *current = BIPED_GET(arg_159e6d);
-
-		current->unknown34c = NONE;
-		current->unknown34e = 0;
-		current->unknown34f = 0;
+		function_e4300(arg_159e6d);
 	}
 	if (biped->unknown34c == 0 &&
 		(names[1] == 0xa000014 || names[1] == 0x9000015 || names[1] == 0x9000016 || names[1] == 0xa000017) &&
 		(char)biped->unknown34e >= (char)biped->unknown34f >> 1)
 	{
-		s_biped *current = BIPED_GET(arg_159e6d);
-
-		current->unknown34c = NONE;
-		current->unknown34e = 0;
-		current->unknown34f = 0;
+		function_e4300(arg_159e6d);
 	}
-	if ((!g_510c50 || !((byte *)g_510c50)[5]) && (biped->unknown34e == 1 || first))
+	if (!function_13cb40() && (biped->unknown34e == 1 || first))
 	{
 		function_e4d90(arg_159e6d, 5, 1.0f, 2);
 	}
 	if (biped->unknown34c != NONE)
 	{
-		long name;
+		byte *state = (byte *)biped + *(short *)((byte *)biped + 0x12a);
 
-		state = (byte *)biped + *(short *)((byte *)biped + 0x12a);
-		name = *(long *)(state + 0x7c);
-		if ((name == 0xd00003f || name == 0x90006b2) && function_10f340(arg_159e6d, 0x7000101, 0x90006b2))
+		if ((*(long *)(state + 0x7c) == 0xd00003f || *(long *)(state + 0x7c) == 0x90006b2) &&
+			function_10f340(arg_159e6d, 0x7000101, 0x90006b2))
 		{
 			names[1] = 0x90006b2;
 			return;

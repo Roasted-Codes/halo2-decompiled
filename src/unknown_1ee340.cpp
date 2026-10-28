@@ -1,6 +1,7 @@
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "normalize3d.h"
+#include "vector_products.h"
 #include <xmmintrin.h>
 #include <float.h>
 #include <new>
@@ -151,7 +152,20 @@ c_vertex_shape::c_vertex_shape(s_shape_source *source, byte type, long data, lon
 short function_120850(const vector3f *vector);
 bool function_23a220(const point2f *point, short count, const point2f *points, real epsilon);
 
-// score 247 (was 247): frame 0x7c versus 0x90; retail reloads `result` from its stack slot and
+// score 192 (was 247): frame 0x84 versus 0x90: retail keeps origin.x/y in xmm6/xmm7 until the
+// offset (ours re-reads all three from the shape), so it spills first.i/second.i into homes and puts
+// the found byte at +0x38 and the plane at +4; every later stack offset differs by that. Retail also
+// computes the direction from its start loads (ours from memory operands) and has a dead second
+// `movsx` of the axis. Round 81 (fixed, 247 -> 192): the projection as the matched sibling 0x14a370
+// writes it (bool positive, the table read at each use, vertex2d/vertex element pointers in the loop:
+// retail's countdown unroll with a destination pointer, `result` no longer held in ebp), `found = true`
+// first in the hit block (retail's two exits), the existing cross3f, the direction from ray->start
+// before the start copy, the second edge before the first. Tried then: 0x120810 for the projections
+// 354; aggregate polygon copy 435; origin pointer 290; struct ray copy 279; origin struct copy or
+// fields, found at top/after the normalize, offset before the plane/edges or after the dot, `&&`
+// range test, call count without the cast, hit-point product orders, normal before fraction, offset
+// from ray->start, dot3f operand order: 192-335, none lower.
+// Before round 81 (247): frame 0x7c versus 0x90; retail reloads `result` from its stack slot and
 // shrink-wraps ebx/ebp/edi into the hit block, where ours keeps `result` in ebp (pushed at entry)
 // and duplicates the early failure exits. Retail's unrolled copy loop counts down with a
 // destination pointer; ours keeps the index. Retail's frame: length/fraction, plane, direction
@@ -189,6 +203,12 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // original terms restored. Normal/ray/hit and polygon homes remain.
 // Full shared normalization with cross/point/plain-loop combinations 253/250/253/250/258/261/258/261. Three-
 // point 250 forms restored; frame is now 0x7c versus 0x90.
+// Round 64: retail's extra 0x14 bytes are the edge vectors' homes (first.i and second.i are spilled
+// into them, the hit point later shares second's) and two loop spills: retail keeps origin.x/y in
+// xmm6/xmm7 until the offset, ours reloads all of origin from the shape, so no edge spills. Origin
+// as a vertex pointer 278 (aligned 194 vs 203); destination and vertex pointers in the loop 328 (not
+// unrolled); per-vertex row pointer 293; origin copied after the direction 248; that with the
+// direction from ray->start 245.
 // Lane 9 r23: retail's homes (frame offsets) are fraction 0, plane 4, direction 0x14, ray start
 // 0x20, hit point 0x2c, hit byte 0x38, spills 0x3c..0x4f, polygon 0x50; ours are size-ordered (hit
 // byte 3, fraction 4, direction 8, ray start 0x14, point 0x20, plane 0x2c, polygon 0x3c). Hit point
@@ -199,17 +219,15 @@ void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_res
 {
 	point3f origin;
 	real_point3d_set(&origin, vertices_raw[0], vertices_raw[1], vertices_raw[2]);
+	vector3f direction;
+	vector3d_from_points3d(&ray->start, &ray->end, &direction);
 	point3f ray_start;
 	real_point3d_set(&ray_start, ray->start.x, ray->start.y, ray->start.z);
-	vector3f direction;
-	vector3d_from_points3d(&ray_start, &ray->end, &direction);
 	vector3f first, second;
-	vector3d_from_points3d(&origin, (point3f *)&vertices_raw[4], &first);
 	vector3d_from_points3d(&origin, (point3f *)&vertices_raw[8], &second);
+	vector3d_from_points3d(&origin, (point3f *)&vertices_raw[4], &first);
 	plane3f plane;
-	plane.n.i = first.j * second.k - first.k * second.j;
-	plane.n.j = first.k * second.i - first.i * second.k;
-	plane.n.k = first.i * second.j - first.j * second.i;
+	cross3f(&first, &second, &plane.n);
 	bool found = false;
 	normalize3d(&plane.n);
 	plane.d = 0.0f;
@@ -225,30 +243,30 @@ void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_res
 		if (bounded == fraction)
 		{
 			short axis = function_120850(&plane.n);
-			long side = axis * 2 + (plane.n.n[axis] > 0.0f ? 1 : 0);
+			bool positive = plane.n.n[axis] > 0.0f;
 			point3f point;
 			point.x = fraction * direction.i + ray_start.x;
 			point.y = fraction * direction.j + ray_start.y;
 			point.z = fraction * direction.k + ray_start.z;
-			long first_axis = g_440b94[side][0];
-			long second_axis = g_440b94[side][1];
 			point2f projected;
-			projected.x = point.n[first_axis];
-			projected.y = point.n[second_axis];
+			projected.x = point.n[g_440b94[axis * 2 + positive][0]];
+			projected.y = point.n[g_440b94[axis * 2 + positive][1]];
 			point2f polygon[8];
 			for (long i = 0; i < vertex_count; ++i)
 			{
-				polygon[i].x = vertices_raw[i * 4 + first_axis];
-				polygon[i].y = vertices_raw[i * 4 + second_axis];
+				point2f *vertex2d = &polygon[i];
+				point3f const *vertex = (point3f const *)&vertices_raw[i * 4];
+				vertex2d->x = vertex->n[g_440b94[axis * 2 + positive][0]];
+				vertex2d->y = vertex->n[g_440b94[axis * 2 + positive][1]];
 			}
 			if (function_23a220(&projected, (short)vertex_count, polygon, 0.0f))
 			{
+				found = true;
 				result->fraction = fraction;
 				result->normal.i = plane.n.i;
 				result->normal.j = plane.n.j;
 				result->normal.k = plane.n.k;
 				result->field_c = plane.d;
-				found = true;
 			}
 		}
 	}

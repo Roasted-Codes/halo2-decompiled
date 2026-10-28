@@ -210,6 +210,11 @@ __forceinline void variant_string_get(long tag_index, long string_handle, word *
 // word/short index local 212/212; word index and helper 212; short index and helper 212.
 // Round 146: type declared second and field_8 by value (which 0x193ba0 and 0x193c70 need) 30;
 // the by-value field_8 needs no address-taken read.
+// Round 31 (lane 12): retail loads the point source into eax before the two field stores; ours keeps it
+// in its stack home (with or without the field_8 read). Plain field_8 read 220; indexed destination with
+// stepped source 30 (same code); stepped destination with indexed source 219 (frame 0x404); string loops
+// on the shared counter 30; name third in the parameters, as the callers' loads order it, 30 (callers
+// still match), the same with the plain field_8 read 220 (three callers lost).
 // @retail 0x1936e0
 void function_1936e0(s_built_variant *variant, long type, s_variant_field_8 field_8, long description_string, long field_5a0, long const *points, long field_59c, long name_string)
 {
