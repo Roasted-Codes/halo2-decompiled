@@ -875,7 +875,7 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
     }
 }
 
-// score 157 (was 157): frame 0xc versus retail 0x10; entry/value homes and deferred descriptor observations remain.
+// score 155 (was 157): frame 0xc versus retail 0x10; entry/value homes and deferred descriptor observations remain.
 // frame 0xc versus 0x10, value/entry homes and delayed selector reads differ.
 // Distinct branch-counter homes 157; shared writer input mask alone/with counters 185; common store
 // alone/with counters 294; shared bank result alone/with body entry steps 311; decoded register test 177.
@@ -929,7 +929,7 @@ void function_17170(byte *state, word const *range)
     word remapping = shader_remapping(state)->packed;
     if (!(remapping & 0xfe00))
     {
-        for (long i = 0; i < (*range >> 9); ++i, entry += 4)
+        for (long i = 0; i < (*range >> 9); entry += 4, ++i)
         {
             word packed = *(word const *)entry;
             store_shader_mask(state, packed, (packed >> 6) & 15, g_467068[entry[2] & 7], values[entry[3]]);
@@ -938,7 +938,7 @@ void function_17170(byte *state, word const *range)
     else
     {
         byte const *mapping = *(byte **)(*(byte **)(state + 0x20) + 0x24) + (remapping & 0x1ff) * 4;
-        for (long i = 0; i < (*range >> 9); ++i, entry += 4)
+        for (long i = 0; i < (*range >> 9); entry += 4, ++i)
         {
             word packed = *(word const *)entry;
             long slot = packed & 7;
