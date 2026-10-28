@@ -120,6 +120,9 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // native numeric truth alone/with entry default 397/394; rotation input/axis/both
 // native copies 466/502/553; both copies with root default 557. All restored.
 // Round 251: Rotation helper role orders axis-input-angle-output, input-angle-axis-output, axis-angle-input-output, angle-axis-input-output, input-output-axis-angle, axis-output-input-angle, output-axis-input-angle, output-angle-axis-input: 389/389/389/389/389/389/389/389. Original helper contract and both alias-safe calls restored.
+// Round 211: Caller-side CRT copies for first/second/rotation inputs, all seven combinations, 389
+// each; all three plus planar input copy 404/1696. Original copies and helpers restored; early J
+// and magnitude/yaw home reuse remain. All three matched controls survived.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)
