@@ -298,6 +298,10 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	return result;
 }
 
+// score 121 (was 146): Frame 0x30 agrees; entry EBP save, target stack transport, x87 carriers/order and loop
+// alignment remain. Fast control 143; shared distance helper 143; result first 143; point homes 143; phase
+// node lifetimes 143; result from lookup 149; long child 142; branch-produced distance 105 fast/121 plain;
+// helper with phase nodes 143.
 // @retail 0x270750
 bool function_270750(byte *buffer, long unknown, s_actor_point_target const *target,
 	real *distance, long a, long b)
@@ -313,7 +317,7 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	{
 		s_path_node_key_view *node = &lookup->nodes[index];
 		real path_distance = function_210970(&node->entry_point, target) + node->path_distance;
-		real closest_distance = 0.0f;
+		real closest_distance;
 		if (input->attractor_valid)
 		{
 			point3f start_point, end_point, closest;
@@ -325,6 +329,10 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 			double dz = (double)closest.z - input->attractor_point.z;
 			real value = (real)sqrt(dz * dz + dx * dx + dy * dy);
 			closest_distance = value > node->attractor_distance ? node->attractor_distance : value;
+		}
+		else
+		{
+			closest_distance = 0.0f;
 		}
 		if (attractor_distance)
 		{
