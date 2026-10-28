@@ -1342,6 +1342,12 @@ struct s_player_properties
 // four-long group and a fresh ecx for the three-long group). Three-long group as real 0.0f 215;
 // both groups as memsets 235 (941 bytes; the parameters test becomes `test`, but the zero registers
 // land on the wrong groups); three-long/four-long memset alone 240/240; both memsets reversed 235.
+// Round 66 (plain): no `current` pointer (its fields read through the player entry at each use) 198: retail's
+// owner in EDX, `test` parameters check and requested-record cursor (+0x1138), 917 bytes, but the zero is then
+// hoisted into ESI for the second loop where retail keeps the name count (ESI, reloaded at the latch); with a
+// named requested pointer 199 (890 bytes); with the four-long group as a memset 226, both groups 224 (930
+// bytes, aligned 101 -> 55: the zeros are local again, the name count still in memory); with the mask read
+// from the field 198.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
