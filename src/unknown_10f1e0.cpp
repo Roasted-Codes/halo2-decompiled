@@ -1429,6 +1429,10 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 241: Complete complementary permission bool/byte/short/long 572/572/616/609;
 // with complementary base interruptibility 593/593/632/619. Original body restored;
 // frame eight versus twelve and requested/state/result homes remain.
+// Round 30: Complete depletion complement bool/byte/short/long 450/450/466/477; with late overlay
+// complement 458/458/445/477. The short pair recovers frame twelve but gains only five (dropped).
+// On that frame: true result here/at entry 445/445; entry byte/signed byte 548/548; live entry true
+// default bool/byte/short/long 511/563/559/548. All statuses, defaults and lifetimes restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2381,6 +2385,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // input/branch 727; branch/original 713; branch/input 690; branch/branch 690.
 // On the secondary input-first form (ret 8): tag second 694; state before control 694;
 // Boolean transition 702; tag second with Boolean transition 702. Original body restored.
+// Round 30: Complete transition complement bool/byte/short/long 727/727/668/667; coupled with
+// permission-override complement 727/727/668/667. Original flags, helper and body restored;
+// request/control homes and ret 4 versus ret 8 remain.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2709,6 +2716,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // 205/216/202/217; unit at every use 188, plain 195. Reduced unchanged control 198;
 // all restored against full baseline 155. Action query now matches; its return-use forms
 // previously grew the frame and remain excluded.
+// Round 30: Immutable set/mode/lookup results at entry in seven subsets, then all with the constant
+// animation default at entry: 173/173/167/194/189/199/189/173 (expanded control 155).
+// Original table observations and all lifetimes restored; frame 0x3c versus 0x38 remains.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
