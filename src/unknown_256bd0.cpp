@@ -177,6 +177,9 @@ struct s_object_flags_256bd0
 // Noinline initializer plus ordinary step reaches frame 0x110 at 194/1070;
 // seven-point form restored. Original declarations, bodies and calls restored;
 // activity spill remains.
+// Round 245: overlap-safe selected-position/direction/both transfers 280/256/279;
+// placement transfer alone/with position/with direction/all three 280/282/283/283;
+// fallback-direction transfer alone 208. Original copies and iterator restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

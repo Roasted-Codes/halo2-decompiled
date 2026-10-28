@@ -394,6 +394,9 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // 199/196/199/243; scale+velocity/direction+velocity/all 255/243/255; all with
 // shared velocity squared length 255. Direction contracts lose two matched
 // siblings in preview; every original helper contract and body restored.
+// Round 245: shared in-place scale orders ikj/jik/jki/kij/kji 208/209/216/223/222;
+// complete factor-first products in ijk/jik/kji order 196/209/222. Original helper restored.
+// Back-edge reload order, attraction temporaries and serial velocity stores remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
