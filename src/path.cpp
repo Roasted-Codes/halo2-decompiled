@@ -265,6 +265,9 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 // Round 268: both library record copies 31; lookup-test result 87; true-first result 105;
 // long result 57; library copies with those three result forms 87/105/57;
 // cached parent advance 95. The 0x24 frame agrees; endpoint argument scheduling remains.
+// Round 270: readonly native receivers 31; promoted lookup index 89; parent-handle
+// traversal 31, readonly 31; complete endpoint 110, with parent handle 110; complete
+// start input 134; word success result 65. All restored; frame 0x24 and call scheduling remain.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
@@ -305,7 +308,7 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	return result;
 }
 
-// score 121 (was 146): Frame 0x30 agrees; entry EBP save, target stack transport, x87 carriers/order and loop
+// score 121 (was 121): Frame 0x30 agrees; entry EBP save, target stack transport, x87 carriers/order and loop
 // alignment remain. Fast control 143; shared distance helper 143; result first 143; point homes 143; phase
 // node lifetimes 143; result from lookup 149; long child 142; branch-produced distance 105 fast/121 plain;
 // helper with phase nodes 143.
@@ -313,6 +316,10 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 // both lookup arms 102; missing-key-first 145; squares with arm result 102; squares
 // with missing-key-first 145; missing-key-first with arm result 145; all three 145;
 // that with entry square declarations 145. The three-point fast gain is not retained.
+// Round 270 (fast control 105): shared attractor receiver 137; separate sqrt result
+// 105; entry point workspaces 105; entry distance outputs 105; attractor with point/
+// distance entry declarations 137/137; failure CRT vector copy 105; all groups 137.
+// All restored; full score 121, frame 0x30 and incoming target/EBP differences remain.
 // @retail 0x270750
 bool function_270750(byte *buffer, long unknown, s_actor_point_target const *target,
 	real *distance, long a, long b)

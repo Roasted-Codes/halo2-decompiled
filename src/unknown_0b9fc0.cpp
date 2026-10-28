@@ -221,12 +221,15 @@ __forceinline short machine_round(real value)
 PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed);
 PRIVATE void machine_release_rigid_bodies(long machine_index);
 
-// score 81 (was 112): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
+// score 81 (was 81): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
 // Round 204: native portal entry 81 kept plain; default-first policy 100; both 106 (subthreshold); shared final update 81; long/unsigned-word policy 102/81; six-use flags 108; flags/default 117; chained clears 81.
 // Round 268: six-use destination flags receiver 81; reset after both clears 81;
 // receiver with six-use source bits 108; receiver with later reset 81; source bits
 // with later reset 108; all three 108; final default-first dispatch with receiver 81;
 // that plus later reset 81. Original portal, policy, flag stores and reads restored.
+// Round 270: native object-bit pointer/reference receivers 93/93; either with later
+// reset 93; either with default-first policy 91 (first +0x7f), with both 92. All
+// eight restored, including the named real bitfield type; initial carriers and merged clears remain.
 // @retail 0x115020
 void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine)
 {

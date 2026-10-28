@@ -109,7 +109,7 @@ void function_118140(long);
 void __stdcall function_118430(long);
 void function_117080(long);
 
-// score 50 (was 54): retail adds the pool data to the record offset before the store (`add eax, edx`),
+// score 50 (was 50): retail adds the pool data to the record offset before the store (`add eax, edx`),
 // reloads the pool after the `lea` of the next index, and gives the inlined next-index search other
 // registers (result edx, count edi, bitmap esi). Pool read directly at each use as in 0x1160c0 54 (reload
 // now after the `lea` as retail); with typed record arithmetic 54; with no slot local 54; with record and
@@ -120,6 +120,9 @@ void function_117080(long);
 // Round 268: explicit search result 50; unsigned slot 50; word slot 51; unsigned
 // datum handle 50; explicit search result with those three carriers 50/51/50;
 // shared out-of-line datum conversion 102. All original helper and field reads restored.
+// Round 270: native iterator called/inline 89, with CRT scalar clear 89; called/called
+// 124, with CRT 121; inline/inline 89, with CRT 89; original traversal with CRT
+// scalar clear 76, unsigned slot 76. All restored; record-address and search homes remain.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
