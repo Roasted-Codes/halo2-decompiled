@@ -594,6 +594,7 @@ extern vector3f *g_4687a4;
 /* the biped object type's update (+0x40): riding in a vehicle or biped,
    else its controls, its physics mode's movement, its animation, its
    camera and the unit update */
+// score 295 (was 305): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0xdd360
 bool __stdcall function_dd360(long arg_159e6d)
 {
@@ -658,7 +659,7 @@ bool __stdcall function_dd360(long arg_159e6d)
 		s_biped_physics_output output;
 
 		if (((biped->flags_10a >> 2) & 1) ||
-			(biped->physics_mode != 2 && !((*(dword *)(definition + 0x264) >> 3) & 1)))
+			(biped->physics_mode != 2 && !(TEST_FIELD_BIT((*(dword *)(definition + 0x264) >> 3) & 1))))
 		{
 			biped->facing_goal.k = 0.0f;
 			if (function_30bf0(&biped->facing_goal) == 0.0f)

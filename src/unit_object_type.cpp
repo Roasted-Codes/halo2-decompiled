@@ -3020,6 +3020,7 @@ void function_c75d0(s_unit_motion *a, s_unit_motion *b, real scale)
    +0x2b8 per second up to 1 while flag 3 is set (set here when its team
    +0x138 is not at peace with the campaign's team 16), else down to 0;
    +0x2b4 by a third per second by flag 4 */
+// score 78 (was 92): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0xc6810
 void function_c6810(long unit_index)
 {
@@ -3035,7 +3036,7 @@ void function_c6810(long unit_index)
 			unit->flags_134 |= 8;
 		}
 	}
-	if ((unit->flags_134 >> 3) & 1)
+	if (TEST_FIELD_BIT((unit->flags_134 >> 3) & 1))
 	{
 		unit->unknown2b0 += unit->unknown2b8 * g_510c54->rate;
 		if (unit->unknown2b0 > 1.0f)
@@ -3279,6 +3280,7 @@ bool __stdcall function_cc460(long object_index)
 /* the unit's team (+0x138): its player's, else its actor's, else for a
    vehicle the team its riders share (riders in seats with bit 11 count
    apart; any disagreement leaves it NONE) */
+// score 111 (was 118): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0xc6990
 void function_c6990(long unit_index)
 {
@@ -3322,7 +3324,7 @@ void function_c6990(long unit_index)
 				s_unit_seat_definition *seat =
 					&UNIT_SEATS(UNIT_DEFINITION_GET(UNIT_GET(iterator.child_value)))[iterator.child_short];
 
-				if ((*(dword *)&seat->flags >> 11) & 1)
+				if (TEST_FIELD_BIT((*(dword *)&seat->flags >> 11) & 1))
 				{
 					other_team = rider->unknown138;
 				}
@@ -4242,6 +4244,7 @@ void function_c50a0(long unit_index)
    riders, in two passes (plain seats, then seat groups whose rider is in
    place), recursing into ridden units; tells 0x1bbdf0 when the driver
    changed */
+// score 188 (was 199): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0xcc810
 void __stdcall function_cc810(long vehicle_index)
 {
@@ -4251,7 +4254,7 @@ void __stdcall function_cc810(long vehicle_index)
 
 	vehicle->unknown248 = NONE;
 	vehicle->unknown24c = NONE;
-	if ((*(dword *)(definition + 0xbc) >> 26) & 1 && vehicle->parent_index != NONE && vehicle->actor_index == NONE &&
+	if (TEST_FIELD_BIT((*(dword *)(definition + 0xbc) >> 26) & 1) && vehicle->parent_index != NONE && vehicle->actor_index == NONE &&
 		(1 << ((byte *)g_4e0300->data)[(vehicle->parent_index & 0xffff) * 0xc + 3]) & 3)
 	{
 		vehicle->unknown24c = vehicle->parent_index;
@@ -6049,6 +6052,7 @@ static long unit_weapon_rounds(long weapon_index, long magazine_count, bool chec
    replaced only by a fresher one, an empty weapon only when it adds
    rounds, not a fully used one for AIs; the player code and the engine
    have the last word, then the weapon learns its holder */
+// score 1009 (was 1032): its flag tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0xcd7b0
 bool __stdcall function_cd7b0(long unit_index, long weapon_index, bool *modes)
 {
@@ -6094,7 +6098,7 @@ bool __stdcall function_cd7b0(long unit_index, long weapon_index, bool *modes)
 		}
 	}
 	dword weapon_flags = *(dword *)(UNIT_DEFINITION_GET(UNIT_GET(weapon_index)) + 0x12c);
-	bool dual_wieldable = (weapon_flags >> 22) & 1 || (weapon_flags >> 23) & 1;
+	bool dual_wieldable = TEST_FIELD_BIT((weapon_flags >> 22) & 1) || (weapon_flags >> 23) & 1;
 	bool second_hand_only = (weapon_flags >> 23) & 1;
 	long *slot = unit->weapon_object_indices;
 	for (long i = 0; i < 4; i++, slot++)
