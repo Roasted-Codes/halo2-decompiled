@@ -1099,6 +1099,9 @@ struct s_looping_promotion_table
 // shared class lookup/one-use short class index 30 (unmatched, restored).
 // Native definition getter 52; both native getters 52; both/short curve 56; composed getters 52.
 // Element/definition registers, class-load position and curve widening remain.
+// Curve produced by short tests 70; with native word publication 70; bool tests/word 52;
+// short default/word 56; original bool/word 52; short conditional/word 56;
+// native definition with short tests/default and word publication 70/56. Restored.
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {

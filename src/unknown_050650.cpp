@@ -989,6 +989,10 @@ struct s_actor_looking_structure_view
 // candidate/trace scope, entry trace, entry horizontal, all entry workspaces and workspace names 80 each;
 // single short ordinal 137; single long ordinal 198; declaration-time path pointer 214;
 // int angle ordinal 80; two long ordinals 214; two int ordinals 214. Counter homes, rotation schedule and tail remain.
+// Existing sine/cosine rotation consumer: named angle 144; sine/cosine locals 80;
+// cosine first 86; trig before candidate 80; fraction after rotation 154;
+// angle ordinal stepped at last use 156; both shared dot products 144 (regrouped,
+// exact-match-only); immediate successful publication return 224. Restored.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {

@@ -361,6 +361,12 @@ bool __stdcall function_fa9a0(long *value)
 // Same-arithmetic private normalizer: one magnitude exit 86; separate result 93;
 // native failure guard 87; direct complete-vector output with those 122/116/122,
 // alone 122; one magnitude exit with local home names 86. Restored.
+// Complete setters: input 81; output 87; fallback 90; fallback/output 114;
+// input/output 70 (plain 70, three caller matches lost); all 104; complete
+// time arms with output/all setters 100/118. Native point/output 70; with late
+// time/full arms/conditional time 94/95/70; input/output late/entry time 94/96;
+// native point/output entry time 96; input setter/library output copy 81.
+// The 70 forms change input registers; 81 gains only six. All restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -593,6 +599,9 @@ s_projectile_material_response g_547660;
 // Short ancestry with direct endpoint 34; positive ordinal/body cursor 49; unguarded ordinal 55;
 // positive while ordinal 49; short ancestry/ordinal 48; per-use count/ordinal 66;
 // multiply-used response base 34; response base/short ancestry 34. Word input and cursor/loop entries remain.
+// Result-owned response cursor: endpoint 40, ordinal 39, relational endpoint 40;
+// direct ordinal/endpoint success returns 79/67; result cursor with per-use count
+// ordinal/endpoint 70/73; short ancestry with result ordinal 39. Restored.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
@@ -848,6 +857,9 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // Early attachment counter 109; native while cursor 72; both 109; parent declaration
 // at entry 72; parent/tag names 72; incoming operand names 72; all-use parent
 // observations 72; those with early counter 109. Restored.
+// Separate parent type admission 72; separate type/owner/state admissions 72;
+// native parent mask named at its computation 72; scan-scoped child receiver 72;
+// receiver with those parent tests/mask 72/72/72; receiver/named reciprocal 72. Restored.
 // @retail 0xfd560
 void function_fd560(long projectile_index, long object_index, short node_index, point3f const *point,
 	vector3f const *forward)
