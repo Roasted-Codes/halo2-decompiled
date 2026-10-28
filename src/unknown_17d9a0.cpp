@@ -518,11 +518,18 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 587 (was 587): frame 0x21dc and the definition/output registers agree with the pivot offset
-// rotated in place, the mode read at each use and the plane flip tested as bit 15; 3615 bytes against
-// 3647. Retail increments the first loop's index before its call; the count and plane spill slots
-// sit in a different order; the axis length is summed i, k, j without keeping k on the x87 stack and
-// its j/k components are preloaded for the scale; the rotation schedule differs after that.
+// score 572 (was 587): the axis now comes from vector3d_from_points3d with the length summed in
+// retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
+// does; that frame is 0x21e4 against retail's 0x21dc (8 bytes more below the plane), 3631 bytes against
+// 3647. The definition/output registers agree with the pivot offset rotated in place, the mode read at
+// each use and the plane flip tested as bit 15. Retail increments the first loop's index before its
+// call; the count and plane spill slots sit in a different order; retail preloads the axis j/k
+// components for the scale; the rotation schedule differs after that. Round 30 (fast, on the kept
+// form): the scale through vector3f_scale 572; the offset rotated inside the matrix position through a
+// pointer 619; axis declared with the selected points 572; the sign through dot3f 632; min/max stored
+// before the end copy 571 (store order as retail, count unchanged). Before the keep: counts declared
+// face count first 587 (store order as retail); the subtraction helper on the `faces[i++]` loop 566,
+// with the j, k, i sum 560.
 // Round 12 (lane 10): retail computes the pivot offset straight into the matrix position (and
 // copies only the i/j components it still needs), rotates it there in place, writes the forward/left/up
 // rotations directly into the matrix and adds the start point last. The offset in the matrix position
@@ -669,10 +676,8 @@ void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 					} while (edge_index != first_edge);
 				}
 				vector3f axis;
-				axis.i = end.x - start.x;
-				axis.j = end.y - start.y;
-				axis.k = end.z - start.z;
-				real length = (real)sqrt(axis.i * axis.i + axis.k * axis.k + axis.j * axis.j);
+				vector3d_from_points3d(&start, &end, &axis);
+				real length = (real)sqrt(axis.j * axis.j + axis.k * axis.k + axis.i * axis.i);
 				if (!(fabs(length) < 0.0001f))
 				{
 					real inverse = 1.0f / length;

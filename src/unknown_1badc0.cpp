@@ -55,6 +55,10 @@ real normalize2d(point2f *arg_0);
 // Round 345: Native original/center/both CRT copies 220/220/220; entry point
 // storage alone/with original/center/both copies 218/218/218/218; both copies
 // and entry storage with radius before center 213 (seven-point gain below gate). All restored.
+// Round 194: original-mode common bool/byte/long completion 248/274/262;
+// native query-test completion 274; Boolean/query-test forms with radius first
+// 243/274; common Boolean with entry points 248; query-test completion
+// with entry points and radius first 274. Original result graph restored.
 // Round 254: entry collision-sentinel initialization with original/first-point/center/both
 // entry storage 269/269/269/269; with radius-before-center 269/269/269/269.
 // Original late collision initialization, point storage and executable body restored.
