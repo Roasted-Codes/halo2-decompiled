@@ -201,6 +201,17 @@ short __stdcall function_1c04f0(long actor_index, s_slot *slot, bool active)
 // Partial unit copy 104, with aggregate target or CRT point copy 104 each (all restored);
 // CRT point copy/aggregate target alone 140/140; aggregate target/early material 138;
 // uniform unit copy at entry 234, after position 161, with early material/slot data 161/161.
+// frame 0xa0 versus 0xb0; action/collision argument registers
+// and destination publication scheduling differ. The movement helper already expands.
+// Earlier: complete 0x5c collision 140, with early material 138; uniform unit index
+// captures 234/161; native slot-data 143; target/request/point/probe names on full output 140.
+// Full output with shared scaled target, whole-point initialization or shared distance
+// difference, alone and together with native slot-data: eight forms 140 each; restored.
+// frame 0xa0 versus 0xb0; target copy and goal registers differ.
+// Movement helper already inlines; the collision output still reserves 0x4c, not 0x5c.
+// Round 210: Complete shared collision extent with native slot-data access 140; destination, request,
+// paired destination/request, hit/probe, both point names, target/request/probe names and
+// all workspace names 140 each. The three-point frame correction is restored.
 // @retail 0x1c0670
 bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 {
