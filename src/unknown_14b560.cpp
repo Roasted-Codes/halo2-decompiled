@@ -2144,6 +2144,9 @@ static __forceinline long player_round_ticks(real value)
 // inlined candidate pointer 708; two request workspaces 804; permuter 697 but a false match
 // (swapped callee arguments and byte/short volatile type stores, all wrong against retail),
 // its neutral remainder 701. Original body kept.
+// Round 235: Native seat bitfield, existing weapon-flag query, both, actual player latch fields, paired
+// latch/metadata and complete native receiver forms 707/707/715/701/707/707/715/715. Original metadata,
+// declarations, player fields and body restored.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {

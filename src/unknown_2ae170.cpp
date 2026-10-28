@@ -573,7 +573,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 393 (was 393): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
+// score 336 (was 393): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
 // conversions (6 calls versus retail's 15; BLOCKED-BY 0x12aff0: retail's callers treat it as opaque).
 // Round 75: SetMixBins (retail calls 0x37c5e4) for SetMixBinVolumes 449 (kept); the existing 0x2216f0 with a
 // NULL list for the three submissions 393 (kept); explicit sends, one object 613, three objects 544; set-2 rear
@@ -650,13 +650,17 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // both copied-level field references 378, with original buffers 398; native settings-copy producer
 // 384, with original buffers 426; native buffer-record snapshot 390 (fast control 378).
 // Original settings observations 396 plain, worse than full 393; all restored. Frame 0x130 remains.
+// Round 235: Complete native descriptor initialization subsets and at-use clear [359, 348, 349, 349, 351,
+// 333, 334, 338] fast; uniform all-three 336 plain kept (393 before). On that producer, pairwise/all
+// descriptor scopes and one reused descriptor [370, 351, 381, 416, 426] fast; restored. Frame 0x130 and
+// repeated-conversion reuse remain.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
 	long const muted_mixbins[4] = {6, 8, 7, 9};
-	s_mixbin_settings mixbins;
-	s_mixbin_settings second;
-	s_mixbin_settings third;
+	s_mixbin_settings mixbins = {0};
+	s_mixbin_settings second = {0};
+	s_mixbin_settings third = {0};
 
 	m_buffers = buffers;
 	m_settings = *settings;
@@ -917,6 +921,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // regress; original word route, scalar observations and three local qualifications restored.
 // Round 365: joint native destination branch with all eight spilled-width subsets
 // 262/263/263/264/263/264/264/265. All restored; frame/input-level and tail sum remain.
+// Round 235: Existing qualified class raw-send path, seven front/rear/tail subsets and all-path if-else tail
+// [224, 224, 247, 224, 247, 247, 248, 254] fast. Dispatcher preserved in every trial; all original helper
+// calls, sums, fields and three local qualifications restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
