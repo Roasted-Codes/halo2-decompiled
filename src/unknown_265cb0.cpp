@@ -1678,6 +1678,10 @@ real function_2683f0(long actor_index, long node_index, short type)
 // access restored.
 // Round 354: shared dot at absolute/relative/facing/absolute-relative/absolute-facing/relative-facing/all
 // scoring sites 684 each; all with native signed-word maximum 707. Original complete body restored.
+// Native-word established/visible, positive, both, retain, pair-retain, positive-retain,
+// all scoring, all six predicates 699/711/728/684/703/715/732/751 (calibrated fast).
+// Word established/visible separately 694/685; pair with short best level/early
+// sentinels 700/700. Established word recovers frame 0x80, but all gains fail; restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

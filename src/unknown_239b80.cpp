@@ -329,6 +329,9 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // departure branches with Boolean state and early heading, with memmove/memcpy 253/286; existing
 // displacement helper 203; shared start-point pointer 253; read-once start index 265, with memmove 263.
 // Original body restored.
+// Round 239: separate lowest-scan/hull-pass/candidate-scan bound values, all
+// seven combinations 203 each; all bounds with overlapping CRT compaction 230.
+// Original bounds, equality helper, compaction and body restored; caller intact.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -560,6 +563,7 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // current true-first/false-first 284/284; paired true/true, true/false, false/true,
 // false/false results 284 each. Count ECX and prior-side byte home remain; original body restored.
 // Round 366: previous-distance carry 156; two-use intersection pointer 129; both 156; shared 2-D difference 129, with distance/pointer/both 156/129/156; joint point cursor 262. All restored.
+// Round 369: prior/current/both outside values 257/268/325; outside values with test-assigned fraction 253/266/316; both with negative accumulation 344; complementary side presence 134. All restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
