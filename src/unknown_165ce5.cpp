@@ -1899,6 +1899,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Round 161: Coordinated definition/header inline query/setter/sampler/query-setter/query-
 // sampler/setter-sampler/all-three/aiming sampler: 411 each (unchanged reduced control 411; full
 // 410). Every specification restored.
+// Round 258: Complete final offset aggregate/const/assignment/library snapshots, each with
+// scalar/shared adjustment subtraction, 571/575/571/575/571/575/571/575 against reduced 411.
+// Original field observations, helpers and body restored; full score remains 410.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

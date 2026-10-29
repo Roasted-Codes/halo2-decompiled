@@ -1654,7 +1654,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 790 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// score 790 (was 790): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // frame 0xcc versus 0xd4 and first angle/overlay inline allocation remain.
 // frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // frame 0xcc versus 0xd4 and first angle expansion remain.
@@ -1716,6 +1716,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // 835/838/830; early two-use centered bool alone/with bit 11/with bit 10/both
 // 858/854/859/790; combined byte predicate 790. Keep the Boolean combined form,
 // plain confirmed at 790 (3386/3403); original floating grouping and all call roles retained.
+// Round 258: Eight consistent basis/output formal orders at the existing projection boundary all
+// 790. Original helper contract and both calls restored; frame 0xcc versus 0xd4 and first
+// conversion expansion remain.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2405,6 +2408,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Round 30: Complete transition complement bool/byte/short/long 727/727/668/667; coupled with
 // permission-override complement 727/727/668/667. Original flags, helper and body restored;
 // request/control homes and ret 4 versus ret 8 remain.
+// Round 258: Complete native channel-value validity input, ordinary bool/byte/short/long results
+// 994/994/1001/993; forced 1000/1000/1013/1004. Original pointer helper and twelve calls
+// restored; request/control homes and validity expansion remain.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2739,6 +2745,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Round 30: Immutable set/mode/lookup results at entry in seven subsets, then all with the constant
 // animation default at entry: 173/173/167/194/189/199/189/173 (expanded control 155).
 // Original table observations and all lifetimes restored; frame 0x3c versus 0x38 remains.
+// Round 258: Immutable mode at every use on the repaired query graph, plus lookup/query/native-
+// channel subsets 191/191/192/192/182/182/181/181. Frame 0x38 forms regress; original
+// observations, action test, copy chain and body restored.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
