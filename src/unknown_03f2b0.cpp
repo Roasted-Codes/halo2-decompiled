@@ -1314,6 +1314,9 @@ short function_4bcc0(byte *output, long object_index, real distance, long overri
 // twice-used source count 43; source count with direct level 83.
 // Native word buffer 43; default tag scope with byte/word data 98/98; native word clear 43;
 // actual object fields with byte/word data 43/43; initial-selection result alone/with fields 43/43.
+// DL179: Inline clobber contract on the existing outlined cache setter, crossed with
+// eight ordinary/inline/noinline getter and selector pairs, 43 each. Original complete
+// target and all provider declarations restored; count/current/wanted allocation remains.
 // @retail 0x4c190
 bool function_4c190(long *count, long object_index, bool defaults, long tag,
     short *level, signed char fallback_level, signed char *sections, bool *fallback)

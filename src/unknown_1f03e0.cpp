@@ -498,6 +498,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // shape_add 238; lowest declared before selected 142; axis declared at case scope 144. 0x1f2250's call
 // sites load the stepping flag before the base point in our build too, so the loop's ECX/EBX request/count
 // swap is not 0x1f2e60's parameter order.
+// DL179: Complete parallel projection products, paired first sums, normalization squares,
+// products+squares, sums+squares, joint products, joint products+squares and that graph
+// with the input-preserving first cross 146 each (991/977); original direct-output body restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)

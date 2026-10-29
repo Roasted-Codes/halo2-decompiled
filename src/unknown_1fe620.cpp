@@ -11,7 +11,7 @@ void function_1fe410(point3f *arg_0, real arg_1);
 
 static __forceinline long real_to_long(real value);
 
-// score 373 (was 373): frame 0x4c versus 0x48; early third-input/random-state carriers and scalar homes differ.
+// score 378 (was 378): frame 0x4c versus 0x48; early third-input/random-state carriers and scalar homes differ.
 // frame 0x4c versus 0x48; third input and random-state register lifetimes differ.
 // point resolver 445; scale snapshot 430; spread snapshot 437; later second trig pair 379; doubled bound 431; local output sums 429; force-inline resolver 466.
 // frame 0x4c versus 0x48 and early settings/seed register allocation remain; native
@@ -70,6 +70,10 @@ static __forceinline long real_to_long(real value);
 // Round 388: Shared sign-state receiver at later range subsets 1-7
 // 423/377/439/373/423/400/438; complete receiver graph with native upper-word step 438.
 // Original independent receiver observations restored; frame and early input ownership remain.
+// DL179: Complete magnitude-square products 373; complete parallel unscaled rotation
+// terms 378; both 373; complete cosine products and unscaled terms in all six rows 381;
+// squares/final-point helper, terms/helper and both/helper 384/384/384; complete cosine
+// products with squares/helper 387. Five-count best fails the retention threshold; restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {
