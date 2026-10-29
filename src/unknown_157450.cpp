@@ -3897,6 +3897,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 385: Team/observer/both/whole-function engine receivers 470/557/557/617; with explicit team
 // result 550/509/509/617. All restored; frame 0xe4/0xe0 and attacker/category/NONE/decision homes
 // remain.
+// Round 173: actual external victim/attacker/state record references, all seven nonempty
+// combinations 470; all three with existing complete position setter 471. Original record
+// receivers, both events, shared award update and complete body restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

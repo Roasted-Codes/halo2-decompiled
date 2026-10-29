@@ -3614,6 +3614,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 216: native word object slot plus flag27, with word activity/unsigned input/both,
 // 1459/1459/1456/1470; flag10 counterparts 1459/1459/1456/1470. Complete original
 // slot, flag reads, signed input field and long activity restored; frame 0x3c/0x38 remains.
+// Native animation/channel fields, time receiver and existing channel getter subsets:
+// 1420/1461/1461/1432/1432/1461/1461; complete graph with entry result workspace 1461.
+// Every original input observation, helper and body restored; frame and pool/dual homes remain.
 // Round 163: independent admission/tracked-target/owner-target query output
 // scopes, seven subsets 1420 each; complete branch ownership with native event
 // role names 1420. All original output scopes and names restored; frame 0x3c

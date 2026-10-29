@@ -1695,6 +1695,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // Round 29: Current/secondary result and actual weapon-pair dword domains in all seven combinations, then the real word ordinal: 263 each. Original result/pair types, ordinal and all code restored.
 // Round 164: nonredundant actor/unit gates, draw-first ordered admission, their seven
 // combinations and all with readonly actor 263 each; all original observations restored.
+// Ammunition span named at its arithmetic producer, with options/probability/delay result-production combinations 263/310/282/315/263/310/282/315; original expressions and result producers restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

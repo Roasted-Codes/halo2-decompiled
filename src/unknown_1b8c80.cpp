@@ -1293,9 +1293,12 @@ struct s_1ba091
     s_slot_entry_iterator field_4;
 };
 
-// score 198 (was 198): retail keeps the actor record count in ESI, loaded from
-// the pool at 0x4e0300 before the slot state is touched, ours reloads it from
-// the stack; the frame offsets differ as well.
+// score 198 (was 198): frame 0x14 agrees; early object-header acquisition,
+// selection-mask, entry/result and reusable frame homes still differ.
+// Round 172: data-member with header/actor/both observations 198/263/263;
+// actor/header observations alone 263/198; single cleanup-result join 258;
+// full-width same result 201; full-width specified with data/actor 288.
+// Original body, iterator record and every type restored.
 // @retail 0x1ba090
 long __stdcall function_1ba090(long actor_index, s_slot *slot)
 {
