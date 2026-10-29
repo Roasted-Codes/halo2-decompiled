@@ -935,6 +935,10 @@ bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_un
 // force, long attempt 31; bool force, unsigned long attempt 2; bool force, short attempt
 // 11; bool force, unsigned short attempt 12; byte force, unsigned short attempt 26; int
 // force, unsigned long attempt 31.
+// Round 213: for-owned long retry 1; for-owned force 3; terminal equality 8; nonterminal
+// equality 2; for-owned int retry 1; for-owned signed-byte retry 40; signed-byte terminal
+// equality 40; for-owned long terminal equality with reset-first publication 8. Force argument
+// convention remains.
 // @retail 0x1c51c0
 void function_1c51c0(long component_index)
 {
@@ -1443,6 +1447,9 @@ PRIVATE __forceinline hkBool contact_metadata_flag(long metadata)
 // Round 166: Native full-width key/filter-child/readonly receiver contracts, all seven subsets 4;
 // one hidden result on the recovered flag/rigid-body graph 65. Original contracts and body
 // restored.
+// Round 213: native aligned scratch
+// vector/renamed-vector/real/renamed-real/long/renamed-long/renamed-byte/renamed-SIMD [4, 4, 4,
+// 4, 4, 4, 4, 4]. Child-result join remains.
 // @retail 0x1c32d0
 hkBool c_contact_rule_filter::accepts(void const *query, s_contact_body_view const *a, s_contact_body_view const *b,
  c_contact_shape_container *container, long key)
@@ -1521,6 +1528,9 @@ PRIVATE inline void contact_motion_vector(vector3f *out, hkVector4 const *value)
 // assignment helpers 65; shared scale plus named progress and body count 3; native int
 // selected count 3; named saved iteration index 3; named selected and available counts 3;
 // shared scale plus all named loop state 3; available count read at every use 3.
+// Round 213: positive-guard exact-count long/int/short/word [4, 4, 132, 132]; positive-guard
+// last-index long/int/short/word [156, 156, 164, 164]. Count test and matched-callee setup
+// remain.
 // @retail 0x1c4c50
 bool __stdcall function_1c4c50(long object_index, long node_index, point3f const *point,
  vector3f const *change_a, vector3f const *change_b, long *result_object, vector3f *linear, vector3f *angular)

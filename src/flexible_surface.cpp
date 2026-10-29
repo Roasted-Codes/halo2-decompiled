@@ -472,7 +472,6 @@ void function_117dd0(long index, vector3f *wind)
 	double strength = (fabs(g_55ecd0) + 0.0075f) * definition->wind_scale * 0.08000000566244125f;
 	wind->i = (real)(g_55ecd4.i * strength); wind->j = (real)(g_55ecd4.j * strength); wind->k = (real)(g_55ecd4.k * strength);
 }
-
 // score 109 (was 109): the loop's vertex cursor points at the normal's j (retail: k), so the dot product,
 // frame 0x48 agrees; normal.j versus normal.k cursor and weight/vector scheduling differ.
 // tangent and position sums load and schedule in another order; retail adds the acceleration and the force
@@ -488,6 +487,10 @@ void function_117dd0(long index, vector3f *wind)
 // Round 221: Shared point-setter boundaries for both weights/both sums/both 108/108/108;
 // complete tangent/force assignment boundaries alone/with either/both point phases 195 each;
 // all with intrinsic fast-history copy 194. One-point gains rejected; all original source restored.
+// Round 216: native projected-normal scale/vertex cursor/both 103/205/187; overlap-safe
+// point-history transfers alone/projection/cursor/all 212/213/207/199; in-place projection 153.
+// On projected normal, early weights/acceleration first/force first/both/all 102/113/103/113/110;
+// weight point setters 104, with all 112. Normal.k cursor recovered at 103/102; sub-eight gains restored.
 // @retail 0x118140
 void function_118140(long index)
 {

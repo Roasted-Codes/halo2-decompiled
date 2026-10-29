@@ -2395,6 +2395,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Boolean transition 702; tag second with Boolean transition 702. Original body restored.
 // Round 220: Control/state/both/tag/control-tag/state-tag/all receiver fields at every use
 // 719/928/977/674/693/956/960; all with object-pool observations 1946. Original body restored.
+// DH round 215: Eager native field comparisons with Boolean/byte/short/long
+// results, ordinary inline 717/717/807/766; forced inline 726/726/872/829. Original
+// short-circuit helper, interface, request values and complete body restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2723,6 +2726,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // 205/216/202/217; unit at every use 188, plain 195. Reduced unchanged control 198;
 // all restored against full baseline 155. Action query now matches; its return-use forms
 // previously grew the frame and remain excluded.
+// DH round 215: Mutually exclusive base/overlay eligibility join with signed-byte/Boolean/
+// byte/short success storage 172/165/172/159; paired true publication chained
+// 172/166/172/159. Original decisions, copy expression and complete body restored.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

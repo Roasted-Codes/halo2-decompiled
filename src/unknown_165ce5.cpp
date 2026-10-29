@@ -1476,6 +1476,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // 386/234/386/234/386/234/386; combined role names 386 (fast control 234, full baseline 232).
 // Original pair types, scopes, names and every smoothing input restored. Frame 0x28 versus 0x2c,
 // unit/mode homes and shared look reciprocal remain.
+// Round 212: plain two-axis aiming-spring traversal, long/short/dword/word indices,
+// direct/output-storage receiver [578, 578, 578, 578, 578, 578, 578, 578]. Original independent
+// calls restored; frame and look homes remain.
 // Round 373 (fast control 234): Structured overlay continuation, with callback/active/both
 // choices 234/234/392/392; reusable no-overlay decision with those four forms
 // 421/421/403/403. Original body and every smoothing input restored.

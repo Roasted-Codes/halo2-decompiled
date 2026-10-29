@@ -3371,12 +3371,16 @@ void function_e3700(long arg_159e6d)
 
 /* the airborne biped: falling damage, a random spin for one that tumbles,
    and its airborne animation */
-// score 90 (was 177): frame 0x10 and retail extent recovered; random products, cross operands and tail stores remain.
+// score 8 (was 90): frame 0x10 agrees; cross operand loads and the first scaled-product carrier differ, one byte long.
 // Getter declaration at caller only 177; bounded-random helper 194 (range rounding differs);
 // shared cross 177; both helpers 194; unit-random/both helpers 177/177; entry axis 194;
 // role names and branch stores 190. Separate out-of-line getter declaration 90, plain confirmed.
 // On the out-of-line graph: cross/unit-random/both 90/90/90; branch stores alone,
 // with cross/unit-random/both, and all with entry axis 94/94/94/94/94. Original body retained.
+// On named normalized draws, shared cross/update and branch/default stores [11, 35, 8, 32, 13, 37, 12, 34];
+// computed tick spin, native up copy and both [11, 122, 120]. Best plain 8.
+// Earlier named/staged normalized draws with scalar/shared updates and spin/tick lifetimes
+// 30/32/27/29/29/31/28/30. Named fractions preserve both random products; branch stores recover the tail.
 // @retail 0xe40d0
 void __stdcall function_e40d0(long arg_159e6d, long *names)
 {
@@ -3395,7 +3399,8 @@ void __stdcall function_e40d0(long arg_159e6d, long *names)
 
 		if (current == 0xe000038 || current == 0xa000040)
 		{
-			real spin = (real)random_next(&g_4e7408->unknown0) * 1.5259022e-05f * 1.0471976f + 1.5707964f;
+			real spin_fraction = (real)random_next(&g_4e7408->unknown0) * 1.5259022e-05f;
+			real spin = spin_fraction * 1.0471976f + 1.5707964f;
 			vector3f axis;
 			bool found = false;
 
@@ -3408,21 +3413,23 @@ void __stdcall function_e40d0(long arg_159e6d, long *names)
 			}
 			if (!found)
 			{
-				real angle = (real)random_next(&g_4e7408->unknown0) * 1.5259022e-05f * 6.2831855f;
+				real angle_fraction = (real)random_next(&g_4e7408->unknown0) * 1.5259022e-05f;
+				real angle = angle_fraction * 6.2831855f;
 
 				axis.i = (real)cos(angle);
 				axis.j = (real)sin(angle);
 				axis.k = 0.0f;
 			}
 			spin *= g_510c54->rate;
-			biped->angular_velocity.i += spin * axis.i;
-			biped->angular_velocity.j += axis.j * spin;
-			biped->angular_velocity.k += axis.k * spin;
+			vector3f_add_scaled(&biped->angular_velocity, &axis, spin, &biped->angular_velocity);
 		}
 		function_e3910(arg_159e6d);
 	}
 	name = *(long *)(state + 0x7c);
-	names[1] = name == 0xa00003e || name == 0xd00003f ? 0xd00003f : 0x800001e;
+	if (name == 0xa00003e || name == 0xd00003f)
+		names[1] = 0xd00003f;
+	else
+		names[1] = 0x800001e;
 }
 
 /* turns a vector about a unit axis (Rodrigues) */

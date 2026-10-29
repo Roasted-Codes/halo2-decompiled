@@ -495,7 +495,8 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
     return result;
 }
 
-// score 278 (was 278): frame 0x40 agrees; early pathfinding EBX ownership and float scheduling differ.
+// score 278 (was 278): Frame 0x40 agrees; early root EBX retention and float/vector scheduling remain.
+// Earlier 278 (was 278): frame 0x40 agrees; early pathfinding EBX ownership and float scheduling differ.
 // entry root retention and floating-point scheduling differ;
 // result first 299; surface first 299; vector names 299; vector helper 299;
 // case order 300; separate vector declarations 299.
@@ -514,6 +515,9 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
 // Complete external vertex observations in paired/actor/trace cases 427/402/370;
 // paired+actor/paired+trace/actor+trace 475/475/448; all cases 519; all with
 // ordinary result 495. Retained element receivers and original result restored.
+// DH round 218: paired-edge vector aggregates/native surface reference/both 278/278/278;
+// ordinary result on these three graphs 340/340/340; all endpoint role names with aggregates,
+// with/without surface reference 278/278. Original body and qualifier restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,

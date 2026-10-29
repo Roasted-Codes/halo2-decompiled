@@ -360,7 +360,6 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	volatile __int64 t = 0;
 	__asm rdtsc
 }
-
 // score 244 (was 244): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
 // Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
 // arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
@@ -387,6 +386,12 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 251: bounded retry short/word/byte/dword carriers 263/263/259/245;
 // the same four with a scoped timeout else phase 263/263/259/245. Frame stays
 // 0x3c; original ordinal, continue graph and full executable body restored.
+// Round 212: native status zero/length aggregate initialization, original/entry texture outputs
+// and bins/volumes declaration orders [286, 286, 286, 286, 285, 285, 285, 285]. Original shared
+// producer and body restored; frame and clock/output homes remain.
+// Round 217: initialized texture size/data/both at native phase 246/246/249;
+// the same private output defaults at entry 284/284/295; both outputs in reverse
+// declaration order at native/entry phase 249/295. Original body restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

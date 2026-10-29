@@ -398,6 +398,9 @@ void function_245400(s_source_245400 const *source, long index,
 // endpoint/transform identities: 203/203/203/203/203/203/203/203. Source receiver, side homes and frame gap
 // remain
 // original identities restored.
+// Round 212: native material-index pair traversal, long/short/dword/word counters, narrow/full
+// decoded pairs [222, 233, 222, 233, 235, 229, 235, 229]; exact-match-only grouped storage
+// restored. Frame, source receiver and side homes remain.
 // Round 246: first/second/both complementary bool sides 207/207/222; both complementary
 // byte/short/long sides 222/222/222; first/second complementary short with the other original bool
 // 207/207. Original producers, equality and all body operations restored.
