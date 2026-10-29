@@ -251,6 +251,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 87: direction from the value setter 192 (same code); `long count = vertex_count;` for the loop
 // and the call 193 (retail's `push edx` and esi tail-loop temp, but a third exit block), declared
 // before the polygon 193; fraction as if/else 259; edges and cross in an inline triangle helper 192.
+// Round 191: complete admission result through fraction/clamp/polygon tests, nested/merged
+// range with original/shared count: bool 266/262/258/256; byte 258/258/262/258.
+// All regress; original result flow, count observations and native geometry restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {

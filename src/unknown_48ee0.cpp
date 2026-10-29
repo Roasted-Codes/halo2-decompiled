@@ -125,6 +125,9 @@ extern real g_4c9798[36];
 // 237; short/long tag with raw flags 237/237; tag short/long with entry border zero
 // 342/342; short tag, raw flags and zero 335. Two-count gains and exact-only tag copies
 // restored; frame 0x24/0x28, state transport and protected rounding reloads remain.
+// Round 191: distance field at every use with saved/lower-live/upper-live/both-live
+// depth observations 330/323/330/324; with entry-owned border zero 267/268/267/268.
+// All regress; original distance/depth snapshots and border restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

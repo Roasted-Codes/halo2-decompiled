@@ -1726,6 +1726,9 @@ transform4x3f *function_b8bd0(long object_index, short node_index);
 // shift subsets 281/285/285/290/281/285/285/290; four-point gain rejected. On native activity,
 // ancestry exit result alone/unsigned offset/uniform pool reads/both 290/290/299/299.
 // Complete original header, private helper and body restored; pool-data, node lookup and SIMD homes remain.
+// Round 191: complete entry/ancestry and accepted-refresh table graphs, reused byte/native
+// receivers 321/329, separate byte/native phase tables 304/328; with the physical slot
+// instead of the byte offset 320/320/303/303. All regress; original table reads restored.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

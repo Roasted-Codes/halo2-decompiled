@@ -210,6 +210,10 @@ struct s_object_flags_256bd0
 // Full native position/direction/placement copies on noinline-initializer/ordinary-datum
 // boundaries, all seven subsets 194 each; all copies with selected-before-minimum publication
 // 194. Frame 0x110 recovered, but seven-point gains rejected; all declarations and bodies restored.
+// Round 191: out-of-line initializer/ordinary datum declarations with nested/branch-result/
+// active-ternary/combined-ternary entries, byte/native records each 194/262/290/262.
+// Nested forms recover frame 0x110 at 1070 bytes but gain seven only; all declarations,
+// iterator body, native receivers and complete function restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
