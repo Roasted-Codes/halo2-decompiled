@@ -13,7 +13,8 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 170 (was 170): the peers table is now read through a local, so `this` stays in EBP, the
+// score 132 (was 170): frame 0x48, receiver EBP and pending counter ESI agree; selector,
+// cursor/entry/query homes and load scheduling remain. Earlier 170: the peers table is read through a local; the
 // index is read inside the enabled test, the cursor is declared under the index test, advanced
 // before the stores and the size is one expression, so retail's prologue and output block match.
 // Left: our cursor, entry pointer and item-priority slots sit 4 bytes below retail's and our
@@ -121,6 +122,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 216/216/200/200; complete post-query selector publication at those widths
 // 278/278/266/266. Original selector, table observations and body restored; cursor/entry
 // homes and pending selector/chain-index residency remain.
+// Round 396: real pending/active array cursors after/before lookup on the EBP graph
+// 216,132,242,221,148,247,247,252; active post-lookup cursor kept at 132 plain, 823/814 bytes.
+// Pending selector now spills at +0x20 versus +0x34; cursor/query homes remain four bytes low.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -187,14 +191,16 @@ long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 								handles_count = replication_table_get_chain(table, handle, handles);
 								priority = 0.0f;
 								size = 0;
+								long const *active_cursor = handles;
 								for (long i = 0; i < handles_count; i++)
 								{
 									real item_priority;
-									table->owner->v9(handles[i], a1, &item_priority);
+									table->owner->v9(*active_cursor, a1, &item_priority);
 									if (item_priority > 0.0f)
 										priority = priority > item_priority ? priority : item_priority;
 									else
 										blocked = true;
+									++active_cursor;
 								}
 								if (blocked)
 									priority = 0.0f;

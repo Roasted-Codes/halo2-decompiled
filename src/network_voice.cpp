@@ -1296,6 +1296,9 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // conjunction, nested success and two failure exits 111 each; forced conditional 94, ordinary conditional
 // 285. Every form loses 0x56160; 94 preserves 0x54990 but loses 0x56380. Original helper and grouped body
 // restored.
+// Round 396: named complete contribution/payload and payload-header/header-payload
+// accumulation on the grouped graph: post-tested inner 255,255,255,255;
+// pre-tested inner 111,111,111,111 at 347 bytes loses 0x54990. Original restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -3013,6 +3016,9 @@ struct s_voice_route_choice
 // Round 220: Selected route pointer on byte-bitwise radio graph: original/choice receiver/
 // three pairs/descriptor/both/receiver-three/receiver-descriptor/all
 // 533/533/541/536/543/541/536/543. Original index, observations and workspaces restored.
+// Round 396: shared routed-admission predicate across settings/reduction, at both
+// observation boundaries with choice receiver and bitwise/branch radio:
+// 1085,1088,1085,1088,1088,1090,1088,1090. All lose both callers and suppress expansion; original restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

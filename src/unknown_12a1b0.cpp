@@ -1237,6 +1237,9 @@ struct s_looping_detail_request
 // score 138 (was 154): return result first restores entry load allocation; source-copy scheduling and first-player expansion remain.
 // Shared offset 170f; direct source 192f; memcpy 170f; tag first 192f; mode arms/type last 168f;
 // offset publication last 167f; camera-position receiver 169f. Fast control 170, result first 154f/138 plain.
+// Round 396: result initialization after copy/clear/mode 154/154/176; success-default 183;
+// admission result 186; result homes prepared/request_ready/success 138 each.
+// Existing first-player query noinline 25 at 509/508, plain; rejected for three matched-caller losses.
 // @retail 0x21cc60
 bool looping_sound_prepare_detail(s_type_a82d9f const *detail, long looping_sound_index, s_looping_detail_request *request)
 {
