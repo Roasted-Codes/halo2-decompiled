@@ -67,6 +67,9 @@ bool g_47f05b;
 // buffer argument through g_479888 38; `(c_havok_fixed_memory *)g_479888 + 1` 38; a typed
 // `fixed` pointer local with `fixed + 1` 34; `block` read after the three global stores 34; the
 // fixed buffer in a local before storing g_479894 38; `block` reassigned from g_479888 for the pool 34.
+// Force-inline abstract constructor 34; scoped block 34; abstract-typed block 34; refcount-typed block 34;
+// intermediate/derived/abstract result reused for the pool 44/44/44; intermediate result published 38;
+// inline target 34.
 // @retail 0x146a20
 void function_146a20(void)
 {
