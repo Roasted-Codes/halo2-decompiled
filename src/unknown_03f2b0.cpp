@@ -921,7 +921,11 @@ void __stdcall function_2cbc0(bool enabled)
 	function_133720(current, enabled);
 }
 
-// score 64 (was 64): the frame is four bytes larger and the camera buffer sits at another offset, and the float subtraction uses x87 where retail uses SSE
+// score 95 (was 95): frame 0x1c0 and camera/query registers agree; x87 offset,
+// dropped identifier and scan jump/padding remain. Earlier: frame four bytes larger,
+// camera home displaced, subtraction x87. Existing camera/effect/visibility noinline
+// boundaries, all seven subsets 95; cursor-result scan 76/297, but normalized
+// instruction edits worsen 9 to 33; restore the Boolean scan and all declarations.
 // @retail 0x3f2c0
 void function_3f2c0(s_planar_camera_source const *source, byte const *view, long object_index, long identifier)
 {

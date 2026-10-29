@@ -4715,6 +4715,9 @@ void function_62640(c_class_58d20 *session)
 // the other stack slots, the frame is four bytes shorter, the bit is shifted
 // in the other register and merged in a register instead of in memory, and the
 // second loop walks the member states from the flag byte
+// Read-only first-loop member / unsigned sequence / immutable observer binding,
+// all seven subsets 98; signed-int cursors in both ordinary loops 98. Original
+// metadata domains and body restored; owner spill, mask homes and send base remain.
 // @retail 0x627e0
 void function_627e0(c_class_58d20 *session)
 {
