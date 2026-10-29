@@ -190,6 +190,9 @@ struct s_object_flags_256bd0
 // with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
 // placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and
 // iterator restored; activity spill and native geometry homes remain.
+// Live tag payload reference 219, with spawned/perception/both shared getters 225/219/225; live
+// tag-instance record 218, with spawned/perception/both getters 226/218/226. Activity spill and
+// native geometry/selection homes remain; original receivers and call values restored.
 // Round 238: actual slot countdown/unit tag link/variant tag field declarations,
 // all seven subsets 201 each; all three with read-only tag receivers 201.
 // Original slot, tag views, field observations and iterator restored.

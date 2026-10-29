@@ -2231,6 +2231,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // short/long cursor and selected carriers 384/336/383/337;
 // corresponding direct indexed fields 374/336/375/337. Original body restored.
 // Round 29: Real distance member and entry cluster/candidate array declarations in all seven combinations, then the entry distance workspace: 283 each. Original publication and declaration lifetimes restored.
+// Round 383: shared existing location reset ordinary/inline/forced/outlined 283/283/283/346;
+// with consistently retained clump heads 391/391/391/411. Original helper linkage, both original
+// helper callers, root observations and complete executable body restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

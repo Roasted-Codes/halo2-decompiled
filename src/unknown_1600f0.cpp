@@ -1380,6 +1380,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 218: Completed collector counts cached, player/team/both long 795/782/832;
 // native short 795/789/813; mixed short-long/long-short 832/813. All restored.
 // Frame/viewer/coordinate homes remain; promoted player-only count recovers frame 0x79c but regresses.
+// Repeated viewer field as short/long/reference 801/788/773; retained options receiver 793; viewer
+// short/long/reference with options 825/789/803; viewer short and retained time mode 815.
+// Frame/viewer/coordinate homes remain.
 // Round 220: Complete header/team-localization/player-appearance lexical scopes, all seven
 // subsets and all with read-only viewer/score receivers, 756 each. Original body restored.
 // DH round 215: Row-geometry/team-RGB/player-RGB home identities, all seven subsets,

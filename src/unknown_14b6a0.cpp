@@ -219,6 +219,9 @@ void function_14bac0()
 // relocation/probes/both 233/233/230; each with native recipients 262/262/259; complete sharing
 // with earlier bounds declarations 230, with native recipients 259. All restored; frame 0x44/0x3c,
 // readiness and recipient storage remain.
+// Existing object getter with original/shared displacement 230/230; each with native recipients
+// 259/259; existing root helper with original/shared displacement 288/288, with native recipients
+// 286/286. Original ancestry, queries and iterators restored; frame/readiness sharing remains.
 // Round 238: full signed request/target marker/both carriers 267/240/275;
 // alternate marker 230, with request/target/both 267/242/276;
 // all three with the native recipient iterator 276. Original short carriers and traversals restored.
