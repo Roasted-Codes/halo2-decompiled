@@ -143,6 +143,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 241: complete heading through the existing vector setter 228; with delayed sine
 // 220, early cross 236, both offset helpers 237, delayed sine/offsets 225, velocity scale
 // 228, delayed sine/velocity 220, and all three 219. Original body/helpers restored.
+// Round 63: delayed first cross scale 228; scalar crosses on delayed-sine schedules 180/209;
+// typed request field 186; own-address zero read 247; direct sums on delayed-sine schedules 216/224;
+// inline library forward copy 186. Original helper and body restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

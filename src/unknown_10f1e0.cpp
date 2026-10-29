@@ -1429,6 +1429,12 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 241: Complete complementary permission bool/byte/short/long 572/572/616/609;
 // with complementary base interruptibility 593/593/632/619. Original body restored;
 // frame eight versus twelve and requested/state/result homes remain.
+// Round 220: Shared eleven-request overlay membership bool/byte/short/long through logical OR
+// 641/641/633/637; conditional-result counterparts 627/627/619/623. Original body restored.
+// Round 30: Complete depletion complement bool/byte/short/long 450/450/466/477; with late overlay
+// complement 458/458/445/477. The short pair recovers frame twelve but gains only five (dropped).
+// On that frame: true result here/at entry 445/445; entry byte/signed byte 548/548; live entry true
+// default bool/byte/short/long 511/563/559/548. All statuses, defaults and lifetimes restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1648,7 +1654,8 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 805 (was 805): frame 0xcc versus 0xd4 and first angle/overlay inline allocation remain.
+// score 790 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// frame 0xcc versus 0xd4 and first angle/overlay inline allocation remain.
 // frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // frame 0xcc versus 0xd4 and first angle expansion remain.
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
@@ -1705,6 +1712,10 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 210: Animation-ID fields at every use: overlay/primary pair/secondary 867/863/833;
 // overlay-primary/overlay-secondary/primary-secondary/all 879/857/856/874;
 // graph at every use 873. Original ID ownership and all executable source restored.
+// Round 380: on the complete-direction/early-graph body, Boolean definition bit 11/10/both
+// 835/838/830; early two-use centered bool alone/with bit 11/with bit 10/both
+// 858/854/859/790; combined byte predicate 790. Keep the Boolean combined form,
+// plain confirmed at 790 (3386/3403); original floating grouping and all call roles retained.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -1734,7 +1745,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 		channel.set(state->graph_tag_index, 0x800, control->animation_108, NONE, NONE, NONE, NONE))
 		channel.sample(1.0f, node_mask, node_count, transforms);
 	control->flags &= ~0x60;
-	if (!(definition->flags & 0x800) && state->graph_tag_index != NONE)
+	if (!(bool)((definition->flags >> 11) & 1) && state->graph_tag_index != NONE)
 	{
 		if (*(real *)((byte *)unit + 0x208) > 0.0f &&
 			*(short *)((byte *)UNIT_ANIMATION_CONTROL(UNIT_ANIMATION_OBJECT(unit_index)) + 0x36) == NONE)
@@ -1762,7 +1773,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 					i++;
 				} while (i < 3);
 			}
-			if (!(definition->flags & 0x400))
+			if (!(bool)((definition->flags >> 10) & 1))
 			{
 				vector2f angles;
 				angles.i = g_4687c4->x;
@@ -1792,6 +1803,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 						else if (screen_b) bounds_112070(screen_b, (real *)control->unknown04);
 						active = function_111590(unit_index, 4);
 						active &= !((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state));
+						bool angles_centered = fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f;
 						if (control->slots[4].unknown1)
 						{
 							real weight = function_1d9370((s_1d9240 *)&control->slots[4]);
@@ -1809,7 +1821,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 									else
 									{
 										if (0.0001f > wb) { wa = 1.0f; wb = 0.0f; }
-										if (wa > 0.0001f && (wa < 0.9999f || !(fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f)))
+										if (wa > 0.0001f && (wa < 0.9999f || !(angles_centered)))
 											a.sample_aiming(angles.i, angles.j, wa, node_mask, node_count, transforms);
 									}
 									if (wb > 0.0001f)
@@ -1817,7 +1829,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 								}
 								else if (screen_a)
 								{
-									if (weight < 0.9999f || !(fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f))
+									if (weight < 0.9999f || !(angles_centered))
 										a.sample_aiming(angles.i, angles.j, weight, node_mask, node_count, transforms);
 								}
 								else if (screen_b)
@@ -2385,6 +2397,14 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // input/branch 727; branch/original 713; branch/input 690; branch/branch 690.
 // On the secondary input-first form (ret 8): tag second 694; state before control 694;
 // Boolean transition 702; tag second with Boolean transition 702. Original body restored.
+// Round 220: Control/state/both/tag/control-tag/state-tag/all receiver fields at every use
+// 719/928/977/674/693/956/960; all with object-pool observations 1946. Original body restored.
+// DH round 215: Eager native field comparisons with Boolean/byte/short/long
+// results, ordinary inline 717/717/807/766; forced inline 726/726/872/829. Original
+// short-circuit helper, interface, request values and complete body restored.
+// Round 30: Complete transition complement bool/byte/short/long 727/727/668/667; coupled with
+// permission-override complement 727/727/668/667. Original flags, helper and body restored;
+// request/control homes and ret 4 versus ret 8 remain.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2713,6 +2733,12 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // 205/216/202/217; unit at every use 188, plain 195. Reduced unchanged control 198;
 // all restored against full baseline 155. Action query now matches; its return-use forms
 // previously grew the frame and remain excluded.
+// DH round 215: Mutually exclusive base/overlay eligibility join with signed-byte/Boolean/
+// byte/short success storage 172/165/172/159; paired true publication chained
+// 172/166/172/159. Original decisions, copy expression and complete body restored.
+// Round 30: Immutable set/mode/lookup results at entry in seven subsets, then all with the constant
+// animation default at entry: 173/173/167/194/189/199/189/173 (expanded control 155).
+// Original table observations and all lifetimes restored; frame 0x3c versus 0x38 remains.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

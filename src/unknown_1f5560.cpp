@@ -799,6 +799,12 @@ real normalize2d(point2f *v);
 // false-validity return, overall result and the combined output/result form 174 each; early first-type
 // 230; byte/word trajectory success 189/177. Coordinated trajectory inline declarations on the
 // original/found-bit graphs 171/174. All bodies, call tuples and outside declarations restored.
+// Round 224: Native initial/retry speed pairs with full-width result, seven subsets
+// 174/172/175/199/199/202/202; both pairs with enclosing retry scope 175. No match; all pair
+// storage, result width and body restored.
+// Round 224 continuation: Native planar normalization/output workspace on the corrected trajectory convention, crossed with
+// earlier result, entry planar declaration and complete memcpy publication, eight forms 267 each.
+// Original 3D output, planar uses, declarations, comparisons and full body restored.
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -1369,6 +1375,9 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 // Round 10 (lane 11): one signed offset for the type-zero arm 293 (1140 bytes); `return 0.0f` at the type
 // exit 252 (same code); direction renamed to sort last 252 (same code); flag declared after the
 // normalization 287; side dot product with the side terms first 252 (same code).
+// Round 28: Ordinary origin with eight consistent native parameter orders 272 each;
+// register inputs before/between/after ordered type/origin/facing/obstacles, 1173 or 1164 bytes.
+// Original definition, declarations and both callers restored; early flag/normalization homes remain.
 // Ordinary origin with existing 2D product producer across paired projections,
 // cosine and side classification 267 in all seven combinations; complete products
 // plus side-offset arms 278. Exact length throughout; original body restored.

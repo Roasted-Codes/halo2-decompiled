@@ -183,6 +183,9 @@ struct s_object_flags_256bd0
 // Round 208: actual entry-result output through pointer/reference, each formal order and bool/byte
 // success, 201 each. All original step and caller contracts restored; frame 0x114/0x110, cached
 // activity and geometry/selection homes remain.
+// Round 377: real datum-member storage, byte/native entry 201/201;
+// separate actual cursor/index outputs 202/202; conditional-entry byte/native
+// and split outputs 274/274/274/274. All helper/header/body changes restored; activity spill remains.
 // Round 211: Placement constructed before marker/after position/after direction 219/210/210; each
 // with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
 // placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and
@@ -190,6 +193,9 @@ struct s_object_flags_256bd0
 // Round 238: actual slot countdown/unit tag link/variant tag field declarations,
 // all seven subsets 201 each; all three with read-only tag receivers 201.
 // Original slot, tag views, field observations and iterator restored.
+// Round 216: real iterator zero aggregate/full aggregate/CRT clear/index defaults
+// 243/244/242/231; before the flags lookup 247/253/246/223. Original iterator input,
+// initializer and private step restored; frame 0x114/0x110, cached activity and homes remain.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

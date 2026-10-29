@@ -104,7 +104,7 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
  arg_3->k = local_0.k - arg_2->k * local_1;
  return function_30bf0(arg_3);
 }
-// score 920 (was 920): Frame 0x1f0 versus 0x1d4; entry EAX/ECX, delayed EBX and record/vector homes remain.
+// score 920 (was 920): Frame 0x1f0 versus 0x1d4; entry EAX/ECX, delayed EBX, second activity byte and record/vector homes differ.
 // Round 105: retail has 23 more mulss, 22 more movss and 15 more movaps, ours ~10 extra counted loops
 // (xor/dec/jne/add): retail's scale helper is unrolled. The helper as three statements gives retail's frame
 // 0x1d4 and the same 32 calls with matching instruction counts between calls in all but four segments, but
@@ -179,6 +179,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Entry predicate long/bool, bool/long, long/long, short/long carriers
 // 996/1012/953/1003; complemented step/admission/both 1013/920/1013;
 // long/short entry carriers 981. Original entry predicates and full body restored.
+// Round 161: Native external option dword/word/byte units 1007/965/1006; read-only selected record
+// with those units 1007/965/1006; native twelve-byte descriptor 920; descriptor plus dword options
+// 1007. All declarations, flag observations and original body restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {
