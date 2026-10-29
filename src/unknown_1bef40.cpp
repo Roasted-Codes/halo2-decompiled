@@ -160,6 +160,13 @@ static __forceinline long real_to_long(real value);
 // unscaled): reals 53, doubles 39, double/real 49, real/double 52; the header
 // random-range helper 55 (57 in the pair); the reset without its volatile
 // casts 43 in either store order; named reals through a seconds-to-ticks
+// inline 53; the existing actor_reset_state for the reset 40 (0x5ac/0x5b0
+// stores after the zero stores); with named reals 55, doubles 41, double/real
+// 51, real/double 54; named reals declared first/at the top/wait first 55;
+// product operands swapped, an explicit (real) tick conversion or the
+// seconds-to-ticks inline 55 each. Named reals spill the second draw before
+// the reset where retail keeps both draws on the FPU stack until the first
+// conversion.
 // inline 53.
 // Existing reset call with native payload and original/scalar delay storage, ordinary/forced
 // reset declaration: 121/126/121/126; whole slot 115/125/115/125 (219/211 or 213/205 bytes).
