@@ -18,6 +18,7 @@ The handlers of the unit request table at 0x467564
 #include "matrix_transform.h"
 #include "unknown_1cec30.h"
 #include "bit_vector.h"
+#include "local_players.h"
 #include <math.h>
 #include <string.h>
 
@@ -1185,35 +1186,40 @@ void function_e8460(long unit_index, bool primary)
 
 /* starts putting away the weapon in a unit's hand: its put away animation,
    or at once */
+// score 81 (was 117): incoming unit stays in ESI instead of a stack home; cleanup tails differ.
+// Result first 117; common bool exit 107; nested/positive admission 107/107;
+// long common result 94; byte nested result 81 (plain, kept); entry name 107; explicit name 107.
 // @retail 0xe8510
 bool function_e8510(long unit_index, bool immediate, bool silent, bool primary)
 {
+	byte result = true;
 	long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
-	bool result = true;
-
 	if (weapon_index != NONE)
 	{
 		long name = primary ? 0x8000025 : 0xd000539;
-
 		if (function_114040(unit_index, name) && !immediate)
-			return false;
-		if (!(silent && immediate))
+			result = false;
+		else
 		{
-			if (function_100130(weapon_index, immediate))
+			if (!(silent && immediate))
 			{
-				function_c86e0(unit_index, 0);
-				if (!silent)
-					function_ee7f0(unit_index, primary ? 0x12 : 0x13);
-				if (function_113e90(unit_index, name, 0.267f, NULL, primary ? 0 : 3))
+				if (function_100130(weapon_index, immediate))
 				{
-					result = immediate;
-					if (!immediate)
-						return result;
+					function_c86e0(unit_index, 0);
+					if (!silent)
+						function_ee7f0(unit_index, primary ? 0x12 : 0x13);
+					if (function_113e90(unit_index, name, 0.267f, NULL, primary ? 0 : 3))
+					{
+						result = immediate;
+						if (!immediate)
+							goto done;
+					}
 				}
 			}
+			function_e8460(unit_index, primary);
 		}
-		function_e8460(unit_index, primary);
 	}
+done:
 	return result;
 }
 
@@ -1613,6 +1619,9 @@ bool __stdcall unit_action_pickup_weapon(long unit_index, s_unit_request *reques
 
 /* gives a unit's weapon to a player's unit, taking the player's weapon
    in exchange (type 21) */
+// score 100 (was 127): frame 0x24 versus 0x20; unit/weapon allocation and transfer-call convention differ.
+// Both ordinal-hand reads 122; result first 118; entry drop workspace/live request/single receiver 122 each;
+// long results 127; early admission return 100 (plain, kept); failed-give arm first 145.
 // @retail 0xe9190
 bool __stdcall function_e9190(long unit_index, s_unit_request *request)
 {
@@ -1620,11 +1629,12 @@ bool __stdcall function_e9190(long unit_index, s_unit_request *request)
 	long player_index = *(long *)((byte *)request + 4);
 	bool given = false;
 
-	if (unit->unknown13c == NONE)
+	if (unit->unknown13c != NONE)
+		return given;
 	{
 		long player_unit_index = *(long *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c + 0x2c);
-		long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), false);
-		long other_weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(player_unit_index), false);
+		long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), 0);
+		long other_weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(player_unit_index), 0);
 
 		if (weapon_index != NONE)
 		{
@@ -4648,38 +4658,49 @@ void function_168896(long user_index, long weapon_index, long field_x11c898, lon
 // @retail 0xee680
 void function_ee680(long user_index, long state, long secondary, long weapon_index)
 {
-	if (user_index != NONE)
+	if (local_player_exists(user_index))
 	{
 		long player_index = g_4e8c20->entries[user_index];
 
-		if (player_index != NONE)
+		long unit_index = *(long *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c + 0x2c);
+
+		if (unit_index != NONE)
 		{
-			long unit_index = *(long *)(g_4e8c24->data + (player_index & 0xffff) * 0x21c + 0x2c);
-
-			if (unit_index != NONE)
+			switch (state)
 			{
-				switch (state)
-				{
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-				{
-					byte *unit = (byte *)UNIT_ACTION_UNIT_GET(unit_index);
+			case 14:
+			{
+				long request_type;
+				if (secondary)
+					request_type = 0x39;
+				else
+					request_type = 0x36;
+				function_e68c0(request_type, unit_index);
+				break;
+			}
+			case 15:
+			{
+				long request_type;
+				if (secondary)
+					request_type = 0x3b;
+				else
+					request_type = 0x38;
+				function_e68c0(request_type, unit_index);
+				break;
+			}
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			{
+				byte *unit = (byte *)UNIT_ACTION_UNIT_GET(unit_index);
 
-					if (!secondary)
-						unit[0x1fa] = unit_action_round((real)g_510c54->field_2_3 * 0.3f);
-					else
-						unit[0x1fb] = unit_action_round((real)g_510c54->field_2_3 * 0.3f);
-					break;
-				}
-				case 14:
-					function_e68c0(secondary ? 0x39 : 0x36, unit_index);
-					break;
-				case 15:
-					function_e68c0(secondary ? 0x3b : 0x38, unit_index);
-					break;
-				}
+				if (!secondary)
+					unit[0x1fa] = unit_action_round((real)g_510c54->field_2_3 * 0.3f);
+				else
+					unit[0x1fb] = unit_action_round((real)g_510c54->field_2_3 * 0.3f);
+				break;
+			}
 			}
 		}
 	}
