@@ -230,6 +230,8 @@ bool function_1b8eb0(long actor_index, long object_index, short seat_index, bool
 // (harness), long result 48 (harness); every 0xc8200 parameter order 4-27 (harness); nested
 // c8200 test 3; actor declared after result 3; unit index local 122; named seat index 78; seat
 // pointer 71; named seat object 71 and occupant test inverted 46 (harness).
+// Round 270: complete seat snapshot 121; reused object/seat/both snapshots 75/104/137;
+// named hostile/reservation/both decisions 3/3/3; native tag receiver 3. Restored.
 // @retail 0x1b8f30
 bool function_1b8f30(long actor_index, long object_index)
 {
@@ -1103,9 +1105,9 @@ struct s_seat_approach_result
 	bool approaching;
 };
 
-// score 147 (was 176): every instruction agrees except one x87 pop: retail pops the vertical
-// arm's last delta before its jump to the distance join, ours shares that pop with the other
-// arm at the join (one instruction early from there on). Round 70: the existing 3D distance
+// score 147 (was 176): the vertical x87 square operands and the final delta pop differ;
+// retail pops before the arm's jump, ours shares that pop at the distance join, shifting
+// the following comparison. Round 70: the existing 3D distance
 // (0x1bbf40's) for the vertical case, a 2D point distance through the existing vector
 // helpers for the nearest seat point (retail recomputes the nearer distance in two arms), the
 // vehicle tag flag as a bitfield and bonus declared before the direction gave retail's x87
@@ -1114,6 +1116,9 @@ struct s_seat_approach_result
 // arms swapped 152/152/168, vertical deltas written out or as a vector or 0x3ea30's own body
 // 152; out-of-line 0x3ea30 not inlined, even with __forceinline. Real: one ternary 143,
 // else-if chain 143, distance at function scope 143, arms swapped 178, (actor, point) helper 143.
+// Round 270: eligibility/marker rejection guards and direct success exits, seven
+// subsets 198/189/223/216/216/216/223; full guards with null-output exit 223.
+// Existing helpers and complete floating trees restored.
 // @retail 0x1baae0
 bool function_1baae0(long actor_index, long object_index, short seat_index, bool ignore_bonus,
 	bool ignore_reserved, bool vertical, s_seat_approach_result *out)
@@ -1306,6 +1311,10 @@ struct s_1ba091
 // carriers and reusable stack homes still differ.
 // Typed slot payload 198; payload/native parent field 198; payload/raw mask 207, with parent 207;
 // payload/separate entry and iterator 202, with parent 202; separate entry/raw mask 212, all 212.
+// Round 270: positive admission with bool/long/byte carriers 194/194/194;
+// slot data member plus positive admission 194; long request code 198;
+// default-owned request code 215; positive admission with long code 194;
+// positive admission, data member and default-owned code 211. Original restored.
 // @retail 0x1ba090
 long __stdcall function_1ba090(long actor_index, s_slot *slot)
 {
