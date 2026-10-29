@@ -96,10 +96,10 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 
 /* slot type 0x23, update: once the actor stands at its prop's position, it
    turns to face it; then it lets the prop go */
-// score 61 (was 61): retail reads the pool before the registers are pushed,
-// ours reads it
-// afterwards, so the prologue differs.
+// score 61 (was 61): actor/view register ownership, the late EBX save and full-width readiness materialization differ.
 // Round 198: typed slot data block/current/entry 61/62; on that block actor once/at use 66/85; long/word/byte readiness 76/78/77; stored readiness 47 (exact-match-only, restored). Opening body restored.
+// Round 238: actual input/required/done byte fields, all seven subsets, 61 each;
+// completion byte field 61. Original Boolean field types and body restored.
 // @retail 0x1b89d0
 void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 {
@@ -217,13 +217,19 @@ struct s_1f4a20_source;
 bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_reference reference, s_1f4a20_source const *source,
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
-
-// score 257 (was 323): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
+// score 257 (was 257): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
 // slot/scratch homes and the 52-byte length deficit remain.
 // Round 198: payload/native input/read-only input/input scope 323 each; clamp 322;
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
 // ordinary result/receiver with ordinary result 325/325; search outputs first 257.
 // Typed payload/native input and preparation scope kept at 257 plain; all follow-ups restored.
+// Round 213: character/payload/scratch home names and named scalar outputs [257, 257, 257,
+// 257]; shared guard/node prop index with original/renamed actor and entry/later result [257,
+// 257, 257, 257]. Frame and actor/slot/scratch allocation remain.
+// Round 216: late marker default 323; result initialized after actor acquisition 257; shared
+// scratch cleanup 257; late marker/result, marker/cleanup, result/cleanup and all 323/323/257/323;
+// marker readiness directly from tests 315. Original early marker default and every exit restored;
+// frame 0x1634/0x162c and actor/slot/scratch homes remain.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
 {

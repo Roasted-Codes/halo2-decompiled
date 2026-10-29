@@ -4351,24 +4351,25 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-
-// score 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
+// score 305 (was 305): frame 0xd8 agrees; result/identity/selection byte homes and
+// acknowledgement placement differ.
+// Earlier 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
 // instead of going through the shared exit, so each one gets its own epilogue and the extent matches
 // retail's 1264 bytes. The three boolean stack homes are still rotated relative to retail.
-// score 310 (was 318): the acknowledgement block returns the result directly instead of going through
+// Earlier 310 (was 318): the acknowledgement block returns the result directly instead of going through
 // the shared exit, so its epilogue is the one retail emits. The three boolean stack homes are still
 // rotated relative to retail and the invalid-state exit is still emitted twice.
-// score 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
+// Earlier 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
 // it into a named flag, so the comparison is tested once as retail does. The three boolean stack homes
 // are still rotated relative to retail and the invalid-state exit is still emitted twice.
-// score 325 (was 335): the acceptance test is written as the no-sender case followed by the
+// Earlier 325 (was 335): the acceptance test is written as the no-sender case followed by the
 // acknowledgement, so the acknowledgement block stays out of line at the end of the function instead of
 // being pulled into the middle of it. The three boolean stack homes are still rotated relative to retail.
-// score 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
+// Earlier 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
 // distinct arm, the peer-map update takes the remote member first (the callee is symmetric in its two
 // member arguments), and the channel-state test is split into a named flag. The three boolean stack
 // homes are still rotated relative to retail and the invalid-state exit is still duplicated.
-// score 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
+// Earlier 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
 // separate arm instead of a merged join, and the identity pointer is taken before the member-state
 // pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
 // score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
@@ -4382,6 +4383,13 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // volatile result (diagnostic only, reverted) 317 at 1278 bytes.
 // Earlier: the identity comparison is a predicate and the two timeout reasons are separate arms.
 // Earlier 384: Frame 0xd8 agrees; result/identity homes and block placement remain.
+// Earlier 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
+// separate arms; the extent is 1265/1264 bytes. Acceptance/identity homes and acknowledgement
+// placement remain.
+// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
+// Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
+// Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
+// Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
 // Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
 // Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
@@ -4425,6 +4433,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 145: Equal-version rejection before preference: original predicates 396; newer predicate
 // 393; equality predicate 394; both predicates 391. Identity-equality counterparts
 // 406/403/404/401; all restored.
+// Round 214: Native-equality/distinct-exit graph: acceptance, selection, both, identity, identity/acceptance,
+// identity/selection and all Boolean home names 305 each; all names with entry selection constants 372.
+// All executable forms restored; result/identity/selection homes and acknowledgement placement remain.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

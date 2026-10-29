@@ -34,7 +34,11 @@ struct s_slot_82_data
 	point3f unknown08;
 	bool unknown14;
 	bool unknown15;
-	byte unknown16[0x34 - 0x16];
+	byte unknown16[2];
+	long unknown18;
+	long unknown1c[4];
+	short unknown2c;
+	byte unknown2e[0x34 - 0x2e];
 };
 
 /* the prop state as these callbacks read it: the position at +4 */
@@ -338,54 +342,52 @@ short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 17 (was 17): our stack frame is 4 bytes bigger than retail's, so one
-// of the two longs lands in the frame here and in a dead argument slot there.
 // @retail 0x1c1320
 bool __stdcall function_1c1320(long actor_index, s_slot *slot)
 {
-	s_slot_82 *state = (s_slot_82 *)slot;
 	bool result = true;
 
 	if (actor_get(actor_index)->unknown040 &&
 		!(actor_get(actor_index)->unknown50c && actor_get(actor_index)->unknown504 == 1) &&
 		actor_get(actor_index)->unknown504 != 2)
 	{
+		s_slot_82_data *state = (s_slot_82_data *)slot->unknownc;
 		s_actor_point_target target;
-		long reference = NONE;
-		long unknown = NONE;
+		long target_index = NONE;
+		long position_reference = NONE;
 
-		if (state->unknown21)
+		if (state->unknown15)
 		{
 			s_firing_position *position;
 
-			reference = state->unknown24;
-			position = firing_position_get(reference);
+			position_reference = state->unknown18;
+			position = firing_position_get(position_reference);
 			target = position->target;
-			unknown = position->unknown30;
+			target_index = position->unknown30;
 		}
 		else
 		{
-			function_1c0b80(actor_index, state->unknown28, state->unknown38, &target, &unknown, &reference);
+			function_1c0b80(actor_index, state->unknown1c, state->unknown2c, &target, &target_index, &position_reference);
 		}
-		if (reference == NONE)
+		if (position_reference == NONE)
 		{
 			result = false;
 			goto done;
 		}
-		if (function_1f4460(actor_index, &target, unknown, NONE, false))
+		if (function_1f4460(actor_index, &target, target_index, NONE, false))
 		{
-			s_firing_position *position = firing_position_get(reference);
+			s_firing_position *position = firing_position_get(position_reference);
 
-			state->unknown14.x = (real)cos(position->facing);
-			state->unknown14.y = (real)sin(position->facing);
-			state->unknown14.z = 0.0f;
-			state->unknown20 = true;
+			state->unknown08.x = (real)cos(position->facing);
+			state->unknown08.y = (real)sin(position->facing);
+			state->unknown08.z = 0.0f;
+			state->unknown14 = true;
 			result = true;
 			goto done;
 		}
-		if (state->unknown38 < 4)
+		if (state->unknown2c < 4)
 		{
-			state->unknown28[state->unknown38++] = reference;
+			state->unknown1c[state->unknown2c++] = position_reference;
 		}
 		else
 		{

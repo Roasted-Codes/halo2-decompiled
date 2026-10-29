@@ -1677,6 +1677,9 @@ void function_bba20(long index);
 // root-cluster scope 319 (fast).
 // Round 214: signed-byte permission 319; unsigned-word permission 320; signed-word saved activity 319; native-long saved activity 319; word permission/activity homes 319.
 // Isolated pool, offset, object, permission, ancestor, header, parent and cluster names each 319.
+// Round 377: ancestry result at loop exit 300; with pool reads/unsigned offset/hidden shift/
+// component shift 330/300/307/300; pool+offset/both shifts/all 330/307/332;
+// 300 at 1236 bytes gains five only, rejected. Original body restored; pool/parent/SIMD homes remain.
 // Round 244: complete rejection/positive/negative/acceptance branch results in bool
 // 311/311/311/309; long 320/320/320/310 (fast control 305).
 // Pool/NONE carriers stay different; original permission production restored.

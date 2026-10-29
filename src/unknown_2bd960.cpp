@@ -1230,6 +1230,9 @@ void c_game_engine_45c948::v12()
 }
 
 // score 14 (was 14): retail loads the engine global g_4e6948 into edx at the
+// top of the function, ours loads it into ecx just before the mode test (as retail
+// compiles the identical matched 0x2bd260), so the load and the compare come in the
+// other order. Direct final-field initialization 6.
 // top of the function, ours loads it just before the mode test, so the load
 // and the compare come in the other order.
 // The early global and compare schedule remains; direct final-field initialization 6.
@@ -1237,6 +1240,9 @@ void c_game_engine_45c948::v12()
 // payload between zero stores 8; both zeros first 13; partial aggregate 56/119;
 // type before payload 6; middle predicate with that order 6; subtype readback 6;
 // parameter address 6; shared send 6; void-return send 6; force-inline send 6.
+// Round 107: options pointer read first, mode test read first, parameter read first: 14 each with
+// identical code (statement order does not move the allocation); dword parameter 14; definition
+// placed after the class 14.
 // Marked initializer/returned receiver/dispatcher/both/receiver plus dispatcher 49/53/47/73/77;
 // early mode exit 27; marked initializer/returned receiver in mode scope 40/45;
 // visible initializer/dispatcher/both forced inline 14/14/14. Frame 0x24 still agrees.

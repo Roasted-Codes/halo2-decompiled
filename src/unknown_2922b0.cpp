@@ -71,6 +71,8 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 }
 
 // score 629 (was 629): Frame 0x108 agrees; early EBX/BL success, hit-byte and basis/rotation homes remain.
+// MiniMax H run 14: the cross helper 0x2922b1 with its sign flipped and the operands swapped at
+// all four calls (same results) 622; under the keep bar, not kept.
 // Frame 0x108 agrees; early success BL/EBX and hit/basis/ray/root/rotation homes remain.
 // frame agrees (0x108); early success BL/EBX and basis/ray/root/rotation homes remain;
 // retail is 60 bytes longer after the ray loop (12 more loads, 4 more products: (1/range) * minimum

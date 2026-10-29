@@ -143,6 +143,9 @@ __declspec(noinline) short __stdcall function_1c8df0(short arg_3, short arg_2, p
 // fixes the mode-1 z row but the 0.1 block then folds its z); x+ centre read as a real array element 5;
 // positive rows in z, x, y / y, z, x order 21/20. Ours always loads the x centre ahead of the first
 // row's multiply. All match-only; restored.
+// Round 63 (plain on the five-difference control): side j/i/both union-array reads 5/5/5;
+// side order j-i-k 11; aggregate side 5; existing add-scaled helper both/negative only 238/238;
+// side order i-k-j 10. No match; original 170 body restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(short arg_3, short arg_2, point3f const *arg_4, long arg_0,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)
