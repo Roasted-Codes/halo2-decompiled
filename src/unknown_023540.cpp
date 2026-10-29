@@ -3186,6 +3186,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Round 282: complete encoded output words, ternary/descending/result/ascending forms,
 // each with original/complete first-output word [1128,1131,1128,1131,1121,1121,1129,1130].
 // Original output helpers and complete body restored; capability/save roles remain.
+// Round 393: complementary small/negative/return-state subsets
+// 932/858/933/934/1212/935/1213; all with Boolean small-denial 1210. Original carriers restored.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

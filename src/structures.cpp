@@ -324,6 +324,8 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 32 on branch-owned definition/result-at-join: all BSP observations 234;
 // all collision metadata observations 228; CRT query snapshot 172; BSP/metadata 231;
 // BSP/copy 234; metadata/copy 228; all 231, instance-first all 222. Original body restored.
+// Round 393: native external cluster/instance/triangle references in seven subsets
+// 172 each; all with native surface reference 172. Original receivers and defined-failure body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
