@@ -116,20 +116,15 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 	tint.red=arg_2->red*tint.red;
 	tint.green=arg_2->green*tint.green;
 	tint.blue=arg_2->blue*tint.blue;
-	if(tint.alpha<0.0f) tint.alpha=0.0f;
-	else if(tint.alpha>1.0f) tint.alpha=1.0f;
-	if(tint.red<0.0f) tint.red=0.0f;
-	else if(tint.red>1.0f) tint.red=1.0f;
-	if(tint.green<0.0f) tint.green=0.0f;
-	else if(tint.green>1.0f) tint.green=1.0f;
-	if(tint.blue<0.0f) tint.blue=0.0f;
-	else if(tint.blue>1.0f) tint.blue=1.0f;
+	real *components=&tint.alpha;
+	for(long channel=0;channel<4;++channel)
+		components[channel]=sprite_pin(components[channel]);
 	dword local_0=pack_color4f(&tint);
 	return local_0;
 }
 
 
-// score 421 (was 421): Frame 0x50 versus 0x60 (the tint lives in a one-caller helper's scope, so uv_b reuses its
+// score 391 (was 421): Frame 0x50 versus 0x60 (the tint lives in a one-caller helper's scope, so uv_b reuses its
 // slot), cache EBP/EBX and scalar homes remain.
 // Frame pointer 597; size optimization 990; tint input-array parameter 435;
 // direct packed-tint return 435; byte flip selector 538.
@@ -170,6 +165,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Caller tint output with x/y/all four scalar observations 463 each; complete scalar
 // bounds with native reference input 421. Original helper contracts and captures restored.
 // Round 380: Alpha clamp before seed/before RGB/after RGB with phased RGB 463/421/421; per-channel RGB with alpha after RGB/before seed/before RGB/after red/after green 421/473/421/421/421. Original tint restored.
+// Round 242: Plain indexed/pointer tint clamp traversal with the existing
+// early-return scalar clamp 391 each; single-exit clamp 468 each, inline or
+// forced. Keep ordinary indexed form, plain 391 at 1931/1937; frame remains.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

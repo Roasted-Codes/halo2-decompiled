@@ -119,6 +119,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Round 237: one driver/at-use channel/one effects receiver 567/641/539;
 // driver-channel/driver-effects/channel-effects/all 567/555/623/555; all with mode interval 556
 // (fast control 532; full 545). All helpers and body restored; frame and stream/gain homes remain.
+// Round 242: Native double absolute-value API across gain/routing/voice gates,
+// seven complete subsets and all with real gain value [547, 534, 532, 539, 543, 535, 537, 537].
+// Reduced control 532, full 545; all width forms and original helpers restored.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

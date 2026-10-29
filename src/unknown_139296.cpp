@@ -450,6 +450,8 @@ bool function_22acb4(long player_index);
 // that extra slot shifts every lockstep line]; on it the second as (short)(char)/(char)(x & 1)/(signed char)/
 // & (short)1/1 & (char) 283 [20] each, without the char cast 287 [19]; word second stored then masked 232
 // (as the rebuilt order; retail's `and ebx, 0xfffd` says word). Original body restored.
+// Round 242: Complete result phase orders 2134/3124/4123/2314/3214/2341/3421/4231
+// 280/290/274/289/228/269/272/268. Original phase order, query and aliased output order restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
