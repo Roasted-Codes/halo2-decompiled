@@ -1494,6 +1494,9 @@ struct s_133f70;
 // Round 265: six lexical orders of entry/failure/compacted-slot long values and
 // both uninitialized entry/slot storage orders before the query, 175 each on the expanded control.
 // Original declarations, names, compaction, cache observations and complete body restored.
+// Round 174: function-scope fallback/reuse/level-change result homes, all seven
+// subsets, 175 each; all plus the builder result 175. Original producer points,
+// separate iteration storage and complete body restored; distance staging remains.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

@@ -1452,6 +1452,10 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 389: Plain two-held-slot traversal with long/short/word/byte indices, slot-first
 // validity joins 470/494/494/523; shared validity-first joins 470/494/494/491 (fast control
 // 450). Original paired queries and complete body restored; frame eight and state homes remain.
+// Round 174: transposed overlay/request dispatch with bool/byte/short/long
+// permission 663/725/829/792; first/second/both overlay defaults before inner
+// dispatch 497/478/581; both with byte permission 545. Original graph restored;
+// frame eight versus twelve and requested/state/result homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2453,6 +2457,10 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // with actual transform/point/both/direction/transform-direction/point-direction/
 // all workspaces uninitialized at entry, 699 each. Frame 0x80 and ret 4
 // remain; original displacement statements and every lifetime restored.
+// Round 174: control/state/tag receiver initialization at the completed request
+// phase, seven subsets, 709/708/714/675/702/704/705; all with Boolean transition
+// 725. Original initializers and body restored; request/control homes and ret 4
+// versus retail ret 8 remain.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2809,6 +2817,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Whole availability decision on returned-query/separate-copy graph, signed/Boolean
 // aggregate and shared/direct success exit 156/158/163/158. All restored;
 // frame 0x3c versus 0x38 and small-home packing remain.
+// Round 174: chained/result-first successful publication with signed/Boolean aggregate
+// 122/122/128/128; two-use base-channel entry/set lifetimes with original/chained
+// publication 122 each. Original body restored; frame 0x3c and short packing remain.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

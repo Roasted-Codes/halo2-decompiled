@@ -1140,6 +1140,10 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // 279/398/269/279/398; distance arm first if/value/entry-result 417/399/407.
 // All original types, tests, helper calls and complete body restored;
 // early true-return host and side-direction forwarding remain.
+// Round 174: shared false exit/distance-first/both 243/386/402; later
+// perpendicular alone/false-exit/distance-first/both 180/251/394/410; all with
+// ordinary first-side storage 378. Original body and qualifier restored; early
+// true host and side-component forwarding remain.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
