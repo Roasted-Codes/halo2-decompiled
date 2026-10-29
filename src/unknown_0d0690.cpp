@@ -1272,6 +1272,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 390: conditional last-selection publication with native entry pointer,
 // combined admission mask and live-count masks 0-7: 529/565/570/567/567/561/574/570.
 // Original scan, positive result, complete math body and all helper/caller contracts restored.
+// Round 392: dead first-clamp workspace reused for either later clamp, native/CRT
+// normal copies before/after intrinsic length: 567/581/566/588 for each workspace.
+// CRT forms lose a matched caller; original distinct color objects and body restored.
 // Round 247: current-frame normal/color/both role names, entry declarations and their
 // three naming combinations, bounded-color consumption scope with both names: 529 each.
 // Original vector/color homes, declaration phases, selection and complete body restored.
@@ -1405,6 +1408,9 @@ real function_30bf0(vector3f *vector);
 // Cosine after cross with sine first recovers frame 0x40 and length 1870 at 430; all restored.
 // Round 385: Plain negate/rotate/normalize component loops and pairs/all,
 // long ordinals 422/486/426/505/404/503/485; all with short ordinals 509. Original helpers restored.
+// Round 395: decoded-base/query/blend phase with one final pin exit, limited/
+// turned scopes and normal declaration priority in all eight combinations: 364 each.
+// Original phase graph, native lifetimes, helpers and inherited homes restored.
 // Round 253: Plain native RGB loops limited/reflected-blend/scales/limited-reflected/
 // limited-scales/reflected-scales/all/all-short 431/436/419/450/419/438/447/660.
 // Several recover frame 0x40 but regress; original complete body and color type restored.
@@ -1818,9 +1824,15 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // scale/add helpers in seven subsets 782/782/782/828/828/828/828;
 // all three with chained default colors 827. Frame 0x90 and displaced status/mesh homes
 // remain; original body, all loops, sample lifetimes and helper bodies restored.
+// Round 395: Nested/failure-first luminance decisions 782/810; dynamic-first
+// validity with original/nested/failure-first luminance 782/782/786; base-first
+// validity with those decisions 783/783/797. Original native output graph restored.
 // Round 177: Native vector setters base/dynamic/output/weighted 784/781/790/782;
 // base+dynamic/all scales/weighted+output/all four 795/824/790/824. One-point gain
 // rejected; original loops and outputs restored; status/mesh homes remain in frame 0x90.
+// Round 268: native existing vertex-buffer, actual model-input record and native three-word
+// triangle views in all seven subsets 782 each; all with read-only buffer/data 782.
+// Original views restored; frame 0x90, displaced status/mesh homes and external expansion remain.
 // Round 253: Direct component-array cursor loops base/dynamic/output/base-dynamic/
 // base-output/dynamic-output/all/all with ordered end tests 856/841/785/809/840/819/810/911.
 // Original ordinal loops, short final counter, frame and complete body restored.

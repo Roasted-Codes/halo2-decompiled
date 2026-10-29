@@ -1598,7 +1598,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 709 (was 719): frame 0xc0 agrees; native completion-group cursor retained;
+// score 719 (was 719): Frame 0xc0 agrees; initial cursor base/home, slot and request/completion homes remain.
+// frame 0xc0 agrees; native completion-group cursor retained;
 // initial cursor base/home, slot expansion and request/completion homes still differ.
 // Earlier: Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
 // Frame 0xc0 agrees; initial user/identity homes, logon dispatch and request/completion allocation remain.
@@ -1673,9 +1674,14 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Round 390: existing native properties object with separate identity assignment,
 // producer-scoped team result and readonly slot masks 0-7: 719 each. Original
 // buffer, declarations, helper settings and complete body restored.
+// Round 392: distinct user/request/completion induction identities, all seven subsets,
+// then nested reset/descriptor role names: 719 each. Original identifiers and body restored.
 // Round 224: Native cached owner/property/both fields 728 each; owner/property/both with
 // test-produced admission 728 each; both with comparison-local team and with both result lifetimes
 // 728/728. Original cache views, admission/team lifetimes, predicates and task transitions restored.
+// Round 269: Slot/identity/properties, slot/properties/identity, identity/slot/properties
+// and properties/slot/identity initializations 767/767/759/741; readonly slot
+// forms give the same scores. Original order and full body restored; cursor base still differs.
 // Native user/request/completion group-array endpoints in subsets 1/2/4/3/5/6/7
 // 781/729/709/748/790/731/745; all equality endpoints 745. Completion-only kept, plain 709.
 // @retail 0x74aa0

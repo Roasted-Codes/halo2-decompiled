@@ -1088,6 +1088,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 30: Squad parameter reference 320; unit re-observation 340; separate early failure 338;
 // uninitialized/late-scoped actor result 338 each; settings lookup noinline 320; unit re-observation
 // with a second guard or separate phases 340 each; cleanup indices first 320. Opening body restored.
+// Round 231: independent query-output initialization orders 320 each in five forms;
+// enabled-output default omitted 348; corrected-join Boolean/probability home identities 320/320.
+// Original query defaults and all executable source restored; sentinel and homes remain.
 // DL167: Native unsigned character/squad/returned handle interfaces, seven nonempty
 // subsets, and all with the unsigned actor result: 320 each. Every declaration, original
 // handle domain and complete body restored; frame 0x118 and sentinel EDI/ESI remain.

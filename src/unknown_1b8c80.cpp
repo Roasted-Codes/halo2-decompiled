@@ -230,6 +230,8 @@ bool function_1b8eb0(long actor_index, long object_index, short seat_index, bool
 // (harness), long result 48 (harness); every 0xc8200 parameter order 4-27 (harness); nested
 // c8200 test 3; actor declared after result 3; unit index local 122; named seat index 78; seat
 // pointer 71; named seat object 71 and occupant test inverted 46 (harness).
+// Round 270: complete seat snapshot 121; reused object/seat/both snapshots 75/104/137;
+// named hostile/reservation/both decisions 3/3/3; native tag receiver 3. Restored.
 // Round 252: eligibility accumulated with logical OR 43, bitwise OR 31, conditional 3;
 // named eligibility 3; actor at every use 116 (matched caller lost); read-only actor,
 // read-only flags, both 3/3/3. Original complete body restored.
@@ -347,6 +349,10 @@ PRIVATE __forceinline void function_1b9201(long arg_0, vector3f *arg_1)
 // score 11 (was 11): the seat loop keeps the seat count in EBP and the index
 // in ESI here, retail keeps the count in ESI and the index in EBP, so the loop
 // preamble is laid out differently. The rest of the function matches.
+// The shared forward helper 302; state after or between the vector declarations
+// 11; split or function-scope state 11; const seat or state 11; result between
+// the lookups 11; split seat initialization 11; index-first with state after the
+// vectors 11; a positive-count guard 135.
 // @retail 0x1b9200
 bool function_1b9200(long object_index, long prop_index)
 {
@@ -1109,7 +1115,10 @@ struct s_seat_approach_result
 	bool approaching;
 };
 
-// score 147 (was 147): the vertical square operands and x87 cleanup differ. Retail pops
+// score 147 (was 176): the vertical x87 square operands and the final delta pop differ;
+// retail pops before the arm's jump, ours shares that pop at the distance join, shifting
+// the following comparison. Round 70: the existing 3D distance
+// the vertical square operands and x87 cleanup differ. Retail pops
 // the vertical arm's last delta before its jump; ours shares that pop at the distance join.
 // Round 70: the existing 3D distance
 // (0x1bbf40's) for the vertical case, a 2D point distance through the existing vector
@@ -1120,6 +1129,9 @@ struct s_seat_approach_result
 // arms swapped 152/152/168, vertical deltas written out or as a vector or 0x3ea30's own body
 // 152; out-of-line 0x3ea30 not inlined, even with __forceinline. Real: one ternary 143,
 // else-if chain 143, distance at function scope 143, arms swapped 178, (actor, point) helper 143.
+// Round 270: eligibility/marker rejection guards and direct success exits, seven
+// subsets 198/189/223/216/216/216/223; full guards with null-output exit 223.
+// Existing helpers and complete floating trees restored.
 // Round 252: inline/forceinline 3D helper declarations 147/147; whole actor point 273;
 // shared planar direction helper 147; branch-owned bonus alone/with direction 194/194;
 // external position reference with both 218; whole point with both 274. All restored.
@@ -1304,7 +1316,14 @@ struct s_1ba091
     s_slot_entry_iterator field_4;
 };
 
-// score 198 (was 198): frame 0x14 agrees; early object-header acquisition,
+// score 198 (was 198): frame 0x14 agrees; incoming actor ECX/EDX, early object-header
+// acquisition, selection-mask storage and iterator/result homes differ.
+// Earlier slot-data form 198; raw-mask and independent iterator variants 202/207;
+// Result-first 190; explicit same-object result 230; cleanup result 258.
+// Complete byte flags with/without slot data 249/249; raw word/dword mask 257/252;
+// branch-assigned decline with byte/word/dword 249/257/252, with slot data 249.
+// Original body restored.
+// frame 0x14 agrees; early object-header acquisition,
 // selection-mask, entry/result and reusable frame homes still differ.
 // Round 172: data-member with header/actor/both observations 198/263/263;
 // actor/header observations alone 263/198; single cleanup-result join 258;
@@ -1315,6 +1334,10 @@ struct s_1ba091
 // carriers and reusable stack homes still differ.
 // Typed slot payload 198; payload/native parent field 198; payload/raw mask 207, with parent 207;
 // payload/separate entry and iterator 202, with parent 202; separate entry/raw mask 212, all 212.
+// Round 270: positive admission with bool/long/byte carriers 194/194/194;
+// slot data member plus positive admission 194; long request code 198;
+// default-owned request code 215; positive admission with long code 194;
+// positive admission, data member and default-owned code 211. Original restored.
 // @retail 0x1ba090
 long __stdcall function_1ba090(long actor_index, s_slot *slot)
 {

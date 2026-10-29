@@ -70,6 +70,8 @@ static inline void point_along_vector_1c19b0(point3f const *point, vector3f cons
 // and its stores are scheduled before the call pushes. Round 152: full 0x5c collision buffer 69;
 // point-along-vector steps in place 163, through an `ahead` point 54; single exit 23; end/ahead
 // declarations swapped 23; tick locals at loop scope 23; end or delta at function scope 23/30.
+// Final call after the loop behind a found flag 337; function-scope ticks,
+// endpoint lexical names and location/node declarations 23.
 // A compile-only frame probe puts both 4-byte slots below end only with the final call after the
 // loop (a found flag); that real form changes the convention and scores 337.
 // Earlier: frame 0xc4 versus 0xd4; direction/counter roles and endpoint scheduling differ.
@@ -81,6 +83,9 @@ static inline void point_along_vector_1c19b0(point3f const *point, vector3f cons
 // Round 219: Complete per-step direction snapshot with short/char/byte/long induction
 // 240/240/240/226; direct char/byte/long/word induction 210/210/164/81. All restored; frame
 // 0xc4/0xd4 and direction/counter roles remain.
+// Round 266: existing point producer point/vector/both inputs by value 310/310/453;
+// output-pointer return 23; with point/vector/both values 310/310/453;
+// complete point-value result 316. Original helper and every producer restored.
 // Round 31: force-inlined point helper, delta/end and function-scope tick declarations,
 // sample_end/contact_end names, location/node and start/origin declaration orders 23 each.
 // Round 393: origin input/trace/collision library copies in seven subsets 23 each;
