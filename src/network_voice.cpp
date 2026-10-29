@@ -1243,7 +1243,7 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 	return result;
 }
 
-// score 255 (was 281): scratch 8 versus retail 4; grouped inner traversal remains rolled, 186/347 bytes.
+// score 255 (was 255): scratch 8 versus retail 4; grouped inner traversal remains rolled, 186/347 bytes.
 // Earlier: sixteen-step rolled loop versus four-by-four unrolling;
 // expanded loop changes the entry convention and loses the matched caller.
 // Direct getter comparison 281; split header/payload adds 281; arithmetic width 329;
@@ -1288,6 +1288,11 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // while/for, do/for and descending-for/for 111 each; actual outer array ends/for 122 each.
 // Post-tested inner with outer array ends 258 each, descending or post-tested outer 255 each.
 // All pre-tested-inner forms lose exact caller 0x54990; post-tested-inner forms preserve it.
+// Round 244: Shared membership guarded/success/failure/conditional results with post/pre-tested inner
+// traversal 255/111, 265/111, 265/111, 292/94; positive return arms/two-arm result 111/111; direct/named
+// conjunction, nested success and two failure exits 111 each; forced conditional 94, ordinary conditional
+// 285. Every form loses 0x56160; 94 preserves 0x54990 but loses 0x56380. Original helper and grouped body
+// restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {

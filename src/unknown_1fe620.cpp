@@ -60,6 +60,10 @@ static __forceinline long real_to_long(real value);
 // Round 170: Common adjusted-timer float/conversion, timer-scope and entry reuse, direct initial conversion,
 // integer/store join, direct final conversion, shared entry results and entry scratch
 // 450/450/458/450/443/450/458/450. Original three conversions and all arithmetic groups restored.
+// Round 244: Existing final vector sum with original/normalization/timed/both real scale boundaries
+// 376/378/376/376 at 1854 bytes; final point setter with the same four scale graphs 384 each at 1861 bytes.
+// Frame 0x4c and third-input/random-state homes remain; original vector operations and published-field
+// observations restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

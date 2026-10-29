@@ -2231,6 +2231,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // short/long cursor and selected carriers 384/336/383/337;
 // corresponding direct indexed fields 374/336/375/337. Original body restored.
 // Round 29: Real distance member and entry cluster/candidate array declarations in all seven combinations, then the entry distance workspace: 283 each. Original publication and declaration lifetimes restored.
+// Round 244: Five alternate location-reset field orders 283 each; reset-word-first with either sentinel
+// chain 283/283; reset between sentinels with invalid-cluster-first merge 283. Early reset SI and
+// visibility/selection homes remain; original field publications restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

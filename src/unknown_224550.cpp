@@ -124,7 +124,7 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 }
 
 
-// score 391 (was 421): Frame 0x50 versus 0x60 (the tint lives in a one-caller helper's scope, so uv_b reuses its
+// score 391 (was 391): Frame 0x50 versus 0x60 (the tint lives in a one-caller helper's scope, so uv_b reuses its
 // slot), cache EBP/EBX and scalar homes remain.
 // Frame pointer 597; size optimization 990; tint input-array parameter 435;
 // direct packed-tint return 435; byte flip selector 538.
@@ -168,6 +168,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Round 242: Plain indexed/pointer tint clamp traversal with the existing
 // early-return scalar clamp 391 each; single-exit clamp 468 each, inline or
 // forced. Keep ordinary indexed form, plain 391 at 1931/1937; frame remains.
+// Round 244: Existing tint producer as cache/seed/definition member, forced 391 each, ordinary inline 722
+// each; cache/definition member with caller tint output 520/520. Native tint outputs recover frame 0x60 but
+// not cache/UV homes; original producer and clamp loop restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)
