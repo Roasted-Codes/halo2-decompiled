@@ -113,6 +113,10 @@ extern real g_4c9798[36];
 // early border zero alone/with tag/direction/both 342 each, zero after mode
 // with both views 297. Border forms recover frame 0x28 but regress; original
 // short mode/height, observations, copies and protected call inputs restored.
+// Round 174: entry tag category captured as short/long 239/239; complete raw sizing flags
+// 237; short/long tag with raw flags 237/237; tag short/long with entry border zero
+// 342/342; short tag, raw flags and zero 335. Two-count gains and exact-only tag copies
+// restored; frame 0x24/0x28, state transport and protected rounding reloads remain.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

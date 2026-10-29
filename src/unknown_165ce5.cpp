@@ -1487,6 +1487,11 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 251 (fast control 234): loop-scoped orientation byte-offset/ordinal/base/cursor
 // 410/234/409/254; the four at entry 561/234/576/558. Ordinal forms keep frame
 // 0x28; the other forms grow it to 0x30. Original buffer lifetime and body restored.
+// Round 174 (fast control 234, full 232): complete mutable/readonly clock roots
+// 509/509; mutable/const native interval 543/543. Final plain activity scan,
+// long/short condition and long/word body termination 233/230/233/230; four-count
+// reduced gains fail the eight-count gate. All snapshots/scans restored; frame,
+// unit/mode homes and shared look reciprocal remain.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
