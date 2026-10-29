@@ -337,7 +337,7 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
     }
 }
 
-// score 159 (was 196): Frame 0xb4 agrees; 1497/1516 bytes. Back-edge parameter reloads and velocity
+// score 67 (was 159): Frame 0xb4 and 1516-byte length agree. Back-edge parameter reloads and velocity
 // blend/normalization stores differ; shared scale return plus addition recovers the attraction's in-place products.
 // Earlier frame-matched body kept attraction j/k products in temporaries and deferred velocity stores.
 // Round 9 (lane 11): steering record replaced by plain locals 291 (frame 0xac); the distance estimate with
@@ -416,6 +416,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // DH round 215: Distinct velocity-normalizer store orders ikj/jik/jki/kij/kji,
 // existing shared scale at its output, and complete inverse-first products ijk/kji
 // 196 each. Original helper and every caller stage restored; reloads and transfers remain.
+// Round 34: On the retained attraction-return graph, shared change addition 67 (plain);
+// previous-scale/quarter-scale/both returns 171/112/173; those with shared change
+// 178/114/178; scaled previous addition 171; shared previous addition 93, with
+// shared change 112, with both native scales 110. Back-edge reloads and final stores remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
@@ -490,9 +494,7 @@ void function_2b9b10(s_particle_properties_2ba const *definition, void const *or
         }
         vector3f previous = particle->velocity;
         scale_particle_vector_2b(0.75f, &previous);
-        particle->velocity.i += change.i;
-        particle->velocity.j += change.j;
-        particle->velocity.k += change.k;
+        vector3f_add(&particle->velocity, &change, &particle->velocity);
         scale_particle_vector_2b(0.25f, &particle->velocity);
         particle->velocity.i += previous.i;
         particle->velocity.j += previous.j;

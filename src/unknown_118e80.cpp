@@ -285,6 +285,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 30: Complete parent-handle long/dword lifetimes 220/220; transform-first arms with those
 // handles 227/227; separate outlined producer original/transform-first 472/472; outlined handle
 // long/dword pair 472/472. Original forced producer, input copies and all body code restored.
+// Round 34: Complete parent-transform value/const-value/reference/const-reference inputs
+// 329/329/220/220; those four with complete native up inputs 353/353/295/295.
+// Original producer and body restored; frame, early save and basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
