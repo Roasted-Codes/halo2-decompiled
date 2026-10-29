@@ -1595,7 +1595,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 728 (was 737): Frame 0xc0 agrees; user cursor spills and identity uses EBX; cursor base, dispatch and completion homes remain.
+// score 728 (was 728): Frame 0xc0 agrees; user cursor spills and identity uses EBX; cursor base, dispatch and completion homes remain.
 // Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
@@ -1653,6 +1653,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // observations 728/739/770/737/728/739/770/770. Direct user observations kept, plain 728.
 // On that receiver graph, native char/byte admission with mutable/readonly identity: 728 each;
 // original admission field and identity retained. All call roles and state transitions preserved.
+// Round 224: Native cached owner/property/both fields 728 each; owner/property/both with
+// test-produced admission 728 each; both with comparison-local team and with both result lifetimes
+// 728/728. Original cache views, admission/team lifetimes, predicates and task transitions restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

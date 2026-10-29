@@ -3410,7 +3410,7 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 215 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
+// score 215 (was 215): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
 // long next-chunk candidate 254; completed-chunk early exit 241.
@@ -3453,6 +3453,9 @@ struct s_128ca0
 // Round 219: readonly conditional next chunk 239; complete countdown arms 215 (plain, kept); both
 // 227; word countdown 229; conditional/word 234; complete arms/word 224; all 217, with role names
 // 217. Sub-eight gains 227/229 restored; all other forms restored.
+// Round 224: Live definition/permutation/playback, definition-permutation/definition-playback/
+// permutation-playback/all/all-pitch-parameters 307/364/681/385/709/864/878/878. Definition-only
+// recovers frame 0x494 but regresses; original receivers, gain homes and complete countdown arms restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

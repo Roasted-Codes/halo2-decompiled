@@ -363,7 +363,7 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
-// score 152 (was 184): result/range homes and inverse SIMD groups remain; seat thresholds now stay in memory.
+// score 152 (was 152): result/range homes and inverse SIMD groups remain; seat thresholds now stay in memory.
 // result/range homes, inverse SIMD groups and seat-threshold reloads remain.
 // Round 57: retail's result stores are a spill of a long result (dword store, `mov ax, word` reload at
 // each tail-duplicated exit). Plain long result 241 (result home +0xc); short return type with every
@@ -464,6 +464,9 @@ real function_30bf0(vector3f *vector);
 // reversed publication 180; short/facing/single select 197; short/facing/explicit 3-or-2 stores 152 (plain, kept);
 // mode/settings failure exits 188/202; publication order, ordinary result, distance declaration, projected order,
 // facing and outer declaration orders 152 each; direct count-down 197; direct accumulators 245.
+// Round 224: Live actor/handle/occupant and actor-handle/actor-occupant/handle-occupant/all/all-forward
+// 311/146/218/324/328/218/322/363; live-handle count/index short-word/short-long/long-word/long-long
+// 229/185/232/185. Six-point 146 rejected below margin; original receivers and signed traversal restored.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
