@@ -342,7 +342,11 @@ void __stdcall function_18c630(long object_index, long tag_index, long a, long b
 // score 7 (was 7): sample-base and offset registers plus object call setup remain; readonly data
 // input 7; readonly entry input 7; native count identity 7; output count lifetime 52; existing
 // scale storage lifetime 7; input pointer home names 7; existing scale home names 7; inline matched
-// output callee 7.
+// output callee 7; final object address read 7; split construction around count 9; split
+// construction count last 7; actual descriptor type 7; nested query guard 7; object snapshot 7;
+// mutable permutation input 7; scalar scale copy 8; scalar copy interleaved 11; plain scale
+// pointer 7; scalar copy split count last 8; direct scale bits 7; union real assignment 8;
+// real assignment after stores 8; scalar copy declared first 8; late object snapshot 7.
 // @retail 0x18ca20
 void __stdcall function_18ca20(long object_index, long tag_index, s_sound_permutation const *permutation, real scale)
 {
