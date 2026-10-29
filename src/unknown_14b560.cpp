@@ -2757,6 +2757,8 @@ struct s_unit_flags_14d8b0
 // combined first native flag and damage-byte store order 17 (plain whole-program confirmed).
 // Round 379: function-scope event/damage/both 17/23/23; early tag input alone/with event/damage/both
 // 150/150/151/151; tag value after scratch store 17. Original executable body restored.
+// Round 164: separate root handle, branch-local short expiry result, tick/result/rate names,
+// all three names, joined slot result and root+slot result: 17 each. Original body retained.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

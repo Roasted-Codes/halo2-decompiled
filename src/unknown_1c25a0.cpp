@@ -1427,12 +1427,15 @@ PRIVATE __forceinline hkBool contact_metadata_flag(long metadata)
  return result;
 }
 
-// score 4 (was 24): retail joins the two child-shape arms in EAX and copies the
+// score 4 (was 4): retail joins the two child-shape arms in EAX and copies the
 // shape into ESI there, ours assigns ESI in each arm. Kept: the flag through an
 // hkBool helper 14 (it replaced a volatile byte copy), the root's rigid body as
 // `type == 1 ? entity : NULL` 4. Shape join tried: if/else 14 (before the rigid
 // body form), inverted if/else 19, default shape then child 80, inline shape helper
 // 4, inline unwrap helper 4, child copy 13, inverted ternary 9.
+// Round 166: Native full-width key/filter-child/readonly receiver contracts, all seven subsets 4;
+// one hidden result on the recovered flag/rigid-body graph 65. Original contracts and body
+// restored.
 // @retail 0x1c32d0
 hkBool c_contact_rule_filter::accepts(void const *query, s_contact_body_view const *a, s_contact_body_view const *b,
  c_contact_shape_container *container, long key)

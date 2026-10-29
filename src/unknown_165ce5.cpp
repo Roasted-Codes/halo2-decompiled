@@ -1472,6 +1472,10 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // all plus primary-pointer admission 587. Original complementary states and all calls restored.
 // Round 370 (fast control 234): scope-factored clear decision with active-default, callback
 // and member-rate interactions 434/410/434/410/401/397/401/397; original body restored.
+// Round 165: Native overlay argument-pair flags/set/outer-lifetime subsets
+// 386/234/386/234/386/234/386; combined role names 386 (fast control 234, full baseline 232).
+// Original pair types, scopes, names and every smoothing input restored. Frame 0x28 versus 0x2c,
+// unit/mode homes and shared look reciprocal remain.
 // Round 373 (fast control 234): Structured overlay continuation, with callback/active/both
 // choices 234/234/392/392; reusable no-overlay decision with those four forms
 // 421/421/403/403. Original body and every smoothing input restored.

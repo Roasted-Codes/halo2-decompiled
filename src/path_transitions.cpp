@@ -349,6 +349,9 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 // Round 379: query before defaults 32; false result after providers 164; entry short count 31;
 // query/result 164, query/count 32, result/count 164, all three 164; selected-index Boolean 98.
 // Original body restored; the alignment dot agrees on this graph.
+// Round 164: native point setter at final/capture/both 51/50/166; short selection with
+// original count and wide scan 66, plus final/capture/both setters 169/170/142;
+// selected marker pointer 196. All restored; original short count and wide ordinals retained.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {

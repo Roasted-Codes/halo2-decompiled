@@ -3583,6 +3583,12 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 243: Player default before scale override, direct/valid candidate 1439/1420;
 // before unit lookup 1442/1421; before dual query 1447/1428; before first lookup 1447/1428.
 // Kept scale-override default plus valid candidate, plain 1420/5680; frame and pool carriers remain.
+// Round 165: Dual/activity/owner inline-boundary subsets and native dual byte all 1420; positive
+// result bool/byte/word 1469/1465/1422. Unsigned real input word alone 1416, with bool/byte/word
+// result 1469/1465/1414; four/six-point gains rejected. Inner behavior/press/both/hold/behavior-
+// hold/press-hold/all orders 1447/1450/1430/1421/1427/1465/1447; word-input/result with hold/all
+// and word-input hold 1433/1449/1425. Original fields, result, cases and every inline
+// specification restored; frame 0x3c versus 0x38 and pool/dual homes remain.
 // Round 246: complementary activity result bool/byte/short/long 1440/1440/1459/1459; the same
 // with entry declaration 1440/1440/1459/1459. Original persistent result restored.
 // @retail 0xfdfb0

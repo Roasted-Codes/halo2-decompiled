@@ -1302,6 +1302,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 234: entry-snapshot/displacement/conversion scope endings and combinations
 // 442/444/442/444/442/444/442; tangent consumption scope 444. Two-point gains rejected; original body restored.
 // Round 379: Data/single-step/both terminal exits 484/444/484; data-first acquisition alone/with data/single/both exits 470/478/470/478; traversal-only radius with both exits 485. Original body restored.
+// Round 165: Early actual data-result NULL lifetime coupled with source-radius/output-
+// index/traversal store subsets 469/486/491/466/471/487/496; combined existing endpoint setters
+// 496. Original data producer, both inherited local qualifiers, arm order and endpoint
+// construction restored. Frame 0x11c versus 0x10c, persistent zero and metadata/radius homes
+// remain.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

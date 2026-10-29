@@ -1257,6 +1257,10 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // parallel products 577; early numeric returns/input copy 577/586; entry/root defaults
 // 570/573; captured length/default plus capture 577/560; coordinated order/order plus capture 577/577.
 // Every paired helper, input observation, signature and call restored.
+// Round 165: Positive selection result byte/word/long/dword at original declaration
+// 531/561/559/559; entry declarations 531/561/559/559. Original bool result and every
+// vector/color/rotation operation restored; frame 0x2c versus 0x28 and block/query/result homes
+// remain. Both caller levels preserve their original measurements.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
