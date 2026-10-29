@@ -65,13 +65,13 @@ static inline void point_along_vector_1c19b0(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 23 (was 81): frame 0xd4 and registers agree; the end point sits at 0x40 below the second
+// score 23 (was 23): frame 0xd4 and registers agree; the end point sits at 0x40 below the second
 // rounded tick count (0x4c) and the actor-position temp (0x50), where retail has 0x48 above 0x40/0x44,
 // and its stores are scheduled before the call pushes. Round 152: full 0x5c collision buffer 69;
 // point-along-vector steps in place 163, through an `ahead` point 54; single exit 23; end/ahead
 // declarations swapped 23; tick locals at loop scope 23; end or delta at function scope 23/30.
 // A compile-only frame probe puts both 4-byte slots below end only with the final call after the
-// loop (a found flag), not tried in a real build.
+// loop (a found flag); that real form changes the convention and scores 337.
 // Earlier: frame 0xc4 versus 0xd4; direction/counter roles and endpoint scheduling differ.
 // The collision workspace remains 16 bytes smaller; local offsets and loop layout differ.
 // Reused step scale 228; with shared delta 228, endpoint setter 220, both 220;
@@ -81,6 +81,10 @@ static inline void point_along_vector_1c19b0(point3f const *point, vector3f cons
 // Round 219: Complete per-step direction snapshot with short/char/byte/long induction
 // 240/240/240/226; direct char/byte/long/word induction 210/210/164/81. All restored; frame
 // 0xc4/0xd4 and direction/counter roles remain.
+// Round 31: force-inlined point helper, delta/end and function-scope tick declarations,
+// sample_end/contact_end names, location/node and start/origin declaration orders 23 each.
+// Round 393: origin input/trace/collision library copies in seven subsets 23 each;
+// native initial origin with both output copies 215. Original producers and complete body restored.
 // @retail 0x1c19b0
 bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_type_f17a25 *path)
 {
