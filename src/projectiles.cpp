@@ -974,6 +974,9 @@ real function_30bf0(vector3f *v);
 // Actual squared-time producer with found test 244; test-derived trajectory result
 // 245; repeated time square alone/with found/result 244/244/245; result with native
 // minimum clamp 246; coefficient home names 245; all scalar producer forms 246. Restored.
+// Round 173: existing native gravity field 244; whole origin/target/both input points
+// 298/299/327; those with complete shared delta 298/299/327; both with entry velocity
+// 327. Original inputs, gravity observation, float trees and pointer contracts restored.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1172,6 +1175,8 @@ extern vector3f *g_4687ac;
 // Round 279: all four endpoints through existing point setters, with query-vector reuse
 // and result-first exit combinations 163/184/163/183; existing scaled-vector sums on the
 // same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
+// Round 173: native position/ignore/radius fields with external object/tag pointer or reference
+// receivers, mutable or read-only, all eight combinations 163. Original layout and body restored.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1444,7 +1449,7 @@ PRIVATE inline long projectile_object_root(long object_index)
 /* the projectile type's new callback: its target, lifetime, range,
    attachment, starting velocity and spin, whether it starts under water,
    and the seat flags of the unit that fired it */
-// score 332 (was 360): frame 4 agrees; pool/input and tag receiver allocation differ at +0xb.
+// score 332 (was 332): frame 4 agrees; pool/input and tag receiver allocation differ at +0xb.
 // Speed update is still called instead of expanded; 1226/1261 bytes.
 // Native flag tests 380; complete water result 375; both 380; plain velocity-component
 // loop 364 fast, 360 plain (kept); loop/flags 381; loop/water 364; all three 381;
@@ -1452,6 +1457,10 @@ PRIVATE inline long projectile_object_root(long object_index)
 // Complete object/tag/both observations 550/332/735; shared scaled addition 364;
 // with tag/object/both observations 344/523/715; initial setter on complete graph 713;
 // retained entry tag identity 396. Tag observations alone kept, plain 332; others restored.
+// Round 173: actual input-record fields with object pointer/reference and ordinary/forced
+// root expansion 332 each; consistently cached tag on those four graphs 360 each.
+// Four earlier slot-observation explorations score 484 and are excluded for overlap risk.
+// Original input accesses, receiver graph, tag observations and root declaration restored.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {

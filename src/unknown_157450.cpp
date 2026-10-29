@@ -3894,6 +3894,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 218: Exhaustive award result, entry declaration with before/after subtype leaves and
 // ordinary/excluded category first 579/591/584/602; selection declaration counterparts 579/591/584/602.
 // All restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
+// Round 173: actual external victim/attacker/state record references, all seven nonempty
+// combinations 470; all three with existing complete position setter 471. Original record
+// receivers, both events, shared award update and complete body restored.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

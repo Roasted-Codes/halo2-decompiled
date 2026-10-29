@@ -907,6 +907,9 @@ public:
 // Round 221: final completion accumulation, two-part eager/logical and incremental eager/logical,
 // long 376/366/374/366; bool 367/359/360/359. Original result and body restored; Boolean
 // accumulation reaches 1355 bytes but changes the frame and regresses.
+// Round 173: coupled count/visibility/cleanup/unlink inline summaries, all six pairs,
+// count/visibility/cleanup and all four 292 each. Original declarations and complete
+// caller/provider bodies restored; entry completion, flag publication and child/tint homes remain.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
