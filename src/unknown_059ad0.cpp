@@ -4351,7 +4351,7 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 305 (was 305): frame 0xd8 agrees; result/identity/selection byte homes and
+// score 305 (was 305): frame 0xd8 and length agree; result/identity/selection byte homes and
 // acknowledgement placement differ.
 // Earlier 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
 // instead of going through the shared exit, so each one gets its own epilogue and the extent matches
@@ -4372,7 +4372,7 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Earlier 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
 // separate arm instead of a merged join, and the identity pointer is taken before the member-state
 // pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
-// score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
+// Byte homes differ (retail: better +9,
 // identity/same +0xa, result +0xb; ours: identity/same +9, result +0xa, better +0xb), retail reads
 // `result` back from its home at every return (ours folds the two reason-2 returns to `xor al, al`
 // and keeps them as two blocks, where retail has one), and the acknowledgement block is laid out
@@ -4439,6 +4439,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 72: sender test inverted ahead of reason 5 317; acknowledgement after the shared exit 305
 // (same code); its result set before the state-7 test 305; preference/equal flags swapped 305;
 // both declared after the member lookup 314. Retail reloads the result byte on every exit.
+// On native-equality/distinct-policy exits: byte/char acceptance, with original or paired-byte
+// selection, 406/406/406/406; word/short acceptance with either selection domain 410 each.
+// All larger than retail; original truth carriers and body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

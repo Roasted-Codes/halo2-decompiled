@@ -498,12 +498,15 @@ void function_e5930(long unit_index);
 
 /* resets the biped's state: its flags, landing and melee timers, its ground
    contact and its physics mode */
-// flag-store scheduling and the final helper's unwanted expansion remain.
+// score 118 (was 118): flag-store scheduling and the final helper's unwanted expansion remain.
 // Boolean predicate 121; native word flags 114; reset zero/NONE/both chains 118;
 // chains with Boolean predicate 121; counter/index/initial block library clear or fill
 // 129/138/127; second receiver scope 118; native tag dword or bit member 121;
 // native word stores with the tag in a named flag 113 (MiniMax B run 14; under the keep bar, restored).
 // either tag form with native word stores 113 (subthreshold, restored).
+// Native destination word bit: Boolean branch 113; direct bit 127; direct Boolean 139;
+// negative Boolean admission 116. Byte destination bit: those four forms 121/131/131/121.
+// Best five-point gain is below threshold; original type and body restored.
 // @retail 0xde4c0
 void __stdcall function_de4c0(long arg_159e6d)
 {
@@ -3535,10 +3538,13 @@ real magnitude3d(vector3f const *v);
 /* an actor riding a fast vehicle that is about to leave the ground (no
    ground under it, or none along its flight) says so, at most once every
    half second: falling (0x54), flipping over (0x56) or a jump (0x55) */
-// score 105 (was 169): Frame 0x84 agrees; byte/word read, float scheduling and normal-copy homes differ.
+// score 105 (was 105): Frame 0x84 agrees; byte/word read, float scheduling and normal-copy homes differ.
 // First/second/both branch-selected collision calls 215/225/105 fast; both retained.
 // On both calls: state at test 105; shared vector/point/both setters 107/110/111; carrier name 105.
 // Complete branch-selected calls 105 plain; original operands and helper roles preserved.
+// Native short ticks 209; time at each use 122; both 211; entry flight workspace 105,
+// with short ticks 209; fallback event result 119, with ticks/workspace 207.
+// One-use normal copy 61 at retail length (exact-match-only, restored).
 // @retail 0xe3380
 void __stdcall function_e3380(long arg_159e6d)
 {

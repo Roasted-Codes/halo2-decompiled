@@ -633,7 +633,7 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 290 (was 336): frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
+// score 290 (was 290): frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -659,6 +659,9 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // index is neutral and omitted. Boolean-role names 301/303/303/303; native origins on typed graph
 // 375/375/308/375/379/387/322/389. Frame and movement addressing agree; Boolean role homes and point/case-tail
 // transport remain.
+// Native byte aiming/read-only specification/read-only state contracts, all seven subsets,
+// 301 each (unchanged fast control 301); existing point setter force-inline declaration 301.
+// Original contracts and body restored; full baseline remains 290.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
