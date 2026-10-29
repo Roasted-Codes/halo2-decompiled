@@ -361,6 +361,7 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	__asm rdtsc
 }
 // score 244 (was 244): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
+// the retry ordinal as a function-scope local 239 (MiniMax E run 12; under the keep bar, restored).
 // Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
 // arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
 // format-size query declaration 287. Original body and declaration restored.
@@ -398,6 +399,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 269: Successful allocation/movie/texture phase nesting, seven subsets,
 // and all with post-protection acceptance nested: 245 each at 1104 bytes.
 // Original early cleanup returns, helpers and full body restored; frame stays 0x3c.
+// Timestamp producer original with inclusive/selected clamp 245/244; forced
+// with original/inclusive/selected clamp 244/245/244; outlined with all three
+// clamps 310 each. Original helper contract, clamp and full body restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

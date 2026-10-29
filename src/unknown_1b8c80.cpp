@@ -223,7 +223,7 @@ bool function_1b8eb0(long actor_index, long object_index, short seat_index, bool
 	return result;
 }
 
-// score 3 (was 109): at the 0xc8200 call retail loads the seat index and the object before the
+// score 3 (was 3): at the 0xc8200 call retail loads the seat index and the object before the
 // unit index (ecx last), ours loads the unit index first. Round 70: one result with `break` for
 // the two rejections, bool result and the seat count from 0xc8b80 (retail inlines it) gave the
 // shrink-wrapped ebp/esi saves (109 -> 3); 0xc8b80 alone 109, bool alone 117, without 0xc8b80 7
@@ -232,6 +232,9 @@ bool function_1b8eb0(long actor_index, long object_index, short seat_index, bool
 // pointer 71; named seat object 71 and occupant test inverted 46 (harness).
 // Round 270: complete seat snapshot 121; reused object/seat/both snapshots 75/104/137;
 // named hostile/reservation/both decisions 3/3/3; native tag receiver 3. Restored.
+// Round 252: eligibility accumulated with logical OR 43, bitwise OR 31, conditional 3;
+// named eligibility 3; actor at every use 116 (matched caller lost); read-only actor,
+// read-only flags, both 3/3/3. Original complete body restored.
 // @retail 0x1b8f30
 bool function_1b8f30(long actor_index, long object_index)
 {
@@ -346,6 +349,10 @@ PRIVATE __forceinline void function_1b9201(long arg_0, vector3f *arg_1)
 // score 11 (was 11): the seat loop keeps the seat count in EBP and the index
 // in ESI here, retail keeps the count in ESI and the index in EBP, so the loop
 // preamble is laid out differently. The rest of the function matches.
+// The shared forward helper 302; state after or between the vector declarations
+// 11; split or function-scope state 11; const seat or state 11; result between
+// the lookups 11; split seat initialization 11; index-first with state after the
+// vectors 11; a positive-count guard 135.
 // @retail 0x1b9200
 bool function_1b9200(long object_index, long prop_index)
 {
@@ -703,6 +710,9 @@ void function_270590(s_path_source *source, s_type_c3b527 const *point, long nod
 // offsets differ as well.
 // Unsigned-word/dword result 306/225; byte preparation with long/word/dword result 225/306/225;
 // long preparation with long/word/dword result 311/309/311. Default observation and arithmetic restored.
+// Native ownership/type/state producer orders O/S/T, T/O/S, T/S/O, S/O/T, S/T/O
+// 286/287/286/285/284; explicit state fallback at first/middle/last 287/289/289
+// (reduced control 289, full 225). Original producers and arithmetic restored.
 // @retail 0x1b99d0
 short __stdcall function_1b99d0(long actor_index, s_slot *slot)
 {
@@ -1108,6 +1118,9 @@ struct s_seat_approach_result
 // score 147 (was 147): the vertical x87 square operands and the final delta pop differ;
 // retail pops before the arm's jump, ours shares that pop at the distance join, shifting
 // the following comparison. Round 70: the existing 3D distance
+// the vertical square operands and x87 cleanup differ. Retail pops
+// the vertical arm's last delta before its jump; ours shares that pop at the distance join.
+// Round 70: the existing 3D distance
 // (0x1bbf40's) for the vertical case, a 2D point distance through the existing vector
 // helpers for the nearest seat point (retail recomputes the nearer distance in two arms), the
 // vehicle tag flag as a bitfield and bonus declared before the direction gave retail's x87
@@ -1122,6 +1135,9 @@ struct s_seat_approach_result
 // Round 272: actual shared difference/magnitude, difference/length-square/root and
 // squared-distance/root graphs 191/214/243/231/143/237/180/180. Native helper return boundaries
 // do not recover the vertical cleanup; all original geometry and helpers restored.
+// Round 252: inline/forceinline 3D helper declarations 147/147; whole actor point 273;
+// shared planar direction helper 147; branch-owned bonus alone/with direction 194/194;
+// external position reference with both 218; whole point with both 274. All restored.
 // @retail 0x1baae0
 bool function_1baae0(long actor_index, long object_index, short seat_index, bool ignore_bonus,
 	bool ignore_reserved, bool vertical, s_seat_approach_result *out)
@@ -1303,7 +1319,14 @@ struct s_1ba091
     s_slot_entry_iterator field_4;
 };
 
-// score 198 (was 198): frame 0x14 agrees; early object-header acquisition,
+// score 198 (was 198): frame 0x14 agrees; incoming actor ECX/EDX, early object-header
+// acquisition, selection-mask storage and iterator/result homes differ.
+// Earlier slot-data form 198; raw-mask and independent iterator variants 202/207;
+// Result-first 190; explicit same-object result 230; cleanup result 258.
+// Complete byte flags with/without slot data 249/249; raw word/dword mask 257/252;
+// branch-assigned decline with byte/word/dword 249/257/252, with slot data 249.
+// Original body restored.
+// frame 0x14 agrees; early object-header acquisition,
 // selection-mask, entry/result and reusable frame homes still differ.
 // Round 172: data-member with header/actor/both observations 198/263/263;
 // actor/header observations alone 263/198; single cleanup-result join 258;
@@ -1430,6 +1453,8 @@ void function_201ad0(long squad_index, long object_index);
 // seat walk and conversion homes differ.
 // Current-vehicle/root-index and seat-count/total-seats home names, each with
 // driver or complementary passenger ownership: eight forms, all 218.
+// Native byte/signed-byte driver state, mutable/const 218/218 each;
+// native short/word driver state, mutable/const 318/318 each. Original Boolean restored.
 // @retail 0x1bb570
 void __stdcall function_1bb570(long vehicle_index, long actor_index)
 {

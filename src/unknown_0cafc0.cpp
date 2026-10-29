@@ -171,6 +171,13 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Frame 0xa4 agrees; object-data/tag-table allocation
 // and collision-point scheduling differ.
 // frame 0xa4 and entry allocation agree; height loads, collision products and marker tails differ.
+// only the two height loads differ: retail loads the 1.0 constant before the
+// crouching height, ours the other way round. Round 110: the seated object as a pointer local
+// used for the seat test and the marker index, the default marker call after that branch, took
+// 31 -> 2 (the marker registers and the parent-branch table loads now agree). Height forms on
+// that graph, all 2: standing/crouching products reversed, sum reversed, crouching term first,
+// named complement, raw standing/crouching reads in either order, one named height sum in either
+// term order; the whole height in one statement 17; a long seat index 91.
 // Basis-only/point-only scopes 309/311; collision created at its first query alone/with basis scope
 // 306/306 (three-point gains rejected), with point/both scopes 310/310; complete displacement
 // initialization alone/with all three narrowed lifetimes 309/310. Original body restored.
@@ -299,17 +306,19 @@ void function_cafc0(long unit_index, point3f *position)
 	{
 		s_object_marker marker;
 
-		if (unit->unknown24c != NONE && objects[unit->unknown24c & 0xffff].object->seat_index != NONE)
+		if (unit->unknown24c != NONE)
 		{
-			function_b8d30(unit_index, definition->seats[objects[unit->unknown24c & 0xffff].object->seat_index].marker_name,
-				&marker, 1, false);
-			*position = marker.matrix.position;
+			s_unit_eye_object *seated = objects[unit->unknown24c & 0xffff].object;
+
+			if (seated->seat_index != NONE)
+			{
+				function_b8d30(unit_index, definition->seats[seated->seat_index].marker_name, &marker, 1, false);
+				*position = marker.matrix.position;
+				return;
+			}
 		}
-		else
-		{
-			function_b8d30(unit_index, 0x4000095, &marker, 1, false);
-			*position = marker.matrix.position;
-		}
+		function_b8d30(unit_index, 0x4000095, &marker, 1, false);
+		*position = marker.matrix.position;
 	}
 	else
 	{

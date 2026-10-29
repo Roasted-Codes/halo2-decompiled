@@ -1517,11 +1517,11 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		panel->score_label.valid = false;
 	if (time_width)
 	{
-		s_short_rectangle time_bounds = { y, x + 0x19 + (short)name_width + (short)score_width,
+		s_short_rectangle time_label_bounds = { y, x + 0x19 + (short)name_width + (short)score_width,
 			y + 0x14, x + 0x19 + (short)name_width + (short)score_width + (short)time_width };
 		list = score_string_list_1608e0();
 		if (list != NONE) function_1a0180(list, 0x8000102, text);
-		panel->time_label.initialize(&time_bounds, &background, &foreground, text, 0x14, true);
+		panel->time_label.initialize(&time_label_bounds, &background, &foreground, text, 0x14, true);
 	}
 	else
 		panel->time_label.valid = false;
