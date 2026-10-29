@@ -921,6 +921,9 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // loop in 0x176a0's shape (value/mask locals, the call in both arms, remap byte added first) 226 at frame
 // 0x10 as retail (the direct loop's counter then takes EBX); one counter declared for both loops 226.
 // Match-only (a one-caller helper); original body restored.
+// Round 257: Existing writer category/ordinary-bank/special-bank completion graphs,
+// independently and combined, 157 in six forms; special-first completion with/without
+// bank returns 170/170. Original complete writer and both live-bound walks restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {

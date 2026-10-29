@@ -1284,6 +1284,10 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Existing curve mapper scalar-first/persistent-record-reference/both contracts,
 // forced or ordinary inline, 529 each; scalar-first or record-reference outlined
 // contracts 849 (1903 bytes; caller lost). Original mapper, all calls and body restored.
+// Round 257: Mapper lower-independent/upper-independent/upper-exclusive bounds
+// 529/551/551; separate bounded input with lower-exclusive/lower-independent/
+// upper-independent/upper-exclusive tests 529/529/551/551; existing returning pin 529.
+// Original mapper, complete body and every caller contract restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1417,6 +1421,9 @@ real function_30bf0(vector3f *vector);
 // Entry-only uninitialized length/square/three-scale declarations, seven subsets,
 // then all with luminance, 364 each. All value producers and complete body restored;
 // frame 0x4c and normal/limited-color/rotation homes remain.
+// Round 257: Projection-before-cross orders SCAPX/SACPX/CSAPX/CAPSX/CAPXS/ACPSX/
+// ACSPX/ASCPX 474/474/474/442/442/442/474/474. The three 442 forms recover frame
+// 0x40 and length 1870; all regress. Original helper and whole body restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1842,6 +1849,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Guarded pointer values after decoding at producer/before-samples/dynamic-phase/
 // function declaration scopes 806 each (3072 bytes). Raw-default diagnostics are
 // rejected; original format-dominated address arithmetic and full body restored.
+// Round 257: Scalar color-pin lower/upper independent, upper exclusive and lower/upper
+// guard returns 782 each; native lower/upper scalar results 828/828; existing returning pin
+// 843. Original conditional stores, helper and complete body restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
