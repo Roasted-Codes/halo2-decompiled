@@ -325,6 +325,8 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 260: separate inline/noinline declarations for animation query, unit request,
 // approach query and movement query, 186 in all eight forms. Original declarations restored;
 // actor/pool carriers, shared request tail and x87 scheduling remain.
+// Round 263: separate vertical/ground admission inline/noinline declarations and all four
+// paired contracts 186/186/186/186/186/186/186/186. Original declarations and complete body restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {

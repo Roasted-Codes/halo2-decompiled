@@ -766,7 +766,7 @@ void function_143250(
 	}
 }
 
-// score 2050 (was 2148): Frame 0x2fc versus 0x300; rotation input and basis/matrix homes remain.
+// score 2039 (was 2050): Full frame 0x300 agrees; rotation input and basis/matrix homes remain.
 // Frame pointer 3182; separate adjacent basis pairs [0,1] 2278, [2,3] 2320,
 // [4,5] 2286, [6,7] 2329.
 // Round 310: second-band product trees 2265; second-band full trees 2265; third-band
@@ -796,6 +796,9 @@ void function_143250(
 // 2067/2156/2236/2145/2051/2156/2263/2263 (control 2149). First and second
 // matrices in row order kept: 2050 plain, 10488/10773 bytes; every scalar
 // computation, input, precision boundary, order guard and helper tuple unchanged.
+// Round 263: complete column publication of band masks 1/2/3/4/5/6/7 and all reversed columns
+// 2051/2040/2040/2199/2199/2210/2210/2291 (fast control 2051). Five-by-five columns kept: 2039 plain,
+// 10500/10773 bytes; every scalar producer and helper tuple unchanged.
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
@@ -2347,29 +2350,29 @@ real *function_143600(real const *rotation, unsigned long order, real const *coe
 	term_180 = term_179 * term_175;
 	term_181 = term_178 - term_180;
 	matrix[0] = term_35;
-	matrix[1] = term_39;
-	matrix[2] = term_46;
-	matrix[3] = term_50;
-	matrix[4] = term_53;
 	matrix[5] = term_59;
-	matrix[6] = term_63;
-	matrix[7] = term_66;
-	matrix[8] = term_70;
-	matrix[9] = term_74;
 	matrix[10] = term_85;
-	matrix[11] = term_96;
-	matrix[12] = term_104;
-	matrix[13] = term_115;
-	matrix[14] = term_136;
 	matrix[15] = term_141;
-	matrix[16] = term_147;
-	matrix[17] = term_150;
-	matrix[18] = term_155;
-	matrix[19] = term_160;
 	matrix[20] = term_162;
+	matrix[1] = term_39;
+	matrix[6] = term_63;
+	matrix[11] = term_96;
+	matrix[16] = term_147;
 	matrix[21] = term_164;
+	matrix[2] = term_46;
+	matrix[7] = term_66;
+	matrix[12] = term_104;
+	matrix[17] = term_150;
 	matrix[22] = term_173;
+	matrix[3] = term_50;
+	matrix[8] = term_70;
+	matrix[13] = term_115;
+	matrix[18] = term_155;
 	matrix[23] = term_169;
+	matrix[4] = term_53;
+	matrix[9] = term_74;
+	matrix[14] = term_136;
+	matrix[19] = term_160;
 	matrix[24] = term_181;
 	function_143250(result + 4, 5, &matrix[0], coefficients + 4);
 	if (order <= 3) return result;

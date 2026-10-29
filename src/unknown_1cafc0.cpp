@@ -951,6 +951,8 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Original class declarations and complete body restored.
 // Round 170: Failure-owned false result, byte/bool/short/long, with bool then byte prior-loop truth
 // 357/337/346/344/357/337/346/344. Original entry false, constructors and protected queries restored.
+// Round 263: previous-record/validity inline/noinline declarations singly and all four pairs
+// 210/210/210/210/210/210/210/210. Original constructors, provider declarations and protected query restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
