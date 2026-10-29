@@ -835,6 +835,9 @@ void function_1e5a60(s_biped_physics_result *arg_0, s_biped_physics_input const 
 // Output-only result byte/bool/word/dword 84/84/85/85; with definition mask 87/87/88/88.
 // Common counter-output stores with branch saturation, long/dword/short/word 93/93/93/93;
 // common counter-output stores with completion saturation, long/dword/short/word 93/93/93/93.
+// Round 276: Native result flags dword/long, with bool/byte input-valid field, 78/78/78/78;
+// Round 276: word/short result flags with both valid-field domains 74/74/74/74 at 651 bytes.
+// Round 276: Four-point forms rejected; original field declarations and body restored.
 // @retail 0x118b80
 void __stdcall function_118b80(long arg_0)
 {

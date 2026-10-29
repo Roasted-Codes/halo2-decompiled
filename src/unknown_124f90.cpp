@@ -2661,22 +2661,31 @@ static inline short sound_voice_find_available_channel(char type)
 }
 
 /* assigns a free channel and, when needed, a shared driver voice */
-// score 113 (was 113): frame 12 versus 8 and saved true byte; validity result 135; assigned result
+// score 96 (was 96): playback/channel roles recovered; frame 12 versus 8, status test and failure
+// placement remain.
+// Validity result 135; assigned result
 // 135; playback handle 113; const playback 113; long buffer index 117; entry status 113;
 // allocation-scope status 113; status name 113; allocation success result 122.
-// score 113 (was 113): frame 12 and saved result byte remain; failure flag 130, entry failure
+// Failure flag 130, entry failure
 // 130, complemented status 132, long channel 147, driver-first/late-system commits 130/130,
 // status plus driver-first 132, requested buffer first 130.
-// score 113 (was 113): `return true` on the success path gives retail's 8-byte frame and both
+// `return true` on the success path gives retail's 8-byte frame and both
 // exits (139, 415 bytes); with `~status & DSBSTATUS_PLAYING` 131 (430 bytes); with driver_index
 // set before the channel test too 135 (430 bytes, aligned 101 of 124: channel spilled where retail
 // spills buffer_index); result declared first 139; failure/success as one if/else 126.
+// Requested-buffer rereads 113; long result 102, with rereads 102; rereads with success exit 139, long too
+// 138; byte result with rereads 96.
+// Rereads with valid guard 141, plus long/success exit 131. Isolated byte/char/short/word result
+// 96/96/125/125; byte only kept, 437/430 bytes.
+// Round 279: byte result from completed paths with short/long channel and buffer
+// 148/154/144/150; driver result at channel selection with long buffer 130, completed-path too 148;
+// completed byte result with complemented status, short/promoted outputs 151/160. Original byte-result body restored.
 // @retail 0x1295e0
 bool __stdcall function_1295e0(short voice_index)
 {
 	s_sound_voice *voice = &g_4e6378[voice_index];
 	s_sound_playback *sound = SOUND_PLAYBACK_GET(voice->sound_index);
-	bool result = true;
+	byte result = true;
 
 	if (voice->channel_index == NONE || ((sound->priority & 2) && voice->unknown0e == NONE))
 	{
@@ -3062,6 +3071,9 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // Loop-end search seed/explicit cases 86/86; first search result/both boundaries 86/86; existing tail
 // search/seed plus search 86/86; first/both salt producers 183/203. Original body restored; playback/clock and
 // native mode scheduling remain.
+// Round 279: flag admission separated from class-mode production, short/long mode,
+// switch/direct guard and repeated/shared class index: eight forms 153 each.
+// Original conditional mode and loop restored; playback/clock schedule still differs.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3849,11 +3861,15 @@ void function_21b0e0(bool arg_0);
 long players_first_active_local_player(void);
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1);
 
-// score 108 (was 108): aligned frame 0x174c versus 0x1744; promoted voice limit 108; entry system
+// score 108 (was 108): aligned frame 0x174c versus retail 0x1744 remains.
+// Promoted voice limit 108; entry system
 // 108; direct elapsed 108; pending byte 108; frame input 108; short player cursor 122; short
 // next-player result 115; both player values 122; const element arrays 108; `= {}` arrays 121;
 // `!= 0` flag argument 128; flag argument through local_0 108; long restart cursor 134 (gives
 // retail's movsx/inc/cmp loop; only the loop padding jump moves with the longer prologue).
+// Fixed stack allocation of first/second/both buffers 131/145/149; batch 139; batch with first/second/both
+// 162/162/164; all with long restart 161.
+// Entry allocation first/second/both/all 174/176/174/164; all with long restart 163. All restored.
 // @retail 0x125b40
 void function_125b40(void)
 {

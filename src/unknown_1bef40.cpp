@@ -151,7 +151,7 @@ PRIVATE __forceinline void function_1befd1(long arg_0)
 
 static __forceinline long real_to_long(real value);
 
-// score 38 (was 38): our frame reserves eight bytes where retail reserves
+// score 35 (was 35): our frame reserves eight bytes where retail reserves
 // four, so the two temporaries sit four bytes higher; retail also scales the
 // first draw before it converts the second one, loads the tick source after
 // the slot reference (which puts the reference in ECX, not EDX) and stores the
@@ -161,6 +161,9 @@ static __forceinline long real_to_long(real value);
 // random-range helper 55 (57 in the pair); the reset without its volatile
 // casts 43 in either store order; named reals through a seconds-to-ticks
 // inline 53.
+// Existing reset call with native payload and original/scalar delay storage, ordinary/forced
+// reset declaration: 121/126/121/126; whole slot 115/125/115/125 (219/211 or 213/205 bytes).
+// The reset stays out of line; every existing reset store and the opening body are restored.
 // @retail 0x1befd0
 bool __stdcall function_1befd0(long actor_index, s_slot *slot)
 {

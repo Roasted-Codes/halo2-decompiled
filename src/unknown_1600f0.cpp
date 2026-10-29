@@ -1118,6 +1118,9 @@ struct s_game_engine_globals_connections_view
 // Round 271: existing short/name/connection widget initializer inline class contracts,
 // all seven subsets and joint noinline contracts, 170 each on calibrated roots.
 // Original owning header and complete body restored; deferred icon tail remains.
+// Round 279: native byte input domains for glyph, dim and hidden-place flags,
+// all seven subsets and all four input flags together: eight calibrated scores 170.
+// Original Boolean signature and complete body restored; deferred icon tail remains.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

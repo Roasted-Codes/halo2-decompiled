@@ -627,6 +627,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Round 178: complete-vector memcmp 771; with decoded-output-first copy 774;
 // result-first angle 770; both 776; with the complete rotation-result setter
 // 771/774/770/776. Original equality, plane and rotation producers restored.
+// Round 273: independent first/candidate/selected plane declarations at function entry,
+// seven subsets 564 each; all three plus the quad declaration at entry 564. Original
+// declarations and complete body restored; definition/count/plane homes still differ.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

@@ -396,6 +396,9 @@ void __stdcall function_117790(long index)
 // form: attachment fields read in full 106 (retail's walk from the vertex field and the second vertex
 // read, but the pin OR splits into load/or/store, 522 bytes), with bit_vector_set 106; definition read
 // after the origin copy 73 (aligned 48).
+// Round 276: Shared translation 72; real attachment value 100; both 97; translation with element owner 74;
+// Round 276: with attachment value 97; translation with common ordinal 74; with attachment value 100;
+// Round 276: all ownership forms 101. Original body restored; pool-base and copy reload remain.
 // @retail 0x117a80
 void function_117a80(long index)
 {

@@ -984,6 +984,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Five-point default-result gain also loses dispatcher 38; original result graph/callers restored.
 // Round 259: five complete shared inline-append formal orders and actual output
 // pointer/reference result contracts 224 each (eight forms). Original helper and all calls restored.
+// Round 279: natural mode tail, zero/one arm first 287/230; with nested rear guard
+// 287/230; each with a shared right gain, alone or nested, 238 (dispatcher 27).
+// Original mode switch, gain observations and three local qualifications restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

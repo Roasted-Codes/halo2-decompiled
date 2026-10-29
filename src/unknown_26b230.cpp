@@ -2073,6 +2073,9 @@ void function_269250(long clump_index, long actor_index)
 // Round 104, on the 3 form: group flag before the cleared prop 185; a removed flag for the cleared prop 3;
 // prop step defined before the node step 3; pool struct fields swapped (diagnostic) 3; prop-loop body
 // reading the prop at its top 136; 600 s permuter, 66 tries, none below 3. Original body restored.
+// Round 276: Unchanged-result polarity on the recovered frame, crossed with byte result, native node
+// Round 276: datum and complete category identities, 94 in all eight forms. Original result, traversal
+// Round 276: and body restored; category homes, removal completion and pool-register roles remain.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

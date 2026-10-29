@@ -357,11 +357,14 @@ void havok_component_rigid_body_position_get(long rigid_body_index, s_havok_comp
 
 /* fills the biped's character physics input for its current physics mode
    (+0x3dc): its node matrix, facing, controls and Havok body */
-// score 134 (was 134): frame 0x4c versus 0x44, Boolean argument staging and mode dispatch remain.
+// score 134 (was 134): frame 0x4c versus 0x44, Boolean staging and mode dispatch remain.
 // Long airborne/landing/both 162/161/135; native-short body ordinal 135, with long
 // airborne/landing/both 152/152/128; paired word results and short ordinal 128.
 // The 128 forms recover frame 0x44 but are below the keep margin. Consistent biped
-// flag word with animation-word/native-result/native-ordinal subsets: 148/183/155/174/147/171/147/173. All restored.
+// flag word with animation-word/native-result/native-ordinal subsets: 148/183/155/174/147/171/147/173. All
+// restored.
+// Airborne/landing/both at call 166/171/173; seat at call 134, with airborne/landing/both 167/171/174; all
+// with native vector identities 174. All restored.
 // @retail 0xdd0d0
 void __stdcall function_dd0d0(long arg_159e6d, s_biped_physics_input *input, bool flag)
 {
@@ -2204,9 +2207,12 @@ void function_1d1540(s_havok_component *component);
 
 /* turns the biped into a ragdoll: lifted a little when it fell through
    something, its nodes placed from its Havok bodies */
-// score 125 (was 125): frame 0x18 agrees; header-offset, biped/component roles and packed result homes differ.
+// score 125 (was 125): frame 0x18 agrees; header-offset spill, biped/component/variant roles and packed
+// result homes remain.
 // Boolean word conditions 154; result first 125; both 154; ragdoll/reach names 125;
 // conditions/names 154; result/names 125; all three 154; all with indexed nodes 292.
+// Shared vector sum 126; native variant record 125, with sum 126; read-only component 125, with
+// record/sum/both 125/126/126; reversed sum inputs 125. All restored.
 // @retail 0xe16b0
 bool __stdcall function_e16b0(long arg_159e6d)
 {
@@ -3991,6 +3997,10 @@ void function_e5790(long arg_159e6d);
 // all 124; lift initialized from room 121 (subthreshold, restored). Complete upward sum
 // and its first pair 124; native overlapping contact fields, native state offset, both,
 // both with the upward pair and both with word flags 124. All executable forms restored.
+// Handle-first interface orders 97/97/97/97 (retail takes the point in EAX and the handle in ECX); other
+// interface orders 124/124/124/124. HELD: the handle-first order (handle, point, contact, knocked) changes the
+// call in 0xcaa60, which is in an open contributor PR (#858); apply it with both declarations and both calls
+// once #858 has landed or closed.
 // @retail 0xe4a20
 void __stdcall function_e4a20(point3f const *point, long arg_159e6d, long object_index, bool knocked)
 {
