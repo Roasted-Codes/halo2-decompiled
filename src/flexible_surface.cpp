@@ -119,6 +119,9 @@ void function_117080(long);
 // Round 71: pool global read at each use 54 (retail's reload after the `lea`; aligned 16 against 18), with a
 // record local/surface_record/no slot/no slot plus surface_record 54/54/54/54; the record address stays
 // folded (`[eax + ecx + 0xc]`, retail `add eax, edx`) in every form whose store precedes the first call.
+// Round 408: existing datum/absolute inline lookups, with retained/per-use pool observations,
+// 106/106/97/100; existing datum/absolute called lookups 71/71/60/60. All validation-bearing forms
+// restored; record-base ADD, pool reload and successor-search result/count/bitmap homes remain.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {

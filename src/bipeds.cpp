@@ -3495,13 +3495,16 @@ PRIVATE inline void biped_rotate_about(vector3f *v, vector3f const *axis, real s
 
 /* turns a tumbling biped by its angular velocity over a tick, keeping its
    facing and up square */
-// score 184 (was 355): Frame 0x24 and entry saves agree; axis copy/norm order,
+// score 184 (was 184): Frame 0x24 and entry saves agree; axis copy/norm order,
 // early normalization loads and rotation/basis SSE carriers still differ.
 // Direct rotation output 235; scalar cross terms 246; all shared cross producers 184 (plain);
 // shared normalizer 240 (restored grouping); explicit rotation output 251; weighted producers 265;
 // scaled-first normalization 234; native axis value 288; vector identities 235;
 // opposite cross/subtraction 235 (restored); on shared crosses: norm squares 210,
 // scaled-first 184, shared normalization scale 213, all three 208, sine first 220, complement 209.
+// Round 408: plain component-index normalization, complete vector role identities, both, native CRT
+// axis copy, copy/loop, copy/identities, all three 184/184/184/184/184/184/184; existing complete
+// vector assignment producer 210. First copy/norm scheduling and early SSE carriers remain; all restored.
 // @retail 0xe3910
 void function_e3910(long arg_159e6d)
 {
@@ -3640,10 +3643,14 @@ void __stdcall function_e3380(long arg_159e6d)
 
 /* the dead biped's animation: its getting-up animation once it can stand,
    the ragdoll's pose while it lies, or its landing */
-// score 171 (was 171): Frame 0xc agrees; receiver/index operand order, repeated flag test and result/SSE homes differ.
+// score 158 (was 171): Frame 0xc agrees; receiver/index operand order, repeated flag test and result/SSE homes differ.
 // Result first 174; explicit status exits 173; current/primary/tag receivers at uses 182/177/206;
 // initial success joined to result 201; current observations/status exits 185; result first too 186.
 // Original body and every callee contract restored.
+// Round 408: real object ordinal long/dword/word 169/169/179; actual later query result alone/with
+// those carriers 201/201/201/203, sequential result 203. Declared animation flags 164; with existing
+// biped bit view 158 plain at 617/617, kept. Native ordinal coupled 156/156: additional two-point
+// gain rejected; retain the confirmed field graph and all original lookups, calls and result lifetimes.
 // @retail 0xe3c90
 bool __stdcall function_e3c90(long arg_159e6d, long *names, s_biped_physics_output *output)
 {
@@ -3701,9 +3708,9 @@ bool __stdcall function_e3c90(long arg_159e6d, long *names, s_biped_physics_outp
 		{
 			function_e3910(arg_159e6d);
 		}
-		if (*((byte *)state + 0x6c) & 1)
+		if (state->flags & 1)
 		{
-			*((byte *)state + 0x6c) &= ~1;
+			state->flags &= ~1;
 		}
 		names[1] = 0xd000042;
 		result = true;
@@ -3718,7 +3725,7 @@ bool __stdcall function_e3c90(long arg_159e6d, long *names, s_biped_physics_outp
 		}
 		names[1] = 0xc000043;
 	}
-	if (!(TEST_FIELD_BIT((biped->flags_10a >> 2) & 1)) && (TEST_FIELD_BIT((*(dword *)(definition + 0x1f0) >> 10) & 1)) &&
+	if (!(TEST_FIELD_BIT(((s_biped_flags_10a_view *)&biped->flags_10a)->bit2)) && (TEST_FIELD_BIT((*(dword *)(definition + 0x1f0) >> 10) & 1)) &&
 		BIPED_GET(arg_159e6d)->unknown39d > 0)
 	{
 		names[0] = 0x6000087;
@@ -4099,10 +4106,13 @@ void function_188180(point3f const *point, vector3f const *forward, long tag_ind
 
 /* a walking biped's footstep effect: at its foot marker (or its origin),
    with the material it stands on */
-// score 168 (was 183): frame 0xec versus 0x94; material homes, model-count test and effect-call transport remain.
+// score 168 (was 168): frame 0xec versus 0x94; material homes, model-count test and effect-call transport remain.
 // Marker scope/direct location/full-width material combinations 190/168/177/183/189/169/178;
 // early collision initialization with all three 169. Query-branch location pointer 168 plain;
 // with marker scope/full-width material/both 177/169/178. Keep only query-branch location ownership.
+// Round 408: query-time ray with retained/per-use count and indexed/node-pointer scan 174/181/174/181;
+// with marker phase scope 183/190/183/190 (frame 0x90). Complete branch-selected material-query
+// effect calls on original/scoped-ray graphs 180/165; three-point gain at 701 bytes rejected. Original body restored.
 // @retail 0xe4d90
 void __stdcall function_e4d90(long arg_159e6d, long type, real scale, long marker)
 {

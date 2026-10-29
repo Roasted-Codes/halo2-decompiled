@@ -3749,6 +3749,10 @@ bool function_07ab10(long key_index, s_type_99af70 *address, long local, word po
 // only the host register left (retail esi copied to ebx for the address call, session
 // reloaded; ours keeps host in ebx across it); inline address callee 138; inline key
 // setter 138; session parameter re-read at the address call 137 (host still ebx).
+// Separate resolver/key/both noinline declarations 136/136/136; each with
+// the shared clock forceinline declaration 145/145/145. Native full-record
+// copies with resolver alone/all boundaries 136/145. Host/session staging,
+// cleanup placement and clock expansion remain; all declarations and bodies restored.
 // @retail 0x59e50
 bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
  const XNKID *kid, const XNKEY *key, const s_session_member_identity *host,

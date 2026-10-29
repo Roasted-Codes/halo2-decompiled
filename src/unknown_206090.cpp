@@ -224,6 +224,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // +0x88 named once 1451 (read once, as retail); operands of the steering product swapped 1403
 // (same code); retail's cross operand form written out 1439 (diagnostic); ray record at function
 // scope 1403 (frame 0x5cc). All restored.
+// Round 400: Joint coefficient branches 1364; word impact count 1386; word list probes 1369;
+// coefficient/count, coefficient/probes, count/probes, all word and all byte
+// 1378/1364/1399/1394/1410. The byte form has frame 0x5c8; the others 0x5d0.
+// Joint coefficients reach 6238 bytes without lowering the score.
 // Round 175: Native reference cross-formal subsets and magnitude input contract all 1364;
 // canonical object calls, no address cancellations. On the current float-product graph, ordinary
 // magnitude components/first-cross components/both/second-normalizer components/magnitude-normalizer/
