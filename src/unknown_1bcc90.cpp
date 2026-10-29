@@ -42,6 +42,11 @@ short __stdcall function_1bcc90(long actor_index)
 // function scope 35; the clear as `= {}` 35.
 // Carrier role names (all seven buffer/index/reference combinations) 35 each;
 // immutable returned reference 35.
+// Lane 11 r12 (aligned counts, base 16): the 0x328 test in a bool before the
+// clear 78 (the entry allocation changes); the reference in a union with a dword
+// view (0x1b1f70's form) 16, identical code; the arms swapped 46; the call
+// assigned inside the test 16, identical code; the 0x328 field read through a
+// fresh actor lookup 43.
 // @retail 0x1bcd00
 bool __stdcall function_1bcd00(long actor_index, s_slot *slot)
 {

@@ -35,6 +35,11 @@ static __forceinline long function_9c912(long arg_0, long arg_1, long arg_2)
 // outer one removed 68.
 // Earlier: the member's fields are copied in the other order and the store of
 // the second field sits before the comparison in ours and after it in retail
+// Lane 11 r12, aligned counts (base 48 at 308 bytes): a plain permutation local
+// instead of the reused parameter 74 (280 bytes; the object index then stays in
+// ebx, as 0xdb760 takes it), with no false assignments 70; no false assignments
+// alone 59; PIN(mode, 0, 1) for the clamp 66 (301 bytes), with no false
+// assignments 75.
 // @retail 0x9c910
 bool c_damage_section_response_event_definition::v11(long arg_0, long const *arg_1, long arg_2, void const *arg_3)
 {
