@@ -548,6 +548,9 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 // combinations, 355 each; ordinary producers 1135. Original helpers restored.
 // Direct collision parameter alone 355 on T's older base (main's 335 form kept).
 // Round 171: Two-stage vectors, copy and scale subsets 387/408/362/382; consumed-stage ray reuse 391/407/343/362. Reuse recovers frame 0xa8, setters can recover length, but all regress. Original body and includes restored; frame and stack-input transport remain.
+// DH round 239: Existing rotation dot/cross/complete-setter subsets 324/320/324/320/324/320/324;
+// all three with parameter-only ranges after axis normalization 369. Frame remains
+// 0x9c/0xa8; original helpers and complete sampler restored.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -1220,6 +1223,9 @@ struct s_actor_looking_turn_request
 // forced/turn/animation carriers, scores 548/538/539/549/544/534/527/541 fast against unchanged 525. All
 // regress. Original body, carriers and both predicate declarations restored; frame, early getter scheduling
 // and result homes remain.
+// DH round 239: Native marker/movement/turn-request record-name subsets 506 each;
+// all three with the uninitialized marker workspace at entry also 506. Original
+// names, workspace scope and whole body restored; frame 0xd0/0xc8 remains.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

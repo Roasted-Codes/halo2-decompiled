@@ -422,6 +422,9 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 // Round 187: Shared initial/traversal node receiver with capped-word/CRT-edge-fill/early-constant
 // masks 0-7 350/374/384/384/372/343/396/411. Original advancing step receiver, link count and
 // complete body restored.
+// DH round 239: Native node/output link-record assignment, split increment, bounded
+// word link count and full-width previous-index combinations 360/360/373/373/385/385/393/393.
+// Original node declaration and complete body restored; frame acquisition and geometry homes remain.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,

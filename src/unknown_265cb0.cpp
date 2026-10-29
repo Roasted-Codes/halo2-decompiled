@@ -482,6 +482,10 @@ real function_30bf0(vector3f *vector);
 // DH round 232: Unsigned full-width result 152; stable actor direction gate 296; both 296;
 // signed admission interval 162, with unsigned result 162, stable gate 301, both 301;
 // unsigned-word result on the full graph 301. Native result/range/projection homes remain; restored.
+// DH round 239: Corresponding projected products/positions/both in every row
+// 191/191/195; each with consistent live seat handles 187/187/195; products or
+// positions with both squared-range expressions 195/195. Original expressions,
+// handles and complete body restored; result/range/amount and SIMD homes remain.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1656,7 +1660,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 528 (was 536): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// score 528 (was 528): the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
 // frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
@@ -1744,6 +1748,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 // both, per-use iterator index, index/ordinal, index/threshold, all, and all with the first-pass
 // workspace scoped each score 536 in the calibrated image. Frame 0x84/0x80 and selection/
 // iterator/transform/scoring homes remain; complete original executable body restored.
+// DH round 239: Contact/player iterator and saved contact-state name subsets each
+// 528; all three with reversed independent selection declarations 529. Calibrated
+// image; original iterator/state names and complete body restored, frame still 0x84/0x80.
 // @retail 0x266640
 void function_266640(long actor_index)
 {
