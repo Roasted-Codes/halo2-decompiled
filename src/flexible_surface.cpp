@@ -7,6 +7,7 @@
 #include "object_markers.h"
 #include "effects.h"
 #include "vector_products.h"
+#include "normalize3d.h"
 #include <math.h>
 #include <xtl.h>
 
@@ -63,17 +64,6 @@ static inline s_surface_object_header *surface_object_header(long index)
 static inline bool surface_pinned(s_surface_record *record, long i)
 {
 	return (record->pinned[i >> 5] & (1 << (i & 31))) != 0;
-}
-static inline real surface_normalize(vector3f *v)
-{
-	real length = (real)sqrt(v->i*v->i + v->j*v->j + v->k*v->k);
-	if (!(fabs(length) < 0.0001f))
-	{
-		real inverse = 1.0f / length;
-		v->i *= inverse; v->j *= inverse; v->k *= inverse;
-		return length;
-	}
-	return 0.0f;
 }
 
 static inline real surface_normalize_horizontal(vector3f *v)
@@ -266,7 +256,7 @@ bool function_1173e0(long object_index, long index)
 	return result;
 }
 
-// score 99 (was 165): frame 0x10 agrees; normalization/accumulation carriers and final normalization schedule differ.
+// score 4 (was 99): only the a/b normal.k addition schedules differ; frame and length agree.
 // Shared point differences 169; differences and cross product 108 (dropped, full); shared
 // scale normalization 166, with differences/cross 130 (dropped, full); normalize_inline 123; reversed edge
 // production 132 (dropped, full); named edges/readonly definition 130/130; cross only 165; normal-first
@@ -275,6 +265,9 @@ bool function_1173e0(long object_index, long index)
 // Plain component accumulation 109; with triangle cursor 176, vertex base 96, both 173.
 // Selected ordinary check 99/621.
 // Component-loop addition 96/633 discarded: only three points beyond the vertex-base form.
+// Shared add 99/633; with shared normalize 40/637; all normal-first 63; final vertex cursor 4/633;
+// only a normal-first 4; only b 7; only c 4; normal declared first 4; reused accumulation 260;
+// normal-field pointers 86; normalized contribution 223. Selected ordinary check 4/633.
 // @retail 0x117510
 void function_117510(long index)
 {
@@ -290,13 +283,14 @@ void function_117510(long index)
 		vector3d_from_points3d(&a->position, &b->position, &v);
 		vector3d_from_points3d(&a->position, &c->position, &u);
 		cross3f(&v, &u, &normal);
-		surface_normalize(&normal);
-		a->normal.i += normal.i; a->normal.j += normal.j; a->normal.k += normal.k;
-		b->normal.i += normal.i; b->normal.j += normal.j; b->normal.k += normal.k;
-		c->normal.i += normal.i; c->normal.j += normal.j; c->normal.k += normal.k;
+		normalize3d(&normal);
+		vector3f_add(&a->normal, &normal, &a->normal);
+		vector3f_add(&b->normal, &normal, &b->normal);
+		vector3f_add(&c->normal, &normal, &c->normal);
 	}
-	for (long i = 0; i < definition->vertex_count; ++i)
-		if (surface_normalize(&vertices[i].normal) == 0.0f) vertices[i].normal = *g_4687a8;
+	s_surface_vertex *vertex = vertices;
+	for (long i = 0; i < definition->vertex_count; ++i, ++vertex)
+		if (normalize3d(&vertex->normal) == 0.0f) vertex->normal = *g_4687a8;
 }
 
 // score 139 (was 154): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.

@@ -752,6 +752,10 @@ void swarm_leader_detach(long actor_index);
 // score 285 (was 277): the frame is 0x1c instead of 0x20, the actor byte offset is kept in EBX
 // instead of EAX and the slot index in ECX instead of EDX, and the cleanup loop keeps its
 // countdown in a register instead of a stack slot.
+// Round 27 reduced preview 261 with a full-image caveat: cleanup pointer/offset/stack countdown 283/981;
+// with shared prop walk 297/964; explicit actor offset/retained pointer 311/958; with countdown 310/958;
+// native bool predicate 265/983; with countdown 304/999; declarations reordered 320/1012;
+// countdown for 283/981, ordinary 285/981. Opening body restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {
