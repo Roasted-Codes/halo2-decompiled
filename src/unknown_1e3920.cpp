@@ -1687,6 +1687,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // query 340/340/340/333; shared seed-field receiver at those same acquisition
 // points 340/340/340/333. Every draw retained; all original receivers restored.
 // Round 29: Current/secondary result and actual weapon-pair dword domains in all seven combinations, then the real word ordinal: 263 each. Original result/pair types, ordinal and all code restored.
+// Round 164: nonredundant actor/unit gates, draw-first ordered admission, their seven
+// combinations and all with readonly actor 263 each; all original observations restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {
