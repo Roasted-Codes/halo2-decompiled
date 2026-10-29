@@ -540,6 +540,10 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 // combinations, 355 each; ordinary producers 1135. Original helpers restored.
 // Direct collision parameter alone 355 on T's older base (main's 335 form kept).
 // Round 171: Two-stage vectors, copy and scale subsets 387/408/362/382; consumed-stage ray reuse 391/407/343/362. Reuse recovers frame 0xa8, setters can recover length, but all regress. Original body and includes restored; frame and stack-input transport remain.
+// Round 173: Shared fallback result 341; horizontal/vertical range names 320; long sample ordinal 319;
+// result/range 341; result/ordinal 340; range/ordinal 319; all three 340; result with complete workspace
+// names 341. One-point forms rejected. Original body restored; frame 0x9c versus 0xa8 and stack-input
+// transport remain.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -1212,6 +1216,10 @@ struct s_actor_looking_turn_request
 // forced/turn/animation carriers, scores 548/538/539/549/544/534/527/541 fast against unchanged 525. All
 // regress. Original body, carriers and both predicate declarations restored; frame, early getter scheduling
 // and result homes remain.
+// Round 173: Cosine-home names, completed unit-query scope, and both 506 each. Entry validity defaults
+// alone/with names/with unit scope/with both 528 each at 2020 bytes. All those forms plus entry flag
+// defaults 528. Original full body restored; frame 0xd0 versus 0xc8 and early object/result ownership
+// remain.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

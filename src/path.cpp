@@ -400,7 +400,7 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
-// score 349 (was 363): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
+// score 349 (was 349): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
 // Earlier: the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
 // Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
 // all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
@@ -419,6 +419,10 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 // Round 250: actual advancing initialization receiver, short/long ordinal 349/401;
 // safely capped word 374/374; separate edge memset 384/353, with word 384/386.
 // Keep only the receiver with the original short ordinal: 349 plain, 1395/1388 bytes.
+// Round 173: Native bounded word link count on the advancing initialization receiver, with geometry and
+// history/receiver name subsets, 359 each at 1388 bytes. Independent traversal defaults at entry on those
+// four forms 383 each at 1411 bytes, first +0x19. Geometry names canonicalize. Original long link count and
+// full body restored.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,

@@ -449,7 +449,7 @@ short function_1b8cc0(long object_index, long *seat_object_index);
 bool function_1b9200(long object_index, long prop_index);
 point3f *function_b9dd0(long object_index, point3f *result);
 
-// score 166 (was 189): retail keeps the special-vehicle flag in CL at the shared tail (the
+// score 166 (was 166): retail keeps the special-vehicle flag in CL at the shared tail (the
 // special path does `mov cl, 1; jmp tail`, the scan's exits reload it from the dead actor
 // argument slot) and lays the tail out after the passenger scan; ours reloads the flag from
 // memory there and places the tail right after the special test, so the lockstep compare is
@@ -458,6 +458,9 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // stack slot as retail, aligned 61); flag set in an if/else around the scan 198; flag set in
 // an if 200; flag at function scope 198; proximity deltas declared x, y, z (retail squares z
 // first) 166 (198 with the bool); sum written x + y + z 198 (with the bool).
+// Round 173: Point-buffer and iterator declarations at the seat phase, and completed player-query scope,
+// all seven subsets 166 each; all workspaces with Boolean special carrier 198. Original body restored; CL
+// predicate transport and the shared tail remain.
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {
