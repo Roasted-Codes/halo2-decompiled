@@ -437,6 +437,8 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // pairs, eight combinations 356 each; consistent dispatcher inline/noinline in its
 // defining unit and every forward declaration 423/356. Every declaration and body
 // restored; late EBP preservation, random/blend/getter homes remain.
+// Final-dispatch tag/handle/flags entry declarations, all seven subsets, and all three with
+// descriptor entry declaration 356 each; original declaration phases and producers restored.
 // Round 186: Independent native blend/probe/placement consumer-scope masks 0-7 on the retained
 // motion graph 465/465/466/466/465/465/466/466. Original grouped workspace, native collision, source
 // velocity and complete body restored.

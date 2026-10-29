@@ -188,6 +188,9 @@ static inline void quaternion_transform_vector(
 // pre-copy doubled scalar/quadratic scalar 302/347; scalar-first construction 272;
 // shared input dot and shared repair crosses on the shared-axis base 237 each.
 // Original body and both helpers restored.
+// Round 258: output/vector/quaternion contract with original/scalar-cross/scale-first/
+// both forms 237/281/302/306; vector/output/quaternion contract with those forms
+// 240/237/298/311. Original helper, three call roles and body restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,

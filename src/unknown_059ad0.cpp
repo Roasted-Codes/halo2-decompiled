@@ -4364,6 +4364,28 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
 // score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
+// frame 0xd8 and length agree; result/identity/selection byte homes and
+// acknowledgement placement differ.
+// Earlier 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
+// instead of going through the shared exit, so each one gets its own epilogue and the extent matches
+// retail's 1264 bytes. The three boolean stack homes are still rotated relative to retail.
+// Earlier 310 (was 318): the acknowledgement block returns the result directly instead of going through
+// the shared exit, so its epilogue is the one retail emits. The three boolean stack homes are still
+// rotated relative to retail and the invalid-state exit is still emitted twice.
+// Earlier 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
+// it into a named flag, so the comparison is tested once as retail does. The three boolean stack homes
+// are still rotated relative to retail and the invalid-state exit is still emitted twice.
+// Earlier 325 (was 335): the acceptance test is written as the no-sender case followed by the
+// acknowledgement, so the acknowledgement block stays out of line at the end of the function instead of
+// being pulled into the middle of it. The three boolean stack homes are still rotated relative to retail.
+// Earlier 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
+// distinct arm, the peer-map update takes the remote member first (the callee is symmetric in its two
+// member arguments), and the channel-state test is split into a named flag. The three boolean stack
+// homes are still rotated relative to retail and the invalid-state exit is still duplicated.
+// Earlier 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
+// separate arm instead of a merged join, and the identity pointer is taken before the member-state
+// pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
+// Byte homes differ (retail: better +9,
 // identity/same +0xa, result +0xb; ours: identity/same +9, result +0xa, better +0xb), retail reads
 // `result` back from its home at every return (ours folds the two reason-2 returns to `xor al, al`
 // and keeps them as two blocks, where retail has one), and the acknowledgement block is laid out
@@ -4430,6 +4452,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 72: sender test inverted ahead of reason 5 317; acknowledgement after the shared exit 305
 // (same code); its result set before the state-7 test 305; preference/equal flags swapped 305;
 // both declared after the member lookup 314. Retail reloads the result byte on every exit.
+// On native-equality/distinct-policy exits: byte/char acceptance, with original or paired-byte
+// selection, 406/406/406/406; word/short acceptance with either selection domain 410 each.
+// All larger than retail; original truth carriers and body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4707,6 +4732,9 @@ void function_62640(c_class_58d20 *session)
 // the other stack slots, the frame is four bytes shorter, the bit is shifted
 // in the other register and merged in a register instead of in memory, and the
 // second loop walks the member states from the flag byte
+// Read-only first-loop member / unsigned sequence / immutable observer binding,
+// all seven subsets 98; signed-int cursors in both ordinary loops 98. Original
+// metadata domains and body restored; owner spill, mask homes and send base remain.
 // @retail 0x627e0
 void function_627e0(c_class_58d20 *session)
 {

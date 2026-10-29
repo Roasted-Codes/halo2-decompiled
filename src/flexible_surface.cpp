@@ -541,6 +541,9 @@ void function_117dd0(long index, vector3f *wind)
 // vector3f_add_scaled(..., -dot, ...) 196 (normal.k cursor, 712 bytes), plus dot3f 195; with the projection
 // through scale_vector_by_double 150 (normal.k cursor, frame changes). Retail loads acceleration.i/j into
 // a register before adding (ours folds the memory operand).
+// Round 263: damping shared by both weights 154; force copy at its consumer 194;
+// both 184; pin-test continue 109, with damping/late force/both 154/194/184;
+// shared damping with native projected-normal scale 159. All original source restored.
 // @retail 0x118140
 void function_118140(long index)
 {

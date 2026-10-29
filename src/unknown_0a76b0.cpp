@@ -1488,63 +1488,69 @@ PRIVATE inline short unit_action_player_value28_get(long player_index)
 }
 
 /* drops the weapon in a hand (types 9 and 19) */
+// score 138 (was 163): frame and entry homes agree through +0x34; pool reload, weapon/result
+// and mode/flag homes remain. Numeric-hand lookup selected/other/both 142/141/142;
+// both with success admission 138, persistent result 154, common primary mode 171,
+// full player value 145, persistent result/full player value 157.
 // @retail 0xe8de0
 bool __stdcall unit_action_drop_weapon(long unit_index, s_unit_request *request)
 {
 	bool primary = request->type == 9;
 	long hand = !primary;
 	long slot = (&UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index)[hand];
-	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), hand != 0);
+	long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), hand);
 	long mode;
 	bool flag;
 
-	if (weapon_index == NONE)
-		return false;
-	if (!primary)
+	if (weapon_index != NONE)
 	{
-		mode = 3;
-		flag = primary;
-	}
-	else if (function_cd660(unit_index))
-	{
-		mode = 2;
-		flag = !*((bool *)request + 4);
-	}
-	else
-	{
-		mode = 0;
-		flag = !*((bool *)request + 4);
-	}
+		if (!primary)
+		{
+			mode = 3;
+			flag = primary;
+		}
+		else if (function_cd660(unit_index))
+		{
+			mode = 2;
+			flag = !*((bool *)request + 4);
+		}
+		else
+		{
+			mode = 0;
+			flag = !*((bool *)request + 4);
+		}
 
-	long other_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), primary != false);
+		long other_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), primary);
 
-	if (other_index != NONE &&
-		UNIT_ACTION_UNIT_GET(weapon_index)->definition_index == UNIT_ACTION_UNIT_GET(other_index)->definition_index)
-	{
-		function_101740(weapon_index, other_index);
+		if (other_index != NONE &&
+			UNIT_ACTION_UNIT_GET(weapon_index)->definition_index == UNIT_ACTION_UNIT_GET(other_index)->definition_index)
+		{
+			function_101740(weapon_index, other_index);
+		}
+		function_e69c0(unit_index, 8);
+		function_e69c0(unit_index, 0x12);
+		function_e69c0(unit_index, 0);
+		function_e69c0(unit_index, 0xa);
+		function_e69c0(unit_index, 0x1b);
+		function_e69c0(unit_index, 0x16);
+		function_e8460(unit_index, primary);
+		function_ce920(unit_index, slot, mode, flag);
+		function_e8720(unit_index, 0x7000101, false, false, primary);
+
+		byte *object = (byte *)function_badc0(unit_index, 3);
+
+		if (object && *(long *)(object + 0x13c) != NONE)
+		{
+			byte *current = (byte *)function_badc0(unit_index, 3);
+			long player_index = current ? *(long *)(current + 0x13c) : NONE;
+			short value = unit_action_player_value28_get(player_index);
+
+			if (value != NONE)
+				function_191f3a(UNIT_ACTION_UNIT_GET(weapon_index)->definition_index, value);
+		}
+		return true;
 	}
-	function_e69c0(unit_index, 8);
-	function_e69c0(unit_index, 0x12);
-	function_e69c0(unit_index, 0);
-	function_e69c0(unit_index, 0xa);
-	function_e69c0(unit_index, 0x1b);
-	function_e69c0(unit_index, 0x16);
-	function_e8460(unit_index, primary);
-	function_ce920(unit_index, slot, mode, flag);
-	function_e8720(unit_index, 0x7000101, false, false, primary);
-
-	byte *object = (byte *)function_badc0(unit_index, 3);
-
-	if (object && *(long *)(object + 0x13c) != NONE)
-	{
-		byte *current = (byte *)function_badc0(unit_index, 3);
-		long player_index = current ? *(long *)(current + 0x13c) : NONE;
-		short value = unit_action_player_value28_get(player_index);
-
-		if (value != NONE)
-			function_191f3a(UNIT_ACTION_UNIT_GET(weapon_index)->definition_index, value);
-	}
-	return true;
+	return false;
 }
 
 /* the request to pick up a weapon (type 20) */
@@ -2220,13 +2226,17 @@ void __stdcall function_cf3d0(long unit_index, long name, long flags, real scale
 
 /* a melee attack (type 27): its animation, once any earlier one has
    passed its end frame */
+// score 152 (was 178): frame 0x20 versus 0x24, pool and admission/result homes remain.
+// Numeric-hand lookup 175; with Boolean active bits 169; per-use state 176; both 172;
+// real attack result through notification 186, with Boolean bits 166; positive cooldown
+// admission 152; bits/per-use state/attack result 176. Original state observation retained.
 // @retail 0xe9ed0
 bool __stdcall unit_action_melee_attack(long unit_index, s_unit_request *request)
 {
 	s_unit_request_melee_attack *melee = (s_unit_request_melee_attack *)request;
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
-	long weapon_index = unit_action_weapon_get(unit, false);
+	long weapon_index = unit_action_hand_weapon_get(unit, 0);
 	bool can_melee = true;
 	bool result = false;
 
@@ -2244,29 +2254,25 @@ bool __stdcall unit_action_melee_attack(long unit_index, s_unit_request *request
 
 	if ((TEST_FIELD_BIT((current->flags_134 >> 25) & 1)) || UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(current), 0x16))
 		can_melee = false;
-	if (UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(current), 0x1b) &&
-		(actions->melee_end_ticks == NONE || actions->melee_counter < actions->melee_end_ticks))
+	if (!(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(current), 0x1b) &&
+		(actions->melee_end_ticks == NONE || actions->melee_counter < actions->melee_end_ticks)) && can_melee)
 	{
-		return result;
-	}
-	if (!can_melee)
-		return result;
+		function_e69c0(unit_index, 8);
+		function_e69c0(unit_index, 0x12);
+		function_e69c0(unit_index, 0);
+		function_e69c0(unit_index, 0xa);
 
-	function_e69c0(unit_index, 8);
-	function_e69c0(unit_index, 0x12);
-	function_e69c0(unit_index, 0);
-	function_e69c0(unit_index, 0xa);
+		s_unit_request stop;
 
-	s_unit_request stop;
-
-	memset(&stop, 0, sizeof(stop));
-	stop.type = 0x13;
-	function_e6900(unit_index, &stop);
-	function_c86e0(unit_index, 0);
-	if (function_e9a20(unit_index, melee->mode, melee->target_index, melee->flags))
-	{
-		function_a8cf0(unit_index, melee->target_index, melee->mode);
-		return true;
+		memset(&stop, 0, sizeof(stop));
+		stop.type = 0x13;
+		function_e6900(unit_index, &stop);
+		function_c86e0(unit_index, 0);
+		if (function_e9a20(unit_index, melee->mode, melee->target_index, melee->flags))
+		{
+			function_a8cf0(unit_index, melee->target_index, melee->mode);
+			result = true;
+		}
 	}
 	return result;
 }
@@ -3064,65 +3070,69 @@ void __stdcall object_get_damage_owner(long object_index, s_damage_owner *owner)
 
 /* flips a vehicle back over (type 33): the way it rolls, from how far over
    it is and where the flipping unit stands */
+// score 72 (was 167): frame 0x78 recovered; pool/header carriers, vector scheduling
+// and failure epilogues remain. Shared point difference/cross/both 143/165/150;
+// persistent success admission alone/with difference/with cross/with both 72/97/74/98;
+// entry owner output with success admission 148. Original vector calculations retained.
 // @retail 0xeb5d0
 bool __stdcall unit_action_vehicle_flip(long unit_index, s_unit_request *request)
 {
+	bool result = false;
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 
-	if (unit->object_type != 1)
-		return false;
-	if (!function_f5dc0(unit_index))
-		return false;
-
-	long flipper_index = *(long *)((byte *)request + 4);
-
-	if (flipper_index != NONE)
+	if (unit->object_type == 1 && function_f5dc0(unit_index))
 	{
-		byte *flipper = (byte *)UNIT_ACTION_UNIT_GET(flipper_index);
+		long flipper_index = *(long *)((byte *)request + 4);
 
-		*(long *)(flipper + 0x250) = unit_index;
-		*(long *)(flipper + 0x254) = g_510c54->game_time;
+		if (flipper_index != NONE)
+		{
+			byte *flipper = (byte *)UNIT_ACTION_UNIT_GET(flipper_index);
+
+			*(long *)(flipper + 0x250) = unit_index;
+			*(long *)(flipper + 0x254) = g_510c54->game_time;
+		}
+		if ((real)fabs(unit->forward.k) > 0.70710677f)
+		{
+			*((byte *)unit + 0x34d) = (byte)((0.0f > unit->forward.k) + 3);
+		}
+		else if (flipper_index != NONE)
+		{
+			transform4x3f unit_matrix_storage;
+			transform4x3f flipper_matrix_storage;
+			transform4x3f *unit_matrix = function_ba160(unit_index, &unit_matrix_storage);
+			transform4x3f *flipper_matrix = function_ba160(flipper_index, &flipper_matrix_storage);
+			vector3f offset;
+			vector3f const *up = g_4687b0;
+			vector3f side;
+
+			offset.i = unit_matrix->position.x - flipper_matrix->position.x;
+			offset.j = unit_matrix->position.y - flipper_matrix->position.y;
+			offset.k = unit_matrix->position.z - flipper_matrix->position.z;
+			side.k = up->i * offset.j - up->j * offset.i;
+			side.j = up->k * offset.i - up->i * offset.k;
+			side.i = up->j * offset.k - up->k * offset.j;
+			*((byte *)unit + 0x34d) = (byte)((unit->forward.j * side.j + unit->forward.k * side.k + unit->forward.i * side.i >
+				0.0f) + 1);
+		}
+		else
+		{
+			*((byte *)unit + 0x34d) = 1;
+		}
+		*((byte *)unit + 0x348) |= 0x40;
+		*((byte *)unit + 0x34e) = 0;
+
+		s_damage_owner owner;
+
+		object_get_damage_owner(*(long *)((byte *)request + 4), &owner);
+
+		byte *current = (byte *)UNIT_ACTION_UNIT_GET(unit_index);
+
+		*(long *)(current + 0xc8) = owner.object_index;
+		*(long *)(current + 0xc4) = owner.player_index;
+		*(short *)(current + 0xc2) = owner.team;
+		result = true;
 	}
-	if ((real)fabs(unit->forward.k) > 0.70710677f)
-	{
-		*((byte *)unit + 0x34d) = (byte)((0.0f > unit->forward.k) + 3);
-	}
-	else if (flipper_index != NONE)
-	{
-		transform4x3f unit_matrix_storage;
-		transform4x3f flipper_matrix_storage;
-		transform4x3f *unit_matrix = function_ba160(unit_index, &unit_matrix_storage);
-		transform4x3f *flipper_matrix = function_ba160(flipper_index, &flipper_matrix_storage);
-		vector3f offset;
-		vector3f const *up = g_4687b0;
-		vector3f side;
-
-		offset.i = unit_matrix->position.x - flipper_matrix->position.x;
-		offset.j = unit_matrix->position.y - flipper_matrix->position.y;
-		offset.k = unit_matrix->position.z - flipper_matrix->position.z;
-		side.k = up->i * offset.j - up->j * offset.i;
-		side.j = up->k * offset.i - up->i * offset.k;
-		side.i = up->j * offset.k - up->k * offset.j;
-		*((byte *)unit + 0x34d) = (byte)((unit->forward.j * side.j + unit->forward.k * side.k + unit->forward.i * side.i >
-			0.0f) + 1);
-	}
-	else
-	{
-		*((byte *)unit + 0x34d) = 1;
-	}
-	*((byte *)unit + 0x348) |= 0x40;
-	*((byte *)unit + 0x34e) = 0;
-
-	s_damage_owner owner;
-
-	object_get_damage_owner(*(long *)((byte *)request + 4), &owner);
-
-	byte *current = (byte *)UNIT_ACTION_UNIT_GET(unit_index);
-
-	*(long *)(current + 0xc8) = owner.object_index;
-	*(long *)(current + 0xc4) = owner.player_index;
-	*(short *)(current + 0xc2) = owner.team;
-	return true;
+	return result;
 }
 // @retail 0xe5670
 long function_e5670(long unit_index)

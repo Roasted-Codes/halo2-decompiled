@@ -238,6 +238,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Round 385: Word obstacle mask with native sphere/motion combinations, reduced
 // 916/894/914/897/914/897/897/897; word+byte sphere 917 plain, plus byte motion 919,
 // plus separate location/raised workspaces 898. Original masks and query storage restored.
+// Individual full-width ignore/block/minimum/maximum priorities 897/897/897/900;
+// ignore-block/minimum-maximum/ignore-minimum/block-maximum pairs 894/920/894/894 (fast).
+// Original signed-short limits, query storage, qualifiers and complete body restored.
 // Round 176: Immutable declaration-produced actor with original/ordinary settings/ordinary unit/both
 // input homes 957/991/978/989; with independent location and raised point 973/993/949/982.
 // All original actor publication, query storage, qualifiers, operands and complete body restored.

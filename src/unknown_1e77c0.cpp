@@ -504,6 +504,9 @@ struct s_request_profile
 // per-element flag reloads and bool select but stays rolled (337, 357 bytes): with if/else, a
 // pointer local, a bool local, short/int/unsigned/do/while counters, an inline transition helper,
 // inline/forceinline on 0x1e7a10 alike; noinline 373; the four-way body calling it 154.
+// Native pointer destinations with matched per-element query: index less/not-equal bounds, ticks first
+// 347/347 and state first 349/349; pointer less/not-equal bounds, ticks first 320/320 and state first
+// 334/334. All remove qualified global data reads.
 // @retail 0x1e73b0
 void function_1e73b0()
 {

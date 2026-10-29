@@ -452,12 +452,16 @@ void function_144f0(long tag, short stage, long fallback, short fallback_index, 
 void function_1cf50(void);
 
 #pragma inline_depth(0)
-// score 100 (was 100): the record index is scaled by 0x40 in retail and by 0x4 here, and the table retail reads is not the one this tree reads
+// score 100 (was 100): no frame; hoisted zero and material-call convention, then color/draw scheduling differ.
+// Earlier: the record index is scaled by 0x40 in retail and by 0x4 here, and the table retail reads is not the one this tree reads
 // Current stride agrees; the hoisted zero, callee convention and color/draw
 // scheduling differ. Record view, byte-channel locals, material/color results,
 // block-pool/byte-offset lifetimes and typed-record for 100; byte bitmap 98.
-// score 100 (was 100): BLOCKED-BY 0x144f0, which retail calls with the tag, stage and index in
+// Earlier: BLOCKED-BY 0x144f0, which retail calls with the tag, stage and index in
 // EAX/ECX/EBX and three pushes (ours four pushes and the priority in XMM2, zero held in EBX).
+// Tag read at every use with all cache-store orders 99; store-order forms without that change
+// 100; bitmap read at every use 98. One- and two-point gains rejected. All original cache
+// stores and field observations restored.
 // @retail 0x44040
 void __stdcall function_44040(long cell, short mask)
 {
@@ -921,7 +925,11 @@ void __stdcall function_2cbc0(bool enabled)
 	function_133720(current, enabled);
 }
 
-// score 64 (was 64): the frame is four bytes larger and the camera buffer sits at another offset, and the float subtraction uses x87 where retail uses SSE
+// score 95 (was 95): frame 0x1c0 and camera/query registers agree; x87 offset,
+// dropped identifier and scan jump/padding remain. Earlier: frame four bytes larger,
+// camera home displaced, subtraction x87. Existing camera/effect/visibility noinline
+// boundaries, all seven subsets 95; cursor-result scan 76/297, but normalized
+// instruction edits worsen 9 to 33; restore the Boolean scan and all declarations.
 // @retail 0x3f2c0
 void function_3f2c0(s_planar_camera_source const *source, byte const *view, long object_index, long identifier)
 {

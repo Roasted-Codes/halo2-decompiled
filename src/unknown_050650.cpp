@@ -642,6 +642,7 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 
 // score 290 (was 290): frame 0x8c agrees; Boolean homes, point/case-tail transport and aiming workspace remain.
 // Earlier: frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
+// frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -669,6 +670,9 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // transport remain.
 // Round 398 (fast 301, full 290): direction/output/both setters; aiming-query scope with neither/direction/output/both; all with late origin
 // 371/318/387/301/371/318/387/387; all restored.
+// Native byte aiming/read-only specification/read-only state contracts, all seven subsets,
+// 301 each (unchanged fast control 301); existing point setter force-inline declaration 301.
+// Original contracts and body restored; full baseline remains 290.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -1080,6 +1084,10 @@ struct s_actor_looking_structure_view
 // cosine first 86; trig before candidate 80; fraction after rotation 154;
 // angle ordinal stepped at last use 156; both shared dot products 144 (regrouped,
 // exact-match-only); immediate successful publication return 224. Restored.
+// Round 262: pointer-bounded candidate traversal (< / != end), both ordinals 164/164;
+// sole angle ordinal on those traversals 191/191; full-width best index 153;
+// post-query fraction producer 111; selected-index publication first 82;
+// conditional lower-bound update then fraction product 91. Original body restored.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {

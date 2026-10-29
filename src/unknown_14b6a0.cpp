@@ -248,6 +248,9 @@ void function_14bac0()
 // 268/268/306/290; with native recipient iterator
 // 270/270/328/296. Original final scan and both request traversals restored;
 // frame 0x44/0x3c, point/recipient sharing and readiness homes remain.
+// Distinct native 16-byte iterator role names and entry recipient reservation, all seven
+// non-original subsets, 259 each; both named native workspaces at entry 259. Frame 0x48;
+// original iterator identities, reservation lifetimes and complete body restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

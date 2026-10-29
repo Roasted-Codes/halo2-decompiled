@@ -504,20 +504,20 @@ bool sound_driver_voice_create_buffer(
 	return result;
 }
 
-// score 98 (was 105): frame/length agree; early saves and descriptor zero/input scheduling differ.
+// score 98 (was 98): frame/length agree; early saves and descriptor zero/input scheduling differ.
 // Descriptor input first 105; flags before clear 105; spatial byte 105; unsigned result 105;
 // pair clear plus direct loop 185; input mixbin snapshot 105; real voice reference 98 (plain);
 // pair clear plus descriptor input first 183.
-// score 98 (was 98): Early saves and descriptor zero/input scheduling still differ.
+// Early saves and descriptor zero/input scheduling still differ.
 // Spatial-table/both plain loops 98/98; first/second/both complete pair copies
 // 230/186/264; native first/second/both descriptors 136/112/136.
 // First/second/both pair aggregates 125/132/160; scoped mixbin aggregates 120;
 // complete descriptor aggregates 229; reused descriptor 171; direct count increment 98;
 // success-path result assignments 110 (caller differs).
-// score 98 (was 98): early saves and descriptor zero/input scheduling remain;
+// early saves and descriptor zero/input scheduling remain;
 // voice before modes/result after count/next count word/spatial signed byte 98 each;
 // spatial word 151; play signed byte 98; spatial word with play byte 151; play long 101.
-// score 98 (was 98): this body sets the second buffer's flags to 0x180010 when play is set;
+// this body sets the second buffer's flags to 0x180010 when play is set;
 // retail computes play ? DSBCAPS_FXIN2 : DSBCAPS_FXIN (0x100010). The 98 allocation needs
 // 0x100000 used twice (first buffer and the select): the correct select 183, or
 // (play ? FXIN : 0) + FXIN 183. With the correct select: index returned directly 155 (pushes
@@ -525,6 +525,8 @@ bool sound_driver_voice_create_buffer(
 // result set after the count 159, voice_index = NONE in an else 169, failure through the
 // final return 173, the plain-locals body 197, select then |= CTRL3D 175, if/else select 189,
 // parameters reordered (flags last) no change.
+// Round 263: first/second/both pair-volume zero chains after identifiers 109/107/118,
+// before identifiers 110/107/119; shared creation status 98, with both late chains 118. All restored.
 // @retail 0x220b90
 short sound_driver_voice_new(
 	dword flags,

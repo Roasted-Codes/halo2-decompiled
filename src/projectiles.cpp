@@ -1660,6 +1660,8 @@ real function_17c900(short function_type, real input);
 // with either receiver 360/360; both existing point-difference producers 368/368, with
 // native salt 367/367. Declared lead field read at each use 369, with native salt 372.
 // All bodies and real-field trials restored; frame agrees, stacked index/output EBX still differ.
+// Parallel lead/turn/drift scalar entry reservations, seven subsets, and complete scalar role
+// names all 348; every original declaration and assignment restored.
 // DH round 234: caller output promoted before final branches with target/output reads, after
 // target-copy acquisition or at the target producer 361/371/395/411; readonly input objects
 // with those four boundaries 361/371/395/411. All restored; input contract and vector homes remain.
