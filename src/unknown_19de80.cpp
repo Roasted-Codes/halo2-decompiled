@@ -308,7 +308,7 @@ static inline bool teams_enabled_19e1c0()
 }
 
 /* writes the text of one token for the event, returning its length */
-// score 390 (was 433): the switch-side-time branch now returns the remaining length directly,
+// score 390 (was 390): the switch-side-time branch now returns the remaining length directly,
 // the team branches keep the event's team in a local; frame 0x208 versus 0x204 and the copy tails differ.
 // Depth one with plain result 709; depth one with original result 443; unsigned mode 443;
 // opponent eligibility continue 443; opponent text initialized after scan 459; all restored.
@@ -356,6 +356,8 @@ static inline bool teams_enabled_19e1c0()
 // `!=`, `<=`, a while, the body in the if and a single score compare 421/403/390/390/390; the
 // result local plain, without its initialiser, and with the text buffer first 701/665/433; the
 // volatile result without its initialiser 449; every form restored.
+// Round 272: entry declarations for cause/effect/both teams and both with opponent
+// score, inherited/ordinary result 390/691/390/691/390/691/390/691. Original lifetimes restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

@@ -1105,7 +1105,7 @@ struct s_seat_approach_result
 	bool approaching;
 };
 
-// score 147 (was 176): the vertical x87 square operands and the final delta pop differ;
+// score 147 (was 147): the vertical x87 square operands and the final delta pop differ;
 // retail pops before the arm's jump, ours shares that pop at the distance join, shifting
 // the following comparison. Round 70: the existing 3D distance
 // (0x1bbf40's) for the vertical case, a 2D point distance through the existing vector
@@ -1119,6 +1119,9 @@ struct s_seat_approach_result
 // Round 270: eligibility/marker rejection guards and direct success exits, seven
 // subsets 198/189/223/216/216/216/223; full guards with null-output exit 223.
 // Existing helpers and complete floating trees restored.
+// Round 272: actual shared difference/magnitude, difference/length-square/root and
+// squared-distance/root graphs 191/214/243/231/143/237/180/180. Native helper return boundaries
+// do not recover the vertical cleanup; all original geometry and helpers restored.
 // @retail 0x1baae0
 bool function_1baae0(long actor_index, long object_index, short seat_index, bool ignore_bonus,
 	bool ignore_reserved, bool vertical, s_seat_approach_result *out)
@@ -1315,6 +1318,8 @@ struct s_1ba091
 // slot data member plus positive admission 194; long request code 198;
 // default-owned request code 215; positive admission with long code 194;
 // positive admission, data member and default-owned code 211. Original restored.
+// Round 272: native header getter and parent field with payload/iterator/result
+// lifetime subsets 198/198/202/202/198/198/202/202. Original body and types restored.
 // @retail 0x1ba090
 long __stdcall function_1ba090(long actor_index, s_slot *slot)
 {

@@ -416,6 +416,9 @@ PRIVATE inline long polygon_round_19f(real value)
 // Round 66: existing double-input distance helper at entry, entry+vertex and all three sites
 // 379/379/399; pre-loop counter, entry counter, entry wrapped index, entry predecessor and
 // a plain while loop 379 each. Both callers stayed matched; all executable forms restored.
+// Round 272: ordinary variant and load-stepped cursor with entry declarations for
+// fade limit/spread/outer distance, every subset and complete role names
+// 416/416/416/416/416/416/416/416. Original parameter home, observations and body restored.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,
