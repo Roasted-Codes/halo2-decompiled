@@ -53,7 +53,9 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 	return (handle << 8) | (type & 15);
 }
 
-// score 91 (was 91): adjusted-table spill, removed pre-copy clears and current-index spill remain;
+// score 47 (was 91): the full image gives 90 for this form (91 before), so the real gain is one
+// point; the table pointer is kept in EDX where retail uses EAX and the matched index is spilled
+// where retail keeps it in ESI; the two pre-copy clears are dropped by the reduced build only.
 // progression after copy 139f; direct copy with late progression 139f; source before index 139f; unsigned
 // current with late progression 139f; role homes 91f; late progression/role homes 139f; library copy/late
 // progression 139f; single real index 122f.
@@ -64,6 +66,8 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 // drive query 91 (with memcpy 91); copy straight from the table element 106; current declared
 // before the loop 91.
 // native terminator library clears each 91.
+// The 64-byte copy written as memcpy(&location, entry, sizeof(location)) gives the same code and
+// the same 47: the compiler still drops the two pre-copy clears.
 // Cache global at consumers 47 fast / 90 plain (one-point gain rejected); direct copy/global direct copy 106/100;
 // location/zero-index scope 91/123; file-type name 91;
 // global location/global copy index scope 90/124;
@@ -72,6 +76,9 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 // short/word successful index 131/131.
 // Compound match 133; nested match 133; complete match result 116; type match result 133; reversed
 // comparison inputs with those four forms 133/133/116/133.
+// Plain-image trials this round: current assigned after the copy 132, direct copy with next - 1 128,
+// current assigned after the copy with the entry local kept 126, a files local in the last block 90
+// (byte-identical code). Every form that moves the progression later also rewrites the prologue.
 // @retail 0x2170e0
 long function_2170e0(long file_index)
 {
@@ -96,11 +103,10 @@ long function_2170e0(long file_index)
 		}
 		else
 		{
-			void *files = g_51ea14;
 			char drive;
-			if (files && function_1249f0(0, &drive))
+			if (g_51ea14 && function_1249f0(0, &drive))
 			{
-				s_profile_location_table *table = (s_profile_location_table *)((byte *)files + 0xbef8);
+				s_profile_location_table *table = (s_profile_location_table *)((byte *)g_51ea14 + 0xbef8);
 				s_profile_location_bytes location;
 				location.data[0] = 0;
 				*(word *)(location.data + 0x14) = 0;
