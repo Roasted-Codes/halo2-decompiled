@@ -937,11 +937,14 @@ void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_com
 // score 38 (was 38): Frame and component-in-EBX convention still differ; zero transform/translation/both 64/61/84;
 // rotation workspace/initialized workspace/initialized transform with workspace 78/106/107;
 // position input value 77; rotation input values 143. Original body restored.
-// score 38 (was 38): frame and component register still differ; external matrix/component records 38/38;
+// Earlier: frame and component register still differ; external matrix/component records 38/38;
 // complete frame set/initialization/library copy 81/71/71; translation memcpy 70;
 // aligned forward/up column values 49/49. Original body retained.
-// score 38 (was 38): only 0x1d0cf0's convention (component in ebx) is left; defined ahead of
+// Earlier: only 0x1d0cf0's convention (component in ebx) is left; defined ahead of
 // 0x1d0cf0 38; 0x1d0cf0's set-copy forms 40/40/49.
+// Round 184: Native left/all/left-up/forward-left columns 48/69/58/59; SIMD
+// translation/rotation/all/left-plus-translation 38/69/69/48. Original aligned values and all
+// matrix components restored.
 // @retail 0x1d0c20
 void havok_component_rigid_body_matrix_set(long rigid_body_index, s_havok_component *component, transform4x3f const *matrix)
 {
@@ -2176,6 +2179,9 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // lengths 184; all with early speed sum 392. Original executable source restored.
 // Round 201: Successive normal/velocity sum workspace 109; with shared length/inverse/both
 // 115/109/123; the same four with persistent sample 109/115/109/123. Original accumulators restored.
+// Round 184: Native contact/material/both add boundaries 157/162/210; reversed complete inputs
+// 157/162/210; existing vector assignment at contact/material sums 144/114. Original sums and
+// matched sample boundary restored.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {

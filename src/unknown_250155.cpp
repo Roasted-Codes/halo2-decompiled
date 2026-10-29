@@ -2417,13 +2417,16 @@ static __forceinline long local_player_find(long const *local_list, long player)
 
 /* fills the lobby's player list (players, count of them), with the local
    players' chosen teams; hides the slots past the count */
-// score 118 (was 118): the locals live in the other stack slots, ours keeps
+// score 111 (was 111): the locals live in the other stack slots, ours keeps
 // the count at ebp-8 and the flags byte at ebp-0xc while retail keeps them at
 // ebp-0xc and ebp-8, and the switch's table and the words it loads sit in
 // the other order
-// score 111 (was 111): retail sign-extends the bitmap index before find_bitmap (a long parameter,
+// Earlier: retail sign-extends the bitmap index before find_bitmap (a long parameter,
 // like find_text), and reloads players[i] after the voice-state query; named pointer to
 // players[i] in the first loop 111; renamed count, flag, player and slot locals 111.
+// Round 184: shared count 301; result-first voice 129; native team byte 165; count/voice 307;
+// scoped text/all receivers 111/111; late team-result constants 171; complete combined graph 307.
+// Original count, receivers, widths and outputs restored.
 // @retail 0x25042d
 void function_25042d(c_session_lobby_screen *screen, long valid, s_session_flags_view *session, long *players, long *local_list, long count)
 {
