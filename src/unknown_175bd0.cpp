@@ -3063,6 +3063,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Round 241: native player record/datum iterators 255/255; effect record/datum iterators
 // with inline/called scans 325/325/352/352; paired native iterators 324/324. Original
 // scalar searches, initial guard, false result and complete body restored.
+// Round 233: Actual returned-point ownership, branch/output/source defaults and
+// original/direct absent-node source, each with radius after/before displacement:
+// 176/176/227/227/176/176/216/216. Source-one-use producer forms require a match; all restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

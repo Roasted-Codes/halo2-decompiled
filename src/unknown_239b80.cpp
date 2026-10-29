@@ -338,6 +338,9 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // Round 385: Natural nonterminal continuation pairs with long/bool departure
 // and memcpy 340/340/338/338, with memmove 323/340/307/307. Original terminal tests restored.
 // Round 387: Parameter-derived current index live before classification, with Boolean departure, CRT overlap compaction and constant heading combinations 245/215/236/277/261/247/250/251; no added completion flag. Original body restored.
+// Round 233: Complete current/candidate coordinate carriers at each candidate,
+// squared-distance expression in seven subsets, then overlap CRT compaction:
+// 253/287/278/203/253/287/278/289. All original coordinate reads, arithmetic and body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
