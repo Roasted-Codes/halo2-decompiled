@@ -1274,6 +1274,9 @@ long function_cbd50(long unit_index, short weapon_index);
 // overlay read at its switch 331; with cached-unit slot arguments 345; with short slot locals 345.
 // Retail's unit reload at each query (`mov ecx, ebp; mov ecx, [ecx + edx + 8]`) occurs in only one
 // other retail function (0x100130, unmatched). Original body restored.
+// Round 162: pool/data receivers 378/345; shared word unit slot 368; pool/data plus word
+// slot 400/368; data plus dword slot 350; pool plus long slot 390; data with native result
+// 329. Original lookup observations, status graph and argument handling restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
