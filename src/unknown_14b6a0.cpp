@@ -239,10 +239,18 @@ void function_14bac0()
 // Existing in-place vector sum with shared displacement/live ancestry headers/both 230 each;
 // sum alone 230; all four with the native recipient call 259 each. Original geometry,
 // both iterators and includes restored; frame 0x44/0x3c and readiness homes remain.
+// Round 89: the readiness homes follow the second scan (an in-memory iterator through 0x6b380 frees BL
+// for the alternate flag, as in retail; frame 0x48 259); final scan through the existing inline record
+// iterator 268 (retail's or/inc/js scan); with the 0x6b380 second scan 270; final scan on the global with
+// the three `players` reloads dropped 295, with the 0x6b380 scan 294; with that scan, centre/height/radius
+// or its iterator declared at the block top 259/259 (declaration scopes do not move the packing).
 // Round 227: Existing final reset record-inline/datum-inline/called/step producers
 // 268/268/306/290; with native recipient iterator
 // 270/270/328/296. Original final scan and both request traversals restored;
 // frame 0x44/0x3c, point/recipient sharing and readiness homes remain.
+// Distinct native 16-byte iterator role names and entry recipient reservation, all seven
+// non-original subsets, 259 each; both named native workspaces at entry 259. Frame 0x48;
+// original iterator identities, reservation lifetimes and complete body restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

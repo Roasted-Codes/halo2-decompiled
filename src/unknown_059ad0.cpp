@@ -3749,6 +3749,10 @@ bool function_07ab10(long key_index, s_type_99af70 *address, long local, word po
 // only the host register left (retail esi copied to ebx for the address call, session
 // reloaded; ours keeps host in ebx across it); inline address callee 138; inline key
 // setter 138; session parameter re-read at the address call 137 (host still ebx).
+// Separate resolver/key/both noinline declarations 136/136/136; each with
+// the shared clock forceinline declaration 145/145/145. Native full-record
+// copies with resolver alone/all boundaries 136/145. Host/session staging,
+// cleanup placement and clock expansion remain; all declarations and bodies restored.
 // @retail 0x59e50
 bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
  const XNKID *kid, const XNKEY *key, const s_session_member_identity *host,
@@ -4359,7 +4363,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 305 (was 305): frame 0xd8 agrees; result/identity/selection byte homes and
+// score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
+// frame 0xd8 and length agree; result/identity/selection byte homes and
 // acknowledgement placement differ.
 // Earlier 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
 // instead of going through the shared exit, so each one gets its own epilogue and the extent matches
@@ -4380,26 +4385,22 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Earlier 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
 // separate arm instead of a merged join, and the identity pointer is taken before the member-state
 // pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
-// score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
+// Byte homes differ (retail: better +9,
 // identity/same +0xa, result +0xb; ours: identity/same +9, result +0xa, better +0xb), retail reads
 // `result` back from its home at every return (ours folds the two reason-2 returns to `xor al, al`
 // and keeps them as two blocks, where retail has one), and the acknowledgement block is laid out
 // after the first identity test in ours, last in retail.
-// Round 87: one `state <= 2 || state > 8` reason-2 test 368 (the block moves to the end, 1248 bytes),
-// reversed `state > 8 || state <= 2` 370; renamed result/better/identity flag 305 each (names do not
-// move these slots); acknowledgement block after `done:` 305; same declared before better 305;
-// volatile result (diagnostic only, reverted) 317 at 1278 bytes.
-// Earlier: the identity comparison is a predicate and the two timeout reasons are separate arms.
-// Earlier 384: Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Earlier 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
-// separate arms; the extent is 1265/1264 bytes. Acceptance/identity homes and acknowledgement
-// placement remain.
-// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
-// Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
-// Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
-// Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
+// Kept along the way (356 -> 305): the valid-state range as an else-if chain, the identity pointer taken
+// before the member-state pointer, the peer-map update with the remote member first (the callee is
+// symmetric in its two members), the acceptance test as the no-sender case followed by the acknowledgement
+// (which then stays at the end), the channel-state test on the identity comparison in place, and the
+// acknowledgement, invalid-state and missing-sender exits returning the result directly (own epilogues,
+// extent 1264).
+// Tried: Round 87: one `state <= 2 || state > 8` reason-2 test 368 (the block moves to the end, 1248
+// bytes), reversed `state > 8 || state <= 2` 370; renamed result/better/identity flag 305 each (names do
+// not move these slots); acknowledgement block after `done:` 305; same declared before better 305;
+// volatile result (diagnostic only, reverted) 317 at 1278 bytes. Earlier: the identity comparison as a
+// predicate with the two timeout reasons as separate arms 358 (1265 bytes).
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
@@ -4444,9 +4445,16 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 214: Native-equality/distinct-exit graph: acceptance, selection, both, identity, identity/acceptance,
 // identity/selection and all Boolean home names 305 each; all names with entry selection constants 372.
 // All executable forms restored; result/identity/selection homes and acknowledgement placement remain.
+// Round 89: every exit through `done:` 318 (1278 bytes; every return then reads `result` from its home
+// as in retail, but the state <= 2 exit keeps its own block); only the three state-test exits through
+// `done:` 308; all exits through `done:` with one `state <= 2 || state > 8` test 357 (1264 bytes, the
+// reason-2 block placed last); better/same declared at entry 367, with every exit through `done:` 381.
 // Round 72: sender test inverted ahead of reason 5 317; acknowledgement after the shared exit 305
 // (same code); its result set before the state-7 test 305; preference/equal flags swapped 305;
 // both declared after the member lookup 314. Retail reloads the result byte on every exit.
+// On native-equality/distinct-policy exits: byte/char acceptance, with original or paired-byte
+// selection, 406/406/406/406; word/short acceptance with either selection domain 410 each.
+// All larger than retail; original truth carriers and body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4724,6 +4732,9 @@ void function_62640(c_class_58d20 *session)
 // the other stack slots, the frame is four bytes shorter, the bit is shifted
 // in the other register and merged in a register instead of in memory, and the
 // second loop walks the member states from the flag byte
+// Read-only first-loop member / unsigned sequence / immutable observer binding,
+// all seven subsets 98; signed-int cursors in both ordinary loops 98. Original
+// metadata domains and body restored; owner spill, mask homes and send base remain.
 // @retail 0x627e0
 void function_627e0(c_class_58d20 *session)
 {

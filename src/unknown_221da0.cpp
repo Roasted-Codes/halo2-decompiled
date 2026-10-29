@@ -852,6 +852,9 @@ real function_18cac0(long arg_0);
 // bounds, side priority, strict maximum and full body restored.
 // Round 265: all six lexical orders of door/side/inner long slots, then both
 // uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
+// Round 179: three-state side on the unaligned shared-membership graph, complete arms in
+// long/short/signed-byte/byte 155/179/224/224; first-side default 232/229/230/230. Original
+// ordinal, early absent-side continue, clear return, helpers and complete body restored.
 // Round 186: Initial camera-cluster short/long with guarded/conditional/default-result/early-null
 // admission 218/272/247/275/247/275/218/272. Original direct observations and whole body restored.
 // Round 188: camera-provider/membership ordinary/forced/separate-noinline declaration

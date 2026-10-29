@@ -105,6 +105,9 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 // it, one actor lookup at the top 52 (index EBP and view EBX as retail, actor/state ESI/EDI swapped),
 // plus the state declared first 52, a prop index local 52 or the typed slot data block 52; the
 // NONE case as an early store and return 91 (actor EDI as retail, more pushes sink).
+// Round 173: Role allocation names in all seven index/actor/view subsets 47 each; indexed data block with
+// complete names 47. Direct concrete callback input, alone/one actor lookup/role names/both, 47/52/47/52.
+// Original body, input declaration and table entry restored; late EBX save and register ownership remain.
 // Round 270: native success/else-return gates for active, facing and release phases,
 // all seven subsets 47; full gates with the slot data member 47. Original restored.
 // Round 252: native node reference with/without the data block 47/47; actor reference

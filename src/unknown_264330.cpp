@@ -201,6 +201,10 @@ owner_selected:
 // or without an object local (96); the facing as a const reference (99); a volatile load of the second object
 // pointer (103; 102 without the object local: it keeps the element address in esi instead); no object local
 // (67); the two ifs folded to if / else if (66); direction.i computed before the facing (67).
+// Round 242: native displacement initializer / position copy then subtract 67/67;
+// either with native-width narrowed category 76/76; existing facing getter plus either
+// direction form 109/109, with native-width category 75/75. Original body restored;
+// header-base retention and the second object lookup still differ.
 // @retail 0x264940
 void function_264940(long actor_index, long prop_ref_index)
 {
@@ -300,6 +304,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 231: native unit mask byte/char/word/long 440/440/449/439;
 // each with positive-view-first magnitude 431/431/436/437. Byte masks recover frame
 // 0x20 but regress; original optional pointer, observation timing and full body restored.
+// Round 240: Native tracking-record receiver with distinct current-state, sequential
+// object-vector workspace and positive-view arm combinations 426/425/426/425/428/427/428/427.
+// Frame remains 0x24/0x20; original separate view, states, vectors and body restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -507,6 +514,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // decrement 420, with timer/planar/both 423/421/424; complete precision graph with
 // wide decrement 424 (fast control 420). Original precision, domains and body restored;
 // frame 0xa4 and actor/node/flag homes remain. Planar precision forms were exact-only.
+// Round 238: Concrete motion/context/both output types 420 each; motion/context/both with the
+// native actor receiver 420 each; both with context-first declarations 420; all with entry
+// workspaces 420. All original types, declarations, fields, qualifier and directives restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -896,6 +906,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // 354/350/351 versus 331; all restored. Actor ESI/EBX and saved/squad homes remain.
 // Round 397 (fast control 356, full 331): complete tracking-root view access; root branches, ordinary saved actor and readonly source-view masks 0..7
 // 355/360/378/376/355/360/378/376; all restored.
+// Round 240: Complete pre-branch object/suppression/current acquisition in six
+// producer orders 360/360/376/394/391/387; first two with the saved-pointer declaration
+// before actor construction 360/360 (fast control 356, full 331).
+// Original observations, qualified local pointer and complete body restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

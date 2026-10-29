@@ -516,6 +516,7 @@ void function_1e4390(long actor_index)
 }
 
 #include "object_markers.h"
+#include "location_zones.h"
 
 struct s_actor_object_sample
 {
@@ -529,6 +530,7 @@ struct s_actor_object_sample
 long function_1e4990(long index);
 void function_1e3a00(long object_index, s_actor_object_sample *sample);
 void function_28f8d0(long index);
+void function_caf90(long unit_index, point3f *position);
 long function_baf40(long object_index);
 long __stdcall function_cbd80(long object_index, long *holder_index);
 void *function_1e5280(long actor_index, long key);
@@ -537,8 +539,11 @@ real normalize2d(point2f *vector);
 real function_267370(long volatile object_index);
 
 
-// score 192 (was 273): the frame size and the held-direction byte home match; the plane index
-// compare uses a resident -1 instead of an immediate and the point copy loads in a different order.
+// score 98 (was 192): the water-plane test is 0x11c120's body (location_point_in_zone_inline) and the marker
+// read existing 0xcaf90; left: the NONE resets keep -1 in EDI, which the inlined plane compares
+// then share (retail compares with immediates, gives EDI to the cluster table and forms -1 in ECX
+// at the resets for them and the carrier compare), the carrier ternary lands in EDI instead of EAX,
+// and both crosses' multiply operand orders.
 // frame 0x8c versus 0x90; early NONE and held-bit byte home differ.
 // Reduced trials: point memcpy 371; early plane result 334; immutable inputs 371;
 // direct actor receiver 371; forward scalar names 371; sampled radius 371;
@@ -580,6 +585,16 @@ real function_267370(long volatile object_index);
 // declarations, each paired group, all groups, and all groups with phase-role names: 273 each. Every
 // value birth and original phase declaration restored. Frame 0x8c/0x90, early NONE and held-direction
 // byte home remain.
+// Round 111: existing 0xcaf90 marker read 190; inline header copy of the water test 192 (out of line
+// 506); existing 0x11c120 with its noinline declaration dropped 132; existing 0xe70b0 action getter
+// 313 (its unit lookup is not merged); seat field read in the test 113 (with a staged cross);
+// staged cross (every component before the stores) for both crosses 107, with the (second, first)
+// parameter order 107; NONE-initialised carrier with an if/else chain 107. Locate-only: the NONE
+// resets as 0 give retail's plane block exactly; resets as unsigned 0xffffffff 107. Staged cross
+// with retail's first-cross operand order 107 (canonicalised); the 0x118e80 call written in both
+// arms of the flag test (retail forms the vector address before the select) 98. Dropping
+// 0x11c120's noinline also inlined it into matched 0x25ccd0, so its body moved to a header
+// forceinline helper for the callers retail inlines it into (98, 0x11c120 and 0x25ccd0 still match).
 // @retail 0x1e3b60
 void function_1e3b60(long actor_index)
 {
@@ -598,32 +613,9 @@ void function_1e3b60(long actor_index)
 		byte *parent = parent_index == NONE ? NULL : (byte *)moving_object_get(parent_index);
 		short type = *(signed char *)(object + 0xaa);
 		function_1e3a00(actor->unit_index, (s_actor_object_sample *)(actor_bytes + 0x22c));
-		s_object_marker marker;
-		function_b8d30(actor->unit_index, 0x40000bd, &marker, 1, false);
-		point3f point = marker.matrix.position;
-		bool below_plane = false;
-		short plane_index = *(short *)(actor_bytes + 0x254);
-		if (plane_index != NONE)
-		{
-			byte *globals = (byte *)g_4e0348;
-			byte plane_key = *(*(byte **)(globals + 0xa0) + plane_index * 0xb0 + 0x70);
-			if (plane_key != 0xff)
-			{
-				byte *entry = *(byte **)(globals + 0x68) + (plane_key & 0x7f) * 24;
-				if (*(short *)(entry + 2) != NONE)
-				{
-					if (!(plane_key & 0x80))
-						below_plane = true;
-					else
-					{
-						plane3f *plane = (plane3f *)(entry + 4);
-						if (point.x * plane->i + plane->k * point.z + plane->j * point.y - plane->d < 0.0f)
-							below_plane = true;
-					}
-				}
-			}
-		}
-		actor_bytes[0x265] = below_plane;
+		point3f point;
+		function_caf90(actor->unit_index, &point);
+		actor_bytes[0x265] = location_point_in_zone_inline((s_location *)(actor_bytes + 0x250), &point, NULL);
 		actor->unknown229 = (movement[0] & 2) != 0 ||
 			(type == 0 && *((byte *)moving_object_get(actor->unit_index) + 0x3dc) == 2);
 		actor->unknown266 = false;
@@ -685,11 +677,10 @@ void function_1e3b60(long actor_index)
 						actor->unknown274 = holder;
 					}
 				}
-				short seat = *(short *)(object + 0x1fc);
-				if (!actor->unknown268 && !actor->unknown266 && seat != NONE)
+				if (!actor->unknown268 && !actor->unknown266 && *(short *)(object + 0x1fc) != NONE)
 				{
 					byte *definition = g_4e3b44[*(long *)parent & 0xffff].bytes;
-					actor_bytes[0x269] = (byte)((*(dword *)(*(byte **)(definition + 0x1cc) + seat * 0xb0) >> 11) & 1);
+					actor_bytes[0x269] = (byte)((*(dword *)(*(byte **)(definition + 0x1cc) + *(short *)(object + 0x1fc) * 0xb0) >> 11) & 1);
 				}
 			}
 		}
@@ -708,7 +699,10 @@ void function_1e3b60(long actor_index)
 				*(short *)(unit + *(short *)(unit + 0x346) + 0x36) == 0)
 				actor->unknown264 = true;
 		}
-		function_118e80(actor->unknown266 ? actor->unknown26c : actor->unit_index, &actor->unknown290);
+		if (actor->unknown266)
+			function_118e80(actor->unknown26c, &actor->unknown290);
+		else
+			function_118e80(actor->unit_index, &actor->unknown290);
 		if (!actor->unknown229)
 		{
 			if (normalize2d((point2f *)&actor->unknown290) > 0.0f)
@@ -734,17 +728,9 @@ void function_1e3b60(long actor_index)
 		vector3f *up = (vector3f *)(actor_bytes + 0x2a8);
 		*up = *(vector3f *)(object + 0x18c);
 		vector3f *left = (vector3f *)(actor_bytes + 0x2b4);
-		cross3f(g_4687b0, up, left);
+		cross3f_staged(g_4687b0, up, left);
 		function_30bf0(left);
-		vector3f *forward = (vector3f *)(actor_bytes + 0x2c0);
-		{
-			real i = up->j * left->k - left->j * up->k;
-			real j = left->i * up->k - up->i * left->k;
-			real k = left->j * up->i - up->j * left->i;
-			forward->i = i;
-			forward->j = j;
-			forward->k = k;
-		}
+		cross3f_staged(up, left, (vector3f *)(actor_bytes + 0x2c0));
 		*(long *)(actor_bytes + 0x2d0) = *(long *)(object + 0xec);
 		*(long *)(actor_bytes + 0x2d4) = *(long *)(object + 0xf0);
 		*(long *)(actor_bytes + 0x2d8) = *(long *)(object + 0x100);
@@ -1630,6 +1616,7 @@ void function_101a10(long weapon_index, real fraction);
 void function_1018b0(long weapon_index, short const *rounds);
 void __stdcall function_1e1a00(long actor_index, long value);
 long function_1e1f20(long actor_index);
+void *function_1e5240(long actor_index);
 PRIVATE inline long equipment_current_weapon_r21(long unit_index)
 {
 	s_ai_object *unit = ai_object_get(unit_index);
@@ -1696,6 +1683,11 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // query 340/340/340/333; shared seed-field receiver at those same acquisition
 // points 340/340/340/333. Every draw retained; all original receivers restored.
 // Round 29: Current/secondary result and actual weapon-pair dword domains in all seven combinations, then the real word ordinal: 263 each. Original result/pair types, ordinal and all code restored.
+// Round 111: opening through existing 0x1e5240 (retail inlines it) 263, kept; tail through existing
+// element_502420_get 272; current slot through existing unit_get_current_weapon with a result-first
+// secondary query 275 (retail's query shape, but ours keeps the unit across 0x1e53e0 where retail
+// re-reads it, so the pool global never gets EDI), current slot alone 270; weapons array declared
+// first/second 263/263.
 // Round 164: nonredundant actor/unit gates, draw-first ordered admission, their seven
 // combinations and all with readonly actor 263 each; all original observations restored.
 // Ammunition span named at its arithmetic producer, with options/probability/delay result-production combinations 263/310/282/315/263/310/282/315; original expressions and result producers restored.
@@ -1706,10 +1698,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 void function_1e2a90(long actor_index)
 {
 	s_actor_view *actor = actor_get(actor_index);
-	byte *weapon_options = NULL;
-	long weapon_index = function_1e1f20(actor_index);
-	if (weapon_index != NONE)
-		weapon_options = (byte *)function_1e5280(actor_index, ai_object_get(weapon_index)->definition_index);
+	byte *weapon_options = (byte *)function_1e5240(actor_index);
 	if (actor->unknown084 == 4 && actor->unknown086 >= 3 && actor->unknown018 != NONE)
 	{
 		byte *unit = (byte *)ai_object_get(actor->unknown018);

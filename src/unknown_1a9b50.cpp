@@ -948,6 +948,9 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 // The first register difference is the 0x110ab0 push (ECX, retail EAX); the later lookups follow it.
 // Object header getter 32; named unit index 124; declarations before assignments 32; result set
 // before the test 32; explicit NULL test 32 (fast).
+// Round 70 fast: read-only object 32; object and actor views 32; actor view 32;
+// early result declaration 32; hoisted choice declaration 32; hoisted real declaration 32;
+// repeated object accessor 35; both existing property helpers 31 (plain 31). Original body restored.
 // @retail 0x1a9ec0
 short __stdcall function_1a9ec0(long arg_0)
 {

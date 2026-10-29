@@ -618,6 +618,9 @@ s_projectile_material_response g_547660;
 // Result-owned response cursor: endpoint 40, ordinal 39, relational endpoint 40;
 // direct ordinal/endpoint success returns 79/67; result cursor with per-use count
 // ordinal/endpoint 70/73; short ancestry with result ordinal 39. Restored.
+// Ordinal reset before material lookup, ancestry/entry lifetime with cursor/indexed candidates
+// 58/56/58/56; immutable current-material values with those four forms 58/56/58/56.
+// Native word input and response scan entry remain; opening body restored.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
@@ -951,7 +954,7 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 232 (was 244): the convention now agrees with retail (target EAX, origin ECX, direction
+// score 232 (was 232): the convention now agrees with retail (target EAX, origin ECX, direction
 // ESI, the rest on the stack, `ret 0x2c`): the forced-speed and time-scale pointers are each read
 // once through their addresses, which keeps them on the stack as retail reads them at their uses
 // and matches the callers 0xfa6a0, 0x1f8100, 0x26f150 and 0x2900b0 (each passed the time scale in
@@ -988,6 +991,9 @@ real function_30bf0(vector3f *v);
 // Round 397: shared velocity scale 261; earlier path product 246; vertical stage first 244;
 // scale/path 232 (983 bytes, plain kept); scale/vertical, path/vertical, all stages and
 // all with library vector copies 246 each. Frame 0x28/0x30 and rounded-root/division scheduling remain.
+// Round 402: native double denominator/optimal-time/horizontal lifetimes and their pairs/all
+// 257/285/232/295/257/285/295; both native float division numerators named 232.
+// All restored; frame 0x28/0x30, rounded horizontal root and separate divisions remain.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1197,6 +1203,10 @@ extern vector3f *g_4687ac;
 // bounded initial ray 165; positive/both with original query reuse 163 each. Actual
 // initial displacement retained after the read-only query 180; with shared cross,
 // later query reuse or both 180 each. Original body restored; frame/tag/query homes remain.
+// DL176: Whole actual query-result lifetime in bool/byte/short/long 182/177/172/168; with
+// consistent radius-field reads 198/193/179/185. Full-width result reaches 756 bytes but
+// regresses. Original result exits, cached radius, simultaneous endpoints and body restored;
+// frame/tag/query homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1494,6 +1504,9 @@ PRIVATE inline long projectile_object_root(long object_index)
 // word/speed, receiver/speed and all three 388/392/387; both unit forms with shared
 // scaled addition 351, with reused speed 364. Original callback restored; entry slot/input
 // allocation and speed-update expansion remain.
+// Round 402: native projectile timer/ownership/forward field observations, seven subsets,
+// all 332; complete native fields with both twelve-byte library copies 332. Restored;
+// slot/input allocation and expanded speed update remain, frame four agrees.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
@@ -1654,9 +1667,18 @@ real function_17c900(short function_type, real input);
 // with either receiver 360/360; both existing point-difference producers 368/368, with
 // native salt 367/367. Declared lead field read at each use 369, with native salt 372.
 // All bodies and real-field trials restored; frame agrees, stacked index/output EBX still differ.
+// Parallel lead/turn/drift scalar entry reservations, seven subsets, and complete scalar role
+// names all 348; every original declaration and assignment restored.
 // DH round 234: caller output promoted before final branches with target/output reads, after
 // target-copy acquisition or at the target producer 361/371/395/411; readonly input objects
 // with those four boundaries 361/371/395/411. All restored; input contract and vector homes remain.
+// DL176: Ret-4 stdcall, inline target, both 348/348/348; with salt at its drift expression
+// 365/365/365; both with native signed-word salt late/early 366/360. Original convention, summary,
+// salt and complete body restored; stacked-index/output-EBX transport and normalization homes
+// remain.
+// DH round 236: lead/turn/drift vector storage promoted without moving their input reads,
+// all seven subsets 348 each; complete promoted graph with role-based point/vector names 348.
+// Original branch storage and complete body restored; input transport and vector homes remain.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -2503,6 +2525,11 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 // DH round 234: shared reflection scaler/live material flags/readonly response combinations
 // 1179/1162/1179/1162/1179/1162/1179; all with the real normal receiver 1194 at retail
 // length. All restored; frame 0x220/0x218 and velocity/request homes remain.
+// Round 402: distance fraction/path/shared difference, seven subsets,
+// 1207/1207/1162/1207/1207/1207/1207; complete graph with native product bounds 1199.
+// Damage tag at every use with live mode/response flags, four subsets, 1203/1201/1203/1201;
+// those with native dword collision count 1201/1181/1201/1181. All restored;
+// frame 0x220/0x218, velocity contract and request homes remain.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)

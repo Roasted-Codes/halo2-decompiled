@@ -4,6 +4,7 @@
 
 #include "unknown_11c920.h"
 #include "unknown_0259d0.h"
+#include "vector_products.h"
 #include <math.h>
 #include <string.h>
 
@@ -115,18 +116,6 @@ static inline void quaternion_transform_vector(
 	out->k = v->k * s + q->k * dot + cross.k * w2;
 }
 
-/* the cross product, every component computed before the stores */
-static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, vector3f *out)
-{
-	real k = a->i * b->j - a->j * b->i;
-	real j = a->k * b->i - a->i * b->k;
-	real i = a->j * b->k - a->k * b->j;
-
-	out->i = i;
-	out->j = j;
-	out->k = k;
-}
-
 /* the rotation that takes one unit vector to another */
 // score 237 (was 237): Frame 0x1c versus 0x24 and quaternion/cross spill overlap remain.
 // Lane 6 r85: helper with `s` computed first 302 (s and the doubled scalar hoisted above the matrix copy,
@@ -199,6 +188,9 @@ static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, 
 // pre-copy doubled scalar/quadratic scalar 302/347; scalar-first construction 272;
 // shared input dot and shared repair crosses on the shared-axis base 237 each.
 // Original body and both helpers restored.
+// Round 258: output/vector/quaternion contract with original/scalar-cross/scale-first/
+// both forms 237/281/302/306; vector/output/quaternion contract with those forms
+// 240/237/298/311. Original helper, three call roles and body restored.
 // @retail 0x1417b0
 void matrix4x3_rotation_between_vectors(
 	transform4x3f *matrix,
@@ -251,9 +243,9 @@ void matrix4x3_rotation_between_vectors(
 	if (!function_143120(&matrix->forward, &matrix->left, &matrix->up))
 	{
 		function_30bf0(&matrix->up);
-		cross_product3d_1417b0(&matrix->up, &matrix->forward, &matrix->left);
+		cross3f_staged(&matrix->up, &matrix->forward, &matrix->left);
 		function_30bf0(&matrix->left);
-		cross_product3d_1417b0(&matrix->left, &matrix->up, &matrix->forward);
+		cross3f_staged(&matrix->left, &matrix->up, &matrix->forward);
 	}
 }
 

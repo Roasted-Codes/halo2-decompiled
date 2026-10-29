@@ -2191,6 +2191,10 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 }
 
 // score 275 (was 275): Frame 0x48 versus 0x54, early saved-register pushes, iterator/point homes and intersection spill remain.
+// Round 73: retail keeps the squad walk's pool pointer in memory (reloaded each pass), ours in EBX,
+// which forces the pushes first. Walk as `while ((squad = step) != NULL)` 319; long squad index 275;
+// flags at +2 read as a word, plain/(dword) cast 294/294 (retail's xor/mov bx load; aligned diff
+// 160 -> 158); with a long index passed unmasked to the squad getter 301.
 // This round: structure at uses 305; cluster root at uses 302; both roots at uses 300; shared final
 // bit test 275; direct bitmap countdown 274; root observations shared test 300; root observations
 // countdown 302; roots countdown shared test 302.
@@ -2639,6 +2643,10 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // trigger flag as a named bool for both tests 189; the block declarations reversed 50.
 // Round 221: Complete logical index snapshot long/int/dword/const long 50 each;
 // all four with a separate optional follow-up result join 50 each. Original body restored.
+// Round 89: the reload follows the trigger-entry loop's 0x290e20 call (without that call or that loop the
+// first part gets `mov eax, ebp`); `return` for the walk's break 50; a found flag with the walk after the
+// loop 50; trigger count declared after the threshold 57; threshold as a ternary 50; follow-up event as
+// if/else 50.
 // Round 257: apply/event ordinary-inline-noinline boundary pairs on the recovered
 // pointer/result and actor-step graph 50 each (eight forms); EBP index reload remains.
 // @retail 0x202be0
@@ -2824,9 +2832,6 @@ static __forceinline long real_to_long(real value);
 // This round: group local publication 280; group field publication 293; group failure exit 293; squad
 // conditional return 264; squad direct return 227; local group conditional squad 277; field group
 // direct squad 293; local group direct squad 280.
-// Frame 0x30 agrees; active/pool reloads and zero-result joins remain. Timer
-// squad for-walk 266; final squad iterator 263; timer group for-walk 329; timer snapshots 245;
-// Frame 0x30 agrees; active/pool observations and zero-result joins remain.
 // Native group both/first/root 250/272/282; native squads 258; both native walks 256; group
 // workspace lexical order 250; both workspace lexical order 256.
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
@@ -2838,6 +2843,10 @@ static __forceinline long real_to_long(real value);
 // Round 176: Shared conversion input/output/both scratch 227/227/227; input/output/both with
 // native groups 250/250/250; both with native group/squad walks 256; phase-local groups 292.
 // All computation points preserved; original four walks and scratch scopes restored.
+// Round 73: retail reloads the ai globals pointer every pass of the group walks (ours keeps it in
+// EBP) and presets the step's NULL result before the active test. NULL-preset group step 280
+// (682 bytes); group walks on the step's returned pointer 227; squad walks likewise 227; both
+// with the NULL-preset step 280/280.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -2984,6 +2993,11 @@ long function_201010(long arg_0, short arg_1, short arg_2, short *arg_3);
 void function_2011f0(long arg_0);
 
 // score 338 (was 338): Frame 0x134 agrees; placement/definition registers and final chain homes remain.
+// Round 73: arg_1 passed unmasked to every call and the +0x3a0 store (masked only for the
+// table lookups, as retail reads it) 374 (EBP takes the placement index as in retail, frame 0x130);
+// with a squad pointer local for the body 353 (retail's entry layout; the 0x200ee0 output shares the
+// seat result's slot), its output declared beside the seat result 353; with the placement index
+// chosen by if/else 345; that if/else alone 358.
 // Earlier: Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
 // Earlier: Frame 0x138 versus 0x134; placement/definition carriers and final chain homes remain.
 // Earlier: frame 0x13c versus 0x134; scalar and spawn/definition homes differ.

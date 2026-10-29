@@ -775,6 +775,9 @@ __forceinline long vehicle_round(real value)
 // Double literals 98; shared crosses 140; both 79 (kept); angular/both scales 83/83;
 // scaled sum 83; single result/vector names 79/79; seven scalar name/scope forms 79;
 // coefficient at use 93, with shared sum 95. Only the cross-helper header is needed.
+// Round 90: `down` computed after the side cross 93 (rate then stays in xmm7, no spill); dot terms
+// i,k,j 80, k,j,i 79; dot3f for the dot 79; dot3f inside vector3f_scale for the projection 79 (that
+// whole block then equals retail, through the forward pointer, one line out of step: aligned 51 -> 44).
 // @retail 0xef870
 bool function_ef870(long vehicle_index)
 {
@@ -2174,6 +2177,9 @@ PRIVATE inline real vehicle_wheel_spin(real spin, real const *period)
 // score 115 (was 192): Kept live period receiver, native twice-used gear and result-first torque; zero/scalar residency and spin schedule remain.
 // Live period 136; native gear 190; both 113; scalar roles 192/136/190/113; result-first torque 101 kept plain.
 // Spin exit / period-first / both 101; named absolute steering with each 127; early torque zero 140.
+// Y405: Frame 0x14 versus 0x10 and zero/scalar homes remain;
+// gear-none/two-defaults/active-gear/sign-arm torque results 126/140/138/126; each with shared
+// straight-drive product 132/141/141/132.
 // @retail 0xf1cd0
 void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -3329,7 +3335,10 @@ long __stdcall effect_new_from_parameters(s_effect_parameters *parameters);
 // i` 117; the loop bound written as the sum of the two counts 52; a short count 128; the speed choice
 // as an if/else 53, into a named local 53. Round 85: the tag index stored after the owner fields
 // (retail's store order) 48 (kept); then colors before the source 49; scale after the memset 48;
-// `i` declared in the for 48; `count +=` 48; the sum's operands swapped 48.
+// `i` declared in the for 48; `count +=` 48; the sum's operands swapped 48. Round 90: no marker
+// pointer 129; the ray through vector3f_scale 48; facing declared with the loop locals 48; `long count`
+// declared before the first count 48; count from the second call, then `+= primary_count` 48 (the
+// 48s are the same code: the second count's sign extension stays preferenced to eax).
 // @retail 0xf6060
 void __stdcall function_f6060(long vehicle_index)
 {
@@ -4007,18 +4016,28 @@ PRIVATE inline void vehicle_iterator_new(s_type_f1af8e *iterator)
 
 /* whether a moving vehicle is within ten world units of a player on foot,
    and which */
-// score 131 (was 131): frame 0x114 agrees; player-scan allocation and scheduling still differ.
+// score 110 (was 131): frame 0x114 agrees; player-scan allocation and scheduling still differ.
 // Bounded short/word/char/byte player counts 137/130/134/129;
 // those four with result-first common exit 137/130/134/129;
 // existing velocity magnitude helper 131, native difference with/without it
 // 135/135 (match-only), plain vehicle for loop 131.
 // Original body restored.
+// Y405: kept the full-width result set after the collection with one exit, 110. The collector
+// reading the unit field at every use as well gives 85 at 569/562, but 0xf7ca0 shares the
+// collector and goes 142 -> 150, so not kept.
+// Collector count long/short/word/byte with per-use unit 124/170/170/171;
+// cached unit with short/word/byte/char collector count 184/184/185/185.
+// Per-use unit with positive bool/byte/word/long return 124/117/90/93;
+// existing typed player with early/bool/word/long return 124/124/90/93.
+// Word/long return name ordering at entry and after collection 90/96/93/85.
+// Current-vehicle stack home and center-address scale remain.
 // @retail 0xf7a60
 bool __stdcall function_f7a60(long *vehicle_index)
 {
 	long unit_indices[16];
 	point3f centers[16];
 	long count = vehicle_players_on_foot(unit_indices, centers);
+	long found = true;
 
 	if (count > 0)
 	{
@@ -4044,13 +4063,15 @@ bool __stdcall function_f7a60(long *vehicle_index)
 						vehicle->linear_velocity.k * vehicle->linear_velocity.k >= 1.0f)
 					{
 						*vehicle_index = iterator.object_index;
-						return true;
+						goto done;
 					}
 				}
 			}
 		}
 	}
-	return false;
+	found = false;
+done:
+	return found;
 }
 
 /* whether an occupied vehicle (one with its flag 2 at +0x10a set) is within
@@ -4059,6 +4080,11 @@ bool __stdcall function_f7a60(long *vehicle_index)
 // Outer declarations, const vehicle, loop scope, single result, shared center and
 // point-difference helper all 142; indexed seats 156; native unsigned seat mask
 // with plain pointer stepping 140 at 561/549 (-2, restored). Original body retained.
+// Y405: the shared collector reading the unit at every use moves this to 150 (not kept); own body restored. Positive
+// word return with short/long/word/byte ordinal and plain seat stepping 170/164/170/172; long
+// return 167/162/167/169. Occupied-mask result dword/long/word/short at entry/after collection
+// 215/177/215/177/179/158/180/157; raw seat-word result dword/long at entry/after collection
+// 200/158/198/152. Frame 0x114 versus 0x118 and returned-object home remain.
 // @retail 0xf7ca0
 bool __stdcall function_f7ca0(long *vehicle_index)
 {

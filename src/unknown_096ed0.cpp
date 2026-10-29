@@ -149,6 +149,11 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 400: On the active-cursor graph, shared native array/blocked/callback outputs in masks
 // 1-7, then all at traversal scope: 145/132/148/145/148/148/148/148. Original workspaces
 // restored.
+// Round 401: Active buffer endpoints with relational/equality bounds 153/153;
+// pending endpoints 236/236; all four paired endpoint graphs 242. Each endpoint
+// is formed after the signed positive-count test. Active endpoints recover cursor,
+// selector and query homes but reverse the two buffers (834/814 bytes). Two native
+// buffer-name orders with each active bound 153/153/153/153. Original restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
