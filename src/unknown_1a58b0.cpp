@@ -121,7 +121,7 @@ void function_1a6340(vector3f const *b, vector3f const *a, point3f *out, point3f
 // score 32 (was 32): the arguments are pushed in a different order and one of the values is passed
 // in a register here and on the stack in retail.
 // Object-second/third interfaces 32/32; unsigned object index 32; original interface restored.
-// score 33 (was 42): early Boolean with a separate success exit 33/91 kept; early result
+// score 35 (was 42): early Boolean with a separate success exit 33/91 kept; early result
 // with one exit 36/95; result on both exits 33; bottom/axis/both output pointers 33/33/33;
 // radius pointer/value 33/33. Saved-register setup and the false-in-BL result still differ.
 // @retail 0x1a62e0

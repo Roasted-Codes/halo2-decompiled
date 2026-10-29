@@ -1268,7 +1268,7 @@ static inline s_players_globals *players_globals_14f2e0()
 
 /* gives a player its unit (the unit kept for it, the unit waiting to be
    reused, or a new unit at a starting location) and resets its spawn state */
-// score 114 (was 114): Player/tag/globals/unit register lifetimes and success BL still differ.
+// score 75 (was 114): Player/tag/globals/unit register lifetimes and success BL still differ.
 // Shared direction helper for reuse/create/both 251/201/276; creation/colors/both entry scopes
 // 152/114/152; native/byte success 174/177; sentinel clears 114;
 // representation inline/out-of-line declarations 114/114.
