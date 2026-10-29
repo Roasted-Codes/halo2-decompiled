@@ -118,7 +118,6 @@ void function_14bac0()
 	s_record_pool_iterator *iterator_reference = &iterator;
 	players_pending_creation_process(iterator_reference);
 }
-
 // score 230 (was 230): Frame 0x44 versus 0x3c; centre/second-iterator slot sharing, readiness homes and the second scan's call remain.
 // Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
 // center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
@@ -220,6 +219,13 @@ void function_14bac0()
 // relocation/probes/both 233/233/230; each with native recipients 262/262/259; complete sharing
 // with earlier bounds declarations 230, with native recipients 259. All restored; frame 0x44/0x3c,
 // readiness and recipient storage remain.
+// Round 238: full signed request/target marker/both carriers 267/240/275;
+// alternate marker 230, with request/target/both 267/242/276;
+// all three with the native recipient iterator 276. Original short carriers and traversals restored.
+// Round 216: first iterator complete defaults/aggregate/CRT clear 230 each; scoped recipient
+// aggregate/CRT clear 230 each; both aggregates 230; first aggregate/native recipient aggregate
+// 250; both cleared/native recipient 279. Original initialization and iterators restored; frame
+// 0x44/0x3c, readiness homes and recipient overlap remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

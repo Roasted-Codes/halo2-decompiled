@@ -582,6 +582,8 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // Round 224: ordered five-request tuple/name tables, mutable/const with byte status
 // 1320/1177/1320/1177; Boolean status 1325/1182/1325/1182 (fast). Extra table storage
 // and rolled request expansions regress; original helper and status restored.
+// Round 170: Primary/alternate/both native resolved-input records, mutable then const, both library and
+// both aggregate copies 603/508/644/603/508/644/644/619. Original queries and input observations restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
@@ -945,6 +947,8 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 383: existing variant helper ordinary/forced/noinline/inline-noinline
 // contracts 210/338/210/210; offset helper counterparts 210/654/210/210.
 // Original class declarations and complete body restored.
+// Round 170: Failure-owned false result, byte/bool/short/long, with bool then byte prior-loop truth
+// 357/337/346/344/357/337/346/344. Original entry false, constructors and protected queries restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

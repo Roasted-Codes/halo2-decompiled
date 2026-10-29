@@ -1824,7 +1824,11 @@ real function_f14f0(short gear, long vehicle_index)
 // the zero return inside the else 32, in each arm 32; `torque`/`fraction` declared at the top 32;
 // the fraction divided in a second statement 32; the intercept written into the fraction 85;
 // slope/intercept declared first 32; the clamp in a named local 32; the parameters reordered 32
-// (either order); a single `result` 81; peak operands swapped 77 (before the field read).
+// (either order); a single `result` 81; peak operands swapped 77 (before the field read). Round 151:
+// `fraction == PIN(...)` 31; the torque local before the magnitude test 51; `fraction *= torque` 32;
+// range/torque magnitudes named 32/32/32; `0.0f <= range` 32; `range < 0.0f ? ...` 34,
+// for the torque 37; the bound compared first 32; `pow(...) * torque` returned in the pin arm 109;
+// a separate scale for the powered fraction 32.
 // @retail 0xf15d0
 real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, real angular_velocity)
 {
@@ -3973,6 +3977,12 @@ PRIVATE inline void vehicle_iterator_new(s_type_f1af8e *iterator)
 
 /* whether a moving vehicle is within ten world units of a player on foot,
    and which */
+// score 131 (was 131): frame 0x114 agrees; player-scan allocation and scheduling still differ.
+// Bounded short/word/char/byte player counts 137/130/134/129;
+// those four with result-first common exit 137/130/134/129;
+// existing velocity magnitude helper 131, native difference with/without it
+// 135/135 (match-only), plain vehicle for loop 131.
+// Original body restored.
 // @retail 0xf7a60
 bool __stdcall function_f7a60(long *vehicle_index)
 {

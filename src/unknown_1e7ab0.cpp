@@ -167,7 +167,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
-// score 627 (was 627): Frame 0x54/type EDX agree; state/player/unit homes remain.
+// score 620 (was 622): retail loads the state table into ESI and the state pointer into EDI, then reuses
+// ESI for the player index and the player pointer and keeps the unit pointer in EBX; ours folds the base
+// into the add and keeps the state in ESI, and retail returns from inside each switch case.
 // Round 134: retail's case layout is 10-14, 2, 4, 15, 18, 0, 1, 31, 17, 30, ...: cases 0/1/31 after 18
 // 656; plain blocked flag 645, both 656; with a plain player pointer too, retail's state edi, player esi,
 // spilled unit index and result at entry, but request_weapon stops inlining: 769, case 2 as an if 785,
@@ -233,8 +235,10 @@ bool function_1e7ab0(long local_index, long type)
  (void)&local_index;
  s_local_player_state_view *state = &((s_local_player_state_view *)g_51e9c0)[local_index];
  byte *data = (byte *)state;
- volatile bool result = false;
- long player_index = local_index == NONE ? NONE : g_4e8c20->entries[local_index];
+ bool result = false;
+ long player_index;
+ if (local_index != NONE) player_index = g_4e8c20->entries[local_index];
+ else player_index = NONE;
  s_entry_420 *entry = entry_420_get(type);
  if (player_index != NONE && entry &&
   (!(*((byte *)entry + 0x10) & 1) || g_4e6948->state != 2))

@@ -3534,7 +3534,6 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
         if (weapon->parent_index != NONE) weapon_index = weapon->parent_index;
     return weapon_index;
 }
-
 // score 1420 (was 1420): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
 // Earlier: frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
@@ -3583,8 +3582,24 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 243: Player default before scale override, direct/valid candidate 1439/1420;
 // before unit lookup 1442/1421; before dual query 1447/1428; before first lookup 1447/1428.
 // Kept scale-override default plus valid candidate, plain 1420/5680; frame and pool carriers remain.
+// Round 165: Dual/activity/owner inline-boundary subsets and native dual byte all 1420; positive
+// result bool/byte/word 1469/1465/1422. Unsigned real input word alone 1416, with bool/byte/word
+// result 1469/1465/1414; four/six-point gains rejected. Inner behavior/press/both/hold/behavior-
+// hold/press-hold/all orders 1447/1450/1430/1421/1427/1465/1447; word-input/result with hold/all
+// and word-input hold 1433/1449/1425. Original fields, result, cases and every inline
+// specification restored; frame 0x3c versus 0x38 and pool/dual homes remain.
 // Round 246: complementary activity result bool/byte/short/long 1440/1440/1459/1459; the same
 // with entry declaration 1440/1440/1459/1459. Original persistent result restored.
+// Round 280: complete four-way ramp/blend producer forms: named rates 1420;
+// named steps 1420; next values with immediate stores 1420; bounded next values
+// 1432; next values with rates/steps 1420/1420; bounded values with rates/steps
+// 1432/1432. Original producer expressions and stores restored.
+// Round 212: native animation/trigger/barrel activity-test accumulation, seven subsets and
+// complete entry-zero result [1421, 1425, 1432, 1432, 1431, 1438, 1450, 1450]. Original
+// producers restored; pool, dual and frame homes remain.
+// Round 216: native word object slot plus flag27, with word activity/unsigned input/both,
+// 1459/1459/1456/1470; flag10 counterparts 1459/1459/1456/1470. Complete original
+// slot, flag reads, signed input field and long activity restored; frame 0x3c/0x38 remains.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

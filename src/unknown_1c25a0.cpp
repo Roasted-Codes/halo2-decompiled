@@ -673,6 +673,10 @@ PRIVATE __forceinline void function_1c2891(short *arg_0, c_havok_reference_count
 // Round 378: Prefix-result zero arm, postfix old-count arm, nonzero completion
 // after decrement/reload and prefix-result completion, normal range arms [45, 55, 45, 45],
 // delete-first arms [45, 56, 45, 45]. Original helper and body restored.
+// Round 279: actual decrement value owns store and zero test; short arithmetic with
+// count/object-reference parameter combinations 47/47/47/47 (129 bytes), long arithmetic
+// 43/43/43/43 (125 bytes). Two-point gain rejected; original helper and body restored.
+// Separate count address, third saved register and delete-null test remain.
 // @retail 0x1c2890
 void function_1c2890(void)
 {
@@ -931,6 +935,10 @@ bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_un
 // force, long attempt 31; bool force, unsigned long attempt 2; bool force, short attempt
 // 11; bool force, unsigned short attempt 12; byte force, unsigned short attempt 26; int
 // force, unsigned long attempt 31.
+// Round 213: for-owned long retry 1; for-owned force 3; terminal equality 8; nonterminal
+// equality 2; for-owned int retry 1; for-owned signed-byte retry 40; signed-byte terminal
+// equality 40; for-owned long terminal equality with reset-first publication 8. Force argument
+// convention remains.
 // @retail 0x1c51c0
 void function_1c51c0(long component_index)
 {
@@ -1101,6 +1109,9 @@ struct s_1c4040
 // same with the parameters reordered (active, attempt).
 // Round 378: Scan-owned success result with shared/fixed/dynamic/both entity ordinals,
 // original/structured dispatch, all eight 111 at 537 bytes. Original result and body restored.
+// Round 279: selected index separate through both scans; island cursor/entity ordinals/entry initialization
+// combinations 35/36/35/36/35/36/35/36, all at 537 bytes. Original body restored;
+// active DL versus AL and its array/count allocation remain.
 // @retail 0x1c4040
 bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_unknown, long excluded_component_index)
 {
@@ -1427,12 +1438,18 @@ PRIVATE __forceinline hkBool contact_metadata_flag(long metadata)
  return result;
 }
 
-// score 4 (was 24): retail joins the two child-shape arms in EAX and copies the
+// score 4 (was 4): retail joins the two child-shape arms in EAX and copies the
 // shape into ESI there, ours assigns ESI in each arm. Kept: the flag through an
 // hkBool helper 14 (it replaced a volatile byte copy), the root's rigid body as
 // `type == 1 ? entity : NULL` 4. Shape join tried: if/else 14 (before the rigid
 // body form), inverted if/else 19, default shape then child 80, inline shape helper
 // 4, inline unwrap helper 4, child copy 13, inverted ternary 9.
+// Round 166: Native full-width key/filter-child/readonly receiver contracts, all seven subsets 4;
+// one hidden result on the recovered flag/rigid-body graph 65. Original contracts and body
+// restored.
+// Round 213: native aligned scratch
+// vector/renamed-vector/real/renamed-real/long/renamed-long/renamed-byte/renamed-SIMD [4, 4, 4,
+// 4, 4, 4, 4, 4]. Child-result join remains.
 // @retail 0x1c32d0
 hkBool c_contact_rule_filter::accepts(void const *query, s_contact_body_view const *a, s_contact_body_view const *b,
  c_contact_shape_container *container, long key)
@@ -1511,6 +1528,9 @@ PRIVATE inline void contact_motion_vector(vector3f *out, hkVector4 const *value)
 // assignment helpers 65; shared scale plus named progress and body count 3; native int
 // selected count 3; named saved iteration index 3; named selected and available counts 3;
 // shared scale plus all named loop state 3; available count read at every use 3.
+// Round 213: positive-guard exact-count long/int/short/word [4, 4, 132, 132]; positive-guard
+// last-index long/int/short/word [156, 156, 164, 164]. Count test and matched-callee setup
+// remain.
 // @retail 0x1c4c50
 bool __stdcall function_1c4c50(long object_index, long node_index, point3f const *point,
  vector3f const *change_a, vector3f const *change_b, long *result_object, vector3f *linear, vector3f *angular)

@@ -398,6 +398,9 @@ void function_245400(s_source_245400 const *source, long index,
 // endpoint/transform identities: 203/203/203/203/203/203/203/203. Source receiver, side homes and frame gap
 // remain
 // original identities restored.
+// Round 212: native material-index pair traversal, long/short/dword/word counters, narrow/full
+// decoded pairs [222, 233, 222, 233, 235, 229, 235, 229]; exact-match-only grouped storage
+// restored. Frame, source receiver and side homes remain.
 // Round 246: first/second/both complementary bool sides 207/207/222; both complementary
 // byte/short/long sides 222/222/222; first/second complementary short with the other original bool
 // 207/207. Original producers, equality and all body operations restored.
@@ -409,6 +412,7 @@ void function_245400(s_source_245400 const *source, long index,
 // Round 382: signed facing-projection result, conditional/if-else producers with
 // bool/byte/word/long side carriers 204/204/204/204/204/204/224/224.
 // Original independent ordered facing tests and full executable body restored.
+// Round 223: Complete orientation eligibility in bool/byte/short/long storage, exhaustive/default-true producers 202/202/202/202/202/202/202/202. Exact-match-only result forms restored; original early returns and in-place transforms retained.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

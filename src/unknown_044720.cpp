@@ -306,6 +306,9 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // function-scope center copy and the query in the list branch 199 (frame 0x10a4), with that query
 // unaligned 192; the word pointer with a long index for table and call 191; the existing
 // bit_vector_test/bit_vector_set 222 (890 bytes). Retail still shares one marking block.
+// Round 63: aligned query/position union with separate center 202 (frame 0x10a4); original-name and
+// reversed-declaration forms 202/202, with long index 203; center lexical rename 202; long index with
+// const entry 191; entry/index declarations swapped 191; short index local 190. Original body restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

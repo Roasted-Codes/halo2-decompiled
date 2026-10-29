@@ -1101,6 +1101,9 @@ struct s_game_engine_globals_connections_view
 // Round 383: complete native background/foreground/both/foreground-first aggregate producers
 // 170/170/170/308; paired color role identities on those graphs 170/170/170/308.
 // Original producers, dim arithmetic, all copies and complete body restored.
+// Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
+// with each field combination, then all with immutable widths: eight calibrated scores 170.
+// Original field domains and declaration lifetimes restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1380,6 +1383,13 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 218: Completed collector counts cached, player/team/both long 795/782/832;
 // native short 795/789/813; mixed short-long/long-short 832/813. All restored.
 // Frame/viewer/coordinate homes remain; promoted player-only count recovers frame 0x79c but regresses.
+// Round 220: Complete header/team-localization/player-appearance lexical scopes, all seven
+// subsets and all with read-only viewer/score receivers, 756 each. Original body restored.
+// DH round 215: Row-geometry/team-RGB/player-RGB home identities, all seven subsets,
+// and all three with the heading-rectangle identity 756 each. Frame/viewer/coordinate homes
+// unchanged; every original operation and body restored.
+// Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
+// output as well: 756 each; original declaration lifetimes restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

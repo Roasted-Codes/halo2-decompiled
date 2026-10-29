@@ -1426,6 +1426,11 @@ void function_170630(long player_index);
 // three addresses in the argument-register order, while retail prepares out, first, second.
 // Native observer timer/channel fields 7/7/7; full typed receiver 7; timer end pointer
 // with byte/typed receiver 23/23; word/byte countdown 7/7.
+// Round 70: the observer base takes the register of the last-evaluated argument (the leftmost,
+// out in EDX); out from the timer cursor instead 3 (base then in ECX, all else as retail;
+// diagnostic only), so the fix is the callee's consistent (second, first, out) reorder.
+// Real-element receiver 7; forceinline (second, first, out) forwarder 7; timer cursor from the
+// element with state inside the guard 7; named delta 7; state-taking inline call helper 7.
 // @retail 0x16fe90
 void function_16fe90(long user_index)
 {
@@ -1562,6 +1567,8 @@ struct s_camera_clip_reference_16ebf0
 // Round 383: complete retained/adjusted/both interpolation contributions 209 each;
 // complete conditional plane products alone/with either/both interpolation producers 209 each;
 // all products with word truth 208 (one-point gain dropped). Original products and body restored.
+// Round 170: Plain two-attempt validation loop, byte/short/long/dword ordinal, then native input copies
+// on the same loop graph 657/658/656/656/695/706/704/704. Original validation, copies and qualifier restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

@@ -408,6 +408,10 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // Round 211: Complete shared direction/velocity/scale input snapshots 563/327/585;
 // direction+velocity/direction+scale/velocity+scale/all 653/831/677/923; all with read-only
 // scale/velocity snapshots 923. All restored; normalization transfers and velocity stores remain.
+// Round 379: Successor after bounds/attraction/collision/at back edge 310/341/364/247; with separate particle-input mask 300/272/353/223. Original early snapshot and body restored.
+// DH round 215: Distinct velocity-normalizer store orders ikj/jik/jki/kij/kji,
+// existing shared scale at its output, and complete inverse-first products ijk/kji
+// 196 each. Original helper and every caller stage restored; reloads and transfers remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

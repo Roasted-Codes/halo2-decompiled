@@ -246,6 +246,9 @@ void __stdcall function_1160c0(real dt)
 // combined, 194 each.
 // Round 371: first-node position copied before direction 179, kept; previous-first
 // publication, complete scalar cross/axial terms and their combinations 179 each.
+// Round 249: Complete rest-offset/recurrent-previous/working-position CRT copies,
+// all seven nonempty combinations 179 each; all overlap-safe copies 419 (frame
+// 0xa0, 1266 bytes). Original native copies, homes and arithmetic restored.
 // Complete previous-position scalars, with complete axis/rest-offset/prediction
 // coordinate sets 345, 335, 332, 323, 345, 335, 332, 323.
 // Native segment index before lookup, explicit last-segment arm, uniform
@@ -263,6 +266,7 @@ void __stdcall function_1160c0(real dt)
 // two-use physics-index capture 179 each (eight forms).
 // Original complete body and all provider interfaces restored; frame 0xa4, segment/previous/axis
 // homes and rotation schedule remain.
+// Round 223: Existing target/interpolation/prediction point constructors, seven subsets 179/179/179/179/179/179/179; all with complete direction/velocity setters 183. Original producers and body restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {
