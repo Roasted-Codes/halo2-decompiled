@@ -1196,9 +1196,15 @@ struct s_looping_detail_request
 	short tracking_data_size;
 };
 
-// score 138 (was 154): return result first restores entry load allocation; source-copy scheduling and first-player expansion remain.
+// score 138 (was 138): return result first restores entry load allocation; source-copy scheduling and first-player expansion remain.
 // Shared offset 170f; direct source 192f; memcpy 170f; tag first 192f; mode arms/type last 168f;
 // offset publication last 167f; camera-position receiver 169f. Fast control 170, result first 154f/138 plain.
+// Round 396: result initialization after copy/clear/mode 154/154/176; success-default 183;
+// admission result 186; result homes prepared/request_ready/success 138 each.
+// Existing first-player query noinline 25 at 509/508, plain; rejected for three matched-caller losses.
+// Round 398: input-source pointer/reference/value/const-value 157/157/194/194;
+// const pool receiver with source pointer 157; direct destination with input pointer/value/const-value
+// 188/184/184. Original complete source observations and body restored.
 // @retail 0x21cc60
 bool looping_sound_prepare_detail(s_type_a82d9f const *detail, long looping_sound_index, s_looping_detail_request *request)
 {
@@ -1909,10 +1915,13 @@ point3f *function_142700(transform4x3f const *matrix, point3f const *point, poin
 real function_30bf0(vector3f *vector);
 void function_192ce0(point3f const *direction, real *gains, bool linear);
 
-// score 759 (was 776): frame 0x38 versus 0x3c, definition/identifier carriers, later flag and result lifetimes differ.
+// score 759 (was 759): frame 0x38 versus 0x3c, definition/identifier carriers, later flag and result lifetimes differ.
 // The fixed four-entry energy traversal is rolled; both gain loops rolled 795, listener loop alone 798,
 // entry-result region 788, full result/single exit 792; direct impulse fields/shared setter/field setter
 // 781/776/781; derived lookup key in either form 775, key with energy loop 770, entry with energy 772.
+// Round 398: full-width result/combine/created storage, seven subsets
+// 776/775/775/772/775/774/792; all three as bytes 777. Complete original result
+// producers, widths, observations, loop bodies and exits restored.
 // @retail 0x21a250
 bool function_21a250(long definition_index, dword sound_flags, long identifier, long controller_definition_index,
 	s_type_99c531 *source, long state, dword flags, real fade_duration)

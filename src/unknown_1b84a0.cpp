@@ -222,8 +222,8 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
 
-// score 257 (was 257): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
-// slot/scratch homes and the 52-byte length deficit remain.
+// score 212 (was 257): frame 0x1634 versus 0x162c; scaled actor offset and
+// slot/scratch homes remain, with a 14-byte length deficit.
 // Round 198: payload/native input/read-only input/input scope 323 each; clamp 322;
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
 // ordinary result/receiver with ordinary result 325/325; search outputs first 257.
@@ -240,6 +240,9 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
 // scratch cleanup 257; late marker/result, marker/cleanup, result/cleanup and all 323/323/257/323;
 // marker readiness directly from tests 315. Original early marker default and every exit restored;
 // frame 0x1634/0x162c and actor/slot/scratch homes remain.
+// Round 395: actor at use 303; invalid-search guard 212 (plain kept); complete
+// success test 305; guard/actor 300, actor/test 296, guard/test 240 (retail length);
+// all three and search-entry availability 305/305. Original actor and success flow kept.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
 {
@@ -325,35 +328,39 @@ bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
     bool unknown;
     s_reference reference = function_261280((s_prop_search *)&request, actor_index,
         &entry, &other_actor, scratch, &unknown);
-    if (!REFERENCE_EQUAL(reference, g_470fa0) && *(short *)((byte *)&entry + 8) <= 1)
+    if (REFERENCE_EQUAL(reference, g_470fa0) || *(short *)((byte *)&entry + 8) > 1)
     {
-        s_262b40_result *location = function_262b40(reference);
-        bool available = false;
-        bool success = false;
-        if (*(short *)((byte *)&entry + 0x5c) != 0 &&
-            *(long *)((byte *)location + 0x14) != NONE &&
-            *(long *)((byte *)location + 0x14) != 0xffff)
+        state->unknown00 = true;
+        g_46eeb8[0x23]->unknown8 = g_46f348;
+        ai_scratch_buffer_release(scratch);
+        return result;
+    }
+    s_262b40_result *location = function_262b40(reference);
+    bool available = false;
+    bool success = false;
+    if (*(short *)((byte *)&entry + 0x5c) != 0 &&
+        *(long *)((byte *)location + 0x14) != NONE &&
+        *(long *)((byte *)location + 0x14) != 0xffff)
+    {
+        success = function_1f4a20((s_1f4a20_entry const *)&entry, actor_index, reference,
+            (s_1f4a20_source const *)scratch, true, &state->point, &state->facing,
+            (signed char *)&state->unknown11, &available);
+        if (success)
         {
-            success = function_1f4a20((s_1f4a20_entry const *)&entry, actor_index, reference,
-                (s_1f4a20_source const *)scratch, true, &state->point, &state->facing,
-                (signed char *)&state->unknown11, &available);
-            if (success)
-            {
-                state->unknown0f = true;
-                state->unknown10 = false;
-            }
-            else if (available)
-                reference = g_470fa0;
+            state->unknown0f = true;
+            state->unknown10 = false;
         }
-        if (!available && !success)
-            reference = function_2626b0(actor_index, reference, other_actor, scratch, unknown, true);
-        if (!REFERENCE_EQUAL(reference, g_470fa0))
-        {
-            state->unknown01 = true;
-            actor->unknown4ae = true;
-            ai_scratch_buffer_release(scratch);
-            return result;
-        }
+        else if (available)
+            reference = g_470fa0;
+    }
+    if (!available && !success)
+        reference = function_2626b0(actor_index, reference, other_actor, scratch, unknown, true);
+    if (!REFERENCE_EQUAL(reference, g_470fa0))
+    {
+        state->unknown01 = true;
+        actor->unknown4ae = true;
+        ai_scratch_buffer_release(scratch);
+        return result;
     }
     state->unknown00 = true;
     g_46eeb8[0x23]->unknown8 = g_46f348;

@@ -184,6 +184,10 @@ public:
 // 307/226/226/307; each with the complete coordinate-double phase closed 307/226/226/307.
 // One-count inline gain restored, including all provider declarations; input delivery
 // agrees, frame 0x10/0x14 and metadata/x87/child allocation remain.
+// Round 397: pool retained across the child loop 234; direct remaining count 226;
+// both 231; pool/count/both with read-only metadata 234/226/231;
+// pool/count with plain while, mutable/read-only metadata 231/231.
+// Original body restored; frame, metadata/head homes and coordinate cleanup remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

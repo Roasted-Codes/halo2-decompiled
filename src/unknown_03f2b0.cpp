@@ -1494,6 +1494,9 @@ struct s_133f70;
 // Round 265: six lexical orders of entry/failure/compacted-slot long values and
 // both uninitialized entry/slot storage orders before the query, 175 each on the expanded control.
 // Original declarations, names, compaction, cache observations and complete body restored.
+// Round 398: complete once-read query object/tag/both 357/352/335; each with
+// allocation-scoped projection workspace 357/352/335; immutable joint inputs
+// with either workspace 335/335. All original field observations and body restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
