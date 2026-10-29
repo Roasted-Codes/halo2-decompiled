@@ -400,22 +400,10 @@ struct s_camera_player_23c110
     byte unknown30[0x21c - 0x30];
 };
 
-/* a view's entry as the camera reads it: the angles sit at +0x24 */
-struct s_camera_entry_23c110
-{
-	byte unknown00[0x24];
-	s_view_angles angles;
-	byte unknown2c[0x94 - 0x2c];
-};
-
 bool function_14ddc0(long local_player_index);
 long function_14de70(long local_player_index);
 
-// score 60 (was 69): the forward vector block now reads the view entry
-// through two registers as retail does ([reg+reg+0x28] for the pitch) and
-// builds the current unit's address before the load, but the input index
-// still travels in EAX where retail keeps it in ECX, so the first block and
-// the current unit's address differ in register choice.
+// score 72 (was 72): retail keeps the input in EBX with three pushes and
 // reloads the unit index, ours keeps it in EBP with four pushes and keeps
 // the value live. BLOCKED-BY 0xcb810 (contributor code): retail pushes its
 // vector argument, ours passes it in EBX; with that call made through a
@@ -433,12 +421,10 @@ void __stdcall function_23c110(void *state, void *input, s_observer_command *com
     else
         unit_index = NONE;
     long player = function_14de70(*(long *)input);
-    s_camera_entry_23c110 *entry = &((s_camera_entry_23c110 *)g_4ed284)[*(long *)input];
-    real horizontal = (real)cos(entry->angles.pitch);
-    s_view_angles *angles = &entry->angles;
-    s_camera_player_23c110 *current = &((s_camera_player_23c110 *)players->data)[player & 0xffff];
-    long current_unit = current->unit_index;
+    long current_unit = ((s_camera_player_23c110 *)players->data)[player & 0xffff].unit_index;
+    s_view_angles *angles = &g_4ed284->entries[*(long *)input].angles;
     vector3f forward;
+    real horizontal = (real)cos(angles->pitch);
     forward.i = horizontal * (real)cos(angles->yaw);
     forward.j = horizontal * (real)sin(angles->yaw);
     forward.k = (real)sin(angles->pitch);
