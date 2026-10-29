@@ -105,6 +105,10 @@ extern real g_4c9798[36];
 // 298/306; with native fields 298/306; native fields with reused signed pixel capacity 333; shared
 // width/capacity without/with native fields 322/322. Original short mode/height, scalar
 // observations and far-normal copy restored.
+// Round 279: both category-admission predicates kept for publication and border, each
+// with multiple consumers: bool [363,348]; byte [363,348]; short [383,393];
+// long [373,388] (each pair late/entry zero border). Original body restored; state transport,
+// rounding reloads and the missing frame word remain.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

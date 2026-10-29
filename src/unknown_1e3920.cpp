@@ -1635,7 +1635,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 	return slot != NONE ? unit->weapons[slot] : NONE;
 }
 
-// score 263 (was 270): Frame 0x14 and actor ESI agree; the probability and delay clamps now match
+// score 263 (was 263): Frame 0x14 and actor ESI agree; the probability and delay clamps now match
 // retail's code; the actor index stays in EDI instead of EBX and the object pool is reloaded instead
 // of kept in a register.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
@@ -1681,6 +1681,9 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // 0x14 agrees; index/pool roles and scalar/ammunition homes remain.
 // Round 22: existing object/header/moving/nested-object accessors 263 each; actor-index
 // address read 263; split/reversed entry declarations 263/263; const actor index 263.
+// Round 280: shared random-state receiver at entry/after actor/before query/after
+// query 340/340/340/333; shared seed-field receiver at those same acquisition
+// points 340/340/340/333. Every draw retained; all original receivers restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

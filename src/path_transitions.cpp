@@ -328,6 +328,7 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 
 // score 31 (was 31): frame 0xe34 and retail length agree; collector flags, scan/selected-index
 // comparison and copy widths remain. Earlier at 154:
+// comparison and copy widths, and alignment-dot j ordering remain. Earlier at 154:
 // the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
@@ -352,6 +353,9 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 // Round 164: native point setter at final/capture/both 51/50/166; short selection with
 // original count and wide scan 66, plus final/capture/both setters 169/170/142;
 // selected marker pointer 196. All restored; original short count and wide ordinals retained.
+// Round 279: separate geometric/weighted distances with scale/update/admission guards
+// 31/31/31/31/33/33/33/33, all at 608 bytes. Original body restored; collector promotion
+// and scan/copy widths remain.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {
@@ -506,6 +510,9 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
 // outputs 404, with case table 404, with ordinary result 398. Original body restored.
 // Actor-valid direction scope with whole-vector initialization, readonly surface and
 // ordinary-result interactions: 284/334/284/334/363/357/363/357; restored.
+// Complete external vertex observations in paired/actor/trace cases 427/402/370;
+// paired+actor/paired+trace/actor+trace 475/475/448; all cases 519; all with
+// ordinary result 495. Retained element receivers and original result restored.
 // @retail 0x26f3f0
 bool function_26f3f0(s_pathfinding_data *pathfinding, long surface_index,
     s_type_c3b527 const *entry, long actor_index, s_type_f17a25 *state,

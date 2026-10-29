@@ -673,6 +673,10 @@ PRIVATE __forceinline void function_1c2891(short *arg_0, c_havok_reference_count
 // Round 378: Prefix-result zero arm, postfix old-count arm, nonzero completion
 // after decrement/reload and prefix-result completion, normal range arms [45, 55, 45, 45],
 // delete-first arms [45, 56, 45, 45]. Original helper and body restored.
+// Round 279: actual decrement value owns store and zero test; short arithmetic with
+// count/object-reference parameter combinations 47/47/47/47 (129 bytes), long arithmetic
+// 43/43/43/43 (125 bytes). Two-point gain rejected; original helper and body restored.
+// Separate count address, third saved register and delete-null test remain.
 // @retail 0x1c2890
 void function_1c2890(void)
 {
@@ -1101,6 +1105,9 @@ struct s_1c4040
 // same with the parameters reordered (active, attempt).
 // Round 378: Scan-owned success result with shared/fixed/dynamic/both entity ordinals,
 // original/structured dispatch, all eight 111 at 537 bytes. Original result and body restored.
+// Round 279: selected index separate through both scans; island cursor/entity ordinals/entry initialization
+// combinations 35/36/35/36/35/36/35/36, all at 537 bytes. Original body restored;
+// active DL versus AL and its array/count allocation remain.
 // @retail 0x1c4040
 bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_unknown, long excluded_component_index)
 {
