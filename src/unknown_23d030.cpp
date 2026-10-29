@@ -124,7 +124,7 @@ struct s_free_state_23d260
 	real roll;
 };
 
-// score 118 (was 234): the rest is register allocation in the side vector
+// score 110 (was 118): the rest is register allocation in the side vector
 // block: retail keeps zero in xmm1 (ours xmm3) and the side vector in
 // xmm2/xmm3/xmm4 (ours xmm1/xmm2/xmm0, retail moves side.k out of the inverse's
 // register), divides before the lahf, and stores up as k, j, i (ours k, i, j);
@@ -145,6 +145,10 @@ struct s_free_state_23d260
 // matrix blocks 603 (992 bytes, kept out of line); if/else pitch clamp 282; roll ternary 146; side j
 // and k assigned apart 118; cosine before sine 119; side.k first 118; up written j, i, k / j, k, i /
 // i, k, j 254/251/249 (1330-1333 bytes).
+// Round 71: shared normalize_inline with side.k first kept at 110 (1330 bytes, plain);
+// planar initialization reversed 110; up written j, k, i / j, i, k / i, k, j on that graph
+// 293/112/287; shared yaw sine/cosine 110; roll update before the pitch clamp 132;
+// a one-use normalization input pointer 107 (1329 bytes, exact-match-only). No pointer kept.
 // @retail 0x23d260
 void __stdcall function_23d260(void *state, void *input, void *output)
 {
@@ -167,10 +171,10 @@ void __stdcall function_23d260(void *state, void *input, void *output)
 	command->forward.j = (real)sin(camera->yaw) * pitch_cosine;
 	command->forward.k = (real)sin(camera->pitch);
 	vector3f side;
+	side.k = 0.f;
 	side.i = command->forward.j;
 	side.j = -command->forward.i;
-	side.k = 0.f;
-	if (normalize3d(&side) == 0.f)
+	if (normalize_inline(&side) == 0.f)
 	{
 		side.i = 1.f;
 		side.j = side.k = 0.f;
