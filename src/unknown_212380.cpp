@@ -47,6 +47,9 @@ bool function_212ec0(s_game_variant *arg_0, long arg_1);
 // Round 66: output pointer throughout/init-only/tail-only/assigned from returns, output reference
 // throughout/tail-only, shared source-name pointer and entry output with a pointer 386 each.
 // The matched callees stayed exact; all executable forms restored.
+// Round 388: Complete tail-family orders 1572489/1572849/1752489/1752849/
+// 1248579/1284579/1248759/1284759: 385/386/386/387/385/387/383/384.
+// Gains below the retention gate; original switch and shared initializer retained.
 // @retail 0x212380
 long function_212380(long arg_0, long arg_1, byte *arg_2)
 {

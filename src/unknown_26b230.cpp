@@ -166,7 +166,11 @@ void function_268840()
 	function_268c90();
 }
 
-// score 221 (was 242): Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
+// score 221 (was 221): Frame 0x50 agrees; player-pool/NONE and current/successor homes remain.
+// frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
+// Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
+// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
+// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
@@ -218,10 +222,20 @@ void function_268840()
 // remain.
 // DL159: actor-boundary player-pool lifetime 246; all squared products named 246; full-width expiry alone/with products 250/250; signed-byte retention alone/with products 247/247; both result domains alone/with products 251/251. Original observations, arithmetic and child interfaces restored.
 // Round 251: Branch-scoped retention bool/byte/short/long 247/247/247/246; with pool after iterator setup 297/297/296/297. Original actor-wide scope, pool observations and child interfaces restored.
+// Round 167: actual point/child/both output declarations at entry 242 each;
+// point/child/both lexical homes 242 each; both entry workspaces with both
+// role names 242; existing three-component point difference with the original
+// z/y/x squared-sum tree 242. Original workspaces, names and scalar body restored.
 // Round 29: Outer-walk initialization/advance inline-inline, inline-outlined, forced-inline, forced-forced, forced-outlined, outlined-inline, outlined-forced, outlined-outlined: 242/386/242/242/386/346/346/406. Outlined forms also lose two matched controls; every helper contract restored.
 // Round 33: With matched child interfaces, positive actor admission 242; deletion-owned if/else
 // 221; both 221; child continuation condition alone/with admission 242/242; with deletion/both
 // 221/221; all three with Boolean retention 222. Keep only the deletion-owned if/else.
+// Round 390: retained actor address, with Boolean retention/positive keep arm/optional
+// handle publication masks 0-7: 290/302/293/296/290/302/293/296. All lose frame 0x50;
+// original late lookup, complete body and matched child interfaces restored.
+// Round 178: On the deletion-owned graph, pool after setup 278; plus Boolean retention 286;
+// plus complete expiry 284; both 302; with long child-step result 276/277/282/288.
+// Original pool observations, retention, expiry and child-step widths restored.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2233,10 +2247,25 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 27: actor-step/getter expansion boundaries, ordinary/inline/forced
 // in all eight non-original pairs [283,283,283,283,283,283,283,283]. Original
 // declarations and bodies restored; early reset SI and later homes remain.
+// Round 167: existing absent-leaf location initializer 283; visibility cluster,
+// row-count and row-pointer scalar homes in all seven combinations 283 each.
+// Original reset and names restored; early reset SI and later allocation remain.
 // Round 250: existing native structure count 283; with per-iteration candidate,
 // short/long cursor and selected carriers 384/336/383/337;
 // corresponding direct indexed fields 374/336/375/337. Original body restored.
 // Round 29: Real distance member and entry cluster/candidate array declarations in all seven combinations, then the entry distance workspace: 283 each. Original publication and declaration lifetimes restored.
+// Round 383: shared existing location reset ordinary/inline/forced/outlined 283/283/283/346;
+// with consistently retained clump heads 391/391/391/411. Original helper linkage, both original
+// helper callers, root observations and complete executable body restored.
+// Round 386: real actor/prop/node traversal workspace reuse for each pair/all,
+// then the same four with the actual uninitialized query workspace at entry
+// 283/283/283/283/283/283/283/283; original independent workspaces and body restored.
+// Round 244: Five alternate location-reset field orders 283 each; reset-word-first with either sentinel
+// chain 283/283; reset between sentinels with invalid-cluster-first merge 283. Early reset SI and
+// visibility/selection homes remain; original field publications restored.
+// Round 391: Loop-local produced object pointers in plain for initializers/steps,
+// cluster/marking/prop in seven subsets 397/389/439/401/478/458/573;
+// all three with the object query 653. All step returns tested; original body restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

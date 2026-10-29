@@ -327,6 +327,14 @@ extern real g_47f05c;
 // Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
 // 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
 // and full body restored; frame 0xd0 and shape/count/alignment homes remain.
+// Round 31: function-scope index 221, guarded do 232; dot3f 192; point setter 267;
+// vector3f_assign and shared scan/selected entry 190 each (below gate); shared entry with
+// height reads 205; height before best_dot 192; function-scope index with height reads 204,
+// with a normal copy 255. Original body restored.
+// Round 181: Fallback distance field at every clamp/equality use 217; with uniform height reads 235;
+// with early best-alignment constant 217; both 235. Entry declarations of point/center/delta
+// on those four graphs 217/235/217/235. Original snapshots and full body restored; frame 0xd0
+// and shape/count/alignment carriers still differ.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -844,6 +852,10 @@ struct s_flags_1f0870
 // separate normalization continuations 623; branch-produced gravity on those three graphs
 // 616/607/623; single magnitude assigned in each mode arm with separate normalization,
 // alone/with branch gravity, 647/647. Original clean shared-normalization body restored.
+// Round 225: existing scaled-add producers for forward/lateral/both ground projections
+// 590/590/590; complete parallel weighted sums in both motion modes 594, with forward/
+// lateral/both projections 594/591/602; all with byte step result 602. Original body and
+// helper boundaries restored; frame 0x34 and direct/vector homes remain.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1247,6 +1259,10 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Existing selection/tangent/speed dot inputs reversed independently, in all seven combinations,
 // and together with the accepted-count lexical home: 421 each. Helpers and body restored.
 // Round 152: Eight relative/desired/direction library-copy forms 421 each; complete accepted-count producer shared by insertion, increment, store and both tests 419, with one-contact-first 419 (2089 bytes). Two-point forms rejected; original copies, qualified count, cursor and response order restored.
+// Round 225: actual accepted-index array traversal 423; response-scoped minimum/selected
+// 421; both 423; index-first selection publication 421, with array/scope/both 423/421/423;
+// all plus a final Boolean-result join 422 at retail length. Original body, qualified count,
+// candidate cursor and response order restored; zero and count/component homes remain.
 // Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
 // inline query with each support contract 434; the other five pairs 421.
 // Original declarations, qualified count, candidate cursor and response order restored.

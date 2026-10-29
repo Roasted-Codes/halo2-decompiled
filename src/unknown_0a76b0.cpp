@@ -484,6 +484,7 @@ PRIVATE short *function_e70b0(long unit_index, short *state)
 // @retail 0xe7110
 bool function_e7110(long unit_index, long secondary, long magazine_index)
 {
+	bool result = false;
 	long action_type;
 	long mode;
 	long name;
@@ -501,29 +502,33 @@ bool function_e7110(long unit_index, long secondary, long magazine_index)
 		name = 0xd00053a + (magazine_index != 0);
 	}
 
-	if (function_110ab0(unit_index))
-		return false;
-
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-
-	if (TEST_FIELD_BIT((unit->flags_134 >> 25) & 1) || TEST_FIELD_BIT(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(unit), 0x16)))
-		return false;
-	if (unit_action_active(unit_index, action_type) &&
-		function_cbd50(unit_index, unit->weapon_slots[secondary]) != NONE)
+	if (!function_110ab0(unit_index))
 	{
-		function_e69c0(unit_index, action_type);
+		s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
+
+		if (!(TEST_FIELD_BIT((unit->flags_134 >> 25) & 1) ||
+			TEST_FIELD_BIT(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(unit), 0x16))))
+		{
+			if (unit_action_active(unit_index, action_type) &&
+				function_cbd50(unit_index, unit->weapon_slots[secondary]) != NONE)
+			{
+				function_e69c0(unit_index, action_type);
+			}
+			function_e69c0(unit_index, 0x1a);
+			function_e69c0(unit_index, 0x1b);
+
+			long weapon_index = function_cbd50(unit_index, (&UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index)[secondary]);
+
+			if (weapon_index != NONE && function_101490(weapon_index, magazine_index))
+			{
+				function_c86e0(unit_index, 0);
+				if (!function_1029d0(weapon_index, (short)magazine_index))
+					function_113e90(unit_index, name, 0.267f, NULL, mode);
+				result = true;
+			}
+		}
 	}
-	function_e69c0(unit_index, 0x1a);
-	function_e69c0(unit_index, 0x1b);
-
-	long weapon_index = function_cbd50(unit_index, (&UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index)[secondary]);
-
-	if (weapon_index == NONE || !function_101490(weapon_index, magazine_index))
-		return false;
-	function_c86e0(unit_index, 0);
-	if (!function_1029d0(weapon_index, (short)magazine_index))
-		function_113e90(unit_index, name, 0.267f, NULL, mode);
-	return true;
+	return result;
 }
 
 /* readies a weapon (types 0, 1, 10 and 11: a hand's first or second
@@ -1214,7 +1219,7 @@ bool function_e8510(long unit_index, bool immediate, bool silent, bool primary)
 
 bool function_10fd40(long unit_index, long action_name, long state_name, bool flag);
 byte function_10fcd0(long unit_index, long unknown, long state_name, long action_name);
-void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary);
+void __stdcall function_d0870(long weapon_index, long unit_index, long secondary);
 void __stdcall function_fff40(long weapon_index, bool silent, bool immediate);
 
 /* a unit's weapon animations: its vehicle seat's weapon's, or the
@@ -1390,6 +1395,10 @@ bool __stdcall unit_action_weapon_switch(long unit_index, s_unit_request *reques
 }
 
 /* a weapon switch waiting for the old weapon to be put away */
+// score 47 (was 76): type preload, hand/table homes and put-away call convention differ.
+// Numeric-hand helper 70; helper with single result 47 (kept); result/primary first
+// 70/71; short/bool hand 71/83; direct fields 57; hand name 70; direct/result 82;
+// short/result 45 (-2, restored); five coherent callee orders 47, all restored.
 // @retail 0xe8b20
 bool __stdcall function_e8b20(long unit_index, long type)
 {
@@ -1402,7 +1411,7 @@ bool __stdcall function_e8b20(long unit_index, long type)
 	{
 		if (function_1140b0(unit_index, primary ? 0x8000025 : 0xd000539))
 		{
-			long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), hand != 0);
+			long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), hand);
 
 			if (weapon_index != NONE)
 			{
@@ -1410,12 +1419,12 @@ bool __stdcall function_e8b20(long unit_index, long type)
 				function_100350(weapon_index);
 			}
 		}
-		return false;
+		result = false;
 	}
-	if (!function_110ab0(unit_index) && function_e8510(unit_index, false, false, primary))
+	else if (!function_110ab0(unit_index) && function_e8510(unit_index, false, false, primary))
 	{
 		function_e8720(unit_index, 0x7000101, false, false, primary);
-		return false;
+		result = false;
 	}
 	return result;
 }
@@ -1428,6 +1437,9 @@ bool __stdcall function_e8b20(long unit_index, long type)
 // actions read inside the test with primary first 11; the bit test as its expression 11; the test
 // result named first 11; `type == 8` in each call argument 82; the then-block as a call of the
 // switch-finished action 252, with that action inline 252 (not inlined).
+// Round 31: direct header lookup 11; named header 77; separate actions/primary assignments 11 each;
+// primary branch 87; zero/one ternary 11; long primary 96; active pointer 11;
+// force-inlined switch-finished action 82.
 // @retail 0xe8c10
 void __stdcall unit_action_weapon_switch_interrupted(long unit_index, long type)
 {
@@ -1539,6 +1551,10 @@ void __stdcall function_191fab(long definition_index, long value);
 void __stdcall function_1ca260(long actor_index, long player_index, long weapon_index, long other_weapon_index);
 
 /* picks up a weapon (type 20), in the way the request's mode asks */
+// score 68 (was 68): request/weapon EBX/EBP homes and getter expansion differ.
+// Caller getter noinline/inline 68/68; weapon/request names 68/68; result/array first
+// 131/131; long admission 87; call-result carrier 69. Provider noinline 44 at retail
+// length loses five matches; provider inline 68. Original body and declarations restored.
 // @retail 0xe9000
 bool __stdcall unit_action_pickup_weapon(long unit_index, s_unit_request *request)
 {
@@ -1747,7 +1763,7 @@ bool __stdcall function_e9500(long unit_index, s_unit_request *request)
 bool __stdcall function_10f430(long unit_index, long field_7c, long state_name, long weapon_name, long action_name,
 	real blend, bool flags, long mode);
 __declspec(noinline) void function_edfa0(long unit_index, point2f const *facing);
-void function_ba3d0(long unit_index);
+__declspec(noinline) void function_ba3d0(long unit_index);
 
 /* the request to play an animation impulse (type 25) */
 struct s_unit_request_impulse
@@ -1763,6 +1779,12 @@ struct s_unit_request_impulse
 
 /* plays an animation impulse (type 25), from the unit's idle state (or its
    alternate one) */
+// score 17 (was 82): admission name/alternate convention, zero scheduling and
+// active-bit address materialization remain.
+// Round 256: provider noinline alone 82; false-first bool/byte/short/long
+// completions 17/32/45/46; true-first 75/88/86/84. Provider declaration restored.
+// Clean bool completion 17; initialization order 16; completion/request names
+// 17/17; combined names/order 16. One-point forms restored; clean completion kept.
 // @retail 0xe9690
 bool __stdcall function_e9690(long unit_index, s_unit_request *request)
 {
@@ -1770,52 +1792,51 @@ bool __stdcall function_e9690(long unit_index, s_unit_request *request)
 	bool result = false;
 	bool alternate = false;
 
-	if (!function_e7020(unit_index, &alternate, impulse->name))
-		return result;
-
-	real blend = 0.0f;
-
-	switch (impulse->blend)
+	if (function_e7020(unit_index, &alternate, impulse->name))
 	{
-	case 1:
-		blend = 0.1f;
-		break;
-	case 2:
-		blend = 0.2f;
-		break;
+		real blend = 0.0f;
+
+		switch (impulse->blend)
+		{
+		case 1:
+			blend = 0.1f;
+			break;
+		case 2:
+			blend = 0.2f;
+			break;
+		}
+		if (alternate)
+			function_10f430(unit_index, 0x6000086, 0x7000101, 0x7000101, 0x400000c, blend, 0, 0);
+		if (function_113e90(unit_index, impulse->name, blend, NULL, 0))
+		{
+			s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
+
+			*((byte *)unit + *(short *)((byte *)unit + 0x33e)) |= 1;
+			if (impulse->face && unit->parent_object_index == NONE)
+				function_edfa0(unit_index, (point2f const *)&impulse->facing);
+			result = true;
+		}
 	}
-	if (alternate)
-		function_10f430(unit_index, 0x6000086, 0x7000101, 0x7000101, 0x400000c, blend, 0, 0);
-	if (!function_113e90(unit_index, impulse->name, blend, NULL, 0))
-		return result;
-
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-
-	*((byte *)unit + *(short *)((byte *)unit + 0x33e)) |= 1;
-	if (impulse->face && unit->parent_object_index == NONE)
-		function_edfa0(unit_index, (point2f const *)&impulse->facing);
-	return true;
+	return result;
 }
 
 /* plays an animation on a unit, facing it the way the animation asks */
+__declspec(noinline) bool function_e9780(long unit_index, long name, bool keep, vector3f const *facing, c_animation_channel **channel_out);
+
 // @retail 0xe9780
 bool function_e9780(long unit_index, long name, bool keep, vector3f const *facing, c_animation_channel **channel_out)
 {
-	c_animation_channel *channel = NULL;
 	bool result = false;
+	c_animation_channel *channel = NULL;
 
 	if (function_113e90(unit_index, name, 0.0f, &channel, 0))
 	{
 		s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-		s_animation *animation = NULL;
 
 		if (!keep)
 			function_ba3d0(unit_index);
-		if (channel->animation_id.index != NONE)
-		{
-			animation = function_1daea0((s_graph_tag *)g_4e3b44[channel->graph_tag_index & 0xffff].bytes,
-				channel->animation_id);
-		}
+		s_animation *animation = channel->function_1c6440();
+
 		if (!animation->type && unit->parent_object_index == NONE)
 		{
 			if (facing)
@@ -1893,12 +1914,13 @@ bool __stdcall unit_action_melee(long unit_index, s_unit_request *request)
 				}
 			}
 
-			if (!function_e9780(unit_index, name, true, melee->face ? &melee->facing : NULL, NULL))
-				return false;
-			if (TEST_FIELD_BIT((*(dword *)(definition + 0xbc) >> 8) & 1))
-				function_10f430(unit_index, 0x7000101, 0x7000101, 0x7000101, 0xc000043, 0.0f, 0, 2);
-			actions->active[0] |= 0x4000000;
-			result = true;
+			if (function_e9780(unit_index, name, true, melee->face ? &melee->facing : NULL, NULL))
+			{
+				if (TEST_FIELD_BIT((*(dword *)(definition + 0xbc) >> 8) & 1))
+					function_10f430(unit_index, 0x7000101, 0x7000101, 0x7000101, 0xc000043, 0.0f, 0, 2);
+				actions->active[0] |= 0x4000000;
+				result = true;
+			}
 		}
 	}
 	return result;
@@ -2229,10 +2251,15 @@ bool __stdcall unit_action_melee_attack(long unit_index, s_unit_request *request
 
 /* a melee attack's ticks: its damage frame, then the next attack in the
    combo (or the end) */
+// score 43 (was 87): frame 4 and entry homes agree; damage-call byte extension, narrow rounded ticks
+// and restart flag register remain. Full ticks 81; restart result first 57; both 85; separate increment
+// 87; both/increment 85; full ticks/direct finish 80; direct finish 93; combined 90.
+// Result after receiver 43; with full ticks 73; field reads at use 43; both 73.
 // @retail 0xea090
 bool __stdcall unit_action_melee_attack_update(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
+	bool result = false;
 
 	if (actions->melee_name != NONE)
 	{
@@ -2255,12 +2282,14 @@ bool __stdcall unit_action_melee_attack_update(long unit_index, long type)
 		}
 		if (++actions->melee_counter < actions->melee_ticks && !finished)
 			return true;
-		if (function_e9a20(unit_index, 0, NONE, actions->melee_flags))
-			return true;
+		result = function_e9a20(unit_index, 0, NONE, actions->melee_flags);
 	}
-	actions->active[0] &= ~0x8000000;
-	actions->melee_name = NONE;
-	return false;
+	if (!result)
+	{
+		actions->active[0] &= ~0x8000000;
+		actions->melee_name = NONE;
+	}
+	return result;
 }
 
 // @retail 0xea1c0
@@ -2445,6 +2474,12 @@ void function_e5300(long unit_index, long a);
 
 /* entering a vehicle's seat finished: the unit's visibility in the seat,
    and the seat's state */
+// score 77 (was 77): region-output routine inlines; pool/unit/output homes
+// and unsigned state test differ.
+// Round 256: caller-only noinline/direct hidden/entry storage subsets and early
+// zero 73 each in reduced image (unchanged preview 73); defining-TU noinline
+// with original/direct/entry/early-zero forms 40 each, confirmed full 40.
+// Defining noinline restored after it lost an existing match; original body kept.
 // @retail 0xea6b0
 void __stdcall function_ea6b0(long unit_index, long type)
 {
@@ -2800,6 +2835,9 @@ void __stdcall function_a8b90(long unit_index);
 
 /* boards another seat of a unit's vehicle (type 31): the seat its seat
    boards */
+// score 86 (was 86): frame 0xc and saved homes agree; entry table register, seat-predicate vehicle register
+// and success-result spill remain. Result first 123; direct vehicle receiver 86; tag at each use 118;
+// seat at each use/native word 86/86; player index once 86; parent/tag names 86; combined form 123.
 // @retail 0xeb090
 bool __stdcall unit_action_vehicle_board(long unit_index, s_unit_request *request)
 {
@@ -3418,13 +3456,14 @@ bool __stdcall function_ec2d0(long unit_index, s_unit_request *request)
 
 void function_e5750(long unit_index);
 
+// score 52 (was 72): unit lookup is at use; the final helper remains expanded (95/67).
+// Early guard, comparison local, byte/long/short type, const pointer and header lookup
+// all 72; direct post-call unit lookup 52.
 // @retail 0xec330
 void __stdcall function_ec330(long unit_index, long type)
 {
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-
 	function_ec0d0(unit_index, 0x6000542, 0x400000c);
-	if (unit->object_type == 0)
+	if (UNIT_ACTION_UNIT_GET(unit_index)->object_type == 0)
 		function_e5750(unit_index);
 }
 
@@ -3667,7 +3706,7 @@ bool __stdcall function_ec9a0(long unit_index, s_unit_request *request)
 
 		function_b9dd0(unit_index, &point);
 		unit_action_seat_facing_get(UNIT_ACTION_UNIT_GET(unit_index), &facing);
-		return function_ee090(unit_index, 0x6000542, 3, 0x7000543, &point, &facing);
+		result = function_ee090(unit_index, 0x6000542, 3, 0x7000543, &point, &facing);
 	}
 	return result;
 }
@@ -4072,6 +4111,11 @@ void function_201520(short value, long type, long a, long b, long c);
 
 /* a surprise: waiting out a paused animation, then its time, then what
    follows it */
+// score 75 (was 87): frame 8 and output homes agree; unit/animation registers, channel tests,
+// true-exit sharing and final call inputs remain. Action receiver first/pointer names 87/87; native
+// channel flags/combined channel test/unit Boolean 87/87/87; uniform countdown 75; natural guard 87;
+// names/flags/countdown 75; chained clearing 87, with unit Boolean 87, countdown 75, both 75;
+// countdown at its original first read, alone/with clearing and Boolean 99/99.
 // @retail 0xed710
 bool __stdcall function_ed710(long unit_index, long type)
 {
@@ -4082,6 +4126,7 @@ bool __stdcall function_ed710(long unit_index, long type)
 	long action_name;
 
 	function_10f630(unit_index, &action_name, &state_name);
+	short remaining_ticks = actions->surprise_ticks;
 	if (state_name == 0x700005c)
 	{
 		if (!(*((byte *)state + 0x6c) & 1) && TEST_FIELD_BIT(state->channels[0].flag0) &&
@@ -4094,13 +4139,15 @@ bool __stdcall function_ed710(long unit_index, long type)
 	{
 		goto tick;
 	}
-	if (actions->surprise_ticks <= 0)
+	if (remaining_ticks <= 0)
 		return function_ed600(unit_index, actions);
 
 tick:
-	if (actions->surprise_ticks <= 0)
+	if (remaining_ticks <= 0)
 		return true;
-	if (--actions->surprise_ticks > 0)
+	--remaining_ticks;
+	actions->surprise_ticks = remaining_ticks;
+	if (remaining_ticks > 0)
 		return true;
 	if (!((unit->flags_10a >> 2) & 1))
 		function_201520(actions->surprise_value, actions->surprise_type, 1, 0, 1);

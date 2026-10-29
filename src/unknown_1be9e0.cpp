@@ -120,7 +120,7 @@ long __stdcall function_1bead0(long actor_index, s_slot *slot)
 /* invites the actor's clump members near enough, the nearest first */
 static __forceinline long real_to_long(real value);
 
-// score 24 (was 88): retail keeps the count test's g_46fbe4 return as its own
+// score 24 (was 24): retail keeps the count test's g_46fbe4 return as its own
 // tail after it and puts the shared g_46fbe8 return last, where ours jumps back
 // to the countdown's g_46fbe4 return and falls into g_46fbe8 (445 bytes against
 // 457). Round 371: typed slot payload and short counters 88; payload/single
@@ -132,7 +132,17 @@ static __forceinline long real_to_long(real value);
 // them 37; the 16-bit participant sum 24 (kept); returned ternaries 91 (cmov);
 // ready flag 98 (setg); count test as >= with both returns 24; final return
 // only 81; the two branches swapped 102; short counters 24 (same code, kept as
+// they need no casts). Round 68: count in an else 24; countdown success return 90;
+// countdown arms reversed 87 (retail length); accepted arms reversed 57; earlier
+// participant-sum declaration 24; direct accepted return 67; count result 90;
+// node-level return removed on the narrow-sum graph 81.
 // they need no casts).
+// Round 165: explicit negative eligibility exits, original/full-width retry snapshot,
+// status-three-first and both 24/27/43/46; positive nested eligibility with the same
+// three alternatives 24/27/43/46. Narrow sum, early counter and original body restored.
+// Countdown-local short/long branch result 90/116; one eligible-branch
+// short/long result 90/94; each with a separate decrement 90/116/90/94.
+// Original status tails and decrement expression restored.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {

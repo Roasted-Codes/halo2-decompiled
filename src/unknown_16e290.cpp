@@ -1480,6 +1480,8 @@ struct s_camera_clip_reference_16ebf0
 // retail 0x1c); that without the volatile saved state 212 (state spilled at 0x1c for retail 0x34); the
 // pointers set up in retail's order 213; with the position set from scalars 230; with the fraction
 // declared at function scope 212.
+// MiniMax R run 2026-10-29: forward/up declared at the top and struct-copied from the state, the matrix
+// position struct-copied, cross products with the operands swapped 204 (gain 5, under the keep bar; not kept).
 // Earlier forms on frame 0x9c: shared cross product 234, scoped matrix 234, working-vector matrix copies
 // 232, aggregate copies with shared cross product 249, role names 249, combined scope 249; direct view
 // call 235; entry point workspace 234; direct narrow predicate 229; entry probe workspaces 234; mode
@@ -1564,10 +1566,15 @@ struct s_camera_clip_reference_16ebf0
 // Typed state/saved-state/both field receivers 209/209/209; each with native
 // directions 221/221/221; both with native position 232, with complete native
 // direction/position copies 204 (five-point gain dropped). Original types and body restored.
+// Round 383: complete retained/adjusted/both interpolation contributions 209 each;
+// complete conditional plane products alone/with either/both interpolation producers 209 each;
+// all products with word truth 208 (one-point gain dropped). Original products and body restored.
 // Round 170: Plain two-attempt validation loop, byte/short/long/dword ordinal, then native input copies
 // on the same loop graph 657/658/656/656/695/706/704/704. Original validation, copies and qualifier restored.
 // Round 34: Complete wide-truth producer, bool/byte/short/long 218/218/208/208; with
 // native forward/up inputs 210/210/214/213. Original narrow truth, copies and body restored.
+// Round 261: separate out-of-line validation/mode/location declaration subsets, all seven
+// 209; separate composition declaration 209. Original declarations and complete body restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

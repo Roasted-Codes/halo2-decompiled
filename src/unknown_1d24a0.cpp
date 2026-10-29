@@ -179,10 +179,20 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Entry predicate long/bool, bool/long, long/long, short/long carriers
 // 996/1012/953/1003; complemented step/admission/both 1013/920/1013;
 // long/short entry carriers 981. Original entry predicates and full body restored.
+// Round 172: native actual-vector reference formals in scale/add/subtract, seven nonempty
+// subsets and all with native planar inputs/output, all eight 920. Original pointer contracts,
+// helpers and body restored; entry carriers, frame 0x1f0/0x1d4 and record/vector homes remain.
 // Round 161: Native external option dword/word/byte units 1007/965/1006; read-only selected record
 // with those units 1007/965/1006; native twelve-byte descriptor 920; descriptor plus dword options
 // 1007. All declarations, flag observations and original body restored.
+// Round 176: Library source captures in scale/add-subtract/both/planar/scale-planar/
+// add-subtract-planar/all 1310/1130/1552/1072/1500/1341/1762; all with projected output copy 1796.
+// Original helpers, short scale loop, response sharing and coefficient pair restored.
 // Round 33: Ordinary inline scale/add/subtract subsets, then all with planar producer: 920/920/920/920/920/920/920/920. Original forced producers, body and response sharing restored.
+// Round 388: Shared complete linear/angular change accumulator 1007; with intermediate
+// change pairs 37-50/37-58/50-58 or all linear changes 1003/1008/1008/1027;
+// with linear residual/axis reuse 1024/1018; all three reuse families 1064.
+// Original separate accumulators and all intermediate vectors restored; entry/frame homes remain.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

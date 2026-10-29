@@ -114,7 +114,9 @@ void function_7f930(void);
 void pending_messages_reset(void);
 void function_53210(void);
 void function_8dd70(void);
-// score 230 (was 230): entry predicate, helper boundaries and global reloads differ;
+// score 221 (was 221): four-byte frame and entry predicate agree; helper boundaries,
+// readiness storage and global reloads differ.
+// entry predicate, helper boundaries and global reloads differ;
 // Lane 10 r11 (forms reverted: reading globals through casts of their own addresses is not kept
 // without a match): message pointer read through its address 231; noinline 0x662f0 in its header
 // 266, with 0xb2cc0 too 321 (calls pair with retail's); all seven network pointers (0x510560..
@@ -211,6 +213,17 @@ void function_8dd70(void);
 // (230 -> 221): the prologue now matches retail's sete/cmp byte for byte. Still differs: retail
 // calls 0x662f0 and the nine registration wrappers out of line and reloads the seven network
 // pointers after every call; ours expands them and keeps the link result in EBP.
+// Original-stage Boolean observer/session/both 224/225/227; Boolean link with
+// Boolean observer/session/both 222/230/227; byte link with both Boolean stages 227;
+// all Boolean with immutable link 227. Original short stage storage restored.
+// Round 173: complete link/message/both/gateway/link-gateway/message-gateway/all-three
+// initialized root lifetimes 219/230/235/228/225/235/232; all seven roots 215 (897 bytes).
+// Exact-only snapshots restored; frame/entry agree, helper calls, readiness and global
+// reloads remain. The six-count form fails the eight-count gate as well.
+// Round 172: coordinated native AL success return domains at the existing
+// trim/interface providers, byte/bool, char/bool, bool/byte, bool/char,
+// byte/byte, char/char, byte/char and char/byte: 221 each.
+// Every declaration and both provider return contracts restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

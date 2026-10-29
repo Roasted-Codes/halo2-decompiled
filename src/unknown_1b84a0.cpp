@@ -96,10 +96,15 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 
 /* slot type 0x23, update: once the actor stands at its prop's position, it
    turns to face it; then it lets the prop go */
-// score 61 (was 61): actor/view register ownership, the late EBX save and full-width readiness materialization differ.
+// score 47 (was 61): the actor index, actor, view and state registers differ (retail EBP/EDI/EBX/ESI,
+// ours EDI/EBX/EBP/ESI), and retail saves EBX late, giving the NONE path its own epilogue.
 // Round 198: typed slot data block/current/entry 61/62; on that block actor once/at use 66/85; long/word/byte readiness 76/78/77; stored readiness 47 (exact-match-only, restored). Opening body restored.
 // Round 238: actual input/required/done byte fields, all seven subsets, 61 each;
 // completion byte field 61. Original Boolean field types and body restored.
+// Round 89: the readiness stored in the field and tested from it, kept (retail's mov eax, 1) 47; on
+// it, one actor lookup at the top 52 (index EBP and view EBX as retail, actor/state ESI/EDI swapped),
+// plus the state declared first 52, a prop index local 52 or the typed slot data block 52; the
+// NONE case as an early store and return 91 (actor EDI as retail, more pushes sink).
 // @retail 0x1b89d0
 void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 {
@@ -117,9 +122,8 @@ void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 			if (state->unknown0c)
 				return;
 
-			bool ready = state->unknown0d && function_1f86f0(actor_index);
-			state->unknown0c = ready;
-			if (ready)
+			state->unknown0c = state->unknown0d && function_1f86f0(actor_index);
+			if (state->unknown0c)
 			{
 				if (!state->unknown1b || !state->unknown1d || state->unknown1c)
 					return;
@@ -217,12 +221,18 @@ struct s_1f4a20_source;
 bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_reference reference, s_1f4a20_source const *source,
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
+
 // score 257 (was 257): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
 // slot/scratch homes and the 52-byte length deficit remain.
 // Round 198: payload/native input/read-only input/input scope 323 each; clamp 322;
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
 // ordinary result/receiver with ordinary result 325/325; search outputs first 257.
 // Typed payload/native input and preparation scope kept at 257 plain; all follow-ups restored.
+// Round 256: native geometry/bounds/marker-reference request fields, all seven subsets,
+// and complete fields with movement scope 257 each; request header and body restored.
+// Round 171: native search request at current/entry/guard/array declaration boundaries 257 each;
+// complete zero aggregates at those boundaries 312/314/312/312. Original request, initialization
+// and executable source restored; aligned frame and actor/slot/scratch homes remain.
 // Round 213: character/payload/scratch home names and named scalar outputs [257, 257, 257,
 // 257]; shared guard/node prop index with original/renamed actor and entry/later result [257,
 // 257, 257, 257]. Frame and actor/slot/scratch allocation remain.

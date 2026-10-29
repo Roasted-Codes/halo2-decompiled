@@ -958,7 +958,7 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
     result->y = scale * y;
 }
 
-// score 513 (was 539): the entry pointer's base (+0x4c), the direction cursor and the table stores
+// score 513 (was 513): the entry pointer's base (+0x4c), the direction cursor and the table stores
 // now agree; retail stores the +radius vertex group first (so 1.0 lands in XMM2, not XMM1) and
 // computes each projection's forward row first. Kept: the file's cross helper for both crosses
 // (it sets the +0x4c base; the shared cross3f for the forward one gives +0x50), normalize3d for
@@ -974,6 +974,13 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
 // with the local vector; the shared cross3f for the left vector 570, 528 with the local vector; the
 // other table orders 549-568. Next: the local vector plus retail's cross-product loads (up loaded into
 // registers, up.i twice) and the normalize's i, k, j product order.
+// Round 109: VC re-sorts each projection row (retail x = (forward.j vj + forward.i vi) + forward.k vk,
+// z = (up.k vk + up.i vi) + up.j vj; ours x = (k + i) + j, z = (i + j) + k). A local vector with the
+// rows through dot3f/dot_product_c1a80/dot3f(v first) 587/587/588; the scale through vector3f_scale
+// 714; the up row computed first 513 (identical).
+// Round 88: projection through a local vector of the three rows 619; depth stored first and the
+// radius read back from it 611; the entry pointer before the bounds copy 511 (retail's store order
+// there, two points: not kept); point3f vertex table 513 (identical); named 0 - radius 587.
 // @retail 0xc1d90
 void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab const *shape, s_light_projection_ab *entries, short *count)
 {

@@ -939,6 +939,10 @@ bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_un
 // equality 2; for-owned int retry 1; for-owned signed-byte retry 40; signed-byte terminal
 // equality 40; for-owned long terminal equality with reset-first publication 8. Force argument
 // convention remains.
+// Round 88: defined after function_1c4040 1; the disabled 0xb8540 body enabled 1 (25 matched lost);
+// the call-cycle entry moved through declaration order (function_146bf0 declared first in
+// src/unknown_278f00.cpp, function_146da0 before function_1c4040 in src/unknown_146a20.cpp) 2, with
+// function_1c4040 then in a custom convention (attempt EAX, active CL) and 15 matched lost.
 // @retail 0x1c51c0
 void function_1c51c0(long component_index)
 {
@@ -1112,6 +1116,14 @@ struct s_1c4040
 // Round 279: selected index separate through both scans; island cursor/entity ordinals/entry initialization
 // combinations 35/36/35/36/35/36/35/36, all at 537 bytes. Original body restored;
 // active DL versus AL and its array/count allocation remain.
+// Round 88: our default convention comes from the call-cycle entry, which follows declaration order:
+// function_146bf0 declared first in src/unknown_278f00.cpp plus function_146da0 declared before this
+// function in src/unknown_146a20.cpp gives a custom convention, but attempt EAX and active CL (30; the
+// first half loses 15 matched); with (active, attempt) reordered 30; with g_51e9a4 read at each use 32;
+// 0xb8540's disabled body enabled 25 (25 matched lost). The custom regime still swaps EAX/ECX and AL/CL.
+// Round 163: coordinated cdecl/stdcall with bool, byte, signed-char active and
+// unsigned-long attempt transport 187/193 in every pair. All original declarations
+// and bodies restored; frame 0x14 agrees, but active remains DL rather than AL.
 // @retail 0x1c4040
 bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_unknown, long excluded_component_index)
 {
@@ -1531,6 +1543,9 @@ PRIVATE inline void contact_motion_vector(vector3f *out, hkVector4 const *value)
 // Round 213: positive-guard exact-count long/int/short/word [4, 4, 132, 132]; positive-guard
 // last-index long/int/short/word [156, 156, 164, 164]. Count test and matched-callee setup
 // remain.
+// Round 88: while loop 3; index shared with the fill loop 3; mirror initialised from the index 3;
+// `count > i` 5; count initialised 3. This is 0x1d10b0's only caller, so its parameters can be
+// reordered to (component, index, change) in src/unknown_1cec30.cpp for the register-argument order.
 // @retail 0x1c4c50
 bool __stdcall function_1c4c50(long object_index, long node_index, point3f const *point,
  vector3f const *change_a, vector3f const *change_b, long *result_object, vector3f *linear, vector3f *angular)

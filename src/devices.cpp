@@ -1216,7 +1216,10 @@ struct s_index_pair
 };
 bool function_0b6760(s_index_pair const *pair);
 
-// score 303 (was 303): Frame 0x1c versus 0x20 and index/header/state/result homes remain; native
+// score 294 (was 294): Frame 0x1c versus 0x20 and index/header/state/result homes remain; the
+// group path still reloads the definition pointer from three base registers and adds the two
+// products in the opposite order.
+// Earlier: Frame 0x1c versus 0x20 and index/header/state/result homes remain; native
 // power/position/both/activity flag values 376/302/379/370; power-activity/position-
 // activity/all/shared 376/373/376/376. One-point gain rejected.
 // Earlier: Frame 0x1c versus 0x20; index/header and state/result homes remain.
@@ -1284,12 +1287,15 @@ bool function_0b6760(s_index_pair const *pair);
 // instructions as retail, but index/offset in EDI/ESI where retail has ESI/EBX and the result in
 // a register where retail keeps its byte); also a plain definition 410; with the result declared
 // first 366, the state before the result 361, the state second 360.
+// Round 390: Complete first-motion/integration/second-motion byte-or-long completion
+// carrier domains, all eight combinations: 294/383/386/414/324/402/392/413. Original bool carriers restored.
+// Long integration gives frame 0x20 but worsens length and register allocation.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
 	s_device *device = DEVICE_GET(device_index);
-	byte const *volatile saved_definition = g_4e3b44[device->definition_index & 0xffff].bytes;
 	bool result = false;
+	byte const *volatile saved_definition = g_4e3b44[device->definition_index & 0xffff].bytes;
 	real previous;
 	s_animation_state *state = NULL;
 	if (device->animation_state_offset != NONE)
@@ -1327,7 +1333,11 @@ bool __stdcall function_106790(long volatile device_index)
 		}
 		else
 		{
-			if (state && device->channels[0].graph_tag_index != NONE && device->channels[0].animation_id.index != NONE)
+			bool power_channel_animates = false;
+			if (state)
+				power_channel_animates = device->channels[0].graph_tag_index != NONE &&
+					device->channels[0].animation_id.index != NONE;
+			if (power_channel_animates)
 				device->channels[0].set_frame_ratio(device->power);
 			real position_acceleration = *(real const *)(saved_definition + 0xcc) * device->position;
 			real remaining_acceleration = *(real const *)(saved_definition + 0xd4) * (1.0f - device->position);

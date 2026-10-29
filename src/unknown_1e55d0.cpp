@@ -96,6 +96,13 @@ static __forceinline long real_to_long(real value);
 // Round 237: component/body at uses and one input handle 368/357/356; component-body/
 // component-handle/body-handle/all 398/367/356/359; all with automatic capsule 344, losing seven
 // checked matches (control 353). Original body restored; plain frame and callee propagation remain.
+// Round 14: the placement-new buffer as a 16-byte aligned local reaches 305 with retail's exact
+// aligned frame and length (1164 bytes), the automatic aligned local 307; both break the matched
+// functions 0xb77d0, 0x1c4b00, 0x1ed340 and 0x2901e0 (29/49/133/45) that the plain form keeps
+// matching. Original body restored; plain frame and callee propagation remain.
+// Round 390: Separate target inline/noinline contracts with manual/aligned-byte/automatic
+// capsule lifetimes and aligned-byte period observation: 353/353/305/305/307/307/306/306. Original body restored.
+// Aligned forms recover frame 0x94 but lose four matched controls; declaration contracts do not fix it.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {
