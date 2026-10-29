@@ -1648,37 +1648,39 @@ void __stdcall function_def60(point3f *point, long arg_159e6d, short mode, point
 
 /* a biped's collision capsule: its bottom point, the vector to its top and
    its radius, from its two capsule nodes when its definition names them */
-// score 105 (was 134): one-dword frame, stack object index and retail length now agree;
+// score 6 (was 105): frame, length, pool/output/node/fallback roles agree; midpoint addition loads differ.
+// Earlier: one-dword frame, stack object index and retail length now agree;
 // pool/definition and output-register roles remain. Existing node queries 105;
 // vector difference and fallback names 134 each, node combinations and entry locals 105.
 // Direct definition producer removes the one-use object alias at 105 (kept, plain);
 // cached object/shared entry 126 each; direct shared entry 105; those four with
 // vector difference 105/126/126/105. Header getter at entry/nodes/both and vector pair 105 each.
+// Round 190: full node transforms 130; direct node fields 98; one radius store 130; both 108;
+// the same four with the existing scaler 130/98/130/108. Fallback-first 98; with shared point
+// difference 8, with scaler 8; shared difference/scaler without reversal 8. Original arm order and
+// shared difference alone 8; commuted means 8; existing object/header getters 6/8. Masked ordinal
+// 118; sequential mean sums 6; both 118; both with header getters 15. Cleanup and full plain 6 kept.
 // @retail 0xdf6c0
 void __stdcall function_df6c0(point3f *bottom, vector3f *axis, long arg_159e6d, real *radius)
 {
-	byte *definition = BIPED_DEFINITION_GET(BIPED_GET(arg_159e6d));
-	short node_a = *(short *)(definition + 0x254);
-	short node_b = *(short *)(definition + 0x256);
+	byte *definition = BIPED_DEFINITION_GET(((s_biped *)object_get(arg_159e6d)));
 
-	if (node_a != NONE && node_b != NONE)
+	if (*(short *)(definition + 0x254) != NONE && *(short *)(definition + 0x256) != NONE)
 	{
-		point3f const *a = &object_node_matrix(object_get(arg_159e6d), node_a)->position;
-		point3f const *b = &object_node_matrix(object_get(arg_159e6d), node_b)->position;
+		transform4x3f const *first_node = object_node_matrix(object_get(arg_159e6d), *(short *)(definition + 0x254));
+		transform4x3f const *second_node = object_node_matrix(object_get(arg_159e6d), *(short *)(definition + 0x256));
 
 		if (TEST_FIELD_BIT((*(dword *)(definition + 0x264) >> 1) & 1))
 		{
-			bottom->x = (a->x + b->x) * 0.5f;
-			bottom->y = (a->y + b->y) * 0.5f;
-			bottom->z = (a->z + b->z) * 0.5f;
+			bottom->x = (first_node->position.x + second_node->position.x) * 0.5f;
+			bottom->y = (first_node->position.y + second_node->position.y) * 0.5f;
+			bottom->z = (first_node->position.z + second_node->position.z) * 0.5f;
 			*axis = *g_4687a4;
 		}
 		else
 		{
-			*bottom = *a;
-			axis->i = b->x - a->x;
-			axis->j = b->y - a->y;
-			axis->k = b->z - a->z;
+			*bottom = first_node->position;
+			vector3d_from_points3d(&first_node->position, &second_node->position, axis);
 		}
 		*radius = *(real *)(definition + 0x23c);
 	}
@@ -3322,10 +3324,12 @@ void function_e3910(long arg_159e6d);
 /* a walking biped falling faster than the globals' falling speed takes
    falling damage, unless it rides a vehicle that protects it; a falling
    object leaves its cluster */
-// score 98 (was 130): frame 0x9c and length 518 agree; high-byte immunity test, load order and damage-result roles differ.
+// score 98 (was 98): frame 0x9c and length 518 agree; high-byte immunity test, load order and damage-result roles differ.
 // Native byte high/lower/both bitfield tests 130 each; native high word bitfield store 98;
 // with high/lower/both byte tests 98 each; all fields with immunity set from tests 134.
 // The native high word bitfield store is kept; all input/call expressions retain their original roles.
+// Round 190: conditional high-bit value in bool/byte/short/long 125/125/122/121;
+// bitwise canonical flags in those domains 144/144/147/152. Original immunity producer restored.
 // @retail 0xe3700
 void function_e3700(long arg_159e6d)
 {
@@ -3394,7 +3398,7 @@ void function_e3700(long arg_159e6d)
 
 /* the airborne biped: falling damage, a random spin for one that tumbles,
    and its airborne animation */
-// score 6 (was 8): the cross product's three components are computed in named locals,
+// score 6 (was 6): the cross product's three components are computed in named locals,
 // which recovers retail's product order. Left: the scaled add's first product (the shared
 // helper computes component * scale, retail scale * component), the call to the unmatched
 // 0xe3910 and the branch displacements that follow from it.
@@ -3411,6 +3415,8 @@ void function_e3700(long arg_159e6d)
 // Existing scale/add helpers, in-place/distinct increment 56/56; with shared cross 58/53. Restored.
 // This round: the third product's operands the other way 8; the second term in a local 8; the negated
 // component 84 (570 bytes); the three products in named locals 6 (kept).
+// Round 190: tick product/direct tick expression/commuted tick product/commuted spin update
+// on the named cross graph 9/9/9/6; with the shared cross-result setter 9/9/9/6. Original update retained.
 // @retail 0xe40d0
 void __stdcall function_e40d0(long arg_159e6d, long *names)
 {

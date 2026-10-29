@@ -1290,6 +1290,9 @@ bool function_0b6760(s_index_pair const *pair);
 // Round 390: Complete first-motion/integration/second-motion byte-or-long completion
 // carrier domains, all eight combinations: 294/383/386/414/324/402/392/413. Original bool carriers restored.
 // Long integration gives frame 0x20 but worsens length and register allocation.
+// Round 190: shared motion completion in bool/byte/short/long, before/after activity by name,
+// 294/294/406/402 each. Refresh/event ordinary-inline-noinline pairs 294 each;
+// the refresh-inline forms also lose two matched callers. Original body and declarations restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
