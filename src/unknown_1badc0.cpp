@@ -94,6 +94,8 @@ real normalize2d(point2f *arg_0);
 // at entry 220. Five-point radius gain below gate; original declarations and body restored.
 // Round 263: existing state carrier conditional/branch-owned initialization, crossed with
 // entry point storage and early radius, 266/266/264/264/260/260/258/258. Original stores, homes and body restored.
+// Round 265: clean output with bool/long common completion, entry-point storage and
+// radius-order combinations 279/279/279/279/285/285/285/285. Original complete body restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)
