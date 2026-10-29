@@ -1056,8 +1056,15 @@ struct s_item_flags_view_10b850
 // result carriers, full body and helpers restored; frame 0x154/0x12c remains.
 // Round 161: Native item flag8/flag29/state0/flag8-29/flag8-state/flag29-state/all-three 813 each;
 // late flag14 view 846. Original actual item declaration and whole body restored.
+// Round 176: Library input captures in rotation/dot/both/cross/rotation-cross/dot-cross/all
+// 931/1229/1381/1400/1517/1736/1829; all with library matrix copy 1829.
+// Original producers, scalar input captures, in-place behavior and flow operands restored.
 // Round 33: Rotation source-component, turn-term and projection scalar role-name subsets,
 // then complete cosine-product roles: 813/813/813/813/813/813/813/813. Original body and all helpers restored.
+// Round 388: Native item receiver reference, with pointer/reference vector outputs and
+// both complete formal orders, 813 each; reversed original pointer contract 813;
+// reversed private dot formals on the latter and two new native receiver contracts 813 each.
+// Original rotation helper, all four callers and every dot tuple restored; frame remains 0x154.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

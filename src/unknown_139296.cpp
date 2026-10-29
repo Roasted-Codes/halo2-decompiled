@@ -455,6 +455,9 @@ bool function_22acb4(long player_index);
 // spill and constants remain.
 // Round 242: Complete result phase orders 2134/3124/4123/2314/3214/2341/3421/4231
 // 280/290/274/289/228/269/272/268. Original phase order, query and aliased output order restored.
+// Round 388: One existing source-flags snapshot after first-mask checkpoints
+// 8/2/4/16/32/256/512/1024: 281/281/278/275/271/268/268/266.
+// Original late snapshot and every mask producer restored; second-mask spill remains.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
