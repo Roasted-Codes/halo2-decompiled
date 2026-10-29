@@ -675,9 +675,10 @@ void function_1e1740(long actor_index, long object_index);
 void function_26dc20(long actor_index);
 void swarm_leader_detach(long actor_index);
 
-// score 285 (was 285): frame 0x1c versus 0x20, early actor/pool allocation,
-// cleanup countdown and slot homes remain.
+// score 285 (was 285): frame 0x1c versus 0x20, entry actor displacement and cleanup stack homes remain.
 // Earlier: Frame 0x20 agrees; early actor-pool allocation, cleanup and slot homes remain.
+// frame 0x1c versus 0x20, early actor/pool allocation,
+// cleanup countdown and slot homes remain.
 // Frame 0x1c versus 0x20; entry actor/displacement allocation and cleanup countdown/slot homes remain.
 // Round 141: the memory loop is the existing joint_decline (0x26ed40) inlined in retail (test through the
 // cached actor, body re-derived, participant index re-read per store), BLOCKED-BY 0x26ed40: its /Ob1
@@ -755,6 +756,12 @@ void swarm_leader_detach(long actor_index);
 // Earlier: the frame is 0x1c instead of 0x20, the actor byte offset is kept in EBX
 // instead of EAX and the slot index in ECX instead of EDX, and the cleanup loop keeps its
 // countdown in a register instead of a stack slot.
+// Round 167: entry cleanup/scan/both constants 285/322/322; uninitialized
+// callback/memory/both workspaces 285/285/285; both constants and workspaces
+// alone/with final receiver 322/322. Entry scan recovers frame 0x20, not allocation.
+// Native unsigned scan late/early 285/322; prop displacement/complete handles
+// 285/285; early scan with displacement/handles 322/322; all domains late/early
+// 285/322. Original declarations, domains, observations and executable body restored.
 // Round 27 reduced preview 261 with a full-image caveat: cleanup pointer/offset/stack countdown 283/981;
 // with shared prop walk 297/964; explicit actor offset/retained pointer 311/958; with countdown 310/958;
 // native bool predicate 265/983; with countdown 304/999; declarations reordered 320/1012;

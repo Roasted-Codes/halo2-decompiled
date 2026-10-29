@@ -248,6 +248,10 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // Round 384: complete output-phase direction/target/duration/direction-target/direction-duration/
 // target-duration/all state observations 690/693/667/731/704/711/736; all with the reused counter 756.
 // Every snapshot and original body restored; exact caller preserved throughout.
+// Round 168: Shared initial difference/impulse addition/direction refresh in seven subsets
+// 679/644/665/664/662/677/648; all plus initial vector assignment 657. Assignment alone
+// and with initial difference/addition/refresh 644/676/659/664. Original snapshots, math,
+// counter result, qualification and exact caller restored.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

@@ -13,7 +13,7 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 170 (was 199): the peers table is now read through a local, so `this` stays in EBP, the
+// score 170 (was 170): the peers table is now read through a local, so `this` stays in EBP, the
 // index is read inside the enabled test, the cursor is declared under the index test, advanced
 // before the stores and the size is one expression, so retail's prologue and output block match.
 // Left: our cursor, entry pointer and item-priority slots sit 4 bytes below retail's and our
@@ -114,6 +114,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 250: two-use pending handle 199; pending array cursor 258; both 258;
 // active array cursor 207; handle/active 207; both cursors 213; handle/both 213;
 // all with cursors before chain queries 214. Original traversal restored.
+// Round 169: Recovered receiver/output graph: selector, distinct chain-index and callback-output
+// identities, all seven subsets 170; native dword selector 170. Pending selector/index
+// interference and the four-byte cursor/entry/callback home shift remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

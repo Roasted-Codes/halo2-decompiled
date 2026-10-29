@@ -1595,7 +1595,10 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 737 (was 737): Frame 0xc0 agrees; initial user/identity homes, logon dispatch and request/completion allocation remain.
+
+// score 737 (was 737): frame 0xc0 agrees; initial user/identity and request-output homes remain.
+// Earlier: Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
+// Frame 0xc0 agrees; initial user/identity homes, logon dispatch and request/completion allocation remain.
 // Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
@@ -1643,6 +1646,12 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // admission byte with immutable identity, byte admission/team/both results 737 each.
 // Round 219: Initial user/value/slot uninitialized declarations at function scope, masks 1-7 and
 // all with role names: 737/737/737/737/737/737/737/737. Original body restored.
+// Round 167: pending-restoration ordinary inline/ordinary/outlined 930 each;
+// direct state fields forced/inline/ordinary/outlined 737/930/930/930; direct
+// fields with native short restoration ordinals 753. Original forced helper restored.
+// Actual read-builder output declarations at entry, all seven nonempty subsets,
+// then both read/write output triplets at entry: 737 each. All zero assignments,
+// observations, predicates, copies, clocks and call tuples stay at their original points.
 // Round 107: retail tests each task poll as `if (state < 0 || state > 1) { if (state == 2) ... else ... }`
 // (jl to the failure arm, jle out, jne to failure); that shape for the write task / read task / both
 // 738/737/738 (retail's block order there, aligned count 359 -> 353, positional unchanged); retail's

@@ -166,7 +166,9 @@ void function_268840()
 	function_268c90();
 }
 
-// score 242 (was 242): Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
+// score 242 (was 242): frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
+// Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
+// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
@@ -218,6 +220,10 @@ void function_268840()
 // remain.
 // DL159: actor-boundary player-pool lifetime 246; all squared products named 246; full-width expiry alone/with products 250/250; signed-byte retention alone/with products 247/247; both result domains alone/with products 251/251. Original observations, arithmetic and child interfaces restored.
 // Round 251: Branch-scoped retention bool/byte/short/long 247/247/247/246; with pool after iterator setup 297/297/296/297. Original actor-wide scope, pool observations and child interfaces restored.
+// Round 167: actual point/child/both output declarations at entry 242 each;
+// point/child/both lexical homes 242 each; both entry workspaces with both
+// role names 242; existing three-component point difference with the original
+// z/y/x squared-sum tree 242. Original workspaces, names and scalar body restored.
 // Round 29: Outer-walk initialization/advance inline-inline, inline-outlined, forced-inline, forced-forced, forced-outlined, outlined-inline, outlined-forced, outlined-outlined: 242/386/242/242/386/346/346/406. Outlined forms also lose two matched controls; every helper contract restored.
 // @retail 0x268c90
 void function_268c90()
@@ -2227,6 +2233,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 27: actor-step/getter expansion boundaries, ordinary/inline/forced
 // in all eight non-original pairs [283,283,283,283,283,283,283,283]. Original
 // declarations and bodies restored; early reset SI and later homes remain.
+// Round 167: existing absent-leaf location initializer 283; visibility cluster,
+// row-count and row-pointer scalar homes in all seven combinations 283 each.
+// Original reset and names restored; early reset SI and later allocation remain.
 // Round 250: existing native structure count 283; with per-iteration candidate,
 // short/long cursor and selected carriers 384/336/383/337;
 // corresponding direct indexed fields 374/336/375/337. Original body restored.
