@@ -53,6 +53,10 @@ __forceinline void function_29c9ee(vector3f const *arg_0, vector3f const *arg_1,
 // second limit 77. Retail preloads one axis component across fsin and
 // reloads the rest from [eax] each use; ours keeps one more component
 // live, so the zero lands in xmm6 and cos in xmm4 (retail xmm4/xmm3).
+// Shared dot/cross with cosine/projection/turn scale phases: single 81/100/84, pairs 105/84/80,
+// all 91, native output loop 122; basic product controls 82/80/84. Zero/axis/trig homes remain.
+// Native vector return with component output, original/dot/cross/both 78/74/82/89;
+// aggregate output counterparts 78/74/82/89. Original helper and all game-call inputs restored.
 // The first difference is in the inlined 0x11cc90: retail loads a->j and
 // folds b->i in the cross term (the standalone 0x11cc90 and ours do the
 // reverse). Rotation in place on the source vector 67; the helper in

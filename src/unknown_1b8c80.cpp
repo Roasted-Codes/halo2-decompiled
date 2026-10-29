@@ -1059,6 +1059,10 @@ s_slot_handler_2x g_47e9d0 =
 // from the result 1); early returns for the NONE tests and the timer 1; three separate early returns
 // 25; failure assignments to the result with one final return 3; else-arm and inner failure returns
 // 1/1; one combined condition 1; long result 47; a status initialized from the result 55.
+// Native pool/status carriers and the shared status load width remain.
+// Round 155, short status: early return at the actor test 73; status assigned in both arms 77; status
+// declared first/after actor/element first 61/61/48; global returned at the actor test with a block status 73;
+// element first with long status 67, with short status before the actor 47.
 // @retail 0x1ba4e0
 short __stdcall function_1ba4e0(long actor_index, s_slot *slot, bool active)
 {
