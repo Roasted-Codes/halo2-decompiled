@@ -2014,6 +2014,8 @@ bool function_1df5d0(short team_a, short team_b);
 // Round 164: shared swarm input 179; shared pool getter 179; aggregation phase 235; phase swarm 235;
 // phase pool getter 235; iteration actor scope 182; actor scope swarm 182; all native scopes 235.
 // Zero/sentinel iterator seeds 243/228; actor pointer/health names 179/179; shared actor level 248; shared definition flags 179; live last-update reads 179; health publication before count 179. Cursor memory home and contribution allocation remain.
+// Round 257: complete live squad observations by byte displacement 357 each
+// with native count/header begin/both; native accessor 374/375/374/375. All restored.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2601,6 +2603,8 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // three gotos 50 (kept); ticks output declared first 50; permuter 600 s, best only by a char delay value.
 // Round 221: Complete logical index snapshot long/int/dword/const long 50 each;
 // all four with a separate optional follow-up result join 50 each. Original body restored.
+// Round 257: apply/event ordinary-inline-noinline boundary pairs on the recovered
+// pointer/result and actor-step graph 50 each (eight forms); EBP index reload remains.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
@@ -2975,6 +2979,9 @@ void function_2011f0(long arg_0);
 // 336/391/334/389 at the same lengths. Gains of two/four are below threshold; body restored.
 // Round 198: Placement/prior-object lookup declarations, ordinary/inline/noinline
 // in all eight non-original pairs, 338 each. Frame 0x134 agrees; original boundaries restored.
+// Round 257: all group-table fields observed through a byte displacement
+// 485; with one squad receiver 426, promoted difficulty 495, both 414;
+// native group-array observations 538/466/537/452 in the same order. All restored.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

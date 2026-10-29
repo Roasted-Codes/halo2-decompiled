@@ -156,6 +156,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // 680 [439]; nested body ending `return local_0;` then `return true;` 679 [462] (retail's early-exit
 // layout and `mov al, 1`). Every stack home is then 4-12 bytes off retail's (flag 0xf, minimum 0x10,
 // hit flags 0x14, input copy 0x38 in retail's frame).
+// Round 257: shared affine origins 629; early constant minimum 636; collision-produced
+// hit entries 700, with early minimum 706; inactive early return on those four
+// affine graphs 685/698/681/694. Original helpers, producers and exits restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)
