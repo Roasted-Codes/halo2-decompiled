@@ -361,6 +361,7 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	__asm rdtsc
 }
 // score 244 (was 244): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
+// the retry ordinal as a function-scope local 239 (MiniMax E run 12; under the keep bar, restored).
 // Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
 // arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
 // format-size query declaration 287. Original body and declaration restored.
