@@ -268,6 +268,9 @@ void __stdcall function_1160c0(real dt)
 // homes and rotation schedule remain.
 // Round 223: Existing target/interpolation/prediction point constructors, seven subsets 179/179/179/179/179/179/179; all with complete direction/velocity setters 183. Original producers and body restored.
 // Round 387: Complete delta/axis squared sums 179/179/179; native double distance-root alone and with those sums 249/249/249/249, both named roots 249. All expression stages restored.
+// Round 32: existing in-place axis scale 179; original-angle segment-first 276;
+// tiny-axis-owned fallback 294; scale/segment 276; scale/fallback 294; segment/fallback 247;
+// all 247, cosine-first all 247. Original producers, fallback and include set restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

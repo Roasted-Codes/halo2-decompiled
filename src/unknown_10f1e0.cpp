@@ -1274,6 +1274,9 @@ long function_cbd50(long unit_index, short weapon_index);
 // overlay read at its switch 331; with cached-unit slot arguments 345; with short slot locals 345.
 // Retail's unit reload at each query (`mov ecx, ebp; mov ecx, [ecx + edx + 8]`) occurs in only one
 // other retail function (0x100130, unmatched). Original body restored.
+// Round 162: pool/data receivers 378/345; shared word unit slot 368; pool/data plus word
+// slot 400/368; data plus dword slot 350; pool plus long slot 390; data with native result
+// 329. Original lookup observations, status graph and argument handling restored.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1435,6 +1438,14 @@ bool __stdcall function_110ab0(long unit_index)
 // complement 458/458/445/477. The short pair recovers frame twelve but gains only five (dropped).
 // On that frame: true result here/at entry 445/445; entry byte/signed byte 548/548; live entry true
 // default bool/byte/short/long 511/563/559/548. All statuses, defaults and lifetimes restored.
+// Round 168: Complete unsigned key/controlling/held-handle domains in seven subsets
+// 451/450/450/451/451/450/451; all with unsigned unit 451. Original signed domains restored.
+// Round 34: Native mutable/readonly object-header bases, with repeated/retained unit-slot
+// lookup inputs 487/487/487/487; the same four with complete short depletion/overlay
+// complements 504/504/504/504. Original pool observations, statuses and body restored.
+// Native pool bases recover frame twelve at 487; the paired short graph reserves sixteen.
+// On the native pool graph, default success bool/entry-bool/byte/entry-byte
+// 474/474/514/514. Original result defaults and lifetimes restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1656,6 +1667,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 
 // score 790 (was 790): frame 0xcc/0xd4 and first angle/overlay inline allocation remain.
 // Earlier: frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // frame 0xcc versus 0xd4 and first angle/overlay inline allocation remain.
 // frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // frame 0xcc versus 0xd4 and first angle expansion remain.
@@ -1720,6 +1732,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 386: shared projected-vector setter/direction memcpy/both 790/790/790;
 // default-angle memcpy alone/with setter/with direction/all 856/856/856/856;
 // all with ordinary projection inline 1165. Original bodies and copies restored.
+// Round 168: Native unit direction/ratio/weight fields in seven subsets and all with side bytes
+// 790 each; on the newer flag/center graph, plain overlay for 882, with native default angles
+// 911, with conditional activity clear 901, with both 897. Original body and records restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2749,6 +2764,8 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Round 386: action/set-decision/channel-backing lifetimes in seven subsets
 // 155/156/156/155/155/156/156; all with native constructed channel 157.
 // Fixed caller/request roots reproduce full 155; original body restored.
+// Round 168: Native paired timing fields/header status/parent slot in seven subsets and all
+// with a shared absolute object index 155 each. Original records, copy chain and body restored.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

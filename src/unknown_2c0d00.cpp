@@ -926,6 +926,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 234: native current edge/node/portal-surface records and combinations
 // 395/437/429/392/478/411/486; native portal query edges 392. Original receivers restored.
 // Round 197: Cached selected/portal/both node words 442/385/442; selected/portal/both with Boolean ring direction 414/399/414; both words with word first-openness 410, plus Boolean ring 396. All restored; frame 0x28 remains.
+// Round 255: complete geometric truth carriers byte/short/word/long 385/398/397/401;
+// the same four with native byte side 385/398/397/401. Original Boolean results
+// and side parameter restored; frame 0x28 and zero/radius schedule remain.
 // Round 379: End/start/both endpoint addresses at use 385/462/451; traversal-lifetime edge alone/with end/start/both 385/385/462/451; complete receiver graph with node fields 421. Original body and helpers restored.
 // Round 385: Uniform edge/surface/vertex table roots, singly and in pairs/all,
 // 418/410/432/407/403/412/409; all roots per iteration 463. Original observations restored.
@@ -1119,6 +1122,13 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Round 251: complete side-direction first/second-input staging 411/409;
 // entry-direction first/second-input staging 410/410; side/entry first-first,
 // first-second, second-first, second-second 472/472/457/471. Original outputs and body restored.
+// Round 384: scale helper output-pointer result with original/result-first/guard normalizer
+// 172/172/172; ordinary scale with result-first/guard normalizer 172/172;
+// complete native scale results with original/result-first/guard normalizer 460/460/460.
+// All helper result contracts and original complete normalizer restored.
+// Round 220: Normalizer complete input via native/readonly/component/library copy
+// 518/518/172/518; each with zero-length guard return 518/518/172/518.
+// Original normalizer and complete body restored; true-return host and y forwarding remain.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1312,6 +1322,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Retail's EBX is a zero register from entry to the loop (data tests, index/count/flag stores).
 // Round 234: entry-snapshot/displacement/conversion scope endings and combinations
 // 442/444/442/444/442/444/442; tangent consumption scope 444. Two-point gains rejected; original body restored.
+// Round 255: entry ordinal/count/fallback zero lifetimes 444, 444, 444;
+// ordinal-count/ordinal-fallback/count-fallback/all 444, 471, 471, 472;
+// all with byte fallback 472. Original lifetimes restored; frame remains 0x11c.
 // Round 379: Data/single-step/both terminal exits 484/444/484; data-first acquisition alone/with data/single/both exits 470/478/470/478; traversal-only radius with both exits 485. Original body restored.
 // Round 165: Early actual data-result NULL lifetime coupled with source-radius/output-
 // index/traversal store subsets 469/486/491/466/471/487/496; combined existing endpoint setters

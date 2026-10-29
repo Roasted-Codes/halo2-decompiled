@@ -844,6 +844,10 @@ struct s_flags_1f0870
 // separate normalization continuations 623; branch-produced gravity on those three graphs
 // 616/607/623; single magnitude assigned in each mode arm with separate normalization,
 // alone/with branch gravity, 647/647. Original clean shared-normalization body restored.
+// Round 225: existing scaled-add producers for forward/lateral/both ground projections
+// 590/590/590; complete parallel weighted sums in both motion modes 594, with forward/
+// lateral/both projections 594/591/602; all with byte step result 602. Original body and
+// helper boundaries restored; frame 0x34 and direct/vector homes remain.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1247,6 +1251,10 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Existing selection/tangent/speed dot inputs reversed independently, in all seven combinations,
 // and together with the accepted-count lexical home: 421 each. Helpers and body restored.
 // Round 152: Eight relative/desired/direction library-copy forms 421 each; complete accepted-count producer shared by insertion, increment, store and both tests 419, with one-contact-first 419 (2089 bytes). Two-point forms rejected; original copies, qualified count, cursor and response order restored.
+// Round 225: actual accepted-index array traversal 423; response-scoped minimum/selected
+// 421; both 423; index-first selection publication 421, with array/scope/both 423/421/423;
+// all plus a final Boolean-result join 422 at retail length. Original body, qualified count,
+// candidate cursor and response order restored; zero and count/component homes remain.
 // Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
 // inline query with each support contract 434; the other five pairs 421.
 // Original declarations, qualified count, candidate cursor and response order restored.

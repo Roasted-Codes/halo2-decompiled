@@ -3131,7 +3131,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 853 (was 934): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
+// score 853 (was 853): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
 // Earlier: Frame 0x2c agrees; capability/save roles and state expansion remain.
 // frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
@@ -3183,6 +3183,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // complete case results 1219; maximum result 1210. Restore all other carriers, memory
 // observations, cases and result lifetimes. Frame 0x2c agrees; mode bound ESI/EDI, full-width
 // small-permission test and state expansion remain.
+// Round 282: complete encoded output words, ternary/descending/result/ascending forms,
+// each with original/complete first-output word [1128,1131,1128,1131,1121,1121,1129,1130].
+// Original output helpers and complete body restored; capability/save roles remain.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
