@@ -1672,6 +1672,9 @@ void function_b7360(long object_index);
 // Round 253: success-first selection result short/long/byte/word 472/472/482/472;
 // actual-default failure production at those widths 488/488/508/488.
 // Original selection test and full executable body restored.
+// Round 245: First admission predicate in positive bool/byte/short/long and
+// complementary bool/byte/short/long carriers, 471 each. All restored; pool/actor/output
+// entry allocation and forty-byte deficit remain.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
