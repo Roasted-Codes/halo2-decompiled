@@ -145,6 +145,10 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // Round 395: actor/object/both pools at use 490/428/481; all repeated coefficients
 // once 400; actor/object/both with coefficients 485/455/494; all with coefficient
 // role names 494. Original receivers, coefficient reads, copies and helpers restored.
+// Round 238: Returned native rotation value with input/axis pointer-pointer, value-pointer,
+// pointer-value, value-value, reference-pointer, pointer-reference, reference-reference and value-
+// reference: 450/448/558/556/450/450/450/448. Original scalar captures, two calls and complete
+// body restored.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

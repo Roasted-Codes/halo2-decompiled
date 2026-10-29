@@ -342,6 +342,8 @@ real function_1e3920(long actor_index);
 // The scratch release written in each branch 47 (342 bytes, same carriers); the failing actor re-read
 // into `actor` 46; the selection tested without a local 46; the search outputs or the reference
 // declared at the top of the function 46/46.
+// Separate raw/admitted reference values with immutable raw value and entry request/scratch
+// declarations: 46/46/48/48/46/46/48/48, all 344 bytes. Original lifetimes and body restored.
 // @retail 0x1bcab0
 bool __stdcall function_1bcab0(long actor_index, s_slot *slot)
 {
@@ -451,6 +453,9 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // stack slot as retail, aligned 61); flag set in an if/else around the scan 198; flag set in
 // an if 200; flag at function scope 198; proximity deltas declared x, y, z (retail squares z
 // first) 166 (198 with the bool); sum written x + y + z 198 (with the bool).
+// Round 173: Point-buffer and iterator declarations at the seat phase, and completed player-query scope,
+// all seven subsets 166 each; all workspaces with Boolean special carrier 198. Original body restored; CL
+// predicate transport and the shared tail remain.
 // Round 270: reused vehicle identity 202; guarded reused prop identity 166; both 202;
 // native player-seat fields 166; vehicle/prop/both with those fields 202/166/202;
 // all native owners with bool special 221 at 861 bytes. Original restored.
@@ -458,6 +463,12 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // with actor/timer/short both 208/208/206; actual bool field 166, conditional 174,
 // bool carrier with conjunction/conditional 198/175. Raw-byte conditional 146/146/147
 // changed the integer carrier and was excluded. Complete body and field restored.
+// Round 403: returned vehicle/unit/both point receivers 205/162/201;
+// with the shared separation producer 205/162/201; both with native
+// separation/Boolean special 201/196. Original body restored; CL/tail remains.
+// Round 273: complete separation from the existing header/native producers, each with
+// reverse sum/shared square/shared dot/all squared parts, 166/166/166/166 and
+// 200/200/200/200. Native producer grows the frame to 0x40; original graph restored.
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {

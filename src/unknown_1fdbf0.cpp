@@ -167,6 +167,8 @@ struct s_aim_definition
 // compare); the same with the header from target_index 43; passing object_index to
 // 0x118e80 43; object_header_get 43; flags & 0x100 47; the target field re-read 44,
 // passing object_index then 58. The fallback's callee 0xcba50 is unmatched.
+// Existing actor/object lookup force-inline declarations, singly/together 41 each;
+// native dword flag Boolean/direct 41/47; word Boolean/direct and byte Boolean 53 each.
 // @retail 0x1fe120
 void function_1fe120(long actor_index, vector3f *direction)
 {
@@ -331,6 +333,8 @@ vector3f *function_11d000(vector3f const *v, vector3f *out);
 // the axis or at the top 57; the rotation as 0x11d3b0 writes it, or through an inline
 // (axis, sine, cosine) helper 57; valid flag declared first 57; valid as an expression 86;
 // member-wise forward copy 88; negated cosine test 100.
+// Perpendicular/forward query inline and noinline declarations, singly/together 57 each; fallback
+// normalization via returned output pointer 71, with both inline declarations 71.
 // @retail 0x1fddd0
 bool function_1fddd0(long actor_index, point3f const *origin, vector3f *direction,
     long *out_index, real *arg_c9241c, long *out_object)

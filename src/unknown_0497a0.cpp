@@ -106,6 +106,10 @@
 // Round 180: Separate second displacement, entry projection cross outputs and entry
 // uninitialized primary shape, masks 1-7, then all with entry special cross output:
 // 656/581/656/581/656/581/656/656. Original executable body restored.
+// Round 237: existing integer truncation helper 716; first input scaled in place 581,
+// with truncation helper 716; second input scaled in place 593, with helper 716;
+// both input scales 593, with helper 716, with direct sixth scalar 716.
+// Original snapshots, conversion and complete body restored; frame 0x58/0x60 remains.
 // Round 110: retail has no integer truncation of the sixth input product (scale * d.k): written
 // as a plain real product 648 (2629 bytes); with both shape pointers set at entry 620 (2622 bytes);
 // plus the wave's sine arguments read from the global point, frame 0x60 agrees: 600 (2636 bytes);
@@ -120,6 +124,9 @@
 // Round 186: Selected native basis receivers, seven subsets and the shared selected source
 // 713/680/777/698/755/767/754/800. Original copies, helpers, floating trees and sixth-component
 // integer conversion restored.
+// Round 403: native double storage for rounded sine/modulation and complete maxima,
+// masks 1-7: 580/580/581/756/753/753/756; all with both wave factors 771.
+// One-point leads dropped; original scalar precision, frame graph and conversion restored.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -498,6 +505,9 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Round 180: First/transition/both short channel indices, first/transition/both word indices,
 // both byte and both dword indices: 638/657/739/638/657/739/739/615. Original executable body
 // restored.
+// Round 396: Direct state-range admission, invalid/valid arm first: native char
+// 637/637, short 633/633, long 647/647, consistent field observations 624/624.
+// All restored; definition/output carriers, endpoint placement and frame homes remain.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {
@@ -699,7 +709,7 @@ void __stdcall function_43720(s_43740_input *input)
     function_52d40(input->bitmap, input->vertices.shader, input->tag, false);
 }
 
-// score 62 (was 63): retail reads the object's field before the frame is set up
+// score 62 (was 62): retail reads the object's field before the frame is set up
 // and compares it with -1, ours loads it into ebp and compares ebp. Retail
 // rereads the tag for input.tag (now matched), keeps the slot index in ebp after
 // the texture test and tests the normal flag as shader + 0x2c. Tried: early
@@ -707,6 +717,8 @@ void __stdcall function_43720(s_43740_input *input)
 // an inline helper taking the tag 62; the normal flag read through the shader
 // pointer 66 (definition moves to the stack); a vertex count local first 64 (it
 // swaps source and definition registers and 0x42b20 stops matching).
+// Round 197 fast trials: Populated request definition readback, direct/stored source and slot x
+// definition/shader normal x retained/removed slot anchor 62, 62, 67, 67, 62, 62, 67, 67.
 // @retail 0x43740
 void function_43740(s_ribbon_source *source, s_ribbon_definition *definition, short slot)
 {

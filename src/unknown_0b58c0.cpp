@@ -347,6 +347,13 @@ void __stdcall function_b5a70(long player_index, long type, long count, long obj
 // copy of the player (119); both dropped with the count read through its address as in
 // 0xb5a70 (113: the player still goes on the stack).
 // Retail reads the player's machine field twice (its dead `add ebx, edx`
+// retail reads the player's machine field twice (its dead `add ebx, edx`
+// score 79 (was 79): retail keeps the player in ebx until its use, so the world pointer must not
+// take ebx; every form that keeps the player live to its use (its test and mask both late, 122)
+// leaves the player on the stack and the five callers differ; masking the player at the entry
+// and testing it late (90) keeps retail's length but the callers differ; computing the
+// distribution at the call instead of the entry (118) differs as well.
+// score 79 (was 79): retail reads the player's machine field twice (its dead `add ebx, edx`
 // after the folded load); doing so moves LTCG's register parameter from the player to the count
 // (ebx) and the five callers differ. Natural for loop with the player used only at its test 119;
 // machine field read twice on the entry-flag form / the opening body 85 / 99 (callers differ);
@@ -358,6 +365,11 @@ void __stdcall function_b5a70(long player_index, long type, long count, long obj
 // masked at its use 85 (callers differ); a5930/a5980 moved to a /GL- file 103 (0xa3990 lost); the world
 // global read at each use 79; slot at entry with the player tested at its use 90 (callers differ); both
 // entry values computed inside the state test 106 (callers differ).
+// re-measured 101) keeps the callers and is closest when aligned.
+// Round 183: actual recipient result after traversal/in active scope/at entry 79/79/79; each
+// with the full handle 122/122/122 (five callers lost); result with ordinary pretested
+// traversal split/full handle 101/119. All result forms tie or regress; original body
+// restored.
 // @retail 0xb5ba0
 void __stdcall function_b5ba0(long player_index, long type, long count, long object_indices,
     long size, void const *data, long timeout)

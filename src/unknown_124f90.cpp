@@ -962,6 +962,16 @@ real function_21f650(long channel_index, long mode);
 // stream pointer for the last state test 42; the table pointer declared at the outer scope 42; a named
 // rate 42; the next pointer cleared before the index copy 42; a chunk-array local for the second release
 // 42; the sound read through SOUND_PLAYBACK_GET 42; a block-local channel index 42.
+// function_219290's two arguments load group-first (retail index-first; its
+// parameters swapped would fix it, but contributor caller 0x21c400 calls the present order), one
+// store sits after the permutation copy, the second release hoists the chunk-table load, and the
+// last block swaps ecx/edx with the post-call SOUND_SYSTEM load in edx (retail eax). Tried: a
+// function-wide channel_index local 113; the last block's locals folded into one expression 42;
+// elapsed_time read into a local before the rate call 42; a stream pointer for the last state
+// test 42; the table pointer declared at the outer scope 42.
+// Round 181: per-use chunk table 42; retained chunk base 85; per-use voice array 180; native
+// loaded-field comparison 66; early queued-pointer clear 42; exact-size transfer memcpy 42;
+// queued/current permutation lifetimes 74/102. EAX global-load allocation remains.
 // @retail 0x12a450
 void sound_voice_update_chunks(short voice_index)
 {
@@ -1251,6 +1261,9 @@ long function_2197f0(real gain);
 // Round 160: Interpolation input orders a/t/b 149, b/a/t 148, b/t/a 148, t/a/b 149, t/b/a 148; immutable
 // base plus release gain 149; interpolation/addition home names 149/149. All executable lines and helper
 // contracts restored. One-point previews excluded by the minimum-gain rule.
+// Round 196: native table-array base 200; readonly table 200; short ordinal 170;
+// gain inside gate 234; readonly class/base-release/common result/unsigned gain 200/200/212/200.
+// All restored; table base changes incoming register transport without recovering the entry gain home.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -2661,22 +2674,31 @@ static inline short sound_voice_find_available_channel(char type)
 }
 
 /* assigns a free channel and, when needed, a shared driver voice */
-// score 113 (was 113): frame 12 versus 8 and saved true byte; validity result 135; assigned result
+// score 96 (was 96): playback/channel roles recovered; frame 12 versus 8, status test and failure
+// placement remain.
+// Validity result 135; assigned result
 // 135; playback handle 113; const playback 113; long buffer index 117; entry status 113;
 // allocation-scope status 113; status name 113; allocation success result 122.
-// score 113 (was 113): frame 12 and saved result byte remain; failure flag 130, entry failure
+// Failure flag 130, entry failure
 // 130, complemented status 132, long channel 147, driver-first/late-system commits 130/130,
 // status plus driver-first 132, requested buffer first 130.
-// score 113 (was 113): `return true` on the success path gives retail's 8-byte frame and both
+// `return true` on the success path gives retail's 8-byte frame and both
 // exits (139, 415 bytes); with `~status & DSBSTATUS_PLAYING` 131 (430 bytes); with driver_index
 // set before the channel test too 135 (430 bytes, aligned 101 of 124: channel spilled where retail
 // spills buffer_index); result declared first 139; failure/success as one if/else 126.
+// Requested-buffer rereads 113; long result 102, with rereads 102; rereads with success exit 139, long too
+// 138; byte result with rereads 96.
+// Rereads with valid guard 141, plus long/success exit 131. Isolated byte/char/short/word result
+// 96/96/125/125; byte only kept, 437/430 bytes.
+// Round 279: byte result from completed paths with short/long channel and buffer
+// 148/154/144/150; driver result at channel selection with long buffer 130, completed-path too 148;
+// completed byte result with complemented status, short/promoted outputs 151/160. Original byte-result body restored.
 // @retail 0x1295e0
 bool __stdcall function_1295e0(short voice_index)
 {
 	s_sound_voice *voice = &g_4e6378[voice_index];
 	s_sound_playback *sound = SOUND_PLAYBACK_GET(voice->sound_index);
-	bool result = true;
+	byte result = true;
 
 	if (voice->channel_index == NONE || ((sound->priority & 2) && voice->unknown0e == NONE))
 	{
@@ -3062,6 +3084,9 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // Loop-end search seed/explicit cases 86/86; first search result/both boundaries 86/86; existing tail
 // search/seed plus search 86/86; first/both salt producers 183/203. Original body restored; playback/clock and
 // native mode scheduling remain.
+// Round 279: flag admission separated from class-mode production, short/long mode,
+// switch/direct guard and repeated/shared class index: eight forms 153 each.
+// Original conditional mode and loop restored; playback/clock schedule still differs.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
@@ -3354,6 +3379,8 @@ void __stdcall function_1264c0(dword arg_0);
 // next search (retail's masked-slot reuse) 9; plus a memset of the impulse ids 6 (its pointer in
 // ECX, retail EAX). Not kept without a match. Next search alone 85; deadline in the loop condition
 // 107; local-pointer, loop, chained and helper id stores 9; struct copy of the ids 114.
+// Range fill saved/direct 119/122; counted fill saved/direct 121/121; with shared invalid value
+// 104/102/102/102. All restored.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
@@ -3458,6 +3485,14 @@ struct s_128ca0
 // Round 219: readonly conditional next chunk 239; complete countdown arms 215 (plain, kept); both
 // 227; word countdown 229; conditional/word 234; complete arms/word 224; all 217, with role names
 // 217. Sub-eight gains 227/229 restored; all other forms restored.
+// Round 154 (fast): one long gain seeded from arg_1, updated in place (`*(real *)&gain = location
+// + (playback gain + gain)`, then `gain = function_1251e0(...)`) with one shared scale local 241
+// (frame 0x494, opening exact up to the pitch bounds); plus 0x126000's pitch_bounds pointer with
+// gain/pitch names 238 (first difference +0xba, aligned listing 108 against 147); gain declared
+// first 256; real gain 295; outer operands swapped, decibels_sum on the variable, in-place
+// permutation sums 238 each (identical code). Retail loads the location gain into its own register
+// before the inner sum (one instruction more); every form folds it into addss, and that one-line
+// shift dominates the positional score. Next: find that load, then the single-exit pin.
 // Round 168: Native processed real gain with original/early declaration and signed/unsigned raw bits 215 each; all four with shared scale 287. Original body restored; gain homes and clamp joins remain.
 // Round 247: sequential inner/outer/both reference-input gain sums 269/215/269; both with shared
 // scale 242, before pitch 276, before pitch with scale 256, role names 269 and entry declaration
@@ -3691,6 +3726,11 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 221: original native fallback copied from the existing immutable object by aggregate/library,
 // each with aggregate/library occlusion and field/aggregate publication: 739 each, 2085 bytes.
 // All eight restored; original helper and stack fallback retained; temporary declaration removed.
+// Round 154 (fast): existing 0x16f3a0 getter for the state pointer 537 (aligned 486 -> 482); the
+// fallback asking the getter again 543; getter plus 0x14ddc0/0x14de70 at the loop head 555 (aligned
+// 461); that plus the existing const g_44a2a0 (extern in sound_driver.h) 719 (frame 0xe0, 2106 bytes,
+// aligned 410); plus the fallback getter 747. Retail evaluates the inlined 0x16f3a0 cmov again in its
+// second fallback copy and inlines 0x1420f0/0x1427f0; BLOCKED-BY 0x16f3a0 (noinline for its callers).
 // Round 389: query directly into the final point 563; first/second/both rotations in place
 // with complete vector snapshots 1030/1035/1008; query reuse with those graphs 1042/1047/1020;
 // complete reuse with native output-pointer return 1020. Original distinct workspaces restored.
@@ -3834,11 +3874,15 @@ void function_21b0e0(bool arg_0);
 long players_first_active_local_player(void);
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1);
 
-// score 108 (was 108): aligned frame 0x174c versus 0x1744; promoted voice limit 108; entry system
+// score 108 (was 108): aligned frame 0x174c versus retail 0x1744 remains.
+// Promoted voice limit 108; entry system
 // 108; direct elapsed 108; pending byte 108; frame input 108; short player cursor 122; short
 // next-player result 115; both player values 122; const element arrays 108; `= {}` arrays 121;
 // `!= 0` flag argument 128; flag argument through local_0 108; long restart cursor 134 (gives
 // retail's movsx/inc/cmp loop; only the loop padding jump moves with the longer prologue).
+// Fixed stack allocation of first/second/both buffers 131/145/149; batch 139; batch with first/second/both
+// 162/162/164; all with long restart 161.
+// Entry allocation first/second/both/all 174/176/174/164; all with long restart 163. All restored.
 // @retail 0x125b40
 void function_125b40(void)
 {

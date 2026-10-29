@@ -568,6 +568,9 @@ void simulation_player_collection_swap(s_type_c67652 *collection, long player_in
 // wrapping the body instead of `continue` 32 (same code); `configuration` reused for the last copy
 // 113; one function-scope player pointer for both loops 32 (same code); `&watcher->players` written
 // at each use instead of `collection` 294.
+// J185: signed-word first/second/conflict ordinal subsets 291/257/292/179/281/288/313;
+// byte conflict ordinal 196. Native narrow counters grow the body; original counters, source observations,
+// exact key/copy expressions, call roles and all helper declarations restored.
 // @retail 0x83610
 void __stdcall function_83610(s_simulation_world_owner *watcher, long *count, s_simulation_player_update *updates)
 {

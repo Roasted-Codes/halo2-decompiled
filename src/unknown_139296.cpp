@@ -458,6 +458,8 @@ bool function_22acb4(long player_index);
 // Round 388: One existing source-flags snapshot after first-mask checkpoints
 // 8/2/4/16/32/256/512/1024: 281/281/278/275/271/268/268/266.
 // Original late snapshot and every mask producer restored; second-mask spill remains.
+// Round 399: Source-flags phase scope, multiplayer phase scope, readonly source values and all
+// combinations, then all result-home names: 165 each. Original restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)

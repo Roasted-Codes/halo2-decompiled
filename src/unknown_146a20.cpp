@@ -72,6 +72,9 @@ bool g_47f05b;
 // and the 1 in edx, leaving only the dead vtable store: 35 each (140 bytes). A one-file LTCG harness
 // keeps the store for none of member reads, constant-folded branches, a cross-file constructor or the
 // globals as one struct.
+// Force-inline abstract constructor 34; scoped block 34; abstract-typed block 34; refcount-typed block 34;
+// intermediate/derived/abstract result reused for the pool 44/44/44; intermediate result published 38;
+// inline target 34.
 // @retail 0x146a20
 void function_146a20(void)
 {

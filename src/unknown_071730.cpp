@@ -145,6 +145,9 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // Original complete lookup count and signed zero/negative admission restored.
 // Round 226: Property/balance defaults before count observation 457/439; both 457; each/both
 // with Boolean reset 472/469/472; property with Boolean balance 462; all with both Booleans 479. All restored.
+// Round 189: plain strict/fallback balance loop, long ordinal with short/bool/long/byte
+// result 580/591/588/591; short ordinal with those four results 580 each. Original
+// attempts restored; the rolled loop shortens away from retail and leaves the frame excess.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

@@ -80,6 +80,15 @@ bool map_copy_request(char const *map_name, long priority);
 void __stdcall cache_copy_record_use(char const *map_name);
 
 // score 367 (was 367): Aligned frame 0x110 agrees; request-source reuse, dependency bound and write-option scheduling remain.
+// Round 74, case-block sizes against retail's jump table: the two 0x1a1050 writes with explicit
+// `s_file_write_flags(0)` temporaries (retail pushes the zero from EAX; the conversion builds it in place)
+// fix states 7 and 14; states 8 and 15 split with case 15 written after case 14 (retail's block order)
+// and state 6 through a named size_known bool give retail's length (1720) and every case offset from
+// state 12 on: 432 (fast). Still off: state 0's `mov esi, edi` after 0x214db0 (retail re-forms
+// 0x55bf28, 3 bytes; a pending-request pointer and a memcpy copy change nothing) and state 11, 3 bytes
+// long, whose no-buffer exit retail merges into state 10's `state = 11` tail. Flags temporaries alone
+// 465 (1688 bytes); split alone 468; split + temporaries 430 (case 15 after case 8); memcpy request
+// copy 367. All restored: the lockstep count only falls once state 0 is fixed.
 // Round 85: retail keeps states 8 and 15 as separate cases (`state = 9;` / `state = 16;`); with them split, the
 // writes' flags as `s_file_write_flags(0)` temporaries, state 6's first test through a named `size_known` bool
 // and the dependency time indexed (`&g_55b4f0.dependency_times[type]`, retail's pointer exit test) the body is
