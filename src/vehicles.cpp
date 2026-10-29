@@ -781,6 +781,9 @@ __forceinline long vehicle_round(real value)
 // Double literals 98; shared crosses 140; both 79 (kept); angular/both scales 83/83;
 // scaled sum 83; single result/vector names 79/79; seven scalar name/scope forms 79;
 // coefficient at use 93, with shared sum 95. Only the cross-helper header is needed.
+// Round 90: `down` computed after the side cross 93 (rate then stays in xmm7, no spill); dot terms
+// i,k,j 80, k,j,i 79; dot3f for the dot 79; dot3f inside vector3f_scale for the projection 79 (that
+// whole block then equals retail, through the forward pointer, one line out of step: aligned 51 -> 44).
 // @retail 0xef870
 bool function_ef870(long vehicle_index)
 {
@@ -3322,7 +3325,10 @@ long __stdcall effect_new_from_parameters(s_effect_parameters *parameters);
 // i` 117; the loop bound written as the sum of the two counts 52; a short count 128; the speed choice
 // as an if/else 53, into a named local 53. Round 85: the tag index stored after the owner fields
 // (retail's store order) 48 (kept); then colors before the source 49; scale after the memset 48;
-// `i` declared in the for 48; `count +=` 48; the sum's operands swapped 48.
+// `i` declared in the for 48; `count +=` 48; the sum's operands swapped 48. Round 90: no marker
+// pointer 129; the ray through vector3f_scale 48; facing declared with the loop locals 48; `long count`
+// declared before the first count 48; count from the second call, then `+= primary_count` 48 (the
+// 48s are the same code: the second count's sign extension stays preferenced to eax).
 // @retail 0xf6060
 void __stdcall function_f6060(long vehicle_index)
 {
