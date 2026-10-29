@@ -109,6 +109,9 @@ real normalize2d(point2f *arg_0);
 // Round 271: full collision output with the shared native head as member/base, late/entry
 // storage, 220 each; all four with radius before center 215 each (five-point gain restored).
 // Original opaque full output, output access, scalar spill and complete body restored.
+// Round 273: uninitialized squared-separation/projection/adjusted-distance declarations
+// at entry, seven subsets 220 each; all with the clearance declaration at entry 220.
+// Original scalar declarations restored; output EBX/EBP and vector homes remain.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

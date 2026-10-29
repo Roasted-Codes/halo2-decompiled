@@ -141,6 +141,9 @@ static __forceinline void world_vector_to_view(real arg_0, vector3f const *arg_1
 // Round 241: orthographic segment in first raw offset/first view/second view 272/220/220;
 // with complete k/j/i input/scale order 284/257/257; first-offset/first-view reuse with
 // shared segment difference 221/220. One-point gains rejected; original body/helper restored.
+// DL175: Helper axis homes, displacement/view homes and early uninitialized tail scratch in seven
+// subsets [221, 221, 221, 221, 221, 221, 221]; helper horizontal/vertical/depth homes 221. Original
+// helper and body restored.
 // @retail 0x501e0
 void function_501e0(s_501e0 const *arg_0, bool arg_1, s_501e0 *arg_2)
 {

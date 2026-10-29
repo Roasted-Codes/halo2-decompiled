@@ -542,6 +542,11 @@ void function_295320(point3f const *point)
 // callers 0x2a6200/0x2a6270/0x2a6330 then pick other scratch registers around
 // the call (11/11/2; a noinline declaration changes nothing), so it is not used
 // here; the walk with early returns 39.
+// Left: the zero sits inside the active block (retail: loop top), the found arm
+// is placed last, and the registers rotate.
+// Native datum iterator with inlined scan, data/index seed, missing-index seed, null-datum seed,
+// complete seed 116/116/116/116; calling-scan counterparts 152/152/152/152.
+// Original captured activity and complete walk restored; the live-null exhaustion join remains.
 // @retail 0x2958a0
 long function_2958a0(long name)
 {

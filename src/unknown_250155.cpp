@@ -1368,22 +1368,22 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // frame 0x58 versus 0x54; query/count homes, scalar tail stores and final row registers differ.
 // Initial slot memset 187; unsigned selected count 116; query failure guard 136; comparator default 124; native secondary result 140.
 // Guarded fills with current cursor/sort 197, with shared query 195; short mode 125; byte mode 121; selected-end tests 158.
-// score 116 (was 116): extra count home and scalar tail fills still differ.
+// Earlier: extra count home and scalar tail fills still differ.
 // Standard range/count fills 166/164; first/second counted fill 164/166;
 // first/second/both maxima 135/124/159; counted fill with maxima 143.
 // extra query frame dword, count homes and scalar tail fills remain.
 // Row-total lexical rank 116; independent query storage and renamed combination 160;
 // actual row reference, short row result and native index array 116; native predicates and query-success local 136.
-// score 116 (was 116): query/count homes and scalar tails remain. Shared query with
+// Earlier: query/count homes and scalar tails remain. Shared query with
 // first/second/both standard maxima 143/117/158; indexed rows 135, plus first/both maxima
 // 150/145; shared query default at entry 142, plus both maxima 151.
 // Extra query dword, count homes and scalar tail fills remain. Branch
 // player/selection/both initialization 130/164/164f; first/second/row while loops 116f; retained row pool
 // 143f; shared checked row accessor 118f. Branch selection restores frame 0x54 but regresses.
-// score 116 (was 116): query/count homes and scalar tail fills still differ.
+// Earlier: query/count homes and scalar tail fills still differ.
 // First/second/both maximum equality 116/116/116; values-first comparator 115 (dropped);
 // comparator branches/storage 116/116; factored mode 160; pre-allocation row value 136.
-// score 116 (was 116): query/count homes and tail-fill schedule still differ.
+// Earlier: query/count homes and tail-fill schedule still differ.
 // first word scan 164f; second word scan 135f.
 // both word scans 155f; byte scans 155f.
 // signed byte scans 155f; early comparator 164f.
@@ -1391,14 +1391,17 @@ int __cdecl matchmaking_compare_value(void const *a, void const *b)
 // extra query home, selected-count homes and scalar tail fills remain.
 // Completed first/second/both query totals 145/138/159; rejected first/second/both scans 116;
 // open-row default 115 (dropped); completed totals with open-row default 158.
-// score 116 (was 116): query/count homes and scalar tail fills still differ.
+// Earlier: query/count homes and scalar tail fills still differ.
 // Branch-shared session count 138; with library/range tails 201/160;
 // selection initialization 162; completed total 134; word scans 160; comparator/open-row forms 139/137.
-// score 116 (was 116): index fills as `for (i = index_count; i < 16; i++)` give retail's guarded
+// Earlier: index fills as `for (i = index_count; i < 16; i++)` give retail's guarded
 // rep stosd 162; with item_count shared by the mode-one query (frame 0x54) 161; plus indices[i]
 // rows without the cursor 171; block-scoped fill index 161/162. Those keep index_count in EBX for
 // the whole body and move mode to the stack, where retail keeps mode in EBX, index_count in EDI
 // only in the scans, and reloads player_count after calls (its address escapes in retail).
+// J185: existing query noinline boundary, alone/shared output/indexed tails/both 116/123/162/161;
+// native byte query return at all declarations, same four forms 116/123/162/161.
+// All query declarations, provider source and original target body restored; no new checked loss beyond the preview.
 // @retail 0x2514fd
 void c_matchmaking_list::v3()
 {
@@ -2099,11 +2102,13 @@ void function_1905bf(long controller, bool flag);
 // score 93 (was 93): the call at the top of the function goes to another
 // helper in ours and to retail's 0x14917c, and the branches around it land in
 // the other order
-// score 93 (was 93): with a bool result every instruction is retail's; retail's one exit
+// with a bool result every instruction is retail's; retail's one exit
 // follows the base call and the not-signed-in block comes last, ours puts the exit last.
 // Base call after the if/else with the else returning 137; the base call in every
 // path that reaches it 107; not-signed-in early return 106; bool result first and
 // returned by the early test 111; constant returns with a direct base return 137.
+// Negative outcome bool/long/signed-byte/unsigned-byte 146/138/146/146; with shared team-direction case
+// 126/147/126/126. Restored.
 // @retail 0x250b1e
 bool c_session_lobby_screen::v10(s_widget_event *event)
 {
@@ -2415,13 +2420,16 @@ static __forceinline long local_player_find(long const *local_list, long player)
 
 /* fills the lobby's player list (players, count of them), with the local
    players' chosen teams; hides the slots past the count */
-// score 118 (was 118): the locals live in the other stack slots, ours keeps
+// score 111 (was 111): the locals live in the other stack slots, ours keeps
 // the count at ebp-8 and the flags byte at ebp-0xc while retail keeps them at
 // ebp-0xc and ebp-8, and the switch's table and the words it loads sit in
 // the other order
-// score 111 (was 111): retail sign-extends the bitmap index before find_bitmap (a long parameter,
+// Earlier: retail sign-extends the bitmap index before find_bitmap (a long parameter,
 // like find_text), and reloads players[i] after the voice-state query; named pointer to
 // players[i] in the first loop 111; renamed count, flag, player and slot locals 111.
+// Round 184: shared count 301; result-first voice 129; native team byte 165; count/voice 307;
+// scoped text/all receivers 111/111; late team-result constants 171; complete combined graph 307.
+// Original count, receivers, widths and outputs restored.
 // @retail 0x25042d
 void function_25042d(c_session_lobby_screen *screen, long valid, s_session_flags_view *session, long *players, long *local_list, long count)
 {
@@ -2797,6 +2805,9 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 // Round 166: unsigned rows 100; bitmap presence 106; absent text 100; row while 100; native
 // animation shift 117; unsigned presence/animation 106/117; presence text animation 109;
 // recovered-prefix game-first/query/unsigned/animation 143/171/171/170.
+// Round 183: existing name/appearance/team payloads before validity bits, all seven nonempty
+// combinations 100 each; all three with one current-item receiver 293. Original setter bodies
+// and complete target restored; receiver reload, row query and animation homes remain.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {

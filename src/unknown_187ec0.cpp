@@ -138,40 +138,20 @@ public:
 	short m_index;
 };
 
-// score 33 (was 33): key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
-// key EDI/EBX and entry-live absent result remain.
-// Earlier: key EDI/EBX and entry-live absent result still differ; 56/65 bytes.
-// Search cursor 38; conditional result 35; count read once 33; pointer walk 46;
-// pointer/exhaustive result 50; exhaustive result 46; unsigned index 39; post-search result 36.
-// Shared-bound noinline/stdcall/cdecl 33/33/33; inline target absent; unsigned entry-result
-// inline/noinline/stdcall/cdecl 39/39/39/33 (aligned caller included); signed entry-result noinline 42; all restored.
-// Entry-live result with break, key compared first 42 (key on the stack); early return in the loop
-// 42; aligned char buffer in 0x1eb020 with that body 42; 0x188640 calling without its key reference
-// 42 (0x1eb020 lost); __stdcall 0x188640 42; parameters swapped 42. With the 0x1eb020 -> 0x188640
-// call removed, or 0x1eb020 unaligned, that body and 0x188640 both match: the aligned caller's edge
-// keeps the key out of ebx. BLOCKED-BY 0x1eb020
-// Native return object first/bound first/found constructor 42/42/42; late result object 35;
-// cursor object with member/copy exhaustion 41/40; entry object/live field bound 42;
-// entry object with completed search 46. Existing class and aligned caller unchanged.
-// Post-search/shared-bound/positive-count class results 41/42/51; while class 46;
-// unsigned positive search 25; unsigned class 51; class copy 33/46.
-// Positive equality/nested equality 22/22; direct return/cursor 28/28;
-// post-search object/scalar 27/25. Negative guard 25; negative equality 22 (a count < 0 guard before an unsigned search, 67/65 bytes; not kept);
-// negative direct return/scalar 28/25; signed/unsigned normalized bounds 26/27.
-// Pointer-derived indices: range-first-return 46; range-completed-test 70; range-native-result 91;
-// range-exhausted-exit 75; range-ordered-bound 46; range-local-object 92; range-computed-index 97;
-// range-result-from-count 84.
-// Descriptor base before cursor/bound/after cursor 39/39/33; live count 39;
-// base with entry short/word/wide result 41/39/41; positive-domain base 32.
-// All include the aligned upstream caller; preliminary one-source scores excluded.
 // @retail 0x1885f0
 c_block_index function_1885f0(s_globals_element_block_view const *globals, long key)
 {
 	long count = globals->count;
-	long index = 0;
-	while (index < count && key != globals->elements[index].key)
-		++index;
-	return c_block_index(index < count ? (short)index : NONE);
+	short result = NONE;
+	for (long index = 0; index < count; ++index)
+	{
+		if (key == globals->elements[index].key)
+		{
+			result = (short)index;
+			break;
+		}
+	}
+	return c_block_index(result);
 }
 
 static inline s_globals_element *globals_element_get(s_globals_element_block_view const *globals, short index)
@@ -185,31 +165,7 @@ static inline s_globals_element *globals_element_get(s_globals_element_block_vie
 	return result;
 }
 
-// score 6 (was 6): key is retained in EDI rather than retail EBX; 75/75 bytes.
-// Earlier: the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
-// the key is passed in EDI instead of retail's EBX, rotating the entry saves and loads;
-// key pointer before globals 6; direct index construction 6; delayed globals assignment 6;
-// read-only key pointer 6; global at each use 6; read-only index result 6;
-// direct key address 29; read-only key parameter 6.
-// the key reaches 0x1885f0 on the stack (ours) instead of in ebx (retail). With
-// 0x1885f0's entry-live result body (key compared first, break) both match unless the caller 0x1eb020
-// is 16-byte self-aligned (with a frame pointer but no alignment, or a double buffer, both match), and
-// only while 0x1885f0 returns its index class through memory (a short result keeps the key in a register).
-// Key as a by-value class 6 (0x1eb020 copies it through eax); that class with the entry-live body 7;
-// an explicit short out pointer 25; key read through a volatile own-parameter cast 8; the entry-live
-// body with 0x1eb020 not taking &material_index/buffer declared after result 7/7; the search as a
-// constructor of the index class 10 (key still on the stack). With the current search body the key
-// travels in edi (ours) where retail uses ebx. With the entry-live body: the search as a const member
-// of the block view 9 (search 42); the getter applied to the call's result 9; a const globals pointer
-// 7; __fastcall search 7; an unsigned key 7; the file without /arch:SSE 7 (diagnostic). The reduced
-// image holds no 0xec4f0 and still keeps the key off ebx, so 0x1eb020's caller is not the cause.
-// BLOCKED-BY 0x1eb020
-// constructor of the index class 10 (key still on the stack). BLOCKED-BY 0x1eb020
-// Further trials: saved-key/search convention remains EDI rather than EBX; aligned upstream edge unchanged.
-// existing index construction 9; returned-index bridge 6.
-// default index/member assignment 9; default index/value assignment 9.
-// read-only block/construction 9; read-only block/bridge 6.
-// read-only block/member assignment 9; read-only block/value assignment 9.
+inline s_globals_element *function_188640(long key);
 // @retail 0x188640
 s_globals_element *function_188640(long key)
 {

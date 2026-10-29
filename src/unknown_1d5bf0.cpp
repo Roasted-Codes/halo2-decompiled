@@ -137,6 +137,18 @@ PRIVATE __forceinline bool function_1d6d04(long arg_0)
 // transform's address, or from its first column 49; the transform argument cast
 // from the rotation's address 49; the rotation through an inline accessor
 // (reference or pointer) 49; component stores spelled m_quad.m128_f32[n] 49.
+// the outgoing call to 0x1d70d0 sets up the transform and
+// its rotation as two separate address calculations in retail (lea ecx,
+// [esp + 0x80] and, three pushes later, lea ecx, [esp + 0x8c] for the same
+// address), while ours computes the address once and reuses the register, so
+// seven bytes are missing and every following instruction is displaced.
+// order: retail pushes the address of the local, then 0, then the float, while
+// ours pushes 0 first and reloads the float out of the stack.
+// body group 49; center pointer 49; the rotation argument cast to
+// hkRotation const * 49; cast to the rotation's first column 49; cast to the
+// column's quad 49; both arguments through pointer locals 49; the rotation argument cast to
+// (hkRotation const *)&local_10.m_rotation 49 (this round, byte-identical to the baseline).
+// body group 49; center pointer 49.
 // @retail 0x1d6d00
 void __stdcall function_1d6d00(s_havok_component *arg_0, void *arg_1, byte *arg_2,
  long arg_3, long arg_4, bool arg_5, bool arg_6)

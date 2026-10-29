@@ -643,11 +643,6 @@ struct s_sound_label_play
 long function_189210(long object_index, long marker_name, s_sound_label_play const *play);
 
 /* sends the unit request 8 between two updates of the unit */
-// score 24 (was 24): frame 0x20 agrees; the first update receives the unit in
-// EBX instead of retail EDI, so the caller retains it in EBX rather than ESI.
-// Existing request helper 77; producer workspace/request scope 24/24;
-// zero/final-type aggregate initialization 29/29; early clear 27;
-// inline update with helper/original workspace 77/24. All restored.
 // @retail 0xc4820
 void __stdcall function_c4820(long unit_index)
 {
@@ -1950,10 +1945,6 @@ struct s_unit_definition_weapon
 /* creates the unit definition's starting weapons (+0x1c0, +0x1c4) and
    gives them to the unit; deletes those it cannot take (or, in state 2,
    already has) */
-// score 95 (was 95): Frame 0xc8 versus 0xc4, spilled ordinal and admission-call convention remain.
-// Entry/definition creation workspace 95/95; outer created handle 95; workspace/handle 95;
-// invalid-item/creation continues 95; successful-admission continue 95; workspace/continues 95;
-// readonly definition/workspace 95; entry ordinal 98; existing masked-index getter 95.
 // @retail 0xccab0
 void function_ccab0(long unit_index)
 {
@@ -2304,7 +2295,7 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 
 /* once: sets the unit's flag 21 and a random angle at +0x2d8 around its
    actor's direction (or its own facing) */
-// score 7 (was 20): Frame 0xc versus 0x10 (retail keeps the atan2 temp in the query buffer's first dword,
+// score 5 (was 20): Frame 0xc versus 0x10 (retail keeps the atan2 temp in the query buffer's first dword,
 // ours with range) and the last two x87 adds (retail adds the bound before the angle) differ; the query
 // writes a 12-byte vector, which the 8-byte buffer only gets away with here. Native vector, 12-byte scratch
 // and real[3] 23; bool flag 60; native/bool 60; outer workspace 23; field angle 57; random-first native/bool
@@ -2513,9 +2504,6 @@ bool __stdcall function_cd6a0(long unit_index, long unknown, long weapon_index)
 /* gives the unit a starting profile (the globals' +0xfc, 0x44 bytes each):
    resets it first when asked, then its two weapons, its two reals and
    its grenades */
-// score 58 (was 58): Unit/profile/cursor carriers differ; retail takes the unit from
-// the stack into EBP and keeps the cursor in EBX. Direct-parameter countdown/index/pointer
-// walks 77/77/95; unit-first versions 64/64/95; short index 77, unit-first short index 64.
 // @retail 0xcce00
 void function_cce00(long unit_index, short starting_profile_index, bool reset, bool flag)
 {
@@ -3711,14 +3699,19 @@ void __stdcall function_cfc90(long unit_index, long definition_index, s_unit_mel
 /* whether a unit may enter the vehicle's seat from a marker: near enough
    (+0x98), facing it (+0xa0), the marker facing the unit (+0x9c), and
    moving with the vehicle (+0xa4) */
-// score 33 (was 85): Frame 0x24 and argument homes agree; normalization starts differing at +0x7f.
+// score 10 (was 33): the existing squared-length helper gives retail's k, j, i sum; only the first
+// scale product differs (retail copies the scale and multiplies by direction.i in memory, ours
+// loads direction.i before the division). Round 73: the scale assigned inside the first product 10;
+// existing scale helper with the quotient/a named scale 10/14; existing normalize helper 13
+// (copy form on j too, sum k, i, j); scale declared at the top 10.
+// Earlier (score 33, was 85): normalization started differing at +0x7f.
 // Angle order 84; with comparison result 92; nonzero normalization arm first 78/86;
 // shared point difference 45/67, with normalization 43/65; entry Boolean result 33.
 // Paired offset parts 137/130; both masked getters 43/33, with parts 137/130; first getter 43.
 // Squared-length/dot helpers 10, normalization helpers 14/13, shared scale and length 14;
 // all changed-grouping forms restored. Complete scale/point/both setters 33; shared scale 33.
 // Eight parallel scale product orders/compound assignments with squared length all 10, exact-only.
-// Retain shared point difference, entry result and retail symmetric angle order with original float tree.
+// Retain shared point difference, entry result and retail symmetric angle order.
 // @retail 0xc9040
 bool function_c9040(long vehicle_index, long unit_index, short seat_index, vector3f const *forward,
 	point3f const *position)
@@ -3732,7 +3725,7 @@ bool function_c9040(long vehicle_index, long unit_index, short seat_index, vecto
 
 	function_cafc0(unit_index, &center);
 	vector3d_from_points3d(&center, position, &direction);
-	distance = (real)sqrt(direction.k * direction.k + direction.j * direction.j + direction.i * direction.i);
+	distance = (real)sqrt(length_sq3f(&direction));
 	if (!(0.0001f > (real)fabs(distance)))
 	{
 		real scale = 1.0f / distance;
@@ -3970,6 +3963,8 @@ bool function_c5eb0(long unit_index)
 // forward products 28; both shared crosses 91; crosses plus uniform products 91;
 // native input vector 63, with uniform products 63, with crosses 101, all three 101;
 // existing scale-aware transform alone/with shared crosses 173/173. Original body retained.
+// Existing plain vector transform helper 33; left terms first 28; k/j/i or i/k/j declarations 32;
+// i/j/k declared then assigned k, j, i 32 (j loads first but takes XMM2) or j, k, i 28.
 // @retail 0xcb810
 bool function_cb810(long unit_index, vector3f *vector)
 {
@@ -5653,9 +5648,16 @@ bool __stdcall function_c4410(long unit_index, void const *creation, bool *out_o
    (4 also changing weapons), 5 to 7 into the second hand beside a
    matching first (6 lowering it first, 7 readying it); tells the player
    code */
-// score 279 (was 325): Frame 0x50 and extent agree; incoming unit, return byte and ready home differ.
+// score 333 (was 279): the single exit with `default: __assume(0)` gives retail's stack convention
+// (all three arguments pushed), which matches 0xc4820, 0xccab0, 0xcce00 and 0x19ef40; frame 0x54
+// versus 0x50 (the main hands array keeps its own slot), weapon/mode in EBX/EDI versus EDI/EBX,
+// and the two weapon flag tests are not stored in the ready byte as in retail.
 // Object flag 7 read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift (294 -> 279).
 // Two request homes 313; result first 313; shared exit 301; secondary modes first 294; branch-local requests 314.
+// With a trial `standard` marker (removed): plain body 320; single exit 320; modes 3/4 tested first 308;
+// `default: __assume(0)` 302; blocked local for the flag tests 320; one ready check after the mode
+// chain 329. Without it: either request renamed 333; hands declared at the top 333; hands in a bare
+// block 332 (frame 0x50).
 // @retail 0xcd0c0
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 {
@@ -5669,7 +5671,7 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 	if (TEST_FIELD_BIT((weapon->object_flags >> 7) & 1) || *((byte *)weapon + 0x12c) & 1 ||
 		!function_cd6a0(unit_index, NONE, weapon_index))
 	{
-		return result;
+		goto done;
 	}
 	ready = true;
 	if (mode == 2)
@@ -5679,28 +5681,7 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 	}
 	else
 	{
-		if (mode == 5 || mode == 6 || mode == 7)
-		{
-			long first_index = function_cbd50(unit_index, UNIT_GET(unit_index)->current_weapon_index);
-
-			if (first_index == NONE || !function_101640(first_index) || !function_101640(weapon_index))
-			{
-				return result;
-			}
-			ready = true;
-			if (mode == 6)
-			{
-				memset(&request, 0, sizeof(request));
-				request.type = 0x13;
-				request.type17.unknown4 = true;
-				ready = function_e6900(unit_index, &request);
-				if (!ready)
-				{
-					return result;
-				}
-			}
-		}
-		else if (mode == 3 || mode == 4)
+		if (mode == 3 || mode == 4)
 		{
 			long second_index = function_cbd50(unit_index, UNIT_GET(unit_index)->next_weapon_index);
 
@@ -5732,7 +5713,28 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 				}
 				if (!ready)
 				{
-					return result;
+					goto done;
+				}
+			}
+		}
+		else if (mode == 5 || mode == 6 || mode == 7)
+		{
+			long first_index = function_cbd50(unit_index, UNIT_GET(unit_index)->current_weapon_index);
+
+			if (first_index == NONE || !function_101640(first_index) || !function_101640(weapon_index))
+			{
+				goto done;
+			}
+			ready = true;
+			if (mode == 6)
+			{
+				memset(&request, 0, sizeof(request));
+				request.type = 0x13;
+				request.type17.unknown4 = true;
+				ready = function_e6900(unit_index, &request);
+				if (!ready)
+				{
+					goto done;
 				}
 			}
 		}
@@ -5740,17 +5742,17 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 	}
 	if (!ready)
 	{
-		return result;
+		goto done;
 	}
 	bool hands[2];
 	if (!function_cd7b0(unit_index, weapon_index, hands) || !hands[hand])
 	{
-		return result;
+		goto done;
 	}
 	short slot_index = function_cd620(unit_index);
 	if (slot_index == NONE)
 	{
-		return result;
+		goto done;
 	}
 	if (weapon->parent_index != NONE)
 	{
@@ -5792,6 +5794,8 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 		request.type17.unknown5 = true;
 		function_e6900(unit_index, &request);
 		break;
+	default:
+		__assume(0);
 	}
 	if (unit->unknown13c != NONE)
 	{
@@ -5801,7 +5805,9 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 	{
 		function_a8a30(unit_index, weapon->definition_index);
 	}
-	return true;
+	result = true;
+done:
+	return result;
 }
 
 /* the unit's death by a damage type, from a direction: picks the side it
