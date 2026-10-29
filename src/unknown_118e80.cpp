@@ -1056,6 +1056,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // point declared ahead of the sweep 283 (same code). On the current body: the sweep renamed to sort
 // before the point 156 and declared at the top of the block 156 (same code and homes: neither the
 // name nor the declaration order moves these slots). All restored.
+// DL175: Actual candidate-pointer countdown on query-first/long-third graph, with native short
+// remaining, pre-query sweep and readonly candidate subsets [281, 287, 208, 278, 281, 287, 208, 278].
+// Original indexed scan, query-first sweep and saved words restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
