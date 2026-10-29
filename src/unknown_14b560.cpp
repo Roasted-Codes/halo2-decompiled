@@ -810,6 +810,9 @@ static inline bool player_datum_iterator_next_inlined(s_data_datum_iterator *ite
 
 // score 55 (was 55): the record pointer is kept in EBX here and in EDI in
 // retail, and the two are used the other way round after the index is masked.
+// Round 199: consistent per-use unit, iterator-player and both observations 55/55/55; each with
+// retained ancestry pointer 113/113/113 (414 bytes); unsigned parent with unit/both observations
+// 55/55. Original body restored; datum/unit roles and root-walk entry remain.
 // @retail 0x14df40
 bool __stdcall function_14df40(long *unit_index)
 {
@@ -1269,11 +1272,15 @@ static inline s_players_globals *players_globals_14f2e0()
 // Shared direction helper for reuse/create/both 251/201/276; creation/colors/both entry scopes
 // 152/114/152; native/byte success 174/177; sentinel clears 114;
 // representation inline/out-of-line declarations 114/114.
-// score 114 (was 114): BLOCKED-BY 0x152bf0, whose retail body takes the loadout in eax and the unit in
+// Earlier: BLOCKED-BY 0x152bf0, whose retail body takes the loadout in eax and the unit in
 // esi (ours ecx/eax): without that call the unit takes retail's esi (diagnostic). `result = true`
 // before the user-index calls gives retail's bl result but 147 (one-line shift); at the tail start
 // 147; globals and reuse flag declared before the guard 114; chained NONE outputs 116; unit index
 // initialised NONE 114.
+// Round 199: actual reusable-unit query pointer through admission/fallback; conditional/guarded
+// acquisition, direct global observations and early final success:
+// 170/163/203/232/198/191/206/235. All restored; the pointer lifetime changes the frame and does
+// not fix the protected spawned-unit convention.
 // @retail 0x14f2e0
 bool __stdcall function_14f2e0(long player_index)
 {
@@ -1987,6 +1994,10 @@ struct s_player_creation_record
 // shows; our build does not inline that call (267, also with
 // inline_recursion(on) around this function). Written in function_14f270's
 // arm order, the NONE call in the other arm inlines instead (49).
+// Round 199: direct previous-controller comparison on the current partial-helper graph, with
+// native current-player fields, requested-field observations and assignment-first arms:
+// 33/33/198/198/47/47/195/195. All restored; requested-value/register roles and selective
+// recursive expansion remain.
 // @retail 0x14c090
 void __stdcall function_14c090(long index, bool reuse, s_player_creation_record const *record)
 {

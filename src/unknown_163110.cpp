@@ -726,21 +726,25 @@ bool function_1648d0(s_frustum_1648d0 const *source, s_view *view,
 // Frame pointer 574; zero inline depth 609.
 // First/second normal memcpy 115/115; negated aggregate 115;
 // native endpoint classification 387; default-zero intersection ratio 252.
-// score 115 (was 115): Coefficient/zero XMM roles, classification products and projection staging remain.
+// Earlier: Coefficient/zero XMM roles, classification products and projection staging remain.
 // Existing scale for first/second/source/all normal negations 425/410/433/446f; reused projected
 // workspace 249f; per-use outside bytes 249f; completed projection total 214f; native short total 115f.
-// score 115 (was 115): coefficient/zero XMM roles, classification operands and projection homes remain.
+// Earlier: coefficient/zero XMM roles, classification operands and projection homes remain.
 // Native camera vector member 115; camera/bounds references 251/133; clipped/camera/projected point names 115/115/115;
 // paired projection names 115; native vector plus three point names 115.
 // First/second input-vector value copies 463/474; external vector references 251/279;
 // both copies 454; shared scaled difference 390; conditional plane enable 474;
 // projection cursor before its guard 115. Arithmetic grouping and count guards retained.
-// score 115 (was 115): Normal/zero XMM roles, classification and projection homes remain; offset
+// Earlier: Normal/zero XMM roles, classification and projection homes remain; offset
 // accumulator 269; shared segment count 468; count result 459; projected/intersection values 402/323;
 // bool/second endpoint values 259/362; completed cursor 196.
 // The locals as plane3f 115; plane_distance_to_point for the classification 265, plus the
 // intersection distance 269, plus dot3f for the denominator 216; the distance alone 117;
 // dot3f for the first plane's d 278 (either argument order), for both planes' d 155.
+// Round 199: matching named xz subtotal, y product, x/z products and all products in both plane
+// rows 305/267/280/269; with existing component assignment for every normal negation
+// 306/301/174/285. All restored; original grouping, scale helper and guards retained; coefficient
+// preload and projection homes remain.
 // @retail 0x1652e0
 bool function_1652e0(s_view *view, real margin, const point3f *points, long point_count, point3f *projected_points, short *projected_count, s_bounds3d *bounds, bool use_plane0, bool use_plane1)
 {
