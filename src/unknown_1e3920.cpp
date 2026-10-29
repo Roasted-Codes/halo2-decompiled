@@ -1085,6 +1085,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // 320, 320, 320, 320, 320, 320]; all restored.
 // Round 196: Initial definition/cleanup/squad/lookup observation schedules
 // [331, 333, 368, 342, 368, 342, 336, 348]; original observation order and all mutable work restored.
+// Round 30: Squad parameter reference 320; unit re-observation 340; separate early failure 338;
+// uninitialized/late-scoped actor result 338 each; settings lookup noinline 320; unit re-observation
+// with a second guard or separate phases 340 each; cleanup indices first 320. Opening body restored.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

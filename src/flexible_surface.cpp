@@ -270,6 +270,10 @@ bool function_1173e0(long object_index, long index)
 // normal-field pointers 86; normalized contribution 223. Selected ordinary check 4/633.
 // Corner-pointer order acb/bac/bca/cab/cba 27/84/80/28/96; vector workspace before
 // corners 4; edge-only scope 4; loop-wide normal workspace 4. Original body restored.
+// Round 163: all triangle-index snapshots short forward/reverse and long forward/reverse
+// 7/7/7/7; corner references 4, with short indices 7; complete edge/normal role names 4;
+// complete position snapshots 274; contribution-first corner pairs ab/ac/bc 7/4/7.
+// All restored. Remaining addition pairs are normal.i, not normal.k: offsets +0x18.
 // @retail 0x117510
 void function_117510(long index)
 {
@@ -306,6 +310,10 @@ void function_117510(long index)
 // Reverse short snapshot ordinary check 139/741.
 // Native endpoint vertices with rest square/correction/shared-scale subsets:
 // 139/138/151/150/139/138/151/150. The one-point leads are dropped; original body restored.
+// Round 163: both pin decisions shared after/before correction, bool 201/201,
+// byte 201/201, word 189/189, long 195/195; with uniform live endpoint fields
+// bool/byte/word/long 212/212/200/206. All restored; 0x1c frame, entry/link homes
+// and correction/pin-word scheduling remain.
 // @retail 0x117790
 void __stdcall function_117790(long index)
 {
@@ -430,24 +438,30 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 168 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// score 160 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
 // Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
 // Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
 // three named cross terms 195; named variation 195; scalar declarations first 195;
 // projection before shared cross 182. Shared cross product 168 fast/plain, 880/880 bytes.
+// Round 219: immutable axis pointer 210; shared final double scale 168; both 210; native rotation
+// setter 168; axis/setter 210; scale/setter 168; all 210; readonly old with axis pointer 210.
+// Restored.
 // Round 381: RNG before time 199; oscillation before RNG 203; axis before/between trigs 168/168;
 // RNG-first/axis-between 199; oscillation-first/axis-first 203; rotation-scoped angle 201,
 // with shared final scale 201. Late angle reaches frame 0x20 but loses wind register; all restored.
 // Round 238: live direction inputs 209; complete output 199, with live inputs 188;
 // all three cosine products 188, with live inputs 183; sine/cosine role names 168/168;
 // separate trigonometric declarations with live inputs 209. Original snapshots and output order restored.
+// Round 32: shared initial RNG 160; shared table-index draws 160; both 160;
+// complete axis/direction CRT captures 168, with initial/table/both 160/160/160;
+// all with alternate shared RNG contract 160. Initial shared RNG retained, plain 160; frame 0x28 remains.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
 	s_surface_definition *definition = surface_definition(surface_record(index));
 	real time = (real)(g_510c54->game_time * (double)g_510c54->field_2_3);
-	dword random = surface_random();
+	dword random = random_next(&g_4e7408->seed);
 	double oscillation = cos(time * 0.005f);
 	real angle = (real)(random * (double)(1.0f/65535.0f) * oscillation * oscillation * 0.15f);
 	if (!g_55e714)
@@ -593,6 +607,10 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // lose the 0x22a664 reduced control; all original helper declarations and calls restored.
 // Native attribute descriptor with uniform type/count observations and complete
 // result-role identities: 473/498/473/498/473/498/473/498. All original fields and scans restored.
+// Round 163: shared independent-search ordinal, original/per-search defaults
+// 473/475; with uniform descriptor-base observations 498/482; native exit-owned
+// results 510/510, with descriptor observations 533/533. All original searches
+// and APIs restored; 0x44/0x2c frame and outer vertex API expansion remain.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {

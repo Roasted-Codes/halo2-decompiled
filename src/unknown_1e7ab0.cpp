@@ -232,6 +232,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Round 169: Native unit parent/seat/health-and-flags field subsets, all seven 620;
 // complete readonly unit receiver 620. Original types and body restored; state/player/unit
 // allocation remains despite the matching frame, selector and cleanup.
+// Round 220: Entry-getter failure guards, per-use table, both, readonly table,
+// readonly with guards/per-use/both, and conditional nullable result 620 each.
+// Original getter, state/player/unit receivers and complete body restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

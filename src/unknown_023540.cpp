@@ -2748,7 +2748,7 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 282 (was 334): Frame 0x58 agrees; six excess bytes, sampler constants,
+// score 282 (was 282): Frame 0x58 agrees; six excess bytes, sampler constants,
 // bitmap-call transport and scale/trig homes remain.
 // Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
 // has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
@@ -2812,6 +2812,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // native rectangle 282/334; independent second trig 280/338; rectangle plus trig
 // 280/338. Keep only paired diameters 282 (plain), 2028 bytes; the extra two-point
 // trig step is rejected. Original trig storage, arrays, helpers and calls retained.
+// Round 383: paired diameter products before normalization 356; full bounds before normalization 354;
+// complete horizontal/vertical product-and-bound phases 336/340; native rectangle counterparts
+// 356/354/336/340. Original reciprocal, product overlap and body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -3128,7 +3131,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 853 (was 934): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
+// score 853 (was 853): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
 // Earlier: Frame 0x2c agrees; capability/save roles and state expansion remain.
 // frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
@@ -3180,6 +3183,9 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // complete case results 1219; maximum result 1210. Restore all other carriers, memory
 // observations, cases and result lifetimes. Frame 0x2c agrees; mode bound ESI/EDI, full-width
 // small-permission test and state expansion remain.
+// Round 282: complete encoded output words, ternary/descending/result/ascending forms,
+// each with original/complete first-output word [1128,1131,1128,1131,1121,1121,1129,1130].
+// Original output helpers and complete body restored; capability/save roles remain.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
