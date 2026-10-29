@@ -50,7 +50,8 @@ static inline __m128 angular_diagonal_terms(__m128 const &a, __m128 const &b,
 	return _mm_add_ps(a_weighted, b_weighted);
 }
 
-static inline void store_body_axis(__m128 &result, __m128 const &axis, solver_body_31e7b0 const *body)
+// Retail keeps this helper inline in the conditional row-construction path.
+static __forceinline void store_body_axis(__m128 &result, __m128 const &axis, solver_body_31e7b0 const *body)
 {
 	if (body->axes_already_local)
 		result = axis;
@@ -164,10 +165,9 @@ void __cdecl build_angular_range_31f000(solver_angular_range_31f000 const *input
 
 // A linear velocity row at a common point, retaining its diagonal as well
 // as its reciprocal for the solver's velocity operation.
-// score 8 (was 50): output-reference transforms and a deferred bias store
-// recover the pointer registers. The diagonal load/x87 scheduling still differs;
-// preloaded vectors and reordered mass locals did not improve it.
-// An explicit first-axis reload fixed SIMD scheduling but changed pointer registers (25).
+// score 0 (was 8): keep the first-axis reload in each body-space branch and
+// inline the transform helper. Hoisting the reload changes pointer allocation;
+// allowing an out-of-line helper introduces a call absent from retail.
 // @retail 0x31ea90
 void __cdecl build_linear_velocity_31ea90(solver_linear_velocity_31ea90 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -181,10 +181,22 @@ void __cdecl build_linear_velocity_31ea90(solver_linear_velocity_31ea90 const *i
 	__m128 angular_a = cross_axis(relative_a, input->axis);
 	store_body_axis(row->a, angular_a, body_a);
 	__m128 angular_b = cross_axis(input->axis, relative_b);
-	store_body_axis(row->b, angular_b, body_b);
+	__m128 result_a;
+	if (body_b->axes_already_local)
+	{
+		result_a = _mm_load_ps((float const *)&row->a);
+		row->b = angular_b;
+	}
+	else
+	{
+		__m128 result_b;
+		store_body_axis(result_b, angular_b, body_b);
+		result_a = _mm_load_ps((float const *)&row->a);
+		row->b = result_b;
+	}
 	float diagonal = body_b->inverse_inertia.m128_f32[3] + body_a->inverse_inertia.m128_f32[3]
 		+ 1.1920928955078125e-7f;
-	float angular = sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b));
+	float angular = sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b));
 	diagonal += angular;
 	row->b.m128_f32[3] = diagonal;
 	row->a.m128_f32[3] = 1.0f / diagonal;
@@ -326,10 +338,9 @@ static inline __m128 transform_point(solver_transform_31f160 const *transform, _
 }
 
 // Transform local pivots and constrain their three world-space components.
-// score 7 (was 97): load bodies after transforming the pivots, use output-reference
-// transforms, and increment the operation cursor first. The diagonal load/x87
-// scheduling still differs; preloaded vectors and mass helpers did not improve it.
-// An explicit first-axis reload fixed SIMD scheduling but changed pointer registers (51).
+// score 0 (was 7): keep the first-axis reload in each body-space branch and
+// use the transform helper in the rotated path. This preserves the pointer
+// registers and delays the reload until after the second axis is transformed.
 // @retail 0x31f160
 void __cdecl build_transformed_points_31f160(solver_transform_31f160 const *transform_a,
 	solver_transform_31f160 const *transform_b, __m128 const *pivot_a, __m128 const *pivot_b,
@@ -351,10 +362,22 @@ void __cdecl build_transformed_points_31f160(solver_transform_31f160 const *tran
 		__m128 angular_a = cross_axis(relative_a, *axis);
 		store_body_axis(row->a, angular_a, body_a);
 		__m128 angular_b = cross_axis(*axis, relative_b);
-		store_body_axis(row->b, angular_b, body_b);
+		__m128 result_a;
+		if (body_b->axes_already_local)
+		{
+			result_a = _mm_load_ps((float const *)&row->a);
+			row->b = angular_b;
+		}
+		else
+		{
+			__m128 result_b;
+			store_body_axis(result_b, angular_b, body_b);
+			result_a = _mm_load_ps((float const *)&row->a);
+			row->b = result_b;
+		}
 		float diagonal = body_b->inverse_inertia.m128_f32[3] + body_a->inverse_inertia.m128_f32[3]
 			+ 1.1920928955078125e-7f;
-		float angular = sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b));
+		float angular = sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b));
 		diagonal += angular;
 		row->b.m128_f32[3] = diagonal;
 		row->a.m128_f32[3] = 1.0f / diagonal;
