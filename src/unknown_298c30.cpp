@@ -93,6 +93,8 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 }
 
 // score 408 (was 408): Frame 0x64 agrees; entry loads, normalization homes and 0x18 versus 0x1c cleanup differ.
+// The pointer-to-parameter trick for arg_3 is gone and the score is unchanged; the parameter's own use
+// still differs from retail's stack home.
 // frame 0x64 agrees; entry loads, parameter cleanup and normalization/trig homes differ.
 // Earlier frame 0x68 forms: shared normalizer 433, unsigned count 437, unsigned endpoint 433, both 437, angle end pointer 457.
 // Frame 0x64 agrees; entry loads, normalization homes and 0x18 versus 0x1c cleanup differ.
@@ -137,7 +139,6 @@ void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f cons
 	long const *const local_28 = &arg_0;
 	long local_29 = *local_28;
 	(void)local_29;
-	point2f const *const *local_26 = &arg_3;
 	s_slot_object_view *local_0 = object_get(arg_1);
 	point2f local_1 = { arg_7->x + arg_8->x, arg_7->y + arg_8->y };
 	point2f local_2 = *arg_8;
@@ -149,9 +150,9 @@ void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f cons
 	local_3[0].y = arg_4->y * local_30 + arg_7->y;
 	local_3[1].x = arg_4->x * arg_6 + arg_7->x;
 	local_3[1].y = arg_4->y * arg_6 + arg_7->y;
-	bool local_4 = local_2.x * (*local_26)->x + local_2.y * (*local_26)->y >= 0.0;
+	bool local_4 = local_2.x * arg_3->x + local_2.y * arg_3->y >= 0.0;
 	point2f const *local_31 = (point2f const *)((byte *)local_0 + 0x88);
-	real local_5 = local_31->y * (*local_26)->y + (*local_26)->x * local_31->x;
+	real local_5 = local_31->y * arg_3->y + arg_3->x * local_31->x;
 	byte local_6 = 0;
 	for (byte local_7 = 0; local_7 < 2; local_7++)
 	{
@@ -163,8 +164,8 @@ void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f cons
 			real local_11 = (real)cos(1.5707963705062866);
 			real local_12 = (real)sin(local_7 == 0 ? -1.5707963705062866 : 1.5707963705062866);
 			g_5047f8[local_6].field_4 = 1.5707963705062866f;
-			g_5047f8[local_6].field_c.x = local_11 * (*local_26)->x - local_12 * (*local_26)->y;
-			g_5047f8[local_6].field_c.y = (*local_26)->y * local_11 + (*local_26)->x * local_12;
+			g_5047f8[local_6].field_c.x = local_11 * arg_3->x - local_12 * arg_3->y;
+			g_5047f8[local_6].field_c.y = arg_3->y * local_11 + arg_3->x * local_12;
 			g_5047f8[local_6].field_0 = local_10;
 			g_5047f8[local_6].field_1 = false;
 			g_5047f8[local_6].field_8 = 1.0f;
@@ -173,8 +174,8 @@ void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f cons
 			local_11 = (real)cos(-1.5707963705062866);
 			local_12 = (real)sin(local_7 == 0 ? 1.5707963705062866 : -1.5707963705062866);
 			g_5047f8[local_6].field_4 = -1.5707963705062866f;
-			g_5047f8[local_6].field_c.x = local_11 * (*local_26)->x - local_12 * (*local_26)->y;
-			g_5047f8[local_6].field_c.y = (*local_26)->y * local_11 + (*local_26)->x * local_12;
+			g_5047f8[local_6].field_c.x = local_11 * arg_3->x - local_12 * arg_3->y;
+			g_5047f8[local_6].field_c.y = arg_3->y * local_11 + arg_3->x * local_12;
 			g_5047f8[local_6].field_0 = local_10;
 			g_5047f8[local_6].field_1 = false;
 			g_5047f8[local_6].field_8 = 1.0f;
@@ -213,8 +214,8 @@ void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f cons
 				real local_22 = local_21 < 0.0f ? local_21 + 6.2831854820251465f : local_21 - 6.2831854820251465f;
 				real local_23 = (real)sin(local_7 == 0 ? -local_22 : local_22);
 				real local_24 = (real)cos(local_22);
-				local_15.x = local_24 * (*local_26)->x - local_23 * (*local_26)->y;
-				local_15.y = local_24 * (*local_26)->y + local_23 * (*local_26)->x;
+				local_15.x = local_24 * arg_3->x - local_23 * arg_3->y;
+				local_15.y = local_24 * arg_3->y + local_23 * arg_3->x;
 				function_2992ba(local_6, local_10, local_21, &local_15, &local_2, arg_1, arg_2, local_13, local_5, arg_5, &local_27);
 				local_6++;
 				function_2992ba(local_6, local_10, local_22, &local_15, &local_2, arg_1, arg_2, local_13, local_5, arg_5, &local_27);
@@ -575,7 +576,11 @@ __forceinline void function_29a20e(vector3f *arg_0)
 	}
 }
 
-// score 550 (was 550): frame 0x580 agrees; retail duplicates the epilogue into both arms of the final
+// score 445 (was 493): the callee's pointer-to-parameter trick is gone, so the call site and the entry
+// schedule agree with retail; the frame homes still differ (our s_298c30 pointer at esp+0x14 and our
+// float at esp+0x10 against retail's esp+0x10 and esp+0x18), and retail keeps the flattened forward
+// vector's length on the x87 stack with fst/fabs/fcompi where ours stores and reloads it.
+// frame 0x580 agrees; retail duplicates the epilogue into both arms of the final
 // clamp and places the failure exit last (ours 82 bytes shorter), keeps the flattened forward vector's
 // length on the x87 stack and loads the reference vector's fields before multiplying. Tried: the
 // flattened length summed j first 551; the flag cleared before the forward copy 550; the flatten helper
@@ -788,7 +793,22 @@ void function_29a190(long arg_0, long arg_1, vector3f const *arg_2, vector3f *ar
 			*(real *)((byte const *)local_2 + 0x50) :
 			(-*(real *)((byte const *)local_2 + 0x50) > *arg_5 ?
 				-*(real *)((byte const *)local_2 + 0x50) : *arg_5);
-		*arg_5 = *arg_5 > 1.0f ? 1.0f : (-1.0f > *arg_5 ? -1.0f : *arg_5);
+		if (*arg_5 > 1.0f)
+		{
+			*arg_5 = 1.0f;
+			*arg_6 = false;
+			*arg_4 = 0;
+			*(real *)(local_0 + 0x668) = local_6;
+			return;
+		}
+		if (-1.0f > *arg_5)
+		{
+			*arg_5 = -1.0f;
+			*arg_6 = false;
+			*arg_4 = 0;
+			*(real *)(local_0 + 0x668) = local_6;
+			return;
+		}
 		*arg_6 = false;
 		*arg_4 = 0;
 		*(real *)(local_0 + 0x668) = local_6;
