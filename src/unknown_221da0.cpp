@@ -852,6 +852,8 @@ real function_18cac0(long arg_0);
 // bounds, side priority, strict maximum and full body restored.
 // Round 265: all six lexical orders of door/side/inner long slots, then both
 // uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
+// Round 186: Initial camera-cluster short/long with guarded/conditional/default-result/early-null
+// admission 218/272/247/275/247/275/218/272. Original direct observations and whole body restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

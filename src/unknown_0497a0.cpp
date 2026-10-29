@@ -109,6 +109,9 @@
 // Round 184: Native source/mode/flag snapshots, masks 1-7, then all plus low-word shape selector:
 // [704, 691, 715, 700, 721, 695, 710, 711]. Original selector observations, shape pointers, wave
 // helpers, scalar trees and sixth-component integer conversion restored.
+// Round 186: Selected native basis receivers, seven subsets and the shared selected source
+// 713/680/777/698/755/767/754/800. Original copies, helpers, floating trees and sixth-component
+// integer conversion restored.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
