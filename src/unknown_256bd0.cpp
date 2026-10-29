@@ -187,6 +187,10 @@ struct s_object_flags_256bd0
 // with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
 // placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and
 // iterator restored; activity spill and native geometry homes remain.
+// Round 171: noinline initializer/ordinary datum step with minimum/selection/both lifetimes
+// 195/195/196; later object result 194, with minimum/selection/both 195/195/196; complete graph
+// with early uninitialized cursor 196. Frame 0x110 recovered at 1070 bytes, but the best seven-point
+// gain is below threshold. Original declarations, lifetimes, helper and complete body restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

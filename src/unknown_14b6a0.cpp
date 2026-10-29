@@ -217,6 +217,9 @@ void function_14bac0()
 // relocation/probes/both 233/233/230; each with native recipients 262/262/259; complete sharing
 // with earlier bounds declarations 230, with native recipients 259. All restored; frame 0x44/0x3c,
 // readiness and recipient storage remain.
+// Round 171: unsigned player/unit/root datum-handle carriers in all seven subsets 230 each;
+// all three with the native result-tested recipient iterator 259. Original signed handles and
+// traversals restored; point/recipient sharing, readiness and frame 0x44/0x3c remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

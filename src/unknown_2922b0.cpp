@@ -154,6 +154,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // 680 [439]; nested body ending `return local_0;` then `return true;` 679 [462] (retail's early-exit
 // layout and `mov al, 1`). Every stack home is then 4-12 bytes off retail's (flag 0xf, minimum 0x10,
 // hit flags 0x14, input copy 0x38 in retail's frame).
+// Round 171: blocked-ray count byte/short/long/unsigned-long at entry 707/707/706/706;
+// after input copy and output zero 715/714/713/713. Original success bit, four hit bytes,
+// accepted length initializer, every math helper and all in-place input/result copies restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)
