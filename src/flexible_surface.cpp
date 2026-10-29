@@ -471,6 +471,9 @@ static inline dword surface_random()
 // Round 264: all six lexical orders of the three rotation objects on the shared
 // cross/RNG graph 160 each; vector declarations at entry/after angle 160/160.
 // Original names and scopes restored; frame 0x28 and time/rotation staging remain.
+// Round 401: uniform seed receiver, time receiver and both 160/160/160; projection before cross on
+// shared-random graph 174, with seed/time/both 174/174/174; both receivers and commuted time
+// factors 174. Original complete body restored; frame and rotation scheduling remain.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -635,6 +638,10 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // Round 264: existing 4f/2f API ordinary-inline-noinline declaration pairs, all
 // eight non-original combinations 473 each. Original declarations and body restored;
 // frame 0x44/0x2c and selective outer vertex API expansion remain.
+// Round 401: paired lookup parameter orders: five leading tag/group/variant permutations 473 each;
+// trailing context/pass swap 517; context/pass then tag/group/variant 471, pass/context then
+// tag/variant/group 471. Two-point gains rejected; every definition, declaration, caller and
+// original body restored.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {

@@ -656,7 +656,7 @@ PRIVATE inline void vehicle_approach(real *value, real const *rates, real bound,
 
 /* a vehicle's control: its drift and boost flags, braking, the steering of
    its control type, and its root node's movement */
-// score 100 (was 189): flag carriers/writers, clamp polarity and lookup ordering differ;
+// score 100 (was 100): flag carriers/writers, clamp polarity and lookup ordering differ;
 // Four-byte frame and root-rate/difference tail agree; flag carriers/writers, clamp polarity and
 // initial lookup ordering still differ.
 // Round 384: shared reversing writer, with boost-mode/active-boost subsets 179/129/185/190;
@@ -667,6 +667,9 @@ PRIVATE inline void vehicle_approach(real *value, real const *rates, real bound,
 // rates/difference 114; all three 100.
 // Retained both shared writers and all three native root producers. Original throttle comparison
 // and every flag/vector/call value preserved.
+// Round 401: native brake bit 213; word-bit outputs 202; both 230; late braking 179, with native
+// bit/word outputs/both 128/240/258; full-width braking carrier 277. All original observations,
+// byte writers and body restored.
 // @retail 0xef4f0
 void __stdcall function_ef4f0(long vehicle_index, real *steering)
 {
@@ -1885,7 +1888,7 @@ real __stdcall function_f1540(long vehicle_index, short gear, real angular_veloc
 /* the gear the vehicle shifts to: neutral (NONE) when it coasts slowly, the
    reverse gear (0) or first gear when the throttle changes direction, and
    up or down a gear at its engine's shift points */
-// score 12 (was 157): downshift upper-bound residence and exit displacements differ;
+// score 12 (was 12): downshift upper-bound residence and exit displacements differ;
 // Retail downshift loads count-minus-one into the returned register; ours preserves the prior
 // gear if lower exceeds that bound, leaving two instructions and exit displacements.
 // Round 384: delayed current 189; long result 151; single short result 175; delayed/single 191;
@@ -1894,6 +1897,9 @@ real __stdcall function_f1540(long vehicle_index, short gear, real angular_veloc
 // three-use gear ordinal 66; eligibility before lower calculation 12, with ordinal 12.
 // Retained short result, delayed current, native higher candidate and eligibility-first single
 // exit; no downshift value changed.
+// Round 401: shared bound 165; test-owned downshift result 44; both 170; current-gear eligibility
+// 126, with bound/result/both 162/135/123; full-width downshift result 164. All restored;
+// upper-bound fallback remains different.
 // @retail 0xf1740
 short __stdcall function_f1740(long vehicle_index, real throttle_input)
 {
@@ -3685,6 +3691,9 @@ PRIVATE __forceinline real vehicle_larger(real a, real b)
 // cases 2 and 5 jump into case 8 and 6/7 stay apart); returns in cases 6/7 161 (x87 again);
 // the larger as if/else 119; a radians inline for 6/7 123; case 2 with block locals 123;
 // double fabs in 6/7 123; cases 6/7 sharing one body 138; a shared angle local for 6/7 123.
+// Round 401: single-result case orders 012345867 143; 031425867 157; 013425867 156; 012345768 123;
+// 013482567 157; 013467825 129; 876543210 134; 258013467 162. All restored; lookup scheduling and
+// late tail merges remain.
 // @retail 0xf78e0
 real __stdcall function_f78e0(long vehicle_index, long limit)
 {
