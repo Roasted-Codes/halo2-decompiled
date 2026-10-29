@@ -232,6 +232,10 @@ void function_14bac0()
 // aggregate/CRT clear 230 each; both aggregates 230; first aggregate/native recipient aggregate
 // 250; both cleared/native recipient 279. Original initialization and iterators restored; frame
 // 0x44/0x3c, readiness homes and recipient overlap remain.
+// Shared in-place vector addition with native recipient/difference/query-input combinations 230/259/230/259/230/259/230/259; original storage and helpers restored.
+// Round 175: Complementary destination/alternate/both readiness 233/240/242;
+// with the native result-tested recipient iterator 254/254/259; both as byte/long
+// 242/286. Original readiness, iterators, points, counters and executable body restored.
 // Existing in-place vector sum with shared displacement/live ancestry headers/both 230 each;
 // sum alone 230; all four with the native recipient call 259 each. Original geometry,
 // both iterators and includes restored; frame 0x44/0x3c and readiness homes remain.

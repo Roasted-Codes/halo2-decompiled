@@ -660,6 +660,10 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Round 379: called shared append on first/second/third/first-second/first-third/last-two/all
 // descriptors 468/469/413/609/548/541/679 fast; uniform existing raw inline append 335
 // (control 334, full 336). All original calls and executable body restored.
+// Round 168: Static routing table with complete-zero descriptors, original/first/second/first-second/third/first-third/last-two/all scopes 352/352/360/419/363/395/416/456 fast (control 334, full 336). All restored.
+// Round 247: full CRT clears at native declaration, first/second/first-second/third/first-third/
+// last-two/all 334/333/333/333/333/332/332 fast; all after member copy 336 (control 334,
+// full 336). No qualifying gain; all aggregate declarations and shared initializers restored.
 // Round 224: Complete native headers for first/second/first-second/third/first-third/last-two/all/
 // at-use all 316/334/335/323/321/324/325/338 fast, restored as shared-initializer expansion.
 // Existing initializer calls with first-use zero declarations in those seven subsets, then all after copy,
@@ -787,6 +791,10 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // right word 456/456, signed byte 438/438; word route with ordinary inline 428,
 // word route alone 428 plain (kept); long/dword/byte route 438 each. Only the native
 // 0-or-1 route word remains; original append declaration and all gain trees retained.
+// Round 168: Retained word route with right long/word/dword/signed-byte domains 451/450/451/428; primary scalar with inline/inline-noinline/cdecl/stdcall 437/437/449/437. Cdecl loses dispatcher; all restored.
+// Round 247: native flag2 and primary pointer, original/native flag3 428/424; with shared
+// ordinary input 471/463; right from left 461/461, with shared input 494/494. Four-point
+// gain rejected; original field view, destinations and complete body restored.
 // Round 224: Coupled left short/right word-short-long-dword 450/450/451/451;
 // left long/right word-short-long-dword 451/451/452/452, all on the retained word route.
 // Original word/byte destinations, selector, gains and append boundaries restored; dispatcher exact.
@@ -955,6 +963,11 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 235: Existing qualified class raw-send path, seven front/rear/tail subsets and all-path if-else tail
 // [224, 224, 247, 224, 247, 247, 248, 254] fast. Dispatcher preserved in every trial; all original helper
 // calls, sums, fields and three local qualifications restored.
+// Round 389: scalar-selector single-result chains, positive nesting, regular/alternate/constant
+// defaults, negative/positive ternaries and mixed publication 224/226/219/231/228/224/235/224.
+// Five-point default-result gain also loses dispatcher 38; original result graph/callers restored.
+// Round 259: five complete shared inline-append formal orders and actual output
+// pointer/reference result contracts 224 each (eight forms). Original helper and all calls restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -1207,6 +1220,11 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // native channel bit with all raw sends, late/early sum 194/207. Short-complement interactions
 // front/rear/all 188/192/188; front plain full 188/592, all matches preserved, but word tests
 // and aligned instruction changes regress (110/120 to 121/128). All executable forms restored.
+// Round 389: actual appended-pair pointer/reference returns, signed/unsigned destinations
+// and forced/ordinary inline combinations 215 each, 640/606 bytes. Original append producer,
+// every caller and the frame 0x10/x87 send graph restored.
+// Round 259: native output-reference append with six complete formal orders and
+// pointer/reference output results: eight forms 200 each. Original helper and all calls restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

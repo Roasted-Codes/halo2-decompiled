@@ -338,7 +338,8 @@ PRIVATE __forceinline vector3f *normalize_particle_velocity_2b(vector3f *v)
     return v;
 }
 
-// score 47 (was 47): Frame 0xb4 agrees; 1517/1516 bytes. Back-edge parameter reloads and velocity
+// score 67 (was 67): Frame 0xb4 and 1516-byte length agree. Back-edge parameter reloads and velocity
+// Frame 0xb4 agrees; 1517/1516 bytes. Back-edge parameter reloads and velocity
 // blend/normalization stores differ; shared scale return plus addition recovers the attraction's in-place products.
 // Earlier frame-matched body kept attraction j/k products in temporaries and deferred velocity stores.
 // Round 9 (lane 11): steering record replaced by plain locals 291 (frame 0xac); the distance estimate with
@@ -421,6 +422,9 @@ PRIVATE __forceinline vector3f *normalize_particle_velocity_2b(vector3f *v)
 // previous-scale/quarter-scale/both returns 171/112/173; those with shared change
 // 178/114/178; scaled previous addition 171; shared previous addition 93, with
 // shared change 112, with both native scales 110. Back-edge reloads and final stores remain.
+// Round 166: shared scaled-add blend boundaries quarter/previous/native-previous/composed
+// 124/117/124/115; each with both final returned-output scales
+// 124/125/124/122. Original blend stages and stores restored.
 // Round 228: Native velocity-normalizer output consumed by both final scales, pointer/reference
 // inputs with existing/shared scales 67/67/47/47; corresponding shared final squared producers
 // 116 each. Keep pointer output into shared scale, plain 47 (1517/1516 bytes); final-store and

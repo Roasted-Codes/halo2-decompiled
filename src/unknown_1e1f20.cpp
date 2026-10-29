@@ -772,6 +772,11 @@ void swarm_leader_detach(long actor_index);
 // Shared inline/forced declaration diagnostics, each long/short/byte/unsigned,
 // 330/303/285/330 and 330/303/285/330; declarations restored.
 // Round 29: Existing record/current-datum reference scans, normal/entry workspace declarations and both workspace names: 266 each against unchanged fast 261; ordinary baseline 285 retained. Original scan and include restored.
+// Round 109: joint_decline declared inline and called from the memory loop 330 (it then also inlines
+// into 0x1bead0 and 0x26ef70, which lose their matches); on the fast image (261 there, caveat): the
+// memory test through the cached actor 352, the participant index re-read per store 287, both 371,
+// a short memory index 261. The bool `value` needs every declaration changed, one of them in
+// src/unknown_1e3920.cpp (another lane's this round).
 // Round 383 (fast control 261, ordinary 285): native invitation/destination/both records
 // 261/261/261; per-store participant field with invitation/destination/both/both plus short
 // ordinal/both plus destination reference 287 each. Original types, field reads and body restored.

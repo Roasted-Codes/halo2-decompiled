@@ -104,6 +104,10 @@ PRIVATE __forceinline real function_29bab4(vector3f const *arg_0, vector3f const
 // Round 224: direct input plus shared cross/speed/publication 748/750/881; cross+speed 748;
 // cross+publication, speed+publication, all, all+native normalizer setter 886 each. Two-point
 // cross gains rejected; original input access, helpers and outputs restored.
+// Round 392: Native scalar/flag/heading actor fields, scalar+flag/scalar+heading/flag+heading/all,
+// then all with object-first acquisition: 804/804/804/804/804/804/804/829. All direct-input forms restored.
+// Round 394: Direct-input shared addition/scalers/both/projection/addition-projection/scalers-
+// projection/all/all with shared normalizer 747/804/747/804/747/804/747/785. Three-point gains rejected; all restored.
 // @retail 0x29bab0
 void __stdcall function_29bab0(long arg_0, long arg_1, vector3f const *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

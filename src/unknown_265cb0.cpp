@@ -464,6 +464,9 @@ real function_30bf0(vector3f *vector);
 // reversed publication 180; short/facing/single select 197; short/facing/explicit 3-or-2 stores 152 (plain, kept);
 // mode/settings failure exits 188/202; publication order, ordinary result, distance declaration, projected order,
 // facing and outer declaration orders 152 each; direct count-down 197; direct accumulators 245.
+// Round 166: existing complete vector assignment for delta/motion/both/projected
+// 164/154/166/152; projected with delta/motion/both, then all plus plane normal
+// 164/154/165/293. Original component producers restored.
 // Round 224: Live actor/handle/occupant and actor-handle/actor-occupant/handle-occupant/all/all-forward
 // 311/146/218/324/328/218/322/363; live-handle count/index short-word/short-long/long-word/long-long
 // 229/185/232/185. Six-point 146 rejected below margin; original receivers and signed traversal restored.
@@ -1650,7 +1653,8 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 536 (was 536): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// score 564 (was 564): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
 // frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
 // the forward transform (retail if/else straight from the unit) and the scoring block differ.
@@ -1714,6 +1718,12 @@ real function_2683f0(long actor_index, long node_index, short type)
 // all scoring, all six predicates 699/711/728/684/703/715/732/751 (calibrated fast).
 // Word established/visible separately 694/685; pair with short best level/early
 // sentinels 700/700. Established word recovers frame 0x80, but all gains fail; restored.
+// Round 166: late visibility/derived retention/both/later established 577/572/567/564;
+// visibility+established/retention+established/all/all with long visibility 577/572/563/560.
+// Combined predicates recover frame 0x80, first +0x3b. On that graph: reversed results 559,
+// wide level 647, live iterator index 560, reversed+live 559, reversed+wide 646,
+// wide+live 647, all 646, all with early constants 655. Early constants alone/reversed
+// 568/568. Best five-point gain is below the gate; original body and parameter access restored.
 // Round 228: Independent first-search table ordinal, NONE/bounded induction, long/short
 // result and conditional/guarded pointer selection 552/549/552/548/536/538/555/551.
 // Guarded long ordinal with ordinary actor input also 536, plain confirmed at retail

@@ -171,10 +171,16 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Round 244: Existing tint producer as cache/seed/definition member, forced 391 each, ordinary inline 722
 // each; cache/definition member with caller tint output 520/520. Native tint outputs recover frame 0x60 but
 // not cache/UV homes; original producer and clamp loop restored.
+// Round 166: actual fixed-size cache-value input with native color/definition/both references
+// 391/391/391/391; each with direct descending channel traversal
+// 399/399/399/399. Original tint contract and indexed clamp restored.
 // Round 228: Complete unclamped tint returned by value/pointer/reference, caller owns
 // the four clamps and packing; producer/entry lifetimes 604, 604, 520, 520, 520, 520; value return
 // with a plain pointer clamp at either lifetime 604, 604. Frame 0x60 recovered, tint/UV
 // ordering and cache residence still differ; original complete tint producer restored.
+// Round 181: Existing tint producer packed-dword output by pointer/reference, first/last,
+// with cache receiver or fixed-size input array, eight forms 391 each. Original complete producer
+// and callback restored; tint/second-UV overlap and cache/interval homes remain.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

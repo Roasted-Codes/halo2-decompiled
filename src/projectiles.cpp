@@ -974,6 +974,9 @@ real function_30bf0(vector3f *v);
 // Actual squared-time producer with found test 244; test-derived trajectory result
 // 245; repeated time square alone/with found/result 244/244/245; result with native
 // minimum clamp 246; coefficient home names 245; all scalar producer forms 246. Restored.
+// Round 173: existing native gravity field 244; whole origin/target/both input points
+// 298/299/327; those with complete shared delta 298/299/327; both with entry velocity
+// 327. Original inputs, gravity observation, float trees and pointer contracts restored.
 // Round 226: separate displacement/gravity admission results and complete horizontal products,
 // seven subsets 282/283/244/298/282/283/298; combined admission on the full graph 298.
 // Original body and pointer contract restored; frame 0x28/0x30 and rounded-root scheduling remain.
@@ -1175,6 +1178,8 @@ extern vector3f *g_4687ac;
 // Round 279: all four endpoints through existing point setters, with query-vector reuse
 // and result-first exit combinations 163/184/163/183; existing scaled-vector sums on the
 // same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
+// Round 173: native position/ignore/radius fields with external object/tag pointer or reference
+// receivers, mutable or read-only, all eight combinations 163. Original layout and body restored.
 // Round 226: positive/negative endpoint names, reversed declarations and full displacement roles 163/163/163;
 // with bounded direct ray 165, live radius 181, both 173; actual call results 172, all together 179.
 // Original body restored; frame 0x48/0x34 and tag/query ownership remain.
@@ -1450,7 +1455,7 @@ PRIVATE inline long projectile_object_root(long object_index)
 /* the projectile type's new callback: its target, lifetime, range,
    attachment, starting velocity and spin, whether it starts under water,
    and the seat flags of the unit that fired it */
-// score 332 (was 360): frame 4 agrees; pool/input and tag receiver allocation differ at +0xb.
+// score 332 (was 332): frame 4 agrees; pool/input and tag receiver allocation differ at +0xb.
 // Speed update is still called instead of expanded; 1226/1261 bytes.
 // Native flag tests 380; complete water result 375; both 380; plain velocity-component
 // loop 364 fast, 360 plain (kept); loop/flags 381; loop/water 364; all three 381;
@@ -1458,6 +1463,10 @@ PRIVATE inline long projectile_object_root(long object_index)
 // Complete object/tag/both observations 550/332/735; shared scaled addition 364;
 // with tag/object/both observations 344/523/715; initial setter on complete graph 713;
 // retained entry tag identity 396. Tag observations alone kept, plain 332; others restored.
+// Round 173: actual input-record fields with object pointer/reference and ordinary/forced
+// root expansion 332 each; consistently cached tag on those four graphs 360 each.
+// Four earlier slot-observation explorations score 484 and are excluded for overlap risk.
+// Original input accesses, receiver graph, tag observations and root declaration restored.
 // Round 226: native object-header/tag-instance entry observations and shared speed publication,
 // seven subsets 484/383/383/358/447/411/339; full graph with native tag reference 339.
 // Original body restored; slot/input allocation and speed-update expansion remain.
@@ -1602,7 +1611,7 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
-// score 348 (was 382): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
+// score 348 (was 348): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
 // Earlier 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
 // Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
 // shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
@@ -1617,6 +1626,10 @@ real function_17c900(short function_type, real input);
 // three-point lead rejected); lead-speed product alone/with cross/with rotation/with both
 // 361/374/365/368; all with complete wandering direction 369. All restored; index/output
 // contract and normalization/rotation homes remain. Original arithmetic grouping retained.
+// Round 248: real center field with pointer/direct uses 348/348; native signed-word salt
+// with either receiver 360/360; both existing point-difference producers 368/368, with
+// native salt 367/367. Declared lead field read at each use 369, with native salt 372.
+// All bodies and real-field trials restored; frame agrees, stacked index/output EBX still differ.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -2456,6 +2469,10 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 // both arrays and both scale defaults at their real phases 1201. Five-point 1157 at
 // 4832/4828 bytes rejected; primary-scale lifetime recovers frame 0x21c but regresses.
 // All executable forms restored; frame 0x220/0x218 and velocity transport remain.
+// Round 248: effect-result case orders 1162/1161/1162/1161; terminal action orders 1174/1162;
+// paired dispatch/action orders 1174/1161. Native tag-array, direction-workspace, both,
+// damage-record, array/record and all paired role names 1162 each. All restored; frame,
+// velocity contract, native request homes and setter expansion still differ.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)

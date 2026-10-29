@@ -1427,6 +1427,12 @@ void function_d0d20(long unit_index)
 
 /* sends request 0x13 when the unit holds two weapons and either of them
    fails 0x101640 */
+// score 68 (was 68): unit argument in EDI instead of retail stack/EBP; repeated pool-data
+// loads and the short-slot/default homes differ. Primary/secondary/both existing getters
+// 72/74/74; masked guard getter 68, with primary/secondary/both 72/74/74; both getters
+// with a shared guard receiver 70. One parameter address read at first guard/request 57/57,
+// with both getters at first guard/second getter 66/66 (exact-match-only; restored).
+// Both weapon results default-first 70. All executable source restored.
 // @retail 0xd1540
 void __stdcall function_d1540(long unit_index)
 {
@@ -1846,7 +1852,7 @@ void __stdcall function_cea70(long mode, short slot_index, long weapon_index, lo
    definition's +0x158 or +0x15c), at the unit's marker +0x160 when the
    weapon has it, else at the weapon definition's +0x284 */
 // @retail 0xd0870
-void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary)
+void __stdcall function_d0870(long weapon_index, long unit_index, long secondary)
 {
 	byte *local_98b918_2 = UNIT_DEFINITION_GET(UNIT_GET(unit_index));
 	byte *local_67e06b = UNIT_DEFINITION_GET(UNIT_GET(weapon_index));
@@ -1860,19 +1866,12 @@ void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary
 	{
 		parent_marker_name = *(long *)(local_98b918_2 + 0x15c);
 	}
+	s_object_marker marker;
 	long marker_name = *(long *)(local_98b918_2 + 0x160);
-	if (marker_name == NONE || marker_name == 0)
+	if (marker_name == NONE || marker_name == 0 ||
+		!function_b8d30(weapon_index, marker_name, &marker, 1, true))
 	{
 		marker_name = *(long *)(local_67e06b + 0x284);
-	}
-	else
-	{
-		s_object_marker marker;
-
-		if (!function_b8d30(weapon_index, marker_name, &marker, 1, true))
-		{
-			marker_name = *(long *)(local_67e06b + 0x284);
-		}
 	}
 	function_10cec0(weapon_index, unit_index, parent_marker_name, marker_name);
 }
@@ -2050,6 +2049,11 @@ struct s_unit_weapon_hands
 	byte unknown0b;
 };
 
+// score 65 (was 65): Output ESI versus EDI and true constant BL remain.
+// Round 387: Existing masked lookup at entry/current/next, all seven subsets 65; native
+// parent/seat values 65; paired hand predicates
+// 64 (below gate); both weapon fields at uses 74; shared initial unit receiver 76; native seat
+// mask 65. Original body restored.
 // @retail 0xcb430
 void function_cb430(long unit_index, s_unit_weapon_hands *hands)
 {
@@ -3233,6 +3237,14 @@ bool function_d1080(long unit_index, transform4x3f *matrix, s_unit_camera_data *
 /* the state of a unit's weapon use: 6 or 5 for the flags when asked, 7
    past the definition's limit at +0x114, else 3; otherwise 0xc96b0's
    range (2 when forced, at most 1 when asked), held to 1 for players */
+// score 64 (was 64): Frame and lookups agree; first +0x2f has flag/b register roles and ret 0x14/0x18.
+// Round 175: held clamp 58 (possible operand fix; exact-only, restored); existing bit view 74;
+// common zero result 87; held/bit 58, held/result 92; actual bit/result 97, all three 88;
+// all test-derived results 89 at 292 bytes. Two duplicate generated forms excluded;
+// original body and every call restored.
+// Round 179: one shared range/result with bit/result-arm/definition-scope combinations
+// 64/70/80/87/74/81/64/76. Blocked return from initialized range, with native bit and
+// terminal result clamp, 64/64/74/74; with held operand 58/58/58/58 (exact-only, restored).
 // @retail 0xc9770
 long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool held, bool force, real c, real d)
 {
@@ -3642,6 +3654,14 @@ void function_d03e0(long unit_index, long definition_index)
 
 /* applies the unit's melee damage to what it hit (a device of type 7 with
    bit 5 at +0x1cc is triggered first), then ends its state +0x2bc */
+// score 61 (was 61): Second object lookup is merged and the surface-call argument width differs.
+// Round 175: default before initializer 56; existing masked-index helper at second/first/both
+// lookups 61/61/61, with early default 56/56; owner before flags 58; both orders 53
+// with or without the neutral helper. Not kept: the NONE material default ahead of
+// 0xd6660 is cleared by its memset (behaviour change).
+// Round 179: omit overwritten material default 125; node direction from completed direction 108;
+// marker scope 61; default/direction 126, default/scope 125, direction/scope 108; all 126;
+// all with owner before flags 126. Original body restored.
 // @retail 0xcfc90
 void __stdcall function_cfc90(long unit_index, long definition_index, s_unit_melee_hit const *hit)
 {
@@ -3684,10 +3704,19 @@ void __stdcall function_cfc90(long unit_index, long definition_index, s_unit_mel
 /* whether a unit may enter the vehicle's seat from a marker: near enough
    (+0x98), facing it (+0xa0), the marker facing the unit (+0x9c), and
    moving with the vehicle (+0xa4) */
+// score 33 (was 85): Frame 0x24 and argument homes agree; normalization starts differing at +0x7f.
+// Angle order 84; with comparison result 92; nonzero normalization arm first 78/86;
+// shared point difference 45/67, with normalization 43/65; entry Boolean result 33.
+// Paired offset parts 137/130; both masked getters 43/33, with parts 137/130; first getter 43.
+// Squared-length/dot helpers 10, normalization helpers 14/13, shared scale and length 14;
+// all changed-grouping forms restored. Complete scale/point/both setters 33; shared scale 33.
+// Eight parallel scale product orders/compound assignments with squared length all 10, exact-only.
+// Retain shared point difference, entry result and retail symmetric angle order with original float tree.
 // @retail 0xc9040
 bool function_c9040(long vehicle_index, long unit_index, short seat_index, vector3f const *forward,
 	point3f const *position)
 {
+	bool result = false;
 	s_unit *unit = UNIT_GET(unit_index);
 	byte *seat = (byte *)&UNIT_SEATS(UNIT_DEFINITION_GET(UNIT_GET(vehicle_index)))[seat_index];
 	point3f center;
@@ -3695,25 +3724,22 @@ bool function_c9040(long vehicle_index, long unit_index, short seat_index, vecto
 	real distance;
 
 	function_cafc0(unit_index, &center);
-	direction.i = position->x - center.x;
-	direction.j = position->y - center.y;
-	direction.k = position->z - center.z;
+	vector3d_from_points3d(&center, position, &direction);
 	distance = (real)sqrt(direction.k * direction.k + direction.j * direction.j + direction.i * direction.i);
-	if (0.0001f > (real)fabs(distance))
-	{
-		distance = 0.0f;
-	}
-	else
+	if (!(0.0001f > (real)fabs(distance)))
 	{
 		real scale = 1.0f / distance;
-
 		direction.i = scale * direction.i;
 		direction.j = direction.j * scale;
 		direction.k = direction.k * scale;
 	}
+	else
+	{
+		distance = 0.0f;
+	}
 	if (*(real *)(seat + 0x98) > distance &&
-		*(real *)(seat + 0xa0) >= function_11cf50(&direction, &unit->unknown168) &&
-		*(real *)(seat + 0x9c) >= 3.1415927f - function_11cf50(&direction, forward))
+		*(real *)(seat + 0xa0) >= function_11cf50(&unit->unknown168, &direction) &&
+		*(real *)(seat + 0x9c) >= 3.1415927f - function_11cf50(forward, &direction))
 	{
 		vector3f unit_velocity;
 		vector3f vehicle_velocity;
@@ -3725,10 +3751,10 @@ bool function_c9040(long vehicle_index, long unit_index, short seat_index, vecto
 		real dz = unit_velocity.k - vehicle_velocity.k;
 		if (*(real *)(seat + 0xa4) >= (real)sqrt(dz * dz + dy * dy + dx * dx))
 		{
-			return true;
+			result = true;
 		}
 	}
-	return false;
+	return result;
 }
 
 /* pushes the unit off its parent (when it is not seated; seated units
@@ -4237,6 +4263,12 @@ void function_ce6b0(long unit_index, long name, long object_index, real scale)
    flips flag 29 with its sounds and fades +0x264 in (a fifth of a second)
    or out (0.8 s) by it; in state 1 or with the campaign flag it runs the
    state +0x2bc and its timer instead */
+// score 82 (was 82): frame 8 agrees; unit/index ESI/EDI are reversed, then control-bit and
+// flag-word scheduling differ. The sound call chain keeps the object in EDI instead of ESI
+// through 0xc5890 and 0x189210; root-location input at 0xba300 needs its owning body.
+// Native word bit-two view 142; dword bit-29 tests/stores/both 82/82/82;
+// word plus dword tests/stores/both 142/142/142; all plus native control mask 142.
+// Original fields, padding, tests and stores restored.
 // @retail 0xc50a0
 void function_c50a0(long unit_index)
 {
