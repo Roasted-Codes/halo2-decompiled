@@ -832,6 +832,9 @@ done:
 // Round 110: native explicit selection pair 196; direct published success returns 224; pair with first while scan 211; published current return 176; unsigned-word result 198.
 // Round 117: Native selection block 176; optional definition result 176; fallback postadvance 203; shared palette publication 210; readonly selection graph 176.
 // Native complete squad owner/count/mode fields, their pairs, all three and the read-only complete record 176 each.
+// Round 225: complete scenario/definition-owner/both/mode/scenario-mode/owner-mode/all/
+// all with full-width result 188/198/192/194/207/175/205/192. Owner-mode gains only
+// one at retail length, with a larger frame; below threshold. Original reads and scans restored.
 // @retail 0x205010
 short function_205010(s_squad_iterator *iterator)
 {
@@ -2014,6 +2017,9 @@ bool function_1df5d0(short team_a, short team_b);
 // Round 164: shared swarm input 179; shared pool getter 179; aggregation phase 235; phase swarm 235;
 // phase pool getter 235; iteration actor scope 182; actor scope swarm 182; all native scopes 235.
 // Zero/sentinel iterator seeds 243/228; actor pointer/health names 179/179; shared actor level 248; shared definition flags 179; live last-update reads 179; health publication before count 179. Cursor memory home and contribution allocation remain.
+// Round 225: consistent live actor receivers/shared vector sum/both/shared scale/live-scale/
+// sum-scale/all/all with shared iterator 335/179/313/179/335/179/313/313.
+// Original receivers, component operations, both tests and empty-path zero restored.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2978,6 +2984,9 @@ void function_2011f0(long arg_0);
 // 336/391/334/389 at the same lengths. Gains of two/four are below threshold; body restored.
 // Round 198: Placement/prior-object lookup declarations, ordinary/inline/noinline
 // in all eight non-original pairs, 338 each. Frame 0x134 agrees; original boundaries restored.
+// Round 225: optional-record arms 361; prior-object arms 374; both 382;
+// selected-entry arms 358; optional/entry 357; prior/entry 378; all 379;
+// all with first cached squad receiver 358 at retail length. Original lifetimes and values restored.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
