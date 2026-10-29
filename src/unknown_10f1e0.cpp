@@ -413,6 +413,13 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // declared first 37; shared exit 37; state pair helper 148; state graph queries 37; mode/graph/
 // class orders 44-110; shifted word expression 37; clear before object chain 191; entry marker
 // workspaces 37; complete workspace boundaries 191; model after clear 191.
+// Round 32 (all 545 bytes unless noted): the existing bit_vector_test 42 (its test is retail's
+// exactly; the set after 0x1d90e0 then becomes load/OR/store instead of retail's `or [eax], edx`);
+// that with a direct `|=` set 42; a written-out mask test with a direct set 42, with
+// bit_vector_set 42; the existing graph_tag_get for the three graph reads 37 (539, back-edge
+// reload order unchanged); bit_vector_test with the second lookup nested 42; with the set through
+// an explicit word pointer 42. A compile-only build gives the opposite set forms, so screen with
+// --fast here.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
