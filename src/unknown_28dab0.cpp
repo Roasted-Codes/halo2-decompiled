@@ -65,6 +65,8 @@ void __stdcall swarm_delete(long arg_0);
 // eight 44; tag/sentinel roles and EBX bound still differ.
 // Coordinated handle parameter priorities 44/45/45/44/45; placement argument priorities 44/44/44.
 // Every definition/declaration/call changed together; original complete contract restored.
+// Tag-query/placement/deletion ordinary inline declaration subsets (seven forms),
+// and all three separate noinline declarations: eight at 44. Original declarations restored.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {

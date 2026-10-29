@@ -548,7 +548,7 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 	return result != NULL;
 }
 
-// score 3 (was 68): initial team load width and push scheduling remain.
+// score 3 (was 3): initial team load width and push scheduling remain.
 // Earlier forms:
 // with a fifth word in the clump iterator (shared with 0x26bc60 and 0x269040;
 // reverted in review, two points) the frame agrees at 66; retail sign-extends the
@@ -584,6 +584,9 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // bool/byte/long 133/133/165; inlined scan bool/long 136/122. Promoted initial team 31; actual
 // pooled clump reference 3. Retained complete calling walk recovers frame 0x20, nullable current
 // in EDI and exhausted-path layout.
+// Initial getter 3; complete side result/comparison 15; per-use prop receiver 113;
+// getter/complete side 15; getter/per-use receiver 113; complete side/per-use receiver 114;
+// all three 114; typed initial pool array 3, on the recovered native calling walk.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1879,7 +1882,7 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
-// score 126 (was 126): retail hoists the walk's pool load into ebx and keeps the selection
+// score 87 (was 126): retail hoists the walk's pool load into ebx and keeps the selection
 // only on the stack (stored from esi, best stored in a tail shared with the initialisation);
 // ours keeps the pool in memory and the selection in edi.
 // Earlier: retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133;
@@ -1890,6 +1893,9 @@ void function_269250(long clump_index, long actor_index);
 // walk declared after the selection locals 129; actor index local 126; early continue on a
 // non-improving score 128; declaration orders, scopes, cached or global activity flag, team test as
 // continue or nested if, and inline/forceinline walk helpers all compile identically.
+// Common score path: zero default with branch/selection-first 92/92, ternary 125/125;
+// best default with branch/selection-first 89/89 fast, ternary 128/128. Retained
+// branch score initialized from best, 87 plain; pool/selection and x87/SSE homes remain.
 // @retail 0x2689d0
 void function_2689d0(void)
 {
@@ -1906,8 +1912,9 @@ void function_2689d0(void)
 		s_clump_activity_view *group;
 		while ((group = (s_clump_activity_view *)clump_datum_walk_next(&groups, active)) != NULL)
 		{
-			if (group->team != actor->unknown024) continue;
-			real score = function_268bb0(group, actor);
+			real score = best;
+			if (group->team == actor->unknown024)
+				score = function_268bb0(group, actor);
 			if (score > best)
 			{
 				best = score;
@@ -2081,6 +2088,8 @@ void function_269250(long clump_index, long actor_index)
 // Round 104, on the 3 form: group flag before the cleared prop 185; a removed flag for the cleared prop 3;
 // prop step defined before the node step 3; pool struct fields swapped (diagnostic) 3; prop-loop body
 // reading the prop at its top 136; 600 s permuter, 66 tries, none below 3. Original body restored.
+// Native repeated state pointer/reference, crossed with the existing node-head getter
+// and chained adjacent flag clears: all eight 89. Native object fields retain the same offsets.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {

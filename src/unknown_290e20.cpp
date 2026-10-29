@@ -413,6 +413,9 @@ struct s_ai_scene_assignment
 // Actual short role advanced/restored around recursion with retained/live completion and
 // assignment/recursion first 96/119/102/120; native-width role state 243/248/236/244.
 // Original recursive body restored; capacity/role allocation remains.
+// Four parallel output-slot pointers before scoring or on success, crossed with the
+// actual previous-assignment source and selector-output store priority: eight at 56;
+// previous-source copies reach 347 bytes. All one-use element-pointer forms restored.
 // @retail 0x2919e0
 void __stdcall function_2919e0(s_ai_scene *arg_0, s_ai_scene_assignment *arg_1, short *arg_2, short arg_3,
 	short arg_4, short arg_5, long arg_6, long arg_7, long arg_8)
