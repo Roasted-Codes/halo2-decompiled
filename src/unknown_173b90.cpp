@@ -898,6 +898,9 @@ public:
 // Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
 // 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
 // All record, request and completion forms restored.
+// Round 219: native negative-forward/perpendicular/both setters 294/292/294; cross setter 292;
+// negative/cross 294; perpendicular/cross 292; all 294; with normalization setter 294. Original
+// restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

@@ -18,7 +18,7 @@ extern byte g_485a47;
 extern real g_485a0c[8];
 extern real g_4c9798[36];
 
-// score 239 (was 252): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
+// score 239 (was 239): frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
 // frame 0x24 versus 0x28; state in EAX/EDI (retail ECX), the size home across the rounding calls and the far-plane copies differ.
 // Earlier form: frame 0x20 versus 0x28; input registers and rounding-call scalar reloads differ.
 // Branch-defined extent 321; two-vector copy loop 311; frame pointer 372; size policy 497; inline depth one 311.
@@ -101,6 +101,8 @@ extern real g_4c9798[36];
 // complete bounded-size result 252; reused native pixel area 342; zero+size 322; zero+area 354;
 // size+area 342; all three 354; all with zero declared after mode 353. All restored; state
 // transport, protected rounding reloads and far-plane stores remain.
+// Round 219: short mode/height/both/all limit role names 239 each; entry halfword declarations 239;
+// readonly mode/height/both 239 each. Original restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {
