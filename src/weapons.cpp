@@ -3616,6 +3616,11 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // scopes, seven subsets 1420 each; complete branch ownership with native event
 // role names 1420. All original output scopes and names restored; frame 0x3c
 // versus 0x38 and initial pool/offset/dual homes remain.
+// Round 387: Frame 0x3c versus 0x38 and pool/dual homes remain. Shared magazine-trigger/trigger-
+// barrel/magazine-barrel/all short ordinals 1420/1416/1416/1420; all at entry or with transient
+// float names 1420 each; independent ordinal names with/without transient names 1420 each. The two
+// 1416 forms reach 5684 bytes but are below the gain gate. Each paired graph with bool/byte/word
+// activity 1469/1465/1426. Original body restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
