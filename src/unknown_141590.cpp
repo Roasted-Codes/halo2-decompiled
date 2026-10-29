@@ -811,6 +811,7 @@ void function_143250(
 // producers, 2040/2051/2051; separate shared 49-element array alone/first/second/both
 // 2279/2279/2294/2294; complete graph with basis identity 2294 (fast control 2040).
 // Original shared workspace, publications and complete polynomial body restored.
+// Round 187: On retained publications, helper inline/noinline/both 2088/2039/2088; with independent basis 2347/2298/2347; first-matrix negative lifetimes with inline 2092, with both plus independent basis 2347. All restored; rotation admission and matrix homes remain.
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
