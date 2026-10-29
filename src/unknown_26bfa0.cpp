@@ -40,13 +40,18 @@ long function_26d100(vector3f const *up, long *unknown, s_collision_result_1697c
 
 /* finds the location of the object's root: a unit's (0), a vehicle's (1),
    otherwise the pathfinding location under its center */
-// score 94 (was 125): case-tail and point-copy scheduling differ; nine excess bytes remain.
+// score 94 (was 94): query homes, case-tail and point-copy scheduling still differ.
+// case-tail and point-copy scheduling differ; nine excess bytes remain.
 // Query index captured after the location guard: kind zero/one/both 150/158/155;
 // null-output-first counterparts 167/158/155; result assigned per dispatch arm 140/140.
 // The first eight query forms were restored; the inherited parameter-slot read is unchanged.
 // Dispatch-assigned result alone 140; separate case query outputs, late/after-guard/early result 127/94/94.
 // Separate case query outputs and a dispatch-assigned result kept: plain 94 at 383/374;
 // retail opening allocation agrees through +0x45. Case tail/copy schedule and 9 bytes remain.
+// Round 246: Actual result output/shared point/chained defaults, seven combinations: 117/94/117/94/117/94/117/94.
+// Eighth form uses distinct first/second query scalar names.
+// Common scalar outputs before/after root lookup; after lookup with shared point/whole center: 143/140/140/114.
+// All trial forms restored; no candidate qualifies.
 // @retail 0x26bfa0
 void function_26bfa0(long object_index, long *location_index, s_location_view *location)
 {

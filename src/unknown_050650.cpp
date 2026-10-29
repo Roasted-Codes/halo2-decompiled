@@ -636,7 +636,8 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 290 (was 336): frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
+// score 290 (was 290): Boolean role homes and case-specific point/reference transport differ.
+// Earlier: frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -662,6 +663,9 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // index is neutral and omitted. Boolean-role names 301/303/303/303; native origins on typed graph
 // 375/375/308/375/379/387/322/389. Frame and movement addressing agree; Boolean role homes and point/case-tail
 // transport remain.
+// Round 246: Per-case short/int/long state; shared short/int/long state; early per-case/shared short state: 301/310/310/301/310/310/307/307.
+// Each state value serves two tests; all signed widths preserve the native short domain.
+// All trial forms restored; no candidate qualifies.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -926,7 +930,8 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 54 (was 54): frame 0x38 and entry homes agree; scaled-pitch schedule, later yaw homes and helper transport differ.
+// score 54 (was 54): scaled-pitch schedule, later yaw homes and helper transport differ.
+// frame 0x38 and entry homes agree; scaled-pitch schedule, later yaw homes and helper transport differ.
 // the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
@@ -952,6 +957,9 @@ real g_55e5cc = 0.08726646f;
 // Round 244: upper-first aiming/relative/both yaw publications 58/56/60;
 // two-use pitch cap before scaled bounds 54, with those publications 58/56/60;
 // cap at original first observation 54. All restored; pitch-cap schedule and helper transport remain.
+// Round 246: Earlier aiming projection/angle selector/read-only dot producer, seven combinations: 165/85/165/149/168/178/168/168.
+// Eighth form adds read-only actor/property/angle inputs to the complete producer form.
+// All trial forms restored; no candidate qualifies.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
@@ -1056,7 +1064,8 @@ struct s_actor_looking_structure_view
 };
 
 /* Name inferred from the path traces and the idle-direction caller. */
-// score 80 (was 80): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
+// score 68 (was 80): counter homes, candidate cursor and expanded rotation scheduling differ.
+// entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
 // Result first 139; existing angular wrapper 468; vector producer 261; both 466;
 // native header/body induction with those producers 137/468/266/466.
 // Separate forced angular declaration 78/265/85/270; earlier cursor step 88;
@@ -1073,6 +1082,9 @@ struct s_actor_looking_structure_view
 // cosine first 86; trig before candidate 80; fraction after rotation 154;
 // angle ordinal stepped at last use 156; both shared dot products 144 (regrouped,
 // exact-match-only); immediate successful publication return 224. Restored.
+// Round 246: Actual candidate workspace/staged candidate dot/staged selected dot, seven combinations: 211/68/215/84/215/150/211/226.
+// Eighth form adds native byte success storage to the complete candidate/score form.
+// Kept t02, plain 68; original helper bodies and logical call inputs retained.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
@@ -1112,7 +1124,9 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 							&actor->location.point.point, NONE, direction, 5.f, 0);
 						if (*(byte *)&trace.unknown00)
 							fraction = trace.distance * 0.2f;
-						real score = direction->i * forward.i + direction->k * forward.k + direction->j * forward.j;
+						real score = direction->i * forward.i;
+						score += direction->k * forward.k;
+						score += direction->j * forward.j;
 						score = (0.6f > score ? 0.6f : score) * fraction;
 						if (score > best_score)
 						{
