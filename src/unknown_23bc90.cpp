@@ -429,10 +429,9 @@ void __stdcall function_23c110(void *state, void *input, s_observer_command *com
         unit_index = NONE;
     long player = function_14de70(*(long *)input);
     long current_unit = ((s_camera_player_23c110 *)players->data)[player & 0xffff].unit_index;
-    s_unknown_185ab0_entry *entry = &g_4ed284->entries[*(long *)input];
-    s_view_angles *angles = &entry->angles;
+    s_view_angles *angles = &g_4ed284->entries[*(long *)input].angles;
     vector3f forward;
-    real horizontal = (real)cos(entry->pitch);
+    real horizontal = (real)cos(angles->pitch);
     forward.i = horizontal * (real)cos(angles->yaw);
     forward.j = horizontal * (real)sin(angles->yaw);
     forward.k = (real)sin(angles->pitch);

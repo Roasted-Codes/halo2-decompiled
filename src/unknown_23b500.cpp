@@ -26,13 +26,6 @@ struct s_spawn_influence_globals
 	s_spawn_influence_type types[12];
 };
 
-struct s_spawn_influence_entry
-{
-	dword value0;
-	dword value4;
-	dword value8;
-};
-
 extern dword g_502258[0x27];
 
 PRIVATE const byte g_4709f0[48] =
@@ -99,22 +92,21 @@ struct s_spawn_scenario_23aea0
 // @retail 0x23aea0
 void function_23aea0()
 {
-	s_spawn_influence_globals *globals = (s_spawn_influence_globals *)g_502258;
 	byte *tag = g_4e3b44[g_4e034c->index & 0xffff].bytes;
 	byte *definition = *(byte **)(tag + 0xc);
 	s_spawn_scenario_23aea0 *scenario = (s_spawn_scenario_23aea0 *)g_4e0350;
-	s_spawn_influence_entry *entries = (s_spawn_influence_entry *)&globals->types[0];
+	s_spawn_influence_globals *globals = (s_spawn_influence_globals *)g_502258;
 	g_5022f0 = g_4709f0;
 	globals->value4 = *(real *)(definition + 0x154);
 	globals->value0 = *(real *)(definition + 0x150);
-	for (long type = 2; type < 14; type += 6)
+	for (long i = 0; i < 2; i++)
 	{
 		for (long j = 0; j < 6; j++)
 		{
-			s_spawn_influence_entry *entry = &entries[type + j - 2];
-			entry->value0 = *(dword *)(definition + 0x148 + type * 0x1c + j * 0x1c);
-			entry->value4 = *(dword *)(definition + 0x14c + type * 0x1c + j * 0x1c);
-			entry->value8 = *(dword *)(definition + 0x150 + type * 0x1c + j * 0x1c);
+			long type = i * 6 + j + 2;
+			g_502258[type * 3 - 4] = *(dword *)(definition + 0x148 + type * 0x1c);
+			g_502258[type * 3 - 3] = *(dword *)(definition + 0x14c + type * 0x1c);
+			g_502258[type * 3 - 2] = *(dword *)(definition + 0x150 + type * 0x1c);
 		}
 	}
 	if (scenario->count > 0)
