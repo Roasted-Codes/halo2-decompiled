@@ -100,6 +100,10 @@ short __stdcall function_2551c0(long actor_index)
 // Round 16 (lane 10): the score's dot as a named local 109 (it also reshuffles the rotation schedule);
 // the helper returning the vector 43; sine and cosine named before the call 43; the rotated vector
 // renamed to sort after forward 43; the helper's axis parameter first 43; cosine before sine 72.
+// Round 181: native slot data block 89 (820 bytes, larger frame); restored slot view with rotation
+// inputs axis/vector/sine/cosine or axis/sine/cosine/vector or cosine/sine/axis/vector 43 each;
+// vector/sine/cosine/axis, sine/cosine/axis/vector, axis/cosine/sine/vector and
+// sine/cosine/vector/axis 72 each. Early cross products and score-dot carriers remain.
 // @retail 0x2551f0
 bool __stdcall function_2551f0(long actor_index, s_slot *slot)
 {
@@ -532,7 +536,8 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 	return local_0;
 }
 
-// score 141 (was 141): frame 0x58 versus 0x54 and first-length/radius homes remain; retail keeps
+// score 141 (was 141): frame 0x58 versus 0x54, first-length/radius homes and unit-call scratch allocation remain.
+// Earlier score 141 (was 141): frame 0x58 versus 0x54 and first-length/radius homes remain; retail keeps
 // the radius in the argument home and adds the object size only after the projection test.
 // Fallback timing initialized before query 200; later heading vector 219; later object lookup 223;
 // shared reverse scale 223; entry vector homes 205; exhaustive timing branches 205; trace distances
@@ -569,6 +574,7 @@ PRIVATE __forceinline real function_255741(vector3f const *arg_0, vector3f const
 // Fallback interval after radius input/sum/difference/projection 141/137/138/136;
 // inside projection/reach 136/136; after lateral/adjusted distance 147/152;
 // projection/reach interval with later radius addition 139/141. Subthreshold forms restored.
+// Entry heading result 141; both normalization outputs 141; entry-declared heading 141; entry projection 141; both outputs with projection-boundary interval 136; sequential alignment helper 141; heading with entry displacement 141; heading with entry timing outputs 141. Restored.
 // @retail 0x255740
 short __stdcall function_255740(long arg_0, s_slot *arg_1)
 {

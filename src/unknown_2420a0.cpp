@@ -513,6 +513,11 @@ long function_243b10(long key_b, bool team_only, long *second)
 // declared at function scope 173; the table local assigned at the outer loop top 169 (the slot
 // parameter moves to the stack and caller 0x240160 is lost). Retail also keeps count in memory
 // from its definition (stored straight from EAX) and stores j = 0 at once.
+// Round 111 (fast; a fast image of this function alone builds 0x19ec40 differently, so include
+// 0x1e5bb0/0x1e2a90/0x29b00): accumulated distance through a distance2d helper 173; ten placements
+// of the j/key/count/point declarations 173 (193-195 with the point read before the query); named
+// result index 173; table local inside the `marker_index != NONE` block 169 at 717 B, but matched
+// caller 0x240160 drops to 46. Original restored.
 // @retail 0x243c00
 void function_243c00(long slot)
 {

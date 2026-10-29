@@ -232,6 +232,10 @@ bool camera_velocity_profile_new(s_camera_velocity_profile *profile, real total_
 // registers differ, retail spills both peak copies and the acceleration and keeps start and
 // deceleration in xmm6/xmm7, ours spills one); the fills in retail's load order 88 (spills start
 // instead); a, b, c declared first 88; aggregate initializers 90.
+// Round 181: all coefficient field reads at uses 117; complete native profile snapshot 107; snapshot
+// plus field reads 105; profile reference 49, plus field reads 117; reordered profile/ticks 49, plus
+// field reads 117, plus native snapshot 107. Coefficient homes and 0x1c frame remain unresolved;
+// original arrays and input binding restored.
 // @retail 0x16be50
 real camera_velocity_profile_evaluate(s_camera_velocity_profile const *profile, long ticks)
 {
@@ -786,7 +790,7 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 }
 
 /* the camera director of scripted cameras: fills the observer's command */
-// score 236 (was 245): frame 72 agrees; the camera mode and the object index are read into
+// score 236 (was 236): frame 72 agrees; the camera mode and the object index are read into
 // named locals before the switch and the test; direction preload, length/zero XMM roles and
 // flag stores still differ.
 // frame 0x48 agrees; direction preload, length/zero
@@ -868,6 +872,10 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 // a named seconds local at the use 384 (lockstep shift); field-of-view fields read at each use 259,
 // with a named start 264, target local with fields elsewhere 254; seconds local plus those fields
 // 380 (retail's instruction count, 462, but zero/value XMM roles swap throughout). Restored.
+// Round 399: Outer native case orders point-animation-pan-first_person / point-animation-first_person-pan
+// / point-first_person-pan-animation / point-first_person-animation-pan /
+// pan-point-first_person-animation / pan-animation-point-first_person / pan-first_person-point-animation
+// / animation-point-first_person-pan: 330/340/356/341/460/464/459/459. Original restored.
 // @retail 0x16c840
 void __stdcall function_16c840(long user_index, long unused, s_observer_command *command)
 {

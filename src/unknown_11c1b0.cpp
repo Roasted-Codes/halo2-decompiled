@@ -27,7 +27,7 @@ struct s_11c1b0
 
 #define g_440df0 (*( s_11c1b0 const (*)[68])((byte const *)g_440dd8 + 0x18))
 
-// score 50 (was 50): entry index/zero registers and saved-index publication still differ.
+// score 50 (was 50): Initial index/zero registers and saved-index publication remain.
 // Earlier allocation: retail keeps local_0 in ebx (xor ebx, ebx; mov bx) up to the
 // Initial index/zero registers and early saved-index store still differ; frame and both result lifetimes agree.
 // On the separate-result form: signed ordinal 125; ordinal != 68 51; row cursor 125;
@@ -72,6 +72,9 @@ struct s_11c1b0
 // callers unchanged) only when the saved index lives in the parameter variable itself: copy arg_0
 // into a requested-index local, assign arg_0 = local_0 at entry and arg_0 = g_4e6948->index after
 // function_137da0, and test the requested local everywhere else. Not kept: a reused parameter.
+// Round 406: Initial index/zero registers and saved-index publication remain. Consistent unsigned-
+// word current/saved/request equality with 0xffff sentinel, parameter-read ordering, saved entry
+// lifetime and byte late-success combinations. Scores 75/75/133/133/91/91/137/137. All restored.
 // @retail 0x11c1b0 standard
 bool __stdcall function_11c1b0(short arg_0, bool arg_1)
 {

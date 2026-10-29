@@ -630,7 +630,11 @@ bool function_aa970(long index)
 #include "unknown_0d0690.h"
 #include "unknown_0259d0.h"
 
-// score 37 (was 37): the float is added into the accumulator and stored back; retail loads it into
+// score 9 (was 61): the accumulator pointer is now declared after the displacement helper call, so the
+// x accumulation is no longer folded into the add; retail keeps the accumulator load and the store next
+// to the add, while ours sinks the store to the end of the group, and retail loads the object's y and z
+// positions before subtracting the previous position's y and z. Tried: a named local for the x sum 9
+// (same code); the accumulations reordered 15 (retail keeps them in source order).
 // a separate register, adds and stores that.
 // BLOCKED-BY 0xd0620 (its iterator in ebx); also tried the accumulator from header->object 37, a masked
 // child index local 37, an index-first byte offset 37, the accumulator declared before the displacement 37,
@@ -649,10 +653,10 @@ void function_aa9e0(long index, point3f const *previous_position, vector3f const
 
   if (previous_position)
   {
-   vector3f *accumulated = (vector3f *)(object + 0x270);
    vector3f displacement;
 
    vector3d_from_points3d(previous_position, (point3f const *)(object + 0x64), &displacement);
+   vector3f *accumulated = (vector3f *)(object + 0x270);
    accumulated->i += displacement.i;
    accumulated->j += displacement.j;
    accumulated->k += displacement.k;

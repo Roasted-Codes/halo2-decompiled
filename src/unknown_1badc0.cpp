@@ -12,7 +12,14 @@ struct s_1badc0
 
 real normalize2d(point2f *arg_0);
 
-// score 220 (was 220): Frame 0x90 agrees; output EBX/EBP and vector/SSE homes remain.
+// score 211 (was 220): Frame 0x90 agrees; output EBX/EBP and vector/SSE homes remain. Retail
+// copies the input point a second time (at 0x28, through integer moves) for the two vector
+// differences and keeps the center at 0x34; ours has the center at 0x28 and the to-center vector at 0x34.
+// Round 90: radius read before the center copy 215 and the copied point as the actor-to-point
+// input 211 (both kept); the copy as the point-to-center input 212, as both inputs 264; a second
+// point copy for both 236 (1029 bytes); center/to-center names in four pairs 211; an early false
+// return for the lookup result 213; the two differences in the other order 211; squared and
+// projection terms in the other order 211/211.
 // Delayed vertical zero 274; with center difference 271; native 2D perpendicular 286/285;
 // complete aggregate 277/274; delayed zero and early three-use clearance 220; with center 259.
 // Delayed zero and early clearance kept; other executable forms restored.
@@ -102,6 +109,9 @@ real normalize2d(point2f *arg_0);
 // Round 271: full collision output with the shared native head as member/base, late/entry
 // storage, 220 each; all four with radius before center 215 each (five-point gain restored).
 // Original opaque full output, output access, scalar spill and complete body restored.
+// Round 273: uninitialized squared-separation/projection/adjusted-distance declarations
+// at entry, seven subsets 220 each; all with the clearance declaration at entry 220.
+// Original scalar declarations restored; output EBX/EBP and vector homes remain.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)
@@ -115,10 +125,10 @@ bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     {
         point3f local_1 = *arg_2;
         byte *local_2 = (byte *)object_get(arg_1);
-        point3f local_3 = *(point3f *)(local_2 + 0x30);
         real local_4 = *(real *)(local_2 + 0x3c);
+        point3f local_3 = *(point3f *)(local_2 + 0x30);
         vector3f local_5;
-        vector3d_from_points3d(&local_0->position, arg_2, &local_5);
+        vector3d_from_points3d(&local_0->position, &local_1, &local_5);
         vector3f local_6;
         vector3d_from_points3d(arg_2, &local_3, &local_6);
         real local_7 = local_5.j * local_5.j + local_5.i * local_5.i;

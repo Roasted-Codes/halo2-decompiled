@@ -2,19 +2,11 @@
 #include "unknown_044e90.h"
 #include "normalize3d.h"
 
-// score 421 (was 434): frame length and instruction count agree with retail.
-// Still differs: the header workspace is 16 bytes smaller than retail's, so the
-// visibility list slots sit lower in the frame (0xb0/0x10bc/0x20c8/0x40d4 against
-// retail's 0xb0/0x10c0/0x20d0/0x40e0) and the frame is 0x7494 against 0x74a4; the
-// globals and the visibility calls name different addresses in this build; in the
-// plane loop retail holds the source plane at 0x34/0x38/0x3c/0x40 with the normals
-// in xmm4/xmm5/xmm6 and one 1.0f in xmm3, ours holds them at 0x2c/0x30/0x34/0x38
-// with xmm3/xmm4/xmm5 and reloads 1.0f, and retail divides the distance in a
-// register while ours reloads it from the stack; retail zeroes the plane distance
-// when the transform scale is 0.0f and ours leaves it unchanged; retail hoists the
-// four list capacities before the first release test while ours tests them in
-// turn; after the visibility query ours reloads the view table once more than
-// retail, which shifts the rest of the tail.
+// score 421 (was 421): frame 0x7494 versus 0x74a4; list strides, entry/table and plane homes differ.
+// Storage headers are at 0xb0/0x10bc/0x20c8/0x40d4 versus retail 0xb0/0x10c0/0x20d0/0x40e0.
+// Input plane homes are 0x2c/0x30/0x34/0x38 versus 0x34/0x38/0x3c/0x40; normal registers,
+// inverse-scale reuse, distance division and capacity-release scheduling also differ.
+// Scale-zero distance handling may differ semantically; it remains unchanged pending a behavior fix.
 // plain plane for 2649; native view ranges 438; plane copy blocks 438; center point setter 438; views read
 // before entry 442; entry bitfield 441
 // Round 310: long bound index 438; explicit plane query 438; visibility-word pointer 438;
@@ -68,6 +60,10 @@
 // Round 162: Native selection fields alone/table/aligned/aligned-table 438/447/439/448; the same
 // four with the existing normal scaler 438/447/439/448. Entry/table and plane/list homes remain;
 // original external fields, storage alignment and all arithmetic restored.
+// Round 273: native storage alignment eight/sixteen, crossed with original/frustum/view
+// plane-normal declarations, eight forms 417/1742 each with frame 0x74a4. Four-point gain
+// below gate. On that layout scale/plane-name/both/table/scale-table/plane-table/all/
+// all-readonly-query 421/417/421/455/468/455/468/468. Header and entire body restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {
