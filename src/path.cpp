@@ -413,7 +413,7 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
-// score 363 (was 372): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
+// score 363 (was 363): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
 // Earlier: the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
 // Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
 // all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
@@ -425,6 +425,10 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 // Round 274: full-width initialization/link/path/scan carriers 400/363/378/414; initialization+link 401;
 // link+path 441 (parent 282); path+scan 422; all four 407; previous-node presence 409, with initialization 433.
 // Only the actual bounded full-width link count is retained: 363 plain, 1390/1388 bytes; parent stays 155.
+// Round 248: real signed flag byte 370; signed/unsigned native flag-seven fields 363/363;
+// signed flag field with link/complete entry initializers 360 (three-point gain restored), all
+// constant traversal initializers 384, guarded edge memset 393, native capped word 372, all 412.
+// Complete body and edge declarations restored; initial acquisition, clearing and vector homes remain.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,

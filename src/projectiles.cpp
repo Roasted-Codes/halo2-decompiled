@@ -1593,7 +1593,7 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
-// score 348 (was 382): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
+// score 348 (was 348): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
 // Earlier 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
 // Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
 // shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
@@ -1604,6 +1604,10 @@ real function_17c900(short function_type, real input);
 // readonly center with separate result, with/without setters 393/393. Reuse the existing target
 // point and publish once, scalar/shared setter 365/365; with early index-only salt 348/348.
 // Shared setter plus early salt kept, plain 348; all game-call arguments unchanged.
+// Round 248: real center field with pointer/direct uses 348/348; native signed-word salt
+// with either receiver 360/360; both existing point-difference producers 368/368, with
+// native salt 367/367. Declared lead field read at each use 369, with native salt 372.
+// All bodies and real-field trials restored; frame agrees, stacked index/output EBX still differ.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -2438,6 +2442,10 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 // DH round 218: existing sound producer 1272; with complete position aggregate, readonly aggregate,
 // sound record name, aggregate/name, both sound/effect array names, aggregate/array names and
 // caller inline declaration all 1272. Every form 4728/4828 bytes, frame unchanged; all restored.
+// Round 248: effect-result case orders 1162/1161/1162/1161; terminal action orders 1174/1162;
+// paired dispatch/action orders 1174/1161. Native tag-array, direction-workspace, both,
+// damage-record, array/record and all paired role names 1162 each. All restored; frame,
+// velocity contract, native request homes and setter expansion still differ.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
