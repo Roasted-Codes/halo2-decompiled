@@ -684,6 +684,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // scores this body 247; there a bool result 276, short result 235 (plain 239, no self-alignment),
 // marker/position/offset declared at function scope 247 each. Retail also keeps the player-index
 // NONE test at the loop latch and widens the zoom argument to 32 bits. Original body restored.
+// Round 176: Comparison-produced near/facing/both long results 236/235/237; Boolean results 287/283/277;
+// one per-player success exit with comparison-produced long/Boolean result 237/277. Direct original
+// radius observations throughout; original result, inherited radius storage and all body statements restored.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1664,7 +1667,7 @@ void function_bba20(long index);
 
 transform4x3f *function_b8bd0(long object_index, short node_index);
 
-// score 285 (was 305): the frame (0x64) agrees; 1239 bytes against 1236. The entry now matches up to
+// score 285 (was 285): the frame (0x64) agrees; 1239 bytes against 1236. The entry now matches up to
 // +0x76 (pool in EBX, -1 in EAX). Retail inlines the node matrix lookup (0xb8bd0's body, here called
 // out of line because its file is /Ob1) and re-derives pool->data into EBX after the ancestry loop
 // for both the parent and the header, where ours takes the header from the entry's pool->data.
@@ -1709,6 +1712,17 @@ transform4x3f *function_b8bd0(long object_index, short node_index);
 // after the walk as retail, but the flag spills); plus the file's bitfield tests (flag7, physics_active)
 // and a type-mask test 339; plus offset declared first 335; plus the ancestor walk through the object
 // getter 324 (aligned 159/159 against 154/162).
+// Round 172 DL: Shared post-ancestry header table 321; native resident pose record
+// 285; both 321. Native header activity bit with shared table/pose/both
+// 323/281/323; table with both shifted flag tests 313; all forms 318.
+// The four-count 281 gain fails the eight-count gate; original type layouts,
+// all helper bodies, node query and complete body restored.
+// Round 175: Existing point-producer native input captures, point/transform/both/rotation/
+// point-rotation/translation/rotation-translation/all 366/348/384/339/376/360/371/416;
+// all lose the shared sibling. Real header activity-bit producer with hidden/component/byte-active
+// shift subsets 281/285/285/290/281/285/285/290; four-point gain rejected. On native activity,
+// ancestry exit result alone/unsigned offset/uniform pool reads/both 290/290/299/299.
+// Complete original header, private helper and body restored; pool-data, node lookup and SIMD homes remain.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

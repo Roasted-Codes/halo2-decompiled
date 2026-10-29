@@ -87,12 +87,18 @@ void function_1bbc00(long player_index, long vehicle_index)
 
 static __forceinline long real_to_long(real value);
 
-// score 8 (was 8): retail moves the vehicle index into EAX before it forms
+// score 2 (was 8): the child object is kept in a local, so retail's object
+// pointer stays in EAX and the tick count is converted through ECX/DX like
+// retail; only the 0xd0620 call setup still differs, ours forms the iterator
+// address in EBX before it moves the vehicle index into EAX.
+// Tried: the iterator started from the stored
 // the iterator address in EBX for the first child call, and in the child loop
 // keeps the object pointer in EAX and converts the tick count through ECX/DX
 // where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
 // player vehicle 77; the actor looked up at each store 45; separate conversion
 // locals in the loop 15; the loop product passed straight to the conversion
+// 8; the block locals in two other orders 8; the player and vehicle parameters
+// swapped 12; the child object in a local with the index read from it 8.
 // 8; the block locals in two other orders 8.
 // Earlier 8 from 44.
 // Existing slot-query long/short 61/8; guarded long/short 70/38;
@@ -134,11 +140,11 @@ void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 			function_d0620(vehicle_index, &iterator);
 			while (function_d0690(&iterator))
 			{
-				long actor_index = object_get(iterator.child_index)->actor_index;
+				s_slot_object_view *child = object_get(iterator.child_index);
 
-				if (actor_index != NONE)
+				if (child->actor_index != NONE)
 				{
-					s_actor_view *actor = actor_get(actor_index);
+					s_actor_view *actor = actor_get(child->actor_index);
 
 					actor->unknown31c = (short)player_slot;
 					time = (real)g_510c54->field_2_3 * 2.0f;

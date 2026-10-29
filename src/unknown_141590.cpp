@@ -766,7 +766,7 @@ void function_143250(
 	}
 }
 
-// score 2148 (was 2148): Full frame 0x300 agrees; rotation input and basis/matrix homes remain.
+// score 2039 (was 2039): Full frame 0x300 agrees; rotation input and basis/matrix homes remain.
 // Full frame 0x300 agrees; rotation input and basis/matrix homes remain.
 // Frame pointer 3182; separate adjacent basis pairs [0,1] 2278, [2,3] 2320,
 // [4,5] 2286, [6,7] 2329.
@@ -803,6 +803,14 @@ void function_143250(
 // Round 263: complete column publication of band masks 1/2/3/4/5/6/7 and all reversed columns
 // 2051/2040/2040/2199/2199/2210/2210/2291 (fast control 2051). Five-by-five columns kept: 2039 plain,
 // 10500/10773 bytes; every scalar producer and helper tuple unchanged.
+// Round 268: native two-dimensional band rows, masks 1/2/3/4/5/6/7,
+// 2055/2088/2107/2123/2146/2179/2279; all arrays at entry 2279
+// (fast control 2040, full 2039). Original shared matrix and publication orders restored;
+// full frame 0x300, rotation admission and basis/matrix homes remain.
+// Round 271: exact first/second/both native retail matrix store orders after complete
+// producers, 2040/2051/2051; separate shared 49-element array alone/first/second/both
+// 2279/2279/2294/2294; complete graph with basis identity 2294 (fast control 2040).
+// Original shared workspace, publications and complete polynomial body restored.
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {

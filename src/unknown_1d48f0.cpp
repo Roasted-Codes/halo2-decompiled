@@ -177,6 +177,9 @@ const dword g_455978[81] = {
 // Round 389: native missing-location result bool/byte/short/long 477/477/487/486;
 // each with entry constant initialization 477/477/487/486. Original positive result and
 // lifetime restored; aligned frame agrees, optional-state homes and helper expansion remain.
+// Round 392: selected-cluster outcome in short at current/entry/control/SSE boundaries
+// 314/474/472/472; long 314/477/475/475. Current lifetime reaches retail length,
+// but homes and selective helper expansion remain. Original Boolean outcome restored.
 // Round 257: inflated-bound scalar before descriptor construction 461, const 461;
 // both with six-use center 496/496; early filter 459/459; center and filter 497/497.
 // Original scalar lifetime, field observations and descriptor stores restored.
