@@ -470,6 +470,9 @@ real function_30bf0(vector3f *vector);
 // Round 228: Immutable range/distance/scaled-range producers, all seven combinations,
 // and all three with the seat workspace at entry 152 each. Original mutable declarations
 // and seat lifetime restored; result/range homes and inverse SIMD groups remain.
+// DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
+// 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
+// Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1644,7 +1647,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 536 (was 564): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// score 536 (was 536): the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
 // frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
 // the forward transform (retail if/else straight from the unit) and the scoring block differ.
@@ -1713,6 +1716,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 // Guarded long ordinal with ordinary actor input also 536, plain confirmed at retail
 // 2880 bytes; retained without the parameter-address alias. First frame remains 0x84/0x80,
 // selection/iterator homes, forward transform and scoring allocation still differ.
+// DH round 230: On the independent-ordinal graph, long established/visible/retain/pair-established-visible/
+// pair-established-retain/pair-visible-retain/all predicates 577/579/550/583/567/579/603;
+// all with reversed selection declarations 604. Restored; frame 0x84/0x80 and native result homes remain.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

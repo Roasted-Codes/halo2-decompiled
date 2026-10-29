@@ -239,6 +239,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Round 246: signed-char frame/weight/both fields 207/207/207; each with a twice-used long
 // frame 257/257/257; both with short frame/immutable frame-count snapshot 258/254. Original
 // field identities, observations and body restored.
+// DH round 230: Post-getter countdown snapshot in byte/short/long/word domains 207/216/280/215;
+// the same complete if/else weight producers 207/216/280/215. Original observations and body restored;
+// frame 0x30/0x2c, destination/ordinal homes and weighted getter expansion remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
