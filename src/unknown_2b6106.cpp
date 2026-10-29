@@ -715,6 +715,9 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // first 573; ordinary inline with widget/array/both references 573 each; both references
 // with text-first formals 573. Original helper and every publication call restored.
 // Round 380: Bit extraction after widgets at bool/byte/short/long width 642/642/640/628; in the data branch 639/639/633/640. Original extraction and carriers restored.
+// Round 384: publication widget/text/external-widget-reference results under forced expansion
+// 573/573/573; ordinary inline results 693/716/693; outlined void/widget results
+// 716/693. Original publication helper, complete screen body and held interfaces restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

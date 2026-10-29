@@ -1261,6 +1261,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // 531/561/559/559; entry declarations 531/561/559/559. Original bool result and every
 // vector/color/rotation operation restored; frame 0x2c versus 0x28 and block/query/result homes
 // remain. Both caller levels preserve their original measurements.
+// Round 384: channel-local sample/lower/upper/sample-lower/sample-upper/lower-upper/all
+// clamp captures 591/582/569/581/566/562/569; plain clamp branch stores 572.
+// All eight lose the matched caller; original complete clamp and target body restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
