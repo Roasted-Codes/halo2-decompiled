@@ -492,6 +492,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Round 239: original shared actor/reference/prop getter force-inline declarations,
 // all seven subsets and all three with unsigned full next/current handles: 420 each.
 // Original getters, handle domains and body restored.
+// Round 384: retained actor/node/both lookups 441/442/462; unsigned full handles 420;
+// unsigned handles with retained actor/node/both 441/442/462; all on a plain linked-list for 466.
+// All lookup lifetimes, handle domains, traversal and complete original body restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -863,6 +866,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // Round 245: Signed-short three-input priority trees in six candidate orders
 // 352/352/350/351/353/353; two reversed comparison trees 352/351
 // (fast control 356, full 331). Sub-eight gains rejected; original body restored.
+// Round 174 (fast control 372/1262, full 331/1251): existing saved-pointer
+// actor_snapshot/retained_actor/actor_saved/saved_owner identities, each with
+// original/actor_squad receiver identity, 372 each. All restored; full frame 0x20
+// agrees, actor ESI/EBX and saved/squad/flag homes remain.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

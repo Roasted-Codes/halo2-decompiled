@@ -1366,9 +1366,8 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
     }
 }
 
-
-
-// score 267 (was 267): frame and sampler agree; deferred index and post-store descriptor rereads remain.
+// score 267 (was 267): frame and sampler agree; mapped flag width, deferred indices and post-store descriptor reads remain.
+// Earlier: frame and sampler agree; deferred index and post-store descriptor rereads remain.
 // Frame and sampler agree; deferred index and post-store descriptor rereads remain.
 // Direct descriptor pointer/reference 267/267; mapped pre-rescale reload 267; mapped descriptor across pack 263 (not kept: a gain under 8);
 // validation descriptor across pack 288; direct pointer on that graph 263; separate mapped output word 268;
@@ -1425,9 +1424,21 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // 286/269; shared masked input 298/270; both mask parts 317/305.
 // Every short-index form loses a matched sibling; original shared writer restored.
 // Round 369: common traversal 845; bounded short counter 844; repeated component/shared color/both on common traversal 845 each, with short counter 844 each. All restored.
+// Round 167: complete mask/color/remap domains 267/267/267/268/268/268/268/268;
+// descriptor-aware direct/mapped/both writers 154/276/153; dword/reference/signed/short contracts 163/153/163/153/159;
+// native word, source field, rescale capture and combined contracts 152/129/153/130/130;
+// caller-masked contracts 184/254/192; actual input records/rescale bitfields 130/130/135/130;
+// boolean/word rescale helpers 135/130/135/135; word accessors 130/130/130/130/130/130/130/130;
+// shared writer macro with word/source domains 183/139/166/136 (other writer worsened, restored);
+// redundant flag predicates 161/162/130/130; runtime descriptor/mask predicates 135/130/130/135/130/130;
+// descriptor-aware writers/accessors all restored: new single-caller helpers did not match.
+// The 130 form differs by the mapped rescale word load; closest diagnostic 129 was not retained.
 // Round 242: Existing writer mask/color/index native references, seven nonempty
 // combinations and all with descriptor reference, 267 each. Original shared
 // writer restored; deferred index and descriptor rereads remain.
+// Round 222: External destination references, indexed pair/constant-zero/constant-one
+// subsets 267/287/287/287/287/296/296; all with reused preserved mask 274. Constant-one
+// forms lose a matched writer sibling; complete original helper and body restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

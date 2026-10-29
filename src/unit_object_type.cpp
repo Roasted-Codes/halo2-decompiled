@@ -1554,6 +1554,13 @@ void function_ce470(long mode, long unit_index, long object_index)
    when the weapon has zoom levels (0x100fd0), else, unless the weapon's
    flag 0 at +0x12e forbids it, the next of the globals' count (NONE past
    the last) */
+// score 37 (was 37): Extra saved EBX/result carrier and unit/weapon/header scheduling remain.
+// Long result 38; entry short/long result 40/39; late result 45; explicit weapon arms 37;
+// byte flag 37; one result exit 44; long result plus explicit arms 38.
+// Masked unit/weapon/both lookups 37/37/37; masked unit/both with long result 38/38;
+// masked unit with late short/long result 45/44; both masked lookups plus byte flag 37;
+// explicit weapon arms with late short/long result 54/53, also 54/53 through masked unit lookup.
+// Original body restored.
 // @retail 0xc8960
 short function_c8960(long unit_index, short value)
 {
@@ -2624,6 +2631,10 @@ void __stdcall function_c42e0(long unit_index, void const *placement)
 /* picks up a grenade: when the globals allow its type (+0x104, 0x2c bytes
    each) and the unit carries fewer than the type's maximum, counts it,
    tells the player code, and deletes it */
+// score 33 (was 33): Entry and frame agree; shared NONE carrier and final player word compare differ.
+// Entry bool result 54; long result 96; entry long result 96; byte result 90;
+// promoted player slot 33; nested object tests plus promoted slot 33; direct success 53;
+// early globals guard 95. Original body restored.
 // @retail 0xccba0
 bool __stdcall function_ccba0(long unit_index, long grenade_index)
 {
@@ -3387,6 +3398,12 @@ void function_c6990(long unit_index)
 
 /* the entry animation (of five) whose end point on the vehicle's seat is
    nearest the unit's center; the seat marker's position and that point */
+// score 49 (was 49): Frame and spatial arithmetic agree; constant, seat flag and call scheduling differ.
+// Boolean bit conversion 49; complete bool/byte/short seat-bit polarity 103/103/119;
+// entry result 44, distance 49, both 45; shared point difference 62.
+// Pointer table walk 50, plus seat polarity 103, shared difference 63, both entry constants 46.
+// Both point library copies 49, plus shared difference 62; entry result with library copies 44;
+// entry result with pointer walk 45. The 44/408-byte form fails the minimum-eight rule; restored.
 // @retail 0xc7160
 long __stdcall function_c7160(long unit_index, short seat_index, long a, long vehicle_index, long b)
 {

@@ -119,6 +119,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Round 237: one driver/at-use channel/one effects receiver 567/641/539;
 // driver-channel/driver-effects/channel-effects/all 567/555/623/555; all with mode interval 556
 // (fast control 532; full 545). All helpers and body restored; frame and stream/gain homes remain.
+// Round 381: Native integer-bit linear inputs, signed/unsigned and ordinary/forced expansion, copied
+// speakers 542 each; original input-array speakers 551 each (fast control 532, full 545). All
+// input/helper forms restored; frame and gain homes remain.
 // Round 242: Native double absolute-value API across gain/routing/voice gates,
 // seven complete subsets and all with real gain value [547, 534, 532, 539, 543, 535, 537, 537].
 // Reduced control 532, full 545; all width forms and original helpers restored.
