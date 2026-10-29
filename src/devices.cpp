@@ -636,7 +636,13 @@ struct s_device_machine_view
 
 // score 42 (was 42): the group-flag test is two bytes longer than retail's: ours shifts the flags byte down by
 // one before the second test, retail tests bit 2 directly; retail also clears the result in
-// case 0x1200055f where ours does not.
+// case 0x1200055f where ours does not (`function_value = 0.0f;` first in the velocity block gives
+// it, 656 bytes 114, kept out until the bit test is solved). Plain mask tests keep the group
+// pointer live to the second test (pushed esi). Tried with that zero store: masks 122; a word
+// getter by group index 123; an inline group-pointer getter 122; the machine test as a named
+// bool 124. Screened (one-file LTCG): word/long `flags & 2` locals, `== 2`, `!!`, a ternary,
+// bit-test helpers taking the mask, a named group condition before/after the machine test,
+// `||` with the machine test: all the shift or the pushed esi.
 // @retail 0x106d70
 bool __stdcall device_export_function(long device_index, long name, real *value, bool *active)
 {
