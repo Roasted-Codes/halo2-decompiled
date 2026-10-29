@@ -463,13 +463,19 @@ static __forceinline float linear_coupling(solver_linear_row_31e7b0 const *a,
 	return sum_three(_mm_add_ps(_mm_add_ps(angular_a, angular_b), linear_mass));
 }
 
+// By-value operands retain retail's proposed-shift spill and selection order.
+static __forceinline float contact_minimum(float a, float b)
+{
+	return a < b ? a : b;
+}
+
 // Contact normal rows, optional coupled pairs, a two-axis friction block,
 // and a radius-scaled angular friction row for a multi-point manifold.
-// score 840 (was 1110): inline normalization/coupling, retain countdown loops,
-// and address friction rows from the current cursor with a shared final update.
-// Header setup now matches; cursor allocation, SIMD scratch loads/stores and
-// x87 scheduling still differ (3245/3182 bytes). Explicit axis reloads and
-// scalar-load helpers did not improve this variant.
+// score 776 (was 840): use a by-value minimum, declare the operation cursor
+// after the vector accumulators, and keep radius lengths in SIMD through sqrt.
+// Retain inlined normalization/coupling, countdown loops and cursor-relative
+// friction rows. First difference is +0x5c; cursor allocation, tangent-loop
+// layout and scalar scheduling still differ (3209/3182 bytes).
 // @retail 0x31f620
 void __cdecl lane_b_contact_build(void const *points_, long count,
 	void *properties_, void *solver_data_, void const *input_, void *output_)
@@ -491,11 +497,11 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 	header->b = body_b;
 	header->property_stride = sizeof(*properties);
 	header->terms = first_terms;
-	unsigned long *op = (unsigned long *)(header + 1);
 	solver_linear_row_31e7b0 *row = (solver_linear_row_31e7b0 *)output->terms;
 	float total_friction = 0.0f;
 	__m128 position_sum = _mm_setzero_ps();
 	__m128 normal_sum = _mm_setzero_ps();
+	unsigned long *op = (unsigned long *)(header + 1);
 	lane_b_contact_point const *point = points;
 	contact_property_31f620 *property = properties;
 	for (long remaining = count; --remaining >= 0; ++point, ++property, ++row)
@@ -516,8 +522,7 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 		float distance = property->distance;
 		float gap = point->position.m128_f32[3] - distance;
 		float margin = -property->bias - gap;
-		float proposed_shift = distance * -0.050000011920928955f;
-		float shift = proposed_shift < input->maximum_shift ? proposed_shift : input->maximum_shift;
+		float shift = contact_minimum(distance * -0.050000011920928955f, input->maximum_shift);
 		float adjusted_distance = distance + shift;
 		float separation = gap - shift;
 		if (shift + shift + 0.001f < margin)
@@ -638,9 +643,11 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 			for (long remaining = count; --remaining >= 0; ++point)
 			{
 				__m128 distance = _mm_sub_ps(point->position, mean_point);
-				float squared = sum_three(_mm_mul_ps(distance, distance));
-				float length;
-				_mm_store_ss(&length, _mm_sqrt_ss(_mm_set_ss(squared)));
+				__m128 square = _mm_mul_ps(distance, distance);
+				__m128 xy = _mm_add_ss(_mm_shuffle_ps(square, square, 0x55), square);
+				__m128 squared = _mm_add_ss(_mm_shuffle_ps(square, square, 0xaa), xy);
+				__m128 root = _mm_sqrt_ss(squared);
+				float length = root.m128_f32[0];
 				state->radius += length;
 			}
 			state->radius *= inverse_count;
