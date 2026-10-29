@@ -3621,6 +3621,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // float names 1420 each; independent ordinal names with/without transient names 1420 each. The two
 // 1416 forms reach 5684 bytes but are below the gain gate. Each paired graph with bool/byte/word
 // activity 1469/1465/1426. Original body restored.
+// Round 389: native reset pointer/reference, with original/readiness-first request formals,
+// 1420 each; native working request index on those four graphs 1704 each. Original repeated
+// helper contracts and all call arguments restored; frame and pool/dual homes remain.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

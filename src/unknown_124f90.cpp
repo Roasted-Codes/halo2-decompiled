@@ -3681,6 +3681,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 221: original native fallback copied from the existing immutable object by aggregate/library,
 // each with aggregate/library occlusion and field/aggregate publication: 739 each, 2085 bytes.
 // All eight restored; original helper and stack fallback retained; temporary declaration removed.
+// Round 389: query directly into the final point 563; first/second/both rotations in place
+// with complete vector snapshots 1030/1035/1008; query reuse with those graphs 1042/1047/1020;
+// complete reuse with native output-pointer return 1020. Original distinct workspaces restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {
