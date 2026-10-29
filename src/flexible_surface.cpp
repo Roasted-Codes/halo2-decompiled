@@ -277,6 +277,8 @@ bool function_1173e0(long object_index, long index)
 // 7/7/7/7; corner references 4, with short indices 7; complete edge/normal role names 4;
 // complete position snapshots 274; contribution-first corner pairs ab/ac/bc 7/4/7.
 // All restored. Remaining addition pairs are normal.i, not normal.k: offsets +0x18.
+// Round 90: one `long i` for both loops 39; second-loop cursor declared at the top 4 (same
+// code); record->vertices at each use 42; per-triangle index pointer 163; `!normalize3d` 37.
 // @retail 0x117510
 void function_117510(long index)
 {

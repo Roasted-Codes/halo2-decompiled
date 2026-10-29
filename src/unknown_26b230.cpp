@@ -24,6 +24,7 @@ void __stdcall function_b8460(long object_index, bool flag);
 void __stdcall function_b8540(long object_index);
 void __stdcall swarm_delete(long index);
 bool function_bba80(long object_index);
+s_object *function_badc0(long object_index, dword type_mask);
 point3f *function_b9dd0(long object_index, point3f *position);
 void function_2691b0(long clump_index);
 void function_2687a0(long clump_index);
@@ -166,22 +167,18 @@ void function_268840()
 	function_268c90();
 }
 
-// score 221 (was 221): Frame 0x50 agrees; player-pool/NONE and current/successor homes remain.
+// score 221 (was 221): frame 0x50 agrees; retail keeps the player pool in EBP (reloaded after the
+// delete block and 0x2691b0) where ours keeps NONE in a callee-saved register; current/successor homes,
+// the keep flag and the delete block (0x1e2990 inlined in retail: BLOCKED-BY 0x1e2990, noinline in
+// its own file) differ.
+// Frame 0x50 agrees; player-pool/NONE and current/successor homes remain.
 // frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
 // Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
-// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
-// frame 0x50 agrees; pool/NONE, current/successor homes and child interfaces remain.
-// frame 0x50 agrees; player-pool/NONE, current-clump homes and protected child-call carriers differ.
-// Player-pool/NONE allocation and current/successor homes remain.
-// Earlier score 246 (was 246): frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
-// Frame 0x50 agrees; player-pool/NONE registers, clump/successor homes and child-call carriers remain.
-// Current-datum iterator 314; scoped keep 314;
-// frame 0x50 agrees; player-pool/NONE, current-clump homes and child-call carriers differ.
-// frame 0x48 versus 0x50; iterator result/exhaustion and
+// Earlier (frame 0x48 then): iterator result/exhaustion and
 // player/child-call carriers differ. Current-datum iterator 314; scoped keep 314;
 // scoped bool keep 320; entry point scratch 314; entry player pool 297
 // (the latter four use the current-datum iterator). All body forms restored.
@@ -194,7 +191,6 @@ void function_268840()
 // Per-clump player pool 258; child-result for-loop 246; integer-byte retention in frame 0x50 247; actor-scope child iterator 246; successor scalar lexical home 246.
 // the clump datum walk gives retail's loop head; NONE kept in ebx
 // where retail keeps the player pool in ebp, and the current clump's slot differs.
-// Frame 0x48 versus 0x50 and current/exhaustion/player homes remain; child-call carriers differ.
 // In the recovered 0x50 frame: entry player pool 302; Boolean retention 247; both 302;
 // direct expiry admission 246/893 bytes; pool/Boolean/both plus direct expiry 314/256/314;
 // entry pool and Boolean retention with full-width child result 301.
@@ -230,6 +226,12 @@ void function_268840()
 // Round 33: With matched child interfaces, positive actor admission 242; deletion-owned if/else
 // 221; both 221; child continuation condition alone/with admission 242/242; with deletion/both
 // 221/221; all three with Boolean retention 222. Keep only the deletion-owned if/else.
+// Round 90: the existing function_badc0 for the extra object's lookup 221 (same code, kept); extra
+// as NONE unless the field is set and not the unit 223; expiry tested in one condition without the
+// flag 234 (910 bytes; that block then follows retail's branches, aligned 171 -> 153); with that, keep
+// as a bool inside the actor branch feeding a remove flag 235 (gives retail's keep byte at +0x13 and
+// its `sete` test, but an extra spill slot makes the frame 0x54); plus the player pool read from
+// the global at each use 235.
 // Round 390: retained actor address, with Boolean retention/positive keep arm/optional
 // handle publication masks 0-7: 290/302/293/296/290/302/293/296. All lose frame 0x50;
 // original late lookup, complete body and matched child interfaces restored.
@@ -306,13 +308,7 @@ void function_268c90()
 					else if (proxy != NONE) swarm_delete(proxy);
 					if (extra != NONE)
 					{
-						byte *object = NULL;
-						if ((extra & 0xffff) < g_4e0300->high_water_index)
-						{
-							byte *header = g_4e0300->data + (extra & 0xffff) * g_4e0300->size;
-							if (*(short *)header && *(short *)header == (extra >> 16) &&
-								(1 << header[3])) object = *(byte **)(header + 8);
-						}
+						byte *object = (byte *)function_badc0(extra, (dword)NONE);
 						if (object)
 						{
 							s_object_child_iterator children;
@@ -956,7 +952,6 @@ void function_2691b0(long clump_index)
 }
 
 struct s_object;
-s_object *function_badc0(long object_index, dword type_mask);
 point3f *function_b9dd0(long object_index, point3f *result);
 bool function_bec70(long object_index);
 bool function_26add0(long prop_index);
@@ -2200,9 +2195,10 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 283 (was 283): Frame 0x6a4 agrees; early reset-word SI and later visibility/selection homes remain.
-// visibility/marking registers and selection/cleanup allocation still differ.
-// Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
+// score 283 (was 283): Frame 0x6a4 agrees; retail hoists the reset word into SI and NONE into EDI for
+// the cluster loop and reads the cluster count twice (ours keeps one read live), recomputes each
+// candidate from the short cursor (`movsx ebx, di; shl ebx, 4; lea ebx, [esp+ebx+0x74]`) and leaves the
+// first selection loop unrotated; visibility/marking registers follow.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup layout differ; typed cluster view 322f; isolated cluster iterator 322f; unsigned cursor 328f; unsigned selected 322f; case-result assignment 391f; existing first 347f; indexed cleanup 351f.
 // Round 280: full-width reset snapshot 373; current-child handle 322; late cursor 350; late selected total 335; ascending word merge 374.
@@ -2263,6 +2259,12 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 244: Five alternate location-reset field orders 283 each; reset-word-first with either sentinel
 // chain 283/283; reset between sentinels with invalid-cluster-first merge 283. Early reset SI and
 // visibility/selection homes remain; original field publications restored.
+// Round 90: `while (selected < 50 && cursor < count)` for the first selection loop 423 (retail's
+// unrotated head, but the frame drops to 0x6a0: the clump offset gets EBX instead of a spill); with
+// `&candidates[cursor]` per iteration 396; with the candidate reassigned after `++cursor` in both loops
+// 372 (aligned 202 -> 161, 1308 bytes); that reassignment alone on the original loops 388 (frame 0x6a0);
+// on the 372 form with the structure global read at every use 368. Retail's extra pressure is the
+// hoisted reset word/NONE pair; ours never hoists them.
 // Round 391: Loop-local produced object pointers in plain for initializers/steps,
 // cluster/marking/prop in seven subsets 397/389/439/401/478/458/573;
 // all three with the object query 653. All step returns tested; original body restored.
