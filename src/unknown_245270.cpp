@@ -413,6 +413,10 @@ void function_245400(s_source_245400 const *source, long index,
 // bool/byte/word/long side carriers 204/204/204/204/204/204/224/224.
 // Original independent ordered facing tests and full executable body restored.
 // Round 223: Complete orientation eligibility in bool/byte/short/long storage, exhaustive/default-true producers 202/202/202/202/202/202/202/202. Exact-match-only result forms restored; original early returns and in-place transforms retained.
+// Round 72: source-first parameter order as 0x245400 declares it (with the 0x245aa0 call) 203, still
+// EDX; second-material record pointer 203; transformed-point call in the transform arm 246 (the
+// transform becomes a register argument, 0x245aa0 46); widened codes before the edge 203; side
+// bytes before the plane pointers 203.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

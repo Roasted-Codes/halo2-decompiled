@@ -4426,6 +4426,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 214: Native-equality/distinct-exit graph: acceptance, selection, both, identity, identity/acceptance,
 // identity/selection and all Boolean home names 305 each; all names with entry selection constants 372.
 // All executable forms restored; result/identity/selection homes and acknowledgement placement remain.
+// Round 72: sender test inverted ahead of reason 5 317; acknowledgement after the shared exit 305
+// (same code); its result set before the state-7 test 305; preference/equal flags swapped 305;
+// both declared after the member lookup 314. Retail reloads the result byte on every exit.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

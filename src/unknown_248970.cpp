@@ -51,7 +51,7 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 239 (was 239): retail's convention since round 67 (flag in AL, location stacked, 0x175270
+// score 227 (was 227): retail's convention since round 67 (flag in AL, location stacked, 0x175270
 // the child loop advances a 0xb8-stride cursor over the child table instead
 // of recomputing field_34 + i * 0xb8, as retail does; field_4 is now read before the metadata
 // call and the flag is stored after the position copy, as retail does.
@@ -166,6 +166,15 @@ public:
 // Round 250: complete native location layout 239; early head 240;
 // inactive-first 243; both 244; those four with a closed coordinate
 // phase 239/240/243/244. Original input type, header and body restored.
+// Round 72: the child table read each pass (field_34 + i * 0xb8; retail re-reads [ebp+0x34]) 243;
+// existing distance3d 241; vector3d_from_points3d + magnitude3d (retail's x87 pops before the
+// radius multiply) 242, alone on this body 227; allocation result in its own local assigned at
+// the join (retail tests it twice) 230, with magnitude3d 229; existing 0x249bb0 for the fade with
+// an inline/forceinline declaration here 294/294 (not inlined); with `inline` on its definition
+// 166 (retail inlines it: its zero default is the early `movaps xmm0, xmm3`), but 0x174420
+// inlines it too (213 -> 337, retail calls it); inactive arm first on that 248; the existing
+// forceinline link body (retail inlines 0x2483f0, salt read first) gives retail's ECX position and
+// spilled head but moves the location into EBX, 253.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
