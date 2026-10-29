@@ -949,6 +949,9 @@ real g_55e5cc = 0.08726646f;
 // Round 224: Native yaw/pitch bound records and full-width result, seven subsets
 // 56/70/209/70/72/86/219; both records in pitch/yaw order 210. No exact match; original scalar
 // homes and body restored.
+// Round 244: upper-first aiming/relative/both yaw publications 58/56/60;
+// two-use pitch cap before scaled bounds 54, with those publications 58/56/60;
+// cap at original first observation 54. All restored; pitch-cap schedule and helper transport remain.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)

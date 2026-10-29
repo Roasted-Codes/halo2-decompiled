@@ -136,6 +136,10 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // Round 242: shared/native displacement with repeated observations 129/118;
 // with normalization reuse 186/183; fused contribution plus these four forms 150/139/214/211.
 // All native displacement forms restored; alignment, facing sum, clear join and contribution remain.
+// Round 244: shared add after scale 141, with native point publication 141;
+// direct scale-return/add pipeline 141, with point publication 141; reverse add inputs
+// 141/141; native point publication alone 118; planar vector/point constructors with
+// pipeline 143. All restored; marker-clear receiver join and contribution schedule remain.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {

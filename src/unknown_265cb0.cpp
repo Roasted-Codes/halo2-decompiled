@@ -925,6 +925,9 @@ struct s_object_activity_flags
 // Native actor and typed settings receivers, separate or combined, with table capture and invalid-
 // input exit 79 in seven forms; native nullable-actor statement form 113. Entry index, early actor
 // NULL and save/pop schedule remain.
+// Round 244: separate activity rejection 80; uniform compound accumulator 79; both 80;
+// settings-first optional bonus 79, with rejections/compound/both 80/79/80;
+// joined rejection 80. Original conditional actor and complete body restored; input/save schedule remains.
 // @retail 0x267370
 real function_267370(long volatile object_index)
 {

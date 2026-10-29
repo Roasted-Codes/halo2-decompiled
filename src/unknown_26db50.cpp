@@ -533,6 +533,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Round 242: fused add/scale at trace/elevation/collision 90/215/90; trace+elevation,
 // trace+collision, elevation+collision, all three 215/90/215/215; all with ordinary radius 113.
 // Original complete body and rotation helper restored; ring conversion and rotation spill remain.
+// Round 244: existing rotation with distinct source/destination, output last/first,
+// axis-source-output first and scalar inputs first, each with projection before/after original
+// component snapshots, all 90. Original helper, in-place input copies and complete body restored.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
