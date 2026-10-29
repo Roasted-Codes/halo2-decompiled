@@ -817,7 +817,7 @@ bool function_1995a0(const byte *source, dword source_size, byte *destination, l
 // named packet record 93; moving payload pointer 144.
 // Earlier: with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
 // Round 109: with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
-// score 90 (was 90): with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
+// score 49 (was 90): with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
 // count in a `remaining` local (compressed size scoped to the compressor call, copied when it
 // succeeds), no gotos and the last write tested for success first, only four single instructions
 // differ (20, aligned 4): flag 130; plus remaining 58; scoped 51; copy on success 38; failures
@@ -961,7 +961,7 @@ bool function_869a0(c_simulation_view *view, void *block)
 
 bool function_68670(byte *source, long size, void *block);
 
-// score 95 (was 97): the window fields now load in retail's order, but retail subtracts the span
+// score 97 (was 97): the window fields now load in retail's order, but retail subtracts the span
 // from 0x200 into eax where we subtract 0x200 from the span, and our ring buffer update reuses
 // the start read before the read call instead of reloading it as retail does.
 // order (+0x1c before +0x18), so the rest of the block follows differently.

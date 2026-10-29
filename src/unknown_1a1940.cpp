@@ -85,7 +85,7 @@ long c_page_heap::get_page_size()
 	return 0x1000;
 }
 
-// score 79 (was 80): the scan is a while loop that advances page and copies it into checked,
+// score 80 (was 80): the scan is a while loop that advances page and copies it into checked,
 // so the two counters advance independently like retail's inc esi; inc ebp. Retail still keeps
 // this in ebx, first in the frame and page_count re-read, and ours still shares page + 1.
 // One scan variable 103; checked++ in the body 103; checked = ++page as the increment 90;

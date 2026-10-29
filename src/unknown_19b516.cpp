@@ -336,7 +336,7 @@ void c_widget::v21()
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 
-// score 88 (was 89): the second block keeps the base edges in named locals, so the right edge's
+// score 89 (was 89): the second block keeps the base edges in named locals, so the right edge's
 // base is one add into the width's register and the two offsets convert in retail's order.
 // The first block still adds the width to the left edge before the offset, which needs a copy of
 // the left edge, and both blocks still pick different registers for the same values.

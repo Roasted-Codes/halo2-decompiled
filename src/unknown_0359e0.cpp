@@ -52,7 +52,7 @@ PRIVATE inline long swizzle_log2(dword value)
 	return result;
 }
 
-// score 79 (was 82): the coordinates now take retail's registers (the second in
+// score 82 (was 82): the coordinates now take retail's registers (the second in
 // cx, the third in dx) with the column local declared first; retail still keeps
 // the row coordinate 16-bit in si, promotes the column one after the mask, uses
 // log2_floor's loop shape and picks the common count with a branch (ours cmov).
