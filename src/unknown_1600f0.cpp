@@ -1399,6 +1399,9 @@ PRIVATE inline long score_string_list_1608e0()
 // unchanged; every original operation and body restored.
 // Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
 // output as well: 756 each; original declaration lifetimes restored.
+// Round 88: user index local for the scroll clamp 776; scroll element reference 798; width folded
+// into x 756; scores declared before the player 756; short screen height 759. Retail reads the
+// rectangle's left word again for x where ours reuses the width's register.
 // Round 169: Native score-table/team-element receivers, mutable/readonly combinations 772;
 // immutable native score-table selection 799. One duplicate readonly source excluded.
 // Original byte observations restored; frame/viewer/coordinate homes remain.
