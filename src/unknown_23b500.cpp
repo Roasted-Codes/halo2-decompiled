@@ -26,6 +26,13 @@ struct s_spawn_influence_globals
 	s_spawn_influence_type types[12];
 };
 
+struct s_spawn_influence_entry
+{
+	dword value0;
+	dword value4;
+	dword value8;
+};
+
 extern dword g_502258[0x27];
 
 PRIVATE const byte g_4709f0[48] =
@@ -59,7 +66,10 @@ struct s_spawn_scenario_23aea0
 	s_spawn_settings_23aea0 *settings;
 };
 
-// score 105 (was 105): source receiver and integer destination induction still differ.
+// score 8 (was 103): the copy walks the table with an unscaled byte offset
+// like retail's, but the offset starts at 8 where retail's starts at 0x18
+// (retail anchors the copy 0x10 below the table), and the prologue publishes
+// the default table after the scalar stores where retail publishes it before.
 // actual batch/type ranges 139/227; inner type ordinal 139; direct twelve types 254;
 // source records with direct/batch/read-only ranges 257/227/227; complete override 140.
 // Word/byte batch ordinals 141/141; word/byte entry ordinals 242/242;
@@ -86,22 +96,37 @@ struct s_spawn_scenario_23aea0
 // @retail 0x23aea0
 void function_23aea0()
 {
+	s_spawn_influence_globals *globals = (s_spawn_influence_globals *)g_502258;
 	byte *tag = g_4e3b44[g_4e034c->index & 0xffff].bytes;
 	byte *definition = *(byte **)(tag + 0xc);
 	s_spawn_scenario_23aea0 *scenario = (s_spawn_scenario_23aea0 *)g_4e0350;
-	s_spawn_influence_globals *globals = (s_spawn_influence_globals *)g_502258;
 	g_5022f0 = g_4709f0;
 	globals->value4 = *(real *)(definition + 0x154);
 	globals->value0 = *(real *)(definition + 0x150);
-	for (long i = 0; i < 2; i++)
+	/* the twelve influence types take their weights from the definition's
+	   records, three values to a record and six records to a group */
+	dword *weights = (dword *)(definition + 0x184);
+	for (long table_offset = 8; table_offset < 0x98; table_offset += 0x48)
 	{
-		for (long j = 0; j < 6; j++)
-		{
-			long type = i * 6 + j + 2;
-			g_502258[type * 3 - 4] = *(dword *)(definition + 0x148 + type * 0x1c);
-			g_502258[type * 3 - 3] = *(dword *)(definition + 0x14c + type * 0x1c);
-			g_502258[type * 3 - 2] = *(dword *)(definition + 0x150 + type * 0x1c);
-		}
+		*(dword *)((byte *)g_502258 + table_offset) = weights[-1];
+		*(dword *)((byte *)g_502258 + table_offset + 4) = weights[0];
+		*(dword *)((byte *)g_502258 + table_offset + 8) = weights[1];
+		*(dword *)((byte *)g_502258 + table_offset + 0x1c) = weights[6];
+		*(dword *)((byte *)g_502258 + table_offset + 0x20) = weights[7];
+		*(dword *)((byte *)g_502258 + table_offset + 0x24) = weights[8];
+		*(dword *)((byte *)g_502258 + table_offset + 0x38) = weights[13];
+		*(dword *)((byte *)g_502258 + table_offset + 0x3c) = weights[14];
+		*(dword *)((byte *)g_502258 + table_offset + 0x40) = weights[15];
+		*(dword *)((byte *)g_502258 + table_offset + 0x50) = weights[20];
+		*(dword *)((byte *)g_502258 + table_offset + 0x54) = weights[21];
+		*(dword *)((byte *)g_502258 + table_offset + 0x58) = weights[22];
+		*(dword *)((byte *)g_502258 + table_offset + 0x6c) = weights[27];
+		*(dword *)((byte *)g_502258 + table_offset + 0x70) = weights[28];
+		*(dword *)((byte *)g_502258 + table_offset + 0x74) = weights[29];
+		*(dword *)((byte *)g_502258 + table_offset + 0x88) = weights[34];
+		*(dword *)((byte *)g_502258 + table_offset + 0x8c) = weights[35];
+		*(dword *)((byte *)g_502258 + table_offset + 0x90) = weights[36];
+		weights += 0x2a;
 	}
 	if (scenario->count > 0)
 	{
