@@ -167,7 +167,7 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
  return function_cbd50(unit_index, *(signed char *)(unit + 0x212 + slot));
 }
 
-// score 620 (was 622): retail loads the state table into ESI and the state pointer into EDI, then reuses
+// score 620 (was 620): retail loads the state table into ESI and the state pointer into EDI, then reuses
 // ESI for the player index and the player pointer and keeps the unit pointer in EBX; ours folds the base
 // into the add and keeps the state in ESI, and retail returns from inside each switch case.
 // Round 134: retail's case layout is 10-14, 2, 4, 15, 18, 0, 1, 31, 17, 30, ...: cases 0/1/31 after 18
@@ -236,6 +236,12 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // request_weapon out of line (cases 15/18/16/23/9 short), state/player in ESI/EDI (retail EDI/ESI)
 // and headers/unit in EBX/EBP (retail EBP/EBX); request_weapon forced inline 929 (more callees
 // inline, the 0x1e8eb0 tails unmerge); request_weapon taking the unit index 657 (still out of line).
+// Round 169: Native unit parent/seat/health-and-flags field subsets, all seven 620;
+// complete readonly unit receiver 620. Original types and body restored; state/player/unit
+// allocation remains despite the matching frame, selector and cleanup.
+// Round 220: Entry-getter failure guards, per-use table, both, readonly table,
+// readonly with guards/per-use/both, and conditional nullable result 620 each.
+// Original getter, state/player/unit receivers and complete body restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

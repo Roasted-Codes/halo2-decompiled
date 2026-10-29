@@ -508,6 +508,11 @@ long function_243b10(long key_b, bool team_only, long *second)
 // and the marker test 173; the position through marker_position() 173; the table at each use 200.
 // Retail loads the team mode into EBP while EAX still holds the options pointer (ours coalesces both
 // in EBP), so EAX looks busy in retail's clause 1 too; the index spill is the cause to find.
+// Round 71 (plain, each on the accumulated distance, which alone stays 173): the select's else arm
+// through the global 200; both select arms through the global 200; the inner index and count
+// declared at function scope 173; the table local assigned at the outer loop top 169 (the slot
+// parameter moves to the stack and caller 0x240160 is lost). Retail also keeps count in memory
+// from its definition (stored straight from EAX) and stores j = 0 at once.
 // @retail 0x243c00
 void function_243c00(long slot)
 {
@@ -1657,6 +1662,9 @@ void function_242e00(long player_index, long team);
 // entry->position;`) gives 2 on the kept order, only the 0xba300 call differing; it needs a match, so
 // apply it together with the held 0xba300 change. Round 103: 0xba300 is still contributor code (DIFF 24).
 // Round 87: unchanged; 0xba300 still contributor code (DIFF 24) and every caller of it is todo.
+// Round 71: unchanged; 0xba300 still contributor code (todo). Retail never takes the engine
+// globals pointer's address (only loads and its allocation store), so its reload after each
+// 0xb58c0 call is the register choice the element-pointer form above reproduces.
 // @retail 0x242660
 void function_242660(long object_index, bool arg_1)
 {
