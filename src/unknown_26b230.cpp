@@ -2234,6 +2234,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 383: shared existing location reset ordinary/inline/forced/outlined 283/283/283/346;
 // with consistently retained clump heads 391/391/391/411. Original helper linkage, both original
 // helper callers, root observations and complete executable body restored.
+// Round 386: real actor/prop/node traversal workspace reuse for each pair/all,
+// then the same four with the actual uninitialized query workspace at entry
+// 283/283/283/283/283/283/283/283; original independent workspaces and body restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
