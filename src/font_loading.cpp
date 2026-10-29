@@ -519,6 +519,9 @@ static inline word font_character_pixel(long alpha, long color)
 // single pixel of type 2 (234: widens there but merges the two fills); named
 // longs for the type 3 stores (108); a byte alpha parameter (201-209); the
 // byte casts at the call sites (108); (dword) or no casts at the stores (108).
+// Round 182: Packed-class tests and positive input endpoints leave alpha extension and literal assembly unresolved
+// Trials 1-8: 87, 87, 186, 89, 187, 188, 189, 188.
+// Trials 9-16: 180, 184, 180, 210, 184, 210, 210, 210.
 // @retail 0x122610
 long function_122610(long size, void const *pixels, void *destination)
 {
