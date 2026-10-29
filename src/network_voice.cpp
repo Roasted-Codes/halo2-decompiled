@@ -1362,7 +1362,7 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 	queue->count = kept;
 }
 
-// score 141 (was 107): the convention now agrees with retail (queue ESI, player EAX copied to
+// score 141 (was 141): the convention now agrees with retail (queue ESI, player EAX copied to
 // EDI, cursor EDX before the player as the declared order, the rest on the stack, `ret 0xc`): the
 // result is computed before the header stores, so EDI holds it after the loop. Still differs:
 // retail keeps the player bit in EBP and the queue count in ECX (ours caches the count in EBP and
@@ -1390,6 +1390,8 @@ void voice_queue_compact(s_voice_queue *queue, word mask)
 // and the bit declared later screened in a one-file LTCG harness: none keeps both the count
 // in ECX and the product in EDI (written declared before the size keeps the count but puts the
 // product in EBX and the player back in EDI).
+// Round 198: one final mask snapshot dword/word after header 142/142, before result 141/141,
+// after result 141/141; snapshot with written before size 168/168.
 // @retail 0x55c40
 long function_55c40(s_voice_queue *queue, byte *cursor, long player, byte *output, long capacity, bool include_mask)
 {
@@ -3229,6 +3231,9 @@ static inline long voice_packet_clamp_count(byte count, long minimum, long maxim
 // frame and extent agree; channel/cursor/count registers and route homes differ.
 // Independent packet cursor 164; byte packet index 172; enclosing member lifetime 139;
 // entry route lifetime 139; ordinary delivery arm first 162.
+// Round 198: remaining set before/after delivery, word/dword 172/182/154/179; with independent
+// cursor 141/182/164/188; separate input/remaining sets with conditional clear 146/176, with
+// cursor 158/184.
 // @retail 0x55e10
 long __stdcall function_55e10(s_voice_channel *channel, byte *data, long size, bool relay)
 {
