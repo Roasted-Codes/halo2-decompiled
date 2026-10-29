@@ -133,6 +133,9 @@ static __forceinline long real_to_long(real value);
 // ready flag 98 (setg); count test as >= with both returns 24; final return
 // only 81; the two branches swapped 102; short counters 24 (same code, kept as
 // they need no casts).
+// Countdown-local short/long branch result 90/116; one eligible-branch
+// short/long result 90/94; each with a separate decrement 90/116/90/94.
+// Original status tails and decrement expression restored.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {
