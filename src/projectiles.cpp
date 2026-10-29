@@ -1566,14 +1566,21 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
-// score 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
+// score 348 (was 382): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
+// Earlier 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
 // Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
 // shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
 // complete spherical direction 401; early index-only salt 377 (five-point gain dropped); target-distance
 // name 382; shared normalizer 382; dot after trigonometry 382; early salt plus field reads 387.
+// DH round 218: separate final aim point/common output 393, both point setters 382, both 393;
+// early salt with separate result/setters/both 375/377/375 (seven-/five-point leads restored);
+// readonly center with separate result, with/without setters 393/393. Reuse the existing target
+// point and publish once, scalar/shared setter 365/365; with early index-only salt 348/348.
+// Shared setter plus early salt kept, plain 348; all game-call arguments unchanged.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
+	long salt = projectile_index >> 16;
 	s_projectile *projectile = PROJECTILE_GET(projectile_index);
 	s_projectile_definition *definition = PROJECTILE_DEFINITION_GET(projectile->tag_index);
 	point3f *center = (point3f *)((byte *)projectile + 0x30);
@@ -1626,16 +1633,11 @@ void function_f87f0(long projectile_index, point3f *aim_point)
 		real cosine = (real)cos(angle);
 		real along = dot * (1.0f - cosine);
 
-		aim_point->x = (to_target.i * along + axis.i * cosine - (axis.j * to_target.k - axis.k * to_target.j) * sine) * amount +
-			arg_0e6828.x;
-		aim_point->y = (to_target.j * along + axis.j * cosine - (axis.k * to_target.i - to_target.k * axis.i) * sine) *
-			amount + arg_0e6828.y;
-		aim_point->z = (to_target.k * along + axis.k * cosine - (to_target.j * axis.i - axis.j * to_target.i) * sine) *
-			amount + arg_0e6828.z;
-		return;
+		real_point3d_set(&arg_0e6828, (to_target.i * along + axis.i * cosine - (axis.j * to_target.k - axis.k * to_target.j) * sine) * amount + arg_0e6828.x,
+			(to_target.j * along + axis.j * cosine - (axis.k * to_target.i - to_target.k * axis.i) * sine) * amount + arg_0e6828.y,
+			(to_target.k * along + axis.k * cosine - (to_target.j * axis.i - axis.j * to_target.i) * sine) * amount + arg_0e6828.z);
 	}
-
-	if (!TEST_FIELD_BIT(definition->flag_bits.unknown7))
+	else if (!TEST_FIELD_BIT(definition->flag_bits.unknown7))
 	{
 		vector3f offset;
 
@@ -1653,19 +1655,16 @@ void function_f87f0(long projectile_index, point3f *aim_point)
 		else
 			amount = 0.0f;
 
-		long salt = projectile_index >> 16;
 		real time_a = (real)((g_510c54->game_time + salt * 3) & 0xffff) * g_510c54->rate;
 		real time_b = (real)((g_510c54->game_time + salt * 7) & 0xffff) * g_510c54->rate;
 		real yaw = function_17c900(10, time_b * (1.0f / 3.0f)) * 6.2831855f;
 		real pitch = 3.1415927f - function_17c900(10, time_a * (1.0f / 3.0f)) * 1.5707964f;
 		real cosine_pitch = (real)cos(pitch);
 
-		aim_point->x = (real)cos(yaw) * cosine_pitch * amount + arg_0e6828.x;
-		aim_point->y = (real)sin(yaw) * cosine_pitch * amount + arg_0e6828.y;
-		aim_point->z = (real)sin(pitch) * amount + arg_0e6828.z;
-		return;
+		real_point3d_set(&arg_0e6828, (real)cos(yaw) * cosine_pitch * amount + arg_0e6828.x,
+			(real)sin(yaw) * cosine_pitch * amount + arg_0e6828.y,
+			(real)sin(pitch) * amount + arg_0e6828.z);
 	}
-
 	*aim_point = arg_0e6828;
 }
 
@@ -2403,11 +2402,15 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 /* a projectile's collision: damage to what it hit, the response of the
    material hit (detonating, bouncing, reflecting, attaching), the impact
    effects and sounds, then the projectile's action */
-// score 1162 (was 1185): frame 0x220 versus 0x218, velocity on the stack versus eax, input normalization and effect scheduling remain.
+// score 1162 (was 1162): Frame 0x220 versus 0x218, stacked velocity and normalization/effect scheduling remain.
+// Earlier 1162 (was 1185): frame 0x220 versus 0x218, velocity on the stack versus eax, input normalization and effect scheduling remain.
 // Independent damage scopes 1162 (kept); direct sound/late effects/both/scoped both 1223/1185/1223/1199; role names/chains/external normalization 1185/1185/1323.
 // Full count/potential conjunction/input aggregate/assignment helper/uninitialized direction 1201/1216/1198/1198/1185; array aggregates/plain loop/unsigned index 1166/1348/1185.
 // Those eight forms on damage scopes 1169/1199/1199/1194/1162/1162/1348/1162; coordinated velocity positions 1185/1185/1185/1201/1201.
 // Input copy/full normalization/intermediate normalization first 1186/1186/1198; on damage scopes 1163/1159/1170 (1159 three-point tail restored).
+// DH round 218: existing sound producer 1272; with complete position aggregate, readonly aggregate,
+// sound record name, aggregate/name, both sound/effect array names, aggregate/array names and
+// caller inline declaration all 1272. Every form 4728/4828 bytes, frame unchanged; all restored.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
