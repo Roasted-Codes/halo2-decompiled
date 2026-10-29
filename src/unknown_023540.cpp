@@ -2817,6 +2817,11 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Round 383: paired diameter products before normalization 356; full bounds before normalization 354;
 // complete horizontal/vertical product-and-bound phases 336/340; native rectangle counterparts
 // 356/354/336/340. Original reciprocal, product overlap and body restored.
+// Round 166: paired corner production with both angle pairs live, explicit/first-corner-first/
+// table-loop/table-loop after first corner 407/368/358/361; native point outputs
+// 407/368/358/361. Original separate UV producers and trig lifetimes restored.
+// Round 180: Entry declarations of first/second/bounds output buffers, masks 1-7, then all with
+// entry trig declarations: 282/282/282/282/282/282/282/282. Original executable body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -3188,6 +3193,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Round 282: complete encoded output words, ternary/descending/result/ascending forms,
 // each with original/complete first-output word [1128,1131,1128,1131,1121,1121,1129,1130].
 // Original output helpers and complete body restored; capability/save roles remain.
+// Round 393: complementary small/negative/return-state subsets
+// 932/858/933/934/1212/935/1213; all with Boolean small-denial 1210. Original carriers restored.
 // Round 261: shared quantizer byte/word/dword results 985/1007/853; quantizer/output/both
 // formal orders 853 each; byte/word results with both orders 985/1007. Original helpers restored.
 // @retail 0x3a5c0

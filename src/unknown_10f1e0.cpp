@@ -1446,6 +1446,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Native pool bases recover frame twelve at 487; the paired short graph reserves sixteen.
 // On the native pool graph, default success bool/entry-bool/byte/entry-byte
 // 474/474/514/514. Original result defaults and lifetimes restored.
+// Round 389: Plain two-held-slot traversal with long/short/word/byte indices, slot-first
+// validity joins 470/494/494/523; shared validity-first joins 470/494/494/491 (fast control
+// 450). Original paired queries and complete body restored; frame eight and state homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1739,6 +1742,12 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 168: Native unit direction/ratio/weight fields in seven subsets and all with side bytes
 // 790 each; on the newer flag/center graph, plain overlay for 882, with native default angles
 // 911, with conditional activity clear 901, with both 897. Original body and records restored.
+// Round 393: native external sample-channel references in seven subsets
+// 793/793/839/790/793/793/839; all with scratch construction at first use 841. Original body restored.
+// Round 172: complete bounds value return, field construction with pointer/reference/value
+// screen inputs 1027/1027/1123; aggregate construction 1027/1027/1123;
+// ordinary inline field/aggregate returns 1010/1010. Frame 0xcc remains;
+// original bounds helper, direction snapshot and all consumers restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2434,6 +2443,10 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Round 386: existing native pair-validity helper by primary/case/both/tail/primary-tail/
 // case-tail/all phases 701/666/701/745/751/747/753; native triple state guard 762.
 // Original private validity helper, request/control homes and body restored.
+// Round 172: shared point-difference producer on the corrected frame 699;
+// with actual transform/point/both/direction/transform-direction/point-direction/
+// all workspaces uninitialized at entry, 699 each. Frame 0x80 and ret 4
+// remain; original displacement statements and every lifetime restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2776,6 +2789,10 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Fixed caller/request roots reproduce full 155; original body restored.
 // Round 168: Native paired timing fields/header status/parent slot in seven subsets and all
 // with a shared absolute object index 155 each. Original records, copy chain and body restored.
+// Round 172: consistent inline copy/indexed-play/both/base-play/copy-base/
+// indexed-base/all summaries 155 each; all with the actual returned-action word
+// test 149. The six-count gain fails the eight-count gate; every declaration,
+// provider contract and the complete caller restored. Frame 0x3c remains.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

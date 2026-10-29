@@ -1113,6 +1113,8 @@ struct s_game_engine_globals_connections_view
 // Round 267: Separate complete native rectangle outputs for place/icon, name/score and
 // time/connection, every subset and all immutable 196/246/237/256/277/239/279/279.
 // Original shared bounds restored; frame/prefix agree, deferred icon tail and later homes remain.
+// Round 394: Existing icon-query/time-formatter/name-parser inline declarations, all seven
+// subsets 170 each; all three separate noinline declarations 170. Original declarations restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1403,6 +1405,9 @@ PRIVATE inline long score_string_list_1608e0()
 // unchanged; every original operation and body restored.
 // Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
 // output as well: 756 each; original declaration lifetimes restored.
+// Round 88: user index local for the scroll clamp 776; scroll element reference 798; width folded
+// into x 756; scores declared before the player 756; short screen height 759. Retail reads the
+// rectangle's left word again for x where ours reuses the width's register.
 // Round 169: Native score-table/team-element receivers, mutable/readonly combinations 772;
 // immutable native score-table selection 799. One duplicate readonly source excluded.
 // Original byte observations restored; frame/viewer/coordinate homes remain.
@@ -1410,6 +1415,8 @@ PRIVATE inline long score_string_list_1608e0()
 // 776/712/688/711/688/711/744/678 (single-caller helpers restored). Five native rectangle
 // objects with ordinary/readonly and scalar/position inputs 689/689/694/694; implicit native
 // field conversions 689/689/694/694. Ordinary scalar-input objects kept, plain 689 at 2879 bytes.
+// Round 394: Complete dim team-last/complementary-brightness/both 758/758/760; icon denial
+// 756, with team-last/brightness/both 758/758/760; recurring flag field 756. Original body restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

@@ -537,7 +537,7 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 	graph_weapon_type_request(graph, mode, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 	graph_weapon_type_request(graph, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 }
-// score 399 (was 399): frame eight versus twelve and independent hidden-result homes remain.
+// score 399 (was 399): frame eight versus twelve; primary/fallback result homes entry +16/+16 versus retail +4/-4.
 
 // Earlier 399 (was 399): frame 8 versus 12 and hidden-result homes still differ.
 // Earlier: frame eight versus twelve and hidden query-result homes still differ.
@@ -584,6 +584,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // and rolled request expansions regress; original helper and status restored.
 // Round 170: Primary/alternate/both native resolved-input records, mutable then const, both library and
 // both aggregate copies 603/508/644/603/508/644/644/619. Original queries and input observations restored.
+// Round 164: resolver/query/fallback inline-contract subsets and real dword flags 399 each;
+// set/mode/class-type/all-key/options/output/all-formal names 399 each, with existing
+// status and identifier roles 399. All sixteen preserve frame eight and both 0x40 LEAs; restored.
 // Round 261: grouping/leaf/both native graph-reference contracts 399 each; read-only
 // lookup entry alone/with each/both contracts 399 each; all with urgent while 399. All restored.
 // @retail 0x1cc3f0
@@ -951,6 +954,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Original class declarations and complete body restored.
 // Round 170: Failure-owned false result, byte/bool/short/long, with bool then byte prior-loop truth
 // 357/337/346/344/357/337/346/344. Original entry false, constructors and protected queries restored.
+// Native word flag-bit publication at entry/transition/disabled joins 210/318/318/210/210/318/318/210;
+// native completion return contracts 222/222/206/206; reused transition-availability bool/byte/short/long 273/273/264/266;
+// original word operations, availability observations and Boolean interface restored.
 // Round 263: previous-record/validity inline/noinline declarations singly and all four pairs
 // 210/210/210/210/210/210/210/210. Original constructors, provider declarations and protected query restored.
 // @retail 0x1cd070

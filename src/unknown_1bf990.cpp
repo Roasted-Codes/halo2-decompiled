@@ -287,6 +287,9 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // unqualified result 207; separate false store and result read 208.
 // Actor/query, object/approach and movement output workspace names, all seven combinations,
 // each 194; all names with the two uninitialized query outputs at entry 194. Original body restored.
+// The unknown018 field read through its own actor_get call ahead of the actor pointer
+// local 185 (the first field load then folds the address as retail does; retail keeps the
+// pool data in ECX and the scaled index in ESI, ours EDI/EAX); not kept, gain under 8.
 // frame 0x38 agrees; actor pool data is loaded into EBX here and
 // ECX in retail. Early actor-index retention, request tails and distance scheduling differ.
 // Round 262: one native request buffer at entry/decision, with original/entry approach
