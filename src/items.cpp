@@ -1056,6 +1056,8 @@ struct s_item_flags_view_10b850
 // result carriers, full body and helpers restored; frame 0x154/0x12c remains.
 // Round 161: Native item flag8/flag29/state0/flag8-29/flag8-state/flag29-state/all-three 813 each;
 // late flag14 view 846. Original actual item declaration and whole body restored.
+// Round 33: Rotation source-component, turn-term and projection scalar role-name subsets,
+// then complete cosine-product roles: 813/813/813/813/813/813/813/813. Original body and all helpers restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

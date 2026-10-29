@@ -185,6 +185,7 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Round 161: Native external option dword/word/byte units 1007/965/1006; read-only selected record
 // with those units 1007/965/1006; native twelve-byte descriptor 920; descriptor plus dword options
 // 1007. All declarations, flag observations and original body restored.
+// Round 33: Ordinary inline scale/add/subtract subsets, then all with planar producer: 920/920/920/920/920/920/920/920. Original forced producers, body and response sharing restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

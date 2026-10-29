@@ -1440,6 +1440,12 @@ bool __stdcall function_110ab0(long unit_index)
 // default bool/byte/short/long 511/563/559/548. All statuses, defaults and lifetimes restored.
 // Round 168: Complete unsigned key/controlling/held-handle domains in seven subsets
 // 451/450/450/451/451/450/451; all with unsigned unit 451. Original signed domains restored.
+// Round 34: Native mutable/readonly object-header bases, with repeated/retained unit-slot
+// lookup inputs 487/487/487/487; the same four with complete short depletion/overlay
+// complements 504/504/504/504. Original pool observations, statuses and body restored.
+// Native pool bases recover frame twelve at 487; the paired short graph reserves sixteen.
+// On the native pool graph, default success bool/entry-bool/byte/entry-byte
+// 474/474/514/514. Original result defaults and lifetimes restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {

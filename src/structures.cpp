@@ -255,7 +255,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
-// score 172 (was 185): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
+// score 172 (was 172): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
 // the BSP in EBP, retail the BSP in EBX with the section in its stack home), range/plane homes and
 // vertex joins remain. Retail never initialises its vertex flag (set only when a vertex exists,
 // tested only after the first vertex); that uninitialised success-only flag gives 165 (163 with
@@ -321,6 +321,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Geometry-join Boolean result 182 (726 bytes); native byte fetch 172; both 182;
 // initialized single-exit fetch 172, with Boolean result/byte fetch/both 182/172/182;
 // complete result/fetch graph with readonly section 182. Original helper and result restored.
+// Round 32 on branch-owned definition/result-at-join: all BSP observations 234;
+// all collision metadata observations 228; CRT query snapshot 172; BSP/metadata 231;
+// BSP/copy 234; metadata/copy 228; all 231, instance-first all 222. Original body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

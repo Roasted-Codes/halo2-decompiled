@@ -1495,6 +1495,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // long/short condition and long/word body termination 233/230/233/230; four-count
 // reduced gains fail the eight-count gate. All snapshots/scans restored; frame,
 // unit/mode homes and shared look reciprocal remain.
+// Round 34 (fast control 234, full 232): independent primary/idle pointer or reference
+// receivers, all four combinations 234 each; those four with first-weapon fields
+// observed directly 578 each. Original shared channel lifetime and body restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

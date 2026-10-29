@@ -149,6 +149,8 @@ bool function_a7670(long object_index);
 // Original saved truth, cursor timing and complete body restored.
 // Round 170: Recursive inline/forced-inline/noinline/inline-noinline declarations, then each with indexed
 // cleanup 181/181/181/181/196/196/196/196. Original recursive declaration and cursor restored.
+// Round 33: Complementary first membership result bool/byte/short/long with cursor cleanup,
+// then indexed cleanup: 181/181/182/260/196/196/197/264. Original result, both eager scans and body restored.
 // @retail 0x278f00
 void function_278f00()
 {
