@@ -705,126 +705,130 @@ long function_1e4a50(long character_index);
 void __stdcall function_26c2d0(long prop_index);
 void function_270590(s_path_source *source, s_type_c3b527 const *point, long node_index);
 
-// score 225 (was 225): ours sign extends g_46fbe4, which is declared short in
-// include/globals.h, where retail reads the same global as a dword; the frame
-// offsets differ as well.
+// score 210 (was 225): frame 0xb4 and a common result exit agree; the signed-word
+// default load, field tests, output scheduling and later register homes still differ.
+// Earlier: the shared default loads as a signed word rather than a dword; frame homes differ.
 // Unsigned-word/dword result 306/225; byte preparation with long/word/dword result 225/306/225;
 // long preparation with long/word/dword result 311/309/311. Default observation and arithmetic restored.
 // Native ownership/type/state producer orders O/S/T, T/O/S, T/S/O, S/O/T, S/T/O
 // 286/287/286/285/284; explicit state fallback at first/middle/last 287/289/289
 // (reduced control 289, full 225). Original producers and arithmetic restored.
+// Round 400: Native 0x4c payload crossed with 0x5d payload, early output addresses and guarded
+// result: 225/225/224/224/210/210/210/210. Original payloads with guarded/positive admission
+// 210/210; plain 210, 1188/1177 bytes. Keep only positive admission and one result exit;
+// temporary payload types restored.
 // @retail 0x1b99d0
 short __stdcall function_1b99d0(long actor_index, s_slot *slot)
 {
 	s_actor_view *actor = actor_get(actor_index);
 	long result = g_46fbe4;
-	if (actor->unknown224 || actor->unknown225 || !actor->unknown040 || actor->unknown858 != NONE ||
-		!function_26c120(actor_index) || actor->prop_index == NONE)
-		return (short)result;
-
-	s_prop_node_view *base = prop_node_get(actor->prop_index);
-	long selected = NONE;
-	real best_score = 10.0f;
-	real range_low;
-	real range_high;
-	byte *properties = (byte *)function_1e4a50(actor->unknown054);
-	s_iterator iterator;
-	function_26be00(actor_index, &iterator);
-	function_26c180(actor_index);
-	if (properties && actor->unknown27c.unknown10 != NONE && actor->unknown278[0])
+	if (!actor->unknown224 && !actor->unknown225 && actor->unknown040 && actor->unknown858 == NONE &&
+		function_26c120(actor_index) && actor->prop_index != NONE)
 	{
-		bool prepared = false;
-		byte *buffer = ai_scratch_buffer_get();
-		s_prop_node_view *node = (s_prop_node_view *)function_26be30(&iterator);
-		while (node)
+		s_prop_node_view *base = prop_node_get(actor->prop_index);
+		long selected = NONE;
+		real best_score = 10.0f;
+		real range_low;
+		real range_high;
+		byte *properties = (byte *)function_1e4a50(actor->unknown054);
+		s_iterator iterator;
+		function_26be00(actor_index, &iterator);
+		function_26c180(actor_index);
+		if (properties && actor->unknown27c.unknown10 != NONE && actor->unknown278[0])
 		{
-			if (node->type == 4 && node->unknown24 >= 1 && node->unknown24 <= 2)
+			bool prepared = false;
+			byte *buffer = ai_scratch_buffer_get();
+			s_prop_node_view *node = (s_prop_node_view *)function_26be30(&iterator);
+			while (node)
 			{
-				s_slot_object_view *vehicle = object_get(node->object_index);
-				s_vehicle_tag_view *tag = (s_vehicle_tag_view *)g_4e3b44[vehicle->tag_index & 0xffff].bytes;
-				if (!TEST_FIELD_BIT(((s_1b99d0_unit_flags *)((byte *)vehicle + 0x10a))->bit2) &&
-					!TEST_FIELD_BIT(((s_1b99d0_tag_flags *)((byte *)tag + 0x1ec))->bit18) &&
-					vehicle->unknown3a0 != NONE && function_1b8f30(actor_index, node->object_index))
+				if (node->type == 4 && node->unknown24 >= 1 && node->unknown24 <= 2)
 				{
-					if (tag->unknown1f0 != 6 || function_1b9200(node->object_index, actor->prop_index))
+					s_slot_object_view *vehicle = object_get(node->object_index);
+					s_vehicle_tag_view *tag = (s_vehicle_tag_view *)g_4e3b44[vehicle->tag_index & 0xffff].bytes;
+					if (!TEST_FIELD_BIT(((s_1b99d0_unit_flags *)((byte *)vehicle + 0x10a))->bit2) &&
+						!TEST_FIELD_BIT(((s_1b99d0_tag_flags *)((byte *)tag + 0x1ec))->bit18) &&
+						vehicle->unknown3a0 != NONE && function_1b8f30(actor_index, node->object_index))
 					{
-						real ownership_weight = vehicle->unknown3a0 == actor->unknown030 ? 0.75f : 1.2f;
-						real type_weight = tag->unknown1f0 == 6 ? 1.5f : 1.0f;
-						real state_weight = 1.0f;
-						if (actor->unknown086 >= 8)
-							state_weight = 1.5f;
-						else if (actor->unknown086 < 6)
-							state_weight = 0.75f;
-						real score = node->unknown28 * state_weight * type_weight * ownership_weight;
-						if (score < best_score)
+						if (tag->unknown1f0 != 6 || function_1b9200(node->object_index, actor->prop_index))
 						{
-							s_prop_state_view *state = prop_node_state(node);
-							function_26c2d0(iterator.index);
-							if (*(long *)((byte *)state + 0x44) != NONE)
+							real ownership_weight = vehicle->unknown3a0 == actor->unknown030 ? 0.75f : 1.2f;
+							real type_weight = tag->unknown1f0 == 6 ? 1.5f : 1.0f;
+							real state_weight = 1.0f;
+							if (actor->unknown086 >= 8)
+								state_weight = 1.5f;
+							else if (actor->unknown086 < 6)
+								state_weight = 0.75f;
+							real score = node->unknown28 * state_weight * type_weight * ownership_weight;
+							if (score < best_score)
 							{
-								if (!prepared)
+								s_prop_state_view *state = prop_node_state(node);
+								function_26c2d0(iterator.index);
+								if (*(long *)((byte *)state + 0x44) != NONE)
 								{
-									s_path_source source;
-									s_path_settings settings;
-									memset(&source, 0, sizeof(source));
-									source.radius = *(real *)(properties + 4);
-									source.unknown04 = 1;
-									source.object_index = NONE;
-									source.unknown0c = NONE;
-									source.unknown4c = 0.0f;
-									function_270590(&source, &actor->unknown27c.point, actor->unknown27c.unknown10);
-									source.unknown45 = true;
-									source.unknown48 = 15.0f;
-									source.unknown28[0] = 1;
-									*(point3f *)((byte *)&source + 0x2c) = prop_node_state(base)->position;
-									*(long *)((byte *)&source + 0x38) = base->object_index;
-									*(real *)((byte *)&source + 0x3c) = 1.0f;
-									*(real *)((byte *)&source + 0x40) = 0.0f;
-									source.unknown44 = false;
-									function_1f9240(actor_index, &settings);
-									function_271300((s_type_f17a25 *)buffer, NULL, &settings, &source, 0);
-									function_2715a0(buffer);
-									prepared = true;
-								}
-								real closest_distance;
-								real path_distance;
-								function_270750(buffer, *(long *)((byte *)state + 0x44), &state->unknown48,
-									&path_distance, (long)&closest_distance, 0);
-								if (path_distance < 15.0f && closest_distance > base->unknown28 * 0.5f)
-								{
-									best_score = score;
-									selected = node->object_index;
-									range_low = ownership_weight * 13.0f;
-									range_high = ownership_weight * 16.0f;
+									if (!prepared)
+									{
+										s_path_source source;
+										s_path_settings settings;
+										memset(&source, 0, sizeof(source));
+										source.radius = *(real *)(properties + 4);
+										source.unknown04 = 1;
+										source.object_index = NONE;
+										source.unknown0c = NONE;
+										source.unknown4c = 0.0f;
+										function_270590(&source, &actor->unknown27c.point, actor->unknown27c.unknown10);
+										source.unknown45 = true;
+										source.unknown48 = 15.0f;
+										source.unknown28[0] = 1;
+										*(point3f *)((byte *)&source + 0x2c) = prop_node_state(base)->position;
+										*(long *)((byte *)&source + 0x38) = base->object_index;
+										*(real *)((byte *)&source + 0x3c) = 1.0f;
+										*(real *)((byte *)&source + 0x40) = 0.0f;
+										source.unknown44 = false;
+										function_1f9240(actor_index, &settings);
+										function_271300((s_type_f17a25 *)buffer, NULL, &settings, &source, 0);
+										function_2715a0(buffer);
+										prepared = true;
+									}
+									real closest_distance;
+									real path_distance;
+									function_270750(buffer, *(long *)((byte *)state + 0x44), &state->unknown48,
+										&path_distance, (long)&closest_distance, 0);
+									if (path_distance < 15.0f && closest_distance > base->unknown28 * 0.5f)
+									{
+										best_score = score;
+										selected = node->object_index;
+										range_low = ownership_weight * 13.0f;
+										range_high = ownership_weight * 16.0f;
+									}
 								}
 							}
 						}
 					}
 				}
+				node = (s_prop_node_view *)function_26be30(&iterator);
 			}
-			node = (s_prop_node_view *)function_26be30(&iterator);
-		}
-		if (selected != NONE)
-		{
-			if (function_f5dc0(selected))
+			if (selected != NONE)
 			{
-				byte *output = (byte *)slot;
-				*(word *)(output + 0x1c) |= 1;
-				*(long *)(output + 0x20) = selected;
-				result = 0x5d;
+				if (function_f5dc0(selected))
+				{
+					byte *output = (byte *)slot;
+					*(word *)(output + 0x1c) |= 1;
+					*(long *)(output + 0x20) = selected;
+					result = 0x5d;
+				}
+				else
+				{
+					s_slot_4c *output = (s_slot_4c *)slot;
+					output->unknown28 = range_low;
+					output->unknown2c = range_high;
+					output->seat_index = NONE;
+					output->unknown1c = selected;
+					output->flags |= 0x29;
+					result = 0x4c;
+				}
 			}
-			else
-			{
-				s_slot_4c *output = (s_slot_4c *)slot;
-				output->unknown28 = range_low;
-				output->unknown2c = range_high;
-				output->seat_index = NONE;
-				output->unknown1c = selected;
-				output->flags |= 0x29;
-				result = 0x4c;
-			}
+			ai_scratch_buffer_release(buffer);
 		}
-		ai_scratch_buffer_release(buffer);
 	}
 	return (short)result;
 }
@@ -1450,6 +1454,9 @@ void function_201ad0(long squad_index, long object_index);
 // driver or complementary passenger ownership: eight forms, all 218.
 // Native byte/signed-byte driver state, mutable/const 218/218 each;
 // native short/word driver state, mutable/const 318/318 each. Original Boolean restored.
+// Round 400: Consistent per-use vehicle squad field with native count/root-input/seat-array
+// scope in masks 0-7: 256/256/285/285/256/256/285/285. Original field snapshot, roots and seat
+// walk restored.
 // @retail 0x1bb570
 void __stdcall function_1bb570(long vehicle_index, long actor_index)
 {

@@ -237,6 +237,8 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // 327/31/334/31/327/31/334; all with readonly receiver views 334. Original lookups restored.
 // Round 398: early/reversed weighted declarations; lexical contribution names; readonly terms; height-phase scope with original/named/readonly terms; scoped readonly tag
 // 2/2/2/2/2/2/2/2; all restored.
+// Round 400: If-else crouch, staged complement and complete staged weights in masks 1-7, then
+// complete height scope: 2/2/2/2/2/2/2/2. Original producers and arithmetic restored.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

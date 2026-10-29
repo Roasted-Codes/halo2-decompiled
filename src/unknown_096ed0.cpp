@@ -146,6 +146,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // all with callback-output names, native count/index names, those with selector/input,
 // explicit remaining-count pointer walk and that walk with count/selector names: 132 each.
 // Active remaining count still coalesces with selector at +0x20; complete body restored.
+// Round 400: On the active-cursor graph, shared native array/blocked/callback outputs in masks
+// 1-7, then all at traversal scope: 145/132/148/145/148/148/148/148. Original workspaces
+// restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

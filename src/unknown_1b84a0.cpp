@@ -251,6 +251,9 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
 // all three and search-entry availability 305/305. Original actor and success flow kept.
 // Round 398: marker-index preparation/call scopes crossed with search-phase ending and movement-input scope
 // 212/212/258/258/212/212/258/258; all restored.
+// Round 400: Character/distance scope before scratch, entry payload pointer and readonly
+// character in masks 1-7, then complete movement scope: 212/212/212/212/212/212/212/212.
+// Original lifetimes restored.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
 {
