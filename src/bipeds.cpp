@@ -444,6 +444,7 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 // Round 281: component reference 27; named updated value 7; both 27; short ordinal 141;
 // ordinary while 7; component pointer 27; point-pointer traversal 258; sequential bounds 7.
 // All restored; frame and length agree, cross-store scheduling remains.
+// Round 171: Projected correction 7; staged subtraction 49; conditional clamp 7, staged 49, in-place 34; direct clamp outcomes 179; unsigned ordinal 7, projected 7. Cross-store scheduling remains; original body restored.
 // @retail 0xde190
 void function_de190(long arg_159e6d)
 {
@@ -2005,6 +2006,7 @@ void __stdcall function_1c3770(long object_index, dword flags);
 // Round 281: shared entry/query input-output count 68/73; entry with short body/getter
 // 72/87; query with short body/getter 77/105; tag at use on entry/query graphs 69/79.
 // All restored; extra EBP and body/flag scheduling remain.
+// Round 171: Paired flag field with retained/native body and retained/fresh count: word 63/73/82/87, byte 103/115/105/117. Extra EBP, validated-index transport and flag scheduling remain; original body and object declaration restored.
 // @retail 0xe0c70
 void function_e0c70(long arg_159e6d)
 {

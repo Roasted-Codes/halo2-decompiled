@@ -11,6 +11,18 @@
 #include "unknown_11cc90.h"
 
 /* A local view of the shared actor datum; other modules own the array. */
+struct s_path_records_2967b0
+{
+	bool active;
+	byte unknown01[0x2d - 1];
+	char count;
+	char index;
+	byte unknown2f[0x3c - 0x2f];
+	s_actor_path_point points[4];
+};
+
+typedef char assert_path_records_2967b0[(sizeof(s_path_records_2967b0) == 0xac) ? 1 : -1];
+
 struct s_actor_looking_view
 {
 	byte unknown000[0x18];
@@ -62,12 +74,19 @@ struct s_actor_looking_view
 	byte unknown43c[0x48a - 0x43c];
 	bool unknown48a;
 	byte unknown48b[0x50c - 0x48b];
-	bool path_active;
-	byte unknown50d[0x539 - 0x50d];
-	char path_count;
-	char path_index;
-	byte unknown53b[0x548 - 0x53b];
-	s_actor_path_point path[4];
+	union
+	{
+		s_path_records_2967b0 records_50c;
+		struct
+		{
+			bool path_active;
+			byte unknown50d[0x539 - 0x50d];
+			char path_count;
+			char path_index;
+			byte unknown53b[0x548 - 0x53b];
+			s_actor_path_point path[4];
+		};
+	};
 	byte unknown5b8[0x5d0 - 0x5b8];
 	bool movement_aiming;
 	bool movement_aiming_valid;
@@ -501,7 +520,7 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 	actor_looking_rotate_in_place(vector, axis, sine, cosine);
 }
 
-// score 320 (was 335): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
+// score 320 (was 320): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
 // Tried: direct collision Boolean 355; initial best vector before normalization 356; result declared first 354;
 // long sample counter 355; axis/sample/range names 355; shared normalizer 330 (sum order changed, restored);
 // shared random-range helper 360; one result return 377; paired span names 355; names plus one return 377;
@@ -520,6 +539,7 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 // Lane T round 28 (older base): Forced existing normalizer/angular/product boundaries, singly and in all
 // combinations, 355 each; ordinary producers 1135. Original helpers restored.
 // Direct collision parameter alone 355 on T's older base (main's 335 form kept).
+// Round 171: Two-stage vectors, copy and scale subsets 387/408/362/382; consumed-stage ray reuse 391/407/343/362. Reuse recovers frame 0xa8, setters can recover length, but all regress. Original body and includes restored; frame and stack-input transport remain.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -605,7 +625,7 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 336 (was 336): the 0x8c frame and saved-register prefix agree; Boolean store order and case/body layout differ.
+// score 290 (was 336): frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -626,13 +646,19 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // Lane T round 28 (older base): All eight ordinary/inline/noinline state-query/origin-output declaration
 // pairs 446 (unchanged fast control 446; full baseline 445). All provider and
 // consumer declarations restored; saved-register timing and Boolean defaults remain.
+// Round 171: Native point origins 381/377/349/377/385/389/355/393; path record and late pointer 330/330;
+// shared defaults 328 fast, 330 plain (below threshold); case 2 first 301 fast, 290 plain kept. Named last
+// index is neutral and omitted. Boolean-role names 301/303/303/303; native origins on typed graph
+// 375/375/308/375/379/387/322/389. Frame and movement addressing agree; Boolean role homes and point/case-tail
+// transport remain.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
-	bool result = false;
-	bool point_valid = false;
+	bool result;
+	bool point_valid;
+	result = point_valid = false;
 	point3f point;
 	s_prop_datum *reference;
 	s_type_5cfb45 *state;
@@ -642,40 +668,20 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	switch (specification->type)
 	{
 	case 0:
+	{
 		if (!actor->movement_aiming)
 			goto done;
 		*direction = actor->field_x6d9d38;
 		if (function_1f8660(actor_index) && actor->object_index == NONE &&
-			actor->field_xe428b1 == 4 && actor->path_index < actor->path_count - 1 &&
+			actor->field_xe428b1 == 4 && actor->records_50c.index < actor->records_50c.count - 1 &&
 			magnitude3d(&actor->field_x6d9d38) < 1.f)
-			function_210be0(&actor->path[actor->path_index].node,
-				&actor->path[actor->path_index + 1].node, direction);
-		goto normalize_direction;
-
-	case 1:
-		reference = (s_prop_datum *)record_pool_lookup(g_502418, specification->index);
-		if (!reference)
-			goto done;
-		state = function_25d690(reference);
-		point_valid = true;
-		if (reference->state < 1)
-			goto done;
-		if (reference->state <= 2)
 		{
-			long object_index = reference->object_index;
-			s_actor_looking_object *object = actor_looking_object_get(object_index);
-			if (((1 << object->type) & 3) && !aiming)
-			{
-				if (object->player_index != NONE)
-					function_cafc0(object_index, &point);
-				else
-					function_caf60(object_index, &point);
-				goto direction_from_actor;
-			}
-			function_1caa40(object_index, &point);
-			goto aim_at_point;
+			s_path_records_2967b0 const *route = &actor->records_50c;
+			function_210be0(&route->points[route->index].node,
+				&route->points[route->index + 1].node, direction);
 		}
-		goto remembered_prop;
+		goto normalize_direction;
+	}
 
 	case 2:
 		if (actor->field_x50962e == NONE)
@@ -716,6 +722,31 @@ PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 					(*(point3f *)((byte *)state + 0x30)).y,
 					(*(point3f *)((byte *)state + 0x30)).z);
 			goto direction_from_actor;
+		}
+		goto remembered_prop;
+
+	case 1:
+		reference = (s_prop_datum *)record_pool_lookup(g_502418, specification->index);
+		if (!reference)
+			goto done;
+		state = function_25d690(reference);
+		point_valid = true;
+		if (reference->state < 1)
+			goto done;
+		if (reference->state <= 2)
+		{
+			long object_index = reference->object_index;
+			s_actor_looking_object *object = actor_looking_object_get(object_index);
+			if (((1 << object->type) & 3) && !aiming)
+			{
+				if (object->player_index != NONE)
+					function_cafc0(object_index, &point);
+				else
+					function_caf60(object_index, &point);
+				goto direction_from_actor;
+			}
+			function_1caa40(object_index, &point);
+			goto aim_at_point;
 		}
 		goto remembered_prop;
 
@@ -1158,7 +1189,7 @@ struct s_actor_looking_turn_request
 	vector3f forward;
 };
 
-// score 506 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
+// score 506 (was 506): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
 // Tried the out-of-line predicate declaration 546 fast; horizontal aggregate copies 562 fast; initial native setters 546 fast;
 // explicit looking success/fallback stores 532 fast, 527 plain (three-point gain, restored); target point or selected vector
 // renamed 546 fast each; validity at function scope 546 fast; aggregate inputs plus explicit stores 549 fast;
@@ -1177,6 +1208,10 @@ struct s_actor_looking_turn_request
 // Lane T round 28 (older base): Inline predicate with long/unsigned-short/unsigned-long animation storage
 // 534/530/534; noinline predicate with those carriers 590 each; ordinary predicate
 // with long/unsigned-short 534/530. Original carrier and declarations restored; frame/validity homes remain.
+// Round 171: Actual predicate call on retained long validity/idle graph, with independent
+// forced/turn/animation carriers, scores 548/538/539/549/544/534/527/541 fast against unchanged 525. All
+// regress. Original body, carriers and both predicate declarations restored; frame, early getter scheduling
+// and result homes remain.
 // @retail 0x298370
 void function_298370(long actor_index)
 {
