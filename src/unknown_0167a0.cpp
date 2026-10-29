@@ -165,6 +165,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // direct first updater 149; direct second updater 47; entry word at chain 47;
 // direct published entry 294. Original body restored.
 // Round 235: published table snapshot after entry/before entry/after packed 151/231/151; after-entry with distinct packed/chain/both/pass/all restore receivers 151/151/151/151/151.
+// Round 155: entry table from the local 151; entry stored to its field directly 47 (table reload in place,
+// the second index load hoists instead); plus range stored directly 163; entry local reused 183;
+// direct entry store with swapped index sum 47.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
@@ -921,6 +924,9 @@ PRIVATE __forceinline void store_shader_mask(byte *state, word packed, long inde
 // loop in 0x176a0's shape (value/mask locals, the call in both arms, remap byte added first) 226 at frame
 // 0x10 as retail (the direct loop's counter then takes EBX); one counter declared for both loops 226.
 // Match-only (a one-caller helper); original body restored.
+// Round 257: Existing writer category/ordinary-bank/special-bank completion graphs,
+// independently and combined, 157 in six forms; special-first completion with/without
+// bank returns 170/170. Original complete writer and both live-bound walks restored.
 // @retail 0x17170
 void function_17170(byte *state, word const *range)
 {
@@ -1439,6 +1445,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Round 222: External destination references, indexed pair/constant-zero/constant-one
 // subsets 267/287/287/287/287/296/296; all with reused preserved mask 274. Constant-one
 // forms lose a matched writer sibling; complete original helper and body restored.
+// Mapped source/index/descriptor-slot uninitialized declarations at branch entry,
+// seven subsets, then all at function entry, 267 each. Original producer points,
+// scopes, shared writer and complete body restored; descriptor/index schedule remains.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

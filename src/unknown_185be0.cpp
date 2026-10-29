@@ -262,11 +262,18 @@ union s_185be7
 // Round 265: adjacent selected-input/input-five/input-four shared-mask groups, all
 // seven subsets and complete grouping with full-width selection 813/895/1033/954/990/990/1031/1030.
 // Original individual masks, selected byte and complete body restored.
+// Independent lower/upper bounds, parameter/result 780/928; independent upper/lower
+// 943/929; upper-first exclusive 943/949; ordinary lower/upper parameter/result 780/928.
+// Original clamp, complete body and all caller expressions restored.
 // Round 186: Native input memcpy with byte/word scratch aggregate masks 0-3 780/979/942/979; memmove
 // with the same masks 1109/1104/1111/1102. Complete original body and helpers restored.
 // Round 188: existing reset whole-output void/result/subobject-reference/whole-output-reference
 // contracts, forced then ordinary inline: 961/961/780/961/961/961/780/961.
 // Complete output contracts grow the frame; original reset and whole body restored.
+// Round 267: reset groups float/word/index 781, index/float/word 782,
+// index/word/float 783, word/float/index 783, word/index/float 783;
+// split admission 780; inactive update/return 1026; chained indices first 782.
+// Original six-store producer and complete body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

@@ -121,17 +121,20 @@ void function_1a6340(vector3f const *b, vector3f const *a, point3f *out, point3f
 // score 32 (was 32): the arguments are pushed in a different order and one of the values is passed
 // in a register here and on the stack in retail.
 // Object-second/third interfaces 32/32; unsigned object index 32; original interface restored.
+// score 35 (was 42): early Boolean with a separate success exit 33/91 kept; early result
+// with one exit 36/95; result on both exits 33; bottom/axis/both output pointers 33/33/33;
+// radius pointer/value 33/33. Saved-register setup and the false-in-BL result still differ.
 // @retail 0x1a62e0
 bool function_1a62e0(long object_index, point3f const *origin, vector3f const *direction, point3f *out)
 {
 	struct s_1a62e1 { real field_0; point3f field_4; vector3f field_10; };
 	s_1a62e1 local_0;
-	function_df6c0(&local_0.field_4, &local_0.field_10, object_index, &local_0.field_0);
 	bool result = false;
+	function_df6c0(&local_0.field_4, &local_0.field_10, object_index, &local_0.field_0);
 	if (local_0.field_0 > 0.0001f)
 	{
 		function_1a6340(&local_0.field_10, direction, out, origin, &local_0.field_4, local_0.field_0);
-		result = true;
+		return true;
 	}
 	return result;
 }
@@ -735,18 +738,20 @@ dword function_1a7ad0(long owner_index)
 	return (1 << owner->unknown086_byte) | ((1 << (byte)shift) << 10);
 }
 
-// score 96 (was 96): Owner/output register ranks, fallback base and intersection schedule still differ;
+// score 96 (was 96): owner/output register ranks, fallback base and first intersection setup still differ.
+// Earlier: Owner/output register ranks, fallback base and intersection schedule still differ;
 // aggregate selection 119; initial/default bitset values 190/167; shared intersection 109;
 // aggregate plus shared intersection 144; common return, fallback handle, phased table 96 each.
 // owner/output register ranks, fallback-base LEA and intersection setup differ.
 // Nullable definition 81 (adds a null branch); typed fallback 96; both 81;
 // const owner, definition, source, tags and object/element views 96 each;
 // ordinary shared source copy 143; shared copy with owner tag 143.
-// score 96 (was 96): BLOCKED-BY 0x1c2330 (its parameter order sets the first intersect call's set-up);
+// BLOCKED-BY 0x1c2330 (its parameter order sets the first intersect call's set-up);
 // the two tail-merged copies swap the owner/result registers and the squad element is one lea.
 // Owner definition read once 94 (390 bytes); squad arm and default arm swapped 101; copies without
 // the source local 153; nullable definition pointer tested 123; source/definition declarations
 // swapped 96; both declared before the owner 96.
+// Every-use tag table with indexed/direct definition, native/library copy and primary/fallback-first region: eight combinations 96 each.
 // @retail 0x1a7b30
 void function_1a7b30(s_flag_bits *result, long owner_index)
 {
@@ -798,7 +803,8 @@ void function_25aba0(long actor_index);
 
 
 
-// score 69 (was 143): frame 0x4c agrees; ESI/EDI, state-one decrement and zero-fill differ.
+// score 69 (was 69): frame 0x4c agrees; actor/result ESI/EDI, state-one decrement and zero-fill remain.
+// Earlier: frame 0x4c agrees; ESI/EDI, state-one decrement and zero-fill differ.
 // Native workspace initializer 69; owner lifetime 266; level lifetime 320;
 // entry pointer walk 261; full-width choice 150; full-width type 338.
 // Two-word initializer 68; full member initializer 287; retained ordinal 244;
@@ -810,11 +816,12 @@ void function_25aba0(long actor_index);
 // Native initializer with early state pop 140; candidate index snapshot 252;
 // candidate receiver 69; choice before workspace 69; callback/insertion names 69;
 // completion/eligibility/insertion results 69/163/69; existing mask helper inline 69.
-// score 69 (was 69): with 0x1a7b30's sources sharing one copy (NULL-preset source there), both callees'
+// with 0x1a7b30's sources sharing one copy (NULL-preset source there), both callees'
 // parameters reordered and the workspace memset, only the state-one pop differs (retail keeps level in
 // a register around the handler store): NULL-preset source 62; plus 0x1a7b30 order 60; plus memset
 // 134 (aligned 4); pop before the store 137; plus 0x1a8080 order 134 (aligned 2); without memset 58;
 // the two orders alone 67. Original body kept (the NULL preset is a tested sentinel; 0x1a7b30 rises to 100).
+// Enclosing enabled/state-one/choice dispatch arms in seven combinations 69 each; all three with current-slot at enabled use 69.
 // @retail 0x1a7cc0
 void __stdcall function_1a7cc0(long actor_index)
 {
@@ -1821,7 +1828,8 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 	return (s_target_link_definition *)g_4e3b44[object->definition_index & 0xffff].bytes;
 }
 
-// score 85 (was 85): frame 0xf0 agrees; the marker loop's query carriers and the optional second
+// score 85 (was 85): frame 0xf0 and prefix through +0x102 agree; query carriers, optional transform and exits differ.
+// Earlier: frame 0xf0 agrees; the marker loop's query carriers and the optional second
 // matrix (retail: a nullable marker selected before the capacity test, then null-tested) differ.
 // With a selector local (allowed only with a match) 13, plus a marker list local 11 at 565 bytes;
 // left: the marker address (retail [base+offset] load, then an in-place add) and count loaded into
@@ -1855,21 +1863,22 @@ PRIVATE __forceinline s_target_link_definition *function_1a5c01(long object_inde
 // readonly tag/capacity value/scalar names 113 each; initialized marker output 209.
 // Initial candidate plus positive table 93 kept; initial candidate plus weighting 109.
 // Initial helper setup now agrees through +0x102; marker call setup and exits still differ.
-// score 85 (was 98): marker setup, optional transform and exits still differ after +0x102.
+// marker setup, optional transform and exits still differ after +0x102.
 // Candidate indexed by accepted count 85 plain kept; post-query candidate 85; native query there 86;
 // existing tag helper 161; first candidate record 98; post-query marker record/workspace 85 each;
 // tag helper plus post-query candidate 161.
 // Round 277: nullable second-marker base 13 at retail length; branches/before presence 80/80;
 // native query count 73; index name/shared marker buffer 13/13; weight result 67; combined eligibility 80.
 // Accepted-count snapshot after/before query 13/13; query name first/with count 12/12; selectors require a match.
-// score 85 (was 85): frame 0xf0 agrees; query carriers and optional matrix conversion remain;
+// frame 0xf0 agrees; query carriers and optional matrix conversion remain;
 // native marker value before/after query 100/110; library copies 100/110; native query width
 // 126/128; shared descriptor 100; late copy with shared outputs 110.
-// score 85 (was 85): query base/offset and accepted-count/selector registers remain.
+// query base/offset and accepted-count/selector registers remain.
 // Complete query inline 85; nullable-record query inline/outlined, geometry/weight/both/all/outlined contracts 13 each;
 // loop/iteration list 165/11; shared candidate 13; iteration/loop list with candidate 11/165; const/native query list 11/11; native query candidate 13;
 // list accepted count after/before 11/11; list next count 127; post-query marker advance 11, with accepted counts 11/11;
 // marker advance with next count/candidate-next 123/127. Loop-wide lists lose the matched caller; every nullable selector remains exact-only and is rejected.
+// Actual descriptor cursor with nullable record: native/short query [165, 168]; shared output [165, 168]; metadata bound [169, 171]; both [169, 171]. All exact-only forms restored.
 // @retail 0x1a5c00
 long function_1a5c00(s_sort_weight_view const *weights, long object_index, bool alternate,
 	point3f const *origin, vector3f const *direction, long count, s_sort_candidate_view *candidates)

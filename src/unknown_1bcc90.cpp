@@ -40,6 +40,15 @@ short __stdcall function_1bcc90(long actor_index)
 // address is never taken. Tried: the test in a bool before the clear 102; the
 // 0x69c store first 36; the second result named 35; the reference declared at
 // function scope 35; the clear as `= {}` 35.
+// Carrier role names (all seven buffer/index/reference combinations) 35 each;
+// immutable returned reference 35.
+// function scope 35; the clear as `= {}` 35. Round 75: inverted reference test with
+// the follow in the first arm 47; request declared at function scope 35; one actor
+// pointer for the active test and the body 78; the 0x328 test through a fresh
+// actor get 81; the test negated 35. Compile-only screens of the clear (sizeof type,
+// one-element array, byte-pointer memset, scratch first, const actor, request first)
+// all keep the compare after rep stos; retail's compare-before-clear occurs in no
+// other retail function.
 // @retail 0x1bcd00
 bool __stdcall function_1bcd00(long actor_index, s_slot *slot)
 {

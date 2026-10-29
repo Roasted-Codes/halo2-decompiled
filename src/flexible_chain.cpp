@@ -288,9 +288,13 @@ void __stdcall function_1160c0(real dt)
 // Original body restored; segment/previous/axis homes and rotation scheduling remain.
 // Round 395: native node cursor 329; with readonly segment 329, invariant reciprocal 327, both 327;
 // invariant vertical on those four graphs 338/338/326/326. All original induction and scopes restored.
+// Round 397: one direction workspace; complete target scalars, noninitial branch first and readonly segment masks 0..7
+// 246/318/277/323/246/318/277/323; all restored.
 // Round 185: Plain target/interpolation/velocity coordinate-loop subsets
 // 188/194/200/639/194/200/634; all with complete direction loop 615. Original native arithmetic
 // statements, copies, segment loop, homes and every call tuple restored.
+// Round 181: outer/per-selection count 298/179; inclusive bound live/selection/outer
+// 302/302/235; ordered terminal selection live/selection/outer 180/180/298. Original body restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

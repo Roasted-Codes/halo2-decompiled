@@ -193,6 +193,9 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // Round 135 byte decode helper writing through a result pointer (255 default) 77, with a zero
 // default 87, on a word 72; returning decode helper 77; decode helper with a constant
 // maximum argument 80 (the dead constant argument is dropped too).
+// Round 177: Entry cluster extrema with original/normalized equality: word interval/
+// zero-first 66/71, byte interval/zero-first 72/76 for each. Original late extrema,
+// receiver, sample, interpolation and fallback restored.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {

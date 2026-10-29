@@ -193,6 +193,11 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // change pairs 37-50/37-58/50-58 or all linear changes 1003/1008/1008/1027;
 // with linear residual/axis reuse 1024/1018; all three reuse families 1064.
 // Original separate accumulators and all intermediate vectors restored; entry/frame homes remain.
+// Round 257: Final rounded-step/level/target declaration pairs at entry, all seven
+// nonempty subsets, then all with native scalar role names: 920 each. Every conversion
+// and read stayed at its producer; original declarations and complete body restored.
+// Round 268: Shared constraint error/axial speed/residual speed, seven subsets, then all with speed
+// change: 975/979/991/974/974/991/974/974. Original body restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

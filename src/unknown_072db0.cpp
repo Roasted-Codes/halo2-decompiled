@@ -1332,7 +1332,7 @@ struct s_rating_summary
 };
 
 #pragma inline_depth(0)
-// score 177 (was 202): frame 0xfc agrees; 1192 bytes against 1212. Left: the spill homes of the key,
+// score 177 (was 177): frame 0xfc agrees; 1192 bytes against 1212. Left: the spill homes of the key,
 // statistics cursor, change and group cursor are rotated (ours 0x18/0x1c/0x2c/0x38, retail
 // 0x1c/0x2c/0x38/0x18); our statistics cursor is biased +6 (retail +0xf44 unbiased); retail keeps
 // the name character as a word and its countdown in ECX; the summary stores and 0x73e00's argument
@@ -1394,6 +1394,7 @@ struct s_rating_summary
 // 234-236. Round 210: query-count table publication 123/132/213/231/312/321 202/206/213/344/214/345;
 // entry table with 123/321 202/345. Round 194: on native fifteen-bit player statistics and a shared
 // pass ordinal, byte/short/word/dword group counters with dword or word characters all 311.
+// Round 187: Native indexed group pointer, array cursor, body-stepped cursor, record reference, each with dword/word character: 300/295, 321/322, 286/294, 300/295. All restored; key/statistics/change/group homes remain.
 // @retail 0x741f0
 void __stdcall function_741f0(s_match_player_rating_collection *collection, s_query_batch *batch)
 {
@@ -1598,7 +1599,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 719 (was 719): Frame 0xc0 agrees; initial cursor base/home, slot and request/completion homes remain.
+// score 709 (was 709): Frame 0xc0 agrees; initial cursor base/home, slot and request/completion homes remain.
 // frame 0xc0 agrees; native completion-group cursor retained;
 // initial cursor base/home, slot expansion and request/completion homes still differ.
 // Earlier: Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
@@ -1684,6 +1685,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // forms give the same scores. Original order and full body restored; cursor base still differs.
 // Native user/request/completion group-array endpoints in subsets 1/2/4/3/5/6/7
 // 781/729/709/748/790/731/745; all equality endpoints 745. Completion-only kept, plain 709.
+// Round 184: Native byte/short/long/dword zero-one returns under inline/forced declarations
+// 709/709/730/730/709/709/709/709. Original bool return, long internal result, complete
+// predicate and helper boundary restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

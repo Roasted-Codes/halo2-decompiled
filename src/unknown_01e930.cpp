@@ -78,7 +78,7 @@ s_bink_bitmap g_55ece8;
 long __stdcall function_12d2f0(long a, long b, long c, long d);
 void function_12c600(void);
 double timing_ticks_to_seconds(__int64 ticks);
-bool function_2148b0(long a);
+bool function_2148b0(real *a);
 struct D3DTexture *function_23e340(short width, short height, short format,
 	void *(__stdcall *allocate)(long size, long alignment), long *size, void **data, struct D3DTexture *header);
 short function_1358c0(short format);
@@ -189,24 +189,12 @@ void function_155ed0(void)
 	}
 }
 
-// score 9 (was 9): in the padding path retail computes the alignment difference
-// before pushing ebx and reloads the capacity global into ecx after the mask, ours
-// pushes ebx first and reloads the capacity global into edi earlier.
-// remaining-first expression 53; shared completion 75; named padding 53;
-// named mask 53; shared completion and mask 75; recomputed start 47;
-// named allocation extent 53; remaining extent with shared completion 86.
-// Round 22: explicit capacity store in the padding path/all paths 9/9; named alignment
-// difference 19; explicit size/result assignments 9/9; integer-address result 9;
-// const remaining/mask 9; reversed result-mask operands 9.
-// Further forms: unsigned-mask zero-alignment guard 28; aligned guard 20; flat guards 28;
-// named padding test 9. Signed-mask counterparts 36/45/36/40. Original body restored.
-// Initial base/capacity address ownership also differs. One captured capacity with
-// delta/shared-mask/early-publication combinations: 45/44/54/54/44/44/54/54; restored.
+/* takes size bytes, aligned, from the top of the permanent block (the texture
+   allocator 0x23e340 calls) */
 // @retail 0x156620
 void *__stdcall function_156620(long size, long alignment)
 {
-	long remaining = g_4e9188.permanent_memory_size - size;
-	byte *result = g_4e9188.permanent_memory + remaining;
+	byte *result = g_4e9188.permanent_memory + (g_4e9188.permanent_memory_size - size);
 
 	if (alignment)
 	{
@@ -216,11 +204,7 @@ void *__stdcall function_156620(long size, long alignment)
 		{
 			size += (alignment - (long)result) & mask;
 			result -= (alignment - 1) & (alignment - (long)result);
-			g_4e9188.permanent_memory_size -= size;
-			return result;
 		}
-		g_4e9188.permanent_memory_size -= size;
-		return result;
 	}
 	g_4e9188.permanent_memory_size -= size;
 	return result;
@@ -402,6 +386,11 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Timestamp producer original with inclusive/selected clamp 245/244; forced
 // with original/inclusive/selected clamp 244/245/244; outlined with all three
 // clamps 310 each. Original helper contract, clamp and full body restored.
+// Round 274: Common false-default skippability across both admission tests, bool/byte/short/long
+// at the original phase 267/267/276/276, at entry 285/285/287/287. Original result,
+// allocation/clock/audio/output phases and full body restored; frame remains 0x3c.
+// Separate native constant audio arrays at entry: surround bins/volumes, stereo bins/volumes,
+// surround pair/stereo pair/both bins/all 290/300/289/299/307/296/297/306. All restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

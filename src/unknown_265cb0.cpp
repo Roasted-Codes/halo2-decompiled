@@ -476,12 +476,19 @@ real function_30bf0(vector3f *vector);
 // DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
 // 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
 // Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
+// Round 189: paired range squares/final squares/both, matched two-term magnitude partials,
+// range-partials/final-partials/all/all with live handle: 193/172/183/193/152/183/168/168.
+// Original products and handle observation restored; result/range/projection homes and SIMD groups remain.
 // Round 394: empty/non-player/both seat continue exits, each with native/seat-scope
 // query outputs, 205 each; both with later up 205; both with long index 209.
 // Original eligibility, cursor and output scopes restored; result/range/SIMD homes remain.
 // DH round 232: Unsigned full-width result 152; stable actor direction gate 296; both 296;
 // signed admission interval 162, with unsigned result 162, stable gate 301, both 301;
 // unsigned-word result on the full graph 301. Native result/range/projection homes remain; restored.
+// DH round 239: Corresponding projected products/positions/both in every row
+// 191/191/195; each with consistent live seat handles 187/187/195; products or
+// positions with both squared-range expressions 195/195. Original expressions,
+// handles and complete body restored; result/range/amount and SIMD homes remain.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -913,11 +920,17 @@ struct s_object_activity_flags
 // entry input is EAX versus EDX; nullable actor and save timing still differ.
 // Entry/all header helpers 79/79; external object reference 79; const object/actor/settings views 79/79/79.
 // Combined const views 79; header helper with const object 79; existing scalar qualifier and original body restored.
-// score 79 (was 79): retail's second-call re-read looks like a plain spill reload of the parameter
+// retail's second-call re-read looks like a plain spill reload of the parameter
 // (all four saved registers busy); without the qualifier ours keeps the index in ebp and spills the
 // actor instead. NULL actor then conditional lookup re-measured 113 (index eax, header/first edi/ebx);
 // on it: settings as one conditional 170; header getter 113; plain parameter used directly 140;
 // actor declared before the object 113. Settings conditional on the opening body 114.
+// Native actor and typed settings receivers, separate or combined, with table capture and invalid-
+// input exit 79 in seven forms; native nullable-actor statement form 113. Entry index, early actor
+// NULL and save/pop schedule remain.
+// Round 244: separate activity rejection 80; uniform compound accumulator 79; both 80;
+// settings-first optional bonus 79, with rejections/compound/both 80/79/80;
+// joined rejection 80. Original conditional actor and complete body restored; input/save schedule remains.
 // @retail 0x267370
 real function_267370(long volatile object_index)
 {
@@ -1196,7 +1209,8 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 	return result;
 }
 
-// score 99 (was 142): clock/compare schedule and vector homes differ; ordinary
+// score 99 (was 99): clock conversion, rounded-result copy and geometry homes differ.
+// Earlier: clock/compare schedule and vector homes differ; ordinary
 // pooled/clock reads with memset zero 178; projected-point loop 297; wide query
 // results 318; named maximum 146; target-copy loop 141 (one-count gain rejected).
 // ordinary-access common tick conversion 400; native point setter 146;
@@ -1207,7 +1221,7 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // j93: Frame 0x60 agrees; clock hoisting, conversion copy and three vector homes remain; typed offset output recovers movement/offset homes.
 // wide event results 371; wide target result 374; state per use 433; state eligibility snapshot 338; typed
 // offset output 99; offset outer direction 99; offset blend before delta 99; offset outer query homes 99.
-// score 99 (was 99): Clock conversion schedule, integer copy and geometry homes remain. branch
+// Earlier: Clock conversion schedule, integer copy and geometry homes remain. branch
 // decay result 398; delta before conversion 100; smoothing value samples 345; sampled early delta
 // 389; native rounded count 99; stored width rounded count 396; branch decay late delta 394;
 // sampled branch decay 402; ordinary conversion inline 373; branch exponent result 416.
@@ -1215,17 +1229,23 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // clock/compare schedule, conversion copy and geometry homes remain.
 // Fast: smoothed field 99; desired field 99; both fields 99; native position 393;
 // native origin 383; both geometry inputs 431; prop record 99; field and geometry 431.
-// score 99 (was 99): clock conversion, interpolation registers and three geometry homes remain;
+// Earlier: clock conversion, interpolation registers and three geometry homes remain;
 // interpolation product inputs 99; direct delta 99; direct blend 99; delta-first addition 99;
 // direct pair 414; direct delta/addition 99; direct blend/addition 99; direct pair/addition 414.
 // Clock conversion schedule, integer copy and geometry homes remain. branch
 // decay result 398; delta before conversion 100; smoothing value samples 345; sampled early delta
 // 389; native rounded count 99; stored width rounded count 396; branch decay late delta 394;
 // sampled branch decay 402; ordinary conversion inline 373; branch exponent result 416.
-// score 99 (was 99): the tick-rate conversion is hoisted above the decay test (both arms start the
+// Earlier: the tick-rate conversion is hoisted above the decay test (both arms start the
 // same); the vector homes offset/ahead/target/direction are offset/direction/ahead/target here.
 // Ticks ternary 99; rounding of a ternary 170; 0.25 first 99; negated test 103; a seconds-to-ticks
 // helper for both or one arm 99; vector local names 99; vector declarations moved 99.
+// Round 246: Native smoothing fields/cached clock/native byte flags, seven combinations: 99/425/425/99/99/425/425/425.
+// Eighth form writes the native smoothing update explicitly; actual actor-layout aliases preserve old byte-array users.
+// All trial forms restored; no candidate qualifies.
+// Native target assignment 133; offset setter 101; both 135; projected-point aggregate 99;
+// target/aggregate 133; offset/aggregate 101; all producers 135; read-only projected point 135.
+// Clock conversion/copy and direction/ahead/target homes remain; all producers restored.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {
@@ -1656,7 +1676,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 528 (was 536): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// score 528 (was 528): the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
 // frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
@@ -1744,6 +1764,9 @@ real function_2683f0(long actor_index, long node_index, short type)
 // both, per-use iterator index, index/ordinal, index/threshold, all, and all with the first-pass
 // workspace scoped each score 536 in the calibrated image. Frame 0x84/0x80 and selection/
 // iterator/transform/scoring homes remain; complete original executable body restored.
+// DH round 239: Contact/player iterator and saved contact-state name subsets each
+// 528; all three with reversed independent selection declarations 529. Calibrated
+// image; original iterator/state names and complete body restored, frame still 0x84/0x80.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

@@ -338,7 +338,14 @@ PRIVATE __forceinline vector3f *normalize_particle_velocity_2b(vector3f *v)
     return v;
 }
 
-// score 47 (was 47): frame 0xb4 agrees; 1517/1516 bytes, back-edge reloads and velocity stores differ.
+// score 34 (was 47): frame 0xb4 agrees; 1521/1516 bytes. The back-edge parameter reloads (ours first,
+// next, definition; retail definition, next, first) and the minimum-speed normalization differ: retail
+// computes j and k into two registers (k into the inverse's own) before storing either.
+// Round 90: the blend's previous add through vector3f_add with the squared speed from dot3f 34 (kept;
+// the add is retail's in-place block); with the direction/vector squared helpers 105/102, length_sq3f 113,
+// written-out sum 115; inverse-first j/k products in the normalizer 34 (same code); the minimum branch
+// split into normalize then scale 34; next declared before properties 34; dot3f in the normalizer or
+// for the change's squared length 34/34.
 // Frame 0xb4 agrees; 1517/1516 bytes. Back-edge parameter reloads and velocity
 // blend/normalization stores differ; shared scale return plus addition recovers the attraction's in-place products.
 // Earlier frame-matched body kept attraction j/k products in temporaries and deferred velocity stores.
@@ -514,10 +521,8 @@ void function_2b9b10(s_particle_properties_2ba const *definition, void const *or
         scale_particle_vector_2b(0.75f, &previous);
         vector3f_add(&particle->velocity, &change, &particle->velocity);
         scale_particle_vector_2b(0.25f, &particle->velocity);
-        particle->velocity.i += previous.i;
-        particle->velocity.j += previous.j;
-        particle->velocity.k += previous.k;
-        squared = particle->velocity.k * particle->velocity.k + particle->velocity.j * particle->velocity.j + particle->velocity.i * particle->velocity.i;
+        vector3f_add(&particle->velocity, &previous, &particle->velocity);
+        squared = dot3f(&particle->velocity, &particle->velocity);
         if (squared > maximum_speed * maximum_speed)
         {
             vector3f_scale(normalize_particle_velocity_2b(&particle->velocity), maximum_speed, &particle->velocity);
