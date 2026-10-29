@@ -2999,6 +2999,9 @@ struct s_voice_route_choice
 // Round 381: headset accumulation after routing 423; settings publication after decisions 435;
 // both 494; with the actual choice receiver 423/435/494; both with conditional radio 416,
 // with the receiver 416. All restored; original byte accumulation and input reads retained.
+// Round 220: Selected route pointer on byte-bitwise radio graph: original/choice receiver/
+// three pairs/descriptor/both/receiver-three/receiver-descriptor/all
+// 533/533/541/536/543/541/536/543. Original index, observations and workspaces restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

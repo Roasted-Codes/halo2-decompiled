@@ -1261,6 +1261,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // 531/561/559/559; entry declarations 531/561/559/559. Original bool result and every
 // vector/color/rotation operation restored; frame 0x2c versus 0x28 and block/query/result homes
 // remain. Both caller levels preserve their original measurements.
+// Round 220: Indexed entry-base snapshot 563; repeated flag snapshot 530; both 563;
+// default-first with base/flags/both 562/531/562; live count with base/base-flags 564/563.
+// Base snapshots recover frame 0x28 but regress; original scan and complete body restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)

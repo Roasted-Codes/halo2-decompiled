@@ -229,6 +229,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // 665 [413] (inlined again); plus cases 0/1/31 after 18 666 [355] (retail's case layout); plus the player
 // index as NONE then an if (retail's or/cmp/je shape) 667 [361]. Register roles (retail: state EDI,
 // player ESI, unit index spilled, unit EBX, headers EBP) still differ in all of them.
+// Round 220: Entry-getter failure guards, per-use table, both, readonly table,
+// readonly with guards/per-use/both, and conditional nullable result 620 each.
+// Original getter, state/player/unit receivers and complete body restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
