@@ -1458,12 +1458,15 @@ bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_inde
 long function_125f70(long definition_index, s_looping_detail_request *request, long *reason);
 void function_126df0(long new_sound, long old_sound, short curve, real duration);
 
-// score 501 (was 801): frame 0x128 now matches with the stop helper out of line;
+// score 501 (was 501): frame 0x128 now matches with the stop helper out of line;
 // index homes, definition register and ring traversal still differ.
 // Separate noinline declaration 501; wide selection full 502 (reduced 315);
 // reduced control 429; indexed tracks 495; loop pool 427; ring pool 429; all pools 427;
 // indexed fills 389; shared lower pitch 427; array creation order 430; early ring plus wide selection 315.
 // Reduced-only improvements restored; the full image did not validate the width gain.
+// Round 185: Outer/track index, range arrays/mask and ring/seed/count role-name groups, seven
+// subsets and alternate complete lexical order: reduced 461 each. Original names, executable body,
+// existing call boundaries and all field observations restored.
 // @retail 0x21b0e0
 void function_21b0e0(bool update)
 {
@@ -1783,11 +1786,14 @@ void function_21f8a0(long channel_index, s_looping_channel_properties const *pro
 void __stdcall function_21f720(s_looping_impulse_parameters const *parameters);
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects, bool force);
 
-// score 532 (was 550): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
+// score 532 (was 532): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
 // Full-width permutation selection keeps its values; both index widths 529 (three-point tail dropped),
 // chunk width alone 560, state width 550, frame names/property declaration 550; existing next-chunk
 // helper with short/long/wide selection 556/568/536; direct gain fields 526 (six-point tail dropped),
 // direct modifier fields 529 (three-point tail dropped), direct voice index/shared lower pitch 532.
+// Round 185: Primary-track truth byte/signed-byte/short/long 532/532/540/544; with complete native
+// modifier copy 597/597/609/611. Original Boolean predicate, modifier receiver, scalar observations,
+// helpers and complete body restored.
 // @retail 0x21c400
 void function_21c400(short voice_index, real gain, s_looping_channel_spatialization const *spatialization)
 {

@@ -282,6 +282,9 @@ void __stdcall function_1160c0(real dt)
 // Round 226: complete rotation base sums, sine-scaled transverse terms and rotated components,
 // all seven combinations and full graph with existing point publication 179 each.
 // Original body restored; segment/previous/axis homes and rotation scheduling remain.
+// Round 185: Plain target/interpolation/velocity coordinate-loop subsets
+// 188/194/200/639/194/200/634; all with complete direction loop 615. Original native arithmetic
+// statements, copies, segment loop, homes and every call tuple restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {
