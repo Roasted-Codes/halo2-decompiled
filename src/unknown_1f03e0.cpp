@@ -848,6 +848,9 @@ struct s_flags_1f0870
 // 590/590/590; complete parallel weighted sums in both motion modes 594, with forward/
 // lateral/both projections 594/591/602; all with byte step result 602. Original body and
 // helper boundaries restored; frame 0x34 and direct/vector homes remain.
+// Folded movement/history/both vector lifetimes 591/594/594; lateral shared across all three paths
+// 590; movement/lateral 590; history/lateral 594; all 598; all with bounded declaration first 598.
+// History reuse recovers frame 0x30 at 594/3060; captured flags/native enabled/both there 618/594/618.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1438,6 +1441,8 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // for the two contact dots 234 (same code: VC swaps the first two terms either way); with a
 // separate `__declspec(noinline)` declaration of 0x1f1df0 297 (1005 bytes: both calls out of line
 // as retail, 0x1f1df0 still matches; the arm layout and the supported flag's home are what remain).
+// Complete native contact record alone/real magnitude/noinline/both 230/233/301/300;
+// the same four forms with operation-specific normal names 230/233/301/300. All restored.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

@@ -2557,11 +2557,14 @@ void function_a8b10(long unit_index);
 
 /* takes a unit out of its vehicle seat: detached, its weapon back in hand,
    its exit animations */
+// score 68 (was 102): Frame 0x14 agrees; object/header EBP/EDI roles and later call scheduling differ.
+// Pointer names 116; widened seat 109; Boolean object flag 104; both 93; unsigned mask 115;
+// unsigned with widened seat 108, with Boolean flag 103, with both 92 (fast); last form 68 plain.
 // @retail 0xea8e0
 void __stdcall function_ea8e0(long unit_index, bool hurried)
 {
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-	bool is_vehicle = ((1 << unit->object_type) >> 1) & 1;
+	bool is_vehicle = ((1u << unit->object_type) >> 1) & 1;
 	long vehicle_index = unit->parent_object_index;
 
 	if (vehicle_index == NONE || unit->seat_index == NONE)
@@ -2576,7 +2579,7 @@ void __stdcall function_ea8e0(long unit_index, bool hurried)
 		state_name = function_10eef0(unit_index, false, true);
 		action_name = hurried ? 0x400000c : 0x800001e;
 	}
-	function_d12b0(vehicle_index, (short)seat_index, 0, 0);
+	function_d12b0(vehicle_index, seat_index, 0, 0);
 	*(long *)((byte *)unit + 0x250) = vehicle_index;
 	*(long *)((byte *)unit + 0x254) = g_510c54->game_time;
 	unit->seat_index = NONE;
@@ -2585,7 +2588,7 @@ void __stdcall function_ea8e0(long unit_index, bool hurried)
 
 	s_unit_action_unit *current = UNIT_ACTION_UNIT_GET(unit_index);
 
-	if (current->object_flags & 1)
+	if (TEST_FIELD_BIT(current->object_flags & 1))
 	{
 		current->object_flags &= ~1;
 		if (function_b9d20(unit_index))
@@ -2650,6 +2653,10 @@ done:
 void function_1bba20(long actor_index);
 
 /* exits a vehicle (type 29) */
+// score 62 (was 105): Native active-bit conversions recover the object/header roles; unit/actions
+// EBP/EBX and the initial false-result home still differ. Boolean active tests 62 (plain kept);
+// result first 105; both 62; joined call result 93; Boolean tests/join 74; result first/join 93;
+// all 74; literal guard failure 105.
 // @retail 0xeab80
 bool __stdcall unit_action_vehicle_exit(long unit_index, s_unit_request *request)
 {
@@ -2657,9 +2664,9 @@ bool __stdcall unit_action_vehicle_exit(long unit_index, s_unit_request *request
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 	bool result = false;
 
-	if (UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(unit), 0x1d) ||
-		UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index)), 0x1f) ||
-		UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index)), 0x20))
+	if (TEST_FIELD_BIT(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(unit), 0x1d)) ||
+		TEST_FIELD_BIT(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index)), 0x1f)) ||
+		TEST_FIELD_BIT(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index)), 0x20)))
 	{
 		return result;
 	}
@@ -2684,6 +2691,10 @@ transform4x3f *function_ba160(long object_index, transform4x3f *matrix);
 
 /* the end of a vehicle exit: the unit leaves the seat with its exit
    animation's velocity */
+// score 55 (was 103): Frame 0x40 and retail length agree; graph-index EDX/EBX, input XMM1/XMM3
+// roles and final flag-address scheduling differ. Graph at call 103; complete component preload
+// 102; both 102; result reuse 131; graph/result reuse 131; preload/result reuse 135; all 135;
+// matrix declaration first 103; scale once 55 (plain kept), with complete component preload 97.
 // @retail 0xeac90
 void __stdcall function_eac90(long unit_index, bool hurried, bool push)
 {
@@ -2701,11 +2712,12 @@ void __stdcall function_eac90(long unit_index, bool hurried, bool push)
 	transform4x3f *matrix = function_ba160(unit_index, &matrix_storage);
 	vector3f world;
 
-	if (matrix->scale != 1.0f)
+	real scale = matrix->scale;
+	if (scale != 1.0f)
 	{
-		velocity.i *= matrix->scale;
-		velocity.j *= matrix->scale;
-		velocity.k *= matrix->scale;
+		velocity.i *= scale;
+		velocity.j *= scale;
+		velocity.k *= scale;
 	}
 	world.i = matrix->up.i * velocity.k + matrix->left.i * velocity.j + matrix->forward.i * velocity.i;
 	world.j = matrix->up.j * velocity.k + matrix->left.j * velocity.j + matrix->forward.j * velocity.i;
