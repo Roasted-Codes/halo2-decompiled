@@ -1682,6 +1682,12 @@ void function_bba20(long index);
 // Pool/NONE carriers stay different; original permission production restored.
 // Round 234: native initial header, inline offset, ancestry getter, both 305/319/307/315;
 // those four with consistent Boolean bit-seven/eight tests 312/327/314/324. All restored.
+// Round 87: retail takes the parent before the calls (kept at +0x18 for the child link) and reads it
+// again after them for the node matrices. That split with the node matrices from the object getter 354
+// (1268 bytes); with the first parent read through `pool->data` 335 (pool in ebx and `pool->data` re-read
+// after the walk as retail, but the flag spills); plus the file's bitfield tests (flag7, physics_active)
+// and a type-mask test 339; plus offset declared first 335; plus the ancestor walk through the object
+// getter 324 (aligned 159/159 against 154/162).
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {

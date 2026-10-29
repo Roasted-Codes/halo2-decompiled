@@ -44,6 +44,13 @@ const dword g_455978[81] = {
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
 // score 306 (was 306): aligned frame 0x1d4 agrees; first +0x21 is bounds/exclusion homes.
+// Round 87: the sample end as `point3f p = *arg_11;` plus in-place adds (retail's three dword copies and
+// `movss x, [home]; addss x, [vector]`) gives retail's homes for the bounds/exclusion locals and the loop
+// spills, 341 (2106 bytes; the entry esi/edi roles swap back while 0x11bed0 stays inlined). With that form
+// and a noinline 0x11bed0 (diagnostic) the entry matches through +0x54 and aligned falls to 80/96 (from
+// 129/130), but 0x14a280's bsp moves to the stack (0x14a280 14, 0x11bed0 19). Also tried: renamed
+// bounds/exclusion locals 306 (names do not move them); upper bound set first 323; vector-first sums
+// 341; existing vector3f_add on the copy 341; 0x11bed0 through 0x11be90 (still matched, still inlined).
 // Earlier: the sample count matches (retail's
 // setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack). Structural cause of
 // the register differences: our LTCG inlines 0x11bed0 here (retail calls it, esi = location), and the

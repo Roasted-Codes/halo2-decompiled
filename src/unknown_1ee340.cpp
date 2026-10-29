@@ -243,6 +243,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // 260/251/216/214; with shared ray-start input 260/247/217/215.
 // Paired endpoints recover frame 0x90 but retain entry/edge scheduling differences;
 // every one-use endpoint capture and original ray input restored.
+// Round 87: direction from the value setter 192 (same code); `long count = vertex_count;` for the loop
+// and the call 193 (retail's `push edx` and esi tail-loop temp, but a third exit block), declared
+// before the polygon 193; fraction as if/else 259; edges and cross in an inline triangle helper 192.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
