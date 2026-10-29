@@ -177,6 +177,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // 731/648/713; result-first root/with sine/with base/with both
 // 726/654/725/633; all with common promoted angle 721.
 // Original helpers and all in-place snapshots restored; early success and workspace homes remain.
+// Round 177: Success from the completed raw-distance minimum 689; with existing point/rotation/
+// both/ray/point+ray/rotation+ray/all setters 707/706/707/711/711/711/711. All restored;
+// frame shrinks to 0x104 and native success/hit/basis/rotation homes remain unresolved.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

@@ -4191,6 +4191,9 @@ void function_15fe20(long team_index, color3f *color);
 // exhaustive weapon selection, either arm order, with/without the repeated unit-index capture 88;
 // producer declaration and direct slot-selection initializer 88. Keep only direct selection (plain 88,
 // 2692/2688 bytes). Frame and initial color-copy gap remain; final NONE allocation improves.
+// Round 177: Existing team-color helper rival/own/both 119/119/119; complete unit-index/
+// absolute-index/team observations 119/119/724, unit plus absolute 119, all three 726.
+// Original observation points and body restored; native transfers and final NONE residency remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

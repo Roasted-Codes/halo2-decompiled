@@ -167,6 +167,7 @@ void function_268840()
 }
 
 // score 221 (was 221): Frame 0x50 agrees; player-pool/NONE and current/successor homes remain.
+// frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
 // Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
 // Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
@@ -232,6 +233,9 @@ void function_268840()
 // Round 390: retained actor address, with Boolean retention/positive keep arm/optional
 // handle publication masks 0-7: 290/302/293/296/290/302/293/296. All lose frame 0x50;
 // original late lookup, complete body and matched child interfaces restored.
+// Round 178: On the deletion-owned graph, pool after setup 278; plus Boolean retention 286;
+// plus complete expiry 284; both 302; with long child-step result 276/277/282/288.
+// Original pool observations, retention, expiry and child-step widths restored.
 // @retail 0x268c90
 void function_268c90()
 {

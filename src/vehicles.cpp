@@ -1033,6 +1033,10 @@ bool __stdcall function_111650(long unit_index, long *names);
 /* the vehicle object type's update: its Havok bodies, controls, its
    vehicle type's physics, its kill volume, boost and lights, and the unit
    update */
+// score 715 (was 715): aligned frame 0x19ac versus retail unaligned 0x1984; flag and scalar homes differ.
+// Physics-state branch scope, separate velocity outputs and both 715 each; final default-array
+// initialization alone or with either/both workspace changes 723 each; all with native flag tests 753.
+// Original scopes, scalar observations, default stores and existing local qualifier retained.
 // @retail 0xefde0
 bool __stdcall function_efde0(long vehicle_index)
 {
@@ -1367,20 +1371,22 @@ bool function_1dceb0(s_graph_iterator3c *iterator, s_graph_tag *graph);
 
 /* a speed as a fraction of the definition's maximum forward or reverse
    speed, 0.5 at rest */
-PRIVATE inline real vehicle_speed_fraction(real speed, byte const *definition)
+PRIVATE __forceinline real vehicle_speed_fraction(real speed, byte const *definition)
 {
+	real forward_limit = *(real *)(definition + 0x1f4);
+	real reverse_limit = *(real *)(definition + 0x1f8);
 	real result = 0.5f;
 
 	if (speed > 0.0f)
 	{
-		if (*(real *)(definition + 0x1f4) > 0.0f)
+		if (forward_limit > 0.0f)
 		{
-			result = PIN(speed / *(real *)(definition + 0x1f4) * 0.5f + 0.5f, 0.0f, 1.0f);
+			result = PIN(speed / forward_limit * 0.5f + 0.5f, 0.0f, 1.0f);
 		}
 	}
-	else if (*(real *)(definition + 0x1f8) > 0.0f)
+	else if (reverse_limit > 0.0f)
 	{
-		result = PIN(speed / *(real *)(definition + 0x1f8) * 0.5f + 0.5f, 0.0f, 1.0f);
+		result = PIN(speed / reverse_limit * 0.5f + 0.5f, 0.0f, 1.0f);
 	}
 	return result;
 }
@@ -1389,6 +1395,10 @@ PRIVATE inline real vehicle_speed_fraction(real speed, byte const *definition)
    sideways drift, speed, forward speed and two engine overlays, the
    graph's function animations and the three aiming overlays) to the
    callback with its value */
+// score 409 (was 622): frame 0x88 versus 0x9c, returned-id temporaries and channel/count homes differ.
+// Existing speed helper forced inline 468; with cross helper 470; channel role names 468/470;
+// single final speed clamp 472, with cross 450, role names 472/450. Both directional limits
+// retained at entry: original/clamp 446/424; with cross 409 (kept)/412.
 // @retail 0xf0760
 void __stdcall function_f0760(long vehicle_index, vehicle_animation_value_callback callback, void *user)
 {
@@ -1429,9 +1439,7 @@ void __stdcall function_f0760(long vehicle_index, vehicle_animation_value_callba
 		{
 			vector3f left;
 
-			left.i = vehicle->up.j * vehicle->forward.k - vehicle->up.k * vehicle->forward.j;
-			left.j = vehicle->forward.i * vehicle->up.k - vehicle->up.i * vehicle->forward.k;
-			left.k = vehicle->up.i * vehicle->forward.j - vehicle->forward.i * vehicle->up.j;
+			cross3f(&vehicle->up, &vehicle->forward, &left);
 			callback(vehicle_index, graph, &channel,
 				((linear_velocity.i * left.i + left.j * linear_velocity.j + linear_velocity.k * left.k) /
 					*(real *)(definition + 0x1f4) + 1.0f) * 0.5f,
@@ -3494,6 +3502,10 @@ long function_189060(long object_index, short value, real scale, point3f const *
    pushes it (every fourth tick, a spread of the vehicles' work, else the
    last one), which sets the function's value; a hard landing plays the
    definition's sound */
+// score 316 (was 374): frame 0xe0 versus 0xec, iterator/scalar homes and final flag stores remain.
+// Native point copy 350; up copy 341; both 333; both with long quantization 328;
+// both with post-search scalar selection 321; all three 316 (kept); scalar selection alone 362;
+// native ray setters 333; ray/marker/both at entry and complete workspace names 316 each.
 // @retail 0xf6670
 bool __stdcall function_f6670(long vehicle_index, bool update)
 {
@@ -3526,9 +3538,9 @@ bool __stdcall function_f6670(long vehicle_index, bool update)
 
 			if (function_b8d30(vehicle_index, iterator.unknown00, &marker, 1, false) == 1 && iterator.unknown00)
 			{
-				real offset = *(real *)&iterator.unknown08;
-				real length = *(real *)&iterator.unknown0c;
-				real rest = *(real *)&iterator.unknown10;
+				real offset;
+				real length;
+				real rest;
 				real value;
 				long i;
 
@@ -3538,24 +3550,35 @@ bool __stdcall function_f6670(long vehicle_index, bool update)
 
 					if (*(long *)(override + 0x44) == iterator.unknown04 && *(long *)(override + 0x48) != NONE)
 					{
-						if ((char)permutations[*(long *)(override + 0x48) * 8 + 1] >= *(short *)(override + 0x42))
-						{
-							offset = *(real *)&iterator.unknown14;
-							length = *(real *)&iterator.unknown18;
-							rest = *(real *)&iterator.unknown1c;
-						}
 						break;
 					}
 				}
 
+				if (i < *(long *)(definition + 0x2f0) &&
+					(char)permutations[*(long *)(*(byte **)(definition + 0x2f4) + i * 0x4c + 0x48) * 8 + 1] >=
+					*(short *)(*(byte **)(definition + 0x2f4) + i * 0x4c + 0x42))
+				{
+					offset = *(real *)&iterator.unknown14;
+					length = *(real *)&iterator.unknown18;
+					rest = *(real *)&iterator.unknown1c;
+				}
+				else
+				{
+					offset = *(real *)&iterator.unknown08;
+					length = *(real *)&iterator.unknown0c;
+					rest = *(real *)&iterator.unknown10;
+				}
+
 				s_vehicle_ray ray;
 
-				ray.point.x = marker.matrix.position.x + vehicle->up.i * offset;
-				ray.point.y = marker.matrix.position.y + vehicle->up.j * offset;
-				ray.point.z = marker.matrix.position.z + vehicle->up.k * offset;
-				ray.vector.i = vehicle->up.i * (0.0f - length);
-				ray.vector.j = vehicle->up.j * (0.0f - length);
-				ray.vector.k = vehicle->up.k * (0.0f - length);
+				ray.vector = vehicle->up;
+				ray.point = marker.matrix.position;
+				ray.point.x += ray.vector.i * offset;
+				ray.point.y += ray.vector.j * offset;
+				ray.point.z += ray.vector.k * offset;
+				ray.vector.i = ray.vector.i * (0.0f - length);
+				ray.vector.j = ray.vector.j * (0.0f - length);
+				ray.vector.k = ray.vector.k * (0.0f - length);
 				if (marker.node_index)
 				{
 					value = 0.0f;
@@ -3594,7 +3617,7 @@ bool __stdcall function_f6670(long vehicle_index, bool update)
 					value = (value + current) * 0.5f;
 				}
 
-				byte quantized = function_11f470(0.0f, 1.0f, value);
+				long quantized = function_11f470(0.0f, 1.0f, value);
 
 				if (((byte *)vehicle->unknown398)[index] != quantized)
 				{

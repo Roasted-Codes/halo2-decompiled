@@ -128,6 +128,12 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 170/170/170; positive availability and its three combinations 171 each;
 // all with a private pending total 218. Original reductions restored; selector/induction
 // interference and the four-byte cursor/entry/callback shift remain.
+// Round 175: On the recovered EBP graph, pending/active/both native chain-buffer names
+// 170/170/170; two-use pending callback handle 170, with either/both buffers 170/170/170;
+// complete graph with alternate buffer home order 170. Original executable body restored.
+// Round 180: Pending/active selector constants after queries and single-item counts after
+// callbacks, masks 1-7, then all with single-item selectors after callbacks:
+// 172/170/172/229/230/229/230/229. Original executable body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

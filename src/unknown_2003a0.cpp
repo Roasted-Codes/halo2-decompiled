@@ -1833,6 +1833,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Best-reference value result 362; result-first formal 362; point value with best result
 // 409, result-first 409. Nearest-distance value result 382; result-first formal 382;
 // point value with nearest result 447, result-first 447. Native pointer outputs restored.
+// Round 176: Native player record 257; datum iterator 262; both 262; native squad state 257;
+// squad/player 257; squad/datum 262; all three 262; all/shared actor walk 262.
+// Datum storage grows the frame to 0x40; original records and both private helpers restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2028,6 +2031,9 @@ bool function_1df5d0(short team_a, short team_b);
 // Round 225: consistent live actor receivers/shared vector sum/both/shared scale/live-scale/
 // sum-scale/all/all with shared iterator 335/179/313/179/335/179/313/313.
 // Original receivers, component operations, both tests and empty-path zero restored.
+// Round 179: Actual first iterator initialization before disjoint header resets, with
+// receiver/hostility lifetimes and chained zeroes, 228/228/227/227/234/234/237/237.
+// Original begin order and complete body restored; cursor/contribution homes remain.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2200,6 +2206,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // Native squad/actor/both byte wake results 275/285/285; eager logical update 346;
 // retained actor eligibility 337; squad byte/logical 346; squad byte/eligibility 337;
 // both bytes/eligibility 344. Original Boolean results and predicate placement restored.
+// Round 176: Complemented squad/overlap/both/actor/squad-actor/overlap-actor/all carriers
+// 330/307/316/322/345/336/330; all with shared raised-point scaled add 330.
+// Original complete result graph and every eager call restored.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2820,6 +2829,9 @@ static __forceinline long real_to_long(real value);
 // Round 260: native group/squad/both iterator reference formals 227 each; group or squad
 // references with its activity input 227 each; both references with group/squad/both activity
 // inputs 227 each. Original helper contracts, observations and all four walks restored.
+// Round 176: Shared conversion input/output/both scratch 227/227/227; input/output/both with
+// native groups 250/250/250; both with native group/squad walks 256; phase-local groups 292.
+// All computation points preserved; original four walks and scratch scopes restored.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -3009,6 +3021,9 @@ void function_2011f0(long arg_0);
 // Round 225: optional-record arms 361; prior-object arms 374; both 382;
 // selected-entry arms 358; optional/entry 357; prior/entry 378; all 379;
 // all with first cached squad receiver 358 at retail length. Original lifetimes and values restored.
+// Round 179: Natural short attempt counter on recovered category/seat-output frame 338;
+// with promoted difficulty/signed placement/both 344/359/357; full-width fallback on
+// those four graphs 354/359/354/359. Frame 0x134 and original body retained.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
