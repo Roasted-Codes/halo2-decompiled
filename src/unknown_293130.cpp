@@ -104,7 +104,18 @@ __forceinline void function_293133(real arg_0, vector3f const *arg_1, vector3f *
 	arg_2->k = arg_2->k * local_1 + arg_1->k * local_2 - local_5 * local_0;
 }
 
-// score 68 (was 68): result, conversion and sine stack homes differ; rotation
+// score 68 (was 68): retail packs the random-to-float temp at frame +8 and the
+// result at +0xc (the sine shares +0 with the first sum); ours swaps those two
+// slots. Ours also adds the field before the range start in the three point
+// draws, colours the rotation's xmm registers differently and stores +0x18
+// ahead of the +0xc..+0x10 stores.
+// Tried: random_index for both index draws 68 (identical code); function_x82e52f
+// for the weighted fraction 84; both 143; function_259d0 for the four range
+// draws 140, with random_index 137; all three helpers 78 (adds as retail, the
+// rotation then ranks j where retail ranks i); on that: dot3f(vector, axis) 78,
+// the rotated vector in a local copy 193, the angle passed straight 87, the
+// angle read after the copy 87, cosine before sine 84.
+// result, conversion and sine stack homes differ; rotation
 // registers also differ.
 // Transient creation handle with range result, trig input and shared cross boundaries:
 // 361/358/360/357/360/357/359/364. Result, conversion and sine homes plus rotation registers
