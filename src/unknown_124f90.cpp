@@ -3412,7 +3412,7 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 215 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
+// score 215 (was 215): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
 // long next-chunk candidate 254; completed-chunk early exit 241.
@@ -3455,6 +3455,14 @@ struct s_128ca0
 // Round 219: readonly conditional next chunk 239; complete countdown arms 215 (plain, kept); both
 // 227; word countdown 229; conditional/word 234; complete arms/word 224; all 217, with role names
 // 217. Sub-eight gains 227/229 restored; all other forms restored.
+// Round 154 (fast): one long gain seeded from arg_1, updated in place (`*(real *)&gain = location
+// + (playback gain + gain)`, then `gain = function_1251e0(...)`) with one shared scale local 241
+// (frame 0x494, opening exact up to the pitch bounds); plus 0x126000's pitch_bounds pointer with
+// gain/pitch names 238 (first difference +0xba, aligned listing 108 against 147); gain declared
+// first 256; real gain 295; outer operands swapped, decibels_sum on the variable, in-place
+// permutation sums 238 each (identical code). Retail loads the location gain into its own register
+// before the inner sum (one instruction more); every form folds it into addss, and that one-line
+// shift dominates the positional score. Next: find that load, then the single-exit pin.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3681,6 +3689,11 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 221: original native fallback copied from the existing immutable object by aggregate/library,
 // each with aggregate/library occlusion and field/aggregate publication: 739 each, 2085 bytes.
 // All eight restored; original helper and stack fallback retained; temporary declaration removed.
+// Round 154 (fast): existing 0x16f3a0 getter for the state pointer 537 (aligned 486 -> 482); the
+// fallback asking the getter again 543; getter plus 0x14ddc0/0x14de70 at the loop head 555 (aligned
+// 461); that plus the existing const g_44a2a0 (extern in sound_driver.h) 719 (frame 0xe0, 2106 bytes,
+// aligned 410); plus the fallback getter 747. Retail evaluates the inlined 0x16f3a0 cmov again in its
+// second fallback copy and inlines 0x1420f0/0x1427f0; BLOCKED-BY 0x16f3a0 (noinline for its callers).
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

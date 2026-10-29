@@ -3616,6 +3616,12 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // scopes, seven subsets 1420 each; complete branch ownership with native event
 // role names 1420. All original output scopes and names restored; frame 0x3c
 // versus 0x38 and initial pool/offset/dual homes remain.
+// Round 154 (fast): trigger fields written in full (no trigger pointer) 1577, alignment 1260 -> 1011;
+// with the clear-trigger helper writing state/timer through one weapon local 1449 (5716 bytes,
+// alignment 983); plus bool blocked 1470; plus bool down/up 1453 (alignment 940); plus `1.0f -
+// scale` at each use 1483 (frame 0x40); switch cases in retail's jump-table order 1501. Retail's
+// barrel request leaves a dead lea of the barrel base (+0x1a4, ours +0x1a8) and keeps blocked/down/up
+// as stack bytes initialized to 0.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

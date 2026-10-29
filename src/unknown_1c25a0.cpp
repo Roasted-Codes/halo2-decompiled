@@ -644,51 +644,6 @@ PRIVATE inline s_havok_component_flags *havok_component_flags_get(long component
 	return &((s_havok_component_flags *)g_51e9b8->data)[component_index & 0xffff];
 }
 
-/* an object 0x1c2910 makes */
-c_havok_reference_counted *g_4f55b0;
-
-/* drops the references to 0x1c2910's object and to g_47f048 */
-PRIVATE __forceinline void function_1c2891(short *arg_0, c_havok_reference_counted *arg_1)
-{
-	--*arg_0;
-	if (*arg_0 == 0)
-	{
-		if (function_279740((long)arg_1))
-			*arg_0 = 1;
-		else
-			delete arg_1;
-	}
-}
-
-// score 45 (was 45): ours keeps both objects in ESI with EDI as the zero; retail
-// keeps the second object in EDI with a separate count pointer (lea esi, [edi + 6])
-// live across the call, EBX as the zero, and no null test before the second delete.
-// Plain havok_reference_remove for the second object 48 (null test gone, still no
-// count pointer); through a local 48; a `delete this` member on the class 48; first
-// object through a local 45, with the plain second release 48.
-// retail zeroes EBX and keeps three callee-saved registers, holds
-// g_47f048 in EDI and &reference_count in ESI; ours zeroes EDI, holds g_47f048 in
-// ESI, folds the count address into the object pointer and tests it before the delete.
-// and clears it in EDI, retail loads it into ESI and clears it in EBX.
-// Round 378: Prefix-result zero arm, postfix old-count arm, nonzero completion
-// after decrement/reload and prefix-result completion, normal range arms [45, 55, 45, 45],
-// delete-first arms [45, 56, 45, 45]. Original helper and body restored.
-// Round 279: actual decrement value owns store and zero test; short arithmetic with
-// count/object-reference parameter combinations 47/47/47/47 (129 bytes), long arithmetic
-// 43/43/43/43 (125 bytes). Two-point gain rejected; original helper and body restored.
-// Separate count address, third saved register and delete-null test remain.
-// @retail 0x1c2890
-void function_1c2890(void)
-{
-	if (g_4f55b0)
-	{
-		havok_reference_remove(g_4f55b0);
-		g_4f55b0 = NULL;
-	}
-	c_havok_reference_counted *local_0 = (c_havok_reference_counted *)g_47f048;
-	function_1c2891(&local_0->reference_count, local_0);
-	g_47f048 = NULL;
-}
 
 // @retail 0x1c29d0
 void function_1c29d0(void)
