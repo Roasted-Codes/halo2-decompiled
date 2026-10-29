@@ -160,7 +160,8 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 31 (was 31): frame 0xa4, entry, collision block and marker-branch layout agree; the two
+// score 2 (was 2): only constant-one and crouching-height load scheduling remains; frame 0xa4 and all other instructions agree.
+// Earlier: frame 0xa4, entry, collision block and marker-branch layout agree; the two
 // height loads are swapped, the seated object goes to EDX (retail EBP, so the marker temporaries
 // rotate one register off), and the parent branch loads the tag table before the object table
 // (ours EAX for the object table is a byte shorter, which also keeps a later je short: 5 bytes).
@@ -234,6 +235,8 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // fresh post-call parent table base 31; separate same-parent and parent bases 31.
 // Shared object getter at entry/same-parent/both/parent/entry-parent/same-parent-parent/all
 // 327/31/334/31/327/31/334; all with readonly receiver views 334. Original lookups restored.
+// Round 398: early/reversed weighted declarations; lexical contribution names; readonly terms; height-phase scope with original/named/readonly terms; scoped readonly tag
+// 2/2/2/2/2/2/2/2; all restored.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

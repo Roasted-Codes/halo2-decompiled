@@ -87,7 +87,8 @@ void function_1bbc00(long player_index, long vehicle_index)
 
 static __forceinline long real_to_long(real value);
 
-// score 2 (was 8): the child object is kept in a local, so retail's object
+// score 2 (was 2): only the EAX vehicle and EBX iterator-address setup order differs; frame 0x1c and retail length agree.
+// Earlier: the child object is kept in a local, so retail's object
 // pointer stays in EAX and the tick count is converted through ECX/DX like
 // retail; only the 0xd0620 call setup still differs, ours forms the iterator
 // address in EBX before it moves the vehicle index into EAX.
@@ -109,6 +110,8 @@ static __forceinline long real_to_long(real value);
 // Earlier 44 -> 8 came from clock/player lifetimes.
 // Round 220: Bounded slot-scan short/word/char/byte induction 84/84/85/85;
 // first-match result termination with those widths 97/97/97/97. Original body restored.
+// Round 398: seconds/ticks/both/elapsed conversion-home names; distinct player/child scratch phases crossed with inner/outer iterator and role names
+// 2/2/2/2/2/2/2/2; all restored.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {
