@@ -1223,7 +1223,7 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
     return 0.0f;
 }
 
-// score 529 (was 529): Frame 0x2c versus 0x28, stored selection result and block/query carriers remain.
+// score 529 (was 529): Frame 0x2c versus 0x28, selection-result spill and block/query homes remain.
 // Selected ordinal 587; combined admission mask 570; unsigned scan 529; shared bias local 559
 // (caller lost); common blend weight 533.
 // frame 0x2c versus 0x28, stored result and block/query registers differ.
@@ -1269,6 +1269,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 220: Indexed entry-base snapshot 563; repeated flag snapshot 530; both 563;
 // default-first with base/flags/both 562/531/562; live count with base/base-flags 564/563.
 // Base snapshots recover frame 0x28 but regress; original scan and complete body restored.
+// Round 390: conditional last-selection publication with native entry pointer,
+// combined admission mask and live-count masks 0-7: 529/565/570/567/567/561/574/570.
+// Original scan, positive result, complete math body and all helper/caller contracts restored.
 // Round 247: current-frame normal/color/both role names, entry declarations and their
 // three naming combinations, bounded-color consumption scope with both names: 529 each.
 // Original vector/color homes, declaration phases, selection and complete body restored.
@@ -1799,6 +1802,13 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 255: native short component counters base/dynamic/output 784/789/782;
 // base-dynamic/base-output/dynamic-output/all 784/797/784/804; all byte 804 (fast).
 // Only the final rescale counter is short, range 0..3; ordinary 782 at 3133/3130.
+// Round 391: Existing color-sum, special default-vector setter and weighted-vector
+// scale/add helpers in seven subsets 782/782/782/828/828/828/828;
+// all three with chained default colors 827. Frame 0x90 and displaced status/mesh homes
+// remain; original body, all loops, sample lifetimes and helper bodies restored.
+// Round 177: Native vector setters base/dynamic/output/weighted 784/781/790/782;
+// base+dynamic/all scales/weighted+output/all four 795/824/790/824. One-point gain
+// rejected; original loops and outputs restored; status/mesh homes remain in frame 0x90.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

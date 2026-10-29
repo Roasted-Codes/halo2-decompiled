@@ -3898,6 +3898,15 @@ static __forceinline long nonnegative_15ce70(long value)
 // events 576/536/610; immutable receivers 576/536/610; paired mixed receivers
 // 610/610. Both original native event constructions and complete body restored;
 // extra frame dword and attacker/category/NONE homes remain.
+// Round 385: Team/observer/both/whole-function engine receivers 470/557/557/617; with explicit team
+// result 550/509/509/617. All restored; frame 0xe4/0xe0 and attacker/category/NONE/decision homes
+// remain.
+// Round 173: actual external victim/attacker/state record references, all seven nonempty
+// combinations 470; all three with existing complete position setter 471. Original record
+// receivers, both events, shared award update and complete body restored.
+// Round 226: paired existing initializer/cause/effect/sender boundaries 602/609/592/588/567/583;
+// initializer/cause/effect 637, complete event lifecycle 659. Original body and all inline
+// boundaries restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4189,6 +4198,9 @@ void function_15fe20(long team_index, color3f *color);
 // Round 251: paired player-score/rival-score/rival-index lexical homes, all seven subsets
 // 88 each; all three with statistic-selector name 88. Original selection names restored;
 // color transfer, NONE reuse and shift-count read width remain.
+// Round 177: Existing team-color helper rival/own/both 119/119/119; complete unit-index/
+// absolute-index/team observations 119/119/724, unit plus absolute 119, all three 726.
+// Original observation points and body restored; native transfers and final NONE residency remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {

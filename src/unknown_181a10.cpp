@@ -573,6 +573,8 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Round 237: root/component/classifier noinline 359/358/349; root-component/root-classifier/
 // component-classifier/all 384/365/401/414; all ordinary inline 401 (control 321).
 // Entire original helper graph restored; frame and plane/output homes remain.
+// Round 390: Native first/second shape values and admitted computed last-key observation,
+// seven subsets plus signed encoded data: 369/321/359/320/359/322/358/358. Original body restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

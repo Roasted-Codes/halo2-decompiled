@@ -318,6 +318,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
 // defined-failure helper and complete query restored; BSP/section homes remain.
 // Round 223: Signed/unsigned word masked-plane storage with original/reference-base/surface-base/both table selections 213/188/214/210/215/196/216/224. Original full-width plane, table selectors and defined vertex failures restored.
+// Round 165: actual instance-table predicate shared at both selections, crossed with
+// native byte fetch and the reused surface ordinal, 228 in all four forms; the same
+// four with a canonical Boolean query result 232 each. Predicate shortens the frame;
+// original long instance lifetime, helper, byte result and defined failures restored.
 // Geometry-join Boolean result 182 (726 bytes); native byte fetch 172; both 182;
 // initialized single-exit fetch 172, with Boolean result/byte fetch/both 182/172/182;
 // complete result/fetch graph with readonly section 182. Original helper and result restored.
@@ -328,6 +332,19 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // 259/259/259/172; each with a complete post-geometry range-end expression
 // 269/269/269/196. Original ordinal and bounds restored; frame/BSP/section and
 // defined vertex joins remain.
+// Round 387: BSP/section carriers and range/plane homes remain. Native fetch output/section/both
+// references 172 each; remaining index-output-section, output-index-section and section-output-
+// index contracts 172 each; output reference with index-first and both references with output-
+// first 172 each. Original query and complete defined-failure helper restored.
+// Round 387: Three further native fetch reference contracts, index-output-section with section
+// reference, output-index-section with point reference and section-output-index with both
+// references: 172 each. Eight new reference contracts total; three pointer-only order observations
+// are additional. Complete original query and defined-failure helper restored.
+// Round 393: native external cluster/instance/triangle references in seven subsets
+// 172 each; all with native surface reference 172. Original receivers and defined-failure body restored.
+// Round 228 on the branch-owned geometry join: filled-output pointer success with native
+// section/output references and index-first order, all eight contracts 172 each. Original
+// Boolean fetch, defined failures and caller roles restored; BSP/section residence remains.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

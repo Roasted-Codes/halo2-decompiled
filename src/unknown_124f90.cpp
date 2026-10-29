@@ -3412,7 +3412,7 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 215 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
+// score 215 (was 215): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
 // long next-chunk candidate 254; completed-chunk early exit 241.
@@ -3455,9 +3455,13 @@ struct s_128ca0
 // Round 219: readonly conditional next chunk 239; complete countdown arms 215 (plain, kept); both
 // 227; word countdown 229; conditional/word 234; complete arms/word 224; all 217, with role names
 // 217. Sub-eight gains 227/229 restored; all other forms restored.
+// Round 168: Native processed real gain with original/early declaration and signed/unsigned raw bits 215 each; all four with shared scale 287. Original body restored; gain homes and clamp joins remain.
 // Round 247: sequential inner/outer/both reference-input gain sums 269/215/269; both with shared
 // scale 242, before pitch 276, before pitch with scale 256, role names 269 and entry declaration
 // with scale 242. Reference-input sequences recover frame 0x494 but regress; original body restored.
+// Round 224: Live definition/permutation/playback, definition-permutation/definition-playback/
+// permutation-playback/all/all-pitch-parameters 307/364/681/385/709/864/878/878. Definition-only
+// recovers frame 0x494 but regresses; original receivers, gain homes and complete countdown arms restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3684,6 +3688,11 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 221: original native fallback copied from the existing immutable object by aggregate/library,
 // each with aggregate/library occlusion and field/aggregate publication: 739 each, 2085 bytes.
 // All eight restored; original helper and stack fallback retained; temporary declaration removed.
+// Round 389: query directly into the final point 563; first/second/both rotations in place
+// with complete vector snapshots 1030/1035/1008; query reuse with those graphs 1042/1047/1020;
+// complete reuse with native output-pointer return 1020. Original distinct workspaces restored.
+// Round 259: existing rotation output pointer/reference results, pointer/reference output
+// formals and ordinary/forced expansion: eight forms 535 each. Original helper restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

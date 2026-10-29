@@ -1587,9 +1587,15 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // bytes 552 each (2898/2882). Original canonical bools, accepted word counts and geometry restored.
 // Round 226: Plain component loops for paired edge inputs/contact direction/residuals and
 // their pairs/all [672, 594, 556, 680, 674, 594, 682]; all with the three ray scales 660. All restored.
+// DL167: Existing scaled-add projected/candidate and shared ray-fallback add producers, seven
+// subsets 553/552/553/609/610/609/632; all with in-place vector sums 623. Original
+// producers, real inputs, word counts and helper restored (fast control/full baseline 552).
 // Round 249: shared final accepted-sum pointer with word/short/long/dword count
 // 612/612/612/619; native sum value with those domains 602/602/602/598.
 // Original separate averaging branches, count domains and all geometry restored.
+// Round 225: projected offset/candidate displacement/both/squared lengths/offset-lengths/
+// displacement-lengths/all/all with three shared ray scales 618/555/553/554/618/555/617/553.
+// Original expression producers and all geometry/helper inputs restored.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

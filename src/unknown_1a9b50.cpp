@@ -748,6 +748,8 @@ static __forceinline long real_to_long(real value);
 // then separate noinline declarations on all three: 386/386/386/386/386/386/386/386. Original restored.
 // Round 227: Prediction/facing/query fallback vector setters, all subsets, then early distance default 382/466/467/484/485/491/492/494.
 // Original body and all helpers restored.
+// Round 392: Entry result from each individual flag and each flag pair, then the first pair in byte/long
+// storage: 476/476/476/393/395/396/438/454. Complete original entry/result and body restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

@@ -100,6 +100,8 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
 // tail); on that, window as `= 0; if` 440/226; 0xe4/0xe8 as if/else 438/237; the 0.0 exit as its own
 // return 444/334. Body unchanged.
 // Round 222: Persistent configuration/updated counter/both 428/415/432; callback-scale arms 415; configuration-arms/counter-arms/all 424/422/415; all with named window terms 415. All restored; frame 0x3c versus 0x34, channel/result homes and counter composition remain.
+// MiniMax D run 2026-10-29: the two flag stores in the other order and the reliable-pending call's
+// declaration split from its assignment 407 (gain 1, under the keep bar; not kept).
 // @retail 0x75fc0
 bool s_network_observer::connection_v05(long arg_1,
 	bool arg_2, bool arg_3, bool arg_4, bool *arg_5, bool *arg_6,
