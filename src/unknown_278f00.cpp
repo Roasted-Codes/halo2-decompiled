@@ -144,6 +144,9 @@ bool function_a7670(long object_index);
 // Round 378: Existing component-index getter with ordinary/inline/forced/noinline
 // caller declarations 299 each; each with indexed cleanup 294. Query remains out
 // of line; original property scan, cleanup cursor, declarations and body restored.
+// Round 383: saved release-state truth byte/signed-byte/word/long with consumed cleanup
+// cursor 181/181/242/207; with cursor advanced after release 263/263/233/273.
+// Original saved truth, cursor timing and complete body restored.
 // @retail 0x278f00
 void function_278f00()
 {

@@ -942,6 +942,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Existing primary lookup/transition lookup/channel-start inline declarations,
 // their three pairs, all three, and all three kept out of line: 210 each.
 // Original declaration contracts, identifier homes and complete body restored.
+// Round 383: existing variant helper ordinary/forced/noinline/inline-noinline
+// contracts 210/338/210/210; offset helper counterparts 210/654/210/210.
+// Original class declarations and complete body restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

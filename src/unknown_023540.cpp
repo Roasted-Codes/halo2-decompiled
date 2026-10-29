@@ -2745,7 +2745,7 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 282 (was 334): Frame 0x58 agrees; six excess bytes, sampler constants,
+// score 282 (was 282): Frame 0x58 agrees; six excess bytes, sampler constants,
 // bitmap-call transport and scale/trig homes remain.
 // Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
 // has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
@@ -2809,6 +2809,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // native rectangle 282/334; independent second trig 280/338; rectangle plus trig
 // 280/338. Keep only paired diameters 282 (plain), 2028 bytes; the extra two-point
 // trig step is rejected. Original trig storage, arrays, helpers and calls retained.
+// Round 383: paired diameter products before normalization 356; full bounds before normalization 354;
+// complete horizontal/vertical product-and-bound phases 336/340; native rectangle counterparts
+// 356/354/336/340. Original reciprocal, product overlap and body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
