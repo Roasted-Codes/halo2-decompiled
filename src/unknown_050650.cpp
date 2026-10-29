@@ -1070,6 +1070,10 @@ struct s_actor_looking_structure_view
 // cosine first 86; trig before candidate 80; fraction after rotation 154;
 // angle ordinal stepped at last use 156; both shared dot products 144 (regrouped,
 // exact-match-only); immediate successful publication return 224. Restored.
+// Round 262: pointer-bounded candidate traversal (< / != end), both ordinals 164/164;
+// sole angle ordinal on those traversals 191/191; full-width best index 153;
+// post-query fraction producer 111; selected-index publication first 82;
+// conditional lower-bound update then fraction product 91. Original body restored.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {

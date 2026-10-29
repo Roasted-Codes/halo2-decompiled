@@ -581,6 +581,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // ours reads count from memory twice and keeps the previous side in CL. The alias test reversed 130;
 // the clipped reset after the alias copy 220; mask declared first 132; plane n.j * dy 129; the
 // previous side as `0 <= distance` 129 (compile-only screens of nine more orders and spellings: none).
+// Round 262: equality-producer byte/short/long result domains and ordinary inline
+// metadata 129 each; single-exit bool/byte/short/long equality results on the
+// native-mask/signed-ordinal graph 129 each. Original helper and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

@@ -1682,6 +1682,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // Existing default text drawer 475; byte offset 475; indexed team 466; player row 490; both rows 481;
 // validity exit 475; mutable panel 475; both rows and byte offset 481. The shared drawer stays out of
 // line.
+// Round 262: non-template rectangle/widget-prefix text contracts 122/122;
+// with indexed team traversal 148/148; widget-prefix byte/short validity offsets
+// 122/122; ordinary inline prefix and invalid-widget exit 122/122. Restored.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {
