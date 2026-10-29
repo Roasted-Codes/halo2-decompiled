@@ -346,6 +346,11 @@ void __stdcall function_b5a70(long player_index, long type, long count, long obj
 // in ebx and the player on the stack); only has_player dropped (90, same flip); a local
 // copy of the player (119); both dropped with the count read through its address as in
 // 0xb5a70 (113: the player still goes on the stack).
+// score 79 (was 79): retail keeps the player in ebx until its use, so the world pointer must not
+// take ebx; every form that keeps the player live to its use (its test and mask both late, 122)
+// leaves the player on the stack and the five callers differ; masking the player at the entry
+// and testing it late (90) keeps retail's length but the callers differ; computing the
+// distribution at the call instead of the entry (118) differs as well.
 // score 79 (was 79): retail reads the player's machine field twice (its dead `add ebx, edx`
 // after the folded load); doing so moves LTCG's register parameter from the player to the count
 // (ebx) and the five callers differ. Natural for loop with the player used only at its test 119;
