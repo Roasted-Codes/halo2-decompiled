@@ -622,6 +622,10 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Original acquisition and receiver pair restored; root-location convention remains.
 // Round 180: Entry forward/marker/audibility outputs, masks 1-7, then all in reverse declaration
 // order: 280/280/280/280/280/280/280/280. Original executable body restored.
+// Round 178: distance pair read once 306; angle pair once 314; negative adjustment
+// once 276 (four-point gain below the gate); distance+angle 324; distance+adjustment
+// 307; angle+adjustment 315; all five properties 324; all with readonly receiver 324.
+// Original observations and body restored; protected root-location convention remains.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

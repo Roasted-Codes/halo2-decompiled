@@ -335,6 +335,12 @@ extern real g_47f05c;
 // with early best-alignment constant 217; both 235. Entry declarations of point/center/delta
 // on those four graphs 217/235/217/235. Original snapshots and full body restored; frame 0xd0
 // and shape/count/alignment carriers still differ.
+// Round 178: selected-record result 241; one center per positive-count scan 254;
+// center with selected record 240; selected record with uniform height reads 243;
+// center with uniform height reads 238; all three 222; all with body-byte reads 254;
+// all with native ground fields 222. Uniform normal-first/up-first alignment products
+// 192/192, each with uniform height reads 205/205. The center alone recovers frame
+// 0xd4 but leaves the best alignment in XMM6; original body retained at 192.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -679,6 +685,11 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Round 158: Whole-dot multiplication operands commuted at initial, rotation and limit sites independently,
 // in pairs, all three, then with every rotation product. Scores [182, 183, 182, 183, 182, 183, 183, 183].
 // Original executable body restored.
+// Round 178: complete accepted-up conditional 287; immutable ground-normal input
+// 311; active-entry forward workspace 182; conditional plus ground input 334;
+// conditional plus forward 287; ground input plus forward 311; all three 334;
+// all with forward declared first 334. Input-split forms lose the matched caller;
+// original body and its 182 score retained.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
