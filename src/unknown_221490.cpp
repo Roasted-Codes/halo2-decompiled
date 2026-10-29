@@ -238,6 +238,9 @@ set_all:
 // volatile on changed_mask) 83; the volatile removed from the if form alone 85; volume
 // read after the mixbin compare 136/145; volume before mixbin 83. Same pairing cause as
 // 0x2215d0.
+// Native desired-pair reference, alone/both element references and nested/combined
+// duplicate guards 102/102/96/96; complete pair snapshots 104/104/104/104.
+// Settings/list induction and mask/count homes remain; all executable forms restored.
 // @retail 0x2216f0
 void function_2216f0(
 	s_mixbin_list *list,

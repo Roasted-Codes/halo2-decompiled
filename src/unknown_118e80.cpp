@@ -661,6 +661,9 @@ bool function_bc380(long arg_0, long arg_1, long arg_2, long arg_3);
 // shared declaration changed; success path inside if (!= NONE) with return false after 88
 // (registers right, false epilogue laid out last); return false at the guard 96 (laid out in
 // line); result from the guard test 108; || on the two bools 95; result set in both arms 88
+// Four-use long ordinal with retained/per-use tag and bitwise/logical predicates
+// 83/89/129/136; native word ordinal 151/164/144/155. Initial table/object and
+// result homes still differ; original body and shared allocator interface restored.
 // @retail 0x118510
 bool __stdcall function_118510(long arg_0, void const *arg_1, bool *arg_2)
 {
