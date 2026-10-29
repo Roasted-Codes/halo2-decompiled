@@ -17,8 +17,11 @@ bool function_1f4a20(s_1f4a20_entry const *arg_2, long arg_0, s_reference arg_1,
 bool function_1af530(long arg_0, long *arg_1, long *arg_2);
 void function_265c30(long arg_0, long arg_1, bool arg_2);
 
-// score 36 (was 36): the locals sit at stack addresses eight bytes lower than retail's, so the
-// values handed to the calls are taken from the wrong slots.
+// score 36 (was 36): the 0x163c frame agrees, but scalar stack homes and the conversion
+// helper boundary differ from retail.
+// Round 197 fast trials (unchanged reduced preview 207; full 36): Native reference member
+// comparisons, short-circuit/bitwise tests x aggregate/member copy x original/forced-inline
+// conversion 279, 275, 348, 350, 346, 353, 402, 405.
 // @retail 0x1af160
 bool function_1af160(long arg_0, s_1af160 *arg_1)
 {

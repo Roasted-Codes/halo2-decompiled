@@ -148,6 +148,9 @@ void function_71ff0(c_session_state_matchmaking *arg_0, long arg_1,
 // Round 409: roster count at every use 439; actual identity-end traversal with captured/live count
 // 450/450; those three with the shared live-state predicate 484/480/480; field-count/end
 // traversal with native long final result 444/468. Original complete body restored.
+// Round 189: plain strict/fallback balance loop, long ordinal with short/bool/long/byte
+// result 580/591/588/591; short ordinal with those four results 580 each. Original
+// attempts restored; the rolled loop shortens away from retail and leaves the frame excess.
 // @retail 0x71730
 bool __stdcall function_71730(c_session_state_matchmaking *arg_0)
 {

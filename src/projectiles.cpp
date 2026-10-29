@@ -616,6 +616,9 @@ s_projectile_material_response g_547660;
 // Result-owned response cursor: endpoint 40, ordinal 39, relational endpoint 40;
 // direct ordinal/endpoint success returns 79/67; result cursor with per-use count
 // ordinal/endpoint 70/73; short ancestry with result ordinal 39. Restored.
+// Ordinal reset before material lookup, ancestry/entry lifetime with cursor/indexed candidates
+// 58/56/58/56; immutable current-material values with those four forms 58/56/58/56.
+// Native word input and response scan entry remain; opening body restored.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
@@ -1198,6 +1201,10 @@ extern vector3f *g_4687ac;
 // bounded initial ray 165; positive/both with original query reuse 163 each. Actual
 // initial displacement retained after the read-only query 180; with shared cross,
 // later query reuse or both 180 each. Original body restored; frame/tag/query homes remain.
+// DL176: Whole actual query-result lifetime in bool/byte/short/long 182/177/172/168; with
+// consistent radius-field reads 198/193/179/185. Full-width result reaches 756 bytes but
+// regresses. Original result exits, cached radius, simultaneous endpoints and body restored;
+// frame/tag/query homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1656,9 +1663,18 @@ real function_17c900(short function_type, real input);
 // with either receiver 360/360; both existing point-difference producers 368/368, with
 // native salt 367/367. Declared lead field read at each use 369, with native salt 372.
 // All bodies and real-field trials restored; frame agrees, stacked index/output EBX still differ.
+// Parallel lead/turn/drift scalar entry reservations, seven subsets, and complete scalar role
+// names all 348; every original declaration and assignment restored.
 // DH round 234: caller output promoted before final branches with target/output reads, after
 // target-copy acquisition or at the target producer 361/371/395/411; readonly input objects
 // with those four boundaries 361/371/395/411. All restored; input contract and vector homes remain.
+// DL176: Ret-4 stdcall, inline target, both 348/348/348; with salt at its drift expression
+// 365/365/365; both with native signed-word salt late/early 366/360. Original convention, summary,
+// salt and complete body restored; stacked-index/output-EBX transport and normalization homes
+// remain.
+// DH round 236: lead/turn/drift vector storage promoted without moving their input reads,
+// all seven subsets 348 each; complete promoted graph with role-based point/vector names 348.
+// Original branch storage and complete body restored; input transport and vector homes remain.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {

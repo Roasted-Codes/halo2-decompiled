@@ -146,6 +146,10 @@ PRIVATE inline bool append_save_entry_2164c0(s_save_list_2164c0 *list, s_save_en
 // Explicit count/publication memcpy 51; list increment with old count 51;
 // count success/failure results 54/54; capacity first 41; character first 32;
 // native file length 131; root aggregate zero 32.
+// Round 70: direct append with two-use result 32; caller append result 32; split helper
+// result declaration 32; enumeration receiver 32; entry and enumeration receivers 32;
+// entry receiver 32; explicit diagnostic addresses 32; mutable append input and
+// sizeof(*entry) 32. Original body restored.
 // @retail 0x2164c0
 void function_2164c0(long memory_unit, s_save_list_2164c0 *list)
 {

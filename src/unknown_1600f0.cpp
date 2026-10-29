@@ -1118,6 +1118,9 @@ struct s_game_engine_globals_connections_view
 // Round 271: existing short/name/connection widget initializer inline class contracts,
 // all seven subsets and joint noinline contracts, 170 each on calibrated roots.
 // Original owning header and complete body restored; deferred icon tail remains.
+// Round 279: native byte input domains for glyph, dim and hidden-place flags,
+// all seven subsets and all four input flags together: eight calibrated scores 170.
+// Original Boolean signature and complete body restored; deferred icon tail remains.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1685,6 +1688,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // Existing default text drawer 475; byte offset 475; indexed team 466; player row 490; both rows 481;
 // validity exit 475; mutable panel 475; both rows and byte offset 481. The shared drawer stays out of
 // line.
+// Round 262: non-template rectangle/widget-prefix text contracts 122/122;
+// with indexed team traversal 148/148; widget-prefix byte/short validity offsets
+// 122/122; ordinary inline prefix and invalid-widget exit 122/122. Restored.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {

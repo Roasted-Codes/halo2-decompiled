@@ -254,13 +254,6 @@ bool unit_has_weapon_definition(long unit_index, long definition_index);
 bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode);
 void __stdcall function_b8540(long object_index);
 
-// score 9 (was 9): function_cd0c0's calling convention differs: retail pushes 1, the
-// argument and the third value, ours pushes 1 and the argument and moves the third value
-// into the argument's register.
-// Frame agrees; unit argument still moves to ESI instead of being pushed for function_cd0c0.
-// Placement field library clear fast 9; choice-entry traversal 78; short/unsigned choice indices 121/10;
-// unsigned creation index 9; choice output workspace 9; chained selection clear 11;
-// placement lifetime ending before the unit test 9. All new scores reduced; callee untouched.
 // @retail 0x19ef40
 void __stdcall function_19ef40(long unit_index, long *first_count, long *second_count)
 {
@@ -419,6 +412,9 @@ PRIVATE inline long polygon_round_19f(real value)
 // Round 409: one emitted-position workspace 403; native tint copy 393; both 416; current-vertex
 // address 379; with position/tint/both 403/393/416; all with ordinary variant 466 and both
 // matched callers lose. Original complete body and output/parameter homes restored.
+// Round 272: ordinary variant and load-stepped cursor with entry declarations for
+// fade limit/spread/outer distance, every subset and complete role names
+// 416/416/416/416/416/416/416/416. Original parameter home, observations and body restored.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,
