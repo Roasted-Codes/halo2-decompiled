@@ -63,6 +63,8 @@ void __stdcall swarm_delete(long arg_0);
 // the loop limit in ebx with a cmov where ours keeps it in a stack slot.
 // Native swarm receiver with requested/completed count snapshots and common-value chains: all
 // eight 44; tag/sentinel roles and EBX bound still differ.
+// Coordinated handle parameter priorities 44/45/45/44/45; placement argument priorities 44/44/44.
+// Every definition/declaration/call changed together; original complete contract restored.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {
