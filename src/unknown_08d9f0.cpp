@@ -207,10 +207,14 @@ void function_8dd70(void);
 // Uninitialized function-scope link/observer/session/link-observer/link-session/observer-session/all
 // short declarations and complete stage-role names 230 each; every assignment kept at its stage.
 // Round 223: Canonical true tests on retained short link/observer/session stages, seven subsets 228/250/250/250/250/250/250; all with canonical entry consumption 250. Original truth tests and stage flow restored.
+// Run 18 (lane D): entry flag compared against false and read a second time on the failure path
+// (230 -> 221): the prologue now matches retail's sete/cmp byte for byte. Still differs: retail
+// calls 0x662f0 and the nine registration wrappers out of line and reloads the seven network
+// pointers after every call; ours expands them and keeps the link result in EBP.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
-	bool initialize = !g_4d8ba0;
+	bool initialize = (g_4d8ba0 == false);
 	if (initialize)
 	{
 		network_configuration_initialize();
@@ -306,6 +310,7 @@ void function_8d9f0(void)
 				}
 			}
 		}
-		function_8dd70();
+		if (initialize)
+			function_8dd70();
 	}
 }
