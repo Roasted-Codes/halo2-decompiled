@@ -1446,6 +1446,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Native pool bases recover frame twelve at 487; the paired short graph reserves sixteen.
 // On the native pool graph, default success bool/entry-bool/byte/entry-byte
 // 474/474/514/514. Original result defaults and lifetimes restored.
+// Round 169: whole primary result groups 0x400076c/0x500000a/0x50000c3/0x600008c/
+// 0x600008d/0x60000cc/0x700005c moved first, and the false group after the first
+// interruptibility group: eight forms 450 each. Original dispatch order and body restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2427,6 +2430,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // Round 386: existing native pair-validity helper by primary/case/both/tail/primary-tail/
 // case-tail/all phases 701/666/701/745/751/747/753; native triple state guard 762.
 // Original private validity helper, request/control homes and body restored.
+// Round 169: native incoming record, mutable/readonly byte flags 666/666; word flags
+// 675/675; dword flags 666/666; unsigned keys with byte/word flags 666/675. Original
+// flat input accesses, external signature, request homes and complete body restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2722,9 +2728,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
-// score 155 (was 155): frame 0x3c versus 0x38; action/decision homes, input carrier roles and
-// call materialization remain. The action query now matches, but its returned-pointer test
-// grows the frame to 0x40 on this caller; the original executable body is retained.
+// score 122 (was 155): frame 0x3c versus 0x38, action/decision and input homes remain.
+// Returned action comparison plus a separate existing channel-copy statement recover
+// native query/play ordering at retail length; the shared result exit is retained.
 // frame 0x3c versus 0x38; the escaped action short has its own
 // aligned slot. The action and seat queries match; returned action-pointer comparison
 // and channel-copy/play argument scheduling still differ.
@@ -2766,6 +2772,11 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Fixed caller/request roots reproduce full 155; original body restored.
 // Round 168: Native paired timing fields/header status/parent slot in seven subsets and all
 // with a shared absolute object index 155 each. Original records, copy chain and body restored.
+// Round 169: returned query with action/force/both/backing/action-backing/force-backing/
+// all scopes 149/150/150/149/149/150/150; all plus native channel 265. Scoped query
+// plus direct true exit 148, Boolean result 151, separate copy 129, actual flag value 149;
+// separate copy with original shared exit 122, also with original action home 122 (plain, kept).
+// Local action comparison on copy graph 132; Boolean result on query/copy graph 127.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
@@ -2794,8 +2805,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
                 force_overlay = true;
             else
             {
-                function_e70b0(unit_index, &action);
-                if (action != 0 ||
+                if (*function_e70b0(unit_index, &action) != 0 ||
                     (*((byte *)g_4e0300->data + (unit_index & 0xffff) * 12 + 3) == 0 && function_e4050(unit_index)))
                     force_overlay = true;
             }
@@ -2804,7 +2814,8 @@ bool function_10ff40(long unit_index, long type, short side, short value,
         {
             byte channel_storage[sizeof(c_animation_channel)];
             c_animation_channel *channel = (c_animation_channel *)channel_storage;
-            if (!state->channel_play_indexed(channel->copy_from(&state->channels[0]), animation, side, value, 0, 0))
+            channel->copy_from(&state->channels[0]);
+            if (!state->channel_play_indexed(channel, animation, side, value, 0, 0))
                 force_overlay = true;
         }
         if (force_overlay)

@@ -2456,6 +2456,12 @@ dword __cdecl function_131fc0(real alpha);
 // Round 253: bounded native pixel short/long/word/dword producers 427/410/427/448;
 // native pixel lifetime across bitmap guard 438/439/438/433. Original float dimensions,
 // full-stack marker, state calls and complete body restored.
+// Round 169: native fallback source/destination/both records, native source/destination/both
+// input fields, and both records plus source/both input fields: eight forms 251 each.
+// Parallel reciprocal-first UV products with original/native/native-field rectangles 251
+// each; native source-before-target frame names 251. Complete native fallback production,
+// with native input fields/frame names/both plus reciprocal-first products: 257 each.
+// Original arrays, fallback order, products and complete body restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2818,6 +2824,10 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Round 166: paired corner production with both angle pairs live, explicit/first-corner-first/
 // table-loop/table-loop after first corner 407/368/358/361; native point outputs
 // 407/368/358/361. Original separate UV producers and trig lifetimes restored.
+// Round 169: reciprocal-first normalization 282; branch-owned outputs 340, with reciprocal-first
+// 340; incoming scale results 343, with reciprocal-first/exclusive maximum 343/343;
+// branch-owned outputs with exclusive maximum 340; paired dimension-first products plus
+// reciprocal-first normalization 282. Original paired diameters, scale and trig homes retained.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
