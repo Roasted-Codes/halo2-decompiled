@@ -473,16 +473,20 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // score 56 (was 56): Offset initialization, scalar initializer order, property reloads and rotation scheduling differ.
 // Combined entry decisions 53; entry decisions with shared cache 53; scale/alpha/both result locals 119/56/119;
 // saved successor 217; particle cache with scale result 119; combined entry/property/cache 116.
-// score 56 (was 56): entry branch, property reload pairs and rotation scheduling differ;
+// Earlier: entry branch, property reload pairs and rotation scheduling differ;
 // forward/left/up/all axis receivers 118/55/55/118; forward/left/up/first-pair values 182/167/181/289;
 // left/up receivers with empty-list return and scale-first initialization 52/52, but the return only repeats the loop test (reverted in review).
 // Captured position/late output 353; captured velocity/late output 357; both 437;
 // translation component loop 56; inner cache member 56; derived mask at use 198;
 // scale initialized at property selection 273; translation value 160.
-// score 56 (was 56): the definitions indexed (index++) put the offset's zero store after the
+// Earlier: the definitions indexed (index++) put the offset's zero store after the
 // list test and fix the three reload pairs (with scale declared first, all but the rotation
 // blocks match), but turn the rotations' products around and add 10 bytes: indexed 119,
 // indexed with scale first 117; plus split += rows 116; plus a matrix pointer local 123.
+// Complete position/velocity/both row products 127/56/127; all-products before stores 164/121/171;
+// both input copies on complete-product graph 170; shared translation add with row products 127.
+// Indexed definitions plus scale-first defaults with those six product graphs 103/117/103/141/153/116.
+// Entry/reload order and matrix/input product scheduling remain; original body retained.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {
@@ -1247,7 +1251,7 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
 long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
-// score 101 (was 101): frame 0x14 agrees; retail keeps the NONE sentinel and the owner in ebp
+// score 102 (was 102): frame 0x14 agrees; retail keeps the NONE sentinel and the owner in ebp
 // (coalesced; later NONE tests use immediates) and the availability flag in bl; ours keeps the
 // sentinel in ebx, the owner in edi and the flag in al, and tests the definition's bit 9 as a
 // byte instead of a shifted word. Owner/NONE coalescing and Boolean homes differ.
@@ -1274,6 +1278,9 @@ bool function_17afd0(long effect_index, long value);
 // NONE/owner sharing and availability/Boolean homes remain.
 // Next-used helper entry/advance/both 200/202/244; native draw/query+draw bits 101/128;
 // native bits with entry/advance helper 195/198; inline/outline-inline query 101/101.
+// Arm-specific draw calls with original/word flag 134/137; camera scoped 143/129;
+// arm-specific draw and camera 144/121; direct other-view eligibility 144/121.
+// NONE/owner sharing and Boolean homes remain; original shared draw call retained.
 // @retail 0x174220
 void __stdcall function_174220(bool view_pass)
 {
