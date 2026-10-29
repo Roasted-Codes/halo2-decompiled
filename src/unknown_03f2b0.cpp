@@ -1491,12 +1491,18 @@ struct s_133f70;
 // site 239f, both sites 239f, both with a signed-char previous level 266 plain (aligned 75, retail's
 // 382 instructions); cache slot as a ternary 304f (folds, adds a jmp). The tail remains
 // BLOCKED-BY 0x23690. All restored.
+// Round 184: Native object/tag, handle/count and cache/sections pointer-home names, masks 1-7, then
+// all six in a second coherent lexical order: eight calibrated scores 175. Original names, all
+// executable statements, native records, flags, query/allocator inputs and call tuples restored.
 // Round 265: six lexical orders of entry/failure/compacted-slot long values and
 // both uninitialized entry/slot storage orders before the query, 175 each on the expanded control.
 // Original declarations, names, compaction, cache observations and complete body restored.
 // Round 174: function-scope fallback/reuse/level-change result homes, all seven
 // subsets, 175 each; all plus the builder result 175. Original producer points,
 // separate iteration storage and complete body restored; distance staging remains.
+// Round 398: complete once-read query object/tag/both 357/352/335; each with
+// allocation-scoped projection workspace 357/352/335; immutable joint inputs
+// with either workspace 335/335. All original field observations and body restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

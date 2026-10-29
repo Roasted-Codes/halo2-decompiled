@@ -96,6 +96,12 @@ real normalize2d(point2f *arg_0);
 // entry point storage and early radius, 266/266/264/264/260/260/258/258. Original stores, homes and body restored.
 // Round 265: clean output with bool/long common completion, entry-point storage and
 // radius-order combinations 279/279/279/279/285/285/285/285. Original complete body restored.
+// Round 268: plain component loops far/adjusted/both with long ordinals 220/220/220;
+// short ordinals 246/286/284; both byte/dword 284/220. Original scalar stores restored;
+// output EBX/EBP, vector homes and return tails remain.
+// Round 271: full collision output with the shared native head as member/base, late/entry
+// storage, 220 each; all four with radius before center 215 each (five-point gain restored).
+// Original opaque full output, output access, scalar spill and complete body restored.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

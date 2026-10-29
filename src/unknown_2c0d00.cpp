@@ -238,6 +238,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // Round 385: Word obstacle mask with native sphere/motion combinations, reduced
 // 916/894/914/897/914/897/897/897; word+byte sphere 917 plain, plus byte motion 919,
 // plus separate location/raised workspaces 898. Original masks and query storage restored.
+// Round 176: Immutable declaration-produced actor with original/ordinary settings/ordinary unit/both
+// input homes 957/991/978/989; with independent location and raised point 973/993/949/982.
+// All original actor publication, query storage, qualifiers, operands and complete body restored.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -940,6 +943,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // vector storage 427/427/427/413. Boolean and byte forms reserve 0x24 versus
 // retail 0x28; short restores extent but regresses. Original acceptance,
 // types, helper calls, history qualifier and complete traversal restored.
+// Round 175: Full-width unsigned incoming/ring/complete selected-vertex domains and all
+// subsets 385 each; all with unsigned equality-only ring-edge anchor 385. Native word values
+// and distinct NONE bit patterns preserved. All original domains, histories and body restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1144,6 +1150,10 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // perpendicular alone/false-exit/distance-first/both 180/251/394/410; all with
 // ordinary first-side storage 378. Original body and qualifier restored; early
 // true host and side-component forwarding remain.
+// Round 175: Return produced by the initial length test/native scale input/both/symmetric side
+// product terms/result with terms/scale with terms/all/all with if-form clamps
+// 359/470/466/172/359/470/466/471. Native scale input loses both matched geometry siblings;
+// all original helper inputs, qualifier, branch returns, arithmetic and body restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1356,6 +1366,10 @@ bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start
 // publication 494, with paired word results 485. The four-count gain fails
 // the eight-count gate. Original successor lifetime, both qualifiers,
 // Boolean corner results, snapshot and full body restored.
+// Round 175: Existing selector inline/noinline declarations 444/444; output receiver formed
+// after successful selection alone/inline/noinline 502/502/502; the same three with the immutable
+// current type retained across all uses 502/502/502. All original declarations, address and
+// metadata lifetimes, native record snapshot, qualifiers and complete body restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
