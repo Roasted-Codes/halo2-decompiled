@@ -834,6 +834,10 @@ real function_18cac0(long arg_0);
 // strict maximum and original side result restored.
 // Selected-mask address on shared membership with final-array ownership, consistent audibility
 // and native real storage: 266/266/260/260/263/263/266/266; exact-only pointer forms restored.
+// Round 153: plain real table with memset 240 (aligned frame); audibility read before the door query 238; table
+// indexed directly with memset's return for the final call 203 (plain frame, return pointer spilled), with the
+// audibility read 249; batch count read once 153 (retail's countdown; one-use local). Compile-only: every clear of
+// a directly addressed table aligns the frame.
 // Round 108: retail clears and indexes the 0x800-byte table in place (`[esp + eax*4 + 0xbc]`,
 // `lea ecx, [esp + 0xc0]` for 0x221e30) with no realignment; the only caller 0x125b40 also realigns
 // here and not in retail. Every other retail function that clears a stack local of 0x1f4 dwords or
