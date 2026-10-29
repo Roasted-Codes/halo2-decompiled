@@ -2093,6 +2093,9 @@ void function_269250(long clump_index, long actor_index)
 // reading the prop at its top 136; 600 s permuter, 66 tries, none below 3. Original body restored.
 // Native repeated state pointer/reference, crossed with the existing node-head getter
 // and chained adjacent flag clears: all eight 89. Native object fields retain the same offsets.
+// Round 249: Complete deletion/live-prop arms with common completion, ownership/replacement
+// comparison priority and original/reversed category declarations 196/144/197/146;
+// changed published after deletion 196/178/197/180. All exact-only forms restored.
 // @retail 0x26ae30
 void function_26ae30(long object_index)
 {
