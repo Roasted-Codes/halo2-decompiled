@@ -2149,37 +2149,41 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 	long rigid_body_index, bool started);
 
 /* places the biped's ragdoll bodies, from its root rigid body outward */
-// score 91 (was 134): frame 0x114 versus 0x110; escaped result byte, zero/save staging and root admission differ.
+// score 70 (was 91): frame 0x114 versus 0x110; entry saves and result/visited homes differ.
 // Native one-word visited mask 91 kept; root clamp 143, with native mask 100; common result 123;
 // declaration-time zero 100, with common result 123; result first 100, with common result 123.
 // Lookup/output scope 86 (five-point incremental gain, 11 extra bytes; restored); with root clamp 101;
 // mask initialized after admission 96; output-only Boolean 103; result after first placement 122;
 // output-only after placement 103. Native mask body retained.
+// Round 282: mask before admission, array/scalar with range/clamp and initialized/output-only
+// result [89,85,91,70,86,82,80,84]; ending lookup scope on this graph [86,88,83,85].
+// One-word mask before admission, root clamp and output-only result 70 plain, kept;
+// output receiver is never read by its matched consumer. All original call roles retained.
 // @retail 0xe1b60
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 {
 	s_list_rigid_bodies list;
 	long count;
-	bool result = false;
+	dword visited[1];
 
 	function_181bd0(arg_159e6d, &list);
 	count = havok_component_get(BIPED_GET(arg_159e6d)->havok_component_index)->rigid_bodies.size;
+	memset(visited, 0, sizeof(visited));
 	if (PIN(count, 1, 32) == count && list.count > 0)
 	{
 		long root = list.lists[0];
 
-		if (root >= 0 && root <= count - 1)
+		if (PIN(root, 0, count - 1) == root)
 		{
-			dword visited[1];
+			bool result;
 			bool started;
 
-			memset(visited, 0, sizeof(visited));
 			started = function_e1c40(arg_159e6d, point, value, root, NONE, NONE, 0);
 			visited[root >> 5] |= 1 << (root & 0x1f);
 			return function_e23e0(arg_159e6d, point, value, &result, visited, root, started);
 		}
 	}
-	return result;
+	return false;
 }
 
 void function_b8840(long unit_index);
@@ -3139,6 +3143,9 @@ void function_e4300(long arg_159e6d)
 // Separate reset noinline declaration 91; Boolean flag test 98; both 98; noinline with
 // field-use object lookup 94; Boolean lookup with/without noinline 101/101; both call-boundary
 // declarations with Boolean test 98, with field-use lookup 101. Original body/declarations restored.
+// Round 282: physical low-byte mask/Boolean/named/early guards 91/91/91/91;
+// native word bitfield with Boolean/early guards 98/98; native byte bitfield 91/91.
+// Original physical word declaration and caller body restored.
 // @retail 0xe4bd0
 void function_e4bd0(long arg_159e6d)
 {
@@ -3381,7 +3388,7 @@ void function_e3700(long arg_159e6d)
 
 /* the airborne biped: falling damage, a random spin for one that tumbles,
    and its airborne animation */
-// score 8 (was 90): frame 0x10 agrees; cross operand loads and the first scaled-product carrier differ, one byte long.
+// score 8 (was 8): frame 0x10 agrees; cross operand loads and the first scaled-product carrier differ, one byte long.
 // Getter declaration at caller only 177; bounded-random helper 194 (range rounding differs);
 // shared cross 177; both helpers 194; unit-random/both helpers 177/177; entry axis 194;
 // role names and branch stores 190. Separate out-of-line getter declaration 90, plain confirmed.
@@ -3391,6 +3398,8 @@ void function_e3700(long arg_159e6d)
 // computed tick spin, native up copy and both [11, 122, 120]. Best plain 8.
 // Earlier named/staged normalized draws with scalar/shared updates and spin/tick lifetimes
 // 30/32/27/29/29/31/28/30. Named fractions preserve both random products; branch stores recover the tail.
+// Round 282: negative cross-factor orders in all seven row subsets 8 each; entry axis on k-order 8.
+// Existing scale/add helpers, in-place/distinct increment 56/56; with shared cross 58/53. Restored.
 // @retail 0xe40d0
 void __stdcall function_e40d0(long arg_159e6d, long *names)
 {

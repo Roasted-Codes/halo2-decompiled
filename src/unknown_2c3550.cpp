@@ -606,7 +606,7 @@ void obstacle_list_group(s_obstacle_list *obstacles, real radius);
 
 bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center, long object_index, real radius);
 
-// score 675 (was 705): the frame 0x1f88 and the length agree, but retail keeps the success result
+// score 675 (was 675): the frame 0x1f88 and the length agree, but retail keeps the success result
 // in a stack byte where ours keeps a dword, loads the source radius before the 0.2f constant, and
 // the path pointer and the obstacle, search and step homes differ.
 // Round 134: retail's result is a stack byte (ebx = pathfinding, then NONE): bool result 757; radius as
@@ -643,6 +643,9 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Round 354 recovered-frame graph: shared 3D/2D/both difference producers 711/711/711;
 // native signed-word frame alone/with 3D/with 2D/with both 709/709/709/709 (two-count gains dropped);
 // complete producer graph with Boolean success 750. Original complete body restored.
+// Earlier native retry Boolean 675 from 705. Round 282: goal insertion helper, original/short
+// forward indices and long/Boolean success [712,795,748,812]; flag-count before count
+// publication with the same storage combinations [675,754,737,777]. Original complete body restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,
