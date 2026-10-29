@@ -285,6 +285,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 30: Complete parent-handle long/dword lifetimes 220/220; transform-first arms with those
 // handles 227/227; separate outlined producer original/transform-first 472/472; outlined handle
 // long/dword pair 472/472. Original forced producer, input copies and all body code restored.
+// Round 34: Complete parent-transform value/const-value/reference/const-reference inputs
+// 329/329/220/220; those four with complete native up inputs 353/353/295/295.
+// Original producer and body restored; frame, early save and basis/position homes remain.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
@@ -945,6 +948,11 @@ void function_b75a0(long arg_0, point3f const *arg_1, vector3f const *arg_2, vec
     s_location const *arg_4, bool arg_5);
 void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // score 156 (was 156): Frame 0x124 agrees; quotient/query, sweep/impact/location homes, word loads and owner-call transport remain.
+// Round 67: query count declared after saved outputs 156; existing assignment helper after the
+// query 156 and before it 292; pre-query helper with later best fraction 283; explicit pre-query
+// stores with saved outputs before count 283; pre-query long saved words 285 and first/third/
+// second acquisition 285; query-first long saved words with first/third/second acquisition 153
+// (three-point gain restored).
 // Retail's homes (frame offsets): selected 0xc, best 0x10, second word 0x14, third 0x18, normal 0x1c,
 // first word 0x28, location 0x2c, point 0x34, sweep 0x40, count 0x4c; ours keep the count at 0x2c and
 // the sweep before the point (0x38/0x44). Round 83: sweep before the query 292 (its products now

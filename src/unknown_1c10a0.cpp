@@ -278,12 +278,15 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 // pointer local 11 (fixes the seat registers, flips the dot product's x term),
 // with the dot arguments swapped 13; forceinline seat search helper 17; tag
 // lookup written out 15; object pointer local 17; request stores reordered 15.
-// frame 0x24 and status loads agree; actor lookup order, early
-// slot retention and object/tag registers differ. Earlier forms: wide result 97;
+// frame 0x24 and status loads agree. Earlier entry forms addressed actor
+// lookup order and early slot retention. Earlier forms: wide result 97;
 // shared predicate 112/115/120; actor-offset form 112; request at entry 70.
 // Round 162: native payload 115, with found-seat result 115; whole-slot found-seat result 65;
 // unsigned-word status with payload/whole-slot 115/65; long found-seat result 114/100;
 // payload/search with direct unit observations 91. Original body and data types restored.
+// Round 223: native vector setter 87; declaration-initialized cursor 15; both 87;
+// readonly tag 15, with setter/cursor/both 87/15/87; all with request renamed 87.
+// Original vector copy, cursor lifetime and tag receiver restored.
 // Round 173: complete request-unit capture 113; shared native seat type 15; both 113;
 // chained false request flags 15, with capture/shared seat/both 112/15/112; all three
 // with readonly tag 112. Original restored; branch-byte and seat/request registers remain.

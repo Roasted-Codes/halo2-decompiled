@@ -292,6 +292,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 205: Complete actor/reference/prop getter receiver masks 1/2/3/4/5/6/7
 // 353/586/586/499/499/778/778; all with current-time observations 748. Original
 // object snapshot and complete body restored; frame and object/view homes remain.
+// Round 241: actual shared direction, category and distance fields in every nonempty
+// subset, then all fields with the existing object getter: 353 each in eight forms.
+// Original shared layout, pointer observations and complete body restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -489,6 +492,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Round 239: original shared actor/reference/prop getter force-inline declarations,
 // all seven subsets and all three with unsigned full next/current handles: 420 each.
 // Original getters, handle domains and body restored.
+// Round 384: retained actor/node/both lookups 441/442/462; unsigned full handles 420;
+// unsigned handles with retained actor/node/both 441/442/462; all on a plain linked-list for 466.
+// All lookup lifetimes, handle domains, traversal and complete original body restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {

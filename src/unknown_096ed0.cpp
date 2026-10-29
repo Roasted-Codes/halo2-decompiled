@@ -114,6 +114,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 250: two-use pending handle 199; pending array cursor 258; both 258;
 // active array cursor 207; handle/active 207; both cursors 213; handle/both 213;
 // all with cursors before chain queries 214. Original traversal restored.
+// Round 169: Recovered receiver/output graph: selector, distinct chain-index and callback-output
+// identities, all seven subsets 170; native dword selector 170. Pending selector/index
+// interference and the four-byte cursor/entry/callback home shift remain.
 // Round 173: native signed-byte/byte/short/word selector on the recovered EBP graph
 // 216/216/200/200; complete post-query selector publication at those widths
 // 278/278/266/266. Original selector, table observations and body restored; cursor/entry

@@ -219,6 +219,9 @@ void function_14bac0()
 // relocation/probes/both 233/233/230; each with native recipients 262/262/259; complete sharing
 // with earlier bounds declarations 230, with native recipients 259. All restored; frame 0x44/0x3c,
 // readiness and recipient storage remain.
+// Existing object getter with original/shared displacement 230/230; each with native recipients
+// 259/259; existing root helper with original/shared displacement 288/288, with native recipients
+// 286/286. Original ancestry, queries and iterators restored; frame/readiness sharing remains.
 // Round 171: unsigned player/unit/root datum-handle carriers in all seven subsets 230 each;
 // all three with the native result-tested recipient iterator 259. Original signed handles and
 // traversals restored; point/recipient sharing, readiness and frame 0x44/0x3c remain.
@@ -232,6 +235,9 @@ void function_14bac0()
 // Round 175: Complementary destination/alternate/both readiness 233/240/242;
 // with the native result-tested recipient iterator 254/254/259; both as byte/long
 // 242/286. Original readiness, iterators, points, counters and executable body restored.
+// Existing in-place vector sum with shared displacement/live ancestry headers/both 230 each;
+// sum alone 230; all four with the native recipient call 259 each. Original geometry,
+// both iterators and includes restored; frame 0x44/0x3c and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

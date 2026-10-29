@@ -2845,6 +2845,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Round 381: double activity accumulator 554; double helper return 398; double caller result 710;
 // accumulator/return 554, accumulator/caller 810, return/caller 710; all 810,
 // all with readonly helper receivers 810. Original real helper/caller carriers restored.
+// Round 32: native predicate-to-real producers for complete inventory/heat, progress,
+// property-bit, inventory/progress, inventory/bits, progress/bits, all families
+// 410/412/419/426/426/431/442; all with native final activity publication 441. All restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3309,6 +3312,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Round 381 initial producer orders (definition D, barrel metadata M, barrel B, holder H), preview:
 // DBMH 635; BDMH 566; DBHM 610; BHDM 613; HDMB 624; HBDM 634; DHMB 620; DHBM 633.
 // Ordinary t02 620, t03 595, t04 626, t07 630, t05 632. All original producers and body restored.
+// Round 32: shared RNG for selection/count/both 637/637/637; complete effect-count
+// capture alone/selection/count/both/const both 621 each (fast control 637). Capture
+// plain 621 at 2533/2533 bytes versus baseline 565 at 2526/2533; rejected. Original body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3606,6 +3612,10 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 216: native word object slot plus flag27, with word activity/unsigned input/both,
 // 1459/1459/1456/1470; flag10 counterparts 1459/1459/1456/1470. Complete original
 // slot, flag reads, signed input field and long activity restored; frame 0x3c/0x38 remains.
+// Round 163: independent admission/tracked-target/owner-target query output
+// scopes, seven subsets 1420 each; complete branch ownership with native event
+// role names 1420. All original output scopes and names restored; frame 0x3c
+// versus 0x38 and initial pool/offset/dual homes remain.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

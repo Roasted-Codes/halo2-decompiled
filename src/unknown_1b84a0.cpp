@@ -224,6 +224,8 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
 // ordinary result/receiver with ordinary result 325/325; search outputs first 257.
 // Typed payload/native input and preparation scope kept at 257 plain; all follow-ups restored.
+// Round 256: native geometry/bounds/marker-reference request fields, all seven subsets,
+// and complete fields with movement scope 257 each; request header and body restored.
 // Round 171: native search request at current/entry/guard/array declaration boundaries 257 each;
 // complete zero aggregates at those boundaries 312/314/312/312. Original request, initialization
 // and executable source restored; aligned frame and actor/slot/scratch homes remain.

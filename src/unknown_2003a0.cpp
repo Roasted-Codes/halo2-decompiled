@@ -2605,6 +2605,9 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // 52 (kept); parameters read directly 52 (kept); the trigger flag as `(... & 1) != 0` 50 (kept); casts dropped
 // on the delay value 50; delay value declared last 50; pending word at each use 50; structured exits for the
 // three gotos 50 (kept); ticks output declared first 50; permuter 600 s, best only by a char delay value.
+// Round 71: the one real difference is that load (EBP still holds the index; 0x202e90 saves EBP);
+// the short-output casts dropped 50; the pending arms swapped 145; the result as a short 50; the
+// trigger flag as a named bool for both tests 189; the block declarations reversed 50.
 // Round 221: Complete logical index snapshot long/int/dword/const long 50 each;
 // all four with a separate optional follow-up result join 50 each. Original body restored.
 // @retail 0x202be0

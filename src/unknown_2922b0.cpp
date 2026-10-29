@@ -156,6 +156,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // 680 [439]; nested body ending `return local_0;` then `return true;` 679 [462] (retail's early-exit
 // layout and `mov al, 1`). Every stack home is then 4-12 bytes off retail's (flag 0xf, minimum 0x10,
 // hit flags 0x14, input copy 0x38 in retail's frame).
+// CRT input copy 629; CRT hit clear 735; both 735; shared zero-output setter 629, with
+// input/hit/both transfers 629/735/735; complete entry transfers with early minimum 739. Frame
+// agrees; direct memory success and hit/basis/rotation homes remain.
 // Round 171: blocked-ray count byte/short/long/unsigned-long at entry 707/707/706/706;
 // after input copy and output zero 715/714/713/713. Original success bit, four hit bytes,
 // accepted length initializer, every math helper and all in-place input/result copies restored.

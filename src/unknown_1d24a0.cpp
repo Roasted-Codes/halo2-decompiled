@@ -188,6 +188,7 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Round 176: Library source captures in scale/add-subtract/both/planar/scale-planar/
 // add-subtract-planar/all 1310/1130/1552/1072/1500/1341/1762; all with projected output copy 1796.
 // Original helpers, short scale loop, response sharing and coefficient pair restored.
+// Round 33: Ordinary inline scale/add/subtract subsets, then all with planar producer: 920/920/920/920/920/920/920/920. Original forced producers, body and response sharing restored.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

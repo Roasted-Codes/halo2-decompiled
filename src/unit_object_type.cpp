@@ -1486,6 +1486,9 @@ long function_ccd60(s_unit_starting_weapon const *weapon, long unit_index, bool 
 }
 
 /* whether either weapon the unit holds is in state 1 or 2 (+0x20c) */
+// score 39 (was 54): Retail reloads object data per weapon; ours caches it.
+// Success-only/reversed/result-first accumulators 58 each; explicit failure/success 54;
+// state at each test 54; OR accumulator 39 (kept, 161 bytes); cached unit/success 60; hand pointer walk 92.
 // @retail 0xcc0c0
 bool function_cc0c0(long unit_index)
 {
@@ -1502,7 +1505,7 @@ bool function_cc0c0(long unit_index)
 		{
 			char state = *((char *)UNIT_GET(weapon_index) + 0x20c);
 
-			result = state == 1 || state == 2;
+			result |= state == 1 || state == 2;
 		}
 	}
 	return result;
@@ -1551,6 +1554,13 @@ void function_ce470(long mode, long unit_index, long object_index)
    when the weapon has zoom levels (0x100fd0), else, unless the weapon's
    flag 0 at +0x12e forbids it, the next of the globals' count (NONE past
    the last) */
+// score 37 (was 37): Extra saved EBX/result carrier and unit/weapon/header scheduling remain.
+// Long result 38; entry short/long result 40/39; late result 45; explicit weapon arms 37;
+// byte flag 37; one result exit 44; long result plus explicit arms 38.
+// Masked unit/weapon/both lookups 37/37/37; masked unit/both with long result 38/38;
+// masked unit with late short/long result 45/44; both masked lookups plus byte flag 37;
+// explicit weapon arms with late short/long result 54/53, also 54/53 through masked unit lookup.
+// Original body restored.
 // @retail 0xc8960
 short function_c8960(long unit_index, short value)
 {
@@ -2061,43 +2071,34 @@ void function_cb430(long unit_index, s_unit_weapon_hands *hands)
 
 /* asks the unit sharing the seat group of the unit's seat to get out
    (request 0x20); returns false */
+// score 37 (was 50): Frame 0x20 agrees; seat-table address scheduling and request-byte
+// registers remain. Table/definition/element/all producers 50 each; data-before-type 50;
+// reversed data-before-type 49; table plus data-first 50; admission exits 37 (kept, 206 bytes).
 // @retail 0xd0f30
 bool __stdcall function_d0f30(long unit_index, bool a, bool b)
 {
 	s_unit *unit = UNIT_GET(unit_index);
 	long parent_index = unit->parent_index;
-
-	if (parent_index != NONE)
+	if (parent_index == NONE)
+		return false;
+	s_unit *parent = UNIT_GET(parent_index);
+	if (!((1 << parent->type) & 3))
+		return false;
+	short seat_index = unit->parent_seat_index;
+	if (seat_index == NONE)
+		return false;
+	short other_seat_index = *(short *)((byte *)&UNIT_SEATS(UNIT_DEFINITION_GET(parent))[seat_index] + 0x3e);
+	if (other_seat_index == NONE)
+		return false;
+	long occupant_index = function_c8f60(parent_index, other_seat_index);
+	if (occupant_index != NONE && occupant_index != unit_index)
 	{
-		s_unit *parent = UNIT_GET(parent_index);
-
-		if ((1 << parent->type) & 3)
-		{
-			short seat_index = unit->parent_seat_index;
-
-			if (seat_index != NONE)
-			{
-				short other_seat_index = *(short *)((byte *)&UNIT_SEATS(UNIT_DEFINITION_GET(parent))[seat_index] + 0x3e);
-
-				if (other_seat_index != NONE)
-				{
-					long occupant_index = function_c8f60(parent_index, other_seat_index);
-
-					if (occupant_index != NONE && occupant_index != unit_index)
-					{
-						s_unit_request request;
-
-						request.type = 0x20;
-						request.type17.unknown4 = a;
-						request.type17.unknown5 = b;
-						if (function_e6900(occupant_index, &request))
-						{
-							function_cc810(parent_index);
-						}
-					}
-				}
-			}
-		}
+		s_unit_request request;
+		request.type = 0x20;
+		request.type17.unknown4 = a;
+		request.type17.unknown5 = b;
+		if (function_e6900(occupant_index, &request))
+			function_cc810(parent_index);
 	}
 	return false;
 }
@@ -2487,6 +2488,9 @@ bool __stdcall function_cd6a0(long unit_index, long unknown, long weapon_index)
 /* gives the unit a starting profile (the globals' +0xfc, 0x44 bytes each):
    resets it first when asked, then its two weapons, its two reals and
    its grenades */
+// score 58 (was 58): Unit/profile/cursor carriers differ; retail takes the unit from
+// the stack into EBP and keeps the cursor in EBX. Direct-parameter countdown/index/pointer
+// walks 77/77/95; unit-first versions 64/64/95; short index 77, unit-first short index 64.
 // @retail 0xcce00
 void function_cce00(long unit_index, short starting_profile_index, bool reset, bool flag)
 {
@@ -2620,6 +2624,10 @@ void __stdcall function_c42e0(long unit_index, void const *placement)
 /* picks up a grenade: when the globals allow its type (+0x104, 0x2c bytes
    each) and the unit carries fewer than the type's maximum, counts it,
    tells the player code, and deletes it */
+// score 33 (was 33): Entry and frame agree; shared NONE carrier and final player word compare differ.
+// Entry bool result 54; long result 96; entry long result 96; byte result 90;
+// promoted player slot 33; nested object tests plus promoted slot 33; direct success 53;
+// early globals guard 95. Original body restored.
 // @retail 0xccba0
 bool __stdcall function_ccba0(long unit_index, long grenade_index)
 {
@@ -3388,6 +3396,12 @@ void function_c6990(long unit_index)
 
 /* the entry animation (of five) whose end point on the vehicle's seat is
    nearest the unit's center; the seat marker's position and that point */
+// score 49 (was 49): Frame and spatial arithmetic agree; constant, seat flag and call scheduling differ.
+// Boolean bit conversion 49; complete bool/byte/short seat-bit polarity 103/103/119;
+// entry result 44, distance 49, both 45; shared point difference 62.
+// Pointer table walk 50, plus seat polarity 103, shared difference 63, both entry constants 46.
+// Both point library copies 49, plus shared difference 62; entry result with library copies 44;
+// entry result with pointer walk 45. The 44/408-byte form fails the minimum-eight rule; restored.
 // @retail 0xc7160
 long __stdcall function_c7160(long unit_index, short seat_index, long a, long vehicle_index, long b)
 {
