@@ -168,6 +168,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Round 175: ordinary-inline cross/offset/rotation helpers, all seven subsets, 629 each;
 // all five existing helpers ordinary-inline 629. Original forced expansions restored;
 // frame agrees, early success save and hit/basis/rotation homes remain.
+// Round 392: four hit bits as byte mask at entry/active scope 766/766;
+// word/long/dword masks 762/765 each. Frame shrinks and code regresses;
+// original hit bytes, success, all helpers and in-place copies restored.
 // Round 263: normalization/settings inline/noinline declarations singly and all four pairs
 // 629/629/629/629/629/629/629/629. Original providers, helpers and in-place snapshots restored.
 // Round 250: native reference formals for cross/rotation/root producers,
