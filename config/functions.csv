@@ -14505,12 +14505,12 @@ va,size,owner,style,evidence,name,object,calls,source,status
 00371d60,306,other:library,speed,a16 pad,,,0036d450 0036d5a0 00370d50 00370e10 00371b00 00371c30,,todo
 00371ea0,385,other:library,speed,a16 pad,,,0036d450 0036d5a0 00370d50 00370e10 00370ed0 00371b00 00371c30,,todo
 00372030,110,other:library,speed,a16 pad ebp,,,,,todo
-003720a0,18,other:library,speed,a16 pad,,,,,todo
-003720c0,184,other:library,speed,a16 pad,,,,,todo
-00372180,117,other:library,speed,a16 pad,,,,,todo
-00372200,244,other:library,speed,a16 pad,,,002d9160 003720c0 00372180,,todo
+003720a0,18,other:library,speed,a16 pad,,,,src/unknown_3720a0.cpp,matched
+003720c0,184,other:library,speed,a16 pad,,,,src/unknown_3720a0.cpp,todo
+00372180,117,other:library,speed,a16 pad,,,,src/unknown_3720a0.cpp,matched
+00372200,244,other:library,speed,a16 pad,,,002d9160 003720c0 00372180,src/unknown_3720a0.cpp,matched
 00372300,137,third:havok,speed,a16 pad,,,,src/unknown_372300.cpp,matched
-00372390,284,other:library,speed,a16 pad,,,002d9160,,todo
+00372390,284,other:library,speed,a16 pad,,,002d9160,src/unknown_3720a0.cpp,matched
 003724b0,54,other:library,speed,a16 pad,,,,,todo
 003724f0,11,other:library,speed,a16 pad,,,00321aae,src/unknown_3724f0.cpp,matched
 00372500,223,other:library,speed,a16 pad,,,,src/unknown_372500.cpp,todo
