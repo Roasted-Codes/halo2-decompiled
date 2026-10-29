@@ -222,6 +222,9 @@ void function_14bac0()
 // Existing object getter with original/shared displacement 230/230; each with native recipients
 // 259/259; existing root helper with original/shared displacement 288/288, with native recipients
 // 286/286. Original ancestry, queries and iterators restored; frame/readiness sharing remains.
+// Round 171: unsigned player/unit/root datum-handle carriers in all seven subsets 230 each;
+// all three with the native result-tested recipient iterator 259. Original signed handles and
+// traversals restored; point/recipient sharing, readiness and frame 0x44/0x3c remain.
 // Round 238: full signed request/target marker/both carriers 267/240/275;
 // alternate marker 230, with request/target/both 267/242/276;
 // all three with the native recipient iterator 276. Original short carriers and traversals restored.

@@ -227,6 +227,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // bytes: it gives retail's lookup control flow (every failure through the `test record` join),
 // leaving register choice; the same with a char test and a long index at the top 753.
 // Round 235: query-table/tag-input/falloff-radius consumption scopes, all seven combinations 616 each; source-selection consumption scope 616.
+// Round 172: complete native accumulated results in scalar/merge/both/color/scalar-color/merge-color/all
+// 1015/1012/1288/1144/1416/1459/1671; all with signed-byte palette 1671.
+// Original field publication, input captures and helpers restored; palette/record and SSE carriers remain.
 // Round 166: Existing shared scaled-add for scalar/merge/color RGB updates, all seven subsets 616;
 // all three plus shared native color scaling at normalization 616. Original free helpers, source-
 // weight capture, body and includes restored. Palette/selected-record and zero/accumulator

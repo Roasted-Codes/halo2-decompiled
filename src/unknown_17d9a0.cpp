@@ -604,6 +604,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // restored.
 // Round 243: Existing tag record with native signed mode, const/mutable 572/572; actual limit
 // flags byte/word/bool 572 each; tag plus each native flag declaration 572 each. All restored.
+// Round 172: shared grouping/selected plane with short/word/long/dword outstanding total,
+// original first-use lifetime 843/843/840/840; group-entry lifetime 843/843/840/840.
+// Original separate planes and total restored; definition/count/plane homes and rotation spills remain.
 // Round 166: On the exact-frame square/cosine-pair graph, tag/array-count/plane-endpoint lexical
 // roles in all seven subsets 564 each; the uninitialized tag declaration before both scratch
 // arrays 564. Original names, declarations and whole body restored; first tag/count/plane homes

@@ -179,6 +179,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Entry predicate long/bool, bool/long, long/long, short/long carriers
 // 996/1012/953/1003; complemented step/admission/both 1013/920/1013;
 // long/short entry carriers 981. Original entry predicates and full body restored.
+// Round 172: native actual-vector reference formals in scale/add/subtract, seven nonempty
+// subsets and all with native planar inputs/output, all eight 920. Original pointer contracts,
+// helpers and body restored; entry carriers, frame 0x1f0/0x1d4 and record/vector homes remain.
 // Round 161: Native external option dword/word/byte units 1007/965/1006; read-only selected record
 // with those units 1007/965/1006; native twelve-byte descriptor 920; descriptor plus dword options
 // 1007. All declarations, flag observations and original body restored.

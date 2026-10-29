@@ -116,6 +116,7 @@ void function_53210(void);
 void function_8dd70(void);
 // score 221 (was 230): four-byte frame and entry predicate agree; helper boundaries,
 // readiness storage and global reloads differ.
+// entry predicate, helper boundaries and global reloads differ;
 // Lane 10 r11 (forms reverted: reading globals through casts of their own addresses is not kept
 // without a match): message pointer read through its address 231; noinline 0x662f0 in its header
 // 266, with 0xb2cc0 too 321 (calls pair with retail's); all seven network pointers (0x510560..
@@ -215,6 +216,10 @@ void function_8dd70(void);
 // Original-stage Boolean observer/session/both 224/225/227; Boolean link with
 // Boolean observer/session/both 222/230/227; byte link with both Boolean stages 227;
 // all Boolean with immutable link 227. Original short stage storage restored.
+// Round 173: complete link/message/both/gateway/link-gateway/message-gateway/all-three
+// initialized root lifetimes 219/230/235/228/225/235/232; all seven roots 215 (897 bytes).
+// Exact-only snapshots restored; frame/entry agree, helper calls, readiness and global
+// reloads remain. The six-count form fails the eight-count gate as well.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

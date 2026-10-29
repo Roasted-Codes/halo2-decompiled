@@ -1107,6 +1107,9 @@ struct s_game_engine_globals_connections_view
 // Round 222: Consistent horizontal/vertical/both coordinate values, short
 // 285/281/308 and long 280/281/309; readonly pairs 308/309. Every widget/query
 // control matched; original input observations and executable body restored.
+// Round 174: opposite dim state shared by foreground and glyph, bool/byte/short/long
+// 311/311/306/308; complete glyph result on those graphs 311/311/308/309. All
+// restored; frame/opening homes agree, deferred icon tail and time/connection carriers remain.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

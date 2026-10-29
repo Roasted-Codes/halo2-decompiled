@@ -117,6 +117,10 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 169: Recovered receiver/output graph: selector, distinct chain-index and callback-output
 // identities, all seven subsets 170; native dword selector 170. Pending selector/index
 // interference and the four-byte cursor/entry/callback home shift remain.
+// Round 173: native signed-byte/byte/short/word selector on the recovered EBP graph
+// 216/216/200/200; complete post-query selector publication at those widths
+// 278/278/266/266. Original selector, table observations and body restored; cursor/entry
+// homes and pending selector/chain-index residency remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

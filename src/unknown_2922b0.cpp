@@ -159,6 +159,12 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // CRT input copy 629; CRT hit clear 735; both 735; shared zero-output setter 629, with
 // input/hit/both transfers 629/735/735; complete entry transfers with early minimum 739. Frame
 // agrees; direct memory success and hit/basis/rotation homes remain.
+// Round 171: blocked-ray count byte/short/long/unsigned-long at entry 707/707/706/706;
+// after input copy and output zero 715/714/713/713. Original success bit, four hit bytes,
+// accepted length initializer, every math helper and all in-place input/result copies restored.
+// Round 175: ordinary-inline cross/offset/rotation helpers, all seven subsets, 629 each;
+// all five existing helpers ordinary-inline 629. Original forced expansions restored;
+// frame agrees, early success save and hit/basis/rotation homes remain.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

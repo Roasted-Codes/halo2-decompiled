@@ -863,6 +863,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // Round 237: shared initial view lookup 372; actor/reference/prop at uses 414/503/415;
 // actor-reference/actor-prop/reference-prop/all 573/468/570/657 (fast control 372; full 331).
 // All restored; actor ESI and saved/squad/flag homes remain.
+// Round 174 (fast control 372/1262, full 331/1251): existing saved-pointer
+// actor_snapshot/retained_actor/actor_saved/saved_owner identities, each with
+// original/actor_squad receiver identity, 372 each. All restored; full frame 0x20
+// agrees, actor ESI/EBX and saved/squad/flag homes remain.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

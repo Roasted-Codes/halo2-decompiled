@@ -272,7 +272,7 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 	return true;
 }
 
-// score 15 (was 63): the unknown22a byte is tested in CL (retail AL), the seat
+// score 15 (was 15): the unknown22a byte is tested in CL (retail AL), the seat
 // count and the seat table swap ECX and EDX, and retail loads the unit for the
 // seat request before its stores. Unit read in each arm 75; flag local 17; seat
 // pointer local 11 (fixes the seat registers, flips the dot product's x term),
@@ -287,6 +287,9 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 // Round 223: native vector setter 87; declaration-initialized cursor 15; both 87;
 // readonly tag 15, with setter/cursor/both 87/15/87; all with request renamed 87.
 // Original vector copy, cursor lifetime and tag receiver restored.
+// Round 173: complete request-unit capture 113; shared native seat type 15; both 113;
+// chained false request flags 15, with capture/shared seat/both 112/15/112; all three
+// with readonly tag 112. Original restored; branch-byte and seat/request registers remain.
 // @retail 0x1c1160
 short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 {

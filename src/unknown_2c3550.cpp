@@ -646,6 +646,9 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // Earlier native retry Boolean 675 from 705. Round 282: goal insertion helper, original/short
 // forward indices and long/Boolean success [712,795,748,812]; flag-count before count
 // publication with the same storage combinations [675,754,737,777]. Original complete body restored.
+// Round 171: actual first/retry searches produce the returned result; bool/byte/short/long
+// with long retry 773/751/753/727, with bool retry 761/752/748/722.
+// Shared slot-enabled predicate on the native forward-index frame 777. Original complete body restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,

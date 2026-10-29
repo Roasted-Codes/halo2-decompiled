@@ -1490,6 +1490,11 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 255 (fast control 234): native actual aiming/look/view state fields, their
 // three pairs/all, and complete native point pairs 234 each. Original byte-buffer
 // declaration and every original expression restored; frame remains 0x28.
+// Round 174 (fast control 234, full 232): complete mutable/readonly clock roots
+// 509/509; mutable/const native interval 543/543. Final plain activity scan,
+// long/short condition and long/word body termination 233/230/233/230; four-count
+// reduced gains fail the eight-count gate. All snapshots/scans restored; frame,
+// unit/mode homes and shared look reciprocal remain.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
