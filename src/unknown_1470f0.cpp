@@ -203,6 +203,9 @@ void *c_game_havok_memory::allocate16(long size, long memory_class)
 // Shared inclusive begin/end helper 43; begin/size helper 44; helper with the fixed
 // receiver 36; begin/size helper with early returns 44; size-first end 43. Retail's
 // jge/jne pair and EAX ends come only from a second (equality) test of each end.
+// Round 282: void-return completion on pool/fixed/physical/fallback paths
+// 36/36/45/36; pool+fixed/pool+physical/three pools/all paths 36 each.
+// Original calls restored; first upper-bound branch pair and bound-register reuse remain.
 // @retail 0x147320
 void c_game_havok_memory::deallocate16(void *address, long size, long memory_class)
 {
