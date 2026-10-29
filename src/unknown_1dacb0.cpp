@@ -1131,6 +1131,8 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // Partial traversal-zero subsets before requested keys (step/mode-entry/both/class-entry/
 // step-class/both-entry) 828/827/828/828/828/827; interleaved key/zero stores 828/828
 // (fast control 828). Small gains rejected; original initialization and body restored.
+// Round 392: Actual iterator output receivers in mode/class/type input slots, all three pairs and all,
+// then all with native iterator initialization: 982/1026/982/1023/1001/1023/1001/1024. Original parameter and output lifetimes restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1228,6 +1230,8 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // 978/828/978/828/978/828/978/1011. Complete original body and declarations restored.
 // Round 228: flat class rejection to the final return, with member/native iterator
 // and original/early iterator/output-default lifetimes 1011/1009/1016/1016/1011/1011/1016/1016. All restored.
+// Round 392: Actual iterator output receivers in mode/class/type input slots, all three pairs and all,
+// then all with native iterator initialization: 982/1026/982/1023/1001/1023/1001/1024. Original parameter and output lifetimes restored.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
