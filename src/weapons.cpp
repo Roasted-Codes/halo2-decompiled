@@ -2783,7 +2783,7 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 	return result;
 }
 
-// score 398 (was 398): Frame eight versus four; activity/dispatch and object/tag homes remain.
+// score 398 (was 398): Frame eight versus four and object/tag/activity homes remain.
 // Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
 // Frame 8 versus 4 and activity/tag homes remain. Early activity plus final
 // Frame eight versus four and object/tag/activity homes remain.
@@ -2852,6 +2852,10 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Round 404: Complete property dispatch and direct barrel-field maximum with metadata/state/scale
 // combinations 415/429/429/430/429/433/421/435. Original helper and dispatcher restored; frame eight/four
 // and tag/activity homes remain.
+// Round 406: Frame eight versus four and object/tag/activity homes remain. Native unsigned property
+// carrier with early or complete dispatch, consistently per-use tag reads and machine-width
+// selector combinations; per-use tags recover frame four but grow the body. Scores
+// 398/409/602/617/424/417/558/568. All restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3088,7 +3092,7 @@ struct s_ammo_conversion_entry
     long definition_index;
 };
 
-// score 190 (was 198): Frame 0x20 agrees; destination/tag homes and conversion staging remain.
+// score 190 (was 190): Frame 0x20 agrees; destination/tag homes and conversion staging remain.
 // Earlier: Frame 0x24 versus 0x20; destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
@@ -3177,6 +3181,10 @@ struct s_ammo_conversion_entry
 // 208/191/214/204/233/213/236/213; capacity updates both/source/conversion 190/190/191. Kept source minimum
 // branch and complementary byte result with long notification formal; full 190 at 731/731, first +0x18, all
 // matches and callee preserved. Seven-point 191 lead alone rejected.
+// Round 406: Frame 0x20 agrees; destination/tag homes and conversion staging remain. Branch-owned
+// source magazines with direct definition equality at transfer, complementary byte/bool and
+// positive bool/word acquisition, each with cached or complete per-use type observations. Scores
+// 231/231/226/235/248/248/224/242. All restored.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3556,7 +3564,7 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
         if (weapon->parent_index != NONE) weapon_index = weapon->parent_index;
     return weapon_index;
 }
-// score 1420 (was 1420): Frame 0x3c versus 0x38, pool/offset registers and dual/scalar homes remain.
+// score 1420 (was 1420): Frame 0x3c versus 0x38 and pool/dual/scalar homes remain.
 // Earlier: frame 0x3c versus 0x38; pool/offset registers and dual/scalar homes remain.
 // Long blocked fast 1518, barrel active 1513, down/up 1506, overheated 1520; depth one 1521;
 // combined blocked/down/up 1470 plain (fast 1500).
@@ -3640,6 +3648,10 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 404: Unsigned native input field with shared magazine-trigger/trigger-barrel/magazine-barrel/all
 // ordinals, long/word activity pairs 1420/1417/1420/1417/1420/1417/1420/1417. Three-point leads rejected;
 // complete original type, loops and body restored. Frame and pool/dual homes remain.
+// Round 406: Frame 0x3c versus 0x38 and pool/dual/scalar homes remain. Complete tag reads at every
+// use, crossed with barrel-phase complement lifetime, word activity and byte dual, grow to
+// 6052-6068 bytes; both native 0x20 double-bound selections give 1479 at 5748 bytes. Scores
+// 1842/1855/1865/1873/1842/1855/1865/1873/1479. All restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {
