@@ -99,6 +99,9 @@
 // Round 180: Separate second displacement, entry projection cross outputs and entry
 // uninitialized primary shape, masks 1-7, then all with entry special cross output:
 // 656/581/656/581/656/581/656/656. Original executable body restored.
+// Round 184: Native source/mode/flag snapshots, masks 1-7, then all plus low-word shape selector:
+// [704, 691, 715, 700, 721, 695, 710, 711]. Original selector observations, shape pointers, wave
+// helpers, scalar trees and sixth-component integer conversion restored.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
