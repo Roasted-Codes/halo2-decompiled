@@ -332,6 +332,8 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // reference, output-index-section with point reference and section-output-index with both
 // references: 172 each. Eight new reference contracts total; three pointer-only order observations
 // are additional. Complete original query and defined-failure helper restored.
+// Round 393: native external cluster/instance/triangle references in seven subsets
+// 172 each; all with native surface reference 172. Original receivers and defined-failure body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

@@ -1794,6 +1794,10 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 255: native short component counters base/dynamic/output 784/789/782;
 // base-dynamic/base-output/dynamic-output/all 784/797/784/804; all byte 804 (fast).
 // Only the final rescale counter is short, range 0..3; ordinary 782 at 3133/3130.
+// Round 391: Existing color-sum, special default-vector setter and weighted-vector
+// scale/add helpers in seven subsets 782/782/782/828/828/828/828;
+// all three with chained default colors 827. Frame 0x90 and displaced status/mesh homes
+// remain; original body, all loops, sample lifetimes and helper bodies restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

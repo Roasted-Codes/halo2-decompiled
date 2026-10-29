@@ -1446,6 +1446,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Native pool bases recover frame twelve at 487; the paired short graph reserves sixteen.
 // On the native pool graph, default success bool/entry-bool/byte/entry-byte
 // 474/474/514/514. Original result defaults and lifetimes restored.
+// Round 389: Plain two-held-slot traversal with long/short/word/byte indices, slot-first
+// validity joins 470/494/494/523; shared validity-first joins 470/494/494/491 (fast control
+// 450). Original paired queries and complete body restored; frame eight and state homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1735,6 +1738,8 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 168: Native unit direction/ratio/weight fields in seven subsets and all with side bytes
 // 790 each; on the newer flag/center graph, plain overlay for 882, with native default angles
 // 911, with conditional activity clear 901, with both 897. Original body and records restored.
+// Round 393: native external sample-channel references in seven subsets
+// 793/793/839/790/793/793/839; all with scratch construction at first use 841. Original body restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

@@ -1675,6 +1675,8 @@ void function_b7360(long object_index);
 // Round 175: inner selector groups DNAB/NABD/BAND/ANBD/BNAD/NBAD/ABDN/DBAN
 // 470/470/470/471/471/470/471/470; A=0..4, B=5..8, N=9/10, D=default.
 // One-count reductions rejected; original inner and outer dispatch restored.
+// Round 392: Shared angle producer/direct point publication/native word range-result stores, paired/all,
+// then all with the word destination defaulted first: 504/473/501/505/501/503/503/504. Original producer and dispatch lifetimes restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

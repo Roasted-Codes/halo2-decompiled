@@ -65,7 +65,7 @@ static inline void point_along_vector_1c19b0(point3f const *point, vector3f cons
 	result->z = vector->k * t + point->z;
 }
 
-// score 23 (was 81): frame 0xd4 and registers agree; the end point sits at 0x40 below the second
+// score 23 (was 23): frame 0xd4 and registers agree; the end point sits at 0x40 below the second
 // rounded tick count (0x4c) and the actor-position temp (0x50), where retail has 0x48 above 0x40/0x44,
 // and its stores are scheduled before the call pushes. Round 152: full 0x5c collision buffer 69;
 // point-along-vector steps in place 163, through an `ahead` point 54; single exit 23; end/ahead
@@ -83,6 +83,8 @@ static inline void point_along_vector_1c19b0(point3f const *point, vector3f cons
 // 0xc4/0xd4 and direction/counter roles remain.
 // Round 31: force-inlined point helper, delta/end and function-scope tick declarations,
 // sample_end/contact_end names, location/node and start/origin declaration orders 23 each.
+// Round 393: origin input/trace/collision library copies in seven subsets 23 each;
+// native initial origin with both output copies 215. Original producers and complete body restored.
 // @retail 0x1c19b0
 bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_type_f17a25 *path)
 {

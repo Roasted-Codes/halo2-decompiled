@@ -2259,6 +2259,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 244: Five alternate location-reset field orders 283 each; reset-word-first with either sentinel
 // chain 283/283; reset between sentinels with invalid-cluster-first merge 283. Early reset SI and
 // visibility/selection homes remain; original field publications restored.
+// Round 391: Loop-local produced object pointers in plain for initializers/steps,
+// cluster/marking/prop in seven subsets 397/389/439/401/478/458/573;
+// all three with the object query 653. All step returns tested; original body restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

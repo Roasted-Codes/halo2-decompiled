@@ -2245,10 +2245,15 @@ bool __stdcall unit_action_melee_attack(long unit_index, s_unit_request *request
 
 /* a melee attack's ticks: its damage frame, then the next attack in the
    combo (or the end) */
+// score 43 (was 87): frame 4 and entry homes agree; damage-call byte extension, narrow rounded ticks
+// and restart flag register remain. Full ticks 81; restart result first 57; both 85; separate increment
+// 87; both/increment 85; full ticks/direct finish 80; direct finish 93; combined 90.
+// Result after receiver 43; with full ticks 73; field reads at use 43; both 73.
 // @retail 0xea090
 bool __stdcall unit_action_melee_attack_update(long unit_index, long type)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
+	bool result = false;
 
 	if (actions->melee_name != NONE)
 	{
@@ -2271,12 +2276,14 @@ bool __stdcall unit_action_melee_attack_update(long unit_index, long type)
 		}
 		if (++actions->melee_counter < actions->melee_ticks && !finished)
 			return true;
-		if (function_e9a20(unit_index, 0, NONE, actions->melee_flags))
-			return true;
+		result = function_e9a20(unit_index, 0, NONE, actions->melee_flags);
 	}
-	actions->active[0] &= ~0x8000000;
-	actions->melee_name = NONE;
-	return false;
+	if (!result)
+	{
+		actions->active[0] &= ~0x8000000;
+		actions->melee_name = NONE;
+	}
+	return result;
 }
 
 // @retail 0xea1c0
@@ -2822,6 +2829,9 @@ void __stdcall function_a8b90(long unit_index);
 
 /* boards another seat of a unit's vehicle (type 31): the seat its seat
    boards */
+// score 86 (was 86): frame 0xc and saved homes agree; entry table register, seat-predicate vehicle register
+// and success-result spill remain. Result first 123; direct vehicle receiver 86; tag at each use 118;
+// seat at each use/native word 86/86; player index once 86; parent/tag names 86; combined form 123.
 // @retail 0xeb090
 bool __stdcall unit_action_vehicle_board(long unit_index, s_unit_request *request)
 {
@@ -4095,6 +4105,11 @@ void function_201520(short value, long type, long a, long b, long c);
 
 /* a surprise: waiting out a paused animation, then its time, then what
    follows it */
+// score 75 (was 87): frame 8 and output homes agree; unit/animation registers, channel tests,
+// true-exit sharing and final call inputs remain. Action receiver first/pointer names 87/87; native
+// channel flags/combined channel test/unit Boolean 87/87/87; uniform countdown 75; natural guard 87;
+// names/flags/countdown 75; chained clearing 87, with unit Boolean 87, countdown 75, both 75;
+// countdown at its original first read, alone/with clearing and Boolean 99/99.
 // @retail 0xed710
 bool __stdcall function_ed710(long unit_index, long type)
 {
@@ -4105,6 +4120,7 @@ bool __stdcall function_ed710(long unit_index, long type)
 	long action_name;
 
 	function_10f630(unit_index, &action_name, &state_name);
+	short remaining_ticks = actions->surprise_ticks;
 	if (state_name == 0x700005c)
 	{
 		if (!(*((byte *)state + 0x6c) & 1) && TEST_FIELD_BIT(state->channels[0].flag0) &&
@@ -4117,13 +4133,15 @@ bool __stdcall function_ed710(long unit_index, long type)
 	{
 		goto tick;
 	}
-	if (actions->surprise_ticks <= 0)
+	if (remaining_ticks <= 0)
 		return function_ed600(unit_index, actions);
 
 tick:
-	if (actions->surprise_ticks <= 0)
+	if (remaining_ticks <= 0)
 		return true;
-	if (--actions->surprise_ticks > 0)
+	--remaining_ticks;
+	actions->surprise_ticks = remaining_ticks;
+	if (remaining_ticks > 0)
 		return true;
 	if (!((unit->flags_10a >> 2) & 1))
 		function_201520(actions->surprise_value, actions->surprise_type, 1, 0, 1);
