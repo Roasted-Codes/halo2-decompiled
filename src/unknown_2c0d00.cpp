@@ -235,6 +235,9 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // 897f/924 plain; only marker counts long 914f (control 916f). Original bounded traversals restored.
 // Direction dot operand order 916f; single expression 928f; both 928f;
 // range read order 916f; alignment test order 916f; predicate declarations 916f.
+// Round 385: Word obstacle mask with native sphere/motion combinations, reduced
+// 916/894/914/897/914/897/897/897; word+byte sphere 917 plain, plus byte motion 919,
+// plus separate location/raised workspaces 898. Original masks and query storage restored.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -927,6 +930,8 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // the same four with native byte side 385/398/397/401. Original Boolean results
 // and side parameter restored; frame 0x28 and zero/radius schedule remain.
 // Round 379: End/start/both endpoint addresses at use 385/462/451; traversal-lifetime edge alone/with end/start/both 385/385/462/451; complete receiver graph with node fields 421. Original body and helpers restored.
+// Round 385: Uniform edge/surface/vertex table roots, singly and in pairs/all,
+// 418/410/432/407/403/412/409; all roots per iteration 463. Original observations restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1114,6 +1119,13 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Round 251: complete side-direction first/second-input staging 411/409;
 // entry-direction first/second-input staging 410/410; side/entry first-first,
 // first-second, second-first, second-second 472/472/457/471. Original outputs and body restored.
+// Round 384: scale helper output-pointer result with original/result-first/guard normalizer
+// 172/172/172; ordinary scale with result-first/guard normalizer 172/172;
+// complete native scale results with original/result-first/guard normalizer 460/460/460.
+// All helper result contracts and original complete normalizer restored.
+// Round 220: Normalizer complete input via native/readonly/component/library copy
+// 518/518/172/518; each with zero-length guard return 518/518/172/518.
+// Original normalizer and complete body restored; true-return host and y forwarding remain.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1316,6 +1328,8 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // 496. Original data producer, both inherited local qualifiers, arm order and endpoint
 // construction restored. Frame 0x11c versus 0x10c, persistent zero and metadata/radius homes
 // remain.
+// Round 385: Natural tangent-search attempt result, short/word/long/dword
+// at search eligibility 445/445/447/447, at iteration entry 445/445/447/447. Original jump restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

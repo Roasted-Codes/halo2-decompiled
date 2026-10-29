@@ -1564,8 +1564,13 @@ struct s_camera_clip_reference_16ebf0
 // Typed state/saved-state/both field receivers 209/209/209; each with native
 // directions 221/221/221; both with native position 232, with complete native
 // direction/position copies 204 (five-point gain dropped). Original types and body restored.
+// Round 383: complete retained/adjusted/both interpolation contributions 209 each;
+// complete conditional plane products alone/with either/both interpolation producers 209 each;
+// all products with word truth 208 (one-point gain dropped). Original products and body restored.
 // Round 170: Plain two-attempt validation loop, byte/short/long/dword ordinal, then native input copies
 // on the same loop graph 657/658/656/656/695/706/704/704. Original validation, copies and qualifier restored.
+// Round 34: Complete wide-truth producer, bool/byte/short/long 218/218/208/208; with
+// native forward/up inputs 210/210/214/213. Original narrow truth, copies and body restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

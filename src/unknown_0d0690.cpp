@@ -1261,6 +1261,12 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // 531/561/559/559; entry declarations 531/561/559/559. Original bool result and every
 // vector/color/rotation operation restored; frame 0x2c versus 0x28 and block/query/result homes
 // remain. Both caller levels preserve their original measurements.
+// Round 384: channel-local sample/lower/upper/sample-lower/sample-upper/lower-upper/all
+// clamp captures 591/582/569/581/566/562/569; plain clamp branch stores 572.
+// All eight lose the matched caller; original complete clamp and target body restored.
+// Round 220: Indexed entry-base snapshot 563; repeated flag snapshot 530; both 563;
+// default-first with base/flags/both 562/531/562; live count with base/base-flags 564/563.
+// Base snapshots recover frame 0x28 but regress; original scan and complete body restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1380,6 +1386,8 @@ real function_30bf0(vector3f *vector);
 // rejected). Original numeric returns/input copy 469/467; entry/root default 489/471; captured
 // length/default plus capture 439/476; coordinated block-query order/order plus capture 455/439.
 // All original helper contracts and bodies restored.
+// Round 385: Plain negate/rotate/normalize component loops and pairs/all,
+// long ordinals 422/486/426/505/404/503/485; all with short ordinals 509. Original helpers restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

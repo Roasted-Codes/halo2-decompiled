@@ -1098,9 +1098,18 @@ struct s_game_engine_globals_connections_view
 // time terminator before name parsing, all seven subsets 175/232/228/231/262/173/176;
 // complete form with direct connection input 176. Calibrated widget/query roots;
 // original private initialization phases, all copies and executable body restored.
+// Round 383: complete native background/foreground/both/foreground-first aggregate producers
+// 170/170/170/308; paired color role identities on those graphs 170/170/170/308.
+// Original producers, dim arithmetic, all copies and complete body restored.
 // Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
 // with each field combination, then all with immutable widths: eight calibrated scores 170.
 // Original field domains and declaration lifetimes restored.
+// Round 222: Consistent horizontal/vertical/both coordinate values, short
+// 285/281/308 and long 280/281/309; readonly pairs 308/309. Every widget/query
+// control matched; original input observations and executable body restored.
+// Round 174: opposite dim state shared by foreground and glyph, bool/byte/short/long
+// 311/311/306/308; complete glyph result on those graphs 311/311/308/309. All
+// restored; frame/opening homes agree, deferred icon tail and time/connection carriers remain.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1380,6 +1389,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 218: Completed collector counts cached, player/team/both long 795/782/832;
 // native short 795/789/813; mixed short-long/long-short 832/813. All restored.
 // Frame/viewer/coordinate homes remain; promoted player-only count recovers frame 0x79c but regresses.
+// Repeated viewer field as short/long/reference 801/788/773; retained options receiver 793; viewer
+// short/long/reference with options 825/789/803; viewer short and retained time mode 815.
+// Frame/viewer/coordinate homes remain.
 // Round 220: Complete header/team-localization/player-appearance lexical scopes, all seven
 // subsets and all with read-only viewer/score receivers, 756 each. Original body restored.
 // DH round 215: Row-geometry/team-RGB/player-RGB home identities, all seven subsets,
@@ -1387,6 +1399,9 @@ PRIVATE inline long score_string_list_1608e0()
 // unchanged; every original operation and body restored.
 // Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
 // output as well: 756 each; original declaration lifetimes restored.
+// Round 169: Native score-table/team-element receivers, mutable/readonly combinations 772;
+// immutable native score-table selection 799. One duplicate readonly source excluded.
+// Original byte observations restored; frame/viewer/coordinate homes remain.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

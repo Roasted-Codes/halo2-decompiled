@@ -1112,6 +1112,9 @@ struct s_1c4040
 // Round 279: selected index separate through both scans; island cursor/entity ordinals/entry initialization
 // combinations 35/36/35/36/35/36/35/36, all at 537 bytes. Original body restored;
 // active DL versus AL and its array/count allocation remain.
+// Round 163: coordinated cdecl/stdcall with bool, byte, signed-char active and
+// unsigned-long attempt transport 187/193 in every pair. All original declarations
+// and bodies restored; frame 0x14 agrees, but active remains DL rather than AL.
 // @retail 0x1c4040
 bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_unknown, long excluded_component_index)
 {

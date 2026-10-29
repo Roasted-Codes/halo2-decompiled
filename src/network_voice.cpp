@@ -1243,7 +1243,7 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 	return result;
 }
 
-// score 255 (was 281): scratch 8 versus retail 4; grouped inner traversal remains rolled, 186/347 bytes.
+// score 255 (was 255): scratch 8 versus retail 4; grouped inner traversal remains rolled, 186/347 bytes.
 // Earlier: sixteen-step rolled loop versus four-by-four unrolling;
 // expanded loop changes the entry convention and loses the matched caller.
 // Direct getter comparison 281; split header/payload adds 281; arithmetic width 329;
@@ -1288,6 +1288,14 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // while/for, do/for and descending-for/for 111 each; actual outer array ends/for 122 each.
 // Post-tested inner with outer array ends 258 each, descending or post-tested outer 255 each.
 // All pre-tested-inner forms lose exact caller 0x54990; post-tested-inner forms preserve it.
+// Round 381: Grouped outer/inner short-long, byte-long, long-short, long-byte, short-short and byte-
+// byte induction 255 each; actual group/step indexed elements with long/short domains 255 each.
+// Original grouped traversal restored; scratch and expansion remain.
+// Round 244: Shared membership guarded/success/failure/conditional results with post/pre-tested inner
+// traversal 255/111, 265/111, 265/111, 292/94; positive return arms/two-arm result 111/111; direct/named
+// conjunction, nested success and two failure exits 111 each; forced conditional 94, ordinary conditional
+// 285. Every form loses 0x56160; 94 preserves 0x54990 but loses 0x56380. Original helper and grouped body
+// restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -2999,6 +3007,12 @@ struct s_voice_route_choice
 // Round 381: headset accumulation after routing 423; settings publication after decisions 435;
 // both 494; with the actual choice receiver 423/435/494; both with conditional radio 416,
 // with the receiver 416. All restored; original byte accumulation and input reads retained.
+// Round 169: Actual mask-array entry/loop/reference and per-element receivers
+// 363/363/363/399; each with conditional radio 411/411/411/411. Original routing restored;
+// entry saves and unrolled cursor bias remain.
+// Round 220: Selected route pointer on byte-bitwise radio graph: original/choice receiver/
+// three pairs/descriptor/both/receiver-three/receiver-descriptor/all
+// 533/533/541/536/543/541/536/543. Original index, observations and workspaces restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)
