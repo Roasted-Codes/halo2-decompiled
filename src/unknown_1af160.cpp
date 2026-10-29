@@ -26,6 +26,11 @@ void function_265c30(long arg_0, long arg_1, bool arg_2);
 // below local_4 and local_2 below local_14). With it: local_16 before local_17 46; local_13
 // declared at the top 44; the product passed straight to the conversion 44; names swapped 44
 // (names do not order this frame); a separate local for 0x1af530's unused output 44 (67 without).
+// the 0x163c frame agrees, but scalar stack homes and the conversion
+// helper boundary differ from retail.
+// Round 197 fast trials (unchanged reduced preview 207; full 36): Native reference member
+// comparisons, short-circuit/bitwise tests x aggregate/member copy x original/forced-inline
+// conversion 279, 275, 348, 350, 346, 353, 402, 405.
 // @retail 0x1af160
 bool function_1af160(long arg_0, s_1af160 *arg_1)
 {

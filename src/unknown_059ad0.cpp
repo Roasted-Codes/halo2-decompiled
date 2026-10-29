@@ -3547,11 +3547,15 @@ void function_61050(c_class_58d20 *session, long channel_index,
 
 long network_observer_attach_channel(s_network_observer *observer, long owner_index, const XNADDR *address);
 
-// score 119 (was 119): the channel call's arguments are set up in the other
+// score 119 (was 119): frame 8 agrees; attach scratch rotation and separate reject tails remain (fast control 131, full 119).
+// Earlier: the channel call's arguments are set up in the other
 // registers, the failure reason is written before the return value is cleared
 // instead of after, the member's flag byte is read through a computed address
 // instead of an indexed load, and the reservation loop's arguments are pushed
 // in the other order
+// Round 403: copy scope 131; const copy scope 131; scoped input output 131; scoped input state 131;
+// const input copy 131; reservation output lifetime 131; output first 131; scoped result lifetime
+// 136. Opening body restored.
 // @retail 0x5c720
 bool __stdcall function_5c720(c_class_58d20 *session, const s_session_member_identity *identity,
 	long player_count, const dword *identities, const long *values, bool reserve,
@@ -3641,7 +3645,8 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 
 /* retail calls 0x5f6a0 and 0x58d20 here instead of inlining them */
 #pragma inline_depth(0)
-// score 101 (was 101): frame 0x3c agrees; retail loads session+0x10 and spills it, and splits the
+// score 101 (was 101): frame 0x3c agrees; held timeout owner spill and message/reply allocation still differ.
+// Earlier: frame 0x3c agrees; retail loads session+0x10 and spills it, and splits the
 // member-state lea, before the timeout call (BLOCKED-BY 0x769a0, held file; same spill in 0x5e7f0),
 // which shifts everything after it; announcement id/member scheduling also differs.
 // Round 55 (on top of each other): constant true/false returns 115 (retail's two exits); guarded
@@ -3672,6 +3677,9 @@ bool network_observer_channel_timed_out(s_network_observer *observer, long chann
 // native announcement with direct reply fields 129 fast;
 // native flag array with direct reply fields 132 fast;
 // native announcement and long peer result 128 fast;
+// Round 403: native protocol 101; native id fields 101; native identity 101; native zero 101; native
+// reply lifetime 101; native reply order 94; native host default 124; native chained flags 101.
+// Opening body restored.
 // @retail 0x5e3f0
 bool __stdcall function_05e3f0(c_class_58d20 *session, const s_type_99af70 *address)
 {
@@ -3741,6 +3749,10 @@ bool function_07ab10(long key_index, s_type_99af70 *address, long local, word po
 // only the host register left (retail esi copied to ebx for the address call, session
 // reloaded; ours keeps host in ebx across it); inline address callee 138; inline key
 // setter 138; session parameter re-read at the address call 137 (host still ebx).
+// Separate resolver/key/both noinline declarations 136/136/136; each with
+// the shared clock forceinline declaration 145/145/145. Native full-record
+// copies with resolver alone/all boundaries 136/145. Host/session staging,
+// cleanup placement and clock expansion remain; all declarations and bodies restored.
 // @retail 0x59e50
 bool __stdcall function_59e50(c_class_58d20 *session, long mode, long local,
  const XNKID *kid, const XNKEY *key, const s_session_member_identity *host,
@@ -4351,7 +4363,8 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 305 (was 305): frame 0xd8 agrees; result/identity/selection byte homes and
+// score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
+// frame 0xd8 and length agree; result/identity/selection byte homes and
 // acknowledgement placement differ.
 // Earlier 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
 // instead of going through the shared exit, so each one gets its own epilogue and the extent matches
@@ -4372,26 +4385,22 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Earlier 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
 // separate arm instead of a merged join, and the identity pointer is taken before the member-state
 // pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
-// score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
+// Byte homes differ (retail: better +9,
 // identity/same +0xa, result +0xb; ours: identity/same +9, result +0xa, better +0xb), retail reads
 // `result` back from its home at every return (ours folds the two reason-2 returns to `xor al, al`
 // and keeps them as two blocks, where retail has one), and the acknowledgement block is laid out
 // after the first identity test in ours, last in retail.
-// Round 87: one `state <= 2 || state > 8` reason-2 test 368 (the block moves to the end, 1248 bytes),
-// reversed `state > 8 || state <= 2` 370; renamed result/better/identity flag 305 each (names do not
-// move these slots); acknowledgement block after `done:` 305; same declared before better 305;
-// volatile result (diagnostic only, reverted) 317 at 1278 bytes.
-// Earlier: the identity comparison is a predicate and the two timeout reasons are separate arms.
-// Earlier 384: Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Earlier 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
-// separate arms; the extent is 1265/1264 bytes. Acceptance/identity homes and acknowledgement
-// placement remain.
-// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
-// Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
-// Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
-// Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
+// Kept along the way (356 -> 305): the valid-state range as an else-if chain, the identity pointer taken
+// before the member-state pointer, the peer-map update with the remote member first (the callee is
+// symmetric in its two members), the acceptance test as the no-sender case followed by the acknowledgement
+// (which then stays at the end), the channel-state test on the identity comparison in place, and the
+// acknowledgement, invalid-state and missing-sender exits returning the result directly (own epilogues,
+// extent 1264).
+// Tried: Round 87: one `state <= 2 || state > 8` reason-2 test 368 (the block moves to the end, 1248
+// bytes), reversed `state > 8 || state <= 2` 370; renamed result/better/identity flag 305 each (names do
+// not move these slots); acknowledgement block after `done:` 305; same declared before better 305;
+// volatile result (diagnostic only, reverted) 317 at 1278 bytes. Earlier: the identity comparison as a
+// predicate with the two timeout reasons as separate arms 358 (1265 bytes).
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
@@ -4436,9 +4445,16 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 214: Native-equality/distinct-exit graph: acceptance, selection, both, identity, identity/acceptance,
 // identity/selection and all Boolean home names 305 each; all names with entry selection constants 372.
 // All executable forms restored; result/identity/selection homes and acknowledgement placement remain.
+// Round 89: every exit through `done:` 318 (1278 bytes; every return then reads `result` from its home
+// as in retail, but the state <= 2 exit keeps its own block); only the three state-test exits through
+// `done:` 308; all exits through `done:` with one `state <= 2 || state > 8` test 357 (1264 bytes, the
+// reason-2 block placed last); better/same declared at entry 367, with every exit through `done:` 381.
 // Round 72: sender test inverted ahead of reason 5 317; acknowledgement after the shared exit 305
 // (same code); its result set before the state-7 test 305; preference/equal flags swapped 305;
 // both declared after the member lookup 314. Retail reloads the result byte on every exit.
+// On native-equality/distinct-policy exits: byte/char acceptance, with original or paired-byte
+// selection, 406/406/406/406; word/short acceptance with either selection domain 410 each.
+// All larger than retail; original truth carriers and body restored.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)
@@ -4655,13 +4671,17 @@ bool __stdcall function_05d9e0(c_class_58d20 *session, const void *message_)
 
 void __stdcall function_60400(c_class_58d20 *session, const byte *current, const byte *previous, byte *update);
 
-// score 122 (was 122): missing owner spill leaves frame 0x9148 versus 0x914c (BLOCKED-BY 0x76930:
+// score 122 (was 122): frame 0x9148 versus retail 0x914c and mask homes remain; held mark-message owner spill is missing.
+// Earlier: missing owner spill leaves frame 0x9148 versus 0x914c (BLOCKED-BY 0x76930:
 // retail passes the owner to the mark-message call as an unused argument; its file is held);
 // mask/counter role names 122, first-loop cursor 122, eligibility guard 122,
 // member bit live across readiness 159, named readiness result 122.
 // Round 50: early continues for the eligibility tests 122; sequence tests swapped 121;
 // channel/observer/sequence read before the tests 136; ready test negated with the mark
 // call in the else arm 119; empty arm for the state-8 test 122.
+// Round 403: live sequence 138; live channel 137; readonly state 122; default buffer 135; default
+// live sequence 138; default live channel 150; readonly live sequence 138; readonly live channel 137.
+// Opening body restored.
 // @retail 0x62640
 void function_62640(c_class_58d20 *session)
 {
@@ -4712,6 +4732,9 @@ void function_62640(c_class_58d20 *session)
 // the other stack slots, the frame is four bytes shorter, the bit is shifted
 // in the other register and merged in a register instead of in memory, and the
 // second loop walks the member states from the flag byte
+// Read-only first-loop member / unsigned sequence / immutable observer binding,
+// all seven subsets 98; signed-int cursors in both ordinary loops 98. Original
+// metadata domains and body restored; owner spill, mask homes and send base remain.
 // @retail 0x627e0
 void function_627e0(c_class_58d20 *session)
 {

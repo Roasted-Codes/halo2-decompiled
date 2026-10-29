@@ -474,7 +474,7 @@ void function_a8040(long index, long value, point3f const *position)
 }
 
 // @retail 0xa88a0
-void function_a88a0(long index, long first_definition, long second_definition, short count)
+void function_a88a0(long index, long first_definition, long second_definition, long count)
 {
     if (index != NONE && first_definition != NONE && second_definition != NONE)
     {

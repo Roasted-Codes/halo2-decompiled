@@ -204,12 +204,15 @@ short __stdcall function_1c04f0(long actor_index, s_slot *slot, bool active)
 // material initialized at declaration 138, aggregate target/early material 138; partial unit copy
 // 104 and with aggregate target or CRT point copy 104 (restored); CRT point copy/aggregate target
 // alone 140/140; uniform unit copy at entry 234, after position 161, with early material/slot data
-// 161/161. The three-point frame correction is kept.
+// 161/161. The three-point frame correction was restored.
 // Round 108: collision NONE store before the vector math 141 (138 with the 0x5c output: gives
 // retail's store order); with the 0x5c output, stamp through the existing 0x146650 getter 138,
 // stamp stores swapped 141, slot pointer declared after the lookups 138, `== false` test 138,
 // height declared at its definition 138. Deleting the whole stamp block (diagnostic) leaves 10
 // aligned differences: everything after it then takes retail's registers.
+// Full output with stamp byte/native payload, stamp signed byte, near byte, near signed byte,
+// both bytes and the three mixed/signed combinations: eight forms 140 at 955 bytes.
+// Native status declarations do not fix the post-stamp register rotation; all types/body restored.
 // @retail 0x1c0670
 bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 {

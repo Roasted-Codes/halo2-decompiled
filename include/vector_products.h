@@ -13,6 +13,19 @@ static inline void cross3f(vector3f const *a, vector3f const *b, vector3f *resul
 	result->k = a->i * b->j - a->j * b->i;
 }
 
+/* the cross product a x b, every component computed before the stores, so
+   result may be either input */
+static inline void cross3f_staged(vector3f const *a, vector3f const *b, vector3f *result)
+{
+	real k = a->i * b->j - a->j * b->i;
+	real j = a->k * b->i - a->i * b->k;
+	real i = a->j * b->k - a->k * b->j;
+
+	result->i = i;
+	result->j = j;
+	result->k = k;
+}
+
 /* input scaled by a double factor, each component rounded back to real;
    input and output may be the same vector */
 static inline vector3f *scale_vector_by_double(vector3f const *input, double scale, vector3f *output)

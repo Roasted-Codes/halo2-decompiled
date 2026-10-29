@@ -366,6 +366,9 @@ static __forceinline long real_to_long(real value);
 // Nested prop/clock/tick names singly, in all pairs and together 49 each; early uninitialized tick declaration 49.
 // Actor getter boundary 49; getter observations at timer/prop/both 117/115/140;
 // unit/timer-unit/prop-unit/all phases 120/117/117/132; all computed receiver forms rejected.
+// Round 404: Native slot data block, then countdown/mode/elapsed combinations and entry cast order, all
+// eight 49 at 443/443. Data block canonicalizes unchanged; complete original body and type restored.
+// Actor/index and final-call allocation remain.
 // @retail 0x1afb30
 void __stdcall function_1afb30(long actor_index, s_slot *slot)
 {

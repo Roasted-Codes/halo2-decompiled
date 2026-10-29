@@ -216,17 +216,18 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 	return *(byte const *const *)(block + 4) + index * size;
 }
 
-// score 149 (was 149): ECX table hoist versus saved EDI and lookup-register ownership still differ.
+// score 136 (was 136): frame 0x5c agrees; saved EDI table ownership, fused lookups and scratch allocation remain.
+// Earlier: ECX table hoist versus saved EDI and lookup-register ownership still differ.
 // Unsigned root/leaf handles 149/149; signed masked indices 149; const input 149;
 // cache-tail memset 150; callback seed initializer 160; mapping element 149;
 // native block-helper return type 149. Early mask read and matched wrapper retained.
-// score 149 (was 149): ECX table hoist, lookup roles and word-load materialization remain.
+// Earlier: ECX table hoist, lookup roles and word-load materialization remain.
 // Native root entry value/binding 194/149; native input field 149, plus entry value 194;
 // unmasked first/second/both words and native-input combination 149/149/149/149.
 // table stays in ECX; saved-register and lookup order still differ.
 // Cache initialization in success/entry 150/164; early callback input 162; both lifetimes 162;
 // cached marker count, geometry result and missing-mask result 149; delayed cache/count 150.
-// score 140 (was 149): table ownership and lookup schedule still differ.
+// Earlier: table ownership and lookup schedule still differ.
 // stride-first helper 149f; ordinal-first helper 149f.
 // element-address helper 149f; stride template 150f.
 // byte helper stride 149f; root handle at use 140f.
@@ -235,29 +236,32 @@ static __forceinline void const *block_element_224db0(byte const *block, long in
 // tag table stays in ECX; saved-register and lookup order still differ.
 // Existing input/render fields and both 149; ordinary block inline 149; group snapshot 163;
 // shared pointer zeros 148 (dropped); callback search field 150; validation failure return 149.
-// score 140 (was 140): table still enters ECX before the frame rather than saved EDI.
+// Earlier: table still enters ECX before the frame rather than saved EDI.
 // Existing element helper out of line 189; type query, geometry test, value callback,
 // value update and context reset noinline declarations 140 each; unsigned extent 140;
 // native int ordinal 140. All temporary helper contracts and declarations restored.
-// score 140 (was 140): retained table register and unfused lookups still differ.
+// Earlier: retained table register and unfused lookups still differ.
 // Typed count/address helper pointer/reference, unsigned ordinal/extent, byte result,
 // ordinary inline and two typed formal orders all 140; original helper restored.
-// score 136 (was 140): saved table register and unfused lookup addresses still differ;
+// Earlier: saved table register and unfused lookup addresses still differ;
 // group reads at use 156; cache/mask/pointer zeros before final lookup 141/156/159;
 // callback input before lookup 141; group reads with cache/mask/pointer zeros 157/136/136.
-// score 136 (was 136): saved table ownership and unfused element addresses remain.
+// Earlier: saved table ownership and unfused element addresses remain.
 // Byte/word element-reference results 136/136; element-type pointer/reference templates 187/187;
 // each with full root snapshot 144/144/197/197. Original helper and group/mask lifetimes retained.
 // saved table ownership and native lookup addresses remain.
 // Forced stride template 167; with root/word ordinals/root and words 171/167/171;
 // with const input/direct ordinal/late mask/root and late mask 167/167/165/165.
-// score 136 (was 136): unfused element addresses, arg/temporary registers and the zero stores remain.
+// Earlier: unfused element addresses, arg/temporary registers and the zero stores remain.
 // Tag index read once (table moves to retail's EDI, first difference +0xe) 135; plus flags read at
 // the call 162; plus lookups in the record_material shape 135; plus all four zero stores after the
 // lookups 163; plus a tag entry pointer for the group tests 152; pointer and late zeros 149.
 // frame 0x5c and EAX input agree; saved EDI table ownership and unfused lookups differ.
 // Five native byte-block formal orders 136 each; accessor result lifetime 136;
 // extent-first product 136; target inline contract 136. Original helper retained.
+// Round 403: native cache 136; existing cache method 136; method root value 144; method mask at use
+// 164; method chained zeros 156; method zero boundary 156; method native context 136; method search
+// output 159. Opening body restored.
 // @retail 0x224db0
 void __stdcall function_224db0(s_interface_definition *arg_0, long arg_1, long arg_2,
 	long arg_3, long arg_4)

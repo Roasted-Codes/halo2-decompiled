@@ -775,6 +775,11 @@ PRIVATE inline real initial_dot(const vector3f *a, const vector3f *b)
 // Round 194: dot producer first/second/both value inputs 320/385/525;
 // first/second/both input references 155/155/155; value/reference and
 // reference/value inputs 320/385. Original dot interface and body restored.
+// Round 111 (fast): 25 name pairs for the sampled vector and the forward copy 155 each; the sample in
+// its own closed block 155; one shared vector for sample and forward copy 187 (retail slot and length),
+// plus `!(fabs(angle) < 0.0001f)` 178, plus an in-place rotate of it 155 at 1382 B (retail re-reads
+// each axis component and puts cosine in the angle's dead slot +0x34, sine at +0x44; ours caches the
+// axis and swaps them); cosine declared first 155; five sine/cosine name pairs 155. Original restored.
 // @retail 0x1e5bb0
 void function_1e5bb0(s_biped_physics_output *output, void *physics, void *animation_state, real speed_scale,
  long component_index, long object_index, void const *definition, long value, bool b, bool turning,

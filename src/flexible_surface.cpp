@@ -119,6 +119,9 @@ void function_117080(long);
 // Round 71: pool global read at each use 54 (retail's reload after the `lea`; aligned 16 against 18), with a
 // record local/surface_record/no slot/no slot plus surface_record 54/54/54/54; the record address stays
 // folded (`[eax + ecx + 0xc]`, retail `add eax, edx`) in every form whose store precedes the first call.
+// Round 408: existing datum/absolute inline lookups, with retained/per-use pool observations,
+// 106/106/97/100; existing datum/absolute called lookups 71/71/60/60. All validation-bearing forms
+// restored; record-base ADD, pool reload and successor-search result/count/bitmap homes remain.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -322,6 +325,9 @@ void function_117510(long index)
 // Round 264: live record/definition/both/link/record-link/definition-link/all receivers
 // 309/232/379/147/309/254/377; definition acquired before record 149. All restored;
 // frame 0x1c, entry pool/record carriers and correction/pin scheduling remain.
+// Round 196: retain only first endpoint with point/vertex/shared-difference/link-cursor forms
+// 179/179/179/173; retain only second 211/211/211/159. All restored; native entry/link
+// carriers, pin-word observations and correction scheduling remain.
 // @retail 0x117790
 void __stdcall function_117790(long index)
 {
@@ -393,6 +399,9 @@ void __stdcall function_117790(long index)
 // form: attachment fields read in full 106 (retail's walk from the vertex field and the second vertex
 // read, but the pin OR splits into load/or/store, 522 bytes), with bit_vector_set 106; definition read
 // after the origin copy 73 (aligned 48).
+// Round 276: Shared translation 72; real attachment value 100; both 97; translation with element owner 74;
+// Round 276: with attachment value 97; translation with common ordinal 74; with attachment value 100;
+// Round 276: all ownership forms 101. Original body restored; pool-base and copy reload remain.
 // @retail 0x117a80
 void function_117a80(long index)
 {
@@ -473,6 +482,9 @@ static inline dword surface_random()
 // Round 264: all six lexical orders of the three rotation objects on the shared
 // cross/RNG graph 160 each; vector declarations at entry/after angle 160/160.
 // Original names and scopes restored; frame 0x28 and time/rotation staging remain.
+// Round 401: uniform seed receiver, time receiver and both 160/160/160; projection before cross on
+// shared-random graph 174, with seed/time/both 174/174/174; both receivers and commuted time
+// factors 174. Original complete body restored; frame and rotation scheduling remain.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -532,6 +544,9 @@ void function_117dd0(long index, vector3f *wind)
 // vector3f_add_scaled(..., -dot, ...) 196 (normal.k cursor, 712 bytes), plus dot3f 195; with the projection
 // through scale_vector_by_double 150 (normal.k cursor, frame changes). Retail loads acceleration.i/j into
 // a register before adding (ours folds the memory operand).
+// Round 263: damping shared by both weights 154; force copy at its consumer 194;
+// both 184; pin-test continue 109, with damping/late force/both 154/194/184;
+// shared damping with native projected-normal scale 159. All original source restored.
 // @retail 0x118140
 void function_118140(long index)
 {
@@ -637,6 +652,10 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // Round 264: existing 4f/2f API ordinary-inline-noinline declaration pairs, all
 // eight non-original combinations 473 each. Original declarations and body restored;
 // frame 0x44/0x2c and selective outer vertex API expansion remain.
+// Round 401: paired lookup parameter orders: five leading tag/group/variant permutations 473 each;
+// trailing context/pass swap 517; context/pass then tag/group/variant 471, pass/context then
+// tag/variant/group 471. Two-point gains rejected; every definition, declaration, caller and
+// original body restored.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {

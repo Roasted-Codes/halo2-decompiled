@@ -34,6 +34,38 @@ void __stdcall swarm_delete(long arg_0);
 // reference 44; inline call-boundary declarations 44; the swarm type and getter 44, with retail's
 // store order 53, the swarm pointer first 95 (72 with retail's order); the loop counter's zero
 // before the stores 108.
+// the tag pointer is in esi where retail keeps it in edi
+// (the constant -1 is in the other one), and retail keeps the loop limit in
+// ebx with a cmov where ours puts it in a stack slot with a branch. Nine
+// source rewrites (the declaration order, the result split from the
+// allocation, the comparison against the variable, the goto, the width of the
+// limit) all scored 53 or worse.
+// the same register split. Retail store order with the
+// count read once 53; tag pointer declared before the result 44; flag byte
+// in a local 44; nested tag test 44; locals declared at the top 53.
+// retail's record stores run NONE pair, zero pair, first point,
+// field_1c, second point, flags; that order 53. The record pointer before the
+// tag-field read with the limit next gives retail's head (tag edi, NONE esi)
+// but not its limit: ternary 79; `count = 10; if (field > 0) count = field;` 56
+// (cmovg into ebp), 65 with an else tail. That form after the stores gives
+// retail's cmovg ebx but moves NONE to ebx 81.
+// Tag/sentinel register roles and spilled loop limit
+// remain. Native requested count 74; replace nonpositive bound 97; explicit
+// bound arms 44; sampled object flags 44; guarded tag-field reference 97;
+// immutable record receiver 44; native completed count 51; immutable receiver
+// and bound 44.
+// tag/sentinel roles and the spilled loop bound remain.
+// Existing point setters first/second/both 83/88/92; tag/placement references 44/44;
+// plain while 44; equality termination 45; completed-count field reference 44.
+// Earlier store-order trial: the fresh-record field stores matched retail's order, but
+// the tag pointer is still in esi where retail keeps it in edi, and retail keeps
+// the loop limit in ebx with a cmov where ours keeps it in a stack slot.
+// Native swarm receiver with requested/completed count snapshots and common-value chains: all
+// eight 44; tag/sentinel roles and EBX bound still differ.
+// Coordinated handle parameter priorities 44/45/45/44/45; placement argument priorities 44/44/44.
+// Every definition/declaration/call changed together; original complete contract restored.
+// Tag-query/placement/deletion ordinary inline declaration subsets (seven forms),
+// and all three separate noinline declarations: eight at 44. Original declarations restored.
 // @retail 0x28dab0
 long __stdcall function_28dab0(long arg_0, s_28dab2 const *arg_1)
 {

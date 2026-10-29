@@ -536,6 +536,9 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Round 259: Two independent caller-owned cue requests at entry/listener/active/branch
 // scope, each with initializer output first/last, 223 each. Original helper-owned
 // requests and complete body restored; frame, BSP/camera/query and duration homes remain.
+// DL175: Native short/word listener ordinals [346, 346]; const aggregate sentinel tags 270; short then
+// word ordinals with const/mutable tags [346, 346, 346, 346]; signed-byte listener 346. Mutable
+// aggregate alone is an excluded archived repeat. Original listener domain and bulk fill restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {
