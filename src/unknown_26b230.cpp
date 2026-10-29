@@ -548,7 +548,9 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 	return result != NULL;
 }
 
-// score 68 (was 68): with a fifth word in the clump iterator (shared with 0x26bc60 and 0x269040;
+// score 3 (was 68): initial team load width and push scheduling remain.
+// Earlier forms:
+// with a fifth word in the clump iterator (shared with 0x26bc60 and 0x269040;
 // reverted in review, two points) the frame agrees at 66; retail sign-extends the
 // first team argument (`movsx eax` after the clump address add, pushes after it) and zeroes the
 // current-clump register (edi) at the loop top for the exhausted path, where ours zeroes ecx there.
@@ -563,21 +565,25 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // initialized 68; prop type snapshot 93; prop reference 68.
 // Both-arm step result/stored-current result/native step result/activity input/member step 68 each.
 // Node query/prop query/both separate noinline declarations 68/68/68.
-// score 68 (was 68): Frame and nullable-current lifetime remain; current datum 68;
+// Frame and nullable-current lifetime remain; current datum 68;
 // success-controlled loop 68; selected datum 132; node/prop inline 68/68; forced node/prop
 // expansion 246/158; datum plus success loop 68.
-// score 68 (was 68): frame, first team extension and nullable-current EDI lifetime remain;
+// frame, first team extension and nullable-current EDI lifetime remain;
 // native clean success 102; optimistic result 113; initial success return 135; found success return 147;
 // returned current pointer 68; existing record step 122; inline record step 119; entry side scope 68.
 // frame 0x1c/0x20, first team sign extension and nullable current remain.
 // Nullable value selection 68; inactive step exit 71; null step failure exit 94; word/byte
 // success result 94/68; native step state value 123; shared step expansion 68; native selected
 // index 68.
-// score 68 (was 68): a fifth iterator word (as the clump walk of 0x1c9830 keeps) 66, stored
+// a fifth iterator word (as the clump walk of 0x1c9830 keeps) 66, stored
 // team in it 92, long team local 92, existing clump_get with long team 92, out-of-line pool step
 // 122 (270 bytes), step through the current field 92 (292 bytes). A NULL-initialised result in the
 // shared calling step moves current to edi (60, diagnostic): retail keeps the loop-top NULL live
 // through the step's not-found arm and copies the found pointer from ecx.
+// Existing complete calling walk bool/byte 3/3, long 128; complete walk calling the datum step
+// bool/byte/long 133/133/165; inlined scan bool/long 136/122. Promoted initial team 31; actual
+// pooled clump reference 3. Retained complete calling walk recovers frame 0x20, nullable current
+// in EDI and exhausted-path layout.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -587,17 +593,14 @@ long function_26b900(long prop_index, long actor_index, long clump_index)
 		s_clump *clump = (s_clump *)(g_502420->data + (clump_index & 0xffff) * sizeof(s_clump));
 		short side = (short)function_20f040(clump->team);
 		s_clump_prop *prop = (s_clump_prop *)(g_50241c->data + (prop_index & 0xffff) * sizeof(s_clump_prop));
-		s_clump_pool_iterator iterator;
-		if (g_4f55d0->active)
+		s_clump_datum_walk iterator;
+		clump_datum_walk_new(&iterator);
+		s_clump *other_clump;
+		while ((other_clump = (s_clump *)clump_datum_walk_next_calling(&iterator, g_4f55d0->active)) != NULL)
 		{
-			iterator.pool.data = g_502420;
-			iterator.pool.index = NONE;
-		}
-		while (next_clump_in_pool(&iterator))
-		{
-			if (clump_index != iterator.pool.datum_index && side == (short)function_20f040(iterator.current->team))
+			if (clump_index != iterator.clump_index && side == (short)function_20f040(other_clump->team))
 			{
-				long other_prop_index = function_26b230(iterator.pool.datum_index, prop->type);
+				long other_prop_index = function_26b230(iterator.clump_index, prop->type);
 				if (other_prop_index != NONE && function_26b8a0(other_prop_index, NONE))
 				{
 					result = true;

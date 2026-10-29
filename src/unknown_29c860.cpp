@@ -53,6 +53,8 @@ __forceinline void function_29c9ee(vector3f const *arg_0, vector3f const *arg_1,
 // second limit 77. Retail preloads one axis component across fsin and
 // reloads the rest from [eax] each use; ours keeps one more component
 // live, so the zero lands in xmm6 and cos in xmm4 (retail xmm4/xmm3).
+// Shared dot/cross with cosine/projection/turn scale phases: single 81/100/84, pairs 105/84/80,
+// all 91, native output loop 122; basic product controls 82/80/84. Zero/axis/trig homes remain.
 // @retail 0x29c860
 void function_29c860(long arg_0, long arg_1, point2f const *arg_2,
 	point2f const *arg_3, real arg_4, vector3f *arg_5)
