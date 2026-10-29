@@ -1343,9 +1343,12 @@ static inline dword looping_sound_take_permutations(s_type_5ef569 *sound, loopin
 	return function_2194c0((s_packed_value *)&g_51ebd4->sets[playback->pitch_range_base + arg_58ecd0], (s_animation_ref *)playback);
 }
 
-// score 166 (was 176): native short previous permutation removes extension traffic; tag/mask/range homes and entry scheduling remain.
+// score 166 (was 166): native short previous permutation removes extension traffic; tag/mask/range homes and entry scheduling remain.
 // Result first 176; tag per use 236; tag/range/mask names 176; outputs declared first 176;
 // counts at entry 176; reasons before span selection 176; native selected voice group 188. Short previous 166 fast/plain.
+// Round 180: Existing shared get/previous/set helper calls, seven nonempty subsets
+// 215/199/245/224/282/269/315; native short previous result in if/else arms 166. Original call
+// expansion, all values and full body restored; tag/mask/range homes and entry scheduling remain.
 // @retail 0x21c190
 bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_index, dword *seed)
 {
