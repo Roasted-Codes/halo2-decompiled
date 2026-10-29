@@ -231,7 +231,6 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 	out->unknown0d = source->unknown0d;
 	out->unknown0e = source->unknown0e;
 }
-
 // score 57 (was 61): the sphere test's normal: retail multiplies the x and z
 // differences in place (normal x/y/z in xmm1/xmm3/xmm2) and loads 1.0 in each arm;
 // ours multiplies copies of the scale and hoists 1.0 into xmm0 before the fsqrt.
@@ -242,10 +241,10 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // the first float of the pair is loaded into XMM2 here and
 // into XMM1 in retail, so the registers of the following subtractions are
 // swapped as well.
-// score 61 (was 61): separate normal workspace 397; default normal workspace 397;
+// separate normal workspace 397; default normal workspace 397;
 // displacement in output normal 181; radius-square local 61; component-square lifetimes 61;
 // immutable distance 61; sphere reference 61; point reference 61. Sphere XMM homes still differ.
-// score 57 (was 57): sphere displacement/normal homes and reciprocal-one hoisting remain.
+// sphere displacement/normal homes and reciprocal-one hoisting remain.
 // Shared scaled difference 57; original-grouping squared-distance accumulator and paired
 // difference 61/61; normal memset and accumulator/reset 176/180; plain component scale
 // loop and shared-difference loop 57/57; normal reset with scale loop 175.
@@ -253,18 +252,23 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // Shared squared length/self product 152/152; outside-sphere exit 57; root declared first 57;
 // default output before normalization 174; center/sphere value copies 397/396; center plus squared helper 397.
 
-// score 57 (was 57): displacement/normal XMM homes and early reciprocal-one load remain;
+// displacement/normal XMM homes and early reciprocal-one load remain;
 // late radius after normal/before root/after root, shared double-factor scale, in-place input,
 // late radius with scale, native factor and partial squared distance 62, 65, 65, 397, 397, 397, 397, 61.
 // sphere displacement/normal coalescing and reciprocal-one hoisting remain.
 // Containment-test return, successful plane/depth pointer returns, normal-first projection,
 // projection value, existing reverse dot in either input order and test/projection result all 57.
-// score 57 (was 57): the normal's x and z products go in place only when the sum's first reads of
+// the normal's x and z products go in place only when the sum's first reads of
 // the difference's x and z are memory reads and y's is not; a pointer local to the difference read
 // for x and z in a statement sum x, z, y, with the dot product's inputs swapped and the unit-z
 // zeros stored separately, matches. Unit-z arm first 62; double reciprocal 397; reciprocal in the
 // call 57; regrouped sums 57-61; direct statement sums in each order 61; dot swap 57; zero stores
 // 61; difference in the plane normal 177; squared-length/self-dot helpers with both fixes 152.
+// Y405: Squared-distance axial array loop, original j term then axes 2 and 0, long/short
+// ordinal with either projection input order and chained/separate zeros: all eight 397 at
+// 456/678 (sphere helper outlined). Existing helper forced inline on the same eight graphs:
+// 235/235/244/244/257/257/262/262. Original helper/query restored; displacement/normal homes
+// and reciprocal-one hoisting remain.
 // @retail 0x245ef0
 bool function_245ef0(s_shapes const *shapes, point3f const *point, s_shape_result *result)
 {
