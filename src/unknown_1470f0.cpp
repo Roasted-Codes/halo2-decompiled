@@ -206,19 +206,22 @@ void *c_game_havok_memory::allocate16(long size, long memory_class)
 // Round 282: void-return completion on pool/fixed/physical/fallback paths
 // 36/36/45/36; pool+fixed/pool+physical/three pools/all paths 36 each.
 // Original calls restored; first upper-bound branch pair and bound-register reuse remain.
+// the first range's end is now a named local tested for equality, which gives
+// retail's jge/jne pair and the shared dispatch block; the first range's start and the second and
+// third ranges' ends are still computed in edx where retail uses eax.
 // @retail 0x147320
 void c_game_havok_memory::deallocate16(void *address, long size, long memory_class)
 {
 	if (address)
 	{
-		c_havok_abstract_allocator *fixed = g_479894;
-		if (ADDRESS_IN_BLOCK(address, (byte *)g_479898 + 0x4340, (byte *)g_479898 + 0xf0340))
+		byte *pool_end = (byte *)g_479898 + 0xf0340;
+		if (((long)((byte *)g_479898 + 0x4340) <= (long)address && ((long)pool_end >= (long)address || pool_end == address)))
 		{
 			g_479898->deallocate16(address, size, memory_class);
 		}
-		else if (ADDRESS_IN_BLOCK(address, (byte *)fixed + 0x30, (byte *)fixed + 0x15030))
+		else if (ADDRESS_IN_BLOCK(address, (byte *)g_479894 + 0x30, (byte *)g_479894 + 0x15030))
 		{
-			fixed->deallocate16(address, size, memory_class);
+			g_479894->deallocate16(address, size, memory_class);
 		}
 		else if (ADDRESS_IN_BLOCK(address, g_47989c->m_buffer, (byte *)g_47989c->m_buffer + g_47989c->m_size))
 		{
