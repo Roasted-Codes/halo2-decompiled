@@ -351,6 +351,8 @@ void function_11bed0(s_location *location, point3f const *point);
 // Native iterator source/spatial receivers 93/99; location-result workspace alone,
 // with source or spatial receiver 118 each; eligibility continue with source, spatial
 // or location workspace 93/99/118. Restored.
+// Complete spatial/source/sound snapshots by assignment or memcpy 165/165/188/188/187/187; Boolean iterator
+// plus spatial/source snapshot 121/139. Restored.
 // @retail 0x21a100
 void looping_sound_update_locations(void)
 {
@@ -1199,6 +1201,9 @@ struct s_looping_detail_request
 // score 138 (was 138): return result first restores entry load allocation; source-copy scheduling and first-player expansion remain.
 // Shared offset 170f; direct source 192f; memcpy 170f; tag first 192f; mode arms/type last 168f;
 // offset publication last 167f; camera-position receiver 169f. Fast control 170, result first 154f/138 plain.
+// Round 178: native short selection/count/both and unsigned selection 146/140/147/146;
+// shared position add 138, with native count 140; preparation noinline/inline 138/138.
+// Original body and interfaces restored; source-copy scheduling and first-player expansion remain.
 // Round 396: result initialization after copy/clear/mode 154/154/176; success-default 183;
 // admission result 186; result homes prepared/request_ready/success 138 each.
 // Existing first-player query noinline 25 at 509/508, plain; rejected for three matched-caller losses.
@@ -1340,9 +1345,12 @@ static inline dword looping_sound_take_permutations(s_type_5ef569 *sound, loopin
 	return function_2194c0((s_packed_value *)&g_51ebd4->sets[playback->pitch_range_base + arg_58ecd0], (s_animation_ref *)playback);
 }
 
-// score 166 (was 176): native short previous permutation removes extension traffic; tag/mask/range homes and entry scheduling remain.
+// score 166 (was 166): native short previous permutation removes extension traffic; tag/mask/range homes and entry scheduling remain.
 // Result first 176; tag per use 236; tag/range/mask names 176; outputs declared first 176;
 // counts at entry 176; reasons before span selection 176; native selected voice group 188. Short previous 166 fast/plain.
+// Round 180: Existing shared get/previous/set helper calls, seven nonempty subsets
+// 215/199/245/224/282/269/315; native short previous result in if/else arms 166. Original call
+// expansion, all values and full body restored; tag/mask/range homes and entry scheduling remain.
 // @retail 0x21c190
 bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_index, dword *seed)
 {
@@ -1415,8 +1423,9 @@ bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_inde
 }
 
 long function_125f70(long definition_index, s_looping_detail_request *request, long *reason);
+// score 457 (was 501): frame 0x124 versus 0x128; definition, index and ring homes still differ.
 
-// score 501 (was 501): frame 0x128 now matches with the stop helper out of line;
+// Earlier: frame 0x128 matched with the stop helper out of line;
 // index homes, definition register and ring traversal still differ.
 // Separate noinline declaration 501; wide selection full 502 (reduced 315);
 // reduced control 429; indexed tracks 495; loop pool 427; ring pool 429; all pools 427;
@@ -1428,14 +1437,18 @@ long function_125f70(long definition_index, s_looping_detail_request *request, l
 // Round 185: Outer/track index, range arrays/mask and ring/seed/count role-name groups, seven
 // subsets and alternate complete lexical order: reduced 461 each. Original names, executable body,
 // existing call boundaries and all field observations restored.
+// J185: direct range bounds full 469; with indexed tracks and consistent pools full 457 kept.
+// Reduced control 429; clamp/real table/both 429/451/451; bounds with clamp 384, with real table/both 494/494;
+// native outer iterator 514. On bounds: indexed/selection/both 373/476/469; pools/indexed+pool/selection+pool/all 369/358/474/460.
+// On 457, activity Boolean/previous byte/range-word subsets 476/481/398/494/527/492/527; long previous with both 536.
+// Width and producer tails restored; original calls, selected type and arithmetic grouping retained.
 // @retail 0x21b0e0
 void function_21b0e0(bool update)
 {
-	s_record_pool *data = LOOPING_SOUNDS;
-	long index = next_sound_datum(data, NONE);
+	long index = next_sound_datum(LOOPING_SOUNDS, NONE);
 	while (index != NONE)
 	{
-		s_type_5ef569 *sound = (s_type_5ef569 *)data->data + (index & 0xffff);
+		s_type_5ef569 *sound = (s_type_5ef569 *)LOOPING_SOUNDS->data + (index & 0xffff);
 		if (update && sound->update_phase != *((byte *)g_4e6380 + 0x7f) &&
 			(!(sound->flags & 2) || sound->playing_sound_count == 0))
 		{
@@ -1444,9 +1457,9 @@ void function_21b0e0(bool update)
 		else
 		{
 			looping_sound_definition *definition = (looping_sound_definition *)g_4e3b44[sound->definition_index & 0xffff].bytes;
-			s_type_06b94f *track = (s_type_06b94f *)sound->track_storage;
-			for (long track_index = 0; track_index < definition->track_count; ++track_index, ++track)
+			for (long track_index = 0; track_index < definition->track_count; ++track_index)
 			{
+				s_type_06b94f *track = (s_type_06b94f *)sound->track_storage + track_index;
 				looping_sound_track_definition *track_definition = &definition->tracks[track_index];
 				track->completed_count = 0;
 				if (sound->state == 2)
@@ -1486,16 +1499,14 @@ void function_21b0e0(bool update)
 						dword active_mask = 0;
 						s_track_sound_iterator iterator;
 						long current;
-						s_record_pool *playing_sounds = g_4e637c;
 						track_sound_iterator_new(&iterator, track->sound_index);
 						while ((current = track_sound_iterator_next(&iterator)) != NONE)
 						{
-							s_looping_track_sound *entry = track_sound_get(playing_sounds, current);
+							s_looping_track_sound *entry = track_sound_get(g_4e637c, current);
 							if (entry->definition_index == definition_index && entry->state == 2)
 								sounds[entry->pitch_range_index] = current;
 						}
-						long pitch_range_count = playback->pitch_range_count;
-						for (long i = 0; i < pitch_range_count; ++i)
+						for (long i = 0; i < playback->pitch_range_count; ++i)
 						{
 							s_permutation_set *set = &g_51ebd4->sets[playback->pitch_range_base + i];
 							s_looping_pitch_bounds *bounds = &((s_looping_pitch_tables *)g_51ebd4)->bounds[*(short *)((byte *)set + 2)];
@@ -1505,8 +1516,7 @@ void function_21b0e0(bool update)
 							if (clamped == pitch)
 								active_mask |= 1 << i;
 						}
-						pitch_range_count = playback->pitch_range_count;
-						for (long i = 0; i < pitch_range_count; ++i)
+						for (long i = 0; i < playback->pitch_range_count; ++i)
 						{
 							dword active = active_mask & (1 << i);
 							if (!active && sounds[i] != NONE)
@@ -1573,7 +1583,6 @@ void function_21b0e0(bool update)
 		}
 		long start = index == NONE ? 0 : (index & 0xffff) + 1;
 		index = data_datum_index(LOOPING_SOUNDS, data_next_absolute_index_inlined(LOOPING_SOUNDS, start));
-		data = LOOPING_SOUNDS;
 	}
 }
 
@@ -1746,17 +1755,28 @@ void function_12a1b0(short voice_index, s_looping_track_sound *sound, s_looping_
 void function_21f8a0(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects);
 void __stdcall function_21f720(s_looping_impulse_parameters const *parameters);
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects, bool force);
+// score 414 (was 447): frame 0x4b4 versus 0x4bc; initial scalar homes and class-query expansion remain.
 
-// score 532 (was 532): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
+// Earlier: frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
+// frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
 // Full-width permutation selection keeps its values; both index widths 529 (three-point tail dropped),
 // chunk width alone 560, state width 550, frame names/property declaration 550; existing next-chunk
 // helper with short/long/wide selection 556/568/536; direct gain fields 526 (six-point tail dropped),
 // direct modifier fields 529 (three-point tail dropped), direct voice index/shared lower pitch 532.
+// Round 179: whole clear 511; two whole subobject clears 527; zero aggregate 476; branch chunk 532;
+// zero-first Doppler 526; whole clear/branch 471; wide branch 532; split clear/both results 527;
+// aggregate with chunk/Doppler/both 525/517/471; aggregate direct gain/modifier/both 510/479/510.
+// Whole clear/branch with direct gain fields 447 kept; modifier/both 468/447. On 447, zero-first
+// Doppler 471; wide chunk 443 (four-point tail dropped); direct sound index/lower pitch 447/447.
 // Round 235: last-chunk char/short/long/dword 532/531/533/533; each with one exit
 // 532/531/533/533. One-point short result restored; missing frame bytes remain.
 // Round 185: Primary-track truth byte/signed-byte/short/long 532/532/540/544; with complete native
 // modifier copy 597/597/609/611. Original Boolean predicate, modifier receiver, scalar observations,
 // helpers and complete body restored.
+// J185: native long old synchronization count 414 fast/plain kept; branch permutation/seed/both 447/447/447;
+// each with long count 414, all with short count 467. On 414, short selection/wide chunk/both 481/457/490;
+// direct controller observations alone/with selection/with chunk/with both 663/680/663/691.
+// The existing count snapshot remains before decrement; all extra producer, receiver and width forms restored.
 // @retail 0x21c400
 void function_21c400(short voice_index, real gain, s_looping_channel_spatialization const *spatialization)
 {
@@ -1771,17 +1791,12 @@ void function_21c400(short voice_index, real gain, s_looping_channel_spatializat
 	looping_sound_track_definition *track_definition = &definition->tracks[playing->loop.track_index];
 	c_class_219e90 *controller = controller_get(sound->controller_index);
 	s_looping_pitch_modifier *modifier = &((s_looping_sound_tables *)g_51ebd4)->pitch_modifiers[playback->playback_index];
-	real scale = playing->source.scale;
-	real track_gain = *(real *)&playing->track_value;
 	real pitch = ((real)modifier->upper - (real)modifier->lower) * track->gain + playing->pitch + (real)modifier->lower;
 	bool primary = track->sound_index == sound_index;
 	s_looping_channel_properties properties;
-	properties.flags = 0;
-	memset((byte *)&properties + 4, 0, 0x30 - 4);
-	properties.effects.flags = 0;
-	memset((byte *)&properties.effects + 4, 0, sizeof(properties.effects) - 4);
-	real total_gain = *(real *)&playing->source.unknown08 + (track_gain + gain);
-	properties.gain_bits = function_1251e0(playback, *(long *)&total_gain, scale);
+	memset(&properties, 0, sizeof(properties));
+	real total_gain = *(real *)&playing->source.unknown08 + (*(real *)&playing->track_value + gain);
+	properties.gain_bits = function_1251e0(playback, *(long *)&total_gain, playing->source.scale);
 	properties.effects.effect = *(short *)((byte *)track_definition + 0x3c);
 	if (properties.effects.effect)
 		properties.effects.flags |= 1;
@@ -1811,7 +1826,7 @@ void function_21c400(short voice_index, real gain, s_looping_channel_spatializat
 		sound_voice_queue_chunk(voice_index, (s_sound_permutation const *)permutation, playing->current_chunk_index);
 		if (definition->flags & 0x20)
 		{
-			char synch_count = NONE;
+			long synch_count = NONE;
 			if (controller->definition_index != NONE)
 			{
 				synch_count = controller->synch_count;
@@ -1838,9 +1853,11 @@ void function_21c400(short voice_index, real gain, s_looping_channel_spatializat
 				s_looping_playback_definition *current = (s_looping_playback_definition *)g_4e3b44[playing->definition_index & 0xffff].bytes;
 				s_permutation_set *current_range = &g_51ebd4->sets[current->pitch_range_base + playing->pitch_range_index];
 				s_looping_permutation *permutation = &((s_looping_permutation *)g_51ebd4->chances)[current_range->first_index + playing->permutation_index];
-				short next_chunk = NONE;
+				short next_chunk;
 				if (permutation && playing->current_chunk_index < permutation->chunk_count - 1)
 					next_chunk = playing->current_chunk_index + 1;
+				else
+					next_chunk = NONE;
 				bool last_chunk = next_chunk == NONE;
 				if (!(playing->loop.flags & 1) && primary && (byte)looping_sound_track_has_next_sound(track, track_definition))
 				{
@@ -1925,14 +1942,25 @@ real function_192d70(real minimum, real maximum, real distance);
 point3f *function_142700(transform4x3f const *matrix, point3f const *point, point3f *out);
 real function_30bf0(vector3f *vector);
 void function_192ce0(point3f const *direction, real *gains, bool linear);
+// score 723 (was 748): frame 0x3c agrees; definition/identifier, result and alternate homes still differ.
 
-// score 759 (was 759): frame 0x38 versus 0x3c, definition/identifier carriers, later flag and result lifetimes differ.
+// Earlier: frame 0x3c and retail length recovered by the availability guard join;
+// definition/identifier carriers and flag/result lifetimes still differ.
 // The fixed four-entry energy traversal is rolled; both gain loops rolled 795, listener loop alone 798,
 // entry-result region 788, full result/single exit 792; direct impulse fields/shared setter/field setter
 // 781/776/781; derived lookup key in either form 775, key with energy loop 770, entry with energy 772.
+// Round 178: partial definition/availability guard joins 751/748; native track/playback/
+// both cursors 799/754/779; canonical scalar names 759; readonly tag 759; definition
+// join with both cursors 781. On the availability join: creation arms 773, derived key
+// 763, playback cursor 771, creation/key 772. Availability-only join kept at plain 748;
+// the five-point playback-only gain is below the retention gate.
+// Earlier: frame 0x38 versus 0x3c, definition/identifier carriers, later flag and result lifetimes differed.
 // Round 398: full-width result/combine/created storage, seven subsets
 // 776/775/775/772/775/774/792; all three as bytes 777. Complete original result
 // producers, widths, observations, loop bodies and exits restored.
+// J185: per-track signed byte/short/long/dword 748/723/763/763; corresponding outer+track widths 748/756/773/773.
+// Signed short per-track truth kept at full 723. On it, word result/combine/created subsets 773/768/737/769/738/728/770;
+// complete word truth carriers 778. Original result/combine/created/outer widths, all producers, calls and loops restored.
 // @retail 0x21a250
 bool function_21a250(long definition_index, dword sound_flags, long identifier, long controller_definition_index,
 	s_type_99c531 *source, long state, dword flags, real fade_duration)
@@ -1941,292 +1969,293 @@ bool function_21a250(long definition_index, dword sound_flags, long identifier, 
 	if (definition_index == NONE)
 		return true;
 	bool alternate = (flags & 1) != 0;
-	if (!looping_sound_system_available())
-		return result;
-	looping_sound_definition *definition = (looping_sound_definition *)g_4e3b44[definition_index & 0xffff].bytes;
-	bool combine_sources = source->audible != 0 && (definition->flags & 0x80);
-	if (combine_sources)
-		identifier = definition_index | 0x6000;
-	long index = function_21cf80(definition_index, identifier);
-	bool created = false;
-	result = true;
-	if (index != NONE)
+	if (looping_sound_system_available())
 	{
-		if ((flags & 0x10) && state == 0)
-			state = 1;
-	}
-	else
-	{
-		if (!((1 << state) & 3))
-			return result;
-		index = function_21aeb0(definition_index, (short)sound_flags, identifier, controller_definition_index);
-		created = true;
-		if (index == NONE)
-			return false;
-	}
-	s_type_5ef569 *sound = (s_type_5ef569 *)LOOPING_SOUNDS->data + (index & 0xffff);
-	sound->sound_class = (short)sound_flags;
-	if (!TEST_FIELD_BIT(((s_looping_source_flags *)source)->flag1))
-		sound->source = *source;
-	function_21d060(definition_index, &sound->source);
-	if (combine_sources)
-	{
-		if (sound->update_phase != *((byte *)g_4e6380 + 0x7f))
-			memset(sound->listener_gains, 0, sizeof(sound->listener_gains));
-		s_looping_source_tail *tail = (s_looping_source_tail *)sound->source.unknown30;
-		real maximum = TEST_FIELD_BIT(((s_looping_source_flags *)&sound->source)->flag3) ? tail->value38 : definition->maximum_distance;
-		real distance;
-		long listener = function_127d00(&sound->source, maximum, &distance);
-		if (listener != NONE)
+		looping_sound_definition *definition = (looping_sound_definition *)g_4e3b44[definition_index & 0xffff].bytes;
+		bool combine_sources = source->audible != 0 && (definition->flags & 0x80);
+		if (combine_sources)
+			identifier = definition_index | 0x6000;
+		long index = function_21cf80(definition_index, identifier);
+		bool created = false;
+		result = true;
+		if (index != NONE)
 		{
-			real minimum = TEST_FIELD_BIT(((s_looping_source_flags *)&sound->source)->flag2) ? tail->value34 : definition->minimum_distance;
-			minimum = minimum > 0.001f ? minimum : 0.001f;
-			real gain = function_192d70(minimum, maximum, distance);
-			point3f position;
-			sound_source_get_position((s_sound_location_source const *)&sound->source, listener, &position);
-			if (sound->source.audible == 1)
-			{
-				transform4x3f const *matrix = (transform4x3f const *)((byte *)g_4e6380 + 0x90 + listener * 0x48);
-				function_142700(matrix, &position, &position);
-			}
-			if (distance > minimum)
-				function_30bf0((vector3f *)&position);
-			real gains[4];
-			function_192ce0(&position, gains, true);
-			real scale = 1.f;
-			real total = 0.f;
-			long gain_index = 0;
-			do
-			{
-				real value = gains[gain_index] * gain;
-				total += value * value;
-				++gain_index;
-			} while (gain_index < 4);
-			if (total > 1.f)
-				scale = 1.f / total;
-			for (long i = 0; i < 4; ++i)
-				sound->listener_gains[i] += gains[i] * scale * gain;
+			if ((flags & 0x10) && state == 0)
+				state = 1;
 		}
-		sound->sound_class &= ~2;
-	}
-	sound->update_phase = *((byte *)g_4e6380 + 0x7f);
-	if ((state == 2 || (sound->flags & 8)) && sound->playing_sound_count == 0)
-	{
-		function_21b070(index);
-		return result;
-	}
-	result = false;
-	for (long i = 0; i < definition->track_count; ++i)
-	{
-		looping_sound_track_definition *track_definition = &definition->tracks[i];
-		s_type_06b94f *track = (s_type_06b94f *)sound->track_storage + i;
-		dword *seed = &g_4e7408->seed;
-		if (definition->flags & 0x30)
-			seed = &track->field_8_4;
-		bool track_alternate = alternate;
-		if (track_definition->alternate_start_sound_index == NONE && track_definition->alternate_loop_sound_index == NONE &&
-			track_definition->alternate_end_sound_index == NONE && track_definition->alternate_transition_sound_index == NONE &&
-			!(track_definition->flags & 0x14))
-			track_alternate = false;
-		if (created)
+		else
 		{
-			track->gain = sound->source.scale;
-			track->completed_count = 0;
+			if (!((1 << state) & 3))
+				return result;
+			index = function_21aeb0(definition_index, (short)sound_flags, identifier, controller_definition_index);
+			created = true;
+			if (index == NONE)
+				return false;
 		}
-		if (created || track->sound_index == NONE)
+		s_type_5ef569 *sound = (s_type_5ef569 *)LOOPING_SOUNDS->data + (index & 0xffff);
+		sound->sound_class = (short)sound_flags;
+		if (!TEST_FIELD_BIT(((s_looping_source_flags *)source)->flag1))
+			sound->source = *source;
+		function_21d060(definition_index, &sound->source);
+		if (combine_sources)
 		{
-			track->sound_index = NONE;
-			track->field_c_4 = track_alternate ? 3 : 0;
-			track->next_state = track->field_c_4;
+			if (sound->update_phase != *((byte *)g_4e6380 + 0x7f))
+				memset(sound->listener_gains, 0, sizeof(sound->listener_gains));
+			s_looping_source_tail *tail = (s_looping_source_tail *)sound->source.unknown30;
+			real maximum = TEST_FIELD_BIT(((s_looping_source_flags *)&sound->source)->flag3) ? tail->value38 : definition->maximum_distance;
+			real distance;
+			long listener = function_127d00(&sound->source, maximum, &distance);
+			if (listener != NONE)
+			{
+				real minimum = TEST_FIELD_BIT(((s_looping_source_flags *)&sound->source)->flag2) ? tail->value34 : definition->minimum_distance;
+				minimum = minimum > 0.001f ? minimum : 0.001f;
+				real gain = function_192d70(minimum, maximum, distance);
+				point3f position;
+				sound_source_get_position((s_sound_location_source const *)&sound->source, listener, &position);
+				if (sound->source.audible == 1)
+				{
+					transform4x3f const *matrix = (transform4x3f const *)((byte *)g_4e6380 + 0x90 + listener * 0x48);
+					function_142700(matrix, &position, &position);
+				}
+				if (distance > minimum)
+					function_30bf0((vector3f *)&position);
+				real gains[4];
+				function_192ce0(&position, gains, true);
+				real scale = 1.f;
+				real total = 0.f;
+				long gain_index = 0;
+				do
+				{
+					real value = gains[gain_index] * gain;
+					total += value * value;
+					++gain_index;
+				} while (gain_index < 4);
+				if (total > 1.f)
+					scale = 1.f / total;
+				for (long i = 0; i < 4; ++i)
+					sound->listener_gains[i] += gains[i] * scale * gain;
+			}
+			sound->sound_class &= ~2;
 		}
-		if (state == 0 && track_definition->start_sound_index != NONE)
-		{
-			long old_end = looping_sound_find_sound(index, track_definition->end_sound_index, NONE, (short)i);
-			if (!(track_definition->flags & 1))
-				track->sound_index = function_21b940(index, track_definition->start_sound_index, NONE, (short)i, 1, seed);
-			else
-			{
-				function_21b940(index, track_definition->start_sound_index, NONE, (short)i, 0, seed);
-				if (old_end != NONE)
-				{
-					real duration = track_definition->fade_in_duration;
-					s_looping_track_sound *playing = track_sound_get(g_4e637c, old_end);
-					playing->fade_gain_bits = function_12a810(old_end);
-					playing->fade_curve = 1;
-					playing->fade_start_time = (long)(duration * 1000.f);
-					playing->fade_end_time = NONE;
-					playing->looping = true;
-				}
-				looping_sound_fade_in(track->sound_index, 1, track_definition->fade_in_duration);
-			}
-			track->field_c_4 = 0;
-			track->next_state = track->field_c_4;
-		}
-		if (state != 2 && !(sound->flags & 8))
-		{
-			long next_definition = NONE;
-			long local_2e47c8 = NONE;
-			dword impulse_states = track_definition->flags & 1;
-			bool impulse_start = TEST_FIELD_BIT((track_definition->flags >> 1) & 1);
-			bool impulse_alternate = TEST_FIELD_BIT((track_definition->flags >> 2) & 1);
-			if (impulse_start)
-				impulse_states |= 4;
-			else
-				impulse_states &= ~4;
-			if (impulse_start)
-				impulse_states |= 0x40;
-			else
-				impulse_states &= ~0x40;
-			if (impulse_alternate)
-				impulse_states |= 8;
-			else
-				impulse_states &= ~8;
-			if (impulse_alternate)
-				impulse_states |= 0x20;
-			else
-				impulse_states &= ~0x20;
-			bool current_alternate = ((1 << track->field_c_4) & 0x58) != 0;
-			if (track->field_c_4 == track->next_state ||
-				*(long *)((byte *)track_definition + g_44a188[track->next_state] + 4) == NONE || track_alternate != current_alternate)
-			{
-				long next = track_alternate ? g_44a16c[track->field_c_4] : g_44a150[track->field_c_4];
-				long previous = track->field_c_4;
-				while (next != previous)
-				{
-					long offset = g_44a188[next];
-					byte *reference = offset == NONE ? NULL : (byte *)track_definition + offset;
-					if (reference && *(long *)(reference + 4) != NONE)
-					{
-						if (!(impulse_states & (1 << next)))
-						{
-							next_definition = *(long *)(reference + 4);
-							break;
-						}
-						local_2e47c8 = *(long *)(reference + 4);
-					}
-					previous = next;
-					next = track_alternate ? g_44a16c[next] : g_44a150[next];
-				}
-				track->next_state = (char)next;
-				if (local_2e47c8 != NONE)
-					function_21b940(index, local_2e47c8, NONE, (short)i, 0, seed);
-			}
-			if (next_definition == NONE && track_alternate == (((1 << track->field_c_4) & 0x58) != 0))
-				continue;
-			bool start_with_fade = state == 0 && (track_definition->flags & 1);
-			if (track->sound_index != NONE && !start_with_fade)
-			{
-				s_looping_track_sound *playing = track_sound_get(g_4e637c, track->sound_index);
-				if (playing->definition_index == next_definition ||
-					track_alternate == (((1 << track->field_c_4) & 0x58) != 0) || !(track_definition->flags & 4))
-					continue;
-				long replacement = NONE;
-				if (next_definition != NONE)
-				{
-					replacement = function_21b910(index, next_definition, NONE, (short)i, 2, seed);
-					if (replacement == NONE)
-						continue;
-				}
-				function_126df0(replacement, track->sound_index, 1, track_definition->crossfade_duration);
-				track->sound_index = replacement;
-				track->field_c_4 = track_alternate ? 4 : 1;
-				track->next_state = track->field_c_4;
-			}
-			else if (next_definition != NONE)
-			{
-				s_looping_playback_definition *playback = (s_looping_playback_definition *)g_4e3b44[next_definition & 0xffff].bytes;
-				s_looping_sound_tables *tables = (s_looping_sound_tables *)g_51ebd4;
-				s_looping_pitch_modifier *modifier = &tables->pitch_modifiers[playback->playback_index];
-				real pitch = ((real)modifier->upper - (real)modifier->lower) * track->gain + (real)tables->classes[playback->sound_class].pitch + (real)modifier->lower;
-				short arg_58ecd0 = function_218f50(playback, NONE, pitch);
-				long replacement = looping_sound_find_sound(index, next_definition, arg_58ecd0, (short)i);
-				if (replacement == NONE)
-					replacement = function_21b940(index, next_definition, arg_58ecd0, (short)i, 2, seed);
-				if (replacement != NONE)
-				{
-					if (state != 0)
-						function_126df0(replacement, NONE, 1, 0.5f);
-					else if (track_definition->flags & 1)
-						function_126df0(replacement, NONE, 1, track_definition->fade_in_duration);
-					track->sound_index = replacement;
-					track->field_c_4 = track->next_state;
-				}
-			}
-		}
-		else if (sound->state != 2)
-		{
-			if (fade_duration != 0.f)
-			{
-				if (track->sound_index != NONE)
-					looping_sound_fade_out(fade_duration, track->sound_index);
-				continue;
-			}
-			dword current_alternate = (1 << track->field_c_4) & 0x58;
-			bool alternate_end;
-			long end_definition;
-			bool impulse_end;
-			if (current_alternate && ((track_definition->flags & 0x10) || track_definition->alternate_end_sound_index != NONE))
-			{
-				end_definition = track_definition->alternate_end_sound_index;
-				alternate_end = true;
-				impulse_end = TEST_FIELD_BIT((track_definition->flags >> 4) & 1);
-			}
-			else
-			{
-				end_definition = track_definition->end_sound_index;
-				alternate_end = false;
-				impulse_end = TEST_FIELD_BIT((track_definition->flags >> 1) & 1);
-			}
-			if (track->sound_index != NONE)
-			{
-				if (!impulse_end && end_definition == NONE && (definition->flags & 2))
-					continue;
-				if (impulse_end || end_definition == NONE)
-				{
-					real duration = current_alternate && (track_definition->flags & 0x10) ?
-						track_definition->alternate_fade_out_duration : track_definition->fade_out_duration;
-					looping_sound_fade_out(duration, track->sound_index);
-				}
-			}
-			if (end_definition != NONE)
-			{
-				if (impulse_end)
-					function_21b940(index, end_definition, NONE, (short)i, 0, seed);
-				else if (track->sound_index != NONE)
-				{
-					s_looping_track_sound *playing = track_sound_get(g_4e637c, track->sound_index);
-					if (playing->channel_index != NONE)
-					{
-						track->next_state = alternate_end ? 6 : 2;
-						playing->state = 3;
-					}
-				}
-			}
-		}
-	}
-	if (sound->playing_sound_count == 0)
-	{
-		real maximum = TEST_FIELD_BIT(((s_looping_source_flags *)&sound->source)->flag3) ?
-			((s_looping_source_tail *)sound->source.unknown30)->value38 :
-			((looping_sound_definition *)g_4e3b44[sound->definition_index & 0xffff].bytes)->maximum_distance;
-		if (function_127d00(&sound->source, maximum, NULL) == NONE)
+		sound->update_phase = *((byte *)g_4e6380 + 0x7f);
+		if ((state == 2 || (sound->flags & 8)) && sound->playing_sound_count == 0)
 		{
 			function_21b070(index);
 			return result;
 		}
+		result = false;
+		for (long i = 0; i < definition->track_count; ++i)
+		{
+			looping_sound_track_definition *track_definition = &definition->tracks[i];
+			s_type_06b94f *track = (s_type_06b94f *)sound->track_storage + i;
+			dword *seed = &g_4e7408->seed;
+			if (definition->flags & 0x30)
+				seed = &track->field_8_4;
+			short track_alternate = alternate;
+			if (track_definition->alternate_start_sound_index == NONE && track_definition->alternate_loop_sound_index == NONE &&
+				track_definition->alternate_end_sound_index == NONE && track_definition->alternate_transition_sound_index == NONE &&
+				!(track_definition->flags & 0x14))
+				track_alternate = false;
+			if (created)
+			{
+				track->gain = sound->source.scale;
+				track->completed_count = 0;
+			}
+			if (created || track->sound_index == NONE)
+			{
+				track->sound_index = NONE;
+				track->field_c_4 = track_alternate ? 3 : 0;
+				track->next_state = track->field_c_4;
+			}
+			if (state == 0 && track_definition->start_sound_index != NONE)
+			{
+				long old_end = looping_sound_find_sound(index, track_definition->end_sound_index, NONE, (short)i);
+				if (!(track_definition->flags & 1))
+					track->sound_index = function_21b940(index, track_definition->start_sound_index, NONE, (short)i, 1, seed);
+				else
+				{
+					function_21b940(index, track_definition->start_sound_index, NONE, (short)i, 0, seed);
+					if (old_end != NONE)
+					{
+						real duration = track_definition->fade_in_duration;
+						s_looping_track_sound *playing = track_sound_get(g_4e637c, old_end);
+						playing->fade_gain_bits = function_12a810(old_end);
+						playing->fade_curve = 1;
+						playing->fade_start_time = (long)(duration * 1000.f);
+						playing->fade_end_time = NONE;
+						playing->looping = true;
+					}
+					looping_sound_fade_in(track->sound_index, 1, track_definition->fade_in_duration);
+				}
+				track->field_c_4 = 0;
+				track->next_state = track->field_c_4;
+			}
+			if (state != 2 && !(sound->flags & 8))
+			{
+				long next_definition = NONE;
+				long local_2e47c8 = NONE;
+				dword impulse_states = track_definition->flags & 1;
+				bool impulse_start = TEST_FIELD_BIT((track_definition->flags >> 1) & 1);
+				bool impulse_alternate = TEST_FIELD_BIT((track_definition->flags >> 2) & 1);
+				if (impulse_start)
+					impulse_states |= 4;
+				else
+					impulse_states &= ~4;
+				if (impulse_start)
+					impulse_states |= 0x40;
+				else
+					impulse_states &= ~0x40;
+				if (impulse_alternate)
+					impulse_states |= 8;
+				else
+					impulse_states &= ~8;
+				if (impulse_alternate)
+					impulse_states |= 0x20;
+				else
+					impulse_states &= ~0x20;
+				bool current_alternate = ((1 << track->field_c_4) & 0x58) != 0;
+				if (track->field_c_4 == track->next_state ||
+					*(long *)((byte *)track_definition + g_44a188[track->next_state] + 4) == NONE || track_alternate != current_alternate)
+				{
+					long next = track_alternate ? g_44a16c[track->field_c_4] : g_44a150[track->field_c_4];
+					long previous = track->field_c_4;
+					while (next != previous)
+					{
+						long offset = g_44a188[next];
+						byte *reference = offset == NONE ? NULL : (byte *)track_definition + offset;
+						if (reference && *(long *)(reference + 4) != NONE)
+						{
+							if (!(impulse_states & (1 << next)))
+							{
+								next_definition = *(long *)(reference + 4);
+								break;
+							}
+							local_2e47c8 = *(long *)(reference + 4);
+						}
+						previous = next;
+						next = track_alternate ? g_44a16c[next] : g_44a150[next];
+					}
+					track->next_state = (char)next;
+					if (local_2e47c8 != NONE)
+						function_21b940(index, local_2e47c8, NONE, (short)i, 0, seed);
+				}
+				if (next_definition == NONE && track_alternate == (((1 << track->field_c_4) & 0x58) != 0))
+					continue;
+				bool start_with_fade = state == 0 && (track_definition->flags & 1);
+				if (track->sound_index != NONE && !start_with_fade)
+				{
+					s_looping_track_sound *playing = track_sound_get(g_4e637c, track->sound_index);
+					if (playing->definition_index == next_definition ||
+						track_alternate == (((1 << track->field_c_4) & 0x58) != 0) || !(track_definition->flags & 4))
+						continue;
+					long replacement = NONE;
+					if (next_definition != NONE)
+					{
+						replacement = function_21b910(index, next_definition, NONE, (short)i, 2, seed);
+						if (replacement == NONE)
+							continue;
+					}
+					function_126df0(replacement, track->sound_index, 1, track_definition->crossfade_duration);
+					track->sound_index = replacement;
+					track->field_c_4 = track_alternate ? 4 : 1;
+					track->next_state = track->field_c_4;
+				}
+				else if (next_definition != NONE)
+				{
+					s_looping_playback_definition *playback = (s_looping_playback_definition *)g_4e3b44[next_definition & 0xffff].bytes;
+					s_looping_sound_tables *tables = (s_looping_sound_tables *)g_51ebd4;
+					s_looping_pitch_modifier *modifier = &tables->pitch_modifiers[playback->playback_index];
+					real pitch = ((real)modifier->upper - (real)modifier->lower) * track->gain + (real)tables->classes[playback->sound_class].pitch + (real)modifier->lower;
+					short arg_58ecd0 = function_218f50(playback, NONE, pitch);
+					long replacement = looping_sound_find_sound(index, next_definition, arg_58ecd0, (short)i);
+					if (replacement == NONE)
+						replacement = function_21b940(index, next_definition, arg_58ecd0, (short)i, 2, seed);
+					if (replacement != NONE)
+					{
+						if (state != 0)
+							function_126df0(replacement, NONE, 1, 0.5f);
+						else if (track_definition->flags & 1)
+							function_126df0(replacement, NONE, 1, track_definition->fade_in_duration);
+						track->sound_index = replacement;
+						track->field_c_4 = track->next_state;
+					}
+				}
+			}
+			else if (sound->state != 2)
+			{
+				if (fade_duration != 0.f)
+				{
+					if (track->sound_index != NONE)
+						looping_sound_fade_out(fade_duration, track->sound_index);
+					continue;
+				}
+				dword current_alternate = (1 << track->field_c_4) & 0x58;
+				bool alternate_end;
+				long end_definition;
+				bool impulse_end;
+				if (current_alternate && ((track_definition->flags & 0x10) || track_definition->alternate_end_sound_index != NONE))
+				{
+					end_definition = track_definition->alternate_end_sound_index;
+					alternate_end = true;
+					impulse_end = TEST_FIELD_BIT((track_definition->flags >> 4) & 1);
+				}
+				else
+				{
+					end_definition = track_definition->end_sound_index;
+					alternate_end = false;
+					impulse_end = TEST_FIELD_BIT((track_definition->flags >> 1) & 1);
+				}
+				if (track->sound_index != NONE)
+				{
+					if (!impulse_end && end_definition == NONE && (definition->flags & 2))
+						continue;
+					if (impulse_end || end_definition == NONE)
+					{
+						real duration = current_alternate && (track_definition->flags & 0x10) ?
+							track_definition->alternate_fade_out_duration : track_definition->fade_out_duration;
+						looping_sound_fade_out(duration, track->sound_index);
+					}
+				}
+				if (end_definition != NONE)
+				{
+					if (impulse_end)
+						function_21b940(index, end_definition, NONE, (short)i, 0, seed);
+					else if (track->sound_index != NONE)
+					{
+						s_looping_track_sound *playing = track_sound_get(g_4e637c, track->sound_index);
+						if (playing->channel_index != NONE)
+						{
+							track->next_state = alternate_end ? 6 : 2;
+							playing->state = 3;
+						}
+					}
+				}
+			}
+		}
+		if (sound->playing_sound_count == 0)
+		{
+			real maximum = TEST_FIELD_BIT(((s_looping_source_flags *)&sound->source)->flag3) ?
+				((s_looping_source_tail *)sound->source.unknown30)->value38 :
+				((looping_sound_definition *)g_4e3b44[sound->definition_index & 0xffff].bytes)->maximum_distance;
+			if (function_127d00(&sound->source, maximum, NULL) == NONE)
+			{
+				function_21b070(index);
+				return result;
+			}
+		}
+		if (alternate)
+			sound->flags |= 1;
+		else
+			sound->flags &= ~1;
+		if (flags & 2)
+			sound->flags |= 2;
+		else
+			sound->flags &= ~2;
+		if (flags & 4)
+			sound->flags |= 4;
+		else
+			sound->flags &= ~4;
+		sound->state = (byte)state;
 	}
-	if (alternate)
-		sound->flags |= 1;
-	else
-		sound->flags &= ~1;
-	if (flags & 2)
-		sound->flags |= 2;
-	else
-		sound->flags &= ~2;
-	if (flags & 4)
-		sound->flags |= 4;
-	else
-		sound->flags &= ~4;
-	sound->state = (byte)state;
 	return result;
 }

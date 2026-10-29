@@ -66,6 +66,10 @@ struct s_motion_adjustment_result
 // k * inverse 73 (identical code); components read after the length 73; components read first
 // 84; sum grouped i*i + (j*j + k*k) 73; normalized assigned per component from the offset 78
 // (526 bytes, values stay in registers).
+// Round 402: shared left/up/both add-scaled 73/73/73; shared velocity add alone/with
+// left/with up/with both 68/73/73/73; all shared operations with native offset assign 73.
+// Output-add with native offset assign, branch clamp, unit difference, both 73/68/73/73.
+// All restored; reductions below eight while above thirty are not retained.
 // @retail 0x1fa810
 void __stdcall function_1fa810(long *ticks, s_motion_adjustment_result *out, s_motion_adjustment const *state)
 {

@@ -130,6 +130,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Round 280: Byte/char/word/long force inputs with signed/unsigned channel indices all 532 fast (control
 // 532, full 545); matched sibling preserved. Original signature, both forward declarations, body and
 // mixed-math helpers restored.
+// Round 396: Pitch bound-test result with long/short offset and switch/if dispatch,
+// late destinations 532/535/531/534; entry uninitialized destinations 532/535/531/534
+// (fast control 532, full 545). One-point reduction dropped; all original body/helpers restored.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

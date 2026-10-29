@@ -961,6 +961,9 @@ real function_21f650(long channel_index, long mode);
 // function-wide channel_index local 113; the last block's locals folded into one expression 42;
 // elapsed_time read into a local before the rate call 42; a stream pointer for the last state
 // test 42; the table pointer declared at the outer scope 42.
+// Round 181: per-use chunk table 42; retained chunk base 85; per-use voice array 180; native
+// loaded-field comparison 66; early queued-pointer clear 42; exact-size transfer memcpy 42;
+// queued/current permutation lifetimes 74/102. EAX global-load allocation remains.
 // @retail 0x12a450
 void sound_voice_update_chunks(short voice_index)
 {
@@ -1248,6 +1251,9 @@ long function_2197f0(real gain);
 // Round 160: Interpolation input orders a/t/b 149, b/a/t 148, b/t/a 148, t/a/b 149, t/b/a 148; immutable
 // base plus release gain 149; interpolation/addition home names 149/149. All executable lines and helper
 // contracts restored. One-point previews excluded by the minimum-gain rule.
+// Round 196: native table-array base 200; readonly table 200; short ordinal 170;
+// gain inside gate 234; readonly class/base-release/common result/unsigned gain 200/200/212/200.
+// All restored; table base changes incoming register transport without recovering the entry gain home.
 // @retail 0x127010
 long function_127010(short class_index)
 {
@@ -3363,6 +3369,8 @@ void __stdcall function_1264c0(dword arg_0);
 // next search (retail's masked-slot reuse) 9; plus a memset of the impulse ids 6 (its pointer in
 // ECX, retail EAX). Not kept without a match. Next search alone 85; deadline in the loop condition
 // 107; local-pointer, loop, chained and helper id stores 9; struct copy of the ids 114.
+// Range fill saved/direct 119/122; counted fill saved/direct 121/121; with shared invalid value
+// 104/102/102/102. All restored.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
@@ -3467,6 +3475,14 @@ struct s_128ca0
 // Round 219: readonly conditional next chunk 239; complete countdown arms 215 (plain, kept); both
 // 227; word countdown 229; conditional/word 234; complete arms/word 224; all 217, with role names
 // 217. Sub-eight gains 227/229 restored; all other forms restored.
+// Round 154 (fast): one long gain seeded from arg_1, updated in place (`*(real *)&gain = location
+// + (playback gain + gain)`, then `gain = function_1251e0(...)`) with one shared scale local 241
+// (frame 0x494, opening exact up to the pitch bounds); plus 0x126000's pitch_bounds pointer with
+// gain/pitch names 238 (first difference +0xba, aligned listing 108 against 147); gain declared
+// first 256; real gain 295; outer operands swapped, decibels_sum on the variable, in-place
+// permutation sums 238 each (identical code). Retail loads the location gain into its own register
+// before the inner sum (one instruction more); every form folds it into addss, and that one-line
+// shift dominates the positional score. Next: find that load, then the single-exit pin.
 // Round 168: Native processed real gain with original/early declaration and signed/unsigned raw bits 215 each; all four with shared scale 287. Original body restored; gain homes and clamp joins remain.
 // Round 247: sequential inner/outer/both reference-input gain sums 269/215/269; both with shared
 // scale 242, before pitch 276, before pitch with scale 256, role names 269 and entry declaration
@@ -3700,6 +3716,11 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 221: original native fallback copied from the existing immutable object by aggregate/library,
 // each with aggregate/library occlusion and field/aggregate publication: 739 each, 2085 bytes.
 // All eight restored; original helper and stack fallback retained; temporary declaration removed.
+// Round 154 (fast): existing 0x16f3a0 getter for the state pointer 537 (aligned 486 -> 482); the
+// fallback asking the getter again 543; getter plus 0x14ddc0/0x14de70 at the loop head 555 (aligned
+// 461); that plus the existing const g_44a2a0 (extern in sound_driver.h) 719 (frame 0xe0, 2106 bytes,
+// aligned 410); plus the fallback getter 747. Retail evaluates the inlined 0x16f3a0 cmov again in its
+// second fallback copy and inlines 0x1420f0/0x1427f0; BLOCKED-BY 0x16f3a0 (noinline for its callers).
 // Round 389: query directly into the final point 563; first/second/both rotations in place
 // with complete vector snapshots 1030/1035/1008; query reuse with those graphs 1042/1047/1020;
 // complete reuse with native output-pointer return 1020. Original distinct workspaces restored.

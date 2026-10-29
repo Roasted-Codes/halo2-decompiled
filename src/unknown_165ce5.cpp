@@ -1516,6 +1516,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // all with flags declared at assignment 444 (fast control 234, full baseline 232).
 // Only direct zoom-channel access kept: plain 218, 2193/2199 bytes, differing rows 217 -> 212.
 // Frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal remain.
+// DL179: Coordinated scalar-spring/angular-difference ordinary, inline and noinline
+// declaration pairs (excluding both ordinary) 218/218/499/499/499/218/218/218 fast;
+// original complete body and every helper declaration restored. Frame/look homes remain.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

@@ -188,6 +188,9 @@ public:
 // both 231; pool/count/both with read-only metadata 234/226/231;
 // pool/count with plain while, mutable/read-only metadata 231/231.
 // Original body restored; frame, metadata/head homes and coordinate cleanup remain.
+// Round 400: Native seventeen-value output array reference, with read-only metadata, word
+// viewer ordinal and indexed child-table observations in all eight subsets
+// 227/227/259/259/243/243/246/246. Original pointer contract and caller declaration restored.
 // Round 251: actual metadata/allocated/linked/updated external object references
 // singly 227 each; metadata with each child 227 each; all four 227. Original
 // distinct pointer receivers restored; metadata/head/frame and x87 homes remain.

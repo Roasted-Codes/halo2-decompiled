@@ -1155,7 +1155,6 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
     data[0x198] = 0;
     data[0x1bc] = 0;
 }
-
 // score 104 (was 104): frame 0x1144 and extent agree; file displacement, request-copy, the first read
 // call's handle copy and the write-success join remain.
 // frame 0x1144 and extent agree; file displacement (retail's product in ECX
@@ -1239,6 +1238,10 @@ PRIVATE inline void cache_header_initialize_strings(s_cache_header *header)
 // type-to-range switch keeps the two compares apart (against ECX/EDX copies of 1, index in ESI),
 // with the write success set by its own test 161 (918 bytes); plain locals, enums, a local struct,
 // const tables and one-entry table loops all fold to one compare.
+// Y405: Native metadata at the actual file-record declaration: path/comparison word/dependency
+// bytes and timestamps in all seven combinations 104 each; full native metadata with array
+// addition 104. Original record, byte-offset observations, body and interfaces restored;
+// temporary file-displacement ECX, request-copy and I/O setup remain.
 // @retail 0x213970
 void function_213970(void)
 {

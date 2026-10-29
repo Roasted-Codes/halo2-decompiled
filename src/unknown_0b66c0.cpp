@@ -139,6 +139,8 @@ static __forceinline char *upload_copy_ab(char *destination, char const *source,
 // that with a plain string parameter 41; start = string + start 40.
 // Cursor displacement with fixed/explicit maximum, unequal/ordered end tests and signed/unsigned
 // returns: eight forms 36 each; threshold rejected, shared find changed.
+// that with a plain string parameter 41; start = string + start 40; a local copy of the start
+// 28, but the start then arrives in edx and the matched caller 0xb5f10 differs.
 // @retail 0xb6220
 bool function_b6220(char const *volatile string, long start, long count, char *destination)
 {
@@ -312,8 +314,12 @@ bool function_b51b0(s_transport_endpoint *endpoint, s_type_99af70 const *address
 
 bool function_7af40(s_type_99af70 const *address);
 
-// score 32 (was 32): the connection state is cleared with the three field stores in a different
-// order here, the flag is written as a word here and or-ed into the field in retail, and the two
+// score 32 (was 32): tried the flag bit set through a byte cast of the flags word, as retail
+// sets it in the low byte, 30 (an address cast for 2 points: not kept); the flag is still read
+// before the three field stores instead of after them, the endpoint pointer is kept in a register
+// here instead of being reloaded from the connection, and the attempt counter is incremented in a
+// register instead of in place. Earlier: the connection state is cleared with the three field
+// stores in a different order here, the flag is written as a word here and or-ed into the field in retail, and the two
 // calls take their arguments in a different order.
 // @retail 0xb5d40
 bool s_http_connection_ab::connect(long address, word port, char const *path, bool flag)

@@ -405,6 +405,8 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 274: Common false-default skippability across both admission tests, bool/byte/short/long
 // at the original phase 267/267/276/276, at entry 285/285/287/287. Original result,
 // allocation/clock/audio/output phases and full body restored; frame remains 0x3c.
+// Separate native constant audio arrays at entry: surround bins/volumes, stereo bins/volumes,
+// surround pair/stereo pair/both bins/all 290/300/289/299/307/296/297/306. All restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

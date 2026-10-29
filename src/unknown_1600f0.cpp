@@ -1426,6 +1426,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 271: entry native rectangle declarations for title/fixed/optional caption groups,
 // every subset and all with complete rectangle identities, 689 each. Original producers,
 // native object lifetimes and body restored; frame 0x790 versus 0x79c remains.
+// Round 403: native rectangles; ordinary height/fade storage and direct first-color
+// output, masks 1-7: 734/713/753/726/764/742/783; all without unused parameter
+// addresses 783. Original scalars, color copy and complete body restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1685,6 +1688,9 @@ PRIVATE __forceinline void score_text_161420(byte const *widget, long valid)
 // Existing default text drawer 475; byte offset 475; indexed team 466; player row 490; both rows 481;
 // validity exit 475; mutable panel 475; both rows and byte offset 481. The shared drawer stays out of
 // line.
+// Round 262: non-template rectangle/widget-prefix text contracts 122/122;
+// with indexed team traversal 148/148; widget-prefix byte/short validity offsets
+// 122/122; ordinary inline prefix and invalid-widget exit 122/122. Restored.
 // @retail 0x161420
 void function_161420(long player_index, real alpha)
 {

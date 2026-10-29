@@ -661,6 +661,9 @@ bool function_bc380(long arg_0, long arg_1, long arg_2, long arg_3);
 // shared declaration changed; success path inside if (!= NONE) with return false after 88
 // (registers right, false epilogue laid out last); return false at the guard 96 (laid out in
 // line); result from the guard test 108; || on the two bools 95; result set in both arms 88
+// Four-use long ordinal with retained/per-use tag and bitwise/logical predicates
+// 83/89/129/136; native word ordinal 151/164/144/155. Initial table/object and
+// result homes still differ; original body and shared allocator interface restored.
 // @retail 0x118510
 bool __stdcall function_118510(long arg_0, void const *arg_1, bool *arg_2)
 {
@@ -1059,6 +1062,9 @@ void __stdcall function_b93b0(long arg_0, long arg_1, short arg_2);
 // point declared ahead of the sweep 283 (same code). On the current body: the sweep renamed to sort
 // before the point 156 and declared at the top of the block 156 (same code and homes: neither the
 // name nor the declaration order moves these slots). All restored.
+// DL175: Actual candidate-pointer countdown on query-first/long-third graph, with native short
+// remaining, pre-query sweep and readonly candidate subsets [281, 287, 208, 278, 281, 287, 208, 278].
+// Original indexed scan, query-first sweep and saved words restored.
 // @retail 0x119c10
 long function_119c10(long arg_0)
 {
@@ -1249,6 +1255,8 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // existing rounding helper 101; chained sentinel words 96; native sentinel library fill 278; byte parent
 // countdown 94; postfix parent countdown 100; shared final flag clear 94; signed short force 16; rounding helper
 // with signed force 62.
+// Round 263: object/input/both flags read at each use 156/132/121; existing basis helper
+// inline/noinline declarations 94/94; inline with those observations 156/132/121. All restored.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

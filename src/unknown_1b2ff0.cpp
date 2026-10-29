@@ -107,6 +107,9 @@ s_slot_handler_2 g_47e1c0 =
 // normalizer 108; direction/point at loop or function scope 108; point inside the transform branch 108;
 // forceinline declaration of the existing direction helper 310 (stays out of line); reversed or
 // explicit dot sums 111/107.
+// Round 196: separate displacement/output with precopy: native/shared difference/component loop/double
+// squared distance 235 each; branch-assigned normalized output with those four producers 172 each.
+// Extra input/output homes regress the frame; original in-place direction and all producers restored.
 // @retail 0x1b3070
 bool __stdcall function_1b3070(long actor_index, s_squad_choice *choice)
 {
