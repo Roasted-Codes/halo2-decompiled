@@ -210,7 +210,7 @@ long function_189fe0(s_sound_request const *request, long tag_index)
 		s_sound_play_state state;
 		state.location = request->location;
 		// Retail also clears the padding after the priority field.
-		*(long *)&state.priority = request->location.audible ? 3 : 1;
+		*(long *)&state.priority = state.location.audible ? 3 : 1;
 		dword flags = (request->source ? 0x20 : 0) + 5;
 
 		if (request->object_index != NONE)
