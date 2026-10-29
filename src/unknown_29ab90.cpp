@@ -174,6 +174,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Round 233: Distinct squared-speed/half-limit, later floor/heading and query-output
 // identities in seven subsets, then alternate complete roles: 383/383/383/383/383/383/383/383.
 // Original names, scopes, helper bodies and complete executable body restored.
+// Round 182: input-updated clamp result in all six formal orders 438 each;
+// lower-failure nesting with forward/reverse orders 438/438 (1814 bytes).
+// Original repeated helper, all four uses and movement body restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

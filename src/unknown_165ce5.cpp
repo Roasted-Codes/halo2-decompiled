@@ -1498,6 +1498,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 34 (fast control 234, full 232): independent primary/idle pointer or reference
 // receivers, all four combinations 234 each; those four with first-weapon fields
 // observed directly 578 each. Original shared channel lifetime and body restored.
+// Round 182: actual aiming-input vector homes before/after other locals 521/521;
+// native real/double input scalars 485/510; confined aiming phases repeat
+// 521/521/485/510 (fast control 234). Original inputs, calls and body restored.
 // Round 389 (fast control 234, full 232): late magnitude double 428; reused native idle tick
 // 290; both 427; both named animation-period summands 234. Native double period/duration
 // alone, with magnitude, with idle tick and with both 390/415/397/414 (exact-only).

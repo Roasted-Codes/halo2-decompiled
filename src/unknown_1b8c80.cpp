@@ -1316,7 +1316,14 @@ struct s_1ba091
     s_slot_entry_iterator field_4;
 };
 
-// score 198 (was 198): frame 0x14 agrees; early object-header acquisition,
+// score 198 (was 198): frame 0x14 agrees; incoming actor ECX/EDX, early object-header
+// acquisition, selection-mask storage and iterator/result homes differ.
+// Earlier slot-data form 198; raw-mask and independent iterator variants 202/207;
+// Result-first 190; explicit same-object result 230; cleanup result 258.
+// Complete byte flags with/without slot data 249/249; raw word/dword mask 257/252;
+// branch-assigned decline with byte/word/dword 249/257/252, with slot data 249.
+// Original body restored.
+// frame 0x14 agrees; early object-header acquisition,
 // selection-mask, entry/result and reusable frame homes still differ.
 // Round 172: data-member with header/actor/both observations 198/263/263;
 // actor/header observations alone 263/198; single cleanup-result join 258;

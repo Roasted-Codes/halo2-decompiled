@@ -51,8 +51,8 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 227 (was 227): retail's convention since round 67 (flag in AL, location stacked, 0x175270
-// frame 0x10/0x14; metadata/head/count homes and x87 cleanup differ.
+// score 227 (was 227): activation AL and stacked location agree; frame 0x10/0x14,
+// metadata/head/count homes and x87 cleanup differ.
 // Earlier: retail's convention since round 67 (flag in AL, location stacked, 0x175270
 // retail's convention since round 67 (flag in AL, location stacked, 0x175270
 // the child loop advances a 0xb8-stride cursor over the child table instead
@@ -191,6 +191,8 @@ public:
 // Round 251: actual metadata/allocated/linked/updated external object references
 // singly 227 each; metadata with each child 227 each; all four 227. Original
 // distinct pointer receivers restored; metadata/head/frame and x87 homes remain.
+// Round 187: Complete squared-distance with scaled-double/coordinate-scope/early-falloff masks 0-7
+// 227/227/227/227/227/227/227/227. Original arithmetic and full body restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

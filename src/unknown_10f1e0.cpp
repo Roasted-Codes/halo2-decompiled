@@ -1745,6 +1745,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 168: Native unit direction/ratio/weight fields in seven subsets and all with side bytes
 // 790 each; on the newer flag/center graph, plain overlay for 882, with native default angles
 // 911, with conditional activity clear 901, with both 897. Original body and records restored.
+// Round 184: Complete aiming flag word/native tag value/encoded byte/separate predicates at entry
+// 855/836/877/857; after persistent samples 848/880/867/850. Original live flags, native direction
+// copy, helpers, arithmetic and call roles restored.
 // Round 393: native external sample-channel references in seven subsets
 // 793/793/839/790/793/793/839; all with scratch construction at first use 841. Original body restored.
 // Round 172: complete bounds value return, field construction with pointer/reference/value

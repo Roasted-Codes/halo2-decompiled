@@ -1491,6 +1491,9 @@ struct s_133f70;
 // site 239f, both sites 239f, both with a signed-char previous level 266 plain (aligned 75, retail's
 // 382 instructions); cache slot as a ternary 304f (folds, adds a jmp). The tail remains
 // BLOCKED-BY 0x23690. All restored.
+// Round 184: Native object/tag, handle/count and cache/sections pointer-home names, masks 1-7, then
+// all six in a second coherent lexical order: eight calibrated scores 175. Original names, all
+// executable statements, native records, flags, query/allocator inputs and call tuples restored.
 // Round 265: six lexical orders of entry/failure/compacted-slot long values and
 // both uninitialized entry/slot storage orders before the query, 175 each on the expanded control.
 // Original declarations, names, compaction, cache observations and complete body restored.
