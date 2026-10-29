@@ -1103,7 +1103,7 @@ struct s_seat_approach_result
 	bool approaching;
 };
 
-// score 143 (was 176): every instruction agrees except one x87 pop: retail pops the vertical
+// score 147 (was 176): every instruction agrees except one x87 pop: retail pops the vertical
 // arm's last delta before its jump to the distance join, ours shares that pop with the other
 // arm at the join (one instruction early from there on). Round 70: the existing 3D distance
 // (0x1bbf40's) for the vertical case, a 2D point distance through the existing vector
