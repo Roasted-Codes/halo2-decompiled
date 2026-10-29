@@ -2849,6 +2849,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // property-bit, inventory/progress, inventory/bits, progress/bits, all families
 // 410/412/419/426/426/431/442; all with native final activity publication 441. All restored.
 // Round 168: Matched inventory/admission/progress query inline subsets 1/2/3/4/5/6/7 score 455/453/451/434/451/453/451; all with separate noinline declarations 451. Original six declaring files restored.
+// Round 404: Complete property dispatch and direct barrel-field maximum with metadata/state/scale
+// combinations 415/429/429/430/429/433/421/435. Original helper and dispatcher restored; frame eight/four
+// and tag/activity homes remain.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3076,7 +3079,7 @@ void function_102f10(long weapon_index, short trigger_index)
 void function_b7360(long object_index);
 void function_b58c0(long index, dword mask);
 long function_1896c0(real scale, long sound_index);
-void function_a88a0(long player_index, long definition_index, long other_definition_index, short count);
+void function_a88a0(long player_index, long definition_index, long other_definition_index, long count);
 
 struct s_ammo_conversion_entry
 {
@@ -3085,7 +3088,8 @@ struct s_ammo_conversion_entry
     long definition_index;
 };
 
-// score 198 (was 198): Frame 0x24 versus 0x20; destination/tag homes and conversion staging remain.
+// score 190 (was 198): Frame 0x20 agrees; destination/tag homes and conversion staging remain.
+// Earlier: Frame 0x24 versus 0x20; destination/tag homes and conversion staging remain.
 // Earlier 198 (was 203): frame 0x24 versus 0x20; destination/tag saved roles and conversion staging differ.
 // Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
 // Earlier: Frame 0x24 versus 0x20, destination/tag homes and conversion staging remain.
@@ -3169,6 +3173,10 @@ struct s_ammo_conversion_entry
 // locals 215; short acquisition with those 240; short with int clamp and ternary 202.
 // Lead: retail sign-extends the passed round total (movsx) where ours zero-extends it; 0xa88a0's
 // count taken as long would give the movsx (its file was not edited this round).
+// Round 404: native signed notification count with acquisition/retention/kind combinations
+// 208/191/214/204/233/213/236/213; capacity updates both/source/conversion 190/190/191. Kept source minimum
+// branch and complementary byte result with long notification formal; full 190 at 731/731, first +0x18, all
+// matches and callee preserved. Seven-point 191 lead alone rejected.
 // @retail 0xffc60
 bool __stdcall function_ffc60(long weapon_index, long other_index, long player_index, long event_index, short *rounds)
 {
@@ -3178,7 +3186,7 @@ bool __stdcall function_ffc60(long weapon_index, long other_index, long player_i
     s_weapon_definition *other_definition = WEAPON_DEFINITION(other);
     *rounds = 0;
     bool other_has_rounds = false;
-    short acquired = false;
+    byte unacquired = true;
     for (short i = 0; i < definition->magazine_count; ++i)
     {
         s_weapon_magazine_definition *magazine_definition = &definition->magazines[i];
@@ -3191,8 +3199,8 @@ bool __stdcall function_ffc60(long weapon_index, long other_index, long player_i
             {
                 source = &other->magazines[i];
                 long total = source->rounds_unloaded + source->rounds_loaded;
-                available = (short)(total <= available ? total : available);
-                acquired = available > 0;
+                if (total <= available) available = (short)total;
+                unacquired = available <= 0;
             }
             else
             {
@@ -3209,7 +3217,7 @@ bool __stdcall function_ffc60(long weapon_index, long other_index, long player_i
                 }
                 if (!conversion) continue;
                 available = conversion->count <= available ? conversion->count : available;
-                acquired = true;
+                unacquired = false;
             }
             if (available > 0 && g_4e6948->mode != 4)
             {
@@ -3228,7 +3236,7 @@ bool __stdcall function_ffc60(long weapon_index, long other_index, long player_i
             }
         }
     }
-    if (acquired)
+    if (!unacquired)
     {
         function_b7360(weapon_index);
         function_b7360(other_index);
@@ -3251,7 +3259,7 @@ bool __stdcall function_ffc60(long weapon_index, long other_index, long player_i
             if (index != NONE) function_b58c0(index, 0x2000);
         }
     }
-    return acquired;
+    return !unacquired;
 }
 
 
@@ -3629,6 +3637,9 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Round 389: native reset pointer/reference, with original/readiness-first request formals,
 // 1420 each; native working request index on those four graphs 1704 each. Original repeated
 // helper contracts and all call arguments restored; frame and pool/dual homes remain.
+// Round 404: Unsigned native input field with shared magazine-trigger/trigger-barrel/magazine-barrel/all
+// ordinals, long/word activity pairs 1420/1417/1420/1417/1420/1417/1420/1417. Three-point leads rejected;
+// complete original type, loops and body restored. Frame and pool/dual homes remain.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

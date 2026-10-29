@@ -374,7 +374,8 @@ void function_1e6b00(long player_index, s_request_source *source)
 	}
 }
 
-// score 51 (was 51): index EBX/mask EBP priority, repeated output load and low/high store order remain.
+// score 43 (was 51): Entry index/mask homes agree; repeated output load and low/high store order remain.
+// Earlier: index EBX/mask EBP priority, repeated output load and low/high store order remain.
 // retail keeps the index in EBX and the mask in EBP (ours
 // the other way round), loads the output pointer once above the last test and
 // stores the low flag word first in the inlined update. Without the read
@@ -388,7 +389,7 @@ void function_1e6b00(long player_index, s_request_source *source)
 // stores 54; `limit > 0` 51. Screened: array/element-address flag views, the transition
 // slot for the recursion, a next-value local, the absent-entry arm last, output stores
 // swapped, call before the stores, all 45-78 in screen terms (base 45).
-// score 51 (was 51): index/mask roles and the output join remain; tested completion
+// Earlier 51 (was 51): index/mask roles and the output join remain; tested completion
 // with separate/state/ticks/both stores 116/112/114/120; shared setter variants
 // 83/111/108/109. Original early-result body restored.
 // index/mask registers and the repeated output load remain.
@@ -397,9 +398,14 @@ void function_1e6b00(long player_index, s_request_source *source)
 // paired snapshot with one shifted mask 85.
 // Early dependency predicate, native signed ordinal, both, native recursive slot, predicate/slot all 51;
 // request value advanced in place alone/with native ordinal 58/58; adjacent recursive ordinal 51.
+// Round 404: actual function result at entry, positive/negative bool/byte/word/long
+// 43/148/162/148/154/138/156/141. Kept positive bool with one return and original branch-owned
+// stores/calls; plain 43 at 300/296, first +0xa2, native entry roles recovered. All matches and setter
+// preserved.
 // @retail 0x1e8d80
 bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_entry_420 *entry, s_request_transition *output)
 {
+	bool completed = false;
 	s_flag_pair *flags = (s_flag_pair *)((byte *)state + 0x170);
 	long value = ((flags->high & (1 << index)) ? 2 : 0) + ((state->request_flags[0] & (1 << index)) ? 1 : 0);
 	if (index == 21)
@@ -408,25 +414,29 @@ bool __stdcall function_1e8d80(long index, s_local_player_state_view *state, s_e
 	{
 		output->state = 4;
 		output->ticks = g_510c54->field_2_3 * 5;
-		return false;
 	}
-	if (entry->limit != 0 && entry->limit <= 3)
+	else if (entry->limit != 0 && entry->limit <= 3)
 	{
 		if (value + 1 >= entry->limit)
 		{
 			output->state = 5;
 			output->ticks = 0;
 			function_1e6a00(3, flags, index);
-			return true;
+			completed = true;
 		}
+		else
+		{
+			output->state = 4;
+			output->ticks = g_510c54->field_2_3 * entry->duration;
+			function_1e6a00(value + 1, flags, index);
+		}
+	}
+	else
+	{
 		output->state = 4;
 		output->ticks = g_510c54->field_2_3 * entry->duration;
-		function_1e6a00(value + 1, flags, index);
-		return false;
 	}
-	output->state = 4;
-	output->ticks = g_510c54->field_2_3 * entry->duration;
-	return false;
+	return completed;
 }
 
 // @retail 0x1e8fa0
