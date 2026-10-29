@@ -684,6 +684,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // scores this body 247; there a bool result 276, short result 235 (plain 239, no self-alignment),
 // marker/position/offset declared at function scope 247 each. Retail also keeps the player-index
 // NONE test at the loop latch and widens the zoom argument to 32 bits. Original body restored.
+// Round 189: actual initial/next cluster-query ordinary/inline/separate-noinline
+// declaration pairs (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2), with direct radius,
+// 239 each. Original declarations and radius form restored; caller-dependent alignment remains.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {

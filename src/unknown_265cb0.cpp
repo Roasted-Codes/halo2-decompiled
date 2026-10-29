@@ -476,6 +476,9 @@ real function_30bf0(vector3f *vector);
 // DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
 // 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
 // Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
+// Round 189: paired range squares/final squares/both, matched two-term magnitude partials,
+// range-partials/final-partials/all/all with live handle: 193/172/183/193/152/183/168/168.
+// Original products and handle observation restored; result/range/projection homes and SIMD groups remain.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
