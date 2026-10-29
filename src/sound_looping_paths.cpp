@@ -192,6 +192,9 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // boundaries, all seven subsets and producer-count ending after snapshot: 886 each.
 // Round 224: shared inline iterator first/second/both 968/1007/1103; shared calling iterator
 // first/second/both 905/915/899; real iterator-step first/second 953/919. Original scans restored.
+// Round 249: native choice-muted/target-audible/target-muted byte domains, seven
+// subsets 915/890/886/898/886/890/890; all signed bytes 890. Original bool fields,
+// record layouts, complete body and every gain expression restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

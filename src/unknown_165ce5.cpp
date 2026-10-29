@@ -1498,6 +1498,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 34 (fast control 234, full 232): independent primary/idle pointer or reference
 // receivers, all four combinations 234 each; those four with first-weapon fields
 // observed directly 578 each. Original shared channel lifetime and body restored.
+// Round 249: native user active-bit stores with original/dispatch/final/both weapon-bit
+// access 234 each; complete native user observations with those four forms 470 each.
+// Original records, flag snapshot, stores and every smoothing input restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1910,6 +1913,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Round 386: real/double ammunition-frame storage 439/462; named last-frame
 // conditional with long/real/double result 411/417/438; complete result arms
 // 411/423/442 (fast control 411, full 410). Original integer frame and body restored.
+// Round 249: direct aiming-completion result bool/byte/short/long 441/441/471/470;
+// complete complementary result 441/441/470/469. Original default and success
+// assignment, every sample, native frame and all helper inputs restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
