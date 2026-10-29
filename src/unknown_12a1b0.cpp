@@ -351,6 +351,8 @@ void function_11bed0(s_location *location, point3f const *point);
 // Native iterator source/spatial receivers 93/99; location-result workspace alone,
 // with source or spatial receiver 118 each; eligibility continue with source, spatial
 // or location workspace 93/99/118. Restored.
+// Complete spatial/source/sound snapshots by assignment or memcpy 165/165/188/188/187/187; Boolean iterator
+// plus spatial/source snapshot 121/139. Restored.
 // @retail 0x21a100
 void looping_sound_update_locations(void)
 {

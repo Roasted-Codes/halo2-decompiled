@@ -1526,6 +1526,8 @@ static __forceinline bool function_57d63(long arg_0, long arg_1);
 // availability test and the second inlined, a one-file LTCG build is byte-identical to retail
 // only when voice_get_membership's call chain may write arbitrary memory; ours is known to write
 // only its own local, which leaves the second availability byte loaded lazily.
+// Coordinated membership inline/local-mask metadata, native/wide bit 94/118/94/118; forced membership
+// combinations 211/206/211/206 (21 checked matches lost). Restored.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {

@@ -3354,6 +3354,8 @@ void __stdcall function_1264c0(dword arg_0);
 // next search (retail's masked-slot reuse) 9; plus a memset of the impulse ids 6 (its pointer in
 // ECX, retail EAX). Not kept without a match. Next search alone 85; deadline in the loop condition
 // 107; local-pointer, loop, chained and helper id stores 9; struct copy of the ids 114.
+// Range fill saved/direct 119/122; counted fill saved/direct 121/121; with shared invalid value
+// 104/102/102/102. All restored.
 // @retail 0x1257b0
 void function_1257b0(void)
 {
