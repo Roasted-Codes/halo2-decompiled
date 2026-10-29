@@ -138,6 +138,8 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // (the first angle's spill then reuses the 2D vector's slot) 397; yaw only 406; pitch only 406; that with
 // the first angle declared at function scope 397; plain reciprocal scaling in the normalizer 400
 // (0x29b990 6).
+// Round 393: Complete XY square terms in vector/point/both, sums in vector/point/both, both phases and role names:
+// 398/395/400/389/389/389/398/398. Original roots/products and all helper contracts restored.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

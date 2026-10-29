@@ -181,6 +181,8 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Round 181: Existing tint producer packed-dword output by pointer/reference, first/last,
 // with cache receiver or fixed-size input array, eight forms 391 each. Original complete producer
 // and callback restored; tint/second-UV overlap and cache/interval homes remain.
+// Round 393: Shared cache identity with tint cache pointer/reference or fixed-array/element-pointer inputs, direct update
+// or existing update method: 391/391/391/391/391/391/391/391. Original cache, callback declaration and helpers restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)
