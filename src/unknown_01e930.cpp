@@ -381,6 +381,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // all three 274; per-branch volume arrays before channel arrays 256. All restored.
 // Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
 // parameter-derived decision at entry 306/306/305/298. Original large decision restored.
+// Round 225: native long/dword allocation result, with ordinary/role-named audio arrays,
+// early/late zero lifetime: 244/244/256/256/244/244/256/256. Original body restored;
+// frame 0x3c, clock/output homes and instruction policy remain.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

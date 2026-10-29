@@ -1373,6 +1373,10 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 // Ordinary origin with existing 2D product producer across paired projections,
 // cosine and side classification 267 in all seven combinations; complete products
 // plus side-offset arms 278. Exact length throughout; original body restored.
+// Round 225: ordinary origin with fraction branches, desired-point subtraction and paired
+// 3D setters, seven nonempty combinations 267/295/295/267/267/295/295;
+// all producers with native long side 289. Original body restored; ordinary input
+// and steering producer forms do not recover the zero/radius or initial homes.
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)

@@ -501,7 +501,7 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 	actor_looking_rotate_in_place(vector, axis, sine, cosine);
 }
 
-// score 335 (was 335): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
+// score 320 (was 335): the frame remains 0x9c versus 0xa8; axis, random/trig and vector schedules differ.
 // Tried: direct collision Boolean 355; initial best vector before normalization 356; result declared first 354;
 // long sample counter 355; axis/sample/range names 355; shared normalizer 330 (sum order changed, restored);
 // shared random-range helper 360; one result return 377; paired span names 355; names plus one return 377;
@@ -513,6 +513,10 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 // Unit-random producer with candidate after/before/between draws 335/336/341;
 // named normalized fractions at those sites 340/341/335 (last retail length).
 // Complete vector-copy setters with early/between candidate 363/363. Restored.
+// Round 225: ray scale helper 339 (frame 0xa8, retail length); native long
+// clear/result/both 320/324/335; scaled combinations 338/340/338; scaled native
+// word states 324. Long clear retained at 320 (plain); ray helper and result restored.
+// Original draws, transforms, producer values and calls preserved.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -522,7 +526,7 @@ PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, boo
 	real best_fraction = 0.f;
 	real yaw_range = yaw_upper - yaw_lower;
 	real arg_58ecd0 = pitch_upper - pitch_lower;
-	bool clear = true;
+	long clear = true;
 	vector3f pitch_axis = { -forward->j, forward->i, 0.f };
 	if (actor_looking_normalize3d(&pitch_axis) == 0.f)
 		pitch_axis = *g_4687ac;
