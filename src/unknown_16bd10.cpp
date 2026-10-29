@@ -778,7 +778,9 @@ PRIVATE inline real game_ticks_to_seconds(long ticks)
 }
 
 /* the camera director of scripted cameras: fills the observer's command */
-// score 245 (was 245): frame 72 agrees; direction preload, length/zero XMM roles and flag stores differ.
+// score 236 (was 245): frame 72 agrees; the camera mode and the object index are read into
+// named locals before the switch and the test; direction preload, length/zero XMM roles and
+// flag stores still differ.
 // frame 0x48 agrees; direction preload, length/zero
 // registers and memory flag updates remain.
 // Earlier 241 (from 241): frame 72 agrees; direction preload, length/zero XMM roles and flag stores differ.
@@ -877,7 +879,8 @@ void __stdcall function_16c840(long user_index, long unused, s_observer_command 
 	}
 
 	camera = camera_scripting_state;
-	switch (camera->mode)
+	short mode_kind = camera->mode;
+	switch (mode_kind)
 	{
 	case _camera_scripting_mode_point:
 		{
@@ -932,7 +935,8 @@ void __stdcall function_16c840(long user_index, long unused, s_observer_command 
 			command->timer = time_scale != 0.0f ? game_ticks_to_seconds(camera->ticks) / time_scale : 0.0f;
 			command->forward = camera->forward;
 			command->up = camera->up;
-			if (camera->object_index != NONE)
+			dword camera_object_index = camera->object_index;
+			if (camera_object_index != NONE)
 			{
 				real yaw = (real)atan2(command->forward.j, command->forward.i);
 				real distance = dot3f(&command->forward, (vector3f *)&camera->position);

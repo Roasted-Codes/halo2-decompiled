@@ -25,16 +25,20 @@ and closes, and keyframes the machine's Havok bodies to its nodes. */
 struct s_machine
 {
 	long definition_index;
-	struct
+	union
 	{
-		dword unknown0 : 11;
-		dword dynamic_lighting : 1;
-		dword static_lighting : 1;
-		dword static_lighting_sideways : 1;
-		dword unknown14 : 8;
-		dword unknown22 : 1;
-		dword unknown23 : 1;
-		dword : 8;
+		dword value;
+		struct
+		{
+			dword unknown0 : 11;
+			dword dynamic_lighting : 1;
+			dword static_lighting : 1;
+			dword static_lighting_sideways : 1;
+			dword unknown14 : 8;
+			dword unknown22 : 1;
+			dword unknown23 : 1;
+			dword : 8;
+		};
 	} object_flags;
 	byte unknown008[0xc];
 	long parent_object_index;
@@ -218,21 +222,18 @@ __forceinline short machine_round(real value)
 	return (short)result;
 }
 
+/* sets or clears one bit of a flags word */
+static inline void flags_set_bit(dword *flags, long bit, bool value)
+{
+	if (value)
+		*flags |= 1 << bit;
+	else
+		*flags &= ~(1 << bit);
+}
+
 PRIVATE void machine_keyframe_rigid_bodies(long machine_index, bool keyframed);
 PRIVATE void machine_release_rigid_bodies(long machine_index);
 
-// score 81 (was 81): Native portal-entry base kept; scenario/constant carriers, coalesced object-bit clears and policy result EAX versus ECX remain.
-// Round 204: native portal entry 81 kept plain; default-first policy 100; both 106 (subthreshold); shared final update 81; long/unsigned-word policy 102/81; six-use flags 108; flags/default 117; chained clears 81.
-// Round 268: six-use destination flags receiver 81; reset after both clears 81;
-// receiver with six-use source bits 108; receiver with later reset 81; source bits
-// with later reset 108; all three 108; final default-first dispatch with receiver 81;
-// that plus later reset 81. Original portal, policy, flag stores and reads restored.
-// Round 270: native object-bit pointer/reference receivers 93/93; either with later
-// reset 93; either with default-first policy 91 (first +0x7f), with both 92. All
-// eight restored, including the named real bitfield type; initial carriers and merged clears remain.
-// Round 208: early policy declaration 81; descending configured cases 81; both 81;
-// comparison mapping with one short observation/direct fields 132/132; natural portal admission
-// and shared publication 150; with early policy 150; with direct configured comparisons 160.
 // @retail 0x115020
 void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine)
 {
@@ -251,16 +252,12 @@ void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine
 	if (scenario_machine->flags & 8)
 		machine->flags |= 0x20;
 	machine->placement_index = NONE;
-	machine->object_flags.unknown22 = false;
-	machine->object_flags.unknown23 = false;
+	flags_set_bit(&machine->object_flags.value, 22, false);
+	flags_set_bit(&machine->object_flags.value, 23, false);
 
-	short policy;
+	short policy = 3;
 
-	if (machine->definition_index == NONE)
-	{
-		policy = 3;
-	}
-	else
+	if (machine->definition_index != NONE)
 	{
 		switch (MACHINE_DEFINITION_GET(machine->definition_index)->pathfinding_policy)
 		{
@@ -289,7 +286,7 @@ void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine
 			machine->placement_index = portal->portal_index;
 			if (portal->portal_index != NONE)
 			{
-				machine->object_flags.unknown22 = true;
+				flags_set_bit(&machine->object_flags.value, 22, true);
 
 				long table = function_1fa7f0();
 
@@ -308,13 +305,12 @@ void __stdcall machine_place(long machine_index, s_type_181dea *scenario_machine
 		// fall through
 	case 0:
 	case 3:
-		machine->object_flags.unknown23 = true;
-		function_b8b70(machine_index);
+		flags_set_bit(&machine->object_flags.value, 23, true);
 		break;
 	default:
-		function_b8b70(machine_index);
 		break;
 	}
+	function_b8b70(machine_index);
 }
 
 struct s_115191

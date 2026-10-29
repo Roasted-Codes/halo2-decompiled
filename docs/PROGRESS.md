@@ -2,6 +2,26 @@
 
 The newest entry comes first.
 
+## 2026-10-29: 9910 functions match
+
+```
+matched 9910 of 11326 game functions (1636764 of 2786206 bytes, 58.75%)
+matched 1226 of 1436 Havok functions (162581 of 290362 bytes, 55.99%)
+```
+
+5 new matches, none lost:
+- Machine 3's batch 148 (#877): `0x90b30`, `0xe9780`, `0x115020`, `0x2056e0` and `0x21d060` match.
+
+## 2026-10-28: 9905 functions match
+
+```
+matched 9905 of 11326 game functions (1634469 of 2786206 bytes, 58.66%)
+matched 1226 of 1436 Havok functions (162581 of 290362 bytes, 55.99%)
+```
+
+45 new matches, none lost:
+- @averycpawelek's #872, #874: `0x2d73f0`, `0x2d7460`, `0x2d74d0`, `0x2d7570`, `0x2d76f0`, `0x2d7720`, `0x2d7860`, `0x2d7c00`, `0x2d7ca0`, `0x2d8080`, `0x314090`, `0x3140a0`, `0x3140c0`, `0x314140`, `0x3141b0`, `0x3141c0`, `0x3141f0`, `0x3142f0`, `0x314320`, `0x314350`, `0x314360`, `0x3143e0`, `0x314450`, `0x314480`, `0x3144b0`, `0x314580`, `0x314650`, `0x314830`, `0x314840`, `0x314860`, `0x3148e0`, `0x314950`, `0x314960`, `0x314980`, `0x3149b0`, `0x314b50`, `0x314b80`, `0x314b90`, `0x314cc0`, `0x314d50`, `0x314dd0`, `0x314e00`, `0x314fa0`, `0x3155f0` and `0x315720` match.
+
 ## 2026-10-28: 9905 functions match
 
 ```
