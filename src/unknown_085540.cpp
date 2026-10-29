@@ -975,7 +975,7 @@ void __stdcall function_865d0(c_simulation_view *view)
   s_link_connection *connection = link_connection_get(view->unknown3c);
   if (connection->state != 5 || !(connection->flags & 0x10)) break;
   s_network_stream_header *stream = network_stream_get(connection->stream_index);
-  if (((stream->window.next - stream->window.end) - 0x200) * 32 > -0x600) break;
+  if ((512 - (stream->window.next - stream->window.end)) * 32 < 0x600) break;
   s_ring_buffer *buffer = (s_ring_buffer *)&view->unknown9c;
   buffer->read_wrapped(buffer->start, sizeof(header), &header);
   buffer->start = (buffer->start + (long)sizeof(header)) % buffer->size;
