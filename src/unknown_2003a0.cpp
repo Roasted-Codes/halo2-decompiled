@@ -1140,6 +1140,13 @@ struct s_squad_tree_definition
 };
 
 // score 31 (was 31): One-dword frame and first two passes agree; later parent loads still lose the retained record address.
+// Round 76: retail's passes 3/4 need the field loaded twice at register allocation and the second load
+// turned into `mov eax, ecx` afterwards (a volatile test, diagnostic only, gives the folded load into ECX
+// and the dead `add eax, edx` but keeps the second load); a noinline declaration of 0x205280 in place
+// of the in-body inline_depth pair 31 (not kept: DECOMPILING.md rules out both; a file-scope pair is
+// allowed). Parent through a ternary select 66;
+// `continue` on a missing parent in both passes 31; group and squad pointers at function scope 31;
+// the group pointer reused for the sibling walk 31.
 // parent field into ECX through [eax+edx+offset] and still forms the record pointer (add eax,edx) before
 // the compare, then copies the value to EAX; ours forms the pointer first and loads through it into EAX.
 // Tried: const current group 43; unsigned squad parent 43; unsigned group parent 63; unsigned sibling 43;
