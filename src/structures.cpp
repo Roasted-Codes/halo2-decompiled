@@ -536,6 +536,9 @@ void function_23ac30(s_vertex_source_23ac30 const *source, long index,
 // in esi/edx/ecx, retail edx/ecx/esi), so both forms wait on that contributor body.
 // Round 202: Native mesh node/strip/parts fields, seven combinations, and all with const receiver 78/78/78/78/78/78/78/78 fast.
 // Original executable source restored. Frame 0x58 agrees; model/collision roles, bounds acquisition, lookup-address reuse and triangle-test inputs remain.
+// Round 194: shared first/second/both object acquisitions, node-matrix accessor alone,
+// either/both acquisitions with that accessor and shared headers with it 78 each.
+// Model/collision homes, bounds timing, lookup reuse and triangle-call inputs remain.
 // @retail 0x14a8e0
 bool __stdcall function_14a8e0(s_structure_collision_result const *collision,
 	long model_index, s_structure_lightmap_triangle *triangle)

@@ -1617,6 +1617,9 @@ static inline bool weapon_state_replaceable(long current, long state)
 // wide set/flags/class 67; single played result 130; unit lookup before flags 75;
 // replaceable-first gate 111; nested class gate 67; wide unit index 67;
 // class-by-default test 67; class ternary 75.
+// Round 194: shared entry/eligibility/notification/all getters 134/137/67/118;
+// late animation receiver 130; class before mask 75; both 132; all getters with both 145.
+// Notification argument registers and success scheduling remain.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {
@@ -1966,6 +1969,10 @@ bool __stdcall function_100130(long weapon_index, bool immediate)
 // reduced image builds retail's shape at 585 bytes, the full image reloads the pool per slot);
 // the same with a pool local for the holder loop 183; with an other-weapon local and continue 165
 // (fast, as the previous); with `return true` on success 179 (fast); `return true` on success alone 124.
+// Round 194: first/other/both magazine array roots 123/123/122 (586/586/585 bytes);
+// first/other/both roots with unit observations 231/227/226; both roots with live handle
+// 180, also with unit observations 211. The two-point retail-length form is restored;
+// magazine, availability/transfer and pooled receiver homes remain.
 // @retail 0x100b80
 bool function_100b80(long magazine_index, long weapon_index, long count)
 {
@@ -2233,10 +2240,13 @@ static __forceinline long real_to_long(real value);
 // timing stack homes, trigger spill and released-output registers differ.
 // Trigger/settings references, rate snapshot and threshold input 89; double duration 134;
 // bounded age increment 167; byte conditional clamp 162.
-// score 89 (was 89): slots ticks/trigger/duration and the age/delta/release registers still differ;
+// Earlier: slots ticks/trigger/duration and the age/delta/release registers still differ;
 // retail's clamp is a byte moved from edi (no cmov). Local names 89 (slots unchanged); trigger pointer
 // declared later 133-140; long/short clamp 100 (cmov); clamp ternaries 159; char clamp 87; duration
 // passed straight to the conversion 89; waiting declared first 89; threshold operands swapped 89.
+// Round 194: trigger/settings/both array roots 148/116/150; direct trigger/settings/both
+// elements 143/185/192; late trigger with settings root 154; read-only paired roots 150.
+// Original three timing homes and release/age interference remain.
 // @retail 0x1027b0
 void function_1027b0(long weapon_index, long trigger_index, bool *pressed, bool *held, bool *released)
 {
