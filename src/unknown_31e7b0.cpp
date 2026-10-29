@@ -497,17 +497,25 @@ static __forceinline float contact_minimum(float a, float b)
 	return a < b ? a : b;
 }
 
+// By-value negation retains retail's normal-accumulation and bias-store order.
+static __forceinline float contact_negate_31f620(float value)
+{
+	return -value;
+}
+
+// Keep the local cursor in its stack slot and preserve the loop-exit reload order.
+static __forceinline void advance_contact_cursor_31f620(unsigned long *volatile &cursor, unsigned long *position)
+{
+	cursor = position + 1;
+}
+
 // Contact normal rows, optional coupled pairs, a two-axis friction block,
 // and a radius-scaled angular friction row for a multi-point manifold.
-// score 12 (was 776): retain row-relative coupling, explicit axis reloads,
+// score 0 (was 776): retain row-relative coupling, explicit axis reloads,
 // scalar-lane broadcasts, a single tangent retry loop, and separate friction
-// cursors. The function now has retail's size (3182 bytes). First difference
-// is +0x2be; normal accumulation, pointer reloads and the early return differ.
-// Earlier 840 -> 776: by-value separation minimum, operation cursor declared
-// after vector accumulators, and SIMD radius lengths through the square root.
-// Further trials: output-pointer reference 14; separate radius return 103;
-// scalar/helper and declaration variants did not improve on 12. A 1200 s
-// permuter run at the earlier score 24 found no improvement.
+// cursors. The final 12 -> 0 uses by-value negation, an inlined cursor advance,
+// and a radius-validity result that keeps the degenerate return after the
+// angular row. All 3182 bytes match retail after address normalization.
 // @retail 0x31f620
 void __cdecl lane_b_contact_build(void const *points_, long count,
 	void *properties_, void *solver_data_, void const *input_, void *output_)
@@ -585,12 +593,12 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 		property->distance = adjusted_distance < 0.0f ? adjusted_distance : 0.0f;
 		position_sum = _mm_add_ps(position_sum, point->position);
 		normal_sum = _mm_add_ps(normal_sum, point->normal);
-		row->linear.m128_f32[3] = -(separation * input->error_scale);
+		row->linear.m128_f32[3] = contact_negate_31f620(separation) * input->error_scale;
 		if (!property->flags)
 		{
 			unsigned long *operation = *(unsigned long * const volatile *)&op;
 			*operation = 0x30402;
-			*(unsigned long *volatile *)&op = operation + 1;
+			advance_contact_cursor_31f620(op, operation);
 		}
 		else
 		{
@@ -605,7 +613,7 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 			previous_row[0].b.m128_f32[3] = inverse_determinant * current_diagonal;
 			row->b.m128_f32[3] = inverse_determinant * previous_diagonal;
 			*(float *)operation = -(inverse_determinant * coupling);
-			*(unsigned long *volatile *)&op = operation + 1;
+			advance_contact_cursor_31f620(op, operation);
 		}
 	}
 	float friction_limit = (total_friction * inverse_count) * total_impulse;
@@ -719,6 +727,7 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 		unsigned long *next_op = op + 5;
 		if (count > 1)
 		{
+			bool radius_valid = true;
 			while (state->flags & 4)
 			{
 				state->radius = 0.0f;
@@ -736,23 +745,34 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 				}
 				state->radius *= inverse_count;
 				if (state->radius < 1.0e-6f)
-					goto write_friction_output;
+				{
+					radius_valid = false;
+					break;
+				}
 				state->flags &= ~4;
 			}
-			solver_angular_row_31e7b0 *angular_row = (solver_angular_row_31e7b0 *)row;
-			store_contact_axis_31f620(angular_row->a, normal, body_a);
-			__m128 negative_normal = _mm_xor_ps(normal, *(__m128 const *)solver_sign_bits);
-			store_body_axis(angular_row->b, negative_normal, body_b);
-			angular_row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(angular_row->a, angular_row->b, body_a, body_b)) + 1.1920928955078125e-7f);
-			float inverse_radius = 1.0f / state->radius;
-			store_contact_radius_31f620(friction_op->radius, state->radius);
-			friction_op->opcode = 0x61808;
-			angular_row->a.m128_f32[3] *= inverse_radius;
-			angular_row->b.m128_f32[3] = state->angular_bias * input->error_scale;
-			row = (solver_linear_row_31e7b0 *)(angular_row + 1);
-			next_op = (unsigned long *)friction_op + 6;
+			if (radius_valid)
+			{
+				solver_angular_row_31e7b0 *angular_row = (solver_angular_row_31e7b0 *)row;
+				store_contact_axis_31f620(angular_row->a, normal, body_a);
+				__m128 negative_normal = _mm_xor_ps(normal, *(__m128 const *)solver_sign_bits);
+				store_body_axis(angular_row->b, negative_normal, body_b);
+				angular_row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(angular_row->a, angular_row->b, body_a, body_b)) + 1.1920928955078125e-7f);
+				float inverse_radius = 1.0f / state->radius;
+				store_contact_radius_31f620(friction_op->radius, state->radius);
+				friction_op->opcode = 0x61808;
+				angular_row->a.m128_f32[3] *= inverse_radius;
+				angular_row->b.m128_f32[3] = state->angular_bias * input->error_scale;
+				row = (solver_linear_row_31e7b0 *)(angular_row + 1);
+				next_op = (unsigned long *)friction_op + 6;
+			}
+			else
+			{
+				output->terms = (__m128 *)row;
+				output->operations = next_op;
+				return;
+			}
 		}
-write_friction_output:
 		output->operations = next_op;
 		output->terms = (__m128 *)row;
 		return;
