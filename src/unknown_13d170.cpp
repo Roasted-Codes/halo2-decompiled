@@ -222,6 +222,10 @@ struct s_block_candidate
 // Round 226: Native inserted candidate initializer 387; zero-initialized best 398; both 398;
 // native deletion iterator initializer 370; insertion/iterator 387; best/iterator 398;
 // all three 398; all with entry best initialization 417. Frame/page-tail homes remain.
+// Round 162: Coordinated policy parameter orders 021/102/120/201/210 370 each; individual
+// physical/candidate/best mutable-pointer input declarations 370 each. Policy body and all matched
+// controls stay exact; original declarations and call restored. Frame 0x1050 versus 0x1054 and
+// page/ring homes remain.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

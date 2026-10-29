@@ -383,6 +383,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // and clock/output homes remain; original body, helpers and flags restored.
 // Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
 // parameter-derived decision at entry 306/306/305/298. Original large decision restored.
+// Round 225: native long/dword allocation result, with ordinary/role-named audio arrays,
+// early/late zero lifetime: 244/244/256/256/244/244/256/256. Original body restored;
+// frame 0x3c, clock/output homes and instruction policy remain.
 // Round 251: bounded retry short/word/byte/dword carriers 263/263/259/245;
 // the same four with a scoped timeout else phase 263/263/259/245. Frame stays
 // 0x3c; original ordinal, continue graph and full executable body restored.

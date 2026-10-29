@@ -217,12 +217,18 @@ struct s_1f4a20_source;
 bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_reference reference, s_1f4a20_source const *source,
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
+
 // score 257 (was 257): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
 // slot/scratch homes and the 52-byte length deficit remain.
 // Round 198: payload/native input/read-only input/input scope 323 each; clamp 322;
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
 // ordinary result/receiver with ordinary result 325/325; search outputs first 257.
 // Typed payload/native input and preparation scope kept at 257 plain; all follow-ups restored.
+// Round 256: native geometry/bounds/marker-reference request fields, all seven subsets,
+// and complete fields with movement scope 257 each; request header and body restored.
+// Round 171: native search request at current/entry/guard/array declaration boundaries 257 each;
+// complete zero aggregates at those boundaries 312/314/312/312. Original request, initialization
+// and executable source restored; aligned frame and actor/slot/scratch homes remain.
 // Round 213: character/payload/scratch home names and named scalar outputs [257, 257, 257,
 // 257]; shared guard/node prop index with original/renamed actor and entry/later result [257,
 // 257, 257, 257]. Frame and actor/slot/scratch allocation remain.

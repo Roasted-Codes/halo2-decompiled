@@ -1121,6 +1121,9 @@ struct s_1c4040
 // function in src/unknown_146a20.cpp gives a custom convention, but attempt EAX and active CL (30; the
 // first half loses 15 matched); with (active, attempt) reordered 30; with g_51e9a4 read at each use 32;
 // 0xb8540's disabled body enabled 25 (25 matched lost). The custom regime still swaps EAX/ECX and AL/CL.
+// Round 163: coordinated cdecl/stdcall with bool, byte, signed-char active and
+// unsigned-long attempt transport 187/193 in every pair. All original declarations
+// and bodies restored; frame 0x14 agrees, but active remains DL rather than AL.
 // @retail 0x1c4040
 bool function_1c4040(long attempt, bool active, bool any_object, bool even_if_unknown, long excluded_component_index)
 {

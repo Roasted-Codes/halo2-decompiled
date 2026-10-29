@@ -2583,6 +2583,11 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // 0x17e670), the attached light call's register arguments (computed before its pushes, retail after: ours forms
 // forward with add ecx, retail with lea edx and keeps the location pointer live) and the sound arms' scratch
 // registers remain. Round 85: `effect` declared before `up` gives retail's EAX up (38 -> 30, kept);
+// Frame 0x100, length and prologue agree; protected decal transfer, attached
+// light argument scheduling and sound scratch carriers remain.
+// Earlier 30 (was 38): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
+// 0x17e670), the attached light call's register arguments (computed before its pushes, retail after) and the sound
+// arms' scratch registers remain. Round 85: `effect` declared before `up` gives retail's EAX up (38 -> 30, kept);
 // then velocity before location in the detached sound arm 47; light/sound node index in the argument list 30/30;
 // one inline node-index helper for three arms 415; sound record at the case scope 30.
 // Earlier measurements and forms:
@@ -2657,6 +2662,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // Round 88: named forward pointer in the attached light call 30; word sound node index 52 (1330 bytes);
 // named position pointer in the attached sound call 30; light node index at case scope 30; light test
 // as !detached first 35.
+// Round 383: native light/sound/both matrix subobject references 30/30/30; sentinel-result
+// assignments for light/sound/both with matrix receivers/all nodes 30/30/30/30; joint receiver/result
+// graph with the sound workspace renamed 30. Original executable source restored.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, s_effect_datum *effect, vector3f const *up, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
@@ -3052,6 +3060,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Round 58: literal false at exhaustion 176; hit as `result = true; return result;` with literal/variable
 // exhaustion 176/176 (VC folds the constant result each time, no early BL); found flag breaking out of
 // each loop 281; found flag in all three loop conditions 281. Retail returns BL only at the early exit.
+// Round 241: native player record/datum iterators 255/255; effect record/datum iterators
+// with inline/called scans 325/325/352/352; paired native iterators 324/324. Original
+// scalar searches, initial guard, false result and complete body restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
