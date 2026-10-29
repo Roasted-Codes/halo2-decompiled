@@ -1526,7 +1526,7 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // at each use 69; first test through the entry expression 70; entry operand order, inline palette,
 // entries-base local, typed location record and an entry declared before the loop 76 each.
 // @retail 0x204950
-real function_204950(long actor_index, long squad_index, short mode)
+real function_204950(long squad_index, long actor_index, short mode)
 {
     real result = 3.402823466e+38F;
     byte *actor = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
@@ -1608,7 +1608,7 @@ long function_204b20(long actor_index, short mode)
             continue;
         else
             weight = 1.333f;
-        real distance = function_204950(actor_index, squad_index, mode);
+        real distance = function_204950(squad_index, actor_index, mode);
         if (distance < 3.402823466e+38F)
         {
             if (squad_index == *(long *)(actor + 0x28))
@@ -2342,7 +2342,7 @@ void function_201df0(void)
     }
 }
 
-void function_1e3400(long actor_index, long squad_index);
+void function_1e3400(long actor_index, short squad_index);
 void function_26def0(long actor_index, long owner_index);
 
 // @retail 0x204ca0
