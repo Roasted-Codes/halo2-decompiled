@@ -320,6 +320,9 @@ extern real g_47f05c;
 // Round 224: Consistent per-use count/list/component-data observations, seven subsets
 // 229/221/228/190/227/221/228; all with entry selection/result constants 198 at retail length.
 // Two-point component-data form rejected; original snapshots and full body restored.
+// Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
+// 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
+// and full body restored; frame 0xd0 and shape/count/alignment homes remain.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)

@@ -613,6 +613,9 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // Round 224: Native external point fields and byte result/point-valid, seven subsets
 // 336/345/345/336/336/345/345; native points plus byte result/word point-valid 356. All source and
 // record declarations restored.
+// Round 224 continuation: Result-owned point publication at the common return, crossed with case-2-first/shared defaults/
+// long result, eight forms 336/341/334/339/350/346/351/347. Two-point shared-default form rejected;
+// original result, epilogue, cases, setters and full body restored.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -1141,7 +1144,7 @@ struct s_actor_looking_turn_request
 	vector3f forward;
 };
 
-// score 530 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
+// score 506 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
 // Tried the out-of-line predicate declaration 546 fast; horizontal aggregate copies 562 fast; initial native setters 546 fast;
 // explicit looking success/fallback stores 532 fast, 527 plain (three-point gain, restored); target point or selected vector
 // renamed 546 fast each; validity at function scope 546 fast; aggregate inputs plus explicit stores 549 fast;
@@ -1154,13 +1157,16 @@ struct s_actor_looking_turn_request
 // Uniform 17 aggregate memcpy producers on disjoint outputs, varied by actual
 // predicate boundary and long animation carrier 534/540/562/563 fast; native
 // memmove variants 624/630/670/671. Best memcpy form 525 plain at 2020/2020; restored.
+// Round 224 continuation: Native long parallel validity/idle/both/turn-override/validity-turn/idle-turn/all, then all-word
+// 528/539/525/535/529/532/540/553 fast (control 546). Parallel validity plus idle 506 plain,
+// 2040/2020 bytes, kept; original producers, tests and call tuples retained. Full frame remains 0xd0.
 // @retail 0x298370
 void function_298370(long actor_index)
 {
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	s_actor_looking_object *unit = actor_looking_object_get(actor->unit_index);
 	short animation_state = ((s_actor_looking_animation *)((byte *)unit + unit->animation_offset))->state;
-	bool idle = false;
+	long idle = false;
 	bool allow_turn = false;
 	bool has_target_point = false;
 	point3f arg_0e6828;
@@ -1172,7 +1178,7 @@ void function_298370(long actor_index)
 	if (function_2973f0(actor_index, &looking_cosine, &aiming_cosine, &idle_aiming_cosine, &idle_looking_cosine))
 	{
 		vector3f direction;
-		bool valid = false;
+		long valid = false;
 		if (animation_state == 6)
 		{
 			s_object_marker marker;
@@ -1255,7 +1261,7 @@ void function_298370(long actor_index)
 			actor->aiming = false;
 		}
 
-		bool looking_valid = false;
+		long looking_valid = false;
 		if (animation_state == 6)
 		{
 			direction = actor->field_xe66477;
