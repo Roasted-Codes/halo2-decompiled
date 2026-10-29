@@ -2815,6 +2815,9 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Round 383: paired diameter products before normalization 356; full bounds before normalization 354;
 // complete horizontal/vertical product-and-bound phases 336/340; native rectangle counterparts
 // 356/354/336/340. Original reciprocal, product overlap and body restored.
+// Round 166: paired corner production with both angle pairs live, explicit/first-corner-first/
+// table-loop/table-loop after first corner 407/368/358/361; native point outputs
+// 407/368/358/361. Original separate UV producers and trig lifetimes restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
