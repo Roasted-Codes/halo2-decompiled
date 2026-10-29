@@ -1786,11 +1786,16 @@ void function_21f8a0(long channel_index, s_looping_channel_properties const *pro
 void __stdcall function_21f720(s_looping_impulse_parameters const *parameters);
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects, bool force);
 
-// score 532 (was 550): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
+// score 447 (was 532): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
 // Full-width permutation selection keeps its values; both index widths 529 (three-point tail dropped),
 // chunk width alone 560, state width 550, frame names/property declaration 550; existing next-chunk
 // helper with short/long/wide selection 556/568/536; direct gain fields 526 (six-point tail dropped),
 // direct modifier fields 529 (three-point tail dropped), direct voice index/shared lower pitch 532.
+// Round 179: whole clear 511; two whole subobject clears 527; zero aggregate 476; branch chunk 532;
+// zero-first Doppler 526; whole clear/branch 471; wide branch 532; split clear/both results 527;
+// aggregate with chunk/Doppler/both 525/517/471; aggregate direct gain/modifier/both 510/479/510.
+// Whole clear/branch with direct gain fields 447 kept; modifier/both 468/447. On 447, zero-first
+// Doppler 471; wide chunk 443 (four-point tail dropped); direct sound index/lower pitch 447/447.
 // @retail 0x21c400
 void function_21c400(short voice_index, real gain, s_looping_channel_spatialization const *spatialization)
 {
@@ -1805,17 +1810,12 @@ void function_21c400(short voice_index, real gain, s_looping_channel_spatializat
 	looping_sound_track_definition *track_definition = &definition->tracks[playing->loop.track_index];
 	c_class_219e90 *controller = controller_get(sound->controller_index);
 	s_looping_pitch_modifier *modifier = &((s_looping_sound_tables *)g_51ebd4)->pitch_modifiers[playback->playback_index];
-	real scale = playing->source.scale;
-	real track_gain = *(real *)&playing->track_value;
 	real pitch = ((real)modifier->upper - (real)modifier->lower) * track->gain + playing->pitch + (real)modifier->lower;
 	bool primary = track->sound_index == sound_index;
 	s_looping_channel_properties properties;
-	properties.flags = 0;
-	memset((byte *)&properties + 4, 0, 0x30 - 4);
-	properties.effects.flags = 0;
-	memset((byte *)&properties.effects + 4, 0, sizeof(properties.effects) - 4);
-	real total_gain = *(real *)&playing->source.unknown08 + (track_gain + gain);
-	properties.gain_bits = function_1251e0(playback, *(long *)&total_gain, scale);
+	memset(&properties, 0, sizeof(properties));
+	real total_gain = *(real *)&playing->source.unknown08 + (*(real *)&playing->track_value + gain);
+	properties.gain_bits = function_1251e0(playback, *(long *)&total_gain, playing->source.scale);
 	properties.effects.effect = *(short *)((byte *)track_definition + 0x3c);
 	if (properties.effects.effect)
 		properties.effects.flags |= 1;
@@ -1872,9 +1872,11 @@ void function_21c400(short voice_index, real gain, s_looping_channel_spatializat
 				s_looping_playback_definition *current = (s_looping_playback_definition *)g_4e3b44[playing->definition_index & 0xffff].bytes;
 				s_permutation_set *current_range = &g_51ebd4->sets[current->pitch_range_base + playing->pitch_range_index];
 				s_looping_permutation *permutation = &((s_looping_permutation *)g_51ebd4->chances)[current_range->first_index + playing->permutation_index];
-				short next_chunk = NONE;
+				short next_chunk;
 				if (permutation && playing->current_chunk_index < permutation->chunk_count - 1)
 					next_chunk = playing->current_chunk_index + 1;
+				else
+					next_chunk = NONE;
 				bool last_chunk = next_chunk == NONE;
 				if (!(playing->loop.flags & 1) && primary && (byte)looping_sound_track_has_next_sound(track, track_definition))
 				{

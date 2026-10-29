@@ -867,6 +867,9 @@ struct s_flags_1f0870
 // 590/590/590; complete parallel weighted sums in both motion modes 594, with forward/
 // lateral/both projections 594/591/602; all with byte step result 602. Original body and
 // helper boundaries restored; frame 0x34 and direct/vector homes remain.
+// Round 179: direct initial/fallback/both eight-byte library copies 604/612/646; direct shared
+// output setter 592; initial/fallback/both copies with that setter 595/600/641; native horizontal
+// point with both copies and shared publication 641. Original clean body and helpers restored.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1277,6 +1280,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
 // inline query with each support contract 434; the other five pairs 421.
 // Original declarations, qualified count, candidate cursor and response order restored.
+// Round 179: retained selected record 433; initial speed zero after other outputs 453; both 458;
+// minimum-first acceptance 506; selected record/minimum 505; zero/minimum 490; all 498; all with
+// explicit final result 499. Original selected ordinal, publications, count and body restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1457,6 +1463,9 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // for the two contact dots 234 (same code: VC swaps the first two terms either way); with a
 // separate `__declspec(noinline)` declaration of 0x1f1df0 297 (1005 bytes: both calls out of line
 // as retail, 0x1f1df0 still matches; the arm layout and the supported flag's home are what remain).
+// Round 179: common normal/material-call join 254; native movement 253; combined preservation
+// mask/both 320/320; the same four joins with continue 254/253/320/320; original calls with the
+// combined preservation mask 324. Original body, magnitude, call sites and normal scopes restored.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

@@ -849,6 +849,9 @@ real function_18cac0(long arg_0);
 // /O1 or /Os or /Oy- (diagnostic flags, not kept) avoid it.
 // Round 265: all six lexical orders of door/side/inner long slots, then both
 // uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
+// Round 179: three-state side on the unaligned shared-membership graph, complete arms in
+// long/short/signed-byte/byte 155/179/224/224; first-side default 232/229/230/230. Original
+// ordinal, early absent-side continue, clear return, helpers and complete body restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
