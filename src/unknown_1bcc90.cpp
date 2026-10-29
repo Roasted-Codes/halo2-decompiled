@@ -40,6 +40,8 @@ short __stdcall function_1bcc90(long actor_index)
 // address is never taken. Tried: the test in a bool before the clear 102; the
 // 0x69c store first 36; the second result named 35; the reference declared at
 // function scope 35; the clear as `= {}` 35.
+// Carrier role names (all seven buffer/index/reference combinations) 35 each;
+// immutable returned reference 35.
 // @retail 0x1bcd00
 bool __stdcall function_1bcd00(long actor_index, s_slot *slot)
 {

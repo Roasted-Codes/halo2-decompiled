@@ -1281,6 +1281,13 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 253: Native RGB bias/reflected/scales/bias-reflected/bias-scales/
 // reflected-scales/all/all-short component loops 541/537/530/532/578/530/577/572.
 // Original selection, all private helpers, complete body and shared color type restored.
+// Existing curve mapper scalar-first/persistent-record-reference/both contracts,
+// forced or ordinary inline, 529 each; scalar-first or record-reference outlined
+// contracts 849 (1903 bytes; caller lost). Original mapper, all calls and body restored.
+// Round 257: Mapper lower-independent/upper-independent/upper-exclusive bounds
+// 529/551/551; separate bounded input with lower-exclusive/lower-independent/
+// upper-independent/upper-exclusive tests 529/529/551/551; existing returning pin 529.
+// Original mapper, complete body and every caller contract restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1358,6 +1365,12 @@ real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
 // score 364 (was 364): Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
+// The 0xd37f0 call is set up for its current convention (block in EDX, query in EAX; retail block EAX,
+// query EDX): BLOCKED-BY 0xd37f0's body, swapping its two parameters moves only the setup order.
+// Round 90: normal's squared length spelled k, i, j 358 (x87 runs i, k, j as retail; not kept: gain under 8); turned
+// vector rotated in place in direction2 429 (frame 0x40, 1870 bytes); squared length before the
+// clamps 458, with in-place rotation 456; 0xd37f0 block/query parameters swapped 436; tag fallback
+// as a select 383.
 // Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
 // Earlier 364 (was 364): frame 0x4c versus 0x40; normal-copy and native color/rotation homes remain.
 // frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.
@@ -1411,6 +1424,12 @@ real function_30bf0(vector3f *vector);
 // Round 253: Plain native RGB loops limited/reflected-blend/scales/limited-reflected/
 // limited-scales/reflected-scales/all/all-short 431/436/419/450/419/438/447/660.
 // Several recover frame 0x40 but regress; original complete body and color type restored.
+// Entry-only uninitialized length/square/three-scale declarations, seven subsets,
+// then all with luminance, 364 each. All value producers and complete body restored;
+// frame 0x4c and normal/limited-color/rotation homes remain.
+// Round 257: Projection-before-cross orders SCAPX/SACPX/CSAPX/CAPSX/CAPXS/ACPSX/
+// ACSPX/ASCPX 474/474/474/442/442/442/474/474. The three 442 forms recover frame
+// 0x40 and length 1870; all regress. Original helper and whole body restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1830,6 +1849,15 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 253: Direct component-array cursor loops base/dynamic/output/base-dynamic/
 // base-output/dynamic-output/all/all with ordered end tests 856/841/785/809/840/819/810/911.
 // Original ordinal loops, short final counter, frame and complete body restored.
+// Native interpolation pointers with decoded/raw defaults at producer, before-samples,
+// dynamic-phase and function declaration scopes: 784/796 in each pair. Original
+// two-arm source selection, independent sample objects and complete body restored.
+// Guarded pointer values after decoding at producer/before-samples/dynamic-phase/
+// function declaration scopes 806 each (3072 bytes). Raw-default diagnostics are
+// rejected; original format-dominated address arithmetic and full body restored.
+// Round 257: Scalar color-pin lower/upper independent, upper exclusive and lower/upper
+// guard returns 782 each; native lower/upper scalar results 828/828; existing returning pin
+// 843. Original conditional stores, helper and complete body restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

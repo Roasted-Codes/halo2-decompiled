@@ -442,6 +442,12 @@ static __forceinline void point_add_scaled_c35a0(point3f const *point, vector3f 
     result->z = point->z + vector->k * scale;
 }
 
+// score 34 (was 34): the x87 magnitude pops k and sums i, k, j rather than retaining k and summing k, j, i;
+// the inverse-times-i load, BSP word load and loop-entry padding also differ.
+// Shared vector3f_add_scaled 34; scale then add 100; nested scale/add 100; shared scaled-add with
+// per-use BSP globals and a loop-local structure 34; force-inline normalize 34; both helpers force-inline 34;
+// force-inline difference 34; point outside the loop 34; inline target 34; inline caller 34;
+// early default length 34.
 // @retail 0xc0840
 bool function_c0840(point3f const *start, point3f const *end, point3f *out, real *distance)
 {

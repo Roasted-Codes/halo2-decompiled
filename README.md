@@ -65,13 +65,13 @@ Analysis, documentation and review do not need it.
 
 ## Status
 
-Decompilation is under way, and 9926 retail functions now match byte for
+Decompilation is under way, and 9937 retail functions now match byte for
 byte. The checker reports:
 
 ```
-matched 9926 of 11326 game functions (1642455 of 2786206 bytes, 58.95%)
+matched 9937 of 11326 game functions (1645547 of 2786206 bytes, 59.06%)
 matched 1248 of 1436 Havok functions (164141 of 290362 bytes, 56.53%)
-matched 11193 of 17654 functions in scope (1808146 of 3904218 bytes, 46.31%)
+matched 11204 of 17654 functions in scope (1811238 of 3904218 bytes, 46.39%)
 ```
 
 Matched code so far includes:

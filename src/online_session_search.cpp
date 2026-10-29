@@ -661,7 +661,7 @@ done:
 	return result;
 }
 
-// score 111 (was 111): the details cursor is entry+0x1f8 (retail entry+0x10c), so every field
+// score 113 (was 111): the details cursor is entry+0x1f8 (retail entry+0x10c), so every field
 // offset differs, and the kind/count homes differ. Cursor taken from the results before the
 // end pointer gave retail's results reuse after the compare (128 -> 113). Round 52:
 // single-exit compare 128; typed details block 128; separate details cursor 154, with the typed
@@ -705,6 +705,9 @@ done:
 // Round 221: Single details induction with byte bounds, detail-relative/named scores 166/173;
 // owner-record bounds 186/170; complete conditional input producers give the same four counts.
 // All restored. Unchanged reduced control 113 versus full baseline 111.
+// Per-use selected count with ternary/result-first clamp: retained kind/value [168, 170];
+// direct value [168, 170]; direct kind [180, 182]; both direct [180, 182].
+// Original inputs restored; details cursor and kind/count/search homes remain.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

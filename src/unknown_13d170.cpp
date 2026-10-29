@@ -226,6 +226,11 @@ struct s_block_candidate
 // physical/candidate/best mutable-pointer input declarations 370 each. Policy body and all matched
 // controls stay exact; original declarations and call restored. Frame 0x1050 versus 0x1054 and
 // page/ring homes remain.
+// Round 111: arms inverted 367 at 1213 B again (retail keeps the none arm first, so only a length
+// coincidence); current and offset initialised at entry 399; 61 orders of the six cursor
+// declarations (fast) 369-383; default case first 370 (our case 0/1 bodies stay at the function's
+// end, retail keeps them in the loop); case 1 as `if (...) better = true;` 382. Retail keeps the
+// offset in EBX through the scan and spills `next` (+0x4c); ours keeps `next` and the tail.
 // @retail 0x13d370
 long __stdcall function_13d370(s_physical_object *physical, long size, long type)
 {

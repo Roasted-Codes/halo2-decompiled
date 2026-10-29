@@ -348,6 +348,9 @@ void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, col
 // body everything through the second reservation matches; ours then loads the size and computes the
 // half span before the third reservation, retail after its call); color pointer with the lower
 // coordinate first 372. All restored.
+// Round 180: Final integral size selection long/dword/short/word 534/528/534/534; on the earlier
+// pointer-color/byte-alpha/per-use reservation graph 548/542/548/548 (reduced control 162). All
+// conversions and storage changes regress; original complete body and real size reference restored.
 // @retail 0x2548f0
 void __stdcall function_2548f0(point2f const *arg_0, real arg_1)
 {

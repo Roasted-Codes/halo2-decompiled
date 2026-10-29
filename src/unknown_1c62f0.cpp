@@ -106,6 +106,8 @@ void c_animation_channel::clear()
 // Further trials: success result/nested success result 49/49; early invalid
 // guard with early frame 36; role-named inputs 36; late rate/short metadata/
 // both 36/36/36; both with the success result 49.
+// Further paired early-frame/retail-order forms: out-of-line member declaration 36/42;
+// immutable input ID 36/42; ID sentinel memset 50/51; direct state bytes 43/51.
 // @retail 0x1c6470
 bool c_animation_channel::set(long graph_tag_index, word flags, c_type_709360 animation_id, long unknown08,
 	char unknown0c, char unknown0d, char unknown0e)

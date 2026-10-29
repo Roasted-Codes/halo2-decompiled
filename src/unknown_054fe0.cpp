@@ -1366,6 +1366,10 @@ struct s_player_properties
 // default store order 224; no `current` with both/0x40/0x70 groups typed real 204/179/182 (not real
 // types). The name count stays in memory through the first loop in every form (the per-player memset
 // alone decides it); retail keeps it in esi. Retail also compares the clamped team as a movsx'd long.
+// Round 180: Absent-member continues in collection/update/both 184/184/184; cache completion after
+// copy alone/with collection/update/both 180/180/180/180, bounded short count 226. On that cache
+// graph, promoted team/direct current/direct cache observation subsets 183/237/240/180/183/216/220,
+// all with short count 220. Four-point form rejected; original full body restored at 184.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {

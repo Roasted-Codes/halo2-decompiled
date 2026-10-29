@@ -637,6 +637,8 @@ struct s_device_machine_view
 // score 42 (was 42): the group-flag test is two bytes longer than retail's: ours shifts the flags byte down by
 // one before the second test, retail tests bit 2 directly; retail also clears the result in
 // case 0x1200055f where ours does not.
+// Actual signed group flags with Boolean/masks/early load/default; actual group bitfields with
+// direct/second/both/default tests 43/120/54/122/50/50/50/122. Original executable source restored.
 // @retail 0x106d70
 bool __stdcall device_export_function(long device_index, long name, real *value, bool *active)
 {
@@ -1290,6 +1292,9 @@ bool function_0b6760(s_index_pair const *pair);
 // Round 390: Complete first-motion/integration/second-motion byte-or-long completion
 // carrier domains, all eight combinations: 294/383/386/414/324/402/392/413. Original bool carriers restored.
 // Long integration gives frame 0x20 but worsens length and register allocation.
+// Round 190: shared motion completion in bool/byte/short/long, before/after activity by name,
+// 294/294/406/402 each. Refresh/event ordinary-inline-noinline pairs 294 each;
+// the refresh-inline forms also lose two matched callers. Original body and declarations restored.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {

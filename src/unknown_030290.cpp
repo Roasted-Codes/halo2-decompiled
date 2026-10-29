@@ -303,6 +303,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 14: forced shared transform 718; helper camera home 234 (frame 0x2c); with snapshots
 // y,x,z / x,z,y / y,z,x / z,x,y / z,y,x 234/207/204/231/227; best plus outer reversed point 204;
 // outer reversed point 195; pointer-returning helper with it 195. All restored.
+// DL175: Uniform transform term permutations, every parallel product named, early uninitialized
+// reversed-point scratch and direct inverse factors [195, 195, 195, 195, 195, 213, 195, 207]. All
+// arithmetic-order forms are exact-only; original helper and body restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {
@@ -500,7 +503,7 @@ void function_30e30(long key, long value, bool add, real x)
 
 real function_30bf0(vector3f *v);
 
-// score 42 (was 47): the first product's x87 operand order and the SSE
+// score 42 (was 42): the first product's x87 operand order and the SSE
 // registers of the normalization and second product differ. Shared cross3f and
 // normalize3d 42; a local copy of axis gives retail's x87 order (35) but is
 // not kept; normalize_inline 53 (harness); result declared first, length kept,
@@ -513,6 +516,9 @@ real function_30bf0(vector3f *v);
 // Second product written into vector directly 46 (stores interleaved, retail
 // stores all three at the end); second product's components computed k, j, i
 // into locals 74, into the result 74.
+// Round 181: outer input order 35 (230 bytes); output/axis/both reference inputs 42/42/42; reordered
+// references 35/35/35; outer inline 42. Seven-point order gain rejected; original binding and SSE
+// carriers retained.
 // @retail 0x31b40
 real function_31b40(vector3f *vector, vector3f const *axis)
 {

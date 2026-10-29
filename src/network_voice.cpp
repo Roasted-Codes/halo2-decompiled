@@ -1526,6 +1526,8 @@ static __forceinline bool function_57d63(long arg_0, long arg_1);
 // availability test and the second inlined, a one-file LTCG build is byte-identical to retail
 // only when voice_get_membership's call chain may write arbitrary memory; ours is known to write
 // only its own local, which leaves the second availability byte loaded lazily.
+// Coordinated membership inline/local-mask metadata, native/wide bit 94/118/94/118; forced membership
+// combinations 211/206/211/206 (21 checked matches lost). Restored.
 // @retail 0x55990
 void function_55990(s_voice_player_values *values)
 {
@@ -3035,6 +3037,10 @@ struct s_voice_route_choice
 // Round 250: signed range admission, original/conditional headset 367/367;
 // with split nearest selection 433/433; complete mode observation 440/440,
 // with split nearest 512/512. All restored; entry saves and cursor bias remain.
+// Round 237: explicit pair/descriptor/both library clears 387/391/395; complete pair values
+// 379; complete descriptor values 373; pair clear with descriptor values 370; pair values
+// with descriptor clear 378; complete values for both 374. Original body restored;
+// both callers and both exact callee controls survive; entry/cursor homes remain.
 // Round 395: signed nearest-index validity 419; with choice receiver 412, branch radio 415, both 414;
 // three mixer pairs on those four graphs 428/402/422/421. Original validity tests and full body restored.
 // @retail 0x57eb0
