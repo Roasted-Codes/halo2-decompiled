@@ -1246,6 +1246,8 @@ void __stdcall function_1e55d0(s_biped_physics_move *arg_0, void *arg_1, s_biped
 // existing rounding helper 101; chained sentinel words 96; native sentinel library fill 278; byte parent
 // countdown 94; postfix parent countdown 100; shared final flag clear 94; signed short force 16; rounding helper
 // with signed force 62.
+// Round 263: object/input/both flags read at each use 156/132/121; existing basis helper
+// inline/noinline declarations 94/94; inline with those observations 156/132/121. All restored.
 // @retail 0x118700
 bool __stdcall function_118700(long arg_0)
 {

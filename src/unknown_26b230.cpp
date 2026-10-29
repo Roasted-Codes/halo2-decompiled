@@ -1765,6 +1765,9 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // Round 69: existing inline datum lookup in the collected pass 288 (generation then cached as retail, but the
 // object query inlines there); short/long index loops 161/160; child next into the walking index 165;
 // child next with an else arm 167.
+// Round 263: shared datum validation with object-query inline/global-noinline/scoped-noinline
+// declarations 288/288/288; each with ordinary-inline prop iterator 288/288/288;
+// inline/global-noinline query with positive validation blocks 288/288. Frame 0xdc; all restored.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
