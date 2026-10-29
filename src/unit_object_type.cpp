@@ -2295,7 +2295,7 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 
 /* once: sets the unit's flag 21 and a random angle at +0x2d8 around its
    actor's direction (or its own facing) */
-// score 7 (was 20): Frame 0xc versus 0x10 (retail keeps the atan2 temp in the query buffer's first dword,
+// score 5 (was 20): Frame 0xc versus 0x10 (retail keeps the atan2 temp in the query buffer's first dword,
 // ours with range) and the last two x87 adds (retail adds the bound before the angle) differ; the query
 // writes a 12-byte vector, which the 8-byte buffer only gets away with here. Native vector, 12-byte scratch
 // and real[3] 23; bool flag 60; native/bool 60; outer workspace 23; field angle 57; random-first native/bool
