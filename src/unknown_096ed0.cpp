@@ -13,7 +13,7 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 132 (was 170): frame 0x48, receiver EBP and pending counter ESI agree; selector,
+// score 132 (was 132): frame 0x48, receiver EBP and pending counter ESI agree; selector,
 // cursor/entry/query homes and load scheduling remain. Earlier 170: the peers table is read through a local; the
 // index is read inside the enabled test, the cursor is declared under the index test, advanced
 // before the stores and the size is one expression, so retail's prologue and output block match.
@@ -138,6 +138,10 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 180: Pending/active selector constants after queries and single-item counts after
 // callbacks, masks 1-7, then all with single-item selectors after callbacks:
 // 172/170/172/229/230/229/230/229. Original executable body restored.
+// Round 399: retained active-cursor graph, output/selector/input names in masks 1-7,
+// all with callback-output names, native count/index names, those with selector/input,
+// explicit remaining-count pointer walk and that walk with count/selector names: 132 each.
+// Active remaining count still coalesces with selector at +0x20; complete body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
