@@ -1208,9 +1208,8 @@ bool __stdcall function_26ccb0(s_pathfinding_data const *pathfinding, s_obstacle
     short ignored_obstacle, point2f const *origin, long sector, long target_sector, point2f const *direction,
     real radius, real distance, bool first, bool stop_at_goal, bool ignore_flagged,
     s_path_location const *location, s_avoidance_trace *trace);
-bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
-    s_path_trace_result *trace, s_pathfinding_data *pathfinding,
-    long sector_index, long target_sector_index, long location);
+bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start, long sector_index,
+    s_type_c3b527 const *end, long target_sector_index, long location, s_path_trace_result *trace);
 // score 444 (was 444): frame 0x11c versus 0x10c, 1740 bytes against 1746. Ours copies the whole step
 // (`rep movsd`) where retail reads it through a pointer and keeps only its type and link in stack slots;
 // retail places the count <= 1 arm at the end, keeps 0 in EBX for the whole function, compares the
@@ -1424,12 +1423,11 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                             function_2c2910(&center, tangents, &origin, radius, &candidate);
                             point3f target = { candidate.x, candidate.y, 0.0f };
                             s_path_trace_result first, second;
-                            function_26c4e0((s_type_c3b527 *)&start, (s_type_c3b527 *)&target,
-                                &first, data, sector, NONE, (long)&query->location);
+                            function_26c4e0(data, (s_type_c3b527 *)&start, sector, (s_type_c3b527 *)&target,
+                                NONE, (long)&query->location, &first);
                             if (!((s_sector_trace_result *)&first)->blocked &&
-                                !function_26c4e0((s_type_c3b527 *)&target, &next_step->point,
-                                    &second, data, ((s_sector_trace_result *)&first)->sector_index,
-                                    next_step->node_index, (long)&query->location))
+                                !function_26c4e0(data, (s_type_c3b527 *)&target, ((s_sector_trace_result *)&first)->sector_index,
+                                    &next_step->point, next_step->node_index, (long)&query->location, &second))
                             {
                                 sector = ((s_sector_trace_result *)&first)->sector_index;
                                 origin = candidate;

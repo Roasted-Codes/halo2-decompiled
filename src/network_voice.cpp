@@ -3010,6 +3010,10 @@ struct s_voice_route_choice
 // Round 381: headset accumulation after routing 423; settings publication after decisions 435;
 // both 494; with the actual choice receiver 423/435/494; both with conditional radio 416,
 // with the receiver 416. All restored; original byte accumulation and input reads retained.
+// Round 109: retail tail-merges the two SetPlaybackPriority calls (engine loaded last in both arms;
+// ours loads it early in the radio arm). The loop test as `count > i` 1091 (not unrolled; callers
+// 57960/56df0 lose to 22/18); the index declared before the loop 363; the player field read at each
+// settings update 477; the NONE-nearest priority arm first 362; the radio flag declared last 363.
 // Round 169: Actual mask-array entry/loop/reference and per-element receivers
 // 363/363/363/399; each with conditional radio 411/411/411/411. Original routing restored;
 // entry saves and unrolled cursor bias remain.
@@ -3019,6 +3023,9 @@ struct s_voice_route_choice
 // Round 396: shared routed-admission predicate across settings/reduction, at both
 // observation boundaries with choice receiver and bitwise/branch radio:
 // 1085,1088,1085,1088,1088,1090,1088,1090. All lose both callers and suppress expansion; original restored.
+// Round 250: signed range admission, original/conditional headset 367/367;
+// with split nearest selection 433/433; complete mode observation 440/440,
+// with split nearest 512/512. All restored; entry saves and cursor bias remain.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

@@ -484,6 +484,7 @@ PRIVATE short *function_e70b0(long unit_index, short *state)
 // @retail 0xe7110
 bool function_e7110(long unit_index, long secondary, long magazine_index)
 {
+	bool result = false;
 	long action_type;
 	long mode;
 	long name;
@@ -501,29 +502,33 @@ bool function_e7110(long unit_index, long secondary, long magazine_index)
 		name = 0xd00053a + (magazine_index != 0);
 	}
 
-	if (function_110ab0(unit_index))
-		return false;
-
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-
-	if (TEST_FIELD_BIT((unit->flags_134 >> 25) & 1) || TEST_FIELD_BIT(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(unit), 0x16)))
-		return false;
-	if (unit_action_active(unit_index, action_type) &&
-		function_cbd50(unit_index, unit->weapon_slots[secondary]) != NONE)
+	if (!function_110ab0(unit_index))
 	{
-		function_e69c0(unit_index, action_type);
+		s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
+
+		if (!(TEST_FIELD_BIT((unit->flags_134 >> 25) & 1) ||
+			TEST_FIELD_BIT(UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(unit), 0x16))))
+		{
+			if (unit_action_active(unit_index, action_type) &&
+				function_cbd50(unit_index, unit->weapon_slots[secondary]) != NONE)
+			{
+				function_e69c0(unit_index, action_type);
+			}
+			function_e69c0(unit_index, 0x1a);
+			function_e69c0(unit_index, 0x1b);
+
+			long weapon_index = function_cbd50(unit_index, (&UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index)[secondary]);
+
+			if (weapon_index != NONE && function_101490(weapon_index, magazine_index))
+			{
+				function_c86e0(unit_index, 0);
+				if (!function_1029d0(weapon_index, (short)magazine_index))
+					function_113e90(unit_index, name, 0.267f, NULL, mode);
+				result = true;
+			}
+		}
 	}
-	function_e69c0(unit_index, 0x1a);
-	function_e69c0(unit_index, 0x1b);
-
-	long weapon_index = function_cbd50(unit_index, (&UNIT_ACTION_UNIT_GET(unit_index)->current_weapon_index)[secondary]);
-
-	if (weapon_index == NONE || !function_101490(weapon_index, magazine_index))
-		return false;
-	function_c86e0(unit_index, 0);
-	if (!function_1029d0(weapon_index, (short)magazine_index))
-		function_113e90(unit_index, name, 0.267f, NULL, mode);
-	return true;
+	return result;
 }
 
 /* readies a weapon (types 0, 1, 10 and 11: a hand's first or second
@@ -1214,7 +1219,7 @@ bool function_e8510(long unit_index, bool immediate, bool silent, bool primary)
 
 bool function_10fd40(long unit_index, long action_name, long state_name, bool flag);
 byte function_10fcd0(long unit_index, long unknown, long state_name, long action_name);
-void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary);
+void __stdcall function_d0870(long weapon_index, long unit_index, long secondary);
 void __stdcall function_fff40(long weapon_index, bool silent, bool immediate);
 
 /* a unit's weapon animations: its vehicle seat's weapon's, or the
@@ -1432,6 +1437,9 @@ bool __stdcall function_e8b20(long unit_index, long type)
 // actions read inside the test with primary first 11; the bit test as its expression 11; the test
 // result named first 11; `type == 8` in each call argument 82; the then-block as a call of the
 // switch-finished action 252, with that action inline 252 (not inlined).
+// Round 31: direct header lookup 11; named header 77; separate actions/primary assignments 11 each;
+// primary branch 87; zero/one ternary 11; long primary 96; active pointer 11;
+// force-inlined switch-finished action 82.
 // @retail 0xe8c10
 void __stdcall unit_action_weapon_switch_interrupted(long unit_index, long type)
 {
@@ -1906,12 +1914,13 @@ bool __stdcall unit_action_melee(long unit_index, s_unit_request *request)
 				}
 			}
 
-			if (!function_e9780(unit_index, name, true, melee->face ? &melee->facing : NULL, NULL))
-				return false;
-			if (TEST_FIELD_BIT((*(dword *)(definition + 0xbc) >> 8) & 1))
-				function_10f430(unit_index, 0x7000101, 0x7000101, 0x7000101, 0xc000043, 0.0f, 0, 2);
-			actions->active[0] |= 0x4000000;
-			result = true;
+			if (function_e9780(unit_index, name, true, melee->face ? &melee->facing : NULL, NULL))
+			{
+				if (TEST_FIELD_BIT((*(dword *)(definition + 0xbc) >> 8) & 1))
+					function_10f430(unit_index, 0x7000101, 0x7000101, 0x7000101, 0xc000043, 0.0f, 0, 2);
+				actions->active[0] |= 0x4000000;
+				result = true;
+			}
 		}
 	}
 	return result;
@@ -3697,7 +3706,7 @@ bool __stdcall function_ec9a0(long unit_index, s_unit_request *request)
 
 		function_b9dd0(unit_index, &point);
 		unit_action_seat_facing_get(UNIT_ACTION_UNIT_GET(unit_index), &facing);
-		return function_ee090(unit_index, 0x6000542, 3, 0x7000543, &point, &facing);
+		result = function_ee090(unit_index, 0x6000542, 3, 0x7000543, &point, &facing);
 	}
 	return result;
 }

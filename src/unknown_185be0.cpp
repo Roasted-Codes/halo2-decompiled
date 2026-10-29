@@ -255,6 +255,9 @@ union s_185be7
 // DH round 218: whole input snapshot aggregate with native/byte/word/both scratch initialization
 // 1046/1077/1046/1072; same four with readonly settings 1046/1077/1046/1072.
 // All grow to 3817 or 3837 bytes versus retail 3777; complete original body restored.
+// Round 265: adjacent selected-input/input-five/input-four shared-mask groups, all
+// seven subsets and complete grouping with full-width selection 813/895/1033/954/990/990/1031/1030.
+// Original individual masks, selected byte and complete body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {
