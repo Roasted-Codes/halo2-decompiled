@@ -413,7 +413,7 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
-// score 363 (was 363): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
+// score 349 (was 363): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
 // Earlier: the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
 // Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
 // all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
@@ -429,6 +429,9 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 // signed flag field with link/complete entry initializers 360 (three-point gain restored), all
 // constant traversal initializers 384, guarded edge memset 393, native capped word 372, all 412.
 // Complete body and edge declarations restored; initial acquisition, clearing and vector homes remain.
+// Round 250: actual advancing initialization receiver, short/long ordinal 349/401;
+// safely capped word 374/374; separate edge memset 384/353, with word 384/386.
+// Keep only the receiver with the original short ordinal: 349 plain, 1395/1388 bytes.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,
@@ -441,12 +444,14 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	long initialize_count = lookup->nodes[node_index].depth + 1;
 	if (initialize_count > maximum_steps)
 		initialize_count = maximum_steps;
+	s_path_step_view *initialize_step = steps;
 	for (short i = 0; i < initialize_count; i++)
 	{
 		edge_indices[i] = NONE;
-		steps[i].type = NONE;
-		steps[i].link_index = NONE;
-		steps[i].unknown02 = 0;
+		initialize_step->type = NONE;
+		initialize_step->link_index = NONE;
+		initialize_step->unknown02 = 0;
+		initialize_step++;
 	}
 	short previous_index = NONE;
 	s_path_node_key_view *previous = NULL;
@@ -567,7 +572,7 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	return count;
 }
 
-// score 98 (was 155): Frame 0x5ac and distance-return tails agree; avoidance materialization and retry-word residency differ.
+// score 98 (was 98): Frame 0x5ac and distance-return tails agree; avoidance materialization and retry-word residency differ.
 // Earlier: frame 0x5ac, actor lookup and direct avoidance-byte copy agree; retry-mask reload and tail layout differ.
 // Tried: one result exit 308; stage array names 356; both 308; reversed arrays 356; named destination fields 360;
 // direct reconstruction count 357; full avoidance if/else 354; success first 362; shared rounding helper 363; helper plus one exit 314.
@@ -581,6 +586,9 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 // defaults/success 216; complete avoidance with both wide result carriers 326.
 // Complete-result return 98; separate avoidance update 165; both 137; failed-finalization first 202;
 // failure-first/avoidance 165, failure-first/return 202, all 165; nested avoidance/return 137.
+// Round 250: signed retry-word ownership before/after output defaults, short/long
+// 103/207/103/207; with separate final retry publication 103/207/103/207.
+// All restored; avoidance materialization and retry-word residency remain.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {

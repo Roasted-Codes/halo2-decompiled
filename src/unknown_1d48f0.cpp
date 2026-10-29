@@ -170,6 +170,9 @@ const dword g_455978[81] = {
 // 306/341/314/306; each with shared optional-ray difference 306/341/314/306.
 // Native copies lengthen the body; optional-state homes and selective
 // location/range expansion remain. All endpoint producers and helpers restored.
+// Round 250: native lower/upper/translation vector producers, subsets 1..7
+// 494/490/547/365/508/521/562; all with complete endpoint copy 601.
+// All restored; optional-state homes and selective helper expansion remain.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
