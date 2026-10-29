@@ -325,6 +325,9 @@ void function_117510(long index)
 // Round 264: live record/definition/both/link/record-link/definition-link/all receivers
 // 309/232/379/147/309/254/377; definition acquired before record 149. All restored;
 // frame 0x1c, entry pool/record carriers and correction/pin scheduling remain.
+// Round 196: retain only first endpoint with point/vertex/shared-difference/link-cursor forms
+// 179/179/179/173; retain only second 211/211/211/159. All restored; native entry/link
+// carriers, pin-word observations and correction scheduling remain.
 // @retail 0x117790
 void __stdcall function_117790(long index)
 {

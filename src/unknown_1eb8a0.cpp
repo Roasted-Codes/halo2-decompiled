@@ -255,6 +255,9 @@ void function_1eb6f0(s_ease_input *input, s_ease_state *state, s_ease_output *ou
 // 679/644/665/664/662/677/648; all plus initial vector assignment 657. Assignment alone
 // and with initial difference/addition/refresh 644/676/659/664. Original snapshots, math,
 // counter result, qualification and exact caller restored.
+// Round 189: original velocity observed at the first output producer, native at-use/entry
+// value and output readback with conditional/native zero 661/661/687/676; each with the
+// shared output dot 670/670/672/668. Original observations, math and counter result restored.
 // @retail 0x1eb8a0
 long function_1eb8a0(
 	s_ease_state *s,

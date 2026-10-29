@@ -659,6 +659,9 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // as a short ([esp+0x40] word store) and zeroes first_output at entry with flags. The if/else alone
 // 707 (2976 B), with the step pointer after it 750 (2960 B); first_output zeroed at entry 700; short
 // frame index 704. All restored.
+// Round 191: native byte success with completion/ordinal/segment scalar identity groups,
+// all eight subsets 754 each. Lexical scalar identities do not recover the byte/word
+// homes; original dword success and all original identities restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,

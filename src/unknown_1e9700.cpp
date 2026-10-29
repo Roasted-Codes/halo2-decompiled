@@ -76,7 +76,10 @@ void function_1ea770(byte code, long player_index, s_statborg *statistics, long 
 // reads as `if (g_510ca0) x = i != NONE ? value : NONE` gave retail's nested
 // shape (115 -> 107). Tried: the old maximum through a call to 0x196960 (167,
 // not inlined), the team maximum as one nested ternary (110).
-// score 107 (was 107): still BLOCKED-BY 0x196960/0x1968b0 (retail inlines both; their file is held) and retail re-reads g_510ca0 after each pointer store where ours keeps it in DL (whole-program aliasing). Combined `g_510ca0 && index != NONE` maximum 112; same for the team maximum 112; increment through the statistics address 111; counter pointer with the nested-ternary clamp 106 (its store then matches retail's); that clamping `consecutive` directly 106.
+// Earlier: still BLOCKED-BY 0x196960/0x1968b0 (retail inlines both; their file is held) and retail re-reads g_510ca0 after each pointer store where ours keeps it in DL (whole-program aliasing). Combined `g_510ca0 && index != NONE` maximum 112; same for the team maximum 112; increment through the statistics address 111; counter pointer with the nested-ternary clamp 106 (its store then matches retail's); that clamping `consecutive` directly 106.
+// Native descriptor value with update/ternary/exclusive/nested clamps 151/160/160/151;
+// const descriptor counterparts 151/160/160/151. Original scalar limits restored;
+// enable reloads, maximum/register roles and the held inline boundaries remain.
 // @retail 0x1ea5b0
 void function_1ea5b0(long player_index, s_statborg *statistics, long threshold, byte code)
 {

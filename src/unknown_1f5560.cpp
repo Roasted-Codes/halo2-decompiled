@@ -658,6 +658,8 @@ struct s_1f9762
 // 127; long validity/last/both 161/161/173; conditional last projection 67.
 // Reached word/native 110/111; short validity/last/both 163/164/178; direction-publication-first
 // 67; publication-first with word reached 110; readonly actor/path receivers 67 (fast).
+// Selected projection by value across four three-vector lexical orders, last/validity-first guards
+// 133/264 in every order; extra vector storage grows the frame and does not recover native tails.
 // @retail 0x1f9760
 bool function_1f9760(long actor_index, long object_index, point3f const *point, real distance,
 	bool *last_out, bool *direction_valid_out, vector3f *direction_out)

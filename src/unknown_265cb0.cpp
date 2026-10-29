@@ -476,6 +476,9 @@ real function_30bf0(vector3f *vector);
 // DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
 // 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
 // Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
+// Round 189: paired range squares/final squares/both, matched two-term magnitude partials,
+// range-partials/final-partials/all/all with live handle: 193/172/183/193/152/183/168/168.
+// Original products and handle observation restored; result/range/projection homes and SIMD groups remain.
 // Round 394: empty/non-player/both seat continue exits, each with native/seat-scope
 // query outputs, 205 each; both with later up 205; both with long index 209.
 // Original eligibility, cursor and output scopes restored; result/range/SIMD homes remain.
@@ -1240,6 +1243,9 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // Round 246: Native smoothing fields/cached clock/native byte flags, seven combinations: 99/425/425/99/99/425/425/425.
 // Eighth form writes the native smoothing update explicitly; actual actor-layout aliases preserve old byte-array users.
 // All trial forms restored; no candidate qualifies.
+// Native target assignment 133; offset setter 101; both 135; projected-point aggregate 99;
+// target/aggregate 133; offset/aggregate 101; all producers 135; read-only projected point 135.
+// Clock conversion/copy and direction/ahead/target homes remain; all producers restored.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {

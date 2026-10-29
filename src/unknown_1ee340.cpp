@@ -256,6 +256,9 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // (push edx, a third exit), declared before the axis or at the bounded test 199/199 (1001 B, this
 // then in EDI); count local with copied start/end points 197 (1020 B); copied start/end points
 // alone 196.
+// Round 191: complete admission result through fraction/clamp/polygon tests, nested/merged
+// range with original/shared count: bool 266/262/258/256; byte 258/258/262/258.
+// All regress; original result flow, count observations and native geometry restored.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
