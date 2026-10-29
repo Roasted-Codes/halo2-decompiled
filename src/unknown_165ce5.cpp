@@ -1498,6 +1498,10 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 34 (fast control 234, full 232): independent primary/idle pointer or reference
 // receivers, all four combinations 234 each; those four with first-weapon fields
 // observed directly 578 each. Original shared channel lifetime and body restored.
+// Round 389 (fast control 234, full 232): late magnitude double 428; reused native idle tick
+// 290; both 427; both named animation-period summands 234. Native double period/duration
+// alone, with magnitude, with idle tick and with both 390/415/397/414 (exact-only).
+// Original scalar types, arithmetic and calls restored; frame 0x28 and look homes remain.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

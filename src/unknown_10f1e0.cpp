@@ -1446,6 +1446,9 @@ bool __stdcall function_110ab0(long unit_index)
 // Native pool bases recover frame twelve at 487; the paired short graph reserves sixteen.
 // On the native pool graph, default success bool/entry-bool/byte/entry-byte
 // 474/474/514/514. Original result defaults and lifetimes restored.
+// Round 389: Plain two-held-slot traversal with long/short/word/byte indices, slot-first
+// validity joins 470/494/494/523; shared validity-first joins 470/494/494/491 (fast control
+// 450). Original paired queries and complete body restored; frame eight and state homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
