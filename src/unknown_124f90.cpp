@@ -961,6 +961,9 @@ real function_21f650(long channel_index, long mode);
 // function-wide channel_index local 113; the last block's locals folded into one expression 42;
 // elapsed_time read into a local before the rate call 42; a stream pointer for the last state
 // test 42; the table pointer declared at the outer scope 42.
+// Round 181: per-use chunk table 42; retained chunk base 85; per-use voice array 180; native
+// loaded-field comparison 66; early queued-pointer clear 42; exact-size transfer memcpy 42;
+// queued/current permutation lifetimes 74/102. EAX global-load allocation remains.
 // @retail 0x12a450
 void sound_voice_update_chunks(short voice_index)
 {
@@ -3351,6 +3354,8 @@ void __stdcall function_1264c0(dword arg_0);
 // next search (retail's masked-slot reuse) 9; plus a memset of the impulse ids 6 (its pointer in
 // ECX, retail EAX). Not kept without a match. Next search alone 85; deadline in the loop condition
 // 107; local-pointer, loop, chained and helper id stores 9; struct copy of the ids 114.
+// Range fill saved/direct 119/122; counted fill saved/direct 121/121; with shared invalid value
+// 104/102/102/102. All restored.
 // @retail 0x1257b0
 void function_1257b0(void)
 {

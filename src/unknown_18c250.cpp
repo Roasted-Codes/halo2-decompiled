@@ -629,6 +629,10 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // 286/286; with complete two-use negative adjustment 282/282, distance pair
 // 305/305, angle pair 310/310. Frame 0x8c and protected root-location destination
 // remain; all original field observations and the receiver pair restored.
+// Round 178: distance pair read once 306; angle pair once 314; negative adjustment
+// once 276 (four-point gain below the gate); distance+angle 324; distance+adjustment
+// 307; angle+adjustment 315; all five properties 324; all with readonly receiver 324.
+// Original observations and body restored; protected root-location convention remains.
 // Round 186: Complete source-kind char/byte/short/long with address/value owner selection
 // 346/346/338/351/358/358/350/363. Original field observations, multi-use handle helper and complete
 // body restored.
