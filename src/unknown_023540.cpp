@@ -2453,6 +2453,9 @@ dword __cdecl function_131fc0(real alpha);
 // Round 235: Direct enum-range address/filter/disabled-state loops, seven subsets and complete while form
 // [926, 883, 685, 1104, 1159, 1089, 1240, 681] fast. Runtime SDK setter specialization grows the body; all
 // original ordered direct calls, arrays, fields, directives and body restored.
+// Round 253: bounded native pixel short/long/word/dword producers 427/410/427/448;
+// native pixel lifetime across bitmap guard 438/439/438/433. Original float dimensions,
+// full-stack marker, state calls and complete body restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2745,7 +2748,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// score 282 (was 334): Frame 0x58 agrees; six excess bytes, sampler constants,
+// bitmap-call transport and scale/trig homes remain.
 // Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
 // has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
 // its 0 lives there. 0x144f0 sits in a contributor file this round; no new form tried.
@@ -2804,6 +2808,10 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Signed integral corner inputs char/short/int/long in the existing rotation helper
 // 334/334/334/334; each with native coordinate outputs
 // 334/334/334/334. Original helper and all eight calls restored.
+// Round 378: Paired scaled pixel diameters 282; complete half extents 334;
+// native rectangle 282/334; independent second trig 280/338; rectangle plus trig
+// 280/338. Keep only paired diameters 282 (plain), 2028 bytes; the extra two-point
+// trig step is rejected. Original trig storage, arrays, helpers and calls retained.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -2873,11 +2881,13 @@ void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
         first_texture_scale *= inverse_scale;
         second_texture_scale *= inverse_scale;
     }
+    real scaled_width = scale * width;
+    real scaled_height = scale * height;
     real bounds[4];
-    bounds[0] = 320.0f - scale * width * 0.5f;
-    bounds[1] = 320.0f + scale * width * 0.5f;
-    bounds[2] = 240.0f - scale * height * 0.5f;
-    bounds[3] = 240.0f + scale * height * 0.5f;
+    bounds[0] = 320.0f - scaled_width * 0.5f;
+    bounds[1] = 320.0f + scaled_width * 0.5f;
+    bounds[2] = 240.0f - scaled_height * 0.5f;
+    bounds[3] = 240.0f + scaled_height * 0.5f;
     if (first_texture_scale == 0.0f) first_texture_scale = 1.0f;
     if (second_texture_scale == 0.0f) second_texture_scale = 1.0f;
     real first_coordinates[8], second_coordinates[8];

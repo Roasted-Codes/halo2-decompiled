@@ -573,7 +573,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 336 (was 393): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
+// score 336 (was 336): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
 // conversions (6 calls versus retail's 15; BLOCKED-BY 0x12aff0: retail's callers treat it as opaque).
 // Round 75: SetMixBins (retail calls 0x37c5e4) for SetMixBinVolumes 449 (kept); the existing 0x2216f0 with a
 // NULL list for the three submissions 393 (kept); explicit sends, one object 613, three objects 544; set-2 rear
@@ -657,6 +657,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // 333, 334, 338] fast; uniform all-three 336 plain kept (393 before). On that producer, pairwise/all
 // descriptor scopes and one reused descriptor [370, 351, 381, 416, 426] fast; restored. Frame 0x130 and
 // repeated-conversion reuse remain.
+// Round 379: called shared append on first/second/third/first-second/first-third/last-two/all
+// descriptors 468/469/413/609/548/541/679 fast; uniform existing raw inline append 335
+// (control 334, full 336). All original calls and executable body restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {

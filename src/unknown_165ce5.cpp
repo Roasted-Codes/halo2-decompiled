@@ -1476,11 +1476,17 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // 386/234/386/234/386/234/386; combined role names 386 (fast control 234, full baseline 232).
 // Original pair types, scopes, names and every smoothing input restored. Frame 0x28 versus 0x2c,
 // unit/mode homes and shared look reciprocal remain.
+// Round 212: plain two-axis aiming-spring traversal, long/short/dword/word indices,
+// direct/output-storage receiver [578, 578, 578, 578, 578, 578, 578, 578]. Original independent
+// calls restored; frame and look homes remain.
 // Round 373 (fast control 234): Structured overlay continuation, with callback/active/both
 // choices 234/234/392/392; reusable no-overlay decision with those four forms
 // 421/421/403/403. Original body and every smoothing input restored.
 // Round 246: complementary activity bool/byte/short/long 424/424/423/425; the same with
 // callback selection at update 424/424/423/425 (fast). Original activity and callback restored.
+// Round 251 (fast control 234): loop-scoped orientation byte-offset/ordinal/base/cursor
+// 410/234/409/254; the four at entry 561/234/576/558. Ordinal forms keep frame
+// 0x28; the other forms grow it to 0x30. Original buffer lifetime and body restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1827,7 +1833,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 
 /* samples a weapon's animation, its overlays and its sway into the user's
    orientations, then builds the weapon's node matrices */
-// score 410 (was 410): current frame 0x78 and initial copies agree; early blend byte and user/weapon/sway homes differ.
+// score 410 (was 410): Frame 0x78 and initial copies agree; early blend byte and user/weapon/sway homes differ.
 // Earlier frame 0x58 versus 0x78; root/channel overlap and later sway homes remained.
 // Earlier root/channel homes overlapped in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // Frame 0x78 and root/channel homes agree; early blend byte and later receiver/sway homes differ.
@@ -1887,6 +1893,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Round 243: Owner-mediated state, handle at every use, both, buffer root at every use,
 // state/buffer, handle/buffer, all three and state with immutable buffer snapshot:
 // 497/529/494/743/742/775/767/497 (fast control 411/2166). Complete original body restored.
+// Round 161: Coordinated definition/header inline query/setter/sampler/query-setter/query-
+// sampler/setter-sampler/all-three/aiming sampler: 411 each (unchanged reduced control 411; full
+// 410). Every specification restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

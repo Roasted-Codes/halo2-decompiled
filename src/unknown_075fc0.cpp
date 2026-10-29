@@ -70,7 +70,7 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
     return local_0;
 }
 
-// score 408 (was 408): frame 0x38/0x34; channel/result homes and the counter copy remain.
+// score 408 (was 408): frame 0x3c/0x34; channel/result homes and the counter copy remain.
 // Native channel 434; primary/both counter products 448/419; native products 446/423;
 // native live flag/callback/both 441/439/432; direct counter product 419;
 // both/primary word concatenation 423/431; native both/primary concatenation 415/441.
@@ -99,6 +99,7 @@ static __forceinline long function_75fc3(s_network_observer *arg_0, long arg_1)
 // test (retail stores false first, 436/226), the 0xe4/0xe8 pick, the 0.0 early exit, the reliable-bytes
 // tail); on that, window as `= 0; if` 440/226; 0xe4/0xe8 as if/else 438/237; the 0.0 exit as its own
 // return 444/334. Body unchanged.
+// Round 222: Persistent configuration/updated counter/both 428/415/432; callback-scale arms 415; configuration-arms/counter-arms/all 424/422/415; all with named window terms 415. All restored; frame 0x3c versus 0x34, channel/result homes and counter composition remain.
 // @retail 0x75fc0
 bool s_network_observer::connection_v05(long arg_1,
 	bool arg_2, bool arg_3, bool arg_4, bool *arg_5, bool *arg_6,

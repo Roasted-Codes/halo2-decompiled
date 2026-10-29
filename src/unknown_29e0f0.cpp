@@ -77,7 +77,6 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
     real local_2 = arg_0->z - arg_1->z;
     return (real)sqrt(local_2 * local_2 + local_1 * local_1 + local_0 * local_0);
 }
-
 // score 406 (was 406): frame 0x68/0x64, induction/endpoint homes and x87 scheduling differ.
 // Earlier: table-pointer roles now agree; frame 0x68/0x64, outer-loop reload placement, inner-loop registers and x87 square order remain.
 // Complete initial guard exits 458; CRT output point copy 416; distance second point by value 569;
@@ -121,10 +120,16 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // Original executable body restored.
 // Round 370: shared point-array base with long group index, captured point count and shared
 // bitmap operations 429/428/410/432/515/515/464/464; body, helpers and original includes restored.
+// Round 214: Function-owned short outer/grouped-link/pass induction declarations, all seven
+// nonempty subsets, 406 each; all three plus the record-search induction declaration 406.
+// Every original initialization/pretest/increment and executable body restored; frame/index spill remains.
 // Round 163: selected-index chain/per-group index chain/explicit native bitmap
 // defaults, all seven subsets and complete graph with separate bitmap stores:
 // 406 each at 1596 bytes. Frame 0x68/0x64 and bound/endpoint homes remain;
 // original default initializers and every helper restored.
+// Round 380: Native point bitmap unsigned/signed 456/456; unsigned group bitmap with array/unsigned/signed point bitmap 426/434/434; signed group bitmap 426/434/434. Original arrays restored.
+// Round 239: coherent validator/reference-provider ordinary, inline and noinline
+// declaration pairs (eight non-original combinations) 406 each. All restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

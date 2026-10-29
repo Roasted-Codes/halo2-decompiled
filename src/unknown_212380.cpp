@@ -44,6 +44,9 @@ bool function_212ec0(s_game_variant *arg_0, long arg_1);
 // rotation that follows). Variant declared at function scope 386; the failure path returning
 // NONE directly 371 (only the length and table line up; the tail moves further from retail; not
 // kept); the initializer's returned pointer used afterwards 386; an early NONE return 446.
+// Round 66: output pointer throughout/init-only/tail-only/assigned from returns, output reference
+// throughout/tail-only, shared source-name pointer and entry output with a pointer 386 each.
+// The matched callees stayed exact; all executable forms restored.
 // @retail 0x212380
 long function_212380(long arg_0, long arg_1, byte *arg_2)
 {

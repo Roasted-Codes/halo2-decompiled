@@ -168,6 +168,7 @@ void function_268840()
 
 // score 242 (was 242): frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
 // Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
+// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
@@ -223,6 +224,7 @@ void function_268840()
 // point/child/both lexical homes 242 each; both entry workspaces with both
 // role names 242; existing three-component point difference with the original
 // z/y/x squared-sum tree 242. Original workspaces, names and scalar body restored.
+// Round 29: Outer-walk initialization/advance inline-inline, inline-outlined, forced-inline, forced-forced, forced-outlined, outlined-inline, outlined-forced, outlined-outlined: 242/386/242/242/386/346/346/406. Outlined forms also lose two matched controls; every helper contract restored.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2184,7 +2186,7 @@ void function_26a210(long clump_index)
 int __cdecl function_269da0(void const *a, void const *b);
 void *actor_get_character_situation_entry(long actor_index);
 
-// score 283 (was 283): frame 0x6a4 and length agree; the early reset-word load,
+// score 283 (was 283): Frame 0x6a4 agrees; early reset-word SI and later visibility/selection homes remain.
 // visibility/marking registers and selection/cleanup allocation still differ.
 // Frame 0x6a4 agrees; reset-word SI, cluster/marking registers and selection/cleanup placement remain.
 // frame 0x6a4 agrees; reset-word/cursor allocation and selection/cleanup placement differ.
@@ -2234,6 +2236,10 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 167: existing absent-leaf location initializer 283; visibility cluster,
 // row-count and row-pointer scalar homes in all seven combinations 283 each.
 // Original reset and names restored; early reset SI and later allocation remain.
+// Round 250: existing native structure count 283; with per-iteration candidate,
+// short/long cursor and selected carriers 384/336/383/337;
+// corresponding direct indexed fields 374/336/375/337. Original body restored.
+// Round 29: Real distance member and entry cluster/candidate array declarations in all seven combinations, then the entry distance workspace: 283 each. Original publication and declaration lifetimes restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {
