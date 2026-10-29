@@ -2068,7 +2068,7 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 	return local_0;
 }
 
-// score 168 (was 168): object/offset homes and low-mask allocation remain;
+// score 155 (was 155): object/offset homes and low-mask allocation remain;
 // Round 9 (lane 10): retail holds the 0x400 block's short in EAX (stores 0x90 before the result update);
 // its value as a ternary 201; its declaration after the field reads 168; set in if/else 201; both slot
 // masks at the loop head 285 (1041 bytes); first slot mask long 168.
@@ -2181,7 +2181,12 @@ static __forceinline long function_9d453(long arg_0, short arg_1)
 // the store 168; the unit through the header-array index 168 (SIB order unchanged); the 0xee field and
 // its new value as bool 168 (retail loads the field into DL before the compare and keeps both float
 // flags in stack bytes; ours compares memory and keeps the first flag in DL).
-// score 155 (was 168): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
+// Earlier 155 (was 168): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
+// Round 284: Complete native child-result record, direct request parameter, and
+// signed/unsigned bit ordinal 191/191/191/191; constant field defaults
+// before the getter 278/278/278/278. Exact-only records restored.
+// Original separate results with direct request parameter, signed/unsigned ordinal
+// 155/155; all executable source restored.
 // @retail 0x9d450
 long c_unit_type::v27(long arg_0, long arg_1, long arg_2, long arg_3)
 {

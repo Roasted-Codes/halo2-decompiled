@@ -237,6 +237,9 @@ struct s_weapon_definition_view
 // long barrel with the guard 176; the existing 0xcbd50 for both queries 149 (identical code); long
 // barrel without the guard plus a short hand index 218. Unit pointer local, a pointer to the
 // workspace, scalar results copied in, NONE stores first and a trigger-count guard compile identically.
+// Native trigger value/read-only value, short barrel 185/185; promoted barrel 176/176;
+// definition value with short/long barrel 164/214; both native values 217/207.
+// Trigger value needs frame 0x60; definition value self-aligns and needs 0x2f4. Restored.
 // @retail 0x82d20
 void function_82d20(long object_index, s_object_relevance_source *source, s_weapon_activity_result *result)
 {
