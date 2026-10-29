@@ -2117,6 +2117,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Round 31: conditional failure producers for spatial/countdown/both admissions 491/604/604;
 // scalar-predicate admissions 631; spatial+scalar 631; countdown+scalar 611; all 611; all with Boolean completion 611.
 // Reduced control 491 versus full 478; original default, all decision producers and complete body restored.
+// Round 259: separate inline/noinline declarations for the dispatch, facing, animation
+// and notification callees 491/491/491/491/491/491/491/491 (fast control 491, full 478).
+// All declarations and every call restored; actor/state and first point homes remain.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

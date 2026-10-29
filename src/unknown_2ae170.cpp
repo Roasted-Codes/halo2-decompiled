@@ -946,6 +946,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 235: Existing qualified class raw-send path, seven front/rear/tail subsets and all-path if-else tail
 // [224, 224, 247, 224, 247, 247, 248, 254] fast. Dispatcher preserved in every trial; all original helper
 // calls, sums, fields and three local qualifications restored.
+// Round 259: five complete shared inline-append formal orders and actual output
+// pointer/reference result contracts 224 each (eight forms). Original helper and all calls restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -1198,6 +1200,8 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // native channel bit with all raw sends, late/early sum 194/207. Short-complement interactions
 // front/rear/all 188/192/188; front plain full 188/592, all matches preserved, but word tests
 // and aligned instruction changes regress (110/120 to 121/128). All executable forms restored.
+// Round 259: native output-reference append with six complete formal orders and
+// pointer/reference output results: eight forms 200 each. Original helper and all calls restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
