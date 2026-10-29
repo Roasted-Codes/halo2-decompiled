@@ -4351,47 +4351,22 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-// score 305 (was 305): frame 0xd8 agrees; result/identity/selection byte homes and
-// acknowledgement placement differ.
-// Earlier 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
-// instead of going through the shared exit, so each one gets its own epilogue and the extent matches
-// retail's 1264 bytes. The three boolean stack homes are still rotated relative to retail.
-// Earlier 310 (was 318): the acknowledgement block returns the result directly instead of going through
-// the shared exit, so its epilogue is the one retail emits. The three boolean stack homes are still
-// rotated relative to retail and the invalid-state exit is still emitted twice.
-// Earlier 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
-// it into a named flag, so the comparison is tested once as retail does. The three boolean stack homes
-// are still rotated relative to retail and the invalid-state exit is still emitted twice.
-// Earlier 325 (was 335): the acceptance test is written as the no-sender case followed by the
-// acknowledgement, so the acknowledgement block stays out of line at the end of the function instead of
-// being pulled into the middle of it. The three boolean stack homes are still rotated relative to retail.
-// Earlier 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
-// distinct arm, the peer-map update takes the remote member first (the callee is symmetric in its two
-// member arguments), and the channel-state test is split into a named flag. The three boolean stack
-// homes are still rotated relative to retail and the invalid-state exit is still duplicated.
-// Earlier 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
-// separate arm instead of a merged join, and the identity pointer is taken before the member-state
-// pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
 // score 305 (was 305): frame 0xd8 and length agree; the byte homes differ (retail: better +9,
 // identity/same +0xa, result +0xb; ours: identity/same +9, result +0xa, better +0xb), retail reads
 // `result` back from its home at every return (ours folds the two reason-2 returns to `xor al, al`
 // and keeps them as two blocks, where retail has one), and the acknowledgement block is laid out
 // after the first identity test in ours, last in retail.
-// Round 87: one `state <= 2 || state > 8` reason-2 test 368 (the block moves to the end, 1248 bytes),
-// reversed `state > 8 || state <= 2` 370; renamed result/better/identity flag 305 each (names do not
-// move these slots); acknowledgement block after `done:` 305; same declared before better 305;
-// volatile result (diagnostic only, reverted) 317 at 1278 bytes.
-// Earlier: the identity comparison is a predicate and the two timeout reasons are separate arms.
-// Earlier 384: Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Earlier 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
-// separate arms; the extent is 1265/1264 bytes. Acceptance/identity homes and acknowledgement
-// placement remain.
-// Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
-// Earlier: Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement/rejection placement remain.
-// Earlier 384 (was 384): Frame 0xd8 agrees; result/identity homes and block placement remain.
-// Aligned frame 0xd8 and sender/identity slots agree; Boolean homes and acknowledgement/rejection placement remain.
-// Frame/sender/identity homes agree; result byte and acknowledgement/rejection placement remain.
+// Kept along the way (356 -> 305): the valid-state range as an else-if chain, the identity pointer taken
+// before the member-state pointer, the peer-map update with the remote member first (the callee is
+// symmetric in its two members), the acceptance test as the no-sender case followed by the acknowledgement
+// (which then stays at the end), the channel-state test on the identity comparison in place, and the
+// acknowledgement, invalid-state and missing-sender exits returning the result directly (own epilogues,
+// extent 1264).
+// Tried: Round 87: one `state <= 2 || state > 8` reason-2 test 368 (the block moves to the end, 1248
+// bytes), reversed `state > 8 || state <= 2` 370; renamed result/better/identity flag 305 each (names do
+// not move these slots); acknowledgement block after `done:` 305; same declared before better 305;
+// volatile result (diagnostic only, reverted) 317 at 1278 bytes. Earlier: the identity comparison as a
+// predicate with the two timeout reasons as separate arms 358 (1265 bytes).
 // shared exit 407, result first 411, role names 411, complete reason arms 411,
 // separate rejection tests 424, positive state arm 411.
 // Member pointers before received copy 396; host workspaces swapped 413;
@@ -4436,6 +4411,10 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 214: Native-equality/distinct-exit graph: acceptance, selection, both, identity, identity/acceptance,
 // identity/selection and all Boolean home names 305 each; all names with entry selection constants 372.
 // All executable forms restored; result/identity/selection homes and acknowledgement placement remain.
+// Round 89: every exit through `done:` 318 (1278 bytes; every return then reads `result` from its home
+// as in retail, but the state <= 2 exit keeps its own block); only the three state-test exits through
+// `done:` 308; all exits through `done:` with one `state <= 2 || state > 8` test 357 (1264 bytes, the
+// reason-2 block placed last); better/same declared at entry 367, with every exit through `done:` 381.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

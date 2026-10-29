@@ -793,11 +793,14 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 }
 
 /* clears the unit's flag 2 at +0x10a and its state that depends on it */
-// score 23 (was 23): indexed state clear still expands to load/modify/store;
-// the final call receives the unit in EAX rather than retail ESI and becomes a tail jump.
-// Existing indexed/both byte helpers 22/22; state pointer 22; subscript 23;
+// score 13 (was 23): the final call receives the unit in EAX rather than retail ESI and becomes a tail
+// jump, and `1 << type` lands in EDX (retail EAX). BLOCKED-BY 0xe4bd0, which inlines 0xe5930 where retail
+// calls it. Existing indexed/both byte helpers 22/22; state pointer 22; subscript 23;
 // explicit state assignment 23; native state flags via pointer/at use 22/23;
-// native flags with masked lookup 22. Original body restored.
+// native flags with masked lookup 22. Round 89: the animation flags cleared as the word they are
+// (bipeds.cpp's `word const *animation_flags`) 13, kept (retail's `and byte [eax+edi], 0xfb` and dead
+// `add eax, edi`); a `word *animation_flags` local 10 (matches once 0xe4bd0 is called as retail does,
+// see 0xe4bd0's note); on the word clear, a word subscript/`0xfffb`/offset first/short 13 each, dword 23.
 // @retail 0xcaf00
 void function_caf00(long unit_index)
 {
@@ -807,7 +810,7 @@ void function_caf00(long unit_index)
 	function_b8b70(unit_index);
 	function_bb950(unit_index, false, NONE);
 	function_db5c0(unit_index);
-	*((byte *)unit + unit->unknown33e) &= ~4;
+	*(word *)((byte *)unit + unit->unknown33e) &= ~4;
 	if ((1 << unit->type) & 1)
 	{
 		function_e4bd0(unit_index);
@@ -2296,7 +2299,9 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 // scoped view 60; native/scoped bitfield setter 60. Round 151: the set through bit_vector_set with the
 // TEST_FIELD_BIT test 7 (kept); then a vector/12-byte buffer 10/10; buffer before range 7; outer angle 7;
 // the random offset in a named local 5 (fixes the adds; one-use, not kept); range/buffer/angle/offset
-// declared at the top 5 each; range assigned before the atan2/store 50/53/38.
+// declared at the top 5 each; range assigned before the atan2/store 50/53/38. Round 89: the buffer as a
+// vector3f/real[3]/point3f 10/10/10 (frame 0x14: no temp packs into a 12-byte local); vector3f with the
+// locals renamed four ways 10; the query test inverted 7; the angle wrap as a ternary 7.
 // @retail 0xcfec0
 void function_cfec0(long unit_index)
 {
@@ -2590,7 +2595,9 @@ struct s_unit_placement
 // animation 22; owner/scale/chained stores 65. Round 151: 0xc98a0 declared __stdcall (the /Gr default
 // passed its unit in EDX) 10, kept; 0xcaa60's unit read once through its address 5 (not kept without a
 // match); 0xc98a0's unit read through its address 22/10; its direction declared last/second 7/10; a
-// separate output local for its value 10; its direction test named at entry 10.
+// separate output local for its value 10; its direction test named at entry 10. Round 89 (through
+// 0xc98a0, BLOCKED-BY 0xc98a0 and 0xcaa60 conventions): 0x11cc90 operands in retail's order 10; TEST_FIELD_BIT
+// definition tests 10/10; angle/turn/flag declared first 10; `!(time >= 0.0f)` 10.
 // @retail 0xc42e0
 void __stdcall function_c42e0(long unit_index, void const *placement)
 {
@@ -5759,7 +5766,10 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
 // score 258 (was 277): Frame 0x24 now agrees; retail takes the direction in ECX (ours on the stack) and keeps
 // the unit pointer in EBX, the definition on the stack. Round 151: __stdcall in place of the file's /Gr
 // fastcall (which passed the unit in EDX) 258, kept; the unit read through its address 258; the
-// direction declared last/second 255/256 (no retail evidence, not kept).
+// direction declared last/second 255/256 (no retail evidence, not kept). Round 89: 0x11cc90 takes its
+// operands as retail passes them (toward in EDI, facing in ESI) 258; both definition tests through
+// TEST_FIELD_BIT 278, the bit-9 one alone 285 (retail stores each test's bool to a dead stack byte);
+// angle/turn/flag declared first 256; `!(time >= 0.0f)` 258 (gives retail's comiss order).
 // @retail 0xc98a0
 void __stdcall function_c98a0(point2f const *direction, long unit_index, long type, short value)
 {
@@ -5786,7 +5796,7 @@ void __stdcall function_c98a0(point2f const *direction, long unit_index, long ty
 			toward.y = toward.y * scale;
 			if (normalize2d(&facing) > 0.0f)
 			{
-				angle = function_11cc90((vector2f const *)&facing, (vector2f const *)&toward);
+				angle = function_11cc90((vector2f const *)&toward, (vector2f const *)&facing);
 				if (!((*(dword *)(definition + 0xbc) >> 9) & 1) && unit->type == 0 && unit->parent_index == NONE)
 				{
 					short state;
