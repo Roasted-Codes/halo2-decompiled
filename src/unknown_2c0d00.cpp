@@ -929,6 +929,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 379: End/start/both endpoint addresses at use 385/462/451; traversal-lifetime edge alone/with end/start/both 385/385/462/451; complete receiver graph with node fields 421. Original body and helpers restored.
 // Round 385: Uniform edge/surface/vertex table roots, singly and in pairs/all,
 // 418/410/432/407/403/412/409; all roots per iteration 463. Original observations restored.
+// Round 388: Shared scale/normalizer ordinary inline singly/both 385/385/385;
+// scale noinline 425; normalizer noinline 451; noinline scale/ordinary normalizer 425;
+// ordinary scale/noinline normalizer 451; both noinline 415. Original declarations restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1317,6 +1320,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // remain.
 // Round 385: Natural tangent-search attempt result, short/word/long/dword
 // at search eligibility 445/445/447/447, at iteration entry 445/445/447/447. Original jump restored.
+// Round 388: Both corner-success carriers byte/short/word/long 444/440/440/450,
+// with the same domains declared at selection 444/440/440/450. Four-point gains
+// above 30 rejected; original Boolean carriers and declarations restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
