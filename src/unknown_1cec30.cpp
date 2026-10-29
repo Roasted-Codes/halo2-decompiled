@@ -17,6 +17,7 @@ static __forceinline long real_to_long(real value);
 #include "havok_reference.h"
 #include "unknown_122870.h"
 #include "normalize3d.h"
+#include "constraint_helpers_314090.h"
 
 void __cdecl function_2d91d0(void *array, long element_size);
 
@@ -1929,16 +1930,6 @@ struct c_component_joint_reader_2
     void read(c_component_joint_snapshot_2 *output);
 };
 
-struct c_component_joint_snapshot_4
-{
-    __m128 data[3];
-    c_component_joint_snapshot_4();
-};
-struct c_component_joint_reader_4
-{
-    void read(c_component_joint_snapshot_4 *output);
-};
-
 // @retail 0x1cff80
 void function_1cff80(s_havok_component_element0c const *constraint, point3f *pivot_a, point3f *pivot_b)
 {
@@ -1994,12 +1985,12 @@ void function_1cff80(s_havok_component_element0c const *constraint, point3f *piv
         break;
     case 4:
         {
-            c_component_joint_reader_4 *joint = (c_component_joint_reader_4 *)constraint->contact;
+            lane_a_ball_socket *joint = (lane_a_ball_socket *)constraint->contact;
             c_component_joint_snapshot_4 snapshot;
-            joint->read(&snapshot);
-            real x = snapshot.data[1].m128_f32[0];
-            real y = snapshot.data[1].m128_f32[1];
-            real z = snapshot.data[1].m128_f32[2];
+            joint->export_description(&snapshot);
+            real x = snapshot.pivot_a.m128_f32[0];
+            real y = snapshot.pivot_a.m128_f32[1];
+            real z = snapshot.pivot_a.m128_f32[2];
             pivot_a->x = x;
             pivot_a->y = y;
             pivot_a->z = z;
