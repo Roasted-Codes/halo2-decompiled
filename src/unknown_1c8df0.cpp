@@ -146,6 +146,11 @@ __declspec(noinline) short __stdcall function_1c8df0(short arg_3, short arg_2, p
 // Round 63 (plain on the five-difference control): side j/i/both union-array reads 5/5/5;
 // side order j-i-k 11; aggregate side 5; existing add-scaled helper both/negative only 238/238;
 // side order i-k-j 10. No match; original 170 body restored.
+// Round 180: Guarded triple-probe opposite/third/both construction 240/220/256; same with Boolean
+// primary 230/209/246; both with short category 277, plus Boolean primary 268. Archived
+// secondary-byte control 5; existing side/quarter-add-scaled/triple-point constructor subsets
+// 5/26/26/5/5/26/26, native side constructor 170. No exact match; every added-byte, constructor and
+// point-lifetime form restored.
 // @retail 0x1c8df0
 short __stdcall function_1c8df0(short arg_3, short arg_2, point3f const *arg_4, long arg_0,
  void const *arg_1, long arg_5, bool arg_6, bool arg_7, bool arg_8, long *arg_9)

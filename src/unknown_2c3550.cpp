@@ -166,13 +166,18 @@ static __forceinline real avoidance_normalize2d(point2f *direction)
 
 /* adds a node at the point, passing the obstacle on the side, unless it
    leads back around an obstacle on its way; returns its index or NONE */
-// score 92 (was 92): the scaled components are kept in different registers and the length is
+// score 92 (was 92): frame 0xc agrees; missing early Y load rotates normalized components and distance registers.
+// Earlier: the scaled components are kept in different registers and the length is
 // squared and summed in a different order. Retail loads y into XMM0 before the square root and
 // keeps `y * inverse` and `other.y * y` in source operand order; ours copies the register
 // operand and multiplies by memory. The compile-only build gives ours for every helper form.
 // Products x*inv/inv*y 92; compound scaling 92; tiny case first with one return 92; scalar
 // direction locals 165; y scaled first 93; helper reads both components first 156; dot test
 // through the node array 153; zero on the left of the dot test 92.
+// Normalized point returned with pointer/reference length outputs 280/280; whole input point
+// by value with pointer/reference outputs 216/216; scalar inputs with pointer/reference
+// outputs 156/156; distinct const-input/output pointers 156; const-reference input with
+// returned point 280. Original in-place normalizer restored.
 // @retail 0x2c3680
 short avoidance_add_node(s_avoidance_search *search, point2f const *point, bool side, long value08, short obstacle,
 	short value1a, real cost, short parent)
@@ -654,6 +659,9 @@ bool obstacle_list_add(s_obstacle_list *list, word flags, point2f const *center,
 // as a short ([esp+0x40] word store) and zeroes first_output at entry with flags. The if/else alone
 // 707 (2976 B), with the step pointer after it 750 (2960 B); first_output zeroed at entry 700; short
 // frame index 704. All restored.
+// Round 191: native byte success with completion/ordinal/segment scalar identity groups,
+// all eight subsets 754 each. Lexical scalar identities do not recover the byte/word
+// homes; original dword success and all original identities restored.
 // @retail 0x2c41b0
 bool __stdcall function_2c41b0(long actor_index, s_type_f17a25 *state, short count,
  s_path_step_view const *steps, bool avoid, short *out_count,

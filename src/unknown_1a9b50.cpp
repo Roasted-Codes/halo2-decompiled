@@ -514,6 +514,9 @@ extern point2f *g_468778;
 // Round 205: Complete settings/state/direction getter receiver masks 1/2/3/4/5/6/7
 // 433/487/516/506/574/663/657; all with constant return exits 660. Every original
 // receiver, early distance, request transfer, expression tree and body restored.
+// Round 399: Native slot callback input, original/actor-first lookup, with entry/late result defaults,
+// constant-return exits and early rejection: 375/413/409/426/425/393/440/413. Body and declaration
+// restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -753,6 +756,8 @@ static __forceinline long real_to_long(real value);
 // Original body and all helpers restored.
 // Round 392: Entry result from each individual flag and each flag pair, then the first pair in byte/long
 // storage: 476/476/476/393/395/396/438/454. Complete original entry/result and body restored.
+// Round 399: Magnitude/weight phase scope, readonly magnitude, magnitude/distance names and all
+// combinations, then coefficient/time names: 384 each. Original restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {
@@ -943,6 +948,9 @@ bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 // The first register difference is the 0x110ab0 push (ECX, retail EAX); the later lookups follow it.
 // Object header getter 32; named unit index 124; declarations before assignments 32; result set
 // before the test 32; explicit NULL test 32 (fast).
+// Round 70 fast: read-only object 32; object and actor views 32; actor view 32;
+// early result declaration 32; hoisted choice declaration 32; hoisted real declaration 32;
+// repeated object accessor 35; both existing property helpers 31 (plain 31). Original body restored.
 // @retail 0x1a9ec0
 short __stdcall function_1a9ec0(long arg_0)
 {

@@ -396,7 +396,7 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 	}
 }
 
-// score 39 (was 39): frame/output-home reuse remains.
+// score 39 (was 39): Frame 0x24 versus 0x18 and escaped output-home reuse remain.
 // Earlier allocation: frame 0x24 versus 0x18; independent query homes still differ.
 // Frame 0x24 versus 0x18; opaque query homes still cannot reuse the incoming slot.
 // Incoming name/mode/type names 39/39/39; name plus type 39; helper input/output/state names 39/39/39;
@@ -444,6 +444,10 @@ static __forceinline void cache_map_progress(char const *name, real *output)
 // frame 0x1c; one scratch for the three queries 206; one scratch or scoped scratches with the
 // helper plain inline 206/206. Any shared scratch slot also drops the non-call-path scratch
 // stores and the reload.
+// Round 406: Frame 0x24 versus 0x18 and escaped output-home reuse remain. Seven existing query-
+// boundary inline subsets and all three noinline tie 39; existing helper returns its output pointer
+// to seven menu/shared/campaign consumer subsets and all with readonly return, also 39 each. Scores
+// 39/39/39/39/39/39/39/39/39/39/39/39/39/39/39/39. All restored.
 // @retail 0x122dd0
 real __stdcall function_122dd0(byte *map_name, long mode, long type)
 {

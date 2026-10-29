@@ -133,6 +133,9 @@ extern real g_4c9798[36];
 // Also tried: the tag word in a named local 239; long mode 243; offset as a ternary 335; distance
 // read before the aspect 240. Retail also passes width/height to 0x1ddd0 in ESI/EDI (ours: EAX
 // and the stack; 0x1ddd0's other callers are in a contributor file).
+// Round 191: distance field at every use with saved/lower-live/upper-live/both-live
+// depth observations 330/323/330/324; with entry-owned border zero 267/268/267/268.
+// All regress; original distance/depth snapshots and border restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

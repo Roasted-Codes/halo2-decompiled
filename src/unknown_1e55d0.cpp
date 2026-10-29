@@ -53,7 +53,32 @@ bool function_1c5210(transform4x3f const *matrix, void *shape, long component, l
 
 static __forceinline long real_to_long(real value);
 
-// score 353 (was 353): Plain frame 0x8c versus retail aligned 0x94; saved object roles, capsule staging and tail expansion remain.
+/* sets or clears the blocked flag by testing a capsule just inside the shape at the component's
+   position */
+static __forceinline void capsule_update_1e55d0(c_z_shape_view *shape, byte *component, byte const *input, byte *out)
+{
+	real margin = g_47f05c + 0.001f;
+	real radius = *(real *)((byte *)shape + 0xc) - margin;
+	if (g_47f05c > radius) radius = g_47f05c;
+	c_z_capsule_temp capsule((byte *)shape + 0x10, (byte *)shape + 0x20, radius);
+	transform4x3f matrix;
+	((s_havok_component *)component)->rigid_body_matrix_get(0, &matrix);
+	matrix.position.z += margin * 0.5f;
+	if (!function_1c5210(&matrix, &capsule, *(long *)(input + 0x18), *(long *)(input + 0x24))) *(dword *)out |= 2;
+	else *(dword *)out &= ~2;
+}
+
+// score 319 (was 353): retail's aligned frame (and esp, -16; 0x94) and prologue. Left: the move and
+// input pointers trade EBX and EDI (retail move EBX, input EDI, physics read from its stack slot at
+// each use; ours keeps physics in ESI), and the inlined 0xb77d0 lacks retail's velocity null test
+// (1176 bytes against 1164).
+// Round 74: the capsule test (an automatic 16-byte-aligned capsule, the flag update inside its scope)
+// moved into a force-inline helper: the frame aligns as retail's while 0xb77d0, 0x1c4b00, 0x1ed340 and
+// 0x2901e0 keep matching (the aligned local in this body itself moves 0x1c4b00's EBX argument to the
+// stack) 353 -> 319; replaces the hand-aligned placement-new buffer and the explicit destructor call.
+// At 319 or worse: move/state/input alias declaration orders 319 each; case 6 before 4/5 (retail's
+// block order) 318; compound test as an if/else 388 (1212 bytes); 0xb77d0 called (stays out of
+// line) 374; input flag as a shifted bit 325; both 366.
 // Global optimization off 988, inline depth 2 348, no reference truth test 348, shape flag result 352, combined 352.
 // Base-position/velocity/both input values 379f/382f/413f; move-stage handle 352f;
 // minimum-radius value 352f; activity/compound byte 352f/352f; header offset 352f.
@@ -150,21 +175,7 @@ void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_bipe
 		bool same = current == shape || compound && *(c_z_shape_view **)((byte *)current + 0x30) == shape;
 		if (same) *(dword *)out |= 2;
 		else if (shape->v5() == 7)
-		{
-			real margin = g_47f05c + 0.001f;
-			real radius = *(real *)((byte *)shape + 0xc) - margin;
-			if (g_47f05c > radius) radius = g_47f05c;
-			byte capsule_storage[sizeof(c_z_capsule_temp) + 15];
-			c_z_capsule_temp *capsule = new ((void *)(((dword)capsule_storage + 15) & ~15UL))
-				c_z_capsule_temp((byte *)shape + 0x10, (byte *)shape + 0x20, radius);
-			transform4x3f matrix;
-			((s_havok_component *)component)->rigid_body_matrix_get(0, &matrix);
-			matrix.position.z += margin * 0.5f;
-			if (!function_1c5210(&matrix, capsule, *(long *)(input + 0x18), *(long *)(input + 0x24))) *(dword *)out |= 2;
-			else *(dword *)out &= ~2;
-			/* the capsule adds nothing to destroy: retail calls the reference object's destructor */
-			capsule->c_reference_a9f20::~c_reference_a9f20();
-		}
+			capsule_update_1e55d0(shape, component, input, out);
 		else if (shape->v5() == 4 || (shape->v5() == 0x15 && (*(c_z_shape_view **)((byte *)shape + 0xc))->v5() == 4)) *(dword *)out |= 2;
 		else *(dword *)out &= ~2;
 	}

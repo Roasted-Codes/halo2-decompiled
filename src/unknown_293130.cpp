@@ -115,6 +115,11 @@ __forceinline void function_293133(real arg_0, vector3f const *arg_1, vector3f *
 // rotation then ranks j where retail ranks i); on that: dot3f(vector, axis) 78,
 // the rotated vector in a local copy 193, the angle passed straight 87, the
 // angle read after the copy 87, cosine before sine 84.
+// result, conversion and sine stack homes differ; rotation
+// registers also differ.
+// Transient creation handle with range result, trig input and shared cross boundaries:
+// 361/358/360/357/360/357/359/364. Result, conversion and sine homes plus rotation registers
+// remain.
 // @retail 0x293130
 long __stdcall function_293130(long arg_0)
 {

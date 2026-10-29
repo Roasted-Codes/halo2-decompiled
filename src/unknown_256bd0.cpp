@@ -217,6 +217,10 @@ struct s_object_flags_256bd0
 // that shape `distance < minimum`, a forceinline step and the iterator declared first 201 each.
 // The hoist is not ours to fix: the matched 0x268510 reloads the same global only because its loop
 // calls an out-of-line function; here 0x6b380 is the only call.
+// Round 191: out-of-line initializer/ordinary datum declarations with nested/branch-result/
+// active-ternary/combined-ternary entries, byte/native records each 194/262/290/262.
+// Nested forms recover frame 0x110 at 1070 bytes but gain seven only; all declarations,
+// iterator body, native receivers and complete function restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {

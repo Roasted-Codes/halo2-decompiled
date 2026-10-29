@@ -575,6 +575,8 @@ PRIVATE __forceinline bool batch_shape_pointer(c_batch_contact_shape const *shap
 // Entire original helper graph restored; frame and plane/output homes remain.
 // Round 390: Native first/second shape values and admitted computed last-key observation,
 // seven subsets plus signed encoded data: 369/321/359/320/359/322/358/358. Original body restored.
+// Round 397: shared initial component query; marked getter, second-first acquisition and two-use entity masks 0..7
+// 321/358/328/362/321/358/328/362; all restored.
 // @retail 0x1822f0
 void c_query_batch_collector::collect(s_batch_contact const *contact)
 {

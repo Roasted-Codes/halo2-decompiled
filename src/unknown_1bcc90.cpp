@@ -42,6 +42,9 @@ short __stdcall function_1bcc90(long actor_index)
 // function scope 35; the clear as `= {}` 35; a copy of the reference for the
 // last call 35; the follow arm's tests nested 35; the scratch buffer taken
 // before the clear 72; the clear sized by the type 35; the flag as a ternary 35.
+// function scope 35; the clear as `= {}` 35.
+// Carrier role names (all seven buffer/index/reference combinations) 35 each;
+// immutable returned reference 35.
 // @retail 0x1bcd00
 bool __stdcall function_1bcd00(long actor_index, s_slot *slot)
 {

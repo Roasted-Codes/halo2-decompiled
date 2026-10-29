@@ -1143,6 +1143,10 @@ void c_class_938e0::function_93aa0(long channel_index, long message_type, long m
 // 24,23,5,22,6,7 / 5,24,23,6,22,7 / 24,5,6,23,7,22 / 24,5,23,22,6,7 /
 // 5,24,6,7,23,22 / 24,23,22,5,6,7 give 192/193/190/193/192/192/192/189 fast;
 // reduced control 191, full 193. Original phases and every case/call restored.
+// Round 402: residual three-family priorities in connection/query/session,
+// connection/peer/session and connection/query/peer orders, eight forms,
+// 195/189/194/193/187/192/193/188 fast; control 191, full 193. All restored;
+// selector/payload/sender convention and single dispatch root remain.
 // @retail 0x938e0
 void c_class_938e0::function_938e0(const s_type_99af70 *address, long message_type, const void *message)
 {
