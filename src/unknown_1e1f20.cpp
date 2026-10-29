@@ -789,6 +789,10 @@ void swarm_leader_detach(long actor_index);
 // DH round 234 (fast control 261, ordinary 285): direct callback-field observations with
 // native iterator/cleanup lexical scopes and unsigned cleanup ordinal, eight forms 261 each.
 // Original body restored; frame 0x1c/0x20 and actor/displacement/countdown homes remain.
+// DH round 236: terminal three-slot table ordinal initialized at function entry or before
+// the tag query, long/short/byte/dword in each lifetime: eight 261 fast, equal to unchanged
+// fast control (full 285). Original ordinal lifetime and entire executable body restored;
+// frame 0x1c/0x20, actor displacement and cleanup countdown homes remain.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

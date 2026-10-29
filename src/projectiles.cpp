@@ -1633,6 +1633,9 @@ real function_17c900(short function_type, real input);
 // DH round 234: caller output promoted before final branches with target/output reads, after
 // target-copy acquisition or at the target producer 361/371/395/411; readonly input objects
 // with those four boundaries 361/371/395/411. All restored; input contract and vector homes remain.
+// DH round 236: lead/turn/drift vector storage promoted without moving their input reads,
+// all seven subsets 348 each; complete promoted graph with role-based point/vector names 348.
+// Original branch storage and complete body restored; input transport and vector homes remain.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {

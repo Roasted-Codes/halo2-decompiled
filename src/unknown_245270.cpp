@@ -426,6 +426,9 @@ void function_245400(s_source_245400 const *source, long index,
 // Round 264: existing difference/cross/rotation force-inline declaration subsets,
 // all seven 203; all with the actual point-transform boundary 203. Original
 // declarations and body restored; frame 0x24/0x2c, source and side homes remain.
+// DH round 236: true cross output at function entry with independent direction, transformed
+// point and both side-byte entry storage, all eight combinations 203 each. Initializations and
+// input reads stayed fixed. Original declarations/body restored; frame and source/side homes remain.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

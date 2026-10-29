@@ -1494,6 +1494,10 @@ struct s_133f70;
 // Round 265: six lexical orders of entry/failure/compacted-slot long values and
 // both uninitialized entry/slot storage orders before the query, 175 each on the expanded control.
 // Original declarations, names, compaction, cache observations and complete body restored.
+// DH round 236: full-width coefficient-order interface on the current callee graph, with
+// bool/long success, long/signed-byte previous and inner/entry success storage:
+// 175/238/319/175/327/238/319/327 on the calibrated caller image (narrow control 353).
+// Original interface and entire body restored; distance/cache homes and call transport remain.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
