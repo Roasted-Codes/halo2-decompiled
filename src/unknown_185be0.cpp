@@ -264,6 +264,9 @@ union s_185be7
 // Original individual masks, selected byte and complete body restored.
 // Round 186: Native input memcpy with byte/word scratch aggregate masks 0-3 780/979/942/979; memmove
 // with the same masks 1109/1104/1111/1102. Complete original body and helpers restored.
+// Round 188: existing reset whole-output void/result/subobject-reference/whole-output-reference
+// contracts, forced then ordinary inline: 961/961/780/961/961/961/780/961.
+// Complete output contracts grow the frame; original reset and whole body restored.
 // @retail 0x185be0
 void __stdcall function_185be0(long arg_0, long arg_1, real arg_2, real arg_3, s_186ab4 *arg_4, s_186ab3 *arg_5)
 {

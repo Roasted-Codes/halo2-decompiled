@@ -436,6 +436,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Round 186: Independent native blend/probe/placement consumer-scope masks 0-7 on the retained
 // motion graph 465/465/466/466/465/465/466/466. Original grouped workspace, native collision, source
 // velocity and complete body restored.
+// Round 188: joint reciprocal result stages, ternary/explicit/default-update pairs
+// (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2):
+// 356/357/356/351/356/351/357/353. Five-point nonmatch leads rejected; original results restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

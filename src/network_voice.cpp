@@ -1296,6 +1296,10 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // conjunction, nested success and two failure exits 111 each; forced conditional 94, ordinary conditional
 // 285. Every form loses 0x56160; 94 preserves 0x54990 but loses 0x56380. Original helper and grouped body
 // restored.
+// Round 188: real group subtotal, direct/named contribution/group/function entry width,
+// post/pre-tested inner: 233/233/241/267/128/128/104/130; original-site width bool/byte
+// and direct subtotal byte/long identity: 233/233/233/257. All legal gains lose 0x54990;
+// group-width 241 preserves it but hoists one-use computation, so restored. Original grouped total retained.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {

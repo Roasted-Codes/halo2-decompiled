@@ -854,6 +854,9 @@ real function_18cac0(long arg_0);
 // uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
 // Round 186: Initial camera-cluster short/long with guarded/conditional/default-result/early-null
 // admission 218/272/247/275/247/275/218/272. Original direct observations and whole body restored.
+// Round 188: camera-provider/membership ordinary/forced/separate-noinline declaration
+// pairs (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2):
+// 155/169/155/577/155/577/169/585. Original shared inline contracts and body restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
