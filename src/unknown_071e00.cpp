@@ -120,13 +120,20 @@ bool __stdcall function_71d70(c_session_state_matchmaking *arg_0)
 }
 #pragma inline_depth(255)
 
-// score 37 (was 37): the session state test is inverted (je against jne) and the shared tail
+// score 34 (was 37): the search block (mark the session, mode 7) now returns from inside
+// the branch, so it carries its own epilogue and the function reaches retail's length;
+// the session_b state test is still inverted (je against jne) and the block order differs.
+// Retail lays the search block right after the session_b state test and reaches it from
+// the timeout compare with `jle tail; jmp search`; ours places it after the timeout
+// compare and reaches it with a forward jump.
 // block is placed on the other side of the branch. Retail lays the search block (mark the
 // session, mode 7) right after the session_b state test and reaches it from the timeout
 // compare with `jle tail; jmp search`; ours always places it after the timeout compare.
 // Tried: a search flag set on both paths (37); if/else with the goto into the else (37);
 // the search block written out twice, with local_0 = true (37), return true (65) or one of
 // each (90); returns in the players-match branch and a goto to the end (41); a
+// do/while (false) with breaks (37); state == 0 and inline state helpers (37);
+// both branches returning true (74).
 // do/while (false) with breaks (37); state == 0 and inline state helpers (37).
 // @retail 0x712d0
 bool function_712d0(c_session_state_matchmaking *arg_0)
@@ -140,23 +147,27 @@ bool function_712d0(c_session_state_matchmaking *arg_0)
 		long local_4 = local_2->state;
 		if (local_4 == 5 || local_4 == 6 || local_4 == 7 || local_4 == 8)
 		{
-			if (!local_3->state)
+			if (local_3->state == 0)
 			{
 local_7:
 				if (arg_0->flag97c)
 					session_search_mark_session((s_session_search *)&arg_0->flag97c,
 						(const s_search_session *)((byte *)arg_0 + 0xa20));
 				network_session_set_mode(local_2, 7);
-				local_0 = true;
-				goto local_6;
+				return true;
 			}
-			if (network_session_players_match(local_2, local_3))
+			else
 			{
-				network_session_set_mode(local_2, 13);
-				local_0 = true;
+				if (network_session_players_match(local_2, local_3))
+				{
+					network_session_set_mode(local_2, 13);
+					local_0 = true;
+				}
+				else if (function_75890(arg_0->unknown970) > g_network_configuration.value190)
+				{
+					goto local_7;
+				}
 			}
-			else if (function_75890(arg_0->unknown970) > g_network_configuration.value190)
-				goto local_7;
 		}
 		else
 		{
@@ -164,7 +175,6 @@ local_7:
 			function_71e00(arg_0);
 		}
 	}
-local_6:
 	return local_0;
 }
 
