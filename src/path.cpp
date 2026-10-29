@@ -10,9 +10,8 @@
 
 real function_30bf0(vector3f *v);
 
-bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
-	s_path_trace_result *result, s_pathfinding_data *pathfinding,
-	long start_node_index, long end_node_index, long flags);
+bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start, long start_node_index,
+	s_type_c3b527 const *end, long end_node_index, long flags, s_path_trace_result *result);
 
 /* Local views of fields not yet named in path.h. */
 struct s_path_input_view
@@ -231,7 +230,7 @@ void function_2705c0(s_path_source *source, point3f const *point,
 	input->unknown44 = unknown;
 }
 
-// score 28 (was 28): retail takes the location in edx and the node in ebx and has one exit (`xor al, al` at entry, `mov al, 1`); the one-exit
+// score 28 (was 28): BLOCKED-BY 0x26c590. Retail takes the location in edx and the node in ebx and has one exit (`xor al, al` at entry, `mov al, 1`); the one-exit
 // form (`bool result = false;` ... `result = true; break;` ... `return result;`) matches, but unmatched 0x26c590 then takes its origin in
 // ecx and its eight matched callers (0x1ab770, 0x1bd400, 0x1f5110, 0x26c4e0, 0x26cbe0, 0x26ccb0, 0x26d290, 0x2c39f0) stop matching
 // (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
@@ -244,6 +243,10 @@ void function_2705c0(s_path_source *source, point3f const *point,
 // Inline with original exits 28; inline plus single result MATCH fast, but seven matched reduced-image callers lose
 // their match (the eighth already differs in that image); shared byte/short result 40/45; native index with original/
 // shared exits 32/37; nested tests 28; active-bit-first tests 28 (same caller losses). All restored.
+// Round 70: a one-file LTCG harness of 0x26c590 + this file reproduces the move (origin in ecx, ret 0x14). Retail keeps
+// NONE in edx from entry to the loop test, so the axis pointer takes edi and origin stays on the stack. In 0x26c590 with
+// the one-exit form: next index at function scope 430, it set to NONE there 419, bool success cleared at the count exit
+// 544, first at function scope 419, nested location/flag tests 419; origin stays in ecx in all, the callers still lost.
 // @retail 0x270600
 PRIVATE bool function_270600(s_path_location const *location, long node_index)
 {
@@ -259,22 +262,6 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 	return false;
 }
 
-// score 31 (was 31): at the call to 0x26c4e0 retail computes the end point (`lea ecx, [eax+0x18]`) right after pushing the parent's node
-// index and loads the next two arguments through eax; ours loads them through ecx and computes the end point last, and from there on our
-// eax/ecx/edx choices are one step off retail's. Tried: a named parent point for the compare and the call 65; the two break tests as one
-// `||` condition 31; trace at function scope 31; no parent local 85; the output arms swapped 34; the permuter (86 tries) found nothing below 31;
-// the loop as `for (; node->parent != NONE; node = ...)` 31; a pathfinding local before the call 34; parent declared after the
-// output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93;
-// the end point named for the call only 31; the call's result in a named bool 31; `parent` as a const pointer 31; a trailing `continue` 31.
-// Round 268: both library record copies 31; lookup-test result 87; true-first result 105;
-// long result 57; library copies with those three result forms 87/105/57;
-// cached parent advance 95. The 0x24 frame agrees; endpoint argument scheduling remains.
-// Round 270: readonly native receivers 31; promoted lookup index 89; parent-handle
-// traversal 31, readonly 31; complete endpoint 110, with parent handle 110; complete
-// start input 134; word success result 65. All restored; frame 0x24 and call scheduling remain.
-// Round 272: active-node index 101; shared root result/record selection 120; parent reference 31;
-// index plus root result 125; exact-only parent-node/start-space/both captures 31/31/31;
-// byte success result 51. All restored; endpoint scheduling at +0x61 remains.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
@@ -293,8 +280,8 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 				break;
 			}
 			s_path_trace_result trace;
-			if (function_26c4e0(point, &parent->entry_point, &trace,
-				(s_pathfinding_data *)state->pathfinding, node_index, parent->node_index, 0))
+			if (function_26c4e0((s_pathfinding_data *)state->pathfinding, point, node_index,
+				&parent->entry_point, parent->node_index, 0, &trace))
 			{
 				break;
 			}
