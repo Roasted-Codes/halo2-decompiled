@@ -6,6 +6,16 @@ The newest entry comes first.
 
 ```
 matched 9918 of 11326 game functions (1639881 of 2786206 bytes, 58.86%)
+matched 1248 of 1436 Havok functions (164141 of 290362 bytes, 56.53%)
+```
+
+23 new matches, none lost:
+- @averycpawelek's #876: `0x3128d0`, `0x3128f0`, `0x312900`, `0x312920`, `0x312980`, `0x3129e0`, `0x312ab0`, `0x312b80`, `0x312d50`, `0x3132f0`, `0x313310`, `0x313320`, `0x313370`, `0x3133d0`, `0x3134a0`, `0x313550`, `0x313b00`, `0x313b20`, `0x313b30`, `0x313b60`, `0x313bc0`, `0x313c50` and `0x313de0` match.
+
+## 2026-10-29: 9918 functions match
+
+```
+matched 9918 of 11326 game functions (1639881 of 2786206 bytes, 58.86%)
 matched 1226 of 1436 Havok functions (162581 of 290362 bytes, 55.99%)
 ```
 
