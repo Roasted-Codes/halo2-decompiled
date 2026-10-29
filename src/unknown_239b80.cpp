@@ -341,6 +341,9 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // Round 233: Complete current/candidate coordinate carriers at each candidate,
 // squared-distance expression in seven subsets, then overlap CRT compaction:
 // 253/287/278/203/253/287/278/289. All original coordinate reads, arithmetic and body restored.
+// Round 182: native unsigned-word input count, long/bool departure and
+// late/early heading crossed with memcpy/memmove 260/232/258/239/253/259/261/266;
+// matched caller becomes 34 in each reduced trial. Original signature and body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {

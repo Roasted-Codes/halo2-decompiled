@@ -338,7 +338,7 @@ PRIVATE __forceinline vector3f *normalize_particle_velocity_2b(vector3f *v)
     return v;
 }
 
-// score 67 (was 67): Frame 0xb4 and 1516-byte length agree. Back-edge parameter reloads and velocity
+// score 47 (was 47): frame 0xb4 agrees; 1517/1516 bytes, back-edge reloads and velocity stores differ.
 // Frame 0xb4 agrees; 1517/1516 bytes. Back-edge parameter reloads and velocity
 // blend/normalization stores differ; shared scale return plus addition recovers the attraction's in-place products.
 // Earlier frame-matched body kept attraction j/k products in temporaries and deferred velocity stores.
@@ -432,6 +432,8 @@ PRIVATE __forceinline vector3f *normalize_particle_velocity_2b(vector3f *v)
 // DH round 230: On the retained normalizer-output graph, shared final addition/reversed inputs 115/119;
 // native normalizer values alone/with those additions 398/386/386; explicit source-output normalization
 // with shared scale alone/with those additions 138/177/183. All restored; final stores, lower tail and reload order remain.
+// Round 394: direct previous-vector scale producer with native/quarter/maximum/maximum+quarter/
+// initial/initial+quarter/initial+maximum/all scales 208/203/208/203/208/203/208/203; restored.
 // DH round 232: On the retained pointer-output graph, quarter-output/final-add composition 117;
 // final component loop 111; scaled-add publication 115; normalizer loop/ordinary inline/inverse
 // lifetime/native slot names 47 each; both publication and normalizer loops 107 at retail length.

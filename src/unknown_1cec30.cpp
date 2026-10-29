@@ -2831,6 +2831,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // Round 233: Call-free native body records first/second/both, then each with
 // readonly first links, both with first-link/count order and both refinements:
 // 317/203/332/317/203/332/374/374. Original records, output reloads and protected call tuple restored.
+// Round 182: first/second/both actual link references 206/206/206; native body
+// record references confined to count/node searches, alone/with either/both links
+// and mutable body records, 332/332/332/332/332. Original records and body restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

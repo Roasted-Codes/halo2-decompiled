@@ -476,6 +476,9 @@ real function_30bf0(vector3f *vector);
 // DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
 // 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
 // Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
+// Round 394: empty/non-player/both seat continue exits, each with native/seat-scope
+// query outputs, 205 each; both with later up 205; both with long index 209.
+// Original eligibility, cursor and output scopes restored; result/range/SIMD homes remain.
 // DH round 232: Unsigned full-width result 152; stable actor direction gate 296; both 296;
 // signed admission interval 162, with unsigned result 162, stable gate 301, both 301;
 // unsigned-word result on the full graph 301. Native result/range/projection homes remain; restored.
@@ -1653,7 +1656,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 564 (was 564): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// score 528 (was 536): the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
 // frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
@@ -1732,6 +1735,11 @@ real function_2683f0(long actor_index, long node_index, short type)
 // DH round 230: On the independent-ordinal graph, long established/visible/retain/pair-established-visible/
 // pair-established-retain/pair-visible-retain/all predicates 577/579/550/583/567/579/603;
 // all with reversed selection declarations 604. Restored; frame 0x84/0x80 and native result homes remain.
+// Round 399: independent-search graph, word first/second/both counters 533/530/530;
+// long second result 577; word first result with long second 575, with word second
+// counter 528 (kept); word counters/first result with long/byte second result 580/639.
+// Calibrated preview; first result stays in -1..1 and each bounded counter in 0..2.
+// Frame remains 0x84/0x80; selection/iterator, forward and scoring homes differ.
 // DH round 232: On the retained ordinal graph, unsigned ordinal, native word threshold,
 // both, per-use iterator index, index/ordinal, index/threshold, all, and all with the first-pass
 // workspace scoped each score 536 in the calibrated image. Frame 0x84/0x80 and selection/
@@ -1857,13 +1865,13 @@ void function_266640(long actor_index)
 	players.datum_index = NONE;
 	while (data_datum_iterator_next(&players))
 	{
-		long player_table_index = NONE;
+		short player_table_index = NONE;
 		for (long p = 0; p < 2; ++p)
 			if (g_4f55cc[p].player_index == players.datum_index) { player_table_index = p; break; }
 		s_ai_player *player = NULL;
 		if (player_table_index != NONE) player = &g_4f55cc[player_table_index];
 		short player_slot = NONE;
-		for (long i = 0; i < 2; i++)
+		for (short i = 0; i < 2; i++)
 			if (g_4f55cc[i].player_index == players.datum_index) { player_slot = (short)i; break; }
 		long threshold = round_tick_count((real)g_510c54->field_2_3 * 2.0f);
 		if (player && *(long *)(players.datum + 0x2c) != NONE)

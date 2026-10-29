@@ -949,7 +949,7 @@ real function_30bf0(vector3f *v);
 /* aims a falling projectile along an arc: the slowest speed that reaches
    the target, then the time to it at the speed used (high or low arc),
    falling back to the slowest arc when the speed can't reach it */
-// score 244 (was 244): the convention now agrees with retail (target EAX, origin ECX, direction
+// score 232 (was 244): the convention now agrees with retail (target EAX, origin ECX, direction
 // ESI, the rest on the stack, `ret 0x2c`): the forced-speed and time-scale pointers are each read
 // once through their addresses, which keeps them on the stack as retail reads them at their uses
 // and matches the callers 0xfa6a0, 0x1f8100, 0x26f150 and 0x2900b0 (each passed the time scale in
@@ -974,12 +974,18 @@ real function_30bf0(vector3f *v);
 // Actual squared-time producer with found test 244; test-derived trajectory result
 // 245; repeated time square alone/with found/result 244/244/245; result with native
 // minimum clamp 246; coefficient home names 245; all scalar producer forms 246. Restored.
+// Round 266: six lexical orders of early gravity/horizontal-root/squared-length
+// scalars and two uninitialized entry declaration orders all 244. Every
+// initialization, input observation and complete original body restored.
 // Round 173: existing native gravity field 244; whole origin/target/both input points
 // 298/299/327; those with complete shared delta 298/299/327; both with entry velocity
 // 327. Original inputs, gravity observation, float trees and pointer contracts restored.
 // Round 226: separate displacement/gravity admission results and complete horizontal products,
 // seven subsets 282/283/244/298/282/283/298; combined admission on the full graph 298.
 // Original body and pointer contract restored; frame 0x28/0x30 and rounded-root scheduling remain.
+// Round 397: shared velocity scale 261; earlier path product 246; vertical stage first 244;
+// scale/path 232 (983 bytes, plain kept); scale/vertical, path/vertical, all stages and
+// all with library vector copies 246 each. Frame 0x28/0x30 and rounded-root/division scheduling remain.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1061,18 +1067,17 @@ bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point
 			chosen_speed = minimum_speed_value;
 		}
 
+		real path_distance = time * chosen_speed;
 		real inverse_time = 1.0f / time;
 		vector3f velocity;
 
-		velocity.i = inverse_time * delta.i;
-		velocity.j = inverse_time * delta.j;
+		vector3f_scale(&delta, inverse_time, &velocity);
 
 		real horizontal_speed_value = (real)sqrt(velocity.j * velocity.j + velocity.i * velocity.i);
 
-		velocity.k = inverse_time * delta.k + time * gravity * 0.5f;
+		velocity.k += time * gravity * 0.5f;
 
 		real vertical = velocity.k;
-		real path_distance = time * chosen_speed;
 
 		if (function_30bf0(&velocity) == 0.0f)
 		{
@@ -1178,11 +1183,18 @@ extern vector3f *g_4687ac;
 // Round 279: all four endpoints through existing point setters, with query-vector reuse
 // and result-first exit combinations 163/184/163/183; existing scaled-vector sums on the
 // same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
+// Round 266: native aggregate producers for all four endpoints, initial ray,
+// lateral displacement/cross output and all seven subsets 163 each; complete
+// endpoint aggregates with the negative pair first 186. Original body restored.
 // Round 173: native position/ignore/radius fields with external object/tag pointer or reference
 // receivers, mutable or read-only, all eight combinations 163. Original layout and body restored.
 // Round 226: positive/negative endpoint names, reversed declarations and full displacement roles 163/163/163;
 // with bounded direct ray 165, live radius 181, both 173; actual call results 172, all together 179.
 // Original body restored; frame 0x48/0x34 and tag/query ownership remain.
+// Round 397: immutable positive/negative/both endpoint pairs 163 each; each with
+// bounded initial ray 165; positive/both with original query reuse 163 each. Actual
+// initial displacement retained after the read-only query 180; with shared cross,
+// later query reuse or both 180 each. Original body restored; frame/tag/query homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1463,6 +1475,10 @@ PRIVATE inline long projectile_object_root(long object_index)
 // Complete object/tag/both observations 550/332/735; shared scaled addition 364;
 // with tag/object/both observations 344/523/715; initial setter on complete graph 713;
 // retained entry tag identity 396. Tag observations alone kept, plain 332; others restored.
+// Round 266: actual current-root parent result with live/cached tags, native
+// water expression and inline/forced combinations 334/334/375/375 twice;
+// live-tag root graph with shared initial-speed publication 348. Original
+// parent helper, callback, speed observations and every call restored.
 // Round 173: actual input-record fields with object pointer/reference and ordinary/forced
 // root expansion 332 each; consistently cached tag on those four graphs 360 each.
 // Four earlier slot-observation explorations score 484 and are excluded for overlap risk.
@@ -1470,6 +1486,10 @@ PRIVATE inline long projectile_object_root(long object_index)
 // Round 226: native object-header/tag-instance entry observations and shared speed publication,
 // seven subsets 484/383/383/358/447/411/339; full graph with native tag reference 339.
 // Original body restored; slot/input allocation and speed-update expansion remain.
+// Round 397: full unit-word observations 354; retained unit receiver 352; both 352;
+// word/speed, receiver/speed and all three 388/392/387; both unit forms with shared
+// scaled addition 351, with reused speed 364. Original callback restored; entry slot/input
+// allocation and speed-update expansion remain.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
