@@ -1464,6 +1464,9 @@ void function_126df0(long new_sound, long old_sound, short curve, real duration)
 // reduced control 429; indexed tracks 495; loop pool 427; ring pool 429; all pools 427;
 // indexed fills 389; shared lower pitch 427; array creation order 430; early ring plus wide selection 315.
 // Reduced-only improvements restored; the full image did not validate the width gain.
+// Round 235: request/ring/seed lexical lifetime subsets and entry request with both,
+// eight reduced ties at 461; unchanged reduced control 461 (frame 0x124, fade callee caveat).
+// Complete executable body restored; ordinary frame/index homes remain 501.
 // @retail 0x21b0e0
 void function_21b0e0(bool update)
 {
@@ -1788,6 +1791,8 @@ void function_21fa80(long channel_index, s_looping_channel_properties const *pro
 // chunk width alone 560, state width 550, frame names/property declaration 550; existing next-chunk
 // helper with short/long/wide selection 556/568/536; direct gain fields 526 (six-point tail dropped),
 // direct modifier fields 529 (three-point tail dropped), direct voice index/shared lower pitch 532.
+// Round 235: last-chunk char/short/long/dword 532/531/533/533; each with one exit
+// 532/531/533/533. One-point short result restored; missing frame bytes remain.
 // @retail 0x21c400
 void function_21c400(short voice_index, real gain, s_looping_channel_spatialization const *spatialization)
 {
