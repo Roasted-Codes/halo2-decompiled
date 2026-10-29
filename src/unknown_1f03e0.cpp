@@ -327,6 +327,10 @@ extern real g_47f05c;
 // Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
 // 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
 // and full body restored; frame 0xd0 and shape/count/alignment homes remain.
+// Round 181: Fallback distance field at every clamp/equality use 217; with uniform height reads 235;
+// with early best-alignment constant 217; both 235. Entry declarations of point/center/delta
+// on those four graphs 217/235/217/235. Original snapshots and full body restored; frame 0xd0
+// and shape/count/alignment carriers still differ.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
