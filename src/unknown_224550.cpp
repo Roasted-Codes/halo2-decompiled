@@ -171,6 +171,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Round 244: Existing tint producer as cache/seed/definition member, forced 391 each, ordinary inline 722
 // each; cache/definition member with caller tint output 520/520. Native tint outputs recover frame 0x60 but
 // not cache/UV homes; original producer and clamp loop restored.
+// Round 266: native in-place pointer/reference clamps on the retained four-channel
+// loop, indexed/pointer walks and inline/forced combinations all 421. Original
+// value-return clamp, indexed traversal, tint producer and UV captures restored.
 // Round 166: actual fixed-size cache-value input with native color/definition/both references
 // 391/391/391/391; each with direct descending channel traversal
 // 399/399/399/399. Original tint contract and indexed clamp restored.
@@ -187,6 +190,11 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // On that graph, caller tint reference/pointer, caller packing and native value return
 // 472/472/472/509; the same with entry tint declarations
 // 472/472/472/509. Original tint producer and ordinal restored.
+// Round 393: Shared cache identity with tint cache pointer/reference or fixed-array/element-pointer inputs, direct update
+// or existing update method: 391/391/391/391/391/391/391/391. Original cache, callback declaration and helpers restored.
+// Round 253: Branch-produced primary aspects/later next reciprocals/later blend remainder/
+// both later phases/aspects-reciprocals/aspects-remainder/all/constant-first aspects with
+// later next spans 417/431/409/405/431/412/436/412. Original scalar phases and complete callback restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

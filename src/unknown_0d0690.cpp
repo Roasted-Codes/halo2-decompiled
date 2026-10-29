@@ -1272,9 +1272,15 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 390: conditional last-selection publication with native entry pointer,
 // combined admission mask and live-count masks 0-7: 529/565/570/567/567/561/574/570.
 // Original scan, positive result, complete math body and all helper/caller contracts restored.
+// Round 392: dead first-clamp workspace reused for either later clamp, native/CRT
+// normal copies before/after intrinsic length: 567/581/566/588 for each workspace.
+// CRT forms lose a matched caller; original distinct color objects and body restored.
 // Round 247: current-frame normal/color/both role names, entry declarations and their
 // three naming combinations, bounded-color consumption scope with both names: 529 each.
 // Original vector/color homes, declaration phases, selection and complete body restored.
+// Round 253: Native RGB bias/reflected/scales/bias-reflected/bias-scales/
+// reflected-scales/all/all-short component loops 541/537/530/532/578/530/577/572.
+// Original selection, all private helpers, complete body and shared color type restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1402,6 +1408,9 @@ real function_30bf0(vector3f *vector);
 // Round 395: decoded-base/query/blend phase with one final pin exit, limited/
 // turned scopes and normal declaration priority in all eight combinations: 364 each.
 // Original phase graph, native lifetimes, helpers and inherited homes restored.
+// Round 253: Plain native RGB loops limited/reflected-blend/scales/limited-reflected/
+// limited-scales/reflected-scales/all/all-short 431/436/419/450/419/438/447/660.
+// Several recover frame 0x40 but regress; original complete body and color type restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1815,6 +1824,12 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 177: Native vector setters base/dynamic/output/weighted 784/781/790/782;
 // base+dynamic/all scales/weighted+output/all four 795/824/790/824. One-point gain
 // rejected; original loops and outputs restored; status/mesh homes remain in frame 0x90.
+// Round 268: native existing vertex-buffer, actual model-input record and native three-word
+// triangle views in all seven subsets 782 each; all with read-only buffer/data 782.
+// Original views restored; frame 0x90, displaced status/mesh homes and external expansion remain.
+// Round 253: Direct component-array cursor loops base/dynamic/output/base-dynamic/
+// base-output/dynamic-output/all/all with ordered end tests 856/841/785/809/840/819/810/911.
+// Original ordinal loops, short final counter, frame and complete body restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

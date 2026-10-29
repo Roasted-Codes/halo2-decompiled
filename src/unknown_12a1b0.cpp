@@ -11,6 +11,7 @@
 #include "crc.h"
 #include "unknown_218ac0.h"
 #include "unknown_221810.h"
+#include "unknown_124f90.h"
 #include <string.h>
 #include <math.h>
 
@@ -1098,36 +1099,9 @@ struct s_looping_promotion_table
 	s_looping_promotion *entries;
 };
 
-// score 52 (was 52): iterator frame agrees; class load, curve widening and element/definition carriers still differ.
-// Prior: frame and loop head now retail's; the body's element and definition registers differ;
-// short curve 76; long curve 80; count renamed 72; table snapshot 72; pool snapshot 76;
-// count first 74; plain for 74; flag mask 72; shared lookup 72; short curve and lookup 76;
-// bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65;
-// shared iterator helper reading the next link at each use 69; the shared iterator record
-// (first, index, count; next link read at each use) 52 (kept).
-// Canonical iterator: short curve 56; shared class lookup 52; both 56; native for 88;
-// per-iteration tag table 52; curve declaration first 52; shifted word flag 52;
-// shared class lookup/one-use short class index 30 (unmatched, restored).
-// Native definition getter 52; both native getters 52; both/short curve 56; composed getters 52.
-// Element/definition registers, class-load position and curve widening remain.
-// Word flag bitfield with byte-cast class: bool curve/direct or shared lookup 52/52, short curve 49/49;
-// with signed class member, bool curve 52/52 and short curve 49/49. Three-point gain at 286 bytes restored.
-// Native iterator index plus early one-use short class input, bool curve
-// with bitfield/word publication 30/30; short curve 42/42; force-inline
-// getter combinations 30/30/42/42. Class snapshot unmatched, restored.
-// Element/class carriers and pre-provider widening still differ.
-// Curve produced by short tests 70; with native word publication 70; bool tests/word 52;
-// short default/word 56; original bool/word 52; short conditional/word 56;
-// native definition with short tests/default and word publication 70/56. Restored.
-// Round 109: the call to the existing 0x221810 (LTCG inlines it, conversions still merged) 52;
-// a force-inline redeclaration of the shared lookup 52; 0x221810 with a short curve 56;
-// byte_flags_set for the looping bit 53 (fade-in 24); a short curve from the negated shifted bit
-// `!(bool)((flags >> 10) & 1)` 49 (retail's bool-then-movzx block; three points, not kept), with
-// byte_flags_set 56, with the shared lookup or 0x221810 49/49, with a flag mask 49, through
-// TEST_FIELD_BIT 49. Retail's `movsx eax, byte` ... `movsx eax, ax` comes from a long value passed
-// on as a short (a one-use long class local 34, exact-only); the one-use short class local with that
-// curve 21, plus a flag mask 21, plus byte_flags_set 25 (all exact-only, restored). Left: the entry
-// block schedule (retail loads the tag header global after the definition) and the flag store order.
+void function_126df0(long new_sound, long old_sound, short curve, real duration);
+
+/* fades out every playing sound of a track's ring over a duration in seconds */
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {
@@ -1140,23 +1114,21 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 		track_sound_iterator_new(&iterator, first_sound_index);
 		while ((index = track_sound_iterator_next(&iterator)) != NONE)
 		{
-			s_looping_track_sound *playing = track_sound_get(g_4e637c, index);
+			s_sound_playback *playing = SOUND_PLAYBACK_GET(index);
 			s_looping_playback_definition *definition = (s_looping_playback_definition *)g_4e3b44[playing->definition_index & 0xffff].bytes;
+			long promotion_index = (char)definition->unknown02[0];
 			s_tag_header *header = g_4e034c->header ? g_4e034c->header_alt : NULL;
 			s_looping_promotion_table *promotions = (s_looping_promotion_table *)g_4e3b44[header->datum_index & 0xffff].bytes;
-			s_looping_promotion *promotion = &promotions->entries[(short)(char)definition->unknown02[0]];
+			s_looping_promotion *promotion = &promotions->entries[(short)promotion_index];
 			bool curve = !(promotion->flags & 0x400);
-			playing->fade_gain_bits = function_12a810(index);
-			playing->fade_curve = curve;
-			playing->fade_start_time = (long)(duration * 1000.f);
-			playing->fade_end_time = NONE;
-			playing->looping = true;
+			function_126df0(NONE, index, curve, duration);
 		}
 	}
 }
 
-// score 25 (was 25): the state load is folded before the element pointer is formed and the
-// final looping store is scheduled early;
+// score 24 (was 25): retail's code is this loop with 0x126df0 inlined (its fade-in half); the
+// index and the element pointer have ESI and EDI the other way round. Earlier: the state load was
+// folded before the element pointer was formed and the final looping store was scheduled early;
 // pool at each use 66; count declared first 66; count renamed 66; state guard 66;
 // plain for 66; iterator record 66; count-first iterator record 66; flag mask 66;
 // shared iterator helper reading the next link at each use 64; the shared iterator record
@@ -1173,46 +1145,28 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 // Element formation and final flag-store schedule remain.
 // Native word flag snapshot inside/before state with mask and first/last publication 75 each;
 // boolean extraction under each lifetime/publication 82 each. Restored.
+// Round 73: the bitfield looping test (retail's shr/test) 35; the flag set through 0x0bfe40 (retail's
+// store order) 35; the state tested through the getter and the element taken in the branch 24; the
+// 0x126df0 call with the state tested through this file's getter 42, through the callee's own
+// SOUND_PLAYBACK_GET 24 (kept); then a one-use sound local, index first, iterator index, pool local,
+// NONE-first loop test, `2 ==`, `index = NONE` and the state read through iterator.index 24 each.
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {
 	if (first_sound_index != NONE)
 	{
-		s_record_pool *data = g_4e637c;
 		s_track_sound_iterator iterator;
 		long index;
 		track_sound_iterator_new(&iterator, first_sound_index);
 		while ((index = track_sound_iterator_next(&iterator)) != NONE)
 		{
-			s_looping_track_sound *playing = track_sound_get(data, index);
-			if (playing->state == 2)
-			{
-				if ((playing->flags & 0x80))
-					playing->fade_gain_bits = function_12a810(index);
-				else
-					playing->fade_gain_bits = 0xc2800000;
-				playing->fade_curve = curve;
-				playing->fade_start_time = NONE;
-				playing->fade_end_time = (long)(duration * 1000.f);
-				playing->flags |= 0x80;
-			}
+			if (SOUND_PLAYBACK_GET(index)->state == 2)
+				function_126df0(index, NONE, curve, duration);
 		}
 	}
 }
 
-// score 87 (was 87): the range additions still fuse; the 0x10 frame versus 4 and direction stores differ.
-// Before the shared direction workspace, only the range tails differed. Round 58:
-// split declarations and assignments 97; assignment in the
-// distance test 97; force-inline helper declaration 97; const results 97; entry-scope results 97;
-// zero-initialized results 97; explicit trigonometric result locals 97; shared vector setter 97.
-// Zero-first exit/if-else 102/102; double range/trig consumers 97/79 (precision form restored);
-// shared direction and scale in-place/workspace 97/87 (workspace kept); cosine before yaw 97;
-// complete offset before publication 94. Original real casts and component grouping are preserved.
-// Round 88: our compiler keeps the unfused add only when the range result has one use (returned,
-// stored or spilled at once, as in 0x1252f0); kept on the x87 stack for several uses it fuses.
-// Direction and scale in place on the output 97 (260 B, only the three adds differ); ranges as
-// direction arguments 101; scale_vector_by_double in place 108, on the workspace 76 (297 B, the
-// pitch/yaw values spill: further from retail, not kept); a named seed pointer 110.
+/* a detail sound's random offset: a random distance along a random yaw and pitch */
 // @retail 0x21ce60
 void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 {
@@ -1221,9 +1175,8 @@ void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 	{
 		real pitch = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, detail->pitch_lower, detail->pitch_upper);
 		real yaw = function_259d0(&g_4e7408->seed, __FILE__, __LINE__, detail->yaw_lower, detail->yaw_upper);
-		vector3f direction;
-		direction_from_angles(&direction, yaw, pitch);
-		vector3f_scale(&direction, distance, offset);
+		direction_from_angles(offset, yaw, pitch);
+		vector3f_scale(offset, distance, offset);
 	}
 	else
 		*offset = *g_4687a4;
@@ -1462,14 +1415,19 @@ bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_inde
 }
 
 long function_125f70(long definition_index, s_looping_detail_request *request, long *reason);
-void function_126df0(long new_sound, long old_sound, short curve, real duration);
 
-// score 501 (was 801): frame 0x128 now matches with the stop helper out of line;
+// score 501 (was 501): frame 0x128 now matches with the stop helper out of line;
 // index homes, definition register and ring traversal still differ.
 // Separate noinline declaration 501; wide selection full 502 (reduced 315);
 // reduced control 429; indexed tracks 495; loop pool 427; ring pool 429; all pools 427;
 // indexed fills 389; shared lower pitch 427; array creation order 430; early ring plus wide selection 315.
 // Reduced-only improvements restored; the full image did not validate the width gain.
+// Round 235: request/ring/seed lexical lifetime subsets and entry request with both,
+// eight reduced ties at 461; unchanged reduced control 461 (frame 0x124, fade callee caveat).
+// Complete executable body restored; ordinary frame/index homes remain 501.
+// Round 185: Outer/track index, range arrays/mask and ring/seed/count role-name groups, seven
+// subsets and alternate complete lexical order: reduced 461 each. Original names, executable body,
+// existing call boundaries and all field observations restored.
 // @retail 0x21b0e0
 void function_21b0e0(bool update)
 {
@@ -1789,11 +1747,16 @@ void function_21f8a0(long channel_index, s_looping_channel_properties const *pro
 void __stdcall function_21f720(s_looping_impulse_parameters const *parameters);
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects, bool force);
 
-// score 532 (was 550): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
+// score 532 (was 532): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
 // Full-width permutation selection keeps its values; both index widths 529 (three-point tail dropped),
 // chunk width alone 560, state width 550, frame names/property declaration 550; existing next-chunk
 // helper with short/long/wide selection 556/568/536; direct gain fields 526 (six-point tail dropped),
 // direct modifier fields 529 (three-point tail dropped), direct voice index/shared lower pitch 532.
+// Round 235: last-chunk char/short/long/dword 532/531/533/533; each with one exit
+// 532/531/533/533. One-point short result restored; missing frame bytes remain.
+// Round 185: Primary-track truth byte/signed-byte/short/long 532/532/540/544; with complete native
+// modifier copy 597/597/609/611. Original Boolean predicate, modifier receiver, scalar observations,
+// helpers and complete body restored.
 // @retail 0x21c400
 void function_21c400(short voice_index, real gain, s_looping_channel_spatialization const *spatialization)
 {

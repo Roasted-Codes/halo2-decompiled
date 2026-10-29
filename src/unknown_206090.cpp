@@ -228,6 +228,15 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // coefficient/count, coefficient/probes, count/probes, all word and all byte
 // 1378/1364/1399/1394/1410. The byte form has frame 0x5c8; the others 0x5d0.
 // Joint coefficients reach 6238 bytes without lowering the score.
+// Round 175: Native reference cross-formal subsets and magnitude input contract all 1364;
+// canonical object calls, no address cancellations. On the current float-product graph, ordinary
+// magnitude components/first-cross components/both/second-normalizer components/magnitude-normalizer/
+// cross-normalizer/all/all with scalar cross outputs 1606/1394/1555/1400/1587/1440/1554/1554.
+// Magnitude components recover frame 0x590 but shorten the body to 5990; all original input captures,
+// private helper bodies, interfaces and complete force body restored. Frame and indexed homes remain.
+// Round 253: Native component cursors scale/add/paired normalizers/scale-add/
+// scale-normalizers/add-normalizers/all/all with ordered end tests
+// 1638/1877/1557/1671/1535/1809/1633/3684. Original complete kernels, captures and body restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {

@@ -352,6 +352,8 @@ void __stdcall function_18c630(long object_index, long tag_index, long a, long b
 // mutable permutation input 7; scalar scale copy 8; scalar copy interleaved 11; plain scale
 // pointer 7; scalar copy split count last 8; direct scale bits 7; union real assignment 8;
 // real assignment after stores 8; scalar copy declared first 8; late object snapshot 7.
+// native data/entry/both record copies 56/58/74; direct entry/data/both fields 22/23/65;
+// native admission predicate 7; nested availability predicate 7.
 // @retail 0x18ca20
 void __stdcall function_18ca20(long object_index, long tag_index, s_sound_permutation const *permutation, real scale)
 {
@@ -627,6 +629,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // 286/286; with complete two-use negative adjustment 282/282, distance pair
 // 305/305, angle pair 310/310. Frame 0x8c and protected root-location destination
 // remain; all original field observations and the receiver pair restored.
+// Round 186: Complete source-kind char/byte/short/long with address/value owner selection
+// 346/346/338/351/358/358/350/363. Original field observations, multi-use handle helper and complete
+// body restored.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

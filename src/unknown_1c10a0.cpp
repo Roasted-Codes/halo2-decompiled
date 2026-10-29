@@ -277,24 +277,6 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 	return true;
 }
 
-// score 15 (was 15): the unknown22a byte is tested in CL (retail AL), the seat
-// count and the seat table swap ECX and EDX, and retail loads the unit for the
-// seat request before its stores. Unit read in each arm 75; flag local 17; seat
-// pointer local 11 (fixes the seat registers, flips the dot product's x term),
-// with the dot arguments swapped 13; forceinline seat search helper 17; tag
-// lookup written out 15; object pointer local 17; request stores reordered 15.
-// frame 0x24 and status loads agree. Earlier entry forms addressed actor
-// lookup order and early slot retention. Earlier forms: wide result 97;
-// shared predicate 112/115/120; actor-offset form 112; request at entry 70.
-// Round 162: native payload 115, with found-seat result 115; whole-slot found-seat result 65;
-// unsigned-word status with payload/whole-slot 115/65; long found-seat result 114/100;
-// payload/search with direct unit observations 91. Original body and data types restored.
-// Round 223: native vector setter 87; declaration-initialized cursor 15; both 87;
-// readonly tag 15, with setter/cursor/both 87/15/87; all with request renamed 87.
-// Original vector copy, cursor lifetime and tag receiver restored.
-// Round 173: complete request-unit capture 113; shared native seat type 15; both 113;
-// chained false request flags 15, with capture/shared seat/both 112/15/112; all three
-// with readonly tag 112. Original restored; branch-byte and seat/request registers remain.
 // @retail 0x1c1160
 short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 {
@@ -304,47 +286,66 @@ short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 	if (actor_get(actor_index)->unknown504 == 2)
 	{
 		s_actor_view *actor = actor_get(actor_index);
-		s_unit_request action;
-		long unit_index = actor->unknown018;
+		long unit_index;
 
-		if (actor->unknown22a)
+		if (bool vector_request = actor->unknown22a)
 		{
-			if (!function_110ab0(unit_index) &&
-				(!state->unknown14 || dot3f((vector3f *)&state->unknown08, &actor->unknown290) > 0.9f))
+			unit_index = actor->unknown018;
+			if (!function_110ab0(unit_index))
 			{
-				action.type = 0x35;
-				action.type35.has_vector = state->unknown14;
+				real alignment = 1.0f;
+
 				if (state->unknown14)
 				{
-					action.type35.vector = *(vector3f *)&state->unknown08;
+					alignment = dot3f((vector3f *)&state->unknown08, &actor->unknown290);
 				}
-				state->unknown00 = function_e6900(actor->unknown018, &action);
+				if (alignment > 0.9f)
+				{
+					s_unit_request request;
+
+					request.type = 0x35;
+					request.type35.has_vector = state->unknown14;
+					if (state->unknown14)
+					{
+						request.type35.vector = *(vector3f *)&state->unknown08;
+					}
+					state->unknown00 = function_e6900(actor->unknown018, &request);
+				}
 			}
 		}
-		else if (!function_110ab0(unit_index))
+		else
 		{
-			long vehicle_index = state->unknown04;
-
-			result = g_46fbe4;
-			if (vehicle_index != NONE)
+			unit_index = actor->unknown018;
+			if (!function_110ab0(unit_index))
 			{
-				s_vehicle_tag_view *tag = vehicle_tag_get(vehicle_index);
-				short seat_index;
+				long vehicle_index = state->unknown04;
 
-				for (seat_index = 0; seat_index < tag->seat_count; seat_index++)
+				result = g_46fbe4;
+				if (vehicle_index != NONE)
 				{
-					if (TEST_FIELD_BIT(tag->seats[seat_index].flags.bit3))
+					s_vehicle_tag_view *tag = vehicle_tag_get(vehicle_index);
+					short seat_index;
+
+					for (seat_index = 0; seat_index < tag->seat_count; seat_index++)
 					{
-						if (seat_index != NONE && function_c8f60(vehicle_index, seat_index) == NONE)
+						s_vehicle_seat_view *seat = &tag->seats[seat_index];
+
+						if (TEST_FIELD_BIT(seat->flags.bit3))
 						{
-							action.type = 0x1c;
-							action.type1c.object_index = vehicle_index;
-							action.type1c.seat_index = seat_index;
-							action.type1c.unknowna = false;
-							action.type1c.unknownb = false;
-							function_e6900(actor->unknown018, &action);
+							if (seat_index != NONE && function_c8f60(vehicle_index, seat_index) == NONE)
+							{
+								long request_unit = actor->unknown018;
+								s_unit_request action;
+
+								action.type1c.object_index = vehicle_index;
+								action.type = 0x1c;
+								action.type1c.seat_index = seat_index;
+								action.type1c.unknowna = false;
+								action.type1c.unknownb = false;
+								function_e6900(request_unit, &action);
+							}
+							break;
 						}
-						break;
 					}
 				}
 			}

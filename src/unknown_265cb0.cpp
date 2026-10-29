@@ -476,6 +476,12 @@ real function_30bf0(vector3f *vector);
 // DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
 // 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
 // Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
+// Round 394: empty/non-player/both seat continue exits, each with native/seat-scope
+// query outputs, 205 each; both with later up 205; both with long index 209.
+// Original eligibility, cursor and output scopes restored; result/range/SIMD homes remain.
+// DH round 232: Unsigned full-width result 152; stable actor direction gate 296; both 296;
+// signed admission interval 162, with unsigned result 162, stable gate 301, both 301;
+// unsigned-word result on the full graph 301. Native result/range/projection homes remain; restored.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1734,6 +1740,10 @@ real function_2683f0(long actor_index, long node_index, short type)
 // counter 528 (kept); word counters/first result with long/byte second result 580/639.
 // Calibrated preview; first result stays in -1..1 and each bounded counter in 0..2.
 // Frame remains 0x84/0x80; selection/iterator, forward and scoring homes differ.
+// DH round 232: On the retained ordinal graph, unsigned ordinal, native word threshold,
+// both, per-use iterator index, index/ordinal, index/threshold, all, and all with the first-pass
+// workspace scoped each score 536 in the calibrated image. Frame 0x84/0x80 and selection/
+// iterator/transform/scoring homes remain; complete original executable body restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

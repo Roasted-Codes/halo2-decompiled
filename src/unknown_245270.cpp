@@ -423,6 +423,9 @@ void function_245400(s_source_245400 const *source, long index,
 // Round 175: native const source member, original/native plane field and bool/byte sides
 // 203/203/203/203; each with uniform material-table reads 210/210/210/210.
 // Original free-function interface, source declaration and every call restored.
+// Complete first/second/both native vertex inputs 245/215/270;
+// with a complete surface 287/272/318; both with material/surface+material 261/304.
+// Original endpoint receivers, source records and complete body restored.
 // Round 264: existing difference/cross/rotation force-inline declaration subsets,
 // all seven 203; all with the actual point-transform boundary 203. Original
 // declarations and body restored; frame 0x24/0x2c, source and side homes remain.
