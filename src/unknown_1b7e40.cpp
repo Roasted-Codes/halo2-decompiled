@@ -164,6 +164,8 @@ evaluate:
 // Round 162: separate view-getter noinline with immutable default status and direct proximity return,
 // combined with native payload, unsigned-word status and complete double speed consumer: eight forms
 // all 102 at 231/264 bytes. Entire body, payload and getter declaration restored.
+// Complete final rejection with native payload/self-dot 87/87; staged final failures 90/90;
+// whole-slot forms 87/90/87/90, all 277 bytes. Original 264-byte body and getter restored.
 // @retail 0x1b81c0
 short __stdcall function_1b81c0(long actor_index, s_slot *slot, bool active)
 {
