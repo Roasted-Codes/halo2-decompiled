@@ -282,6 +282,8 @@ void __stdcall function_1160c0(real dt)
 // Round 226: complete rotation base sums, sine-scaled transverse terms and rotated components,
 // all seven combinations and full graph with existing point publication 179 each.
 // Original body restored; segment/previous/axis homes and rotation scheduling remain.
+// Round 395: native node cursor 329; with readonly segment 329, invariant reciprocal 327, both 327;
+// invariant vertical on those four graphs 338/338/326/326. All original induction and scopes restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

@@ -358,6 +358,8 @@ static inline bool teams_enabled_19e1c0()
 // volatile result without its initialiser 449; every form restored.
 // Round 393: Length/copy/comparison/format noinline declarations with inherited result 390/390/390/390;
 // ordinary result 691/691/691/691. All declarations and original case bodies restored.
+// Round 395: consumed name capacity with result after/before copy, result-fed capacity, and direct capacity exits
+// 618/649/519/621; ordinary result with those four capacity lifetimes 692/692/692/692. All restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {
