@@ -407,6 +407,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Round 218: Shared vector sums blend/velocity/both/motion/blend-motion/velocity-motion/all
 // 368/368/368/356/356/363/363; all plus trace-vector setter 366. Motion helper alone
 // 356 kept plain; frame 0xb0 and 1643/1652 bytes remain, with late EBP save and random/blend/getter homes.
+// Round 255: returned position/direction receivers 379/374; contact add-scale 356; both
+// receivers 380; position/contact 378, direction/contact 371, both/contact 380;
+// all plus shared blend addition 380. Original receivers and collision arithmetic restored.
 // Round 222: Native initial-position/both-blend-source/both/normal/initial-normal/blend-normal/all inputs 396/420/478/372/412/432/478; all with point constructors 396. Every input snapshot and constructor restored; late EBP save and random/blend/getter homes remain.
 // Round 224: Probe/normal/both memcpy, collision scaled sum, probe+sum/normal+sum/all 356 each;
 // both memmove with the sum 390. Original copies, helper graph and complete body restored.
@@ -419,6 +422,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // 368 (retail's load/and/store), both 367 (both exact, later registers move); flag bit 4 through a
 // word read 374 (retail's `shr al, 4; test al, 1`, but the definition is reloaded from the stack);
 // all three 364 (1659 bytes). /G5, /G6 and /G7 compile-only all fold as ours does.
+// Round 383: coherent live particle/live descriptor/retained allocation pool 709/367/359;
+// particle+descriptor/particle+pool/descriptor+pool/all/all with live settings
+// 731/752/367/755/807. Original record observations, helper graph and complete body restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

@@ -255,7 +255,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
-// score 172 (was 185): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
+// score 172 (was 172): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
 // the BSP in EBP, retail the BSP in EBX with the section in its stack home), range/plane homes and
 // vertex joins remain. Retail never initialises its vertex flag (set only when a vertex exists,
 // tested only after the first vertex); that uninitialised success-only flag gives 165 (163 with
@@ -309,10 +309,21 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // result with source-owned definition 195/207. Branch-owned definition null default
 // and geometry-join byte result 172 (733/726 bytes), plain confirmed; retained.
 // Frame 0x58 agrees; BSP/section residence, range/plane homes and vertex joins remain.
+// Round 384: strip receiver after readonly part lookup with original/readonly
+// strip/reference/both 201/201/201/201; each with the two-use native first-index snapshot
+// 230/230/230/230.
+// Original strip acquisition, native byte result and complete defined-failure body restored;
+// BSP/section and range/plane homes remain.
 // Round 249: Complete pointer/lower/upper eligibility exits in all six orders
 // 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
 // defined-failure helper and complete query restored; BSP/section homes remain.
 // Round 223: Signed/unsigned word masked-plane storage with original/reference-base/surface-base/both table selections 213/188/214/210/215/196/216/224. Original full-width plane, table selectors and defined vertex failures restored.
+// Geometry-join Boolean result 182 (726 bytes); native byte fetch 172; both 182;
+// initialized single-exit fetch 172, with Boolean result/byte fetch/both 182/172/182;
+// complete result/fetch graph with readonly section 182. Original helper and result restored.
+// Round 32 on branch-owned definition/result-at-join: all BSP observations 234;
+// all collision metadata observations 228; CRT query snapshot 172; BSP/metadata 231;
+// BSP/copy 234; metadata/copy 228; all 231, instance-first all 222. Original body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
