@@ -1616,7 +1616,8 @@ static inline bool weapon_state_replaceable(long current, long state)
 // signed-word mask 83; owner-first test 68.
 // wide set/flags/class 67; single played result 130; unit lookup before flags 75;
 // replaceable-first gate 111; nested class gate 67; wide unit index 67;
-// class-by-default test 67; class ternary 75.
+// class-by-default test 67; class ternary 75; a stack-argument (varargs) forwarder for the
+// notification call (diagnostic) gives retail's code to the end but its own add esp, 60.
 // @retail 0x1058b0
 bool function_1058b0(long weapon_index, long state, bool force)
 {
@@ -2978,23 +2979,22 @@ s_weapon_type_definition_view g_467cd0 =
 };
 
 
-bool function_1023d0(long weapon_index, long barrel_index);
-
-static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long barrel_index)
+// @retail 0x1023d0
+bool function_1023d0(long weapon_index, long barrel_index)
 {
     s_weapon *weapon = WEAPON_GET(weapon_index);
     s_weapon_definition *definition = WEAPON_DEFINITION(weapon);
     s_weapon_barrel_definition *barrel_definition = &definition->barrels[barrel_index];
     bool result = false;
-    short magazine_index = barrel_definition->magazine_index;
-    if (magazine_index != NONE)
+    if (barrel_definition->magazine_index != NONE)
     {
-        s_weapon_magazine_definition *magazine_definition = &definition->magazines[magazine_index];
-        s_weapon_magazine *magazine = &weapon->magazines[magazine_index];
+        s_weapon_magazine_definition *magazine_definition = &definition->magazines[barrel_definition->magazine_index];
+        s_weapon_magazine *magazine = &weapon->magazines[barrel_definition->magazine_index];
         if ((magazine->rounds_loaded < barrel_definition->rounds_minimum && !TEST_FIELD_BIT(barrel_definition->flag2)) ||
             magazine->rounds_loaded < barrel_definition->rounds_per_shot || magazine->rounds_loaded == 0)
         {
-            if (function_1008f0(barrel_definition->magazine_index, weapon_index, false) > 0 &&
+            long magazine_index = barrel_definition->magazine_index;
+            if (function_1008f0(magazine_index, weapon_index, false) > 0 &&
                 magazine->rounds_loaded < magazine_definition->rounds_loaded_maximum)
             {
                 if (!TEST_FIELD_BIT(((s_weapon_flags_view_1023d0 const *)&weapon->value_16e)->flag5) && weapon->parent_index != NONE)
@@ -3016,33 +3016,6 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
         }
     }
     return result;
-}
-
-// score 52 (was 52): the barrel record's pointer is kept in ebx where retail keeps it in
-// ebp (magazine record ebp/ebx), and the weapon pointer, magazine index and scratch
-// registers rotate ecx/edx against retail's. Forms tried: long outcome 128; byte outcome
-// 127; long helper return 127; both wide 128; const barrel 52; const magazine tag 52; const
-// tags 52; forced-body receiver names 52; late magazine tag 127; late const tag 127; saved
-// query selector 107; failure-first 52; exemption-first 76; distinct stop ordinals 52;
-// immutable selector/barrel 52/52; shared object/header getters 52/52; ordinary inline 468;
-// automatic inline 468; barrel reference 52; magazine-tag reference 52; magazine reference
-// 52; combined references 52; empty-first tests 88; query result first 140; actual flag
-// member 52; tag at each use 201; actual tag reference 52; success before notification 116;
-// parent handle 52; capacity snapshot 99; absolute object index 90; flag member with tag
-// reference 52; weapon/tag/both receiver inputs 52/52/52; barrel input 131;
-// weapon+barrel/tag+barrel/all inputs 52/52/52; direct success with weapon input 111; short
-// selector with barrel input 133; with weapon/barrel 52; with tag/barrel 52; with all
-// receivers 52; with external record references 52; reserve query, reload notification and
-// barrel stop noinline 52 each; neighbor inline getter 52; header-table local 52; masked
-// definition-index local 52; outcome and selector declarations swapped 52; nested macro get
-// 131; barrel address by arithmetic 52; shared-linkage forced inline 52; magazine address by
-// arithmetic 52; existing trigger-clear helper in the loop 64; barrel local renamed 52;
-// existing index/header getter for both fetches 52; named loaded-round count 52; one loop
-// counter for both loops 52.
-// @retail 0x1023d0
-bool function_1023d0(long weapon_index, long barrel_index)
-{
-	return weapon_barrel_ammunition_check(weapon_index, barrel_index);
 }
 
 
