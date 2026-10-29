@@ -457,6 +457,8 @@ static __forceinline byte *function_9d952(long arg_0)
 }
 
 // score 12 (was 12): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
+// the final field_f4 copy into the object's +0x2b8 goes through EAX in retail
+// and through ECX in ours; the field_92 read now precedes the +0x2a8 store, as retail has it.
 // object lookup gives 4, kept out: one use) and copies field_f4 at the end through EAX (ours ECX).
 // Lane 10 r15: 0xd0e00 arm first 37; camo arm as a (unit, flag) inline helper 12; final store
 // indexed from the +0x2b0 field 12; field_f4 read through the parameter 12; field_92 local with a
@@ -532,9 +534,10 @@ void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
         long local_4 = NONE;
         if (datum_get_absolute_inlined(g_4e8c24, local_2->field_90))
             local_4 = data_datum_index(g_4e8c24, local_2->field_90);
+        long local_5 = local_2->field_92;
         byte *local_6 = function_9d952(arg_0);
         *(long *)(local_6 + 0x2a8) = local_4;
-        *(long *)(local_6 + 0x2ac) = local_2->field_92;
+        *(long *)(local_6 + 0x2ac) = local_5;
         function_d0d20(arg_0);
     }
     if (local_1 & 0x800)
