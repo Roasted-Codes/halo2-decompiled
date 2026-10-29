@@ -271,6 +271,9 @@ void __stdcall function_1160c0(real dt)
 // Round 32: existing in-place axis scale 179; original-angle segment-first 276;
 // tiny-axis-owned fallback 294; scale/segment 276; scale/fallback 294; segment/fallback 247;
 // all 247, cosine-first all 247. Original producers, fallback and include set restored.
+// Round 226: complete rotation base sums, sine-scaled transverse terms and rotated components,
+// all seven combinations and full graph with existing point publication 179 each.
+// Original body restored; segment/previous/axis homes and rotation scheduling remain.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

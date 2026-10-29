@@ -974,6 +974,9 @@ real function_30bf0(vector3f *v);
 // Actual squared-time producer with found test 244; test-derived trajectory result
 // 245; repeated time square alone/with found/result 244/244/245; result with native
 // minimum clamp 246; coefficient home names 245; all scalar producer forms 246. Restored.
+// Round 226: separate displacement/gravity admission results and complete horizontal products,
+// seven subsets 282/283/244/298/282/283/298; combined admission on the full graph 298.
+// Original body and pointer contract restored; frame 0x28/0x30 and rounded-root scheduling remain.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1172,6 +1175,9 @@ extern vector3f *g_4687ac;
 // Round 279: all four endpoints through existing point setters, with query-vector reuse
 // and result-first exit combinations 163/184/163/183; existing scaled-vector sums on the
 // same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
+// Round 226: positive/negative endpoint names, reversed declarations and full displacement roles 163/163/163;
+// with bounded direct ray 165, live radius 181, both 173; actual call results 172, all together 179.
+// Original body restored; frame 0x48/0x34 and tag/query ownership remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1452,6 +1458,9 @@ PRIVATE inline long projectile_object_root(long object_index)
 // Complete object/tag/both observations 550/332/735; shared scaled addition 364;
 // with tag/object/both observations 344/523/715; initial setter on complete graph 713;
 // retained entry tag identity 396. Tag observations alone kept, plain 332; others restored.
+// Round 226: native object-header/tag-instance entry observations and shared speed publication,
+// seven subsets 484/383/383/358/447/411/339; full graph with native tag reference 339.
+// Original body restored; slot/input allocation and speed-update expansion remain.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
