@@ -766,7 +766,7 @@ void function_143250(
 	}
 }
 
-// score 2148 (was 2265): Full frame 0x300 agrees; rotation input and basis/matrix homes remain.
+// score 2148 (was 2148): Full frame 0x300 agrees; rotation input and basis/matrix homes remain.
 // Frame pointer 3182; separate adjacent basis pairs [0,1] 2278, [2,3] 2320,
 // [4,5] 2286, [6,7] 2329.
 // Round 310: second-band product trees 2265; second-band full trees 2265; third-band
@@ -791,6 +791,9 @@ void function_143250(
 // at entry/publication 2163/2163; receiver with inlined negatives 2169/2169;
 // receiver with early negatives 2149/2149 (fast control 2266). Last form 2148
 // plain, 10390/10773 bytes; receiver used throughout the genuine shared matrix.
+// Round 385: Current shared-matrix receiver graph: independent native rows, all seven subsets
+// 2240/2237/2348/2191/2294/2286/2397; all with component-order names 2397 (fast control 2149; full
+// 2148). Original workspace and complete body restored; input and basis/matrix homes remain.
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
