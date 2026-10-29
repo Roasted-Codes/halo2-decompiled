@@ -1425,6 +1425,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // 286/269; shared masked input 298/270; both mask parts 317/305.
 // Every short-index form loses a matched sibling; original shared writer restored.
 // Round 369: common traversal 845; bounded short counter 844; repeated component/shared color/both on common traversal 845 each, with short counter 844 each. All restored.
+// Round 222: External destination references, indexed pair/constant-zero/constant-one
+// subsets 267/287/287/287/287/296/296; all with reused preserved mask 274. Constant-one
+// forms lose a matched writer sibling; complete original helper and body restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

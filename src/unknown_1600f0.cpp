@@ -1101,6 +1101,9 @@ struct s_game_engine_globals_connections_view
 // Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
 // with each field combination, then all with immutable widths: eight calibrated scores 170.
 // Original field domains and declaration lifetimes restored.
+// Round 222: Consistent horizontal/vertical/both coordinate values, short
+// 285/281/308 and long 280/281/309; readonly pairs 308/309. Every widget/query
+// control matched; original input observations and executable body restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

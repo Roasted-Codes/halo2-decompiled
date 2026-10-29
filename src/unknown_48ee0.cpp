@@ -115,6 +115,9 @@ extern real g_4c9798[36];
 // early border zero alone/with tag/direction/both 342 each, zero after mode
 // with both views 297. Border forms recover frame 0x28 but regress; original
 // short mode/height, observations, copies and protected call inputs restored.
+// Round 222: Existing native projection/opposite/near-normal vector setters, all seven
+// subsets 252/255/264/239/252/255/264; all with both point setters 264. Frame
+// 0x24/0x28 and state/rounding homes remain; complete original body restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

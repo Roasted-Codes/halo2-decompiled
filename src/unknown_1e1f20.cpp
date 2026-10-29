@@ -765,6 +765,9 @@ void swarm_leader_detach(long actor_index);
 // Shared inline/forced declaration diagnostics, each long/short/byte/unsigned,
 // 330/303/285/330 and 330/303/285/330; declarations restored.
 // Round 29: Existing record/current-datum reference scans, normal/entry workspace declarations and both workspace names: 266 each against unchanged fast 261; ordinary baseline 285 retained. Original scan and include restored.
+// Round 222: Native callback-handler ownership, conditional iterator-result declaration,
+// cleanup-only workspace scope, all seven subsets and readonly handler: eight 261 fast
+// against unchanged fast 261 (ordinary 285). Original executable body restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

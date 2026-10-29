@@ -159,6 +159,9 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Round 381: marked-function requested/movement/acceleration vector references, all seven
 // nonempty subsets, 383 each; all vectors plus native scalar-output references 383.
 // Every original signature, operation and disabled declaration/call restored.
+// Round 222: Selective ordinary-inline magnitude/planar/clamp boundaries, all seven
+// subsets 383 each; all four private math helpers ordinary inline 383. Original
+// forced boundaries, helper bodies and every call restored; frame/input homes remain.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)
