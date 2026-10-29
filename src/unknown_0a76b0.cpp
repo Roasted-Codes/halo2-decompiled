@@ -1744,7 +1744,7 @@ bool __stdcall function_e9500(long unit_index, s_unit_request *request)
 bool __stdcall function_10f430(long unit_index, long field_7c, long state_name, long weapon_name, long action_name,
 	real blend, bool flags, long mode);
 __declspec(noinline) void function_edfa0(long unit_index, point2f const *facing);
-void function_ba3d0(long unit_index);
+__declspec(noinline) void function_ba3d0(long unit_index);
 
 /* the request to play an animation impulse (type 25) */
 struct s_unit_request_impulse
@@ -1760,6 +1760,12 @@ struct s_unit_request_impulse
 
 /* plays an animation impulse (type 25), from the unit's idle state (or its
    alternate one) */
+// score 17 (was 82): admission name/alternate convention, zero scheduling and
+// active-bit address materialization remain.
+// Round 256: provider noinline alone 82; false-first bool/byte/short/long
+// completions 17/32/45/46; true-first 75/88/86/84. Provider declaration restored.
+// Clean bool completion 17; initialization order 16; completion/request names
+// 17/17; combined names/order 16. One-point forms restored; clean completion kept.
 // @retail 0xe9690
 bool __stdcall function_e9690(long unit_index, s_unit_request *request)
 {
@@ -1767,52 +1773,51 @@ bool __stdcall function_e9690(long unit_index, s_unit_request *request)
 	bool result = false;
 	bool alternate = false;
 
-	if (!function_e7020(unit_index, &alternate, impulse->name))
-		return result;
-
-	real blend = 0.0f;
-
-	switch (impulse->blend)
+	if (function_e7020(unit_index, &alternate, impulse->name))
 	{
-	case 1:
-		blend = 0.1f;
-		break;
-	case 2:
-		blend = 0.2f;
-		break;
+		real blend = 0.0f;
+
+		switch (impulse->blend)
+		{
+		case 1:
+			blend = 0.1f;
+			break;
+		case 2:
+			blend = 0.2f;
+			break;
+		}
+		if (alternate)
+			function_10f430(unit_index, 0x6000086, 0x7000101, 0x7000101, 0x400000c, blend, 0, 0);
+		if (function_113e90(unit_index, impulse->name, blend, NULL, 0))
+		{
+			s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
+
+			*((byte *)unit + *(short *)((byte *)unit + 0x33e)) |= 1;
+			if (impulse->face && unit->parent_object_index == NONE)
+				function_edfa0(unit_index, (point2f const *)&impulse->facing);
+			result = true;
+		}
 	}
-	if (alternate)
-		function_10f430(unit_index, 0x6000086, 0x7000101, 0x7000101, 0x400000c, blend, 0, 0);
-	if (!function_113e90(unit_index, impulse->name, blend, NULL, 0))
-		return result;
-
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-
-	*((byte *)unit + *(short *)((byte *)unit + 0x33e)) |= 1;
-	if (impulse->face && unit->parent_object_index == NONE)
-		function_edfa0(unit_index, (point2f const *)&impulse->facing);
-	return true;
+	return result;
 }
 
 /* plays an animation on a unit, facing it the way the animation asks */
+__declspec(noinline) bool function_e9780(long unit_index, long name, bool keep, vector3f const *facing, c_animation_channel **channel_out);
+
 // @retail 0xe9780
 bool function_e9780(long unit_index, long name, bool keep, vector3f const *facing, c_animation_channel **channel_out)
 {
-	c_animation_channel *channel = NULL;
 	bool result = false;
+	c_animation_channel *channel = NULL;
 
 	if (function_113e90(unit_index, name, 0.0f, &channel, 0))
 	{
 		s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-		s_animation *animation = NULL;
 
 		if (!keep)
 			function_ba3d0(unit_index);
-		if (channel->animation_id.index != NONE)
-		{
-			animation = function_1daea0((s_graph_tag *)g_4e3b44[channel->graph_tag_index & 0xffff].bytes,
-				channel->animation_id);
-		}
+		s_animation *animation = channel->function_1c6440();
+
 		if (!animation->type && unit->parent_object_index == NONE)
 		{
 			if (facing)
@@ -2442,6 +2447,12 @@ void function_e5300(long unit_index, long a);
 
 /* entering a vehicle's seat finished: the unit's visibility in the seat,
    and the seat's state */
+// score 77 (was 77): region-output routine inlines; pool/unit/output homes
+// and unsigned state test differ.
+// Round 256: caller-only noinline/direct hidden/entry storage subsets and early
+// zero 73 each in reduced image (unchanged preview 73); defining-TU noinline
+// with original/direct/entry/early-zero forms 40 each, confirmed full 40.
+// Defining noinline restored after it lost an existing match; original body kept.
 // @retail 0xea6b0
 void __stdcall function_ea6b0(long unit_index, long type)
 {

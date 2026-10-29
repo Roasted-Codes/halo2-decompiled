@@ -218,12 +218,14 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
 
-// score 257 (was 323): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
+// score 257 (was 257): frame 0x1634 versus 0x162c; scaled actor offset EAX versus ESI,
 // slot/scratch homes and the 52-byte length deficit remain.
 // Round 198: payload/native input/read-only input/input scope 323 each; clamp 322;
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
 // ordinary result/receiver with ordinary result 325/325; search outputs first 257.
 // Typed payload/native input and preparation scope kept at 257 plain; all follow-ups restored.
+// Round 256: native geometry/bounds/marker-reference request fields, all seven subsets,
+// and complete fields with movement scope 257 each; request header and body restored.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
 {
