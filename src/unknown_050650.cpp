@@ -950,6 +950,9 @@ real g_55e5cc = 0.08726646f;
 // Round 224: Native yaw/pitch bound records and full-width result, seven subsets
 // 56/70/209/70/72/86/219; both records in pitch/yaw order 210. No exact match; original scalar
 // homes and body restored.
+// Round 177: Full vector setters 279, with byte result 282; common output publication
+// 265, with byte result 272; both 322, with byte result 327; fallback setter 63;
+// actor-copy setters 274. Original frame, publication, copies, result and calls restored.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
