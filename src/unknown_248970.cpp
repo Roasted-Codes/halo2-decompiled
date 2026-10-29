@@ -193,6 +193,9 @@ public:
 // distinct pointer receivers restored; metadata/head/frame and x87 homes remain.
 // Round 187: Complete squared-distance with scaled-double/coordinate-scope/early-falloff masks 0-7
 // 227/227/227/227/227/227/227/227. Original arithmetic and full body restored.
+// Round 274: Native shared signed count field with independent child-count declaration,
+// bounded short viewer and indexed child-field subsets 227/227/259/259/243/243/264/264.
+// Original shared header and complete body restored; frame and metadata/head homes remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

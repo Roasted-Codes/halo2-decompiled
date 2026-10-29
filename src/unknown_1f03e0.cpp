@@ -340,6 +340,9 @@ extern real g_47f05c;
 // and shape/count/alignment carriers still differ.
 // Round 269: Height/validity/alignment rejection-guard subsets 1-7 all 192;
 // all three with fallback validity first 215. Original nested scan, snapshots and full body restored.
+// Round 274: Shared branch-distance home with separate/common clamp joins, crossed with
+// uniform height/body-byte observations 192/288/205/283/208/294/220/289. Original
+// branch-owned distances, snapshots and full body restored; frame and carriers remain.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)

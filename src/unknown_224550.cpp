@@ -189,6 +189,9 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Round 253: Branch-produced primary aspects/later next reciprocals/later blend remainder/
 // both later phases/aspects-reciprocals/aspects-remainder/all/constant-first aspects with
 // later next spans 417/431/409/405/431/412/436/412. Original scalar phases and complete callback restored.
+// Round 274: Existing flip producer with a zero result and two native bit tests,
+// definition/seed reference inputs and forced expansion in eight combinations 466 each.
+// Original flip producer, input contracts, tint clamp and complete callback restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)
