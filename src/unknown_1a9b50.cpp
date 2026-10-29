@@ -514,6 +514,9 @@ extern point2f *g_468778;
 // Round 205: Complete settings/state/direction getter receiver masks 1/2/3/4/5/6/7
 // 433/487/516/506/574/663/657; all with constant return exits 660. Every original
 // receiver, early distance, request transfer, expression tree and body restored.
+// Round 399: Native slot callback input, original/actor-first lookup, with entry/late result defaults,
+// constant-return exits and early rejection: 375/413/409/426/425/393/440/413. Body and declaration
+// restored.
 // @retail 0x1aa0d0
 bool __stdcall function_1aa0d0(long arg_0, s_slot *arg_1)
 {
@@ -753,6 +756,8 @@ static __forceinline long real_to_long(real value);
 // Original body and all helpers restored.
 // Round 392: Entry result from each individual flag and each flag pair, then the first pair in byte/long
 // storage: 476/476/476/393/395/396/438/454. Complete original entry/result and body restored.
+// Round 399: Magnitude/weight phase scope, readonly magnitude, magnitude/distance names and all
+// combinations, then coefficient/time names: 384 each. Original restored.
 // @retail 0x1aab50
 bool __stdcall function_1aab50(long arg_0, s_slot *arg_1)
 {

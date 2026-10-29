@@ -105,6 +105,31 @@ static __forceinline long real_to_long(real value);
 // the iterator's address in a local (declared before the call, with the block locals, assigned
 // first) 2; a 300 s permuter run, none below 2; the iterator declared at function scope or first
 // in the player block 2/2; the tick conversion before the player stores 21.
+// only the EAX vehicle and EBX iterator-address setup order differs; frame 0x1c and retail length agree.
+// Earlier: the child object is kept in a local, so retail's object
+// pointer stays in EAX and the tick count is converted through ECX/DX like
+// retail; only the 0xd0620 call setup still differs, ours forms the iterator
+// address in EBX before it moves the vehicle index into EAX.
+// Tried: the iterator started from the stored
+// the iterator address in EBX for the first child call, and in the child loop
+// keeps the object pointer in EAX and converts the tick count through ECX/DX
+// where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
+// player vehicle 77; the actor looked up at each store 45; separate conversion
+// locals in the loop 15; the loop product passed straight to the conversion
+// 8; the block locals in two other orders 8; the player and vehicle parameters
+// swapped 12; the child object in a local with the index read from it 8.
+// 8; the block locals in two other orders 8.
+// Earlier 8 from 44.
+// Existing slot-query long/short 61/8; guarded long/short 70/38;
+// query-first long/short 77/46; shared-query rounding names/separate loop carriers 61/61.
+// 8; the block locals in two other orders 8. Separately, from the 44 form: the clock
+// local moved into the player block with the slot local declared first, 8 (the same
+// lines); pointer, type, scope, direct-store and helper forms on it give the same bytes.
+// Earlier 44 -> 8 came from clock/player lifetimes.
+// Round 220: Bounded slot-scan short/word/char/byte induction 84/84/85/85;
+// first-match result termination with those widths 97/97/97/97. Original body restored.
+// Round 398: seconds/ticks/both/elapsed conversion-home names; distinct player/child scratch phases crossed with inner/outer iterator and role names
+// 2/2/2/2/2/2/2/2; all restored.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {

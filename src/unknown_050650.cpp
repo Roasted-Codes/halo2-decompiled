@@ -218,7 +218,8 @@ static inline real actor_looking_normalize2d(point2f *vector)
 }
 
 /* A switch selects whether the vertical component is compared. */
-// score 2 (was 40): the horizontal dot now matches retail instruction for instruction; the last
+// score 2 (was 2): the x87 square addition is before the final reference-component store instead of after it; frame and final dot agree.
+// Earlier: the horizontal dot now matches retail instruction for instruction; the last
 // difference is the scheduler's placement of the x87 add: retail sums the two squares after the
 // reference's second component is stored, ours sums them before that store.
 // Vector parameters
@@ -237,6 +238,8 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // single exit plus y-first normalization stores 8; single exit plus native fast normalization 4 (restored).
 // Single exit with the horizontal sum's term and operand orders 12/12/6/12, parenthesised terms 4, a
 // named dot 68, named factors 47, pointers to the locals 38; none better than the plain single exit.
+// Round 398: paired real squares, uniform scalar inputs, both, squares plus sum; each with original/conditional reference-projection lifetime
+// 8/38/122/128/122/128/8/38; all restored.
 // @retail 0x296d60
 PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
@@ -633,7 +636,8 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 290 (was 336): frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
+// score 290 (was 290): frame 0x8c agrees; Boolean homes, point/case-tail transport and aiming workspace remain.
+// Earlier: frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -659,6 +663,8 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // index is neutral and omitted. Boolean-role names 301/303/303/303; native origins on typed graph
 // 375/375/308/375/379/387/322/389. Frame and movement addressing agree; Boolean role homes and point/case-tail
 // transport remain.
+// Round 398 (fast 301, full 290): direction/output/both setters; aiming-query scope with neither/direction/output/both; all with late origin
+// 371/318/387/301/371/318/387/387; all restored.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)

@@ -158,6 +158,8 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Round 262: native team/credited-player/victim/secondary-award call summaries,
 // inline and noinline 421/421/421/421/421/421/421/421. Every declaration and complete
 // body restored; frame 0x48 versus 0x50 and result/history/rounding homes remain.
+// Round 399: First-lookup entry defaults for damage code, selection/fallback slots, killer team and all
+// combinations, then credited player: 461/442/433/467/460/442/433/443. Original restored.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

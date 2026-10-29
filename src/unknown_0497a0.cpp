@@ -498,6 +498,9 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Round 180: First/transition/both short channel indices, first/transition/both word indices,
 // both byte and both dword indices: 638/657/739/638/657/739/739/615. Original executable body
 // restored.
+// Round 396: Direct state-range admission, invalid/valid arm first: native char
+// 637/637, short 633/633, long 647/647, consistent field observations 624/624.
+// All restored; definition/output carriers, endpoint placement and frame homes remain.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

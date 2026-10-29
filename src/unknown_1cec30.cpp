@@ -911,6 +911,10 @@ void function_1d1540(s_havok_component *component);
 // set + body pointer + m_fixed first 88 at 230 (retail's code except the ebx parameter); that with
 // flag5 first 27 at 220 (component in edi, costs 0x1d0c20 and 0x1d1b60); as a member function, every
 // parameter order, body pointer at the top, else arm first, early return, noinline: all as 88.
+// Reset/rebuild inline/noinline contracts, original then aligned-copy/fixed-or-flag-first graphs
+// 81/81/81/81/81/81/81/81/88/88/88/88/27/27/27/27. Original executable source restored. All four 27
+// forms still lose matched 0x1d1b60 at 59 in the reduced image.
+// Both-inline paired form: plain 27 at 220 bytes; matched 0x1d1b60 loses 59; rejected.
 // @retail 0x1d0cf0
 void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_component *component, hkTransform const *transform)
 {

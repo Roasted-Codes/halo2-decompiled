@@ -295,6 +295,8 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 241: actual shared direction, category and distance fields in every nonempty
 // subset, then all fields with the existing object getter: 353 each in eight forms.
 // Original shared layout, pointer observations and complete body restored.
+// Round 397: one sequential object-vector workspace; unit predicate, separate current state and signed approach masks 0..7
+// 353/447/351/447/371/465/369/465; all restored.
 // Round 231: native unit mask byte/char/word/long 440/440/449/439;
 // each with positive-view-first magnitude 431/431/436/437. Byte masks recover frame
 // 0x20 but regress; original optional pointer, observation timing and full body restored.
@@ -892,6 +894,8 @@ real function_296600(long actor_index, long prop_ref_index);
 // both flags+parent 333; byte pair/+parent 358/359. Shared mode 371/366/368;
 // shared object getters ordinary/ancestry/all 333 each. Full flag25/pair/pair+parent
 // 354/350/351 versus 331; all restored. Actor ESI/EBX and saved/squad homes remain.
+// Round 397 (fast control 356, full 331): complete tracking-root view access; root branches, ordinary saved actor and readonly source-view masks 0..7
+// 355/360/378/376/355/360/378/376; all restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

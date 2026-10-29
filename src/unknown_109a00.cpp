@@ -207,6 +207,8 @@ static __forceinline bool carried_object_motion_apply(long object_index, vector3
 // complete moved position 202; with coherent nonrotating frame names 202. Original helpers restored.
 // At-use clock displacement producer orders ijk/ikj/jik/kij/kji 88/87/88/87/87;
 // shared displacement producer 177; aggregate and immutable aggregate 88/88.
+// Complete native moving record / read-only record / object-header payload / both 88 each;
+// read-only headers / both with read-only motion / both with read-only headers / all 88 each.
 // @retail 0x109a00
 bool function_109a00(long object_index, vector3f *delta, bool rotate, vector3f *velocity)
 {
