@@ -2105,6 +2105,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Round 240: Internal turning-result byte/short/long 491/491/491; facing-completion
 // byte/short/long 491/583/584; both short/long 583/584 (fast control 491, full 478).
 // Actor/state ownership and first point home persist; original predicates restored.
+// Round 31: conditional failure producers for spatial/countdown/both admissions 491/604/604;
+// scalar-predicate admissions 631; spatial+scalar 631; countdown+scalar 611; all 611; all with Boolean completion 611.
+// Reduced control 491 versus full 478; original default, all decision producers and complete body restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
