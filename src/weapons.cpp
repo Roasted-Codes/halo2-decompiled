@@ -3039,6 +3039,9 @@ static __forceinline bool weapon_barrel_ammunition_check(long weapon_index, long
 // arithmetic 52; existing trigger-clear helper in the loop 64; barrel local renamed 52;
 // existing index/header getter for both fetches 52; named loaded-round count 52; one loop
 // counter for both loops 52.
+// Fast trials: Actual barrel elements at every use with direct/saved table; each with magazine
+// tag/state/both at every use 131/137/129/137/99/141/91/129. Original executable source restored. Best
+// saved-table/direct-state form is 68 in the plain check; all four callees match.
 // @retail 0x1023d0
 bool function_1023d0(long weapon_index, long barrel_index)
 {
