@@ -267,6 +267,9 @@ void __stdcall function_1160c0(real dt)
 // Original complete body and all provider interfaces restored; frame 0xa4, segment/previous/axis
 // homes and rotation schedule remain.
 // Round 223: Existing target/interpolation/prediction point constructors, seven subsets 179/179/179/179/179/179/179; all with complete direction/velocity setters 183. Original producers and body restored.
+// Round 386: preserve native previous aggregate; independent complete rest-offset,
+// axis and prediction coordinate domains in all seven subsets, then native role names
+// 280/197/289/216/273/193/293/293; original native domains and complete body restored.
 // Round 387: Complete delta/axis squared sums 179/179/179; native double distance-root alone and with those sums 249/249/249/249, both named roots 249. All expression stages restored.
 // Round 32: existing in-place axis scale 179; original-angle segment-first 276;
 // tiny-axis-owned fallback 294; scale/segment 276; scale/fallback 294; segment/fallback 247;

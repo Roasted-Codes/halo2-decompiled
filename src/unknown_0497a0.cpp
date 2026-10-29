@@ -93,6 +93,9 @@
 // Round 209: Intrinsic copies at history/publication/all outputs 581/581/581; conditional origin 726;
 // origin and basis 825; basis 817; ordinary and late input snapshots 581; all boundaries 825. Restored;
 // actual frame 0x58/0x60, shape/basis/wave homes remain; original sixth-component conversion unchanged.
+// Round 385: Current 0x58-frame basis/wave-vector/wave-scalar homes, all seven subsets, and all with
+// the reciprocal home 581 each. Original names and complete body restored; frame 0x58/0x60,
+// shape/basis homes and thirteen excess bytes remain.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -458,6 +461,9 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Original scratch scopes, tint initialization, helper calls and endpoint masks restored.
 // Round 206: Whole camera-facing normal/side normalization through the existing two inline helpers,
 // all eight nonoriginal combinations [615, 615, 620, 620, 620, 620, 620, 620]. Grouping changes require an exact match; all restored.
+// Round 385: Final vertex extent/endpoint flags/both 618/622/626; native opacity alone/with
+// extent/flags/both 624/625/630/628; consistent next handle 634. All restored; frame/carrier, endpoint
+// placement and color/vector homes remain.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

@@ -186,6 +186,10 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // with those units 1007/965/1006; native twelve-byte descriptor 920; descriptor plus dword options
 // 1007. All declarations, flag observations and original body restored.
 // Round 33: Ordinary inline scale/add/subtract subsets, then all with planar producer: 920/920/920/920/920/920/920/920. Original forced producers, body and response sharing restored.
+// Round 388: Shared complete linear/angular change accumulator 1007; with intermediate
+// change pairs 37-50/37-58/50-58 or all linear changes 1003/1008/1008/1027;
+// with linear residual/axis reuse 1024/1018; all three reuse families 1064.
+// Original separate accumulators and all intermediate vectors restored; entry/frame homes remain.
 // @retail 0x1d24a0
 void __stdcall function_1d24a0(s_havok_component *arg_0, float arg_1)
 {

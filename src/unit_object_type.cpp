@@ -2046,6 +2046,11 @@ struct s_unit_weapon_hands
 	byte unknown0b;
 };
 
+// score 65 (was 65): Output ESI versus EDI and true constant BL remain.
+// Round 387: Existing masked lookup at entry/current/next, all seven subsets 65; native
+// parent/seat values 65; paired hand predicates
+// 64 (below gate); both weapon fields at uses 74; shared initial unit receiver 76; native seat
+// mask 65. Original body restored.
 // @retail 0xcb430
 void function_cb430(long unit_index, s_unit_weapon_hands *hands)
 {

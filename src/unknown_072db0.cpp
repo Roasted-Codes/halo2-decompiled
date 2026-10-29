@@ -1584,7 +1584,10 @@ static __forceinline void query_restore_pending()
 }
 static inline bool query_variant_available(long index)
 {
-    return g_47d8f4.count && (g_47d8f4.flags & 2) && function_1934f0(&g_551ae8[index]);
+    long result = false;
+    if (g_47d8f4.count && (g_47d8f4.flags & 2))
+        result = function_1934f0(&g_551ae8[index]);
+    return result;
 }
 
 #pragma optimize("g", off)
@@ -1596,7 +1599,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 }
 #pragma optimize("", on)
 
-// score 737 (was 737): frame 0xc0 agrees; initial user/identity and request-output homes remain.
+// score 719 (was 719): Frame 0xc0 agrees; initial cursor base/home, slot and request/completion homes remain.
 // Earlier: Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
 // Frame 0xc0 agrees; initial user/identity homes, logon dispatch and request/completion allocation remain.
 // Frame 0xc0 agrees; user cursor spills and identity uses EBX; cursor base, dispatch and completion homes remain.
@@ -1663,6 +1666,13 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // observations 728/739/770/737/728/739/770/770. Direct user observations kept, plain 728.
 // On that receiver graph, native char/byte admission with mutable/readonly identity: 728 each;
 // original admission field and identity retained. All call roles and state transitions preserved.
+// Round 387: Existing availability producer with single-exit bool/byte/short/long result and
+// combined/nested admission: 728/728/728/728/719/719/719/719. Native long result retained, plain
+// 719 at 2878/2862; all file matches preserved. Cursor base, slot expansion and request/completion
+// homes remain.
+// Round 390: existing native properties object with separate identity assignment,
+// producer-scoped team result and readonly slot masks 0-7: 719 each. Original
+// buffer, declarations, helper settings and complete body restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

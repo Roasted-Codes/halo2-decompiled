@@ -946,6 +946,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 235: Existing qualified class raw-send path, seven front/rear/tail subsets and all-path if-else tail
 // [224, 224, 247, 224, 247, 247, 248, 254] fast. Dispatcher preserved in every trial; all original helper
 // calls, sums, fields and three local qualifications restored.
+// Round 389: scalar-selector single-result chains, positive nesting, regular/alternate/constant
+// defaults, negative/positive ternaries and mixed publication 224/226/219/231/228/224/235/224.
+// Five-point default-result gain also loses dispatcher 38; original result graph/callers restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -1198,6 +1201,9 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // native channel bit with all raw sends, late/early sum 194/207. Short-complement interactions
 // front/rear/all 188/192/188; front plain full 188/592, all matches preserved, but word tests
 // and aligned instruction changes regress (110/120 to 121/128). All executable forms restored.
+// Round 389: actual appended-pair pointer/reference returns, signed/unsigned destinations
+// and forced/ordinary inline combinations 215 each, 640/606 bytes. Original append producer,
+// every caller and the frame 0x10/x87 send graph restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {
