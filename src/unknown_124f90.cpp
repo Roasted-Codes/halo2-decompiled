@@ -961,6 +961,9 @@ real function_21f650(long channel_index, long mode);
 // function-wide channel_index local 113; the last block's locals folded into one expression 42;
 // elapsed_time read into a local before the rate call 42; a stream pointer for the last state
 // test 42; the table pointer declared at the outer scope 42.
+// Round 181: per-use chunk table 42; retained chunk base 85; per-use voice array 180; native
+// loaded-field comparison 66; early queued-pointer clear 42; exact-size transfer memcpy 42;
+// queued/current permutation lifetimes 74/102. EAX global-load allocation remains.
 // @retail 0x12a450
 void sound_voice_update_chunks(short voice_index)
 {

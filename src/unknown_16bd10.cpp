@@ -224,6 +224,10 @@ bool camera_velocity_profile_new(s_camera_velocity_profile *profile, real total_
 // locals 49, b * (b * accelerations[1]) 99, a loop over the three segments
 // 59-65 (unrolled, factored), aggregate initializers 49, accelerations
 // zero-initialized 101, the arrays filled or declared in another order 49-50.
+// Round 181: all coefficient field reads at uses 117; complete native profile snapshot 107; snapshot
+// plus field reads 105; profile reference 49, plus field reads 117; reordered profile/ticks 49, plus
+// field reads 117, plus native snapshot 107. Coefficient homes and 0x1c frame remain unresolved;
+// original arrays and input binding restored.
 // @retail 0x16be50
 real camera_velocity_profile_evaluate(s_camera_velocity_profile const *profile, long ticks)
 {
