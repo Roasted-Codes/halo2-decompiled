@@ -718,6 +718,9 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // Round 384: publication widget/text/external-widget-reference results under forced expansion
 // 573/573/573; ordinary inline results 693/716/693; outlined void/widget results
 // 716/693. Original publication helper, complete screen body and held interfaces restored.
+// Round 168: Byte row/widget/fixed-team ordinals in seven subsets 675/629/570/685/668/625/679;
+// all with byte saved bit 679. The team-only three-point gain is dropped. Complete status-arm
+// orders 678/704/584/695/704/681/707/609; original ordinals, arm order and body restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

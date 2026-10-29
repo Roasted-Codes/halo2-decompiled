@@ -1264,6 +1264,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 384: channel-local sample/lower/upper/sample-lower/sample-upper/lower-upper/all
 // clamp captures 591/582/569/581/566/562/569; plain clamp branch stores 572.
 // All eight lose the matched caller; original complete clamp and target body restored.
+// Round 220: Indexed entry-base snapshot 563; repeated flag snapshot 530; both 563;
+// default-first with base/flags/both 562/531/562; live count with base/base-flags 564/563.
+// Base snapshots recover frame 0x28 but regress; original scan and complete body restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1383,6 +1386,8 @@ real function_30bf0(vector3f *vector);
 // rejected). Original numeric returns/input copy 469/467; entry/root default 489/471; captured
 // length/default plus capture 439/476; coordinated block-query order/order plus capture 455/439.
 // All original helper contracts and bodies restored.
+// Round 385: Plain negate/rotate/normalize component loops and pairs/all,
+// long ordinals 422/486/426/505/404/503/485; all with short ordinals 509. Original helpers restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1737,7 +1742,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 790 (was 790): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
+// score 782 (was 790): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
 // Earlier: Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
 // remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
 // block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
@@ -1783,6 +1788,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 251: separate per-path long/dword/short/word status lifetimes
 // 809/809/812/812; the same lifetimes after admission 809/809/812/812. All use
 // frame 0x8c; original shared status, frame 0x90 and complete body restored.
+// Round 255: native short component counters base/dynamic/output 784/789/782;
+// base-dynamic/base-output/dynamic-output/all 784/797/784/804; all byte 804 (fast).
+// Only the final rescale counter is short, range 0..3; ordinary 782 at 3133/3130.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
@@ -1931,7 +1939,7 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
                 out->k = dynamic_normal.k * dynamic_weight + normal.k * base_weight;
                 function_30bf0(out);
                 real length = dynamic_length > base_length ? dynamic_length : base_length;
-                for (long component = 0; component < 3; ++component)
+                for (short component = 0; component < 3; ++component)
                     out->n[component] *= length;
             }
             else if (dynamic_weight > 0.0001f)

@@ -189,6 +189,11 @@ void function_2232a0(void)
 // Round 87 (fast): slot data NULL at the loop top with no else arms 124 (gives retail's loop-top zero,
 // in EDX, but not the found arm's second zero); the NONE store then one ternary 117, one if/else 117;
 // the first with a pretested for loop 179, the second 166. 0x2b5d0's file is held by another lane.
+// Round 152: slot data NULL at the loop top + default-last ternary in the found arm 122 (NULL lands in
+// ECX, retail EAX); NULL then an `index != NONE && g_4686c4 != NONE` guard after the scan 121 (the
+// NONE test is not threaded); that ternary form with the pretested for loop 158 (EBX save sinks past
+// the pretest: our tail needs no EBX because the stub takes count + 1 in ECX); NULL first in both arms
+// 124. The one-use record pointer for the initializer dropped (identical code, kept).
 // Round 223: Complete shared successor with staged/direct optional source in do/for traversal 319/168/319/168; with twice-used terminal count 268/113/268/113. Original scan, source, traversal and terminal restored.
 // @retail 0x2234e0
 void function_2234e0(void)
@@ -239,8 +244,7 @@ void function_2234e0(void)
 			local_2, local_3, (s_223081 const *)local_5);
 		++local_0;
 	} while (local_0 < local_2);
-	s_223240 *local_6 = &g_47f0f8[local_2 + 1];
-	function_2232a1(local_6);
+	function_2232a1(&g_47f0f8[local_2 + 1]);
 	function_2b5d0(local_2 + 1, 3, local_2, local_3, &g_47f0f8[1]);
 }
 

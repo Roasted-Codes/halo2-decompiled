@@ -152,6 +152,9 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Round 381: Victim/selection/victim-selection/threshold/victim-threshold/selection-threshold/all
 // workspace scopes 421/464/464/421/421/464/464; all scopes with unsigned selection ordinal 464.
 // Original lifetimes restored; frame, result homes and rounding calls remain.
+// Round 242: Native statistics-valid/player-record/object-header fields, all
+// seven subsets and complete graph with native history, 421 each. Original
+// body, types, rounding calls and memory observations restored.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

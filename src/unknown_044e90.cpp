@@ -53,6 +53,9 @@
 // Round 240: Complete whole-query decision bool/byte/short/long 437/437/443/436;
 // equivalent ordered alternatives 437/437/443/436. Entry/table and list/plane
 // homes remain; all original selection observations and body restored.
+// Round 162: Native selection fields alone/table/aligned/aligned-table 438/447/439/448; the same
+// four with the existing normal scaler 438/447/439/448. Entry/table and plane/list homes remain;
+// original external fields, storage alignment and all arithmetic restored.
 // @retail 0x44e90
 void __stdcall function_44e90(short entry_index, short section_index)
 {

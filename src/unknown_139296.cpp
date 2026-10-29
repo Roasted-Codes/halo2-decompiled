@@ -453,6 +453,8 @@ bool function_22acb4(long player_index);
 // Round 381: User-query bit update before enum tests/after first 8/2/4 updates 272/239/285/284; after
 // 16/32/second-enum/first high 1024 updates 165 each. Original query placement restored; second-mask
 // spill and constants remain.
+// Round 242: Complete result phase orders 2134/3124/4123/2314/3214/2341/3421/4231
+// 280/290/274/289/228/269/272/268. Original phase order, query and aliased output order restored.
 // @retail 0x13a050
 void function_13a050(byte const *status, long user_index, long type, s_13ad48_item const **item_out,
 	word *first_out, word *second_out, word *third_out, word *fourth_out)
