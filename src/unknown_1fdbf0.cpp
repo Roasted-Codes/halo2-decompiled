@@ -333,6 +333,8 @@ vector3f *function_11d000(vector3f const *v, vector3f *out);
 // the axis or at the top 57; the rotation as 0x11d3b0 writes it, or through an inline
 // (axis, sine, cosine) helper 57; valid flag declared first 57; valid as an expression 86;
 // member-wise forward copy 88; negated cosine test 100.
+// Perpendicular/forward query inline and noinline declarations, singly/together 57 each; fallback
+// normalization via returned output pointer 71, with both inline declarations 71.
 // @retail 0x1fddd0
 bool function_1fddd0(long actor_index, point3f const *origin, vector3f *direction,
     long *out_index, real *arg_c9241c, long *out_object)
