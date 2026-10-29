@@ -1502,6 +1502,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // 290; both 427; both named animation-period summands 234. Native double period/duration
 // alone, with magnitude, with idle tick and with both 390/415/397/414 (exact-only).
 // Original scalar types, arithmetic and calls restored; frame 0x28 and look homes remain.
+// DL167: Plain look-history difference traversal long/short/dword/word 599/600/599/600;
+// complete per-axis difference/default/history publication 501 each. Existing mode-helper inline
+// and inline with separate noinline declaration 234 each (fast control 234). All restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

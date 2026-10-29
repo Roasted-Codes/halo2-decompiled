@@ -1988,6 +1988,10 @@ bool function_f5d70(long vehicle_index);
 /* runs the vehicle's engine for a tick: its load follows the throttle, a
    new gear engages after a delay (at once when it changes direction), the
    shift timers count, and the gear's torque spins the engine up */
+// score 156 (was 195): Kept conditional throttle result; extra frame word and cached shift-byte home remain.
+// Conditional / both-branch throttle 156 kept plain; input-first 191; field-only clamp 192;
+// conditional with clamp 191, native gear 178, direction roles / scalar names 156/156.
+// Computed load 156; uniform raw speed 199, with load 199, with native gear 200.
 // @retail 0xf1950
 void __stdcall function_f1950(long vehicle_index, real throttle_input, short new_gear)
 {
@@ -1996,12 +2000,7 @@ void __stdcall function_f1950(long vehicle_index, real throttle_input, short new
 
 	if (VEHICLE_MAX_ANGULAR_VELOCITY(definition) > 0.001f)
 	{
-		real throttle = 0.0f;
-
-		if (!vehicle->unknown385 && !function_f5d70(vehicle_index))
-		{
-			throttle = throttle_input;
-		}
+		real throttle = !vehicle->unknown385 && !function_f5d70(vehicle_index) ? throttle_input : 0.0f;
 
 		char current = vehicle->gear;
 		real gear_ratio = function_f14f0(current, vehicle_index);
@@ -2137,15 +2136,15 @@ void function_f5ee0(long vehicle_index);
 
 /* a wheel's spin advanced by its angular velocity, wrapped to the
    definition's period */
-PRIVATE inline real vehicle_wheel_spin(real spin, real period)
+PRIVATE inline real vehicle_wheel_spin(real spin, real const *period)
 {
-	if (period > 0.001f)
+	if ((*period) > 0.001f)
 	{
 		if (!(spin > 0.0f))
 		{
-			spin += period;
+			spin += (*period);
 		}
-		return (real)fmod(spin, period);
+		return (real)fmod(spin, (*period));
 	}
 	return 0.0f;
 }
@@ -2153,6 +2152,9 @@ PRIVATE inline real vehicle_wheel_spin(real spin, real period)
 /* the physics of type 0 vehicles (the differential-steered ones): the
    engine drives each side's contacts, the turn trading torque between
    the sides */
+// score 101 (was 192): Kept live period receiver, native twice-used gear and result-first torque; zero/scalar residency and spin schedule remain.
+// Live period 136; native gear 190; both 113; scalar roles 192/136/190/113; result-first torque 101 kept plain.
+// Spin exit / period-first / both 101; named absolute steering with each 127; early torque zero 140.
 // @retail 0xf1cd0
 void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -2172,16 +2174,13 @@ void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state
 	long i;
 
 	function_f1950(vehicle_index, engine_throttle, function_f1740(vehicle_index, gear_throttle));
-	if (vehicle->gear == NONE)
+	short gear = vehicle->gear;
+	torque = 0.0f;
+	if (gear != NONE)
 	{
-		torque = 0.0f;
-		torque_magnitude = torque;
+		torque = function_f14f0(gear, vehicle_index) * VEHICLE_GET(vehicle_index)->unknown378;
 	}
-	else
-	{
-		torque = function_f14f0(vehicle->gear, vehicle_index) * VEHICLE_GET(vehicle_index)->unknown378;
-		torque_magnitude = torque >= 0.0f ? torque : 0.0f - torque;
-	}
+	torque_magnitude = torque >= 0.0f ? torque : 0.0f - torque;
 
 	real turn_torque = torque_magnitude * turn;
 
@@ -2192,9 +2191,9 @@ void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state
 		state->contacts[i].torque = (i & 1) ? right : left;
 	}
 	vehicle->unknown368 += left * dt;
-	vehicle->unknown368 = vehicle_wheel_spin(vehicle->unknown368, *(real *)(definition + 0x20c));
+	vehicle->unknown368 = vehicle_wheel_spin(vehicle->unknown368, (real const *)(definition + 0x20c));
 	vehicle->unknown36c += right * dt;
-	vehicle->unknown36c = vehicle_wheel_spin(vehicle->unknown36c, *(real *)(definition + 0x20c));
+	vehicle->unknown36c = vehicle_wheel_spin(vehicle->unknown36c, (real const *)(definition + 0x20c));
 	function_2056e0(vehicle_index, state, function_f5e00(vehicle_index), NULL, NULL);
 	function_f1c80(vehicle_index, state);
 	function_f5ee0(vehicle_index);
@@ -3063,6 +3062,10 @@ PRIVATE inline void vehicle_cross(vector3f const *a, vector3f const *b, vector3f
 /* the orientation the vehicle's physics aims for: its facing held level,
    turned through its flip while it flips (returns whether it flips), else
    the state's own */
+// score 204 (was 204): Restored original body; projection/cross-product scheduling and angle precision remain.
+// Shared cross 204; external cross 326; native forward/up/both 263/269/298;
+// shared cross with forward/both 263/298. Wide angle 177 rejected without exact equality;
+// coordinated external force-inline 326, with wide angle 359; all original contracts restored.
 // @retail 0xf44a0
 bool __stdcall function_f44a0(long vehicle_index, matrix3x3 *facing, s_vehicle_physics_state *state,
 	matrix3x3 *result)

@@ -363,7 +363,7 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
-// score 152 (was 184): result/range homes and inverse SIMD groups remain; seat thresholds now stay in memory.
+// score 152 (was 152): result/range homes and inverse SIMD groups remain; seat thresholds now stay in memory.
 // result/range homes, inverse SIMD groups and seat-threshold reloads remain.
 // Round 57: retail's result stores are a spill of a long result (dword store, `mov ax, word` reload at
 // each tail-duplicated exit). Plain long result 241 (result home +0xc); short return type with every
@@ -464,6 +464,9 @@ real function_30bf0(vector3f *vector);
 // reversed publication 180; short/facing/single select 197; short/facing/explicit 3-or-2 stores 152 (plain, kept);
 // mode/settings failure exits 188/202; publication order, ordinary result, distance declaration, projected order,
 // facing and outer declaration orders 152 each; direct count-down 197; direct accumulators 245.
+// Round 166: existing complete vector assignment for delta/motion/both/projected
+// 164/154/166/152; projected with delta/motion/both, then all plus plane normal
+// 164/154/165/293. Original component producers restored.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1638,7 +1641,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 564 (was 724): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// score 564 (was 564): the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
 // frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
 // the forward transform (retail if/else straight from the unit) and the scoring block differ.
@@ -1702,6 +1705,12 @@ real function_2683f0(long actor_index, long node_index, short type)
 // all scoring, all six predicates 699/711/728/684/703/715/732/751 (calibrated fast).
 // Word established/visible separately 694/685; pair with short best level/early
 // sentinels 700/700. Established word recovers frame 0x80, but all gains fail; restored.
+// Round 166: late visibility/derived retention/both/later established 577/572/567/564;
+// visibility+established/retention+established/all/all with long visibility 577/572/563/560.
+// Combined predicates recover frame 0x80, first +0x3b. On that graph: reversed results 559,
+// wide level 647, live iterator index 560, reversed+live 559, reversed+wide 646,
+// wide+live 647, all 646, all with early constants 655. Early constants alone/reversed
+// 568/568. Best five-point gain is below the gate; original body and parameter access restored.
 // @retail 0x266640
 void function_266640(long actor_index)
 {

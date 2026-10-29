@@ -318,6 +318,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
 // defined-failure helper and complete query restored; BSP/section homes remain.
 // Round 223: Signed/unsigned word masked-plane storage with original/reference-base/surface-base/both table selections 213/188/214/210/215/196/216/224. Original full-width plane, table selectors and defined vertex failures restored.
+// Round 165: actual instance-table predicate shared at both selections, crossed with
+// native byte fetch and the reused surface ordinal, 228 in all four forms; the same
+// four with a canonical Boolean query result 232 each. Predicate shortens the frame;
+// original long instance lifetime, helper, byte result and defined failures restored.
 // Geometry-join Boolean result 182 (726 bytes); native byte fetch 172; both 182;
 // initialized single-exit fetch 172, with Boolean result/byte fetch/both 182/172/182;
 // complete result/fetch graph with readonly section 182. Original helper and result restored.

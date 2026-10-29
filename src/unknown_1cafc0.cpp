@@ -537,7 +537,7 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 	graph_weapon_type_request(graph, mode, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 	graph_weapon_type_request(graph, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME, DEFAULT_WEAPON_NAME);
 }
-// score 399 (was 399): frame eight versus twelve and independent hidden-result homes remain.
+// score 399 (was 399): frame eight versus twelve; primary/fallback result homes entry +16/+16 versus retail +4/-4.
 
 // Earlier 399 (was 399): frame 8 versus 12 and hidden-result homes still differ.
 // Earlier: frame eight versus twelve and hidden query-result homes still differ.
@@ -584,6 +584,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // and rolled request expansions regress; original helper and status restored.
 // Round 170: Primary/alternate/both native resolved-input records, mutable then const, both library and
 // both aggregate copies 603/508/644/603/508/644/644/619. Original queries and input observations restored.
+// Round 164: resolver/query/fallback inline-contract subsets and real dword flags 399 each;
+// set/mode/class-type/all-key/options/output/all-formal names 399 each, with existing
+// status and identifier roles 399. All sixteen preserve frame eight and both 0x40 LEAs; restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)

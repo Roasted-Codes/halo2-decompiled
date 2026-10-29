@@ -660,6 +660,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Round 379: called shared append on first/second/third/first-second/first-third/last-two/all
 // descriptors 468/469/413/609/548/541/679 fast; uniform existing raw inline append 335
 // (control 334, full 336). All original calls and executable body restored.
+// Round 168: Static routing table with complete-zero descriptors, original/first/second/first-second/third/first-third/last-two/all scopes 352/352/360/419/363/395/416/456 fast (control 334, full 336). All restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -709,7 +710,7 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 428 (was 438): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 428 (was 428): frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // Frame 0xc agrees; selected-primary storage, destination construction and integer-bit/SSE staging differ.
 // Earlier: frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // frame 0xc agrees; retail copies the input level into a dead argument slot through a
@@ -781,6 +782,7 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // right word 456/456, signed byte 438/438; word route with ordinary inline 428,
 // word route alone 428 plain (kept); long/dword/byte route 438 each. Only the native
 // 0-or-1 route word remains; original append declaration and all gain trees retained.
+// Round 168: Retained word route with right long/word/dword/signed-byte domains 451/450/451/428; primary scalar with inline/inline-noinline/cdecl/stdcall 437/437/449/437. Cdecl loses dispatcher; all restored.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
