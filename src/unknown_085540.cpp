@@ -812,12 +812,16 @@ bool function_1995a0(const byte *source, dword source_size, byte *destination, l
 // Round 109: direct view plus writer forceinline 93; unsigned writer result 93;
 // writer reference 93; native count 93; unsigned offset 93; word kind 93;
 // named packet record 93; moving payload pointer 144.
-// score 90 (was 90): with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
+// Earlier: with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
 // count in a `remaining` local (compressed size scoped to the compressor call, copied when it
 // succeeds), no gotos and the last write tested for success first, only four single instructions
 // differ (20, aligned 4): flag 130; plus remaining 58; scoped 51; copy on success 38; failures
 // returned 63; single-exit breaks 38; success first 20; then element address 20; offset first 20;
 // header = { 1 } 22; flag before the header 125; count before cursors 24; all of it without the flag 128.
+// Round 182: Terminal-record do loops 89; positive-chunk finalization 85; return and record forms regress; five-point best gain rejected
+// Trials 1-8: 136, 89, 136, 89, 136, 89, 136, 89.
+// Trials 9-16: 86, 124, 86, 124, 85, 124, 85, 124.
+// Trials 17-24: 108, 116, 115, 113, 124, 137, 87, 139.
 // @retail 0x86800
 bool function_86800(dword capacity, c_simulation_view *view, dword source_size, byte *destination)
 {
@@ -961,10 +965,12 @@ bool function_68670(byte *source, long size, void *block);
 
 // score 97 (was 97): the two fields of the record are read into the registers in the opposite
 // order (+0x1c before +0x18), so the rest of the block follows differently.
-// score 97 (was 97): a `used = next - end` local gives retail's window test exactly (135 from the
+// Earlier: a `used = next - end` local gives retail's window test exactly (135 from the
 // listing shift); retail also reloads the buffer start after each read call and loads the header
 // size after the start store, as if the call might touch the buffer. Window as shift 97; window
 // pointer 97; inline read method 135; header size per use 135; buffer hoisted out of the loop 204.
+// Round 182: Self-aligned standard entry, case-workspace scopes and complete ring-field forms do not recover receiver and reader visibility
+// Trials 1-8: 179, 172, 179, 172, 164, 159, 164, 159.
 // @retail 0x865d0
 void __stdcall function_865d0(c_simulation_view *view)
 {
