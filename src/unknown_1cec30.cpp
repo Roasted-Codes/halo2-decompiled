@@ -2737,6 +2737,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 383: retained pre-clamp body/owner handle/native repeated array receivers 190/190/53;
 // body+owner/body+array/owner+array/all/all with plain while 193/189/190/192/192 (controlled
 // preview 50). Original body, paired getter, observation graph and all interfaces restored.
+// Round 244: Paired-getter graph with shared scale linear/angular/both 50/50/50; common scale workspace
+// alone/with linear/angular/both 50/50/50/50; shared pair and single admission exit 50. Staged saves, five
+// address orders and final call moves remain; original source restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2848,6 +2851,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // snapshot/bound pairs and all 369/369/419; index through if/else 313; a body-link table local 209;
 // the child search as a while with the compound test 206 (same code); the second index assigned in
 // plain statements (no embedded assignment, same code, kept) 206; the child counter declared first 208.
+// Round 241: native requested-node shorts first/second/both 338/226/354; independent
+// readonly model snapshots first/second 221/321; both snapshots with first/second/both
+// shorts 267/325/283. Original frame, body and protected relative-call contract restored.
 // First link before count first/second/both 205/224/275; loop link locals first/second 206/206;
 // converter position declared first 206; translation read before rotations 254; converter force-inline 206 (plain).
 // @retail 0x1d7ef0

@@ -1291,6 +1291,11 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // Round 381: Grouped outer/inner short-long, byte-long, long-short, long-byte, short-short and byte-
 // byte induction 255 each; actual group/step indexed elements with long/short domains 255 each.
 // Original grouped traversal restored; scratch and expansion remain.
+// Round 244: Shared membership guarded/success/failure/conditional results with post/pre-tested inner
+// traversal 255/111, 265/111, 265/111, 292/94; positive return arms/two-arm result 111/111; direct/named
+// conjunction, nested success and two failure exits 111 each; forced conditional 94, ordinary conditional
+// 285. Every form loses 0x56160; 94 preserves 0x54990 but loses 0x56380. Original helper and grouped body
+// restored.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {

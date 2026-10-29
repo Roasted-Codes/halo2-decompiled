@@ -122,6 +122,9 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 // Round 381: Native integer-bit linear inputs, signed/unsigned and ordinary/forced expansion, copied
 // speakers 542 each; original input-array speakers 551 each (fast control 532, full 545). All
 // input/helper forms restored; frame and gain homes remain.
+// Round 242: Native double absolute-value API across gain/routing/voice gates,
+// seven complete subsets and all with real gain value [547, 534, 532, 539, 543, 535, 537, 537].
+// Reduced control 532, full 545; all width forms and original helpers restored.
 // @retail 0x21fa80
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties,
 	s_looping_effect_playback const *effects, bool force)

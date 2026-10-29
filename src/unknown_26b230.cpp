@@ -2243,6 +2243,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 383: shared existing location reset ordinary/inline/forced/outlined 283/283/283/346;
 // with consistently retained clump heads 391/391/391/411. Original helper linkage, both original
 // helper callers, root observations and complete executable body restored.
+// Round 244: Five alternate location-reset field orders 283 each; reset-word-first with either sentinel
+// chain 283/283; reset between sentinels with invalid-cluster-first merge 283. Early reset SI and
+// visibility/selection homes remain; original field publications restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

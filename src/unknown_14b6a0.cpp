@@ -229,6 +229,9 @@ void function_14bac0()
 // aggregate/CRT clear 230 each; both aggregates 230; first aggregate/native recipient aggregate
 // 250; both cleared/native recipient 279. Original initialization and iterators restored; frame
 // 0x44/0x3c, readiness homes and recipient overlap remain.
+// Existing in-place vector sum with shared displacement/live ancestry headers/both 230 each;
+// sum alone 230; all four with the native recipient call 259 each. Original geometry,
+// both iterators and includes restored; frame 0x44/0x3c and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

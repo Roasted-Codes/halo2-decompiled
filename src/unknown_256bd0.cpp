@@ -199,6 +199,9 @@ struct s_object_flags_256bd0
 // Round 216: real iterator zero aggregate/full aggregate/CRT clear/index defaults
 // 243/244/242/231; before the flags lookup 247/253/246/223. Original iterator input,
 // initializer and private step restored; frame 0x114/0x110, cached activity and homes remain.
+// Full native position/direction/placement copies on noinline-initializer/ordinary-datum
+// boundaries, all seven subsets 194 each; all copies with selected-before-minimum publication
+// 194. Frame 0x110 recovered, but seven-point gains rejected; all declarations and bodies restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
