@@ -135,6 +135,9 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // domains, then all with short quadrant 501/508/508/501/501/508/508/508; helpers and body restored.
 // Round 254: native short copy/first-inverse/both/second-inverse/copy-second/both-inverse/all
 // mapping induction 625/538/626/535/646/544/648; all byte 648. Original long loops restored.
+// Round 220: Selected trig magnitude in shared/separate native phase scalars, with long/word/byte/char
+// controller induction, 501/548/539/539 each. Byte/char recover frame 0x40 and first +0x1b but regress;
+// every form retains 2012 bytes and both matched callers. Original body restored.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {

@@ -262,6 +262,7 @@ void __stdcall function_1160c0(real dt)
 // Round 382: complete delta/axis squared-product phases, three-use free blend weight,
 // all combinations and full projection products 179/179/179/179/179/179/179/179.
 // Original product phases and complete executable body restored.
+// Round 223: Existing target/interpolation/prediction point constructors, seven subsets 179/179/179/179/179/179/179; all with complete direction/velocity setters 183. Original producers and body restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

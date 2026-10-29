@@ -1429,6 +1429,8 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 241: Complete complementary permission bool/byte/short/long 572/572/616/609;
 // with complementary base interruptibility 593/593/632/619. Original body restored;
 // frame eight versus twelve and requested/state/result homes remain.
+// Round 220: Shared eleven-request overlay membership bool/byte/short/long through logical OR
+// 641/641/633/637; conditional-result counterparts 627/627/619/623. Original body restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2386,6 +2388,8 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // input/branch 727; branch/original 713; branch/input 690; branch/branch 690.
 // On the secondary input-first form (ret 8): tag second 694; state before control 694;
 // Boolean transition 702; tag second with Boolean transition 702. Original body restored.
+// Round 220: Control/state/both/tag/control-tag/state-tag/all receiver fields at every use
+// 719/928/977/674/693/956/960; all with object-pool observations 1946. Original body restored.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {

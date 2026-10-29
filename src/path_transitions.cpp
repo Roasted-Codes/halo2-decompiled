@@ -508,6 +508,7 @@ bool function_270400(long actor_index, long mode, long set, point3f const *posit
 // Entry vertex table at case/dispatch scope 280/340; ordinary result 340;
 // case table with ordinary result 342; early actor predicate 278; common case-5
 // outputs 404, with case table 404, with ordinary result 398. Original body restored.
+// Round 222: Complete point constructors: paired fallback 366; both case-5 copies 356; both 383; both case-2 copies 365; fallback/case-2 379; case-5/case-2 376; all 390; all with both vector setters 378. Frame 0x40 agrees; early root retention and vector scheduling remain. All restored.
 // Actor-valid direction scope with whole-vector initialization, readonly surface and
 // ordinary-result interactions: 284/334/284/334/363/357/363/357; restored.
 // Complete external vertex observations in paired/actor/trace cases 427/402/370;
