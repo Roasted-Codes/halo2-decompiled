@@ -188,6 +188,9 @@ short function_239e50(short count, point2f const *points, short *indices);
 // Repeated j input 42; repeated i input 42; both scalar inputs 126.
 // Shared normalizer/magnitude 42/42; tested initial/distance states 81/76; both tested states 79;
 // early distance default 65; shared normalizer with tested states/default 79/65.
+// Bounded geometric enum with original/count-first/terminal/zero-first graph; independent-point
+// word/enum/count-first/terminal graph; first-point memcpy/memmove 86/94/86/86/54/58/99/58/42/99.
+// Original executable source restored.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {
@@ -457,6 +460,9 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 // 50; outer offset/edge/both storage 50/50/50; early next with outer vectors 50; radius at
 // use with outer vectors 71. Current-point pointer for both differences with
 // ordinary/volatile count 92/97 (point moves to the stack; 0x14a370 23).
+// Shared offset/edge/both difference producers; early-next/unsigned ordinal/ordinary
+// count/count-plus-next/count-plus-ordinal 50/50/50/50/50/73/73/67. Original executable source
+// restored. The three ordinary-count forms lose matched 0x14a370 at 23/23/27 in the reduced image.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {

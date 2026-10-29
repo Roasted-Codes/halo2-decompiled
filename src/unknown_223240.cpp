@@ -195,6 +195,9 @@ void function_2232a0(void)
 // the pretest: our tail needs no EBX because the stub takes count + 1 in ECX); NULL first in both arms
 // 124. The one-use record pointer for the initializer dropped (identical code, kept).
 // Round 223: Complete shared successor with staged/direct optional source in do/for traversal 319/168/319/168; with twice-used terminal count 268/113/268/113. Original scan, source, traversal and terminal restored.
+// Separate candidate/result on the recovered prefix: long/int with original/pretested
+// traversal 106/172 each; short/word counterparts 160/192 each. Three-count gains rejected;
+// original scan restored. Outer pretest, optional-source homes and tail transport remain.
 // @retail 0x2234e0
 void function_2234e0(void)
 {

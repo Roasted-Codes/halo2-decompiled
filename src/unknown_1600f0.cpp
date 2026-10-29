@@ -1118,6 +1118,9 @@ struct s_game_engine_globals_connections_view
 // Round 271: existing short/name/connection widget initializer inline class contracts,
 // all seven subsets and joint noinline contracts, 170 each on calibrated roots.
 // Original owning header and complete body restored; deferred icon tail remains.
+// Round 279: native byte input domains for glyph, dim and hidden-place flags,
+// all seven subsets and all four input flags together: eight calibrated scores 170.
+// Original Boolean signature and complete body restored; deferred icon tail remains.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1423,6 +1426,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 271: entry native rectangle declarations for title/fixed/optional caption groups,
 // every subset and all with complete rectangle identities, 689 each. Original producers,
 // native object lifetimes and body restored; frame 0x790 versus 0x79c remains.
+// Round 403: native rectangles; ordinary height/fade storage and direct first-color
+// output, masks 1-7: 734/713/753/726/764/742/783; all without unused parameter
+// addresses 783. Original scalars, color copy and complete body restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

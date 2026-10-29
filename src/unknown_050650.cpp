@@ -218,7 +218,8 @@ static inline real actor_looking_normalize2d(point2f *vector)
 }
 
 /* A switch selects whether the vertical component is compared. */
-// score 2 (was 40): the horizontal dot now matches retail instruction for instruction; the last
+// score 2 (was 2): the x87 square addition is before the final reference-component store instead of after it; frame and final dot agree.
+// Earlier: the horizontal dot now matches retail instruction for instruction; the last
 // difference is the scheduler's placement of the x87 add: retail sums the two squares after the
 // reference's second component is stored, ours sums them before that store.
 // Vector parameters
@@ -237,6 +238,8 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // single exit plus y-first normalization stores 8; single exit plus native fast normalization 4 (restored).
 // Single exit with the horizontal sum's term and operand orders 12/12/6/12, parenthesised terms 4, a
 // named dot 68, named factors 47, pointers to the locals 38; none better than the plain single exit.
+// Round 398: paired real squares, uniform scalar inputs, both, squares plus sum; each with original/conditional reference-projection lifetime
+// 8/38/122/128/122/128/8/38; all restored.
 // @retail 0x296d60
 PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
@@ -548,6 +551,13 @@ static inline void actor_looking_rotate(vector3f *vector, vector3f const *axis, 
 // combinations, 355 each; ordinary producers 1135. Original helpers restored.
 // Direct collision parameter alone 355 on T's older base (main's 335 form kept).
 // Round 171: Two-stage vectors, copy and scale subsets 387/408/362/382; consumed-stage ray reuse 391/407/343/362. Reuse recovers frame 0xa8, setters can recover length, but all regress. Original body and includes restored; frame and stack-input transport remain.
+// Round 173: Shared fallback result 341; horizontal/vertical range names 320; long sample ordinal 319;
+// result/range 341; result/ordinal 340; range/ordinal 319; all three 340; result with complete workspace
+// names 341. One-point forms rejected. Original body restored; frame 0x9c versus 0xa8 and stack-input
+// transport remain.
+// DH round 239: Existing rotation dot/cross/complete-setter subsets 324/320/324/320/324/320/324;
+// all three with parameter-only ranges after axis normalization 369. Frame remains
+// 0x9c/0xa8; original helpers and complete sampler restored.
 // @retail 0x296e60
 PRIVATE bool function_296e60(point3f const *origin, vector3f const *forward, bool test_collision,
 	real yaw_lower, real yaw_upper, real pitch_lower, real pitch_upper, vector3f *direction)
@@ -633,7 +643,10 @@ bool function_1ffbd0(long actor_index, long weapon_index, short barrel_index,
 	void *unknown0, void *unknown1, void *unknown2, void *unknown3);
 bool __stdcall function_1ffe00(long actor_index, long object_index);
 
-// score 290 (was 290): frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
+// score 290 (was 290): frame 0x8c agrees; Boolean homes, point/case-tail transport and aiming workspace remain.
+// Earlier: frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
+// frame 0x8c and movement-record addressing agree; Boolean role homes and point/case-tail transport differ.
+// Boolean role homes and case-specific point/reference transport differ.
 // Tried (fast control 446): case 2 before 1 450; one exit 416; both 420; result first 420; Boolean names 420;
 // default first 420; field-derived indices at each use 420; object case before point/vector cases 409;
 // result assigned from both normalization tests 397 (kept); that with case order and flag name 401; flag name 416;
@@ -659,9 +672,14 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // index is neutral and omitted. Boolean-role names 301/303/303/303; native origins on typed graph
 // 375/375/308/375/379/387/322/389. Frame and movement addressing agree; Boolean role homes and point/case-tail
 // transport remain.
+// Round 398 (fast 301, full 290): direction/output/both setters; aiming-query scope with neither/direction/output/both; all with late origin
+// 371/318/387/301/371/318/387/387; all restored.
 // Native byte aiming/read-only specification/read-only state contracts, all seven subsets,
 // 301 each (unchanged fast control 301); existing point setter force-inline declaration 301.
 // Original contracts and body restored; full baseline remains 290.
+// Round 246: Per-case short/int/long state; shared short/int/long state; early per-case/shared short state: 301/310/310/301/310/310/307/307.
+// Each state value serves two tests; all signed widths preserve the native short domain.
+// All trial forms restored; no candidate qualifies.
 // @retail 0x2967b0
 PRIVATE bool function_2967b0(long actor_index, s_type_952051 *specification,
 	bool aiming, vector3f *direction, bool *has_target_point, point3f *arg_0e6828)
@@ -926,7 +944,8 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 54 (was 54): frame 0x38 and entry homes agree; scaled-pitch schedule, later yaw homes and helper transport differ.
+// score 54 (was 54): scaled-pitch schedule, later yaw homes and helper transport differ.
+// frame 0x38 and entry homes agree; scaled-pitch schedule, later yaw homes and helper transport differ.
 // the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
@@ -949,6 +968,15 @@ real g_55e5cc = 0.08726646f;
 // Round 224: Native yaw/pitch bound records and full-width result, seven subsets
 // 56/70/209/70/72/86/219; both records in pitch/yaw order 210. No exact match; original scalar
 // homes and body restored.
+// Round 177: Full vector setters 279, with byte result 282; common output publication
+// 265, with byte result 272; both 322, with byte result 327; fallback setter 63;
+// actor-copy setters 274. Original frame, publication, copies, result and calls restored.
+// Round 244: upper-first aiming/relative/both yaw publications 58/56/60;
+// two-use pitch cap before scaled bounds 54, with those publications 58/56/60;
+// cap at original first observation 54. All restored; pitch-cap schedule and helper transport remain.
+// Round 246: Earlier aiming projection/angle selector/read-only dot producer, seven combinations: 165/85/165/149/168/178/168/168.
+// Eighth form adds read-only actor/property/angle inputs to the complete producer form.
+// All trial forms restored; no candidate qualifies.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
@@ -1053,7 +1081,8 @@ struct s_actor_looking_structure_view
 };
 
 /* Name inferred from the path traces and the idle-direction caller. */
-// score 80 (was 80): entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
+// score 68 (was 80): counter homes, candidate cursor and expanded rotation scheduling differ.
+// entry result order now agrees; loop homes, rotation scalar scheduling and return tail remain.
 // Result first 139; existing angular wrapper 468; vector producer 261; both 466;
 // native header/body induction with those producers 137/468/266/466.
 // Separate forced angular declaration 78/265/85/270; earlier cursor step 88;
@@ -1074,6 +1103,9 @@ struct s_actor_looking_structure_view
 // sole angle ordinal on those traversals 191/191; full-width best index 153;
 // post-query fraction producer 111; selected-index publication first 82;
 // conditional lower-bound update then fraction product 91. Original body restored.
+// Round 246: Actual candidate workspace/staged candidate dot/staged selected dot, seven combinations: 211/68/215/84/215/150/211/226.
+// Eighth form adds native byte success storage to the complete candidate/score form.
+// Kept t02, plain 68; original helper bodies and logical call inputs retained.
 // @retail 0x297d30
 PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 {
@@ -1113,7 +1145,9 @@ PRIVATE bool function_297d30(long actor_index, s_type_952051 *specification)
 							&actor->location.point.point, NONE, direction, 5.f, 0);
 						if (*(byte *)&trace.unknown00)
 							fraction = trace.distance * 0.2f;
-						real score = direction->i * forward.i + direction->k * forward.k + direction->j * forward.j;
+						real score = direction->i * forward.i;
+						score += direction->k * forward.k;
+						score += direction->j * forward.j;
 						score = (0.6f > score ? 0.6f : score) * fraction;
 						if (score > best_score)
 						{
@@ -1227,6 +1261,13 @@ struct s_actor_looking_turn_request
 // forced/turn/animation carriers, scores 548/538/539/549/544/534/527/541 fast against unchanged 525. All
 // regress. Original body, carriers and both predicate declarations restored; frame, early getter scheduling
 // and result homes remain.
+// Round 173: Cosine-home names, completed unit-query scope, and both 506 each. Entry validity defaults
+// alone/with names/with unit scope/with both 528 each at 2020 bytes. All those forms plus entry flag
+// defaults 528. Original full body restored; frame 0xd0 versus 0xc8 and early object/result ownership
+// remain.
+// DH round 239: Native marker/movement/turn-request record-name subsets 506 each;
+// all three with the uninitialized marker workspace at entry also 506. Original
+// names, workspace scope and whole body restored; frame 0xd0/0xc8 remains.
 // @retail 0x298370
 void function_298370(long actor_index)
 {

@@ -1365,6 +1365,12 @@ real g_467494 = 5.0f;
 real function_30bf0(vector3f *vector);
 
 // score 364 (was 364): Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
+// The 0xd37f0 call is set up for its current convention (block in EDX, query in EAX; retail block EAX,
+// query EDX): BLOCKED-BY 0xd37f0's body, swapping its two parameters moves only the setup order.
+// Round 90: normal's squared length spelled k, i, j 358 (x87 runs i, k, j as retail; not kept: gain under 8); turned
+// vector rotated in place in direction2 429 (frame 0x40, 1870 bytes); squared length before the
+// clamps 458, with in-place rotation 456; 0xd37f0 block/query parameters swapped 436; tag fallback
+// as a select 383.
 // Frame 0x4c versus 0x40; normal-copy and limited/rotation/color homes remain.
 // Earlier 364 (was 364): frame 0x4c versus 0x40; normal-copy and native color/rotation homes remain.
 // frame 0x4c versus 0x40; normal/color scheduling and rotation scratch differ.

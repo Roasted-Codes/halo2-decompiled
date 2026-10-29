@@ -900,17 +900,19 @@ static inline XUID *message_entry_get_xuid(s_entry *entry)
 
 /* adds the senders of the player's messages (at most 20) to the players
    list, except those given and those already on it */
-// score 81 (was 81): count/sender homes +0x6c/+0x68 remain reversed; nullable getter and exclusion cursor differ.
+// score 81 (was 81): frame 0x2268 agrees; count/sender homes, nullable sender spill and exclusion cursor remain.
+// Earlier: count/sender homes +0x6c/+0x68 remain reversed; nullable getter and exclusion cursor differ.
 // Exclusion pointer at use 82; native exclusion result 132; enumeration-count lifetime 82; format buffers swapped 81; getter force-inline declaration 81.
 // Byte added count 103; signed/unsigned word exclusion result 128/128; cumulative conditional 113; rejection guards 81.
 // Current cumulative-result trials: plain getter 145; result-first plus plain getter 145;
 // read-only sender 81; read-only sender plus plain getter 145; native string buffer 75
 // (458 bytes, plain; rejected single-array wrapper); buffer plus plain getter 141;
 // loop-scoped index 81; indexed cumulative exclusions 81.
-// score 81 (was 81): retail keeps the sender in a stack slot (set by a branch, later reused for the
+// retail keeps the sender in a stack slot (set by a branch, later reused for the
 // player) and keeps the getter's null test; without the qualified read the test is folded away.
 // Plain message read 145; that with an if-set exclusion 150; if-set exclusion alone 113; the count
 // renamed result/sender_count/added 81 each; a message pointer stepped at the body's end 157.
+// Shared sender across allocation on cumulative exclusions 135; plain getter 145; literal success 138, plain/literal 150; library copy 135, plain/library 145; readonly/named shared sender 135 each.
 // @retail 0x1a4441
 long players_list_add_message_senders(XUID const *excluded, long excluded_count)
 {

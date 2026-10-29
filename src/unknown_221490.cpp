@@ -160,6 +160,9 @@ void function_221490(
 // read after the mixbin compare 136 (settings becomes the pointer, as retail); the mixbin
 // compare reading both arrays 115; an explicit settings pair pointer 103; volume before
 // mixbin 83; element pointer locals and declared parameter orders compile the same.
+// Round 276: Actual setting/previous/both pair values 104/96/108; native changed byte 83;
+// Round 276: the same pair values with byte state 104/96/108; complete graph with descriptor aggregate 108.
+// Round 276: Original scalars, array observations and descriptor restored; mirrored induction remains.
 // @retail 0x2215d0
 void function_2215d0(
 	s_mixbin_list *list,
@@ -238,6 +241,9 @@ set_all:
 // volatile on changed_mask) 83; the volatile removed from the if form alone 85; volume
 // read after the mixbin compare 136/145; volume before mixbin 83. Same pairing cause as
 // 0x2215d0.
+// Native desired-pair reference, alone/both element references and nested/combined
+// duplicate guards 102/102/96/96; complete pair snapshots 104/104/104/104.
+// Settings/list induction and mask/count homes remain; all executable forms restored.
 // @retail 0x2216f0
 void function_2216f0(
 	s_mixbin_list *list,
