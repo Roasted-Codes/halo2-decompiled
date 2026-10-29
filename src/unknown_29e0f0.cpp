@@ -125,6 +125,7 @@ PRIVATE __forceinline real function_29e3b1(point3f const *arg_0, point3f const *
 // defaults, all seven subsets and complete graph with separate bitmap stores:
 // 406 each at 1596 bytes. Frame 0x68/0x64 and bound/endpoint homes remain;
 // original default initializers and every helper restored.
+// Round 380: Native point bitmap unsigned/signed 456/456; unsigned group bitmap with array/unsigned/signed point bitmap 426/434/434; signed group bitmap 426/434/434. Original arrays restored.
 // @retail 0x29e0f0
 bool __stdcall function_29e0f0(point3f const *arg_0, long arg_1, s_reference arg_2,
     s_29de21 *arg_3, s_29e0f9 *arg_4)

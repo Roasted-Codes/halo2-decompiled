@@ -1101,6 +1101,7 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Group zero-store orders, five combinations 766; initial extrema-store orders, three combinations 766.
 // Available, first, last, spread, party count, team count, team size and combined
 // party-boundary slot names 766 each (fast); original names restored.
+// Round 380: Shared capacity height/product/both cases 766/877/876; team NONE/width/both cases 900/937/940; shared imbalance cases 936; all three selectors 963. Original selectors restored.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {
