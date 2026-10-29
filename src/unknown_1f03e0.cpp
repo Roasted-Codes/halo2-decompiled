@@ -317,6 +317,10 @@ extern real g_47f05c;
 // value with shape reads 233; selected-entry result 272; best comparison first 201; selected index
 // assigned before alignment 202; transform role names 202; inverse/body/relative declarations 202;
 // names with common scope 202; byte success 282; byte validity 202.
+// Round 249: Native external input/component-list fields singly/together
+// 190/192/190; consistent height reads alone/with input/list/both 205 each
+// (frame 0xd4); all with body-byte reads 220. Two-point input gain below gate;
+// original declarations, cached fields, calls and complete body restored.
 // Round 224: Consistent per-use count/list/component-data observations, seven subsets
 // 229/221/228/190/227/221/228; all with entry selection/result constants 198 at retail length.
 // Two-point component-data form rejected; original snapshots and full body restored.
@@ -1251,6 +1255,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // 421; both 423; index-first selection publication 421, with array/scope/both 423/421/423;
 // all plus a final Boolean-result join 422 at retail length. Original body, qualified count,
 // candidate cursor and response order restored; zero and count/component homes remain.
+// Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
+// inline query with each support contract 434; the other five pairs 421.
+// Original declarations, qualified count, candidate cursor and response order restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)

@@ -1094,6 +1094,13 @@ struct s_game_engine_globals_connections_view
 // and time/connection homes remain.
 // Native widget metadata with glyph enum, immutable complete background and tail store order:
 // eight calibrated scores 170; metadata type and helper graph restored.
+// Round 380: numeric-buffer terminator after widths, name terminator at entry and
+// time terminator before name parsing, all seven subsets 175/232/228/231/262/173/176;
+// complete form with direct connection input 176. Calibrated widget/query roots;
+// original private initialization phases, all copies and executable body restored.
+// Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
+// with each field combination, then all with immutable widths: eight calibrated scores 170.
+// Original field domains and declaration lifetimes restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1375,6 +1382,11 @@ PRIVATE inline long score_string_list_1608e0()
 // Frame/viewer/coordinate homes remain; promoted player-only count recovers frame 0x79c but regresses.
 // Round 220: Complete header/team-localization/player-appearance lexical scopes, all seven
 // subsets and all with read-only viewer/score receivers, 756 each. Original body restored.
+// DH round 215: Row-geometry/team-RGB/player-RGB home identities, all seven subsets,
+// and all three with the heading-rectangle identity 756 each. Frame/viewer/coordinate homes
+// unchanged; every original operation and body restored.
+// Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
+// output as well: 756 each; original declaration lifetimes restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
