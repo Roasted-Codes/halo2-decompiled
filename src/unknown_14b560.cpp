@@ -1268,7 +1268,7 @@ static inline s_players_globals *players_globals_14f2e0()
 
 /* gives a player its unit (the unit kept for it, the unit waiting to be
    reused, or a new unit at a starting location) and resets its spawn state */
-// score 114 (was 114): Player/tag/globals/unit register lifetimes and success BL still differ.
+// score 75 (was 114): Player/tag/globals/unit register lifetimes and success BL still differ.
 // Shared direction helper for reuse/create/both 251/201/276; creation/colors/both entry scopes
 // 152/114/152; native/byte success 174/177; sentinel clears 114;
 // representation inline/out-of-line declarations 114/114.
@@ -2823,10 +2823,10 @@ void function_14d8b0(void)
         long &ticks = *(long *)(player + 0x16c);
         if ((player[2] & 4) && (unit = *(long *)(player + 0x2c)) != NONE)
         {
-            real rate = g_510c54->rate;
+            s_game_time_globals *time_globals = g_510c54;
             ++ticks;
-            real time = rate * (real)ticks;
-            if (time >= 3.0f)
+            real time = time_globals->rate * (real)ticks;
+            if (time_globals->rate * (real)ticks >= 3.0f)
             {
                 if (!TEST_FIELD_BIT(((s_unit_flags_14d8b0 *)(object_get_unchecked(unit) + 0x10a))->bit5))
                 {
@@ -2837,13 +2837,15 @@ void function_14d8b0(void)
                         event.effect_player_index = index;
                         function_a7c50(&event);
                         function_19eb30(&event);
-                        s_type_1e6529 damage;
-                        damage.unknown7c = NONE;
-                        function_d6660(&damage, *(long *)(*(byte **)((byte *)g_4e034c + 0x144) + 0x28));
-                        *(byte *)&damage.unknown84 = 0x29;
-                        damage.flags |= 4;
-                        object_get_damage_owner(*(long *)(player + 0x2c), &damage.owner);
-                        function_d7b80(&damage, *(long *)(player + 0x2c), NONE, NONE, NONE, NULL);
+                        {
+                            s_type_1e6529 damage;
+                            damage.unknown7c = NONE;
+                            function_d6660(&damage, *(long *)(*(byte **)((byte *)g_4e034c + 0x144) + 0x28));
+                            *(byte *)&damage.unknown84 = 0x29;
+                            damage.flags |= 4;
+                            object_get_damage_owner(*(long *)(player + 0x2c), &damage.owner);
+                            function_d7b80(&damage, *(long *)(player + 0x2c), NONE, NONE, NONE, NULL);
+                        }
                     }
                     function_153cd0(index);
                 }
