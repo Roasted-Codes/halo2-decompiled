@@ -1630,6 +1630,9 @@ real function_17c900(short function_type, real input);
 // with either receiver 360/360; both existing point-difference producers 368/368, with
 // native salt 367/367. Declared lead field read at each use 369, with native salt 372.
 // All bodies and real-field trials restored; frame agrees, stacked index/output EBX still differ.
+// DH round 234: caller output promoted before final branches with target/output reads, after
+// target-copy acquisition or at the target producer 361/371/395/411; readonly input objects
+// with those four boundaries 361/371/395/411. All restored; input contract and vector homes remain.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -2473,6 +2476,9 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 // paired dispatch/action orders 1174/1161. Native tag-array, direction-workspace, both,
 // damage-record, array/record and all paired role names 1162 each. All restored; frame,
 // velocity contract, native request homes and setter expansion still differ.
+// DH round 234: shared reflection scaler/live material flags/readonly response combinations
+// 1179/1162/1179/1162/1179/1162/1179; all with the real normal receiver 1194 at retail
+// length. All restored; frame 0x220/0x218 and velocity/request homes remain.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
