@@ -327,6 +327,10 @@ extern real g_47f05c;
 // Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
 // 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
 // and full body restored; frame 0xd0 and shape/count/alignment homes remain.
+// Round 31: function-scope index 221, guarded do 232; dot3f 192; point setter 267;
+// vector3f_assign and shared scan/selected entry 190 each (below gate); shared entry with
+// height reads 205; height before best_dot 192; function-scope index with height reads 204,
+// with a normal copy 255. Original body restored.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)

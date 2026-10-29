@@ -1432,6 +1432,9 @@ bool __stdcall function_e8b20(long unit_index, long type)
 // actions read inside the test with primary first 11; the bit test as its expression 11; the test
 // result named first 11; `type == 8` in each call argument 82; the then-block as a call of the
 // switch-finished action 252, with that action inline 252 (not inlined).
+// Round 31: direct header lookup 11; named header 77; separate actions/primary assignments 11 each;
+// primary branch 87; zero/one ternary 11; long primary 96; active pointer 11;
+// force-inlined switch-finished action 82.
 // @retail 0xe8c10
 void __stdcall unit_action_weapon_switch_interrupted(long unit_index, long type)
 {
