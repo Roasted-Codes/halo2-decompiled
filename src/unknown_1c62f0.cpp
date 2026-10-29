@@ -77,6 +77,25 @@ void c_animation_channel::clear()
 }
 
 // score 36 (was 36): incoming graph save and the late graph store still differ. With retail's
+// store order (graph after unknown0d) and the byte-pointer clear the body equals retail except
+// that the animation id is copied through ECX (retail: ESI, while CX holds unknown0e), so ESI is
+// never modified and LTCG passes graph straight in ESI (retail: ECX, then push esi; mov esi, ecx);
+// the four matched callers break.
+// Tried: early frame-position store (kept, 36); sentinel/word/byte clear chains 41/41/43; two-byte
+// memset 43; stored flags 41; stored-ID result 76; renamed late graph 42; dword/long flags plus early
+// frame 36/37; paired defaults 42; identifier memcpy 36; metadata before resets 42; trailing defaults
+// 41; redundant byte clear removed 36; early derived state 38; explicit state bit 35; defaults plus
+// memcpy 42; validity-result 43; animation guard first 44; inline/noinline declarations 41; existing
+// reset 43; state memset 51; high-bit predicate 41; ID word copies 50; retail store order 51; counter
+// from bit 15 as conditional/ternary 43/43 (retail order 49/51); graph as a by-value class 43; graph
+// store first/after the NONE words 41/41, after the zero words/unknown0d/frame 42; inline definition
+// in retail order 42, with graph copied to a local 42; nested validity gates 36; separate invalid
+// guards 42; eager validity tests 47; short-pair memset 50; early short metadata 43; early flags word
+// 41; early long metadata 43; named short promotion 36; success result/nested 49/49; early invalid
+// guard with early frame 36; role-named inputs 36; late rate/short metadata/both 36; both with the
+// success result 49. Round 75: existing clear() then retail-order assignments 51; const graph 51;
+// __fastcall member declaration 51 (LTCG overrides it); retail order with the byte-pointer clear 42;
+// eight orders of the graph/frame/id/rate/unknown0e/unknown10 assignments 42 each.
 // store order (graph after unknown0d) the body equals retail except that LTCG passes graph
 // straight in esi (no push esi; mov esi, ecx) and the four matched callers break.
 // Early frame-position store kept (36). sentinel chain 41; word clear chain 41; byte clear chain 43;

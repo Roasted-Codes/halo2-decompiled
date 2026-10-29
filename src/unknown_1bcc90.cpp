@@ -49,6 +49,9 @@ short __stdcall function_1bcc90(long actor_index)
 // one-element array, byte-pointer memset, scratch first, const actor, request first)
 // all keep the compare after rep stos; retail's compare-before-clear occurs in no
 // other retail function.
+// function scope 35; the clear as `= {}` 35.
+// Carrier role names (all seven buffer/index/reference combinations) 35 each;
+// immutable returned reference 35.
 // @retail 0x1bcd00
 bool __stdcall function_1bcd00(long actor_index, s_slot *slot)
 {
