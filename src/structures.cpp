@@ -318,6 +318,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
 // defined-failure helper and complete query restored; BSP/section homes remain.
 // Round 223: Signed/unsigned word masked-plane storage with original/reference-base/surface-base/both table selections 213/188/214/210/215/196/216/224. Original full-width plane, table selectors and defined vertex failures restored.
+// Geometry-join Boolean result 182 (726 bytes); native byte fetch 172; both 182;
+// initialized single-exit fetch 172, with Boolean result/byte fetch/both 182/172/182;
+// complete result/fetch graph with readonly section 182. Original helper and result restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

@@ -1264,6 +1264,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 384: channel-local sample/lower/upper/sample-lower/sample-upper/lower-upper/all
 // clamp captures 591/582/569/581/566/562/569; plain clamp branch stores 572.
 // All eight lose the matched caller; original complete clamp and target body restored.
+// Round 220: Indexed entry-base snapshot 563; repeated flag snapshot 530; both 563;
+// default-first with base/flags/both 562/531/562; live count with base/base-flags 564/563.
+// Base snapshots recover frame 0x28 but regress; original scan and complete body restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)

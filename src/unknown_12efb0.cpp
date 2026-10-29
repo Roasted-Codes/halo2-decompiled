@@ -235,6 +235,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // each with plain cluster cursor 616/705/713; readonly selected record alone/with cursor
 // 616/616. Original source acquisition, loop and executable body restored.
 // Round 387: Existing scalar accumulator takes all three RGB channels as values; destination order, four-channel color inputs and uniform palette-byte combinations 751/751/809/809/753/753/797/797. All original helpers restored.
+// Round 221: native destination-return contracts in scalar/merge/both/color/scalar-color/
+// merge-color/all helpers, then all with normalized publication, 616 each. All eight restored;
+// original free-helper contracts and source-weight capture retained.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

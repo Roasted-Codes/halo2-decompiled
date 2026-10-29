@@ -222,6 +222,8 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Round 68: direct height sum 46; separate same-parent table base 31; parent definition
 // through the existing/new local 31/31; reversed crouching product/sum 31/31;
 // fresh post-call parent table base 31; separate same-parent and parent bases 31.
+// Shared object getter at entry/same-parent/both/parent/entry-parent/same-parent-parent/all
+// 327/31/334/31/327/31/334; all with readonly receiver views 334. Original lookups restored.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {

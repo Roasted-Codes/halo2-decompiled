@@ -1123,6 +1123,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // 172/172/172; ordinary scale with result-first/guard normalizer 172/172;
 // complete native scale results with original/result-first/guard normalizer 460/460/460.
 // All helper result contracts and original complete normalizer restored.
+// Round 220: Normalizer complete input via native/readonly/component/library copy
+// 518/518/172/518; each with zero-length guard return 518/518/172/518.
+// Original normalizer and complete body restored; true-return host and y forwarding remain.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)

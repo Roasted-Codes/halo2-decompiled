@@ -775,6 +775,9 @@ void swarm_leader_detach(long actor_index);
 // Round 383 (fast control 261, ordinary 285): native invitation/destination/both records
 // 261/261/261; per-store participant field with invitation/destination/both/both plus short
 // ordinal/both plus destination reference 287 each. Original types, field reads and body restored.
+// Round 222: Native callback-handler ownership, conditional iterator-result declaration,
+// cleanup-only workspace scope, all seven subsets and readonly handler: eight 261 fast
+// against unchanged fast 261 (ordinary 285). Original executable body restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

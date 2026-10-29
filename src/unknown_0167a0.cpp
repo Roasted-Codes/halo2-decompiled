@@ -1436,6 +1436,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Round 242: Existing writer mask/color/index native references, seven nonempty
 // combinations and all with descriptor reference, 267 each. Original shared
 // writer restored; deferred index and descriptor rereads remain.
+// Round 222: External destination references, indexed pair/constant-zero/constant-one
+// subsets 267/287/287/287/287/296/296; all with reused preserved mask 274. Constant-one
+// forms lose a matched writer sibling; complete original helper and body restored.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {

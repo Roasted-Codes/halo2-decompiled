@@ -440,6 +440,9 @@ static inline dword surface_random()
 // Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
 // three named cross terms 195; named variation 195; scalar declarations first 195;
 // projection before shared cross 182. Shared cross product 168 fast/plain, 880/880 bytes.
+// Round 219: immutable axis pointer 210; shared final double scale 168; both 210; native rotation
+// setter 168; axis/setter 210; scale/setter 168; all 210; readonly old with axis pointer 210.
+// Restored.
 // Round 381: RNG before time 199; oscillation before RNG 203; axis before/between trigs 168/168;
 // RNG-first/axis-between 199; oscillation-first/axis-first 203; rotation-scoped angle 201,
 // with shared final scale 201. Late angle reaches frame 0x20 but loses wind register; all restored.

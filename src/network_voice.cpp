@@ -3010,6 +3010,9 @@ struct s_voice_route_choice
 // Round 169: Actual mask-array entry/loop/reference and per-element receivers
 // 363/363/363/399; each with conditional radio 411/411/411/411. Original routing restored;
 // entry saves and unrolled cursor bias remain.
+// Round 220: Selected route pointer on byte-bitwise radio graph: original/choice receiver/
+// three pairs/descriptor/both/receiver-three/receiver-descriptor/all
+// 533/533/541/536/543/541/536/543. Original index, observations and workspaces restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

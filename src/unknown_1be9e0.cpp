@@ -136,6 +136,10 @@ static __forceinline long real_to_long(real value);
 // countdown arms reversed 87 (retail length); accepted arms reversed 57; earlier
 // participant-sum declaration 24; direct accepted return 67; count result 90;
 // node-level return removed on the narrow-sum graph 81.
+// they need no casts).
+// Countdown-local short/long branch result 90/116; one eligible-branch
+// short/long result 90/94; each with a separate decrement 90/116/90/94.
+// Original status tails and decrement expression restored.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {
