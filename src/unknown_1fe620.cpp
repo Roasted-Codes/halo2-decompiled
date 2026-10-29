@@ -67,6 +67,9 @@ static __forceinline long real_to_long(real value);
 // 376/378/376/376 at 1854 bytes; final point setter with the same four scale graphs 384 each at 1861 bytes.
 // Frame 0x4c and third-input/random-state homes remain; original vector operations and published-field
 // observations restored.
+// Round 388: Shared sign-state receiver at later range subsets 1-7
+// 423/377/439/373/423/400/438; complete receiver graph with native upper-word step 438.
+// Original independent receiver observations restored; frame and early input ownership remain.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

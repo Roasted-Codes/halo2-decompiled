@@ -221,25 +221,6 @@ class_31ad80::class_31ad80(void const *position, void const *orientation)
 
 // Havok round 23: callees of the functions this round writes
 
-// orders each pair by the second words of its two objects, then the pairs
-// @stub 0x372b50
-void __cdecl function_372b50(pair_30d870 *pairs, long count)
-{
-}
-
-// passes on the pairs of overlapping objects that begin and end
-// @stub 0x3728c0
-void dispatcher_3728c0::function_3728c0(pair_30d870 const *added, long added_count, pair_30d870 const *removed,
-	long removed_count, pair_listener_315a10 *listener)
-{
-}
-
-// a rotation matrix set from a quaternion
-// @stub 0x372500
-void rotation_372500::function_372500(__m128 const *quaternion)
-{
-}
-
 // the islands' step handed on (925 bytes, not decompiled)
 // @stub 0x31c100
 void __cdecl function_31c100(void *step_10, void *step_20, void *step_50, void *world_info,
@@ -272,22 +253,3 @@ class class_2dc220
 public:
 	void function_2dc220(pending_2ddbd0 *pending, void const *root, fixed_point_2dc220 const *fixed_point);
 };
-
-// Havok round 37: a library callee of the world's destructor (0x310a70)
-
-class helper_3728b0
-{
-public:
-	~helper_3728b0();
-};
-
-// resets the object the helper holds at +0x100
-// @stub 0x3728b0
-helper_3728b0::~helper_3728b0()
-{
-}
-
-// @stub 0x372a40
-slot_table_372a40::slot_table_372a40()
-{
-}

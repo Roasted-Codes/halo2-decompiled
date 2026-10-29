@@ -132,10 +132,16 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Round 240: Shared normalizer factor-first, early uninitialized factor and role names,
 // all seven combinations 408; native epsilon-rejection return 408. Internal magnitude/
 // reciprocal lifetime forms do not recover entry/XY homes or cleanup; helper restored.
+// Round 153 (fast): nullable point through its address (diagnostic) 427; short counters 471, with the point
+// through its address 471 (the facing argument moves to EBX); point and facing through their addresses 427
+// (ret 0x1c), with short counters 433.
 // Round 68: split center around the object lookup with the unused carrier removed 409;
 // shared displacement helper 438; direction declared first 409; component direction copy 450;
 // entry/both magnitude captures 409/409; object-index address at entry 409 and at all uses 405
 // (three-point gain rejected); unused input moved behind the stack inputs at definition/caller 444.
+// DH round 234: complete cosine products/all sine products, with reused/separate second
+// trig producers 442/408/442/408; those graphs with native word ordinals 471/471/471/472.
+// All restored; entry/normalized homes and cleanup differ on the retail-size frame.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -362,6 +368,8 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Round 175: native state/settings/source-point reference formals, all seven subsets,
 // 749 each; all five nonnull object/vector input formals 749. Original pointer
 // definition, external declaration and both real calls restored.
+// Round 393: Native planar pivot with eight coherent existing rotation-producer role orders:
+// 755/755/755/755/755/755/755/755. Original pivot, helper contracts and both transform outputs restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

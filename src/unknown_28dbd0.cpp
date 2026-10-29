@@ -146,6 +146,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 63: delayed first cross scale 228; scalar crosses on delayed-sine schedules 180/209;
 // typed request field 186; own-address zero read 247; direct sums on delayed-sine schedules 216/224;
 // inline library forward copy 186. Original helper and body restored.
+// Round 262: complete fixed-axis/constructed-point/both values 234/324/352;
+// each with two-use source index 234/324/352; readonly axis/point-setter
+// publication on the full graph 352/368. Original values, helpers and body restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

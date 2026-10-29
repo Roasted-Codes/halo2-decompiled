@@ -287,6 +287,9 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // unqualified result 207; separate false store and result read 208.
 // Actor/query, object/approach and movement output workspace names, all seven combinations,
 // each 194; all names with the two uninitialized query outputs at entry 194. Original body restored.
+// The unknown018 field read through its own actor_get call ahead of the actor pointer
+// local 185 (the first field load then folds the address as retail does; retail keeps the
+// pool data in ECX and the scaled index in ESI, ours EDI/EAX); not kept, gain under 8.
 // frame 0x38 agrees; actor pool data is loaded into EBX here and
 // ECX in retail. Early actor-index retention, request tails and distance scheduling differ.
 // Round 262: one native request buffer at entry/decision, with original/entry approach
@@ -322,6 +325,20 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // All receiver models regress; original snapshots, body and frame restored.
 // Round 254: both planar squared parts, squared sum and real magnitude homes, all seven
 // subsets 186 each; already-real magnitude promoted for comparison 186. All restored.
+// Round 260: separate inline/noinline declarations for animation query, unit request,
+// approach query and movement query, 186 in all eight forms. Original declarations restored;
+// actor/pool carriers, shared request tail and x87 scheduling remain.
+// Round 263: separate vertical/ground admission inline/noinline declarations and all four
+// paired contracts 186/186/186/186/186/186/186/186. Original declarations and complete body restored.
+// Round 265: complete single completion exit, with every subset of the existing
+// actor/object/prop force-inline getter declarations, 208 in all eight forms (682 bytes).
+// Original exits, declarations and body restored.
+// Round 268: selector-first direct target arguments/branch-owned target/conditional call/test-assigned target
+// 202/202/202/191; the four with query-default-false outcomes 202/202/202/191.
+// Actor/pool and shared request tail remain; original movement producers and body restored.
+// Round 271: native first/second/both object-header getters and retained header outputs
+// 186/186/186/186/186/186; both native headers with long/exhaustive seated results
+// 195/186. Original lookups, requests, predicate and complete body restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {
