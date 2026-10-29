@@ -974,6 +974,10 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
 // with the local vector; the shared cross3f for the left vector 570, 528 with the local vector; the
 // other table orders 549-568. Next: the local vector plus retail's cross-product loads (up loaded into
 // registers, up.i twice) and the normalize's i, k, j product order.
+// Round 109: VC re-sorts each projection row (retail x = (forward.j vj + forward.i vi) + forward.k vk,
+// z = (up.k vk + up.i vi) + up.j vj; ours x = (k + i) + j, z = (i + j) + k). A local vector with the
+// rows through dot3f/dot_product_c1a80/dot3f(v first) 587/587/588; the scale through vector3f_scale
+// 714; the up row computed first 513 (identical).
 // @retail 0xc1d90
 void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab const *shape, s_light_projection_ab *entries, short *count)
 {

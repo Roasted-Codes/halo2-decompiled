@@ -1113,6 +1113,15 @@ struct s_looping_promotion_table
 // Curve produced by short tests 70; with native word publication 70; bool tests/word 52;
 // short default/word 56; original bool/word 52; short conditional/word 56;
 // native definition with short tests/default and word publication 70/56. Restored.
+// Round 109: the call to the existing 0x221810 (LTCG inlines it, conversions still merged) 52;
+// a force-inline redeclaration of the shared lookup 52; 0x221810 with a short curve 56;
+// byte_flags_set for the looping bit 53 (fade-in 24); a short curve from the negated shifted bit
+// `!(bool)((flags >> 10) & 1)` 49 (retail's bool-then-movzx block; three points, not kept), with
+// byte_flags_set 56, with the shared lookup or 0x221810 49/49, with a flag mask 49, through
+// TEST_FIELD_BIT 49. Retail's `movsx eax, byte` ... `movsx eax, ax` comes from a long value passed
+// on as a short (a one-use long class local 34, exact-only); the one-use short class local with that
+// curve 21, plus a flag mask 21, plus byte_flags_set 25 (all exact-only, restored). Left: the entry
+// block schedule (retail loads the tag header global after the definition) and the flag store order.
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {
