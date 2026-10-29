@@ -44,6 +44,13 @@ const dword g_455978[81] = {
  0x3f13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0xbf13cd3a, 0x3f13cd3a, 0xbf13cd3a
 };
 // score 306 (was 306): aligned frame 0x1d4 agrees; first +0x21 is bounds/exclusion homes.
+// Round 87: the sample end as `point3f p = *arg_11;` plus in-place adds (retail's three dword copies and
+// `movss x, [home]; addss x, [vector]`) gives retail's homes for the bounds/exclusion locals and the loop
+// spills, 341 (2106 bytes; the entry esi/edi roles swap back while 0x11bed0 stays inlined). With that form
+// and a noinline 0x11bed0 (diagnostic) the entry matches through +0x54 and aligned falls to 80/96 (from
+// 129/130), but 0x14a280's bsp moves to the stack (0x14a280 14, 0x11bed0 19). Also tried: renamed
+// bounds/exclusion locals 306 (names do not move them); upper bound set first 323; vector-first sums
+// 341; existing vector3f_add on the copy 341; 0x11bed0 through 0x11be90 (still matched, still inlined).
 // Earlier: the sample count matches (retail's
 // setne/dec/and/sub is `27 - (flag ? 0 : 9)`, which keeps the flag on the stack). Structural cause of
 // the register differences: our LTCG inlines 0x11bed0 here (retail calls it, esi = location), and the
@@ -163,6 +170,22 @@ const dword g_455978[81] = {
 // 306/341/314/306; each with shared optional-ray difference 306/341/314/306.
 // Native copies lengthen the body; optional-state homes and selective
 // location/range expansion remain. All endpoint producers and helpers restored.
+// Round 387: Optional-state homes and selective location/range expansion remain. Actual in-place
+// transform with input/output native home, aggregate/CRT point publication and complete basis
+// setter combinations: eight forms 352 each at 2070/2083 bytes. Original separate input/output
+// matrices and every existing producer restored.
+// Round 389: native missing-location result bool/byte/short/long 477/477/487/486;
+// each with entry constant initialization 477/477/487/486. Original positive result and
+// lifetime restored; aligned frame agrees, optional-state homes and helper expansion remain.
+// Round 392: selected-cluster outcome in short at current/entry/control/SSE boundaries
+// 314/474/472/472; long 314/477/475/475. Current lifetime reaches retail length,
+// but homes and selective helper expansion remain. Original Boolean outcome restored.
+// Round 257: inflated-bound scalar before descriptor construction 461, const 461;
+// both with six-use center 496/496; early filter 459/459; center and filter 497/497.
+// Original scalar lifetime, field observations and descriptor stores restored.
+// Round 250: native lower/upper/translation vector producers, subsets 1..7
+// 494/490/547/365/508/521/562; all with complete endpoint copy 601.
+// All restored; optional-state homes and selective helper expansion remain.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

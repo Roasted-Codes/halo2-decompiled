@@ -116,20 +116,15 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 	tint.red=arg_2->red*tint.red;
 	tint.green=arg_2->green*tint.green;
 	tint.blue=arg_2->blue*tint.blue;
-	if(tint.alpha<0.0f) tint.alpha=0.0f;
-	else if(tint.alpha>1.0f) tint.alpha=1.0f;
-	if(tint.red<0.0f) tint.red=0.0f;
-	else if(tint.red>1.0f) tint.red=1.0f;
-	if(tint.green<0.0f) tint.green=0.0f;
-	else if(tint.green>1.0f) tint.green=1.0f;
-	if(tint.blue<0.0f) tint.blue=0.0f;
-	else if(tint.blue>1.0f) tint.blue=1.0f;
+	real *components=&tint.alpha;
+	for(long channel=0;channel<4;++channel)
+		components[channel]=sprite_pin(components[channel]);
 	dword local_0=pack_color4f(&tint);
 	return local_0;
 }
 
 
-// score 421 (was 421): Frame 0x50 versus 0x60 (the tint lives in a one-caller helper's scope, so uv_b reuses its
+// score 391 (was 391): Frame 0x50 versus 0x60 (the tint lives in a one-caller helper's scope, so uv_b reuses its
 // slot), cache EBP/EBX and scalar homes remain.
 // Frame pointer 597; size optimization 990; tint input-array parameter 435;
 // direct packed-tint return 435; byte flip selector 538.
@@ -170,6 +165,30 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Caller tint output with x/y/all four scalar observations 463 each; complete scalar
 // bounds with native reference input 421. Original helper contracts and captures restored.
 // Round 380: Alpha clamp before seed/before RGB/after RGB with phased RGB 463/421/421; per-channel RGB with alpha after RGB/before seed/before RGB/after red/after green 421/473/421/421/421. Original tint restored.
+// Round 242: Plain indexed/pointer tint clamp traversal with the existing
+// early-return scalar clamp 391 each; single-exit clamp 468 each, inline or
+// forced. Keep ordinary indexed form, plain 391 at 1931/1937; frame remains.
+// Round 244: Existing tint producer as cache/seed/definition member, forced 391 each, ordinary inline 722
+// each; cache/definition member with caller tint output 520/520. Native tint outputs recover frame 0x60 but
+// not cache/UV homes; original producer and clamp loop restored.
+// Round 266: native in-place pointer/reference clamps on the retained four-channel
+// loop, indexed/pointer walks and inline/forced combinations all 421. Original
+// value-return clamp, indexed traversal, tint producer and UV captures restored.
+// Round 166: actual fixed-size cache-value input with native color/definition/both references
+// 391/391/391/391; each with direct descending channel traversal
+// 399/399/399/399. Original tint contract and indexed clamp restored.
+// Round 228: Complete unclamped tint returned by value/pointer/reference, caller owns
+// the four clamps and packing; producer/entry lifetimes 604, 604, 520, 520, 520, 520; value return
+// with a plain pointer clamp at either lifetime 604, 604. Frame 0x60 recovered, tint/UV
+// ordering and cache residence still differ; original complete tint producer restored.
+// Round 181: Existing tint producer packed-dword output by pointer/reference, first/last,
+// with cache receiver or fixed-size input array, eight forms 391 each. Original complete producer
+// and callback restored; tint/second-UV overlap and cache/interval homes remain.
+// Round 393: Shared cache identity with tint cache pointer/reference or fixed-array/element-pointer inputs, direct update
+// or existing update method: 391/391/391/391/391/391/391/391. Original cache, callback declaration and helpers restored.
+// Round 253: Branch-produced primary aspects/later next reciprocals/later blend remainder/
+// both later phases/aspects-reciprocals/aspects-remainder/all/constant-first aspects with
+// later next spans 417/431/409/405/431/412/436/412. Original scalar phases and complete callback restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

@@ -113,6 +113,11 @@ static inline vector3f *function_x84d9e8(vector3f *vector, vector3f const *axis,
 // value-returning cross 123; reference cross interface 6; array component cross 6.
 // Axis/input/both scalar snapshots 48/53/56; paired products 34;
 // cross inputs by value axis/input/both 150/157/193; rotation axis by value 150.
+// Round 70: retail loads axis j for the i-row first product and vector i for the j-row one; VC picks
+// the loaded operand itself (all 64 product operand orders and all helper parameter orders give this
+// code or worse). Axis/vector pointer aliases in the helper 11 (fixes those two, flips the k-row
+// second product), vector alias first 12; axis local before the call 39; point-typed helper 6;
+// input alias 13; cross/rotation statement orders 7-39; helper in another file 6; angle wrapper 38.
 // @retail 0x18c250
 bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
@@ -342,7 +347,13 @@ void __stdcall function_18c630(long object_index, long tag_index, long a, long b
 // score 7 (was 7): sample-base and offset registers plus object call setup remain; readonly data
 // input 7; readonly entry input 7; native count identity 7; output count lifetime 52; existing
 // scale storage lifetime 7; input pointer home names 7; existing scale home names 7; inline matched
-// output callee 7.
+// output callee 7; final object address read 7; split construction around count 9; split
+// construction count last 7; actual descriptor type 7; nested query guard 7; object snapshot 7;
+// mutable permutation input 7; scalar scale copy 8; scalar copy interleaved 11; plain scale
+// pointer 7; scalar copy split count last 8; direct scale bits 7; union real assignment 8;
+// real assignment after stores 8; scalar copy declared first 8; late object snapshot 7.
+// native data/entry/both record copies 56/58/74; direct entry/data/both fields 22/23/65;
+// native admission predicate 7; nested availability predicate 7.
 // @retail 0x18ca20
 void __stdcall function_18ca20(long object_index, long tag_index, s_sound_permutation const *permutation, real scale)
 {
@@ -609,6 +620,14 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Round 360: tag pointer acquired in the object phase after admission/name/marker/
 // position/forward/velocity/root-location/audibility boundaries 308/316/312/314/316/321/318/320.
 // Original acquisition and receiver pair restored; root-location convention remains.
+// Round 396: complete datum snapshot with pair/cluster-direct/spatial-direct/both-direct
+// 339,339,322,315; typed pool fields at each use with those receivers
+// 517,503,463,451. Original datum observations and receiver pair restored.
+// Round 180: Entry forward/marker/audibility outputs, masks 1-7, then all in reverse declaration
+// order: 280/280/280/280/280/280/280/280. Original executable body restored.
+// Round 186: Complete source-kind char/byte/short/long with address/value owner selection
+// 346/346/338/351/358/358/350/363. Original field observations, multi-use handle helper and complete
+// body restored.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

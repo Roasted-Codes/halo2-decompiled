@@ -1481,6 +1481,25 @@ struct s_133f70;
 // `movsx ecx` of the level), BLOCKED-BY 0x23690. Head forms: the 0x4ed284 test nested with an entry
 // pointer 175, nested without it 175; a cached-flag pointer at every access 175; the header as table
 // pointer + masked index 175; entries declared before the failure count 175.
+// Round 153 (plain): success declared first 173; inline active-entry getter (retail's dead entry lea) 177; with
+// success first 175; plus signed-char previous through a levels pointer 309 (byte forms right, both pool sites fold
+// record + offset where retail adds first); 0x23690's order read through its address 182 (ret 0x1c).
+// Round 108 (plain control 175, aligned 76; fast control 353): header pointer formed before the
+// count store 176; retail's two-step `add eax, ecx; lea ebx, [eax + 0x44]` (and +0xbc) comes back
+// when the record address and the member address sit in separate blocks under the same NONE test
+// (record set in one `if (index != NONE)`, member in a second; diagnostic, not a kept form): cache
+// site 239f, both sites 239f, both with a signed-char previous level 266 plain (aligned 75, retail's
+// 382 instructions); cache slot as a ternary 304f (folds, adds a jmp). The tail remains
+// BLOCKED-BY 0x23690. All restored.
+// Round 184: Native object/tag, handle/count and cache/sections pointer-home names, masks 1-7, then
+// all six in a second coherent lexical order: eight calibrated scores 175. Original names, all
+// executable statements, native records, flags, query/allocator inputs and call tuples restored.
+// Round 265: six lexical orders of entry/failure/compacted-slot long values and
+// both uninitialized entry/slot storage orders before the query, 175 each on the expanded control.
+// Original declarations, names, compaction, cache observations and complete body restored.
+// Round 398: complete once-read query object/tag/both 357/352/335; each with
+// allocation-scoped projection workspace 357/352/335; immutable joint inputs
+// with either workspace 335/335. All original field observations and body restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)

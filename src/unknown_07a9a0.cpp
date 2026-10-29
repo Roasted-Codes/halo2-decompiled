@@ -1104,6 +1104,23 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Available, first, last, spread, party count, team count, team size and combined
 // party-boundary slot names 766 each (fast); original names restored.
 // Round 380: Shared capacity height/product/both cases 766/877/876; team NONE/width/both cases 900/937/940; shared imbalance cases 936; all three selectors 963. Original selectors restored.
+// Round 245: Current balance graph result byte/short/long/dword 784/841/841/841;
+// paired group-decision domains 784/844/847/847. All original Boolean carriers restored;
+// frame/session/lookup remain.
+// Round 169: Admission/identity/excess result-join subsets 815/778/827/789/859/803/785;
+// all joins with entry result 785. Original workspace lifetimes and returns restored;
+// frame, session convention and opening lookup expansion remain.
+// Round 220: Native dword histogram with forced capacity/teams/both/imbalance/
+// capacity-imbalance/teams-imbalance/all switch selectors/all seven selectors
+// 863/844/863/844/863/844/863/863. Frame 0xb4 recovered; original table and selectors restored.
+// Round 174: coordinated count-balance/addition inline and noinline summaries,
+// each boundary and four paired contracts, 766 each; all declarations restored.
+// Frame 0xd4/0xb4, stacked session and protected opening lookup remain.
+// Round 389: independent player/peer, machine/member and party induction identities,
+// all seven subsets, then entry declarations for all five counters: 766 each (fast).
+// Original counter names and declaration lifetimes restored; frame/session/lookup remain.
+// Round 261: explicit initial histogram memset with word/short/long/dword cells
+// 820/820/844/844; each with byte balance argument 871/871/870/870. Original clear and cells restored.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

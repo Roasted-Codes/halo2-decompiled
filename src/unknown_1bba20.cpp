@@ -87,12 +87,18 @@ void function_1bbc00(long player_index, long vehicle_index)
 
 static __forceinline long real_to_long(real value);
 
-// score 8 (was 8): retail moves the vehicle index into EAX before it forms
+// score 2 (was 8): the child object is kept in a local, so retail's object
+// pointer stays in EAX and the tick count is converted through ECX/DX like
+// retail; only the 0xd0620 call setup still differs, ours forms the iterator
+// address in EBX before it moves the vehicle index into EAX.
+// Tried: the iterator started from the stored
 // the iterator address in EBX for the first child call, and in the child loop
 // keeps the object pointer in EAX and converts the tick count through ECX/DX
 // where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
 // player vehicle 77; the actor looked up at each store 45; separate conversion
 // locals in the loop 15; the loop product passed straight to the conversion
+// 8; the block locals in two other orders 8; the player and vehicle parameters
+// swapped 12; the child object in a local with the index read from it 8.
 // 8; the block locals in two other orders 8.
 // Earlier 8 from 44.
 // Existing slot-query long/short 61/8; guarded long/short 70/38;
@@ -134,11 +140,11 @@ void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 			function_d0620(vehicle_index, &iterator);
 			while (function_d0690(&iterator))
 			{
-				long actor_index = object_get(iterator.child_index)->actor_index;
+				s_slot_object_view *child = object_get(iterator.child_index);
 
-				if (actor_index != NONE)
+				if (child->actor_index != NONE)
 				{
-					s_actor_view *actor = actor_get(actor_index);
+					s_actor_view *actor = actor_get(child->actor_index);
 
 					actor->unknown31c = (short)player_slot;
 					time = (real)g_510c54->field_2_3 * 2.0f;
@@ -157,9 +163,16 @@ real function_204950(long actor_index, long squad_index, short mode);
 void function_26def0(long actor_index, long owner_index);
 __declspec(noinline) bool function_f5dc0(long object_index);
 
-// score 49 (was 49): the first squad test still reuses its full-width load;
-// the second call reloads the actor where retail uses its saved pointer, and
-// the distance-call argument order differs. Split entry branch 67; first fresh
+// score 49 (was 49): BLOCKED-BY 0x1e3400: retail loads the squad for both
+// 0x1e3400 calls as a 16-bit value (`xor eax, eax; mov ax, [esi + 0x28]` and
+// `xor ecx, ecx; mov cx, ax`, pushed unextended, as in 0x1bb570), so 0x1e3400's
+// squad parameter is a short; ours (long) zero-extends with movzx. One-file
+// harness with that parameter as short and the second call through the saved
+// actor (no second actor lookup): 1 difference, the 0x204950 call's EAX/ECX
+// setup order (0x204950's first two parameters swapped 5; squad local at
+// function scope 1; named squad distance 1). Earlier: the first squad test
+// still reuses its full-width load; the second call reloads the actor where
+// retail uses its saved pointer, and the distance-call argument order differs. Split entry branch 67; first fresh
 // actor 90; second fresh actor 49 (kept); both fresh actors 81; first field
 // pointer 49; second field pointer 67; typed vehicle 67; no final refresh 123.
 // Native tag field 49; squad-first admission 74; squad before entry flag 77;

@@ -361,6 +361,7 @@ PRIVATE inline __int64 bink_read_tsc(void)
 	__asm rdtsc
 }
 // score 244 (was 244): frame 0x3c versus 0x40, allocation homes and SSE scheduling differ.
+// the retry ordinal as a function-scope local 239 (MiniMax E run 12; under the keep bar, restored).
 // Round 231: shared retry helper/native byte block/both/shared audio arrays/helper-arrays/byte-
 // arrays/all/Boolean large-block selection 313/287/313/339/364/339/364/347; separate noinline
 // format-size query declaration 287. Original body and declaration restored.
@@ -383,6 +384,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // and clock/output homes remain; original body, helpers and flags restored.
 // Round 246: complementary small-allocation bool/byte/short/long 270/270/289/289; the same
 // parameter-derived decision at entry 306/306/305/298. Original large decision restored.
+// Round 225: native long/dword allocation result, with ordinary/role-named audio arrays,
+// early/late zero lifetime: 244/244/256/256/244/244/256/256. Original body restored;
+// frame 0x3c, clock/output homes and instruction policy remain.
 // Round 251: bounded retry short/word/byte/dword carriers 263/263/259/245;
 // the same four with a scoped timeout else phase 263/263/259/245. Frame stays
 // 0x3c; original ordinal, continue graph and full executable body restored.
@@ -392,6 +396,12 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 217: initialized texture size/data/both at native phase 246/246/249;
 // the same private output defaults at entry 284/284/295; both outputs in reverse
 // declaration order at native/entry phase 249/295. Original body restored.
+// Round 269: Successful allocation/movie/texture phase nesting, seven subsets,
+// and all with post-protection acceptance nested: 245 each at 1104 bytes.
+// Original early cleanup returns, helpers and full body restored; frame stays 0x3c.
+// Timestamp producer original with inclusive/selected clamp 245/244; forced
+// with original/inclusive/selected clamp 244/245/244; outlined with all three
+// clamps 310 each. Original helper contract, clamp and full body restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

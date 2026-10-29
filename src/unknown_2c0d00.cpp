@@ -235,6 +235,12 @@ void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_in
 // 897f/924 plain; only marker counts long 914f (control 916f). Original bounded traversals restored.
 // Direction dot operand order 916f; single expression 928f; both 928f;
 // range read order 916f; alignment test order 916f; predicate declarations 916f.
+// Round 385: Word obstacle mask with native sphere/motion combinations, reduced
+// 916/894/914/897/914/897/897/897; word+byte sphere 917 plain, plus byte motion 919,
+// plus separate location/raised workspaces 898. Original masks and query storage restored.
+// Round 176: Immutable declaration-produced actor with original/ordinary settings/ordinary unit/both
+// input homes 957/991/978/989; with independent location and raised point 973/993/949/982.
+// All original actor publication, query storage, qualifiers, operands and complete body restored.
 // @retail 0x2c0d60
 void __stdcall function_2c0d60(vector3f const *previous_direction, long actor_index, byte flags,
     s_path_settings const *volatile settings, s_obstacle_list *obstacles, s_obstacle_list *blocking_obstacles,
@@ -923,7 +929,23 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 234: native current edge/node/portal-surface records and combinations
 // 395/437/429/392/478/411/486; native portal query edges 392. Original receivers restored.
 // Round 197: Cached selected/portal/both node words 442/385/442; selected/portal/both with Boolean ring direction 414/399/414; both words with word first-openness 410, plus Boolean ring 396. All restored; frame 0x28 remains.
+// Round 255: complete geometric truth carriers byte/short/word/long 385/398/397/401;
+// the same four with native byte side 385/398/397/401. Original Boolean results
+// and side parameter restored; frame 0x28 and zero/radius schedule remain.
 // Round 379: End/start/both endpoint addresses at use 385/462/451; traversal-lifetime edge alone/with end/start/both 385/385/462/451; complete receiver graph with node fields 421. Original body and helpers restored.
+// Round 385: Uniform edge/surface/vertex table roots, singly and in pairs/all,
+// 418/410/432/407/403/412/409; all roots per iteration 463. Original observations restored.
+// Round 388: Shared scale/normalizer ordinary inline singly/both 385/385/385;
+// scale noinline 425; normalizer noinline 451; noinline scale/ordinary normalizer 425;
+// ordinary scale/noinline normalizer 451; both noinline 415. Original declarations restored.
+// Round 172 DL: Complete first-node rejection ownership with bool/byte/signed-byte/
+// short storage 427/427/427/413; the same four with native complete geometric
+// vector storage 427/427/427/413. Boolean and byte forms reserve 0x24 versus
+// retail 0x28; short restores extent but regresses. Original acceptance,
+// types, helper calls, history qualifier and complete traversal restored.
+// Round 175: Full-width unsigned incoming/ring/complete selected-vertex domains and all
+// subsets 385 each; all with unsigned equality-only ring-edge anchor 385. Native word values
+// and distinct NONE bit patterns preserved. All original domains, histories and body restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1111,6 +1133,23 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Round 251: complete side-direction first/second-input staging 411/409;
 // entry-direction first/second-input staging 410/410; side/entry first-first,
 // first-second, second-first, second-second 472/472/457/471. Original outputs and body restored.
+// Round 384: scale helper output-pointer result with original/result-first/guard normalizer
+// 172/172/172; ordinary scale with result-first/guard normalizer 172/172;
+// complete native scale results with original/result-first/guard normalizer 460/460/460.
+// All helper result contracts and original complete normalizer restored.
+// Round 220: Normalizer complete input via native/readonly/component/library copy
+// 518/518/172/518; each with zero-length guard return 518/518/172/518.
+// Original normalizer and complete body restored; true-return host and y forwarding remain.
+// Round 172 DL: Native vector storage for sides/entry/both/angular/distance/all,
+// then sides/all with the native normalizer, 172 each. Shared real totals with
+// one final comparison, angular arm first, if/value/result/entry-if/entry-value
+// 279/398/269/279/398; distance arm first if/value/entry-result 417/399/407.
+// All original types, tests, helper calls and complete body restored;
+// early true-return host and side-direction forwarding remain.
+// Round 175: Return produced by the initial length test/native scale input/both/symmetric side
+// product terms/result with terms/scale with terms/all/all with if-form clamps
+// 359/470/466/172/359/470/466/471. Native scale input loses both matched geometry siblings;
+// all original helper inputs, qualifier, branch returns, arithmetic and body restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1190,9 +1229,8 @@ bool __stdcall function_26ccb0(s_pathfinding_data const *pathfinding, s_obstacle
     short ignored_obstacle, point2f const *origin, long sector, long target_sector, point2f const *direction,
     real radius, real distance, bool first, bool stop_at_goal, bool ignore_flagged,
     s_path_location const *location, s_avoidance_trace *trace);
-bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
-    s_path_trace_result *trace, s_pathfinding_data *pathfinding,
-    long sector_index, long target_sector_index, long location);
+bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start, long sector_index,
+    s_type_c3b527 const *end, long target_sector_index, long location, s_path_trace_result *trace);
 // score 444 (was 444): frame 0x11c versus 0x10c, 1740 bytes against 1746. Ours copies the whole step
 // (`rep movsd`) where retail reads it through a pointer and keeps only its type and link in stack slots;
 // retail places the count <= 1 arm at the end, keeps 0 in EBX for the whole function, compares the
@@ -1304,12 +1342,30 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Retail's EBX is a zero register from entry to the loop (data tests, index/count/flag stores).
 // Round 234: entry-snapshot/displacement/conversion scope endings and combinations
 // 442/444/442/444/442/444/442; tangent consumption scope 444. Two-point gains rejected; original body restored.
+// Round 255: entry ordinal/count/fallback zero lifetimes 444, 444, 444;
+// ordinal-count/ordinal-fallback/count-fallback/all 444, 471, 471, 472;
+// all with byte fallback 472. Original lifetimes restored; frame remains 0x11c.
 // Round 379: Data/single-step/both terminal exits 484/444/484; data-first acquisition alone/with data/single/both exits 470/478/470/478; traversal-only radius with both exits 485. Original body restored.
 // Round 165: Early actual data-result NULL lifetime coupled with source-radius/output-
 // index/traversal store subsets 469/486/491/466/471/487/496; combined existing endpoint setters
 // 496. Original data producer, both inherited local qualifiers, arm order and endpoint
 // construction restored. Frame 0x11c versus 0x10c, persistent zero and metadata/radius homes
 // remain.
+// Round 385: Natural tangent-search attempt result, short/word/long/dword
+// at search eligibility 445/445/447/447, at iteration entry 445/445/447/447. Original jump restored.
+// Round 388: Both corner-success carriers byte/short/word/long 444/440/440/450,
+// with the same domains declared at selection 444/440/440/450. Four-point gains
+// above 30 rejected; original Boolean carriers and declarations restored.
+// Round 172 DL: Selected successor in the ordinary for increment 444; its
+// entry declaration 444; ordinary output-index/radius/both storage 486/469/491;
+// paired word corner results 440; current-record lifetime ending at metadata
+// publication 494, with paired word results 485. The four-count gain fails
+// the eight-count gate. Original successor lifetime, both qualifiers,
+// Boolean corner results, snapshot and full body restored.
+// Round 175: Existing selector inline/noinline declarations 444/444; output receiver formed
+// after successful selection alone/inline/noinline 502/502/502; the same three with the immutable
+// current type retained across all uses 502/502/502. All original declarations, address and
+// metadata lifetimes, native record snapshot, qualifiers and complete body restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
@@ -1398,12 +1454,11 @@ void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_vi
                             function_2c2910(&center, tangents, &origin, radius, &candidate);
                             point3f target = { candidate.x, candidate.y, 0.0f };
                             s_path_trace_result first, second;
-                            function_26c4e0((s_type_c3b527 *)&start, (s_type_c3b527 *)&target,
-                                &first, data, sector, NONE, (long)&query->location);
+                            function_26c4e0(data, (s_type_c3b527 *)&start, sector, (s_type_c3b527 *)&target,
+                                NONE, (long)&query->location, &first);
                             if (!((s_sector_trace_result *)&first)->blocked &&
-                                !function_26c4e0((s_type_c3b527 *)&target, &next_step->point,
-                                    &second, data, ((s_sector_trace_result *)&first)->sector_index,
-                                    next_step->node_index, (long)&query->location))
+                                !function_26c4e0(data, (s_type_c3b527 *)&target, ((s_sector_trace_result *)&first)->sector_index,
+                                    &next_step->point, next_step->node_index, (long)&query->location, &second))
                             {
                                 sector = ((s_sector_trace_result *)&first)->sector_index;
                                 origin = candidate;

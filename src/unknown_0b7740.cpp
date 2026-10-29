@@ -1158,6 +1158,14 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // 234; a pool local in the no-model branch 234; the parent read through the entry header pointer 385
 // (1394 bytes; not a real form). The ESI reload after 0xbfed0 is the reverse of 0x14a8e0's case, where
 // retail reuses ESI after a register-argument call that ours re-forms.
+// Round 153 (fast): one pool local for the current and no-model lookups 290; volatile stored flag (diagnostic)
+// 234; render-model node count named once 252; compile-only, no node-loop form gives retail's count > 0 test.
+// Round 108 (fast, aligned differences 20: the esi reload, the count > 0 guard and the no-model
+// reload): retail keeps g_4e0300 in ecx and re-reads its data field in the no-model branch, which our
+// build does only when a pointer store sits on the path from the current-object lookup (diagnostic
+// store in the default-orientation arm, 307; a volatile flag 234 does not). Orientations through an
+// inline out-parameter helper 234; render branch nested under the model test with a return 234;
+// flag computed from the orientation test 312. The esi reload after 0xbfed0 is unique in retail.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {

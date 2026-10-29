@@ -2456,6 +2456,14 @@ dword __cdecl function_131fc0(real alpha);
 // Round 253: bounded native pixel short/long/word/dword producers 427/410/427/448;
 // native pixel lifetime across bitmap guard 438/439/438/433. Original float dimensions,
 // full-stack marker, state calls and complete body restored.
+// Round 169: native fallback source/destination/both records, native source/destination/both
+// input fields, and both records plus source/both input fields: eight forms 251 each.
+// Parallel reciprocal-first UV products with original/native/native-field rectangles 251
+// each; native source-before-target frame names 251. Complete native fallback production,
+// with native input fields/frame names/both plus reciprocal-first products: 257 each.
+// Original arrays, fallback order, products and complete body restored.
+// Round 261: actual four-corner vertex table, byte/word/long/dword with long ordinal
+// 337/337/353/353; with short ordinal 339/339/343/343. Original unrolled draws restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2748,7 +2756,7 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 282 (was 334): Frame 0x58 agrees; six excess bytes, sampler constants,
+// score 282 (was 282): Frame 0x58 agrees; six excess bytes, sampler constants,
 // bitmap-call transport and scale/trig homes remain.
 // Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
 // has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
@@ -2812,6 +2820,18 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // native rectangle 282/334; independent second trig 280/338; rectangle plus trig
 // 280/338. Keep only paired diameters 282 (plain), 2028 bytes; the extra two-point
 // trig step is rejected. Original trig storage, arrays, helpers and calls retained.
+// Round 383: paired diameter products before normalization 356; full bounds before normalization 354;
+// complete horizontal/vertical product-and-bound phases 336/340; native rectangle counterparts
+// 356/354/336/340. Original reciprocal, product overlap and body restored.
+// Round 166: paired corner production with both angle pairs live, explicit/first-corner-first/
+// table-loop/table-loop after first corner 407/368/358/361; native point outputs
+// 407/368/358/361. Original separate UV producers and trig lifetimes restored.
+// Round 169: reciprocal-first normalization 282; branch-owned outputs 340, with reciprocal-first
+// 340; incoming scale results 343, with reciprocal-first/exclusive maximum 343/343;
+// branch-owned outputs with exclusive maximum 340; paired dimension-first products plus
+// reciprocal-first normalization 282. Original paired diameters, scale and trig homes retained.
+// Round 180: Entry declarations of first/second/bounds output buffers, masks 1-7, then all with
+// entry trig declarations: 282/282/282/282/282/282/282/282. Original executable body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -3128,7 +3148,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 853 (was 934): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
+// score 853 (was 853): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
 // Earlier: Frame 0x2c agrees; capability/save roles and state expansion remain.
 // frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
@@ -3180,6 +3200,13 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // complete case results 1219; maximum result 1210. Restore all other carriers, memory
 // observations, cases and result lifetimes. Frame 0x2c agrees; mode bound ESI/EDI, full-width
 // small-permission test and state expansion remain.
+// Round 282: complete encoded output words, ternary/descending/result/ascending forms,
+// each with original/complete first-output word [1128,1131,1128,1131,1121,1121,1129,1130].
+// Original output helpers and complete body restored; capability/save roles remain.
+// Round 393: complementary small/negative/return-state subsets
+// 932/858/933/934/1212/935/1213; all with Boolean small-denial 1210. Original carriers restored.
+// Round 261: shared quantizer byte/word/dword results 985/1007/853; quantizer/output/both
+// formal orders 853 each; byte/word results with both orders 985/1007. Original helpers restored.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

@@ -156,6 +156,33 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // 680 [439]; nested body ending `return local_0;` then `return true;` 679 [462] (retail's early-exit
 // layout and `mov al, 1`). Every stack home is then 4-12 bytes off retail's (flag 0xf, minimum 0x10,
 // hit flags 0x14, input copy 0x38 in retail's frame).
+// Round 257: shared affine origins 629; early constant minimum 636; collision-produced
+// hit entries 700, with early minimum 706; inactive early return on those four
+// affine graphs 685/698/681/694. Original helpers, producers and exits restored.
+// CRT input copy 629; CRT hit clear 735; both 735; shared zero-output setter 629, with
+// input/hit/both transfers 629/735/735; complete entry transfers with early minimum 739. Frame
+// agrees; direct memory success and hit/basis/rotation homes remain.
+// Round 171: blocked-ray count byte/short/long/unsigned-long at entry 707/707/706/706;
+// after input copy and output zero 715/714/713/713. Original success bit, four hit bytes,
+// accepted length initializer, every math helper and all in-place input/result copies restored.
+// Round 175: ordinary-inline cross/offset/rotation helpers, all seven subsets, 629 each;
+// all five existing helpers ordinary-inline 629. Original forced expansions restored;
+// frame agrees, early success save and hit/basis/rotation homes remain.
+// Round 392: four hit bits as byte mask at entry/active scope 766/766;
+// word/long/dword masks 762/765 each. Frame shrinks and code regresses;
+// original hit bytes, success, all helpers and in-place copies restored.
+// Round 263: normalization/settings inline/noinline declarations singly and all four pairs
+// 629/629/629/629/629/629/629/629. Original providers, helpers and in-place snapshots restored.
+// Round 250: native reference formals for cross/rotation/root producers,
+// subsets 1..7 and all with the point producer: 629 each. All original formals,
+// helper calls and in-place snapshots restored; success and workspace homes remain.
+// Round 227: Whole rotation sine-cross/base/both shared producers
+// 731/648/713; result-first root/with sine/with base/with both
+// 726/654/725/633; all with common promoted angle 721.
+// Original helpers and all in-place snapshots restored; early success and workspace homes remain.
+// Round 177: Success from the completed raw-distance minimum 689; with existing point/rotation/
+// both/ray/point+ray/rotation+ray/all setters 707/706/707/711/711/711/711. All restored;
+// frame shrinks to 0x104 and native success/hit/basis/rotation homes remain unresolved.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

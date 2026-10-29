@@ -1098,9 +1098,26 @@ struct s_game_engine_globals_connections_view
 // time terminator before name parsing, all seven subsets 175/232/228/231/262/173/176;
 // complete form with direct connection input 176. Calibrated widget/query roots;
 // original private initialization phases, all copies and executable body restored.
+// Round 383: complete native background/foreground/both/foreground-first aggregate producers
+// 170/170/170/308; paired color role identities on those graphs 170/170/170/308.
+// Original producers, dim arithmetic, all copies and complete body restored.
 // Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
 // with each field combination, then all with immutable widths: eight calibrated scores 170.
 // Original field domains and declaration lifetimes restored.
+// Round 222: Consistent horizontal/vertical/both coordinate values, short
+// 285/281/308 and long 280/281/309; readonly pairs 308/309. Every widget/query
+// control matched; original input observations and executable body restored.
+// Round 174: opposite dim state shared by foreground and glyph, bool/byte/short/long
+// 311/311/306/308; complete glyph result on those graphs 311/311/308/309. All
+// restored; frame/opening homes agree, deferred icon tail and time/connection carriers remain.
+// Round 267: Separate complete native rectangle outputs for place/icon, name/score and
+// time/connection, every subset and all immutable 196/246/237/256/277/239/279/279.
+// Original shared bounds restored; frame/prefix agree, deferred icon tail and later homes remain.
+// Round 394: Existing icon-query/time-formatter/name-parser inline declarations, all seven
+// subsets 170 each; all three separate noinline declarations 170. Original declarations restored.
+// Round 271: existing short/name/connection widget initializer inline class contracts,
+// all seven subsets and joint noinline contracts, 170 each on calibrated roots.
+// Original owning header and complete body restored; deferred icon tail remains.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1300,7 +1317,8 @@ PRIVATE inline long score_string_list_1608e0()
 	}
 	return result;
 }
-// score 756 (was 756): frame 0x798 versus 0x79c; the local player sits in EDI (retail EBX) and the
+// score 689 (was 689): native rectangle objects recover retail length; frame 0x790 versus 0x79c;
+// the local player sits in EDI (retail EBX) and the
 // x coordinate in EBX (retail EDI); the color locals' slots (retail keeps background below foreground)
 // and the shared 0.0/1.0 registers of the fade clamps differ.
 // Tried: player register and scalar homes; scalar names 817; header/name reuse 818; header/decoder
@@ -1380,6 +1398,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 218: Completed collector counts cached, player/team/both long 795/782/832;
 // native short 795/789/813; mixed short-long/long-short 832/813. All restored.
 // Frame/viewer/coordinate homes remain; promoted player-only count recovers frame 0x79c but regresses.
+// Repeated viewer field as short/long/reference 801/788/773; retained options receiver 793; viewer
+// short/long/reference with options 825/789/803; viewer short and retained time mode 815.
+// Frame/viewer/coordinate homes remain.
 // Round 220: Complete header/team-localization/player-appearance lexical scopes, all seven
 // subsets and all with read-only viewer/score receivers, 756 each. Original body restored.
 // DH round 215: Row-geometry/team-RGB/player-RGB home identities, all seven subsets,
@@ -1387,6 +1408,21 @@ PRIVATE inline long score_string_list_1608e0()
 // unchanged; every original operation and body restored.
 // Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
 // output as well: 756 each; original declaration lifetimes restored.
+// Round 88: user index local for the scroll clamp 776; scroll element reference 798; width folded
+// into x 756; scores declared before the player 756; short screen height 759. Retail reads the
+// rectangle's left word again for x where ours reuses the width's register.
+// Round 169: Native score-table/team-element receivers, mutable/readonly combinations 772;
+// immutable native score-table selection 799. One duplicate readonly source excluded.
+// Original byte observations restored; frame/viewer/coordinate homes remain.
+// Round 267: Complete rectangle edge/extent/position producers, value/pointer/reference outputs
+// 776/712/688/711/688/711/744/678 (single-caller helpers restored). Five native rectangle
+// objects with ordinary/readonly and scalar/position inputs 689/689/694/694; implicit native
+// field conversions 689/689/694/694. Ordinary scalar-input objects kept, plain 689 at 2879 bytes.
+// Round 394: Complete dim team-last/complementary-brightness/both 758/758/760; icon denial
+// 756, with team-last/brightness/both 758/758/760; recurring flag field 756. Original body restored.
+// Round 271: entry native rectangle declarations for title/fixed/optional caption groups,
+// every subset and all with complete rectangle identities, 689 each. Original producers,
+// native object lifetimes and body restored; frame 0x790 versus 0x79c remains.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
@@ -1431,14 +1467,9 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 			PIN((real &)g_4e9af0.unknown04[4 + local_player->local_user_index * 4], 0.0f, (real)(height - screen_height));
 	long y = (short)(g_4b9dd8.top -
 		(long)(real &)g_4e9af0.unknown04[4 + local_player->local_user_index * 4] - g_4b9dd0);
-	struct
-	{
-		s_short_rectangle bounds;
-		short position[2];
-	} work;
-	s_short_rectangle title_bounds;
-	work.position[0] = x;
-	work.position[1] = y;
+	short row_position[2];
+	row_position[0] = x;
+	row_position[1] = y;
 	real volatile fade_count = (real)total_rows;
 	color4f foreground;
 	color4f background = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -1449,10 +1480,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 	foreground.blue = 1.0f;
 	word title[0x50];
 	function_15f120(player_index, title, 0x50, 0);
-	title_bounds.top = y;
-	title_bounds.left = x;
-	title_bounds.bottom = y + 0x14;
-	title_bounds.right = x + 0x10c;
+	s_short_rectangle title_bounds = { y, x, y + 0x14, x + 0x10c };
 	panel->title.initialize(&title_bounds, &background, &foreground, title, 0x50, false);
 	fade = (alpha - 1.0f / fade_count * 0.5f) * 2.0f;
 	foreground.alpha = PIN(fade, 0.0f, 1.0f);
@@ -1470,34 +1498,30 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 	word text[0x100];
 	text[0] = 0;
 	y = (short)(y + 0x18);
-	work.position[1] = y;
-	work.bounds.top = y;
-	work.bounds.left = x;
-	work.bounds.bottom = y + 0x14;
-	work.bounds.right = x + 0x19;
-	panel->place.initialize(&work.bounds, &background, &foreground, (word const *)L"", 0x14, false);
-	work.bounds.left = x + 0x19;
-	work.bounds.right = work.bounds.left + (short)name_width;
+	row_position[1] = y;
+	s_short_rectangle place_bounds = { y, x, y + 0x14, x + 0x19 };
+	panel->place.initialize(&place_bounds, &background, &foreground, (word const *)L"", 0x14, false);
+	s_short_rectangle name_bounds = { y, x + 0x19, y + 0x14, x + 0x19 + (short)name_width };
 	long list = score_string_list_1608e0();
 	if (list != NONE) function_1a0180(list, 0x7000105, text);
-	panel->name.initialize(&work.bounds, &background, &foreground, text, 0x14, false);
+	panel->name.initialize(&name_bounds, &background, &foreground, text, 0x14, false);
 	if (score_width)
 	{
-		work.bounds.left = x + 0x19 + (short)name_width;
-		work.bounds.right = work.bounds.left + (short)score_width;
+		s_short_rectangle score_bounds = { y, x + 0x19 + (short)name_width,
+			y + 0x14, x + 0x19 + (short)name_width + (short)score_width };
 		list = score_string_list_1608e0();
 		if (list != NONE) function_1a0180(list, 0x70000fd, text);
-		panel->score_label.initialize(&work.bounds, &background, &foreground, text, 0x14, true);
+		panel->score_label.initialize(&score_bounds, &background, &foreground, text, 0x14, true);
 	}
 	else
 		panel->score_label.valid = false;
 	if (time_width)
 	{
-		work.bounds.left = x + 0x19 + (short)name_width + (short)score_width;
-		work.bounds.right = work.bounds.left + (short)time_width;
+		s_short_rectangle time_label_bounds = { y, x + 0x19 + (short)name_width + (short)score_width,
+			y + 0x14, x + 0x19 + (short)name_width + (short)score_width + (short)time_width };
 		list = score_string_list_1608e0();
 		if (list != NONE) function_1a0180(list, 0x8000102, text);
-		panel->time_label.initialize(&work.bounds, &background, &foreground, text, 0x14, true);
+		panel->time_label.initialize(&time_label_bounds, &background, &foreground, text, 0x14, true);
 	}
 	else
 		panel->time_label.valid = false;
@@ -1530,7 +1554,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 				name[0xff] = 0;
 			}
 		}
-		work.position[1] += 0x14;
+		row_position[1] += 0x14;
 		color3f color;
 		color = *function_7f720(&color, (short)team);
 		byte *entry = scores + team * 0x12;
@@ -1546,12 +1570,12 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 			if (teams && team >= 0 && team < 8)
 				active = (g_4e9ae8->wc & (1 << team)) != 0;
 		}
-		game_engine_score_row_build(work.position, (s_score_row_columns const *)panel, &color, row_alpha, name,
+		game_engine_score_row_build(row_position, (s_score_row_columns const *)panel, &color, row_alpha, name,
 			display.team_ranks[team_row] / 2 + 1, *(short *)(entry + 0x1d2), seconds,
 			!active, &panel->teams[team_row]);
 	}
 	panel->team_count = display.team_count;
-	if (display.team_count) work.position[1] += 0x15;
+	if (display.team_count) row_position[1] += 0x15;
 	for (long player_row = 0; player_row < display.player_count; ++player_row)
 	{
 		long index = display.players[player_row];
@@ -1578,7 +1602,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		bool dim = (flags & 2) || !(flags & 1) || team == NONE ||
 			(g_4e6948->value1b8 > 0 && *(long *)(player + 0x2c) == NONE &&
 			*(short *)(player + 0x1ac) == 0);
-		work.position[1] += 0x14;
+		row_position[1] += 0x14;
 		long show_icon = team != NONE && *(long *)(player + 0x2c) == NONE && !(flags & 2);
 		short seconds;
 		if (g_4e6948->flag1128)
@@ -1586,7 +1610,7 @@ void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, r
 		else
 			seconds = *(short *)(scores + (index & 0xffff) * 0x1c + 4);
 		s_player_row_columns *columns = (s_player_row_columns *)panel;
-		game_engine_player_row_build(work.position, row_alpha, index, (word *)(player + 0x44), place,
+		game_engine_player_row_build(row_position, row_alpha, index, (word *)(player + 0x44), place,
 			*(short *)(scores + (index & 0xffff) * 0x1c + 0x12), seconds, (bool)((flags >> 1) & 1), show_icon, team == NONE,
 			&color, dim, &panel->players[player_row].row, columns);
 		panel->players[player_row].selected = index == player_index;

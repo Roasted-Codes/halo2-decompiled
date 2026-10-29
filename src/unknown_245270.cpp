@@ -406,6 +406,9 @@ void function_245400(s_source_245400 const *source, long index,
 // 207/207. Original producers, equality and all body operations restored.
 // Full native transform values, mutable/const with native plane field and point workspace
 // subsets: 223 each; source enters ECX but frame grows to 0x58 and length 796. Original restored.
+// Nonnull source-reference formal in original/first positions 203/203; each with native plane
+// ordinals 222, uniform material-table reads 210, both 231. Sole caller 3/3/107/107 in each order.
+// Original pointer definition, declaration and call restored; source/frame/side homes remain.
 // Round 380: two-use masked plane ordinals as word/short, original/signed-code
 // side tests and production after/before the edge: 222/222/203/203/207/207/209/209.
 // Original full-width masked expressions and complete executable body restored.
@@ -413,6 +416,22 @@ void function_245400(s_source_245400 const *source, long index,
 // bool/byte/word/long side carriers 204/204/204/204/204/204/224/224.
 // Original independent ordered facing tests and full executable body restored.
 // Round 223: Complete orientation eligibility in bool/byte/short/long storage, exhaustive/default-true producers 202/202/202/202/202/202/202/202. Exact-match-only result forms restored; original early returns and in-place transforms retained.
+// Round 72: source-first parameter order as 0x245400 declares it (with the 0x245aa0 call) 203, still
+// EDX; second-material record pointer 203; transformed-point call in the transform arm 246 (the
+// transform becomes a register argument, 0x245aa0 46); widened codes before the edge 203; side
+// bytes before the plane pointers 203.
+// Round 175: native const source member, original/native plane field and bool/byte sides
+// 203/203/203/203; each with uniform material-table reads 210/210/210/210.
+// Original free-function interface, source declaration and every call restored.
+// Complete first/second/both native vertex inputs 245/215/270;
+// with a complete surface 287/272/318; both with material/surface+material 261/304.
+// Original endpoint receivers, source records and complete body restored.
+// Round 264: existing difference/cross/rotation force-inline declaration subsets,
+// all seven 203; all with the actual point-transform boundary 203. Original
+// declarations and body restored; frame 0x24/0x2c, source and side homes remain.
+// Round 398: signed-code side producers with original masks and independent facing exits,
+// bool/byte/word/long 223/223/219/220; direct native material words on those graphs
+// 222/222/216/217. Complete original body and side producers restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
