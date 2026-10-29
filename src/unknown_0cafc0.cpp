@@ -219,6 +219,9 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Round 70: position copy in each marker arm 40 (kept); to-collision vector first 31 (kept);
 // parent branch without its index local 46; parent through a table local / header pointer 31/31;
 // seated lookups through the object macro 31; crouching term named first 31.
+// Round 68: direct height sum 46; separate same-parent table base 31; parent definition
+// through the existing/new local 31/31; reversed crouching product/sum 31/31;
+// fresh post-call parent table base 31; separate same-parent and parent bases 31.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {
