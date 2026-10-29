@@ -2739,6 +2739,10 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 195: Native final vector outputs linear/angular/both [241, 244, 314]; paired result before
 // receiver 314; native component-set output linear/angular/both [241, 230, 205]; paired early component
 // result 205. Original private getters restored; staged saves and fixed/zero homes remain.
+// Round 29 (controlled full-image scores; reduced body 7): existing vector constructor 50;
+// two-use change pointer 50; reversed velocity declarations 50; guarded do-while 53;
+// reversed loop comparison 52; preincrement 50; outer-block index 50; per-iteration body index 50.
+// Original body restored; entry saves, five address forms and the final argument moves remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
