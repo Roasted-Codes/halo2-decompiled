@@ -223,13 +223,16 @@ bool function_1b8eb0(long actor_index, long object_index, short seat_index, bool
 	return result;
 }
 
-// score 3 (was 109): at the 0xc8200 call retail loads the seat index and the object before the
+// score 3 (was 3): at the 0xc8200 call retail loads the seat index and the object before the
 // unit index (ecx last), ours loads the unit index first. Round 70: one result with `break` for
 // the two rejections, bool result and the seat count from 0xc8b80 (retail inlines it) gave the
 // shrink-wrapped ebp/esi saves (109 -> 3); 0xc8b80 alone 109, bool alone 117, without 0xc8b80 7
 // (harness), long result 48 (harness); every 0xc8200 parameter order 4-27 (harness); nested
 // c8200 test 3; actor declared after result 3; unit index local 122; named seat index 78; seat
 // pointer 71; named seat object 71 and occupant test inverted 46 (harness).
+// Round 252: eligibility accumulated with logical OR 43, bitwise OR 31, conditional 3;
+// named eligibility 3; actor at every use 116 (matched caller lost); read-only actor,
+// read-only flags, both 3/3/3. Original complete body restored.
 // @retail 0x1b8f30
 bool function_1b8f30(long actor_index, long object_index)
 {
@@ -1103,9 +1106,9 @@ struct s_seat_approach_result
 	bool approaching;
 };
 
-// score 147 (was 176): every instruction agrees except one x87 pop: retail pops the vertical
-// arm's last delta before its jump to the distance join, ours shares that pop with the other
-// arm at the join (one instruction early from there on). Round 70: the existing 3D distance
+// score 147 (was 147): the vertical square operands and x87 cleanup differ. Retail pops
+// the vertical arm's last delta before its jump; ours shares that pop at the distance join.
+// Round 70: the existing 3D distance
 // (0x1bbf40's) for the vertical case, a 2D point distance through the existing vector
 // helpers for the nearest seat point (retail recomputes the nearer distance in two arms), the
 // vehicle tag flag as a bitfield and bonus declared before the direction gave retail's x87
@@ -1114,6 +1117,9 @@ struct s_seat_approach_result
 // arms swapped 152/152/168, vertical deltas written out or as a vector or 0x3ea30's own body
 // 152; out-of-line 0x3ea30 not inlined, even with __forceinline. Real: one ternary 143,
 // else-if chain 143, distance at function scope 143, arms swapped 178, (actor, point) helper 143.
+// Round 252: inline/forceinline 3D helper declarations 147/147; whole actor point 273;
+// shared planar direction helper 147; branch-owned bonus alone/with direction 194/194;
+// external position reference with both 218; whole point with both 274. All restored.
 // @retail 0x1baae0
 bool function_1baae0(long actor_index, long object_index, short seat_index, bool ignore_bonus,
 	bool ignore_reserved, bool vertical, s_seat_approach_result *out)
