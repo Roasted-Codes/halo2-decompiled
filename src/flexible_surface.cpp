@@ -256,7 +256,7 @@ bool function_1173e0(long object_index, long index)
 	return result;
 }
 
-// score 4 (was 99): only the a/b normal.k addition schedules differ; frame and length agree.
+// score 4 (was 4): only the a/b normal.i addition schedules differ; frame and length agree.
 // Shared point differences 169; differences and cross product 108 (dropped, full); shared
 // scale normalization 166, with differences/cross 130 (dropped, full); normalize_inline 123; reversed edge
 // production 132 (dropped, full); named edges/readonly definition 130/130; cross only 165; normal-first
@@ -268,6 +268,8 @@ bool function_1173e0(long object_index, long index)
 // Shared add 99/633; with shared normalize 40/637; all normal-first 63; final vertex cursor 4/633;
 // only a normal-first 4; only b 7; only c 4; normal declared first 4; reused accumulation 260;
 // normal-field pointers 86; normalized contribution 223. Selected ordinary check 4/633.
+// Corner-pointer order acb/bac/bca/cab/cba 27/84/80/28/96; vector workspace before
+// corners 4; edge-only scope 4; loop-wide normal workspace 4. Original body restored.
 // @retail 0x117510
 void function_117510(long index)
 {
@@ -293,7 +295,7 @@ void function_117510(long index)
 		if (normalize3d(&vertex->normal) == 0.0f) vertex->normal = *g_4687a8;
 }
 
-// score 139 (was 154): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.
+// score 139 (was 139): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.
 // Shared difference 154; vertex base 155; distinct correction 161, with shared difference 161;
 // both shared scales 154, with difference 154; early rest square 155; all producers/lifetimes 162.
 // All executable forms restored.
@@ -302,6 +304,8 @@ void function_117510(long index)
 // early rest square 155; all producer/correction forms 162. Endpoint short snapshots forward 176,
 // reverse 139; extended long 183 in either order; shared pin helper ties each form.
 // Reverse short snapshot ordinary check 139/741.
+// Native endpoint vertices with rest square/correction/shared-scale subsets:
+// 139/138/151/150/139/138/151/150. The one-point leads are dropped; original body restored.
 // @retail 0x117790
 void __stdcall function_117790(long index)
 {
@@ -587,6 +591,8 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // Round 238: application inline/force-inline 485/485; format inline/force-inline 526/526;
 // both helpers inline or force-inline, all four combinations 528. Application-inline forms also
 // lose the 0x22a664 reduced control; all original helper declarations and calls restored.
+// Native attribute descriptor with uniform type/count observations and complete
+// result-role identities: 473/498/473/498/473/498/473/498. All original fields and scans restored.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {
