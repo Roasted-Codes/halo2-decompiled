@@ -1598,8 +1598,6 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 728 (was 728): Frame 0xc0 agrees; user cursor spills and identity uses EBX; cursor base, dispatch and completion homes remain.
-
 // score 719 (was 719): Frame 0xc0 agrees; initial cursor base/home, slot and request/completion homes remain.
 // Earlier: Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
 // Frame 0xc0 agrees; initial user/identity homes, logon dispatch and request/completion allocation remain.
@@ -1679,6 +1677,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Round 224: Native cached owner/property/both fields 728 each; owner/property/both with
 // test-produced admission 728 each; both with comparison-local team and with both result lifetimes
 // 728/728. Original cache views, admission/team lifetimes, predicates and task transitions restored.
+// Round 269: Slot/identity/properties, slot/properties/identity, identity/slot/properties
+// and properties/slot/identity initializations 767/767/759/741; readonly slot
+// forms give the same scores. Original order and full body restored; cursor base still differs.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

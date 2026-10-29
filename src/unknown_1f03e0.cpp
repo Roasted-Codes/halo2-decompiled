@@ -338,6 +338,8 @@ extern real g_47f05c;
 // with early best-alignment constant 217; both 235. Entry declarations of point/center/delta
 // on those four graphs 217/235/217/235. Original snapshots and full body restored; frame 0xd0
 // and shape/count/alignment carriers still differ.
+// Round 269: Height/validity/alignment rejection-guard subsets 1-7 all 192;
+// all three with fallback validity first 215. Original nested scan, snapshots and full body restored.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)

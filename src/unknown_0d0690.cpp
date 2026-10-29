@@ -1818,6 +1818,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 177: Native vector setters base/dynamic/output/weighted 784/781/790/782;
 // base+dynamic/all scales/weighted+output/all four 795/824/790/824. One-point gain
 // rejected; original loops and outputs restored; status/mesh homes remain in frame 0x90.
+// Round 268: native existing vertex-buffer, actual model-input record and native three-word
+// triangle views in all seven subsets 782 each; all with read-only buffer/data 782.
+// Original views restored; frame 0x90, displaced status/mesh homes and external expansion remain.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

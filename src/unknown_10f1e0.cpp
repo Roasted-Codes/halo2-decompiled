@@ -1751,6 +1751,10 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // screen inputs 1027/1027/1123; aggregate construction 1027/1027/1123;
 // ordinary inline field/aggregate returns 1010/1010. Frame 0xcc remains;
 // original bounds helper, direction snapshot and all consumers restored.
+// Round 269: Existing projection boundary includes the angle-conversion call,
+// caller pointer/reference, private vector and native angle value: forced
+// 928/928/961/933; ordinary inline 1180/1180/1184/1230. Original two helpers,
+// separate conversion calls, direction snapshot and complete body restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

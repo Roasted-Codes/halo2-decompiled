@@ -105,6 +105,8 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 // it, one actor lookup at the top 52 (index EBP and view EBX as retail, actor/state ESI/EDI swapped),
 // plus the state declared first 52, a prop index local 52 or the typed slot data block 52; the
 // NONE case as an early store and return 91 (actor EDI as retail, more pushes sink).
+// Round 270: native success/else-return gates for active, facing and release phases,
+// all seven subsets 47; full gates with the slot data member 47. Original restored.
 // @retail 0x1b89d0
 void __stdcall function_1b89d0(long actor_index, s_slot *slot)
 {

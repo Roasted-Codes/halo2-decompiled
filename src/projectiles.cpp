@@ -974,6 +974,9 @@ real function_30bf0(vector3f *v);
 // Actual squared-time producer with found test 244; test-derived trajectory result
 // 245; repeated time square alone/with found/result 244/244/245; result with native
 // minimum clamp 246; coefficient home names 245; all scalar producer forms 246. Restored.
+// Round 266: six lexical orders of early gravity/horizontal-root/squared-length
+// scalars and two uninitialized entry declaration orders all 244. Every
+// initialization, input observation and complete original body restored.
 // Round 173: existing native gravity field 244; whole origin/target/both input points
 // 298/299/327; those with complete shared delta 298/299/327; both with entry velocity
 // 327. Original inputs, gravity observation, float trees and pointer contracts restored.
@@ -1180,6 +1183,9 @@ extern vector3f *g_4687ac;
 // Round 279: all four endpoints through existing point setters, with query-vector reuse
 // and result-first exit combinations 163/184/163/183; existing scaled-vector sums on the
 // same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
+// Round 266: native aggregate producers for all four endpoints, initial ray,
+// lateral displacement/cross output and all seven subsets 163 each; complete
+// endpoint aggregates with the negative pair first 186. Original body restored.
 // Round 173: native position/ignore/radius fields with external object/tag pointer or reference
 // receivers, mutable or read-only, all eight combinations 163. Original layout and body restored.
 // Round 226: positive/negative endpoint names, reversed declarations and full displacement roles 163/163/163;
@@ -1469,6 +1475,10 @@ PRIVATE inline long projectile_object_root(long object_index)
 // Complete object/tag/both observations 550/332/735; shared scaled addition 364;
 // with tag/object/both observations 344/523/715; initial setter on complete graph 713;
 // retained entry tag identity 396. Tag observations alone kept, plain 332; others restored.
+// Round 266: actual current-root parent result with live/cached tags, native
+// water expression and inline/forced combinations 334/334/375/375 twice;
+// live-tag root graph with shared initial-speed publication 348. Original
+// parent helper, callback, speed observations and every call restored.
 // Round 173: actual input-record fields with object pointer/reference and ordinary/forced
 // root expansion 332 each; consistently cached tag on those four graphs 360 each.
 // Four earlier slot-observation explorations score 484 and are excluded for overlap risk.

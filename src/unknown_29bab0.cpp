@@ -104,6 +104,9 @@ PRIVATE __forceinline real function_29bab4(vector3f const *arg_0, vector3f const
 // Round 224: direct input plus shared cross/speed/publication 748/750/881; cross+speed 748;
 // cross+publication, speed+publication, all, all+native normalizer setter 886 each. Two-point
 // cross gains rejected; original input access, helpers and outputs restored.
+// Round 267: Isolated response/position/normalized-input home identities on direct input,
+// all seven subsets and jointly with the magnitude identity, 804 each. Frame 0x8c versus
+// retail 0x88; original body, input access and helpers restored.
 // Round 392: Native scalar/flag/heading actor fields, scalar+flag/scalar+heading/flag+heading/all,
 // then all with object-first acquisition: 804/804/804/804/804/804/804/829. All direct-input forms restored.
 // Round 394: Direct-input shared addition/scalers/both/projection/addition-projection/scalers-
