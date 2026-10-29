@@ -2580,10 +2580,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 }
 
 // score 30 (was 30): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
-// Frame 0x100 and extent agree; protected decal transfer, light argument scheduling and sound scratch carriers remain.
-// Earlier 30 (was 38): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
-// 0x17e670), the attached light call's register arguments (computed before its pushes, retail after) and the sound
-// arms' scratch registers remain. Round 85: `effect` declared before `up` gives retail's EAX up (38 -> 30, kept);
+// 0x17e670), the attached light call's register arguments (computed before its pushes, retail after: ours forms
+// forward with add ecx, retail with lea edx and keeps the location pointer live) and the sound arms' scratch
+// registers remain. Round 85: `effect` declared before `up` gives retail's EAX up (38 -> 30, kept);
 // then velocity before location in the detached sound arm 47; light/sound node index in the argument list 30/30;
 // one inline node-index helper for three arms 415; sound record at the case scope 30.
 // Earlier measurements and forms:
@@ -2655,6 +2654,9 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // Round 379: Sound point/velocity/both setters 60/57/72; location before point/compressor 36/34; location and velocity before point 36; early location with velocity/point setter 61/61. Original body restored.
 // DH round 218: sound point/tail/all CRT copies 30/30/30; sound case tag/native or point CRT 69/69;
 // writable/const sound aggregates 47/47; aggregate plus sound tag 70. Opening body restored.
+// Round 88: named forward pointer in the attached light call 30; word sound node index 52 (1330 bytes);
+// named position pointer in the attached sound call 30; light node index at case scope 30; light test
+// as !detached first 35.
 // @retail 0x17a8a0
 void function_17a8a0(s_effect_location_datum *location, bool detached, s_effect_datum *effect, vector3f const *up, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
