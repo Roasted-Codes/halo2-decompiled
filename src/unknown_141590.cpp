@@ -4,6 +4,7 @@
 
 #include "unknown_11c920.h"
 #include "unknown_0259d0.h"
+#include "vector_products.h"
 #include <math.h>
 #include <string.h>
 
@@ -113,18 +114,6 @@ static inline void quaternion_transform_vector(
 	out->i = v->i * s + q->i * dot + cross.i * w2;
 	out->j = v->j * s + q->j * dot + cross.j * w2;
 	out->k = v->k * s + q->k * dot + cross.k * w2;
-}
-
-/* the cross product, every component computed before the stores */
-static inline void cross_product3d_1417b0(vector3f const *a, vector3f const *b, vector3f *out)
-{
-	real k = a->i * b->j - a->j * b->i;
-	real j = a->k * b->i - a->i * b->k;
-	real i = a->j * b->k - a->k * b->j;
-
-	out->i = i;
-	out->j = j;
-	out->k = k;
 }
 
 /* the rotation that takes one unit vector to another */
@@ -251,9 +240,9 @@ void matrix4x3_rotation_between_vectors(
 	if (!function_143120(&matrix->forward, &matrix->left, &matrix->up))
 	{
 		function_30bf0(&matrix->up);
-		cross_product3d_1417b0(&matrix->up, &matrix->forward, &matrix->left);
+		cross3f_staged(&matrix->up, &matrix->forward, &matrix->left);
 		function_30bf0(&matrix->left);
-		cross_product3d_1417b0(&matrix->left, &matrix->up, &matrix->forward);
+		cross3f_staged(&matrix->left, &matrix->up, &matrix->forward);
 	}
 }
 
