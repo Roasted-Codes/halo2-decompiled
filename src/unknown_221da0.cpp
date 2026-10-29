@@ -834,6 +834,10 @@ real function_18cac0(long arg_0);
 // strict maximum and original side result restored.
 // Selected-mask address on shared membership with final-array ownership, consistent audibility
 // and native real storage: 266/266/260/260/263/263/266/266; exact-only pointer forms restored.
+// Round 153: plain real table with memset 240 (aligned frame); audibility read before the door query 238; table
+// indexed directly with memset's return for the final call 203 (plain frame, return pointer spilled), with the
+// audibility read 249; batch count read once 153 (retail's countdown; one-use local). Compile-only: every clear of
+// a directly addressed table aligns the frame.
 // Round 108: retail clears and indexes the 0x800-byte table in place (`[esp + eax*4 + 0xbc]`,
 // `lea ecx, [esp + 0xc0]` for 0x221e30) with no realignment; the only caller 0x125b40 also realigns
 // here and not in retail. Every other retail function that clears a stack local of 0x1f4 dwords or
@@ -843,6 +847,8 @@ real function_18cac0(long arg_0);
 // `&table[0]`, split clears, a table member at +4, a clear or the whole body in an inline helper all
 // realign; a table of 0x1f0 dwords does not, 0x1f4 does (the frame size is not the trigger); only
 // /O1 or /Os or /Oy- (diagnostic flags, not kept) avoid it.
+// Round 265: all six lexical orders of door/side/inner long slots, then both
+// uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

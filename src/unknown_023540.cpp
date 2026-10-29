@@ -2462,6 +2462,8 @@ dword __cdecl function_131fc0(real alpha);
 // each; native source-before-target frame names 251. Complete native fallback production,
 // with native input fields/frame names/both plus reciprocal-first products: 257 each.
 // Original arrays, fallback order, products and complete body restored.
+// Round 261: actual four-corner vertex table, byte/word/long/dword with long ordinal
+// 337/337/353/353; with short ordinal 339/339/343/343. Original unrolled draws restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -2828,6 +2830,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // 340; incoming scale results 343, with reciprocal-first/exclusive maximum 343/343;
 // branch-owned outputs with exclusive maximum 340; paired dimension-first products plus
 // reciprocal-first normalization 282. Original paired diameters, scale and trig homes retained.
+// Round 180: Entry declarations of first/second/bounds output buffers, masks 1-7, then all with
+// entry trig declarations: 282/282/282/282/282/282/282/282. Original executable body restored.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -3199,6 +3203,10 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Round 282: complete encoded output words, ternary/descending/result/ascending forms,
 // each with original/complete first-output word [1128,1131,1128,1131,1121,1121,1129,1130].
 // Original output helpers and complete body restored; capability/save roles remain.
+// Round 393: complementary small/negative/return-state subsets
+// 932/858/933/934/1212/935/1213; all with Boolean small-denial 1210. Original carriers restored.
+// Round 261: shared quantizer byte/word/dword results 985/1007/853; quantizer/output/both
+// formal orders 853 each; byte/word results with both orders 985/1007. Original helpers restored.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

@@ -27,6 +27,8 @@ struct s_slot_5a
 
 void function_1f86a0(long index);
 
+static __forceinline long real_to_long(real value);
+
 short __stdcall function_1bbf40(long actor_index, s_slot *slot);
 short __stdcall function_1bc2a0(long actor_index, s_slot *slot);
 short __stdcall function_1bc6d0(long actor_index);
@@ -345,6 +347,8 @@ real function_1e3920(long actor_index);
 // Earlier result-first 53; output/reference and failure-cleanup forms did not close the carrier gap.
 // Per-use actor receiver with nested failure-first and output-home names 117/117; early admission 140/140;
 // success-first 116/116; success-first/early admission 138/138. All forms grow to 368 or 372 bytes.
+// Typed request reference fields 46; complete request Boolean 89; named movement kind 46;
+// typed fields/kind 46; Boolean with fields/kind/both 89/89/89; aggregate zero with fields/Boolean 99.
 // @retail 0x1bcab0
 bool __stdcall function_1bcab0(long actor_index, s_slot *slot)
 {
@@ -445,9 +449,15 @@ short function_1b8cc0(long object_index, long *seat_object_index);
 bool function_1b9200(long object_index, long prop_index);
 point3f *function_b9dd0(long object_index, point3f *result);
 
-// score 189 (was 189): the boolean result is kept in EAX here and in CL
-// there, so the branch
-// that follows it and the whole chain of branches are laid out differently.
+// score 166 (was 189): retail keeps the special-vehicle flag in CL at the shared tail (the
+// special path does `mov cl, 1; jmp tail`, the scan's exits reload it from the dead actor
+// argument slot) and lays the tail out after the passenger scan; ours reloads the flag from
+// memory there and places the tail right after the special test, so the lockstep compare is
+// shifted through the scan. Round 70: the rounding inlined through a forceinline declaration
+// of real_to_long (as unknown_1bba20.cpp does) 189 -> 166. With it: bool flag 198 (every
+// stack slot as retail, aligned 61); flag set in an if/else around the scan 198; flag set in
+// an if 200; flag at function scope 198; proximity deltas declared x, y, z (retail squares z
+// first) 166 (198 with the bool); sum written x + y + z 198 (with the bool).
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {

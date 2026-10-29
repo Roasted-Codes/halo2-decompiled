@@ -495,6 +495,10 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Round 384: retained actor/node/both lookups 441/442/462; unsigned full handles 420;
 // unsigned handles with retained actor/node/both 441/442/462; all on a plain linked-list for 466.
 // All lookup lifetimes, handle domains, traversal and complete original body restored.
+// Round 389: native double timer/planar pair/both 423/421/424; unsigned bounded
+// decrement 420, with timer/planar/both 423/421/424; complete precision graph with
+// wide decrement 424 (fast control 420). Original precision, domains and body restored;
+// frame 0xa4 and actor/node/flag homes remain. Planar precision forms were exact-only.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -863,10 +867,16 @@ real function_296600(long actor_index, long prop_ref_index);
 // Round 237: shared initial view lookup 372; actor/reference/prop at uses 414/503/415;
 // actor-reference/actor-prop/reference-prop/all 573/468/570/657 (fast control 372; full 331).
 // All restored; actor ESI and saved/squad/flag homes remain.
+// Round 245: Signed-short three-input priority trees in six candidate orders
+// 352/352/350/351/353/353; two reversed comparison trees 352/351
+// (fast control 356, full 331). Sub-eight gains rejected; original body restored.
 // Round 174 (fast control 372/1262, full 331/1251): existing saved-pointer
 // actor_snapshot/retained_actor/actor_saved/saved_owner identities, each with
 // original/actor_squad receiver identity, 372 each. All restored; full frame 0x20
 // agrees, actor ESI/EBX and saved/squad/flag homes remain.
+// Round 389: suppression byte/short/long 372/363/366; unsigned timestamp 372; native
+// wide timestamp alone/with byte/short/long suppression 377/377/377/376 (fast control
+// 372). Short suppression plain 344 versus 331; all original types and body restored.
 // DL167 (fast control 356, full 331): repeated flag25/flag23/parent observations,
 // entry masks 1..7 348/349/367/353/354/369/359; all byte 367. First-mode flag25,
 // flag25+parent, flag23, both flags and byte flag25 350/355/351/337/357;

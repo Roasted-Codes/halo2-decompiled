@@ -330,6 +330,14 @@ extern real g_47f05c;
 // Round 170: late false result 204; count/selection guard exits 223/234; admission-produced
 // success 212; with late false/count guard/selection guard/byte success 211/222/243/250.
 // Original result lifetime and full body restored; frame and shape/count homes remain.
+// Round 31: function-scope index 221, guarded do 232; dot3f 192; point setter 267;
+// vector3f_assign and shared scan/selected entry 190 each (below gate); shared entry with
+// height reads 205; height before best_dot 192; function-scope index with height reads 204,
+// with a normal copy 255. Original body restored.
+// Round 181: Fallback distance field at every clamp/equality use 217; with uniform height reads 235;
+// with early best-alignment constant 217; both 235. Entry declarations of point/center/delta
+// on those four graphs 217/235/217/235. Original snapshots and full body restored; frame 0xd0
+// and shape/count/alignment carriers still differ.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)

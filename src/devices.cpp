@@ -1216,7 +1216,7 @@ struct s_index_pair
 };
 bool function_0b6760(s_index_pair const *pair);
 
-// score 294 (was 303): Frame 0x1c versus 0x20 and index/header/state/result homes remain; the
+// score 294 (was 294): Frame 0x1c versus 0x20 and index/header/state/result homes remain; the
 // group path still reloads the definition pointer from three base registers and adds the two
 // products in the opposite order.
 // Earlier: Frame 0x1c versus 0x20 and index/header/state/result homes remain; native
@@ -1287,6 +1287,9 @@ bool function_0b6760(s_index_pair const *pair);
 // instructions as retail, but index/offset in EDI/ESI where retail has ESI/EBX and the result in
 // a register where retail keeps its byte); also a plain definition 410; with the result declared
 // first 366, the state before the result 361, the state second 360.
+// Round 390: Complete first-motion/integration/second-motion byte-or-long completion
+// carrier domains, all eight combinations: 294/383/386/414/324/402/392/413. Original bool carriers restored.
+// Long integration gives frame 0x20 but worsens length and register allocation.
 // @retail 0x106790
 bool __stdcall function_106790(long volatile device_index)
 {
