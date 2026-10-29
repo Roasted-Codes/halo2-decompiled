@@ -59,9 +59,9 @@ static inline void store_body_axis(__m128 &result, __m128 const &axis, solver_bo
 }
 
 // A single angular error row and its four-byte operation.
-// score 88 (was 90): defer the error store until after the output cursors.
-// Axis-load scheduling and pointer registers still differ; output-reference
-// transforms and a shared negative-axis helper did not improve this row.
+// score 70 (was 88): explicitly reload the first axis after storing the second.
+// Pointer registers and SIMD temporary allocation still differ; moving the
+// reload before the store or using output-reference transforms scored worse.
 // @retail 0x31e7b0
 void __cdecl build_angular_error_31e7b0(solver_angular_error_31e7b0 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -79,7 +79,8 @@ void __cdecl build_angular_error_31e7b0(solver_angular_error_31e7b0 const *input
 		__m128 negative_axis = _mm_xor_ps(input->axis, *(__m128 const *)solver_sign_bits);
 		row->b = rotated_axis(negative_axis, body_b);
 	}
-	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
+	__m128 result_a = _mm_load_ps((float const *)&row->a);
+	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
 	float error = -(input->error_b.m128_f32[2] * input->error_a.m128_f32[2]
 		+ input->error_b.m128_f32[1] * input->error_a.m128_f32[1]
 		+ input->error_b.m128_f32[0] * input->error_a.m128_f32[0]) * pair->error_scale;
@@ -127,9 +128,9 @@ void __cdecl build_angular_array_31e900(solver_angular_array_31e900 const *input
 }
 
 // An angular row with lower/upper impulse bounds and half inverse mass.
-// score 109 (was 110): load body B after storing the first axis. Axis negation
-// and register scheduling still differ; bound temporaries and sign-mask
-// intrinsic rewrites did not improve the score.
+// score 108 (was 109): explicitly reload the first axis after storing the second.
+// Axis negation and register scheduling still differ; moving the reload before
+// the store or using output-reference transforms scored worse.
 // @retail 0x31f000
 void __cdecl build_angular_range_31f000(solver_angular_range_31f000 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -148,7 +149,8 @@ void __cdecl build_angular_range_31f000(solver_angular_range_31f000 const *input
 		__m128 negative_axis = _mm_xor_ps(input->axis, *(__m128 const *)solver_sign_bits);
 		row->b = rotated_axis(negative_axis, body_b);
 	}
-	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
+	__m128 result_a = _mm_load_ps((float const *)&row->a);
+	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
 	float scale = -pair->error_scale;
 	op->minimum = scale * input->minimum;
 	op->maximum = scale * input->maximum;
@@ -165,6 +167,7 @@ void __cdecl build_angular_range_31f000(solver_angular_range_31f000 const *input
 // score 8 (was 50): output-reference transforms and a deferred bias store
 // recover the pointer registers. The diagonal load/x87 scheduling still differs;
 // preloaded vectors and reordered mass locals did not improve it.
+// An explicit first-axis reload fixed SIMD scheduling but changed pointer registers (25).
 // @retail 0x31ea90
 void __cdecl build_linear_velocity_31ea90(solver_linear_velocity_31ea90 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -195,9 +198,9 @@ void __cdecl build_linear_velocity_31ea90(solver_linear_velocity_31ea90 const *i
 }
 
 // Constrain the projected separation between two world-space points.
-// score 7 (was 150): capture the operation pointer before constructing the row
-// to reproduce its spill. The diagonal load/x87 scheduling still differs;
-// vector/mass helper variants and 120 annealing attempts did not improve it.
+// score 0 (was 7): explicitly reload the first axis before storing the second.
+// An ordinary vector copy retains the old value across the second transform;
+// the aligned load reproduces retail's reload and diagonal scheduling.
 // @retail 0x31ec30
 void __cdecl build_linear_axis_31ec30(solver_linear_axis_31ec30 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -212,10 +215,12 @@ void __cdecl build_linear_axis_31ec30(solver_linear_axis_31ec30 const *input,
 	__m128 angular_a = cross_axis(relative_a, input->axis);
 	row->a = body_axis(angular_a, body_a);
 	__m128 angular_b = cross_axis(input->axis, relative_b);
-	row->b = body_axis(angular_b, body_b);
+	__m128 result_b = body_axis(angular_b, body_b);
+	__m128 result_a = _mm_load_ps((float const *)&row->a);
+	row->b = result_b;
 	float diagonal = body_b->inverse_inertia.m128_f32[3] + body_a->inverse_inertia.m128_f32[3]
 		+ 1.1920928955078125e-7f;
-	float angular = sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b));
+	float angular = sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b));
 	diagonal += angular;
 	row->b.m128_f32[3] = diagonal;
 	row->a.m128_f32[3] = 1.0f / diagonal;
@@ -227,9 +232,8 @@ void __cdecl build_linear_axis_31ec30(solver_linear_axis_31ec30 const *input,
 }
 
 // A projected separation row with lower and upper operation bounds.
-// score 7 (was 69): output-reference transforms and scaled bound temporaries
-// recover the input loads and scalar spill. The diagonal load/x87 scheduling
-// still differs; alternate vector loads and mass helpers did not improve it.
+// score 0 (was 7): explicitly reload the first axis before storing the second,
+// retaining the output-reference transforms and scaled bound temporaries.
 // @retail 0x31ee10
 void __cdecl build_linear_range_31ee10(solver_linear_range_31ee10 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -243,10 +247,13 @@ void __cdecl build_linear_range_31ee10(solver_linear_range_31ee10 const *input,
 	__m128 angular_a = cross_axis(relative_a, input->axis);
 	store_body_axis(row->a, angular_a, body_a);
 	__m128 angular_b = cross_axis(input->axis, relative_b);
-	store_body_axis(row->b, angular_b, body_b);
+	__m128 result_b;
+	store_body_axis(result_b, angular_b, body_b);
+	__m128 result_a = _mm_load_ps((float const *)&row->a);
+	row->b = result_b;
 	float diagonal = body_b->inverse_inertia.m128_f32[3] + body_a->inverse_inertia.m128_f32[3]
 		+ 1.1920928955078125e-7f;
-	float angular = sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b));
+	float angular = sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b));
 	diagonal += angular;
 	row->b.m128_f32[3] = diagonal;
 	row->a.m128_f32[3] = 1.0f / diagonal;
@@ -273,9 +280,8 @@ __declspec(align(16)) static float const solver_identity_axes[4][4] =
 };
 
 // Three Cartesian rows between world-space points.
-// score 7 (was 26): output-reference transforms and operation-first increments
-// recover the pointer registers. The diagonal load/x87 scheduling still differs;
-// preloaded vectors and a combined mass expression did not improve it.
+// score 0 (was 7): explicitly reload the first axis before storing the second,
+// retaining the output-reference transforms and operation-first increments.
 // @retail 0x31f3e0
 void __cdecl build_point_axes_31f3e0(__m128 const *point_a, __m128 const *point_b,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -293,10 +299,13 @@ void __cdecl build_point_axes_31f3e0(__m128 const *point_a, __m128 const *point_
 		__m128 angular_a = cross_axis(relative_a, *axis);
 		store_body_axis(row->a, angular_a, body_a);
 		__m128 angular_b = cross_axis(*axis, relative_b);
-		store_body_axis(row->b, angular_b, body_b);
+		__m128 result_b;
+		store_body_axis(result_b, angular_b, body_b);
+		__m128 result_a = _mm_load_ps((float const *)&row->a);
+		row->b = result_b;
 		float diagonal = body_b->inverse_inertia.m128_f32[3] + body_a->inverse_inertia.m128_f32[3]
 			+ 1.1920928955078125e-7f;
-		float angular = sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b));
+		float angular = sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b));
 		diagonal += angular;
 		row->b.m128_f32[3] = diagonal;
 		row->a.m128_f32[3] = 1.0f / diagonal;
@@ -320,6 +329,7 @@ static inline __m128 transform_point(solver_transform_31f160 const *transform, _
 // score 7 (was 97): load bodies after transforming the pivots, use output-reference
 // transforms, and increment the operation cursor first. The diagonal load/x87
 // scheduling still differs; preloaded vectors and mass helpers did not improve it.
+// An explicit first-axis reload fixed SIMD scheduling but changed pointer registers (51).
 // @retail 0x31f160
 void __cdecl build_transformed_points_31f160(solver_transform_31f160 const *transform_a,
 	solver_transform_31f160 const *transform_b, __m128 const *pivot_a, __m128 const *pivot_b,
