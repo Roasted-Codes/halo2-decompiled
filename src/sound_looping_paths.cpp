@@ -204,6 +204,9 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // Round 225: target-step snapshot 889; target-tag snapshot 886; both 894 at retail length;
 // live pool 886; step/pool 889; tag/pool 886; all 894; all with direct computed gain 894.
 // Original target observations, pool snapshot and computed gain local restored.
+// Round 233: Common override attenuation, readonly override metadata and native
+// used-bit expression in seven subsets, then complete used-word expression: 982/886/982/886/982/886/982/982.
+// Common-result forms require a match; all original producers and body restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

@@ -867,6 +867,9 @@ struct s_flags_1f0870
 // Folded movement/history/both vector lifetimes 591/594/594; lateral shared across all three paths
 // 590; movement/lateral 590; history/lateral 594; all 598; all with bounded declaration first 598.
 // History reuse recovers frame 0x30 at 594/3060; captured flags/native enabled/both there 618/594/618.
+// Round 235: Existing vector setters for disabled initial/lateral/vertical/initial+lateral/
+// initial+vertical/lateral+vertical/all/all plus general output 627/590/600/627/628/600/628/629.
+// All restored; the first three-axis forms reach 3047 bytes but retain the extra frame dword.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1281,6 +1284,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // and increment 421; both 420; one-based pass alone/with initialization/with split producer/all
 // 421/420/421/420; count initialized at the relative/desired boundary 520. One-point gains
 // rejected; original full body restored, with persistent zero and count/component homes unresolved.
+// Round 235: Existing vector setters for default/negated desired/projected direction/
+// default+negation/default+projection/negation+projection/all/all with test-produced result
+// 482/421/421/482/482/421/482/479; all restored; persistent zero and scalar homes remain.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1463,6 +1469,9 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // as retail, 0x1f1df0 still matches; the arm layout and the supported flag's home are what remain).
 // Complete native contact record alone/real magnitude/noinline/both 230/233/301/300;
 // the same four forms with operation-specific normal names 230/233/301/300. All restored.
+// Round 235: Named squared sum with double/real movement 241/229; all three named squared
+// products 243/229; products plus sum 243/233; complete graph with long/short moving 307/305.
+// One-point forms restored; original magnitude, selection and material calls retained.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {
