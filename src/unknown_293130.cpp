@@ -104,8 +104,14 @@ __forceinline void function_293133(real arg_0, vector3f const *arg_1, vector3f *
 	arg_2->k = arg_2->k * local_1 + arg_1->k * local_2 - local_5 * local_0;
 }
 
-// score 68 (was 68): every local of the frame sits 4 bytes higher in ours
-// ([esp+0x14] where retail has [esp+0x10]).
+// score 68 (was 68): four causes. Frame: retail packs the random-to-float temp at +8 and the
+// result at +0xc (the sine temp shares +0 with the first sum), ours the result at +8 (sharing it
+// with the sine temp) and the random temp at +0xc. Ours reassociates `range draw + base` (adds
+// the base first); the rotation's xmm colouring differs; the scheduler hoists the 0x18 NONE store.
+// Round 75: the existing random-range function (0x259d0) for the four draws 140 (fixes the three
+// fadd orders, reorders the rotation); result renamed object_index/result/zz_index/aa_index 68 each
+// (slot unchanged); result declared first 69; existing random real for the fraction 145; angle
+// field passed straight to the rotation 80.
 // @retail 0x293130
 long __stdcall function_293130(long arg_0)
 {
