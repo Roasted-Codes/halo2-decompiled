@@ -3056,6 +3056,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Round 241: native player record/datum iterators 255/255; effect record/datum iterators
 // with inline/called scans 325/325/352/352; paired native iterators 324/324. Original
 // scalar searches, initial guard, false result and complete body restored.
+// Round 182: signed-short player ordinal with bool/long result and mutable/readonly
+// player receivers 257/257/257/257; signed-byte equivalents 265/265/265/265.
+// Original ordinal, result, receivers and complete executable body restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {
