@@ -335,6 +335,8 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // Round 382: all four coordinate epsilon thresholds in four producer orders,
 // with/without both candidate-angle thresholds, 204/204/204/204/204/204/204/204.
 // Original threshold expressions and complete executable body restored.
+// Round 385: Natural nonterminal continuation pairs with long/bool departure
+// and memcpy 340/340/338/338, with memmove 323/340/307/307. Original terminal tests restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
