@@ -248,6 +248,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // DH round 230: Post-getter countdown snapshot in byte/short/long/word domains 207/216/280/215;
 // the same complete if/else weight producers 207/216/280/215. Original observations and body restored;
 // frame 0x30/0x2c, destination/ordinal homes and weighted getter expansion remain.
+// Round 398: actual eligibility retained for sampling and loop-result accumulation,
+// bitwise bool/byte/short/long 306/306/303/304; logical
+// accumulation with those carriers 324/324/314/310. Original result and body restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

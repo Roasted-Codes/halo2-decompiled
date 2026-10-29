@@ -352,6 +352,8 @@ void __stdcall function_18c630(long object_index, long tag_index, long a, long b
 // mutable permutation input 7; scalar scale copy 8; scalar copy interleaved 11; plain scale
 // pointer 7; scalar copy split count last 8; direct scale bits 7; union real assignment 8;
 // real assignment after stores 8; scalar copy declared first 8; late object snapshot 7.
+// native data/entry/both record copies 56/58/74; direct entry/data/both fields 22/23/65;
+// native admission predicate 7; nested availability predicate 7.
 // @retail 0x18ca20
 void __stdcall function_18ca20(long object_index, long tag_index, s_sound_permutation const *permutation, real scale)
 {
@@ -618,6 +620,9 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Round 360: tag pointer acquired in the object phase after admission/name/marker/
 // position/forward/velocity/root-location/audibility boundaries 308/316/312/314/316/321/318/320.
 // Original acquisition and receiver pair restored; root-location convention remains.
+// Round 396: complete datum snapshot with pair/cluster-direct/spatial-direct/both-direct
+// 339,339,322,315; typed pool fields at each use with those receivers
+// 517,503,463,451. Original datum observations and receiver pair restored.
 // Round 180: Entry forward/marker/audibility outputs, masks 1-7, then all in reverse declaration
 // order: 280/280/280/280/280/280/280/280. Original executable body restored.
 // Round 186: Complete source-kind char/byte/short/long with address/value owner selection

@@ -184,6 +184,13 @@ public:
 // 307/226/226/307; each with the complete coordinate-double phase closed 307/226/226/307.
 // One-count inline gain restored, including all provider declarations; input delivery
 // agrees, frame 0x10/0x14 and metadata/x87/child allocation remain.
+// Round 397: pool retained across the child loop 234; direct remaining count 226;
+// both 231; pool/count/both with read-only metadata 234/226/231;
+// pool/count with plain while, mutable/read-only metadata 231/231.
+// Original body restored; frame, metadata/head homes and coordinate cleanup remain.
+// Round 251: actual metadata/allocated/linked/updated external object references
+// singly 227 each; metadata with each child 227 each; all four 227. Original
+// distinct pointer receivers restored; metadata/head/frame and x87 homes remain.
 // Round 187: Complete squared-distance with scaled-double/coordinate-scope/early-falloff masks 0-7
 // 227/227/227/227/227/227/227/227. Original arithmetic and full body restored.
 // @retail 0x248970

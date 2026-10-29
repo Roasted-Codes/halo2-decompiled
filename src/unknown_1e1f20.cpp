@@ -790,6 +790,9 @@ void swarm_leader_detach(long actor_index);
 // DH round 230 (fast control 261, ordinary 285): iterator actor/handle/both outputs initialized
 // 279/274/274; complete zero aggregate 301; their entry-declaration forms 279/274/274/326.
 // All restored; frame 0x1c/0x20, actor/displacement allocation and cleanup countdown remain.
+// DH round 234 (fast control 261, ordinary 285): direct callback-field observations with
+// native iterator/cleanup lexical scopes and unsigned cleanup ordinal, eight forms 261 each.
+// Original body restored; frame 0x1c/0x20 and actor/displacement/countdown homes remain.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

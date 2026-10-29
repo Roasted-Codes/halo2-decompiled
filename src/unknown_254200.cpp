@@ -147,6 +147,9 @@ void function_254200(void)
 // second-vertex point after/before the texture call 133/138; scoped point 133;
 // position helper for vertices 2 and 3/all four 8/8;
 // texture-position helper for vertices 2 and 3/all four 4/4; comma-sequenced pair 4.
+// inline color helper 339; direct color products 4; color aggregate 33; color value input 218;
+// scalar color inputs 4; red-first color products 9; color home names 4; snapshot home names 4;
+// native point copy 4; point copy assignment 4; reference color input 4.
 // @retail 0x254490
 void __stdcall function_254490(point2f const *arg_0, real arg_1, real arg_2, color3f const *arg_3, bool arg_4)
 {
