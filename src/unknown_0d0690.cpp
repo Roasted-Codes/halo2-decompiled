@@ -1739,7 +1739,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 790 (was 790): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
+// score 782 (was 790): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
 // Earlier: Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
 // remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
 // block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
@@ -1785,6 +1785,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Round 251: separate per-path long/dword/short/word status lifetimes
 // 809/809/812/812; the same lifetimes after admission 809/809/812/812. All use
 // frame 0x8c; original shared status, frame 0x90 and complete body restored.
+// Round 255: native short component counters base/dynamic/output 784/789/782;
+// base-dynamic/base-output/dynamic-output/all 784/797/784/804; all byte 804 (fast).
+// Only the final rescale counter is short, range 0..3; ordinary 782 at 3133/3130.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
@@ -1933,7 +1936,7 @@ long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, 
                 out->k = dynamic_normal.k * dynamic_weight + normal.k * base_weight;
                 function_30bf0(out);
                 real length = dynamic_length > base_length ? dynamic_length : base_length;
-                for (long component = 0; component < 3; ++component)
+                for (short component = 0; component < 3; ++component)
                     out->n[component] *= length;
             }
             else if (dynamic_weight > 0.0001f)
