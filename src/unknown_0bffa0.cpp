@@ -977,6 +977,12 @@ PRIVATE inline void light_projection_point_ab(transform4x3f const *matrix, vecto
 // Round 88: projection through a local vector of the three rows 619; depth stored first and the
 // radius read back from it 611; the entry pointer before the bounds copy 511 (retail's store order
 // there, two points: not kept); point3f vertex table 513 (identical); named 0 - radius 587.
+// Round 73: the projection through the existing 0x1427f0 transform 1211 (kept out of line, also with a
+// __forceinline declaration); cross-product operand orders 513 (identical: canonicalised); the
+// cross product stored straight to the result 581 (0xc1a80 stops matching); the local-vector projection
+// again 511: then the tables agree and the first cross product's loads (retail loads up.i, up.j and the
+// reference into registers) and normalize3d's product order are next. Vertex forms with 0 - radius, a
+// negative-radius local before or after radius, const radius: our -radius group stays first (harness).
 // @retail 0xc1d90
 void __stdcall function_c1d90(s_light_frame_ab const *frame, s_light_shape_ab const *shape, s_light_projection_ab *entries, short *count)
 {
