@@ -9,6 +9,7 @@ helpers only they call. */
 #include "data_array.h"
 #include "unknown_0259d0.h"
 #include "vector_products.h"
+#include "unknown_1428b0.h"
 #include "unknown_1c62f0.h"
 #include "unknown_1cafc0.h"
 #include "unknown_1cec30.h"
@@ -2352,6 +2353,10 @@ PRIVATE __forceinline real vehicle_friction(real speed, real friction, real scal
    desired speeds along the facing, its left and its up, friction where a
    control is idle, and a torque that turns the vehicle to face its
    facing, banked into its turns */
+// score 830 (was 872): Frame 0x10c versus 0xfc; scalar and matrix homes still differ.
+// Shared cross products 830 kept; shared friction/bank sums 879; both 867; shared
+// normalize/mass scales 861; cross/scales 836; sums/scales 865; all 846; all with
+// both point setters 846. Plain confirms four existing cross3f calls, unchanged call roles.
 // @retail 0xf2360
 void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -2422,9 +2427,7 @@ void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state
 
 	vector3f left;
 
-	left.i = facing->k * up.j - facing->j * up.k;
-	left.j = up.k * facing->i - facing->k * up.i;
-	left.k = facing->j * up.i - up.j * facing->i;
+	cross3f(&up, facing, &left);
 
 	real forward_speed = linear_velocity.j * facing->j + linear_velocity.i * facing->i + facing->k * linear_velocity.k;
 	real up_speed = linear_velocity.k * up.k + linear_velocity.j * up.j + linear_velocity.i * up.i;
@@ -2513,9 +2516,7 @@ void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state
 	vector3f axis;
 	vector3f banked;
 
-	axis.i = facing->j * up.k - facing->k * up.j;
-	axis.j = facing->k * up.i - up.k * facing->i;
-	axis.k = up.j * facing->i - facing->j * up.i;
+	cross3f(facing, &up, &axis);
 	banked.i = cosine * up.i + axis.i * sine;
 	banked.j = cosine * up.j + axis.j * sine;
 	banked.k = cosine * up.k + axis.k * sine;
@@ -2529,18 +2530,14 @@ void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state
 
 	current.scale = 1.0f;
 	current.forward = vehicle->forward;
-	current.left.i = vehicle->forward.k * vehicle->up.j - vehicle->up.k * vehicle->forward.j;
-	current.left.j = vehicle->up.k * vehicle->forward.i - vehicle->forward.k * vehicle->up.i;
-	current.left.k = vehicle->up.i * vehicle->forward.j - vehicle->forward.i * vehicle->up.j;
+	cross3f(&vehicle->up, &vehicle->forward, &current.left);
 	current.up = vehicle->up;
 	current.position.x = 0.0f;
 	current.position.y = 0.0f;
 	current.position.z = 0.0f;
 	desired.scale = 1.0f;
 	desired.forward = *facing;
-	desired.left.i = facing->k * banked.j - facing->j * banked.k;
-	desired.left.j = banked.k * facing->i - facing->k * banked.i;
-	desired.left.k = facing->j * banked.i - banked.j * facing->i;
+	cross3f(&banked, facing, &desired.left);
 	desired.up = banked;
 	desired.position.x = 0.0f;
 	desired.position.y = 0.0f;
@@ -2591,6 +2588,11 @@ PRIVATE inline real vehicle_angle_fraction(real angle)
    toward the controls' speed in the facing's frame, a yaw torque toward the
    steering, torques that hold the vehicle upright while it is off the
    ground, and its boost */
+// score 1053 (was 1124): Frame 0x80 versus 0x74; velocity and force homes still differ.
+// Existing inverse transform 1137; forward transform and accumulation 1053 kept;
+// both 1238; shared cross products 1130; inverse/cross 1134; forward/cross 1056;
+// all three 1222; all with mass scales 1254. Plain confirms the shared in-place
+// forward transform and vector accumulation; original incoming-velocity calculation kept.
 // @retail 0xf3010
 void __stdcall function_f3010(long vehicle_index, s_vehicle_physics_state *state, real steering)
 {
@@ -2747,21 +2749,11 @@ void __stdcall function_f3010(long vehicle_index, s_vehicle_physics_state *state
 				acceleration.j *= 0.9f;
 				acceleration.k *= 0.9f;
 			}
-			if (state->matrix.scale != 1.0f)
-			{
-				acceleration.i = state->matrix.scale * acceleration.i;
-				acceleration.j = state->matrix.scale * acceleration.j;
-				acceleration.k = state->matrix.scale * acceleration.k;
-			}
+			function_142640(&state->matrix, &acceleration, &acceleration);
 
 			real scale = state->unknown6c * vehicle->unknown370;
 
-			force.i += scale * (state->matrix.up.i * acceleration.k + state->matrix.left.i * acceleration.j +
-				state->matrix.forward.i * acceleration.i);
-			force.j += scale * (state->matrix.up.j * acceleration.k + state->matrix.left.j * acceleration.j +
-				state->matrix.forward.j * acceleration.i);
-			force.k += scale * (state->matrix.up.k * acceleration.k + state->matrix.left.k * acceleration.j +
-				state->matrix.forward.k * acceleration.i);
+			vector3f_add_scaled(&force, &acceleration, scale, &force);
 		}
 		if (vehicle->unknown370 > 0.0f)
 		{
@@ -3712,6 +3704,10 @@ bool __stdcall function_f8070(long bit, word const *flags);
 /* the vehicle object type's function values (+0x4c): its boost, brakes,
    ground contact, speeds, steering, engine and wheels; false for a name it
    does not know */
+// score 864 (was 864): Frame 0x18 agrees; definition EBP and scalar/SSE allocation differ.
+// Complete definition snapshot, result-first, direct active predicate in seven nonempty
+// combinations 1006/864/1006/869/1002/869/1002; snapshot with numeric movement-case
+// source order 1006. Original observations, switch and body restored.
 // @retail 0xf6d10
 bool __stdcall function_f6d10(long vehicle_index, long name, real *value, bool *active)
 {
