@@ -395,6 +395,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 217: initialized texture size/data/both at native phase 246/246/249;
 // the same private output defaults at entry 284/284/295; both outputs in reverse
 // declaration order at native/entry phase 249/295. Original body restored.
+// Timestamp producer original with inclusive/selected clamp 245/244; forced
+// with original/inclusive/selected clamp 244/245/244; outlined with all three
+// clamps 310 each. Original helper contract, clamp and full body restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

@@ -704,6 +704,9 @@ void function_270590(s_path_source *source, s_type_c3b527 const *point, long nod
 // offsets differ as well.
 // Unsigned-word/dword result 306/225; byte preparation with long/word/dword result 225/306/225;
 // long preparation with long/word/dword result 311/309/311. Default observation and arithmetic restored.
+// Native ownership/type/state producer orders O/S/T, T/O/S, T/S/O, S/O/T, S/T/O
+// 286/287/286/285/284; explicit state fallback at first/middle/last 287/289/289
+// (reduced control 289, full 225). Original producers and arithmetic restored.
 // @retail 0x1b99d0
 short __stdcall function_1b99d0(long actor_index, s_slot *slot)
 {
@@ -1422,6 +1425,8 @@ void function_201ad0(long squad_index, long object_index);
 // seat walk and conversion homes differ.
 // Current-vehicle/root-index and seat-count/total-seats home names, each with
 // driver or complementary passenger ownership: eight forms, all 218.
+// Native byte/signed-byte driver state, mutable/const 218/218 each;
+// native short/word driver state, mutable/const 318/318 each. Original Boolean restored.
 // @retail 0x1bb570
 void __stdcall function_1bb570(long vehicle_index, long actor_index)
 {
