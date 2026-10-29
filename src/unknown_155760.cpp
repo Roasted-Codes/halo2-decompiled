@@ -169,6 +169,9 @@ long function_10f5f0(long object_index);
 // Constant label success 90; dword/Boolean result 31/69 (Boolean loses callers);
 // final binary result test with short/dword storage 96/92. Dword one-point gain restored.
 // @retail 0x155810
+// score 78 (was 78): retail pushes esi and edi at the top and keeps a zero in esi for the
+// mode, and it pushes ebp only around the call that fills it; ours pushes ebp in the
+// prologue, which shifts every stack offset, and retail returns the 1-results in eax
 short function_155810(long unit_index, short *mode)
 {
 	short result = 0;
