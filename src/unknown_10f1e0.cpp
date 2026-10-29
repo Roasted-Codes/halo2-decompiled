@@ -413,6 +413,8 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // declared first 37; shared exit 37; state pair helper 148; state graph queries 37; mode/graph/
 // class orders 44-110; shifted word expression 37; clear before object chain 191; entry marker
 // workspaces 37; complete workspace boundaries 191; model after clear 191.
+// Complete unvisited decision with shift/mask tests and bool/byte/short/long iterator results
+// 55/42/55/42/83/88/81/86; back-edge reload order and later call carriers remain.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)
@@ -1277,6 +1279,9 @@ long function_cbd50(long unit_index, short weapon_index);
 // Round 162: pool/data receivers 378/345; shared word unit slot 368; pool/data plus word
 // slot 400/368; data plus dword slot 350; pool plus long slot 390; data with native result
 // 329. Original lookup observations, status graph and argument handling restored.
+// Round 402: native unsigned first/second/controlling handle domains, seven subsets,
+// all 164; all handles with both unsigned identifier domains 188. Original signed
+// domains and body restored; pool/state allocation, count joins and byte normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1758,6 +1763,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // screen inputs 1027/1027/1123; aggregate construction 1027/1027/1123;
 // ordinary inline field/aggregate returns 1010/1010. Frame 0xcc remains;
 // original bounds helper, direction snapshot and all consumers restored.
+// Round 400: Actual bounds outputs as four-real reference/pointer, native interval pair and
+// separate yaw/pitch intervals 790/790/790/790; each output-first
+// 790/790/790/790. Original output contract and every arithmetic tree restored.
 // Round 269: Existing projection boundary includes the angle-conversion call,
 // caller pointer/reference, private vector and native angle value: forced
 // 928/928/961/933; ordinary inline 1180/1180/1184/1230. Original two helpers,

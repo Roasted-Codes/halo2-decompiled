@@ -1091,7 +1091,20 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
     result->k = a->i * b->j - a->j * b->i;
 }
 
-// score 213 (was 213): Frame/length agree; early EDI, tag/mask and child-render homes remain.
+// score 135 (was 213): frame and length agree, and so do the entry saves. Left: the tag index lands
+// in EAX (retail EDX, 0x137bd0's register) and the extra `mov edx, eax` shifts the camera block;
+// retail tests definition bit 5 as `mov dl; shr dl, 5; test dl, 1`; it reloads the location
+// after 0x1e4e0 (BLOCKED-BY 0x1e4e0, todo) and calls 0x1751d0 before pushing 0x40e30's arguments.
+// Round 74: retail's visibility semantics (not forced, bit 9 clear, cluster not in the set and not
+// visible: nothing is tested or stamped and the system draws) 213 -> 207; the fade sets the draw
+// flag (`draw = fade > 0`, `draw = true` when visible: retail's `mov bl, 1`) 166 (as `||` 175,
+// without the else 170); the child flag copied as a set/clear if/else 135 (1380 bytes). At 135 or
+// worse: early location index/request system 134 (one point); tag group as a switch 144, group read
+// twice 144, inverted test 135, reference declared first 135, const tag 135, tag through a named
+// definition 136, long group 135; bit 5 as byte shifts 135 (still `test byte`), in this function's
+// word-flag form 310 (retail's three instructions, but the location loop then runs out of step),
+// named 324; the in-view comparison written in place 297 (with the word form 351); cross product
+// before/between the camera copies 135; tag read into a local for 0x40e30 166.
 // Round 57: the child flag copy as a set/clear if/else (retail's `test word; or word / and byte`)
 // gives retail's entry saves (the early exits reach the child loop, which then uses edi) and
 // child loop, but the inner tag value lands in eax (retail edx) and the extra `mov edx, eax`
@@ -1186,8 +1199,7 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
                         long cluster = system->location.cluster_index;
                         bool visible = function_3eb20(cluster) || (bool)(((dword)*(word const *)((byte const *)system + 0xc) >> 10) & 1);
                         bool in_pool = (g_547f88.flags[cluster >> 5] & (1 << (cluster & 31))) != 0;
-                        if (!force_visible && !(bool)(((dword)*(word const *)((byte const *)definition + 0x16) >> 9) & 1) && !in_pool && !visible) draw = false;
-                        else
+                        if (force_visible || (bool)(((dword)*(word const *)((byte const *)definition + 0x16) >> 9) & 1) || in_pool || visible)
                         {
                             if (!visible && !force_visible)
                             {
@@ -1213,8 +1225,9 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
                                 if (!visible)
                                 {
                                     real distance = (real)(sqrt(delta.k * delta.k + delta.j * delta.j + delta.i * delta.i) * g_4b9dcc);
-                                    if (!(function_249bb0((s_distance_fade const *)definition, distance) > 0.0f)) draw = false;
+                                    draw = function_249bb0((s_distance_fade const *)definition, distance) > 0.0f;
                                 }
+                                else draw = true;
                                 *(dword *)((byte *)location + 0x30) = g_4ba034;
                             }
                         }
@@ -1240,7 +1253,10 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
     for (long child_index = system->first_child_index; child_index != NONE; )
     {
         s_particle_system_datum *child = DATUM(g_510c74, s_particle_system_datum, child_index);
-        child->flag10 = system->flag10;
+        if (system->flag10)
+            child->flag10 = true;
+        else
+            child->flag10 = false;
         function_174420(child_index, view_pass, camera_relative, force_visible);
         child_index = child->next_index;
     }

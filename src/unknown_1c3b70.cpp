@@ -81,6 +81,9 @@ void havok_entity_component_index_set(hkEntity *entity, s_havok_property_word co
 // earlier/later local names and declaration before the descriptor 71 each.
 // Round 218: Property/descriptor/final-owner/shape-owner inline and noinline declarations:
 // 71/71/71/71/71/71/71/71 (fast control 71). Original restored.
+// Native reference-count receivers for initial/shape/optional owners, separately and together,
+// then a scoped property argument: eight forms 76 at 390 bytes, using an ordinary allocation store.
+// Aggregate immediate preparation persists; original owners, store and property contract restored.
 // @retail 0x1c3b70
 void function_1c3b70()
 {

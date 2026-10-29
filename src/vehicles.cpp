@@ -656,7 +656,7 @@ PRIVATE inline void vehicle_approach(real *value, real const *rates, real bound,
 
 /* a vehicle's control: its drift and boost flags, braking, the steering of
    its control type, and its root node's movement */
-// score 100 (was 189): flag carriers/writers, clamp polarity and lookup ordering differ;
+// score 100 (was 100): flag carriers/writers, clamp polarity and lookup ordering differ;
 // Four-byte frame and root-rate/difference tail agree; flag carriers/writers, clamp polarity and
 // initial lookup ordering still differ.
 // Round 384: shared reversing writer, with boost-mode/active-boost subsets 179/129/185/190;
@@ -667,6 +667,9 @@ PRIVATE inline void vehicle_approach(real *value, real const *rates, real bound,
 // rates/difference 114; all three 100.
 // Retained both shared writers and all three native root producers. Original throttle comparison
 // and every flag/vector/call value preserved.
+// Round 401: native brake bit 213; word-bit outputs 202; both 230; late braking 179, with native
+// bit/word outputs/both 128/240/258; full-width braking carrier 277. All original observations,
+// byte writers and body restored.
 // @retail 0xef4f0
 void __stdcall function_ef4f0(long vehicle_index, real *steering)
 {
@@ -772,6 +775,9 @@ __forceinline long vehicle_round(real value)
 // Double literals 98; shared crosses 140; both 79 (kept); angular/both scales 83/83;
 // scaled sum 83; single result/vector names 79/79; seven scalar name/scope forms 79;
 // coefficient at use 93, with shared sum 95. Only the cross-helper header is needed.
+// Round 90: `down` computed after the side cross 93 (rate then stays in xmm7, no spill); dot terms
+// i,k,j 80, k,j,i 79; dot3f for the dot 79; dot3f inside vector3f_scale for the projection 79 (that
+// whole block then equals retail, through the forward pointer, one line out of step: aligned 51 -> 44).
 // @retail 0xef870
 bool function_ef870(long vehicle_index)
 {
@@ -1885,7 +1891,7 @@ real __stdcall function_f1540(long vehicle_index, short gear, real angular_veloc
 /* the gear the vehicle shifts to: neutral (NONE) when it coasts slowly, the
    reverse gear (0) or first gear when the throttle changes direction, and
    up or down a gear at its engine's shift points */
-// score 12 (was 157): downshift upper-bound residence and exit displacements differ;
+// score 12 (was 12): downshift upper-bound residence and exit displacements differ;
 // Retail downshift loads count-minus-one into the returned register; ours preserves the prior
 // gear if lower exceeds that bound, leaving two instructions and exit displacements.
 // Round 384: delayed current 189; long result 151; single short result 175; delayed/single 191;
@@ -1894,6 +1900,9 @@ real __stdcall function_f1540(long vehicle_index, short gear, real angular_veloc
 // three-use gear ordinal 66; eligibility before lower calculation 12, with ordinal 12.
 // Retained short result, delayed current, native higher candidate and eligibility-first single
 // exit; no downshift value changed.
+// Round 401: shared bound 165; test-owned downshift result 44; both 170; current-gear eligibility
+// 126, with bound/result/both 162/135/123; full-width downshift result 164. All restored;
+// upper-bound fallback remains different.
 // @retail 0xf1740
 short __stdcall function_f1740(long vehicle_index, real throttle_input)
 {
@@ -1996,10 +2005,15 @@ bool function_f5d70(long vehicle_index);
 /* runs the vehicle's engine for a tick: its load follows the throttle, a
    new gear engages after a delay (at once when it changes direction), the
    shift timers count, and the gear's torque spins the engine up */
-// score 156 (was 195): Kept conditional throttle result; extra frame word and cached shift-byte home remain.
+// score 156 (was 156): extra frame word and cached shift-byte home remain; conditional throttle retained.
 // Conditional / both-branch throttle 156 kept plain; input-first 191; field-only clamp 192;
 // conditional with clamp 191, native gear 178, direction roles / scalar names 156/156.
 // Computed load 156; uniform raw speed 199, with load 199, with native gear 200.
+// Full current gear 184; uniform gear reads 197; requested direction first 156, with full/live
+// gear 184/197; named shift time 156, with full/live gear 184/197. Separate limited result 152,
+// with full gear / requested direction first / live gear 182/152/197; word delay 155, with full
+// gear 184, with limited result 151. Uniform shift phase byte/word/long 156/154/183; limited
+// result with word phase 150; limited result with word delay and word phase 181. All restored.
 // @retail 0xf1950
 void __stdcall function_f1950(long vehicle_index, real throttle_input, short new_gear)
 {
@@ -2163,6 +2177,9 @@ PRIVATE inline real vehicle_wheel_spin(real spin, real const *period)
 // score 115 (was 192): Kept live period receiver, native twice-used gear and result-first torque; zero/scalar residency and spin schedule remain.
 // Live period 136; native gear 190; both 113; scalar roles 192/136/190/113; result-first torque 101 kept plain.
 // Spin exit / period-first / both 101; named absolute steering with each 127; early torque zero 140.
+// Y405: Frame 0x14 versus 0x10 and zero/scalar homes remain;
+// gear-none/two-defaults/active-gear/sign-arm torque results 126/140/138/126; each with shared
+// straight-drive product 132/141/141/132.
 // @retail 0xf1cd0
 void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -3323,7 +3340,10 @@ long __stdcall effect_new_from_parameters(s_effect_parameters *parameters);
 // i` 117; the loop bound written as the sum of the two counts 52; a short count 128; the speed choice
 // as an if/else 53, into a named local 53. Round 85: the tag index stored after the owner fields
 // (retail's store order) 48 (kept); then colors before the source 49; scale after the memset 48;
-// `i` declared in the for 48; `count +=` 48; the sum's operands swapped 48.
+// `i` declared in the for 48; `count +=` 48; the sum's operands swapped 48. Round 90: no marker
+// pointer 129; the ray through vector3f_scale 48; facing declared with the loop locals 48; `long count`
+// declared before the first count 48; count from the second call, then `+= primary_count` 48 (the
+// 48s are the same code: the second count's sign extension stays preferenced to eax).
 // @retail 0xf6060
 void __stdcall function_f6060(long vehicle_index)
 {
@@ -3697,6 +3717,9 @@ PRIVATE __forceinline real vehicle_larger(real a, real b)
 // cases 2 and 5 jump into case 8 and 6/7 stay apart); returns in cases 6/7 161 (x87 again);
 // the larger as if/else 119; a radians inline for 6/7 123; case 2 with block locals 123;
 // double fabs in 6/7 123; cases 6/7 sharing one body 138; a shared angle local for 6/7 123.
+// Round 401: single-result case orders 012345867 143; 031425867 157; 013425867 156; 012345768 123;
+// 013482567 157; 013467825 129; 876543210 134; 258013467 162. All restored; lookup scheduling and
+// late tail merges remain.
 // @retail 0xf78e0
 real __stdcall function_f78e0(long vehicle_index, long limit)
 {
@@ -4005,18 +4028,28 @@ PRIVATE inline void vehicle_iterator_new(s_type_f1af8e *iterator)
 
 /* whether a moving vehicle is within ten world units of a player on foot,
    and which */
-// score 131 (was 131): frame 0x114 agrees; player-scan allocation and scheduling still differ.
+// score 110 (was 131): frame 0x114 agrees; player-scan allocation and scheduling still differ.
 // Bounded short/word/char/byte player counts 137/130/134/129;
 // those four with result-first common exit 137/130/134/129;
 // existing velocity magnitude helper 131, native difference with/without it
 // 135/135 (match-only), plain vehicle for loop 131.
 // Original body restored.
+// Y405: kept the full-width result set after the collection with one exit, 110. The collector
+// reading the unit field at every use as well gives 85 at 569/562, but 0xf7ca0 shares the
+// collector and goes 142 -> 150, so not kept.
+// Collector count long/short/word/byte with per-use unit 124/170/170/171;
+// cached unit with short/word/byte/char collector count 184/184/185/185.
+// Per-use unit with positive bool/byte/word/long return 124/117/90/93;
+// existing typed player with early/bool/word/long return 124/124/90/93.
+// Word/long return name ordering at entry and after collection 90/96/93/85.
+// Current-vehicle stack home and center-address scale remain.
 // @retail 0xf7a60
 bool __stdcall function_f7a60(long *vehicle_index)
 {
 	long unit_indices[16];
 	point3f centers[16];
 	long count = vehicle_players_on_foot(unit_indices, centers);
+	long found = true;
 
 	if (count > 0)
 	{
@@ -4042,13 +4075,15 @@ bool __stdcall function_f7a60(long *vehicle_index)
 						vehicle->linear_velocity.k * vehicle->linear_velocity.k >= 1.0f)
 					{
 						*vehicle_index = iterator.object_index;
-						return true;
+						goto done;
 					}
 				}
 			}
 		}
 	}
-	return false;
+	found = false;
+done:
+	return found;
 }
 
 /* whether an occupied vehicle (one with its flag 2 at +0x10a set) is within
@@ -4057,6 +4092,11 @@ bool __stdcall function_f7a60(long *vehicle_index)
 // Outer declarations, const vehicle, loop scope, single result, shared center and
 // point-difference helper all 142; indexed seats 156; native unsigned seat mask
 // with plain pointer stepping 140 at 561/549 (-2, restored). Original body retained.
+// Y405: the shared collector reading the unit at every use moves this to 150 (not kept); own body restored. Positive
+// word return with short/long/word/byte ordinal and plain seat stepping 170/164/170/172; long
+// return 167/162/167/169. Occupied-mask result dword/long/word/short at entry/after collection
+// 215/177/215/177/179/158/180/157; raw seat-word result dword/long at entry/after collection
+// 200/158/198/152. Frame 0x114 versus 0x118 and returned-object home remain.
 // @retail 0xf7ca0
 bool __stdcall function_f7ca0(long *vehicle_index)
 {

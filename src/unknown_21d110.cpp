@@ -406,6 +406,9 @@ PRIVATE __forceinline void function_21dcf1(long effect_index)
 // losses); whole-body tag reference 207 (eight caller losses); single address-based tag reads at the
 // definition query, class lookup, effect start and fallback start 204 each; noinline target alone and
 // with the fallback address read 204 each. Original body and declarations restored.
+// Round 258: accessor word/short/dword inputs 213/213/204; separate noinline
+// declarations with those inputs 256 each; external inline word/short inputs
+// 213/213. All eight sensitive callers preserved; original accessor restored.
 // @retail 0x21d110
 long function_21d110(s_sound_play_state *state, long tag_index)
 {

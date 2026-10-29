@@ -241,6 +241,8 @@ void function_8dd70(void);
 // complete chain, short readiness, observations and entire body restored.
 // Native gateway/handler entry declarations with immutable entry decision,
 // seven subsets and complete receiver role names: 221 each. Original lifetimes restored.
+// Final-completion bool/byte/short/long at admitted/entry scope all 230; original success return
+// and cleanup restored. No flagged completion form matches.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

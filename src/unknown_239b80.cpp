@@ -188,6 +188,9 @@ short function_239e50(short count, point2f const *points, short *indices);
 // Repeated j input 42; repeated i input 42; both scalar inputs 126.
 // Shared normalizer/magnitude 42/42; tested initial/distance states 81/76; both tested states 79;
 // early distance default 65; shared normalizer with tested states/default 79/65.
+// Bounded geometric enum with original/count-first/terminal/zero-first graph; independent-point
+// word/enum/count-first/terminal graph; first-point memcpy/memmove 86/94/86/86/54/58/99/58/42/99.
+// Original executable source restored.
 // @retail 0x239b80
 short function_239b80(short count, point2f const *points)
 {
@@ -458,6 +461,9 @@ PRIVATE __forceinline void polygon_difference_23a220(point2f const *a, point2f c
 // 50; outer offset/edge/both storage 50/50/50; early next with outer vectors 50; radius at
 // use with outer vectors 71. Current-point pointer for both differences with
 // ordinary/volatile count 92/97 (point moves to the stack; 0x14a370 23).
+// Shared offset/edge/both difference producers; early-next/unsigned ordinal/ordinary
+// count/count-plus-next/count-plus-ordinal 50/50/50/50/50/73/73/67. Original executable source
+// restored. The three ordinary-count forms lose matched 0x14a370 at 23/23/27 in the reduced image.
 // @retail 0x23a160
 bool function_23a160(point2f const *point, real radius, short volatile count, point2f const *points)
 {
@@ -582,6 +588,9 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // ours reads count from memory twice and keeps the previous side in CL. The alias test reversed 130;
 // the clipped reset after the alias copy 220; mask declared first 132; plane n.j * dy 129; the
 // previous side as `0 <= distance` 129 (compile-only screens of nine more orders and spellings: none).
+// Round 262: equality-producer byte/short/long result domains and ordinary inline
+// metadata 129 each; single-exit bool/byte/short/long equality results on the
+// native-mask/signed-ordinal graph 129 each. Original helper and body restored.
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)

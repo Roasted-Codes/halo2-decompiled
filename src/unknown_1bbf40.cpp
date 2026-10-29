@@ -339,6 +339,8 @@ real function_1e3920(long actor_index);
 // Round 110: selection compared inside the else-if 46; reference declared before the scratch call 46;
 // success branch first 46; flag store before the result 46; out locals swapped 46; the reference
 // compared as a long value 46; the search part as an inline helper 223 (its callee inlined).
+// Separate raw/admitted reference values with immutable raw value and entry request/scratch
+// declarations: 46/46/48/48/46/46/48/48, all 344 bytes. Original lifetimes and body restored.
 // @retail 0x1bcab0
 bool __stdcall function_1bcab0(long actor_index, s_slot *slot)
 {
@@ -458,6 +460,12 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // with actor/timer/short both 208/208/206; actual bool field 166, conditional 174,
 // bool carrier with conjunction/conditional 198/175. Raw-byte conditional 146/146/147
 // changed the integer carrier and was excluded. Complete body and field restored.
+// Round 403: returned vehicle/unit/both point receivers 205/162/201;
+// with the shared separation producer 205/162/201; both with native
+// separation/Boolean special 201/196. Original body restored; CL/tail remains.
+// Round 273: complete separation from the existing header/native producers, each with
+// reverse sum/shared square/shared dot/all squared parts, 166/166/166/166 and
+// 200/200/200/200. Native producer grows the frame to 0x40; original graph restored.
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {

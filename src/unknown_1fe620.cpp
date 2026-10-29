@@ -11,6 +11,13 @@ void function_1fe410(point3f *arg_0, real arg_1);
 
 static __forceinline long real_to_long(real value);
 
+// score 378: frame 0x4c versus 0x48; early third-input/random-state carriers and scalar homes differ.
+// Round 74 (baseline 378 after the round-73 real cast in 0x259d0): the timer draw scaled in its own
+// statement (`timer_value *= ticks`) 373 again, the output copy block back in step (under the keep bar of 8; restored). At 373 or worse:
+// resolver as an if/else with two copies (retail's inlined 0x210850 shape) 466; sign draw through the
+// global at each access 417; both 461; random state named once at the top 417; final sums with the
+// operands swapped 373, through the vector field 373, from the vector local 429; timer conversion
+// as an initialized declaration 373; second draw's sum swapped 373.
 // score 378 (was 378): frame 0x4c versus 0x48; early third-input/random-state carriers and scalar homes differ.
 // frame 0x4c versus 0x48; third input and random-state register lifetimes differ.
 // point resolver 445; scale snapshot 430; spread snapshot 437; later second trig pair 379; doubled bound 431; local output sums 429; force-inline resolver 466.

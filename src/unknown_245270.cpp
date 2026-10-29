@@ -429,6 +429,9 @@ void function_245400(s_source_245400 const *source, long index,
 // Round 264: existing difference/cross/rotation force-inline declaration subsets,
 // all seven 203; all with the actual point-transform boundary 203. Original
 // declarations and body restored; frame 0x24/0x2c, source and side homes remain.
+// DH round 236: true cross output at function entry with independent direction, transformed
+// point and both side-byte entry storage, all eight combinations 203 each. Initializations and
+// input reads stayed fixed. Original declarations/body restored; frame and source/side homes remain.
 // Round 398: signed-code side producers with original masks and independent facing exits,
 // bool/byte/word/long 223/223/219/220; direct native material words on those graphs
 // 222/222/216/217. Complete original body and side producers restored.
