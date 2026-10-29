@@ -314,6 +314,8 @@ PRIVATE inline real shape_dot_reverse(vector3f const *a, vector3f const *b)
 
 // score 40 (was 40): the float is loaded into XMM1 and moved to XMM0; retail loads it into XMM0 and
 // moves XMM5 into XMM1.
+// Existing offset/scale/plane-product force-inline declarations, all seven combinations 40;
+// native result byte 69.
 // @retail 0x2461a0
 bool function_2461a0(
 	s_sphere const *sphere,

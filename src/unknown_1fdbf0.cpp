@@ -167,6 +167,8 @@ struct s_aim_definition
 // compare); the same with the header from target_index 43; passing object_index to
 // 0x118e80 43; object_header_get 43; flags & 0x100 47; the target field re-read 44,
 // passing object_index then 58. The fallback's callee 0xcba50 is unmatched.
+// Existing actor/object lookup force-inline declarations, singly/together 41 each;
+// native dword flag Boolean/direct 41/47; word Boolean/direct and byte Boolean 53 each.
 // @retail 0x1fe120
 void function_1fe120(long actor_index, vector3f *direction)
 {
