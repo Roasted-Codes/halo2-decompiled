@@ -26,6 +26,13 @@ struct s_spawn_influence_globals
 	s_spawn_influence_type types[12];
 };
 
+struct s_spawn_influence_entry
+{
+	dword value0;
+	dword value4;
+	dword value8;
+};
+
 extern dword g_502258[0x27];
 
 PRIVATE const byte g_4709f0[48] =
@@ -59,7 +66,10 @@ struct s_spawn_scenario_23aea0
 	s_spawn_settings_23aea0 *settings;
 };
 
-// score 105 (was 105): source receiver and integer destination induction still differ.
+// score 103 (was 105): the definition now stays in EAX and the source pointer in ECX, but
+// the destination is still an absolute pointer induction instead of retail's integer table
+// offset 0x18..0xa8; the prologue publishes the default table after the first scalar store
+// and the override loop keeps an extra lea esp, [esp].
 // actual batch/type ranges 139/227; inner type ordinal 139; direct twelve types 254;
 // source records with direct/batch/read-only ranges 257/227/227; complete override 140.
 // Word/byte batch ordinals 141/141; word/byte entry ordinals 242/242;
@@ -83,24 +93,28 @@ struct s_spawn_scenario_23aea0
 // globals' last member (retail's memset clears it) 102; running destination index 120.
 // No-link compiles of 1728 loop shapes, counter types and destination forms all fold the
 // global into a pointer induction variable; retail keeps the integer offset 0x18..0xa8.
+// A twelve-byte destination record indexed by the type ordinal moves the definition into
+// EAX and the source pointer into ECX (105 -> 103); the same record reached through a
+// pointer below the table regresses to 149.
 // @retail 0x23aea0
 void function_23aea0()
 {
+	s_spawn_influence_globals *globals = (s_spawn_influence_globals *)g_502258;
 	byte *tag = g_4e3b44[g_4e034c->index & 0xffff].bytes;
 	byte *definition = *(byte **)(tag + 0xc);
 	s_spawn_scenario_23aea0 *scenario = (s_spawn_scenario_23aea0 *)g_4e0350;
-	s_spawn_influence_globals *globals = (s_spawn_influence_globals *)g_502258;
+	s_spawn_influence_entry *entries = (s_spawn_influence_entry *)&globals->types[0];
 	g_5022f0 = g_4709f0;
 	globals->value4 = *(real *)(definition + 0x154);
 	globals->value0 = *(real *)(definition + 0x150);
-	for (long i = 0; i < 2; i++)
+	for (long type = 2; type < 14; type += 6)
 	{
 		for (long j = 0; j < 6; j++)
 		{
-			long type = i * 6 + j + 2;
-			g_502258[type * 3 - 4] = *(dword *)(definition + 0x148 + type * 0x1c);
-			g_502258[type * 3 - 3] = *(dword *)(definition + 0x14c + type * 0x1c);
-			g_502258[type * 3 - 2] = *(dword *)(definition + 0x150 + type * 0x1c);
+			s_spawn_influence_entry *entry = &entries[type + j - 2];
+			entry->value0 = *(dword *)(definition + 0x148 + type * 0x1c + j * 0x1c);
+			entry->value4 = *(dword *)(definition + 0x14c + type * 0x1c + j * 0x1c);
+			entry->value8 = *(dword *)(definition + 0x150 + type * 0x1c + j * 0x1c);
 		}
 	}
 	if (scenario->count > 0)
