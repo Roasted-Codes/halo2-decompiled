@@ -2734,6 +2734,11 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // two-use change pointer 50; reversed velocity declarations 50; guarded do-while 53;
 // reversed loop comparison 52; preincrement 50; outer-block index 50; per-iteration body index 50.
 // Original body restored; entry saves, five address forms and the final argument moves remain.
+// Round 71 (reduced scores): 0x1d1010 declared (component, index, change) with its callers 5f (retail's
+// ECX-then-ESI setup at the call) but 0x1d1010 itself then reads [data + index] (1; callers in
+// unknown_206090.cpp and unknown_1c25a0.cpp were held this round); with an array pointer in the
+// velocity helper, 0x1d1010 still 1; array pointer at all five / the three late reads 10f/10f;
+// separate component-first velocity helpers 128f. The address order stays [index + data].
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
