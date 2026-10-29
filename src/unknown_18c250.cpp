@@ -628,6 +628,10 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // Round 186: Complete source-kind char/byte/short/long with address/value owner selection
 // 346/346/338/351/358/358/350/363. Original field observations, multi-use handle helper and complete
 // body restored.
+// DL176: Native distance/angle/both property-array loops with long ordinals 280/331/331; both with
+// short/word/unsigned-long ordinals 367/367/331; shared long/short ordinal 331/367. Original
+// scalar fields, property tests, receiver pair and full body restored; protected root-location and
+// datum/tag homes remain.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {
