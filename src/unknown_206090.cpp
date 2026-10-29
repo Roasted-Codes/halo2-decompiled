@@ -210,6 +210,12 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // 1440/1441/1405/1405/1440/1441/1405; all with native output copies 1405. Single-phase local sums
 // reach retail length but regress; combined sums restore frame 0x5d0. Original body and every
 // private producer restored.
+// Round 108 (fast control 1403): the first loop's element pointer starts at +0x50 in retail, +0x54
+// here; retail reads +0x88 once, keeps the first velocity's components in xmm2-4 from the loop top
+// and computes the cross k, j, i (stores j, k, i). First-loop cross through function_206092 1472;
+// +0x88 named once 1451 (read once, as retail); operands of the steering product swapped 1403
+// (same code); retail's cross operand form written out 1439 (diagnostic); ray record at function
+// scope 1403 (frame 0x5cc). All restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
