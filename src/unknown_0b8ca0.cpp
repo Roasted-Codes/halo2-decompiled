@@ -1712,6 +1712,11 @@ transform4x3f *function_b8bd0(long object_index, short node_index);
 // after the walk as retail, but the flag spills); plus the file's bitfield tests (flag7, physics_active)
 // and a type-mask test 339; plus offset declared first 335; plus the ancestor walk through the object
 // getter 324 (aligned 159/159 against 154/162).
+// Round 172 DL: Shared post-ancestry header table 321; native resident pose record
+// 285; both 321. Native header activity bit with shared table/pose/both
+// 323/281/323; table with both shifted flag tests 313; all forms 318.
+// The four-count 281 gain fails the eight-count gate; original type layouts,
+// all helper bodies, node query and complete body restored.
 // Round 175: Existing point-producer native input captures, point/transform/both/rotation/
 // point-rotation/translation/rotation-translation/all 366/348/384/339/376/360/371/416;
 // all lose the shared sibling. Real header activity-bit producer with hidden/component/byte-active

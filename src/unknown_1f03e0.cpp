@@ -327,6 +327,9 @@ extern real g_47f05c;
 // Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
 // 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
 // and full body restored; frame 0xd0 and shape/count/alignment homes remain.
+// Round 170: late false result 204; count/selection guard exits 223/234; admission-produced
+// success 212; with late false/count guard/selection guard/byte success 211/222/243/250.
+// Original result lifetime and full body restored; frame and shape/count homes remain.
 // Round 31: function-scope index 221, guarded do 232; dot3f 192; point setter 267;
 // vector3f_assign and shared scan/selected entry 190 each (below gate); shared entry with
 // height reads 205; height before best_dot 192; function-scope index with height reads 204,
@@ -341,6 +344,8 @@ extern real g_47f05c;
 // all with native ground fields 222. Uniform normal-first/up-first alignment products
 // 192/192, each with uniform height reads 205/205. The center alone recovers frame
 // 0xd4 but leaves the best alignment in XMM6; original body retained at 192.
+// Round 269: Height/validity/alignment rejection-guard subsets 1-7 all 192;
+// all three with fallback validity first 215. Original nested scan, snapshots and full body restored.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -690,6 +695,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // conditional plus forward 287; ground input plus forward 311; all three 334;
 // all with forward declared first 334. Input-split forms lose the matched caller;
 // original body and its 182 score retained.
+// Round 170: complete three-row axial/retained/swept product groups in three schedules
+// 180/180/180; row schedule 181; coordinate schedule 180; complete initial products 180;
+// cosine complement 183; both 182. Two-point gains rejected; original full body restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -870,6 +878,12 @@ struct s_flags_1f0870
 // Round 179: direct initial/fallback/both eight-byte library copies 604/612/646; direct shared
 // output setter 592; initial/fallback/both copies with that setter 595/600/641; native horizontal
 // point with both copies and shared publication 641. Original clean body and helpers restored.
+// Folded movement/history/both vector lifetimes 591/594/594; lateral shared across all three paths
+// 590; movement/lateral 590; history/lateral 594; all 598; all with bounded declaration first 598.
+// History reuse recovers frame 0x30 at 594/3060; captured flags/native enabled/both there 618/594/618.
+// Round 235: Existing vector setters for disabled initial/lateral/vertical/initial+lateral/
+// initial+vertical/lateral+vertical/all/all plus general output 627/590/600/627/628/600/628/629.
+// All restored; the first three-axis forms reach 3047 bytes but retain the extra frame dword.
 // @retail 0x1f0870
 void function_1f0870(byte *history, vector3f const *current, byte const *state, byte *out)
 {
@@ -1283,6 +1297,13 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Round 179: retained selected record 433; initial speed zero after other outputs 453; both 458;
 // minimum-first acceptance 506; selected record/minimum 505; zero/minimum 490; all 498; all with
 // explicit final result 499. Original selected ordinal, publications, count and body restored.
+// Round 170: count initialized between surface/object publications 420; separate array store
+// and increment 421; both 420; one-based pass alone/with initialization/with split producer/all
+// 421/420/421/420; count initialized at the relative/desired boundary 520. One-point gains
+// rejected; original full body restored, with persistent zero and count/component homes unresolved.
+// Round 235: Existing vector setters for default/negated desired/projected direction/
+// default+negation/default+projection/negation+projection/all/all with test-produced result
+// 482/421/421/482/482/421/482/479; all restored; persistent zero and scalar homes remain.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
@@ -1466,6 +1487,11 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // Round 179: common normal/material-call join 254; native movement 253; combined preservation
 // mask/both 320/320; the same four joins with continue 254/253/320/320; original calls with the
 // combined preservation mask 324. Original body, magnitude, call sites and normal scopes restored.
+// Complete native contact record alone/real magnitude/noinline/both 230/233/301/300;
+// the same four forms with operation-specific normal names 230/233/301/300. All restored.
+// Round 235: Named squared sum with double/real movement 241/229; all three named squared
+// products 243/229; products plus sum 243/233; complete graph with long/short moving 307/305.
+// One-point forms restored; original magnitude, selection and material calls retained.
 // @retail 0x1f19c0
 void function_1f19c0(byte const *request, s_shape_state *history, byte *out)
 {

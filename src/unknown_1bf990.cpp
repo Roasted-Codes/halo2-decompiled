@@ -333,6 +333,12 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 265: complete single completion exit, with every subset of the existing
 // actor/object/prop force-inline getter declarations, 208 in all eight forms (682 bytes).
 // Original exits, declarations and body restored.
+// Round 268: selector-first direct target arguments/branch-owned target/conditional call/test-assigned target
+// 202/202/202/191; the four with query-default-false outcomes 202/202/202/191.
+// Actor/pool and shared request tail remain; original movement producers and body restored.
+// Round 271: native first/second/both object-header getters and retained header outputs
+// 186/186/186/186/186/186; both native headers with long/exhaustive seated results
+// 195/186. Original lookups, requests, predicate and complete body restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {

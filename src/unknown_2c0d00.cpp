@@ -938,6 +938,11 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 388: Shared scale/normalizer ordinary inline singly/both 385/385/385;
 // scale noinline 425; normalizer noinline 451; noinline scale/ordinary normalizer 425;
 // ordinary scale/noinline normalizer 451; both noinline 415. Original declarations restored.
+// Round 172 DL: Complete first-node rejection ownership with bool/byte/signed-byte/
+// short storage 427/427/427/413; the same four with native complete geometric
+// vector storage 427/427/427/413. Boolean and byte forms reserve 0x24 versus
+// retail 0x28; short restores extent but regresses. Original acceptance,
+// types, helper calls, history qualifier and complete traversal restored.
 // Round 175: Full-width unsigned incoming/ring/complete selected-vertex domains and all
 // subsets 385 each; all with unsigned equality-only ring-edge anchor 385. Native word values
 // and distinct NONE bit patterns preserved. All original domains, histories and body restored.
@@ -1135,6 +1140,12 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Round 220: Normalizer complete input via native/readonly/component/library copy
 // 518/518/172/518; each with zero-length guard return 518/518/172/518.
 // Original normalizer and complete body restored; true-return host and y forwarding remain.
+// Round 172 DL: Native vector storage for sides/entry/both/angular/distance/all,
+// then sides/all with the native normalizer, 172 each. Shared real totals with
+// one final comparison, angular arm first, if/value/result/entry-if/entry-value
+// 279/398/269/279/398; distance arm first if/value/entry-result 417/399/407.
+// All original types, tests, helper calls and complete body restored;
+// early true-return host and side-direction forwarding remain.
 // Round 175: Return produced by the initial length test/native scale input/both/symmetric side
 // product terms/result with terms/scale with terms/all/all with if-form clamps
 // 359/470/466/172/359/470/466/471. Native scale input loses both matched geometry siblings;
@@ -1345,6 +1356,12 @@ bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start
 // Round 388: Both corner-success carriers byte/short/word/long 444/440/440/450,
 // with the same domains declared at selection 444/440/440/450. Four-point gains
 // above 30 rejected; original Boolean carriers and declarations restored.
+// Round 172 DL: Selected successor in the ordinary for increment 444; its
+// entry declaration 444; ordinary output-index/radius/both storage 486/469/491;
+// paired word corner results 440; current-record lifetime ending at metadata
+// publication 494, with paired word results 485. The four-count gain fails
+// the eight-count gate. Original successor lifetime, both qualifiers,
+// Boolean corner results, snapshot and full body restored.
 // Round 175: Existing selector inline/noinline declarations 444/444; output receiver formed
 // after successful selection alone/inline/noinline 502/502/502; the same three with the immutable
 // current type retained across all uses 502/502/502. All original declarations, address and
