@@ -778,6 +778,10 @@ void swarm_leader_detach(long actor_index);
 // Round 222: Native callback-handler ownership, conditional iterator-result declaration,
 // cleanup-only workspace scope, all seven subsets and readonly handler: eight 261 fast
 // against unchanged fast 261 (ordinary 285). Original executable body restored.
+// Self-exclusion by native pool-slot identity, word/long/dword/unsigned-int
+// entry carriers 288/312/312/312; uniformly reused getter carriers 294/313/313/313
+// against unchanged fast 261 (ordinary 285). Original pointer test, complete
+// handles, getter observations and executable body restored.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

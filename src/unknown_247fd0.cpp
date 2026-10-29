@@ -419,6 +419,8 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Round 383: coherent live particle/live descriptor/retained allocation pool 709/367/359;
 // particle+descriptor/particle+pool/descriptor+pool/all/all with live settings
 // 731/752/367/755/807. Original record observations, helper graph and complete body restored.
+// Existing cache update method 356; with initial shared scale/blend sum/loop lookup
+// 376/356/376; scale+lookup/scale+blend/lookup+blend/all 397/376/376/398. All restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

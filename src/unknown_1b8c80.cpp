@@ -1263,9 +1263,13 @@ struct s_1ba091
     s_slot_entry_iterator field_4;
 };
 
-// score 198 (was 198): retail keeps the actor record count in ESI, loaded from
-// the pool at 0x4e0300 before the slot state is touched, ours reloads it from
-// the stack; the frame offsets differ as well.
+// score 198 (was 198): frame 0x14 agrees; incoming actor ECX/EDX, early object-header
+// acquisition, selection-mask storage and iterator/result homes differ.
+// Earlier slot-data form 198; raw-mask and independent iterator variants 202/207;
+// Result-first 190; explicit same-object result 230; cleanup result 258.
+// Complete byte flags with/without slot data 249/249; raw word/dword mask 257/252;
+// branch-assigned decline with byte/word/dword 249/257/252, with slot data 249.
+// Original body restored.
 // @retail 0x1ba090
 long __stdcall function_1ba090(long actor_index, s_slot *slot)
 {

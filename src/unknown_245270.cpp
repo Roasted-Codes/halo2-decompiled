@@ -419,6 +419,9 @@ void function_245400(s_source_245400 const *source, long index,
 // Round 175: native const source member, original/native plane field and bool/byte sides
 // 203/203/203/203; each with uniform material-table reads 210/210/210/210.
 // Original free-function interface, source declaration and every call restored.
+// Complete first/second/both native vertex inputs 245/215/270;
+// with a complete surface 287/272/318; both with material/surface+material 261/304.
+// Original endpoint receivers, source records and complete body restored.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,
