@@ -432,7 +432,7 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 
 /* moves the biped's camera offset (+0x3cc) toward its head marker,
    relative to its root node, a little each tick */
-// score 7 (was 24): frame 0x9c, native entry and length agree; cross-component
+// score 7 (was 7): frame 0x9c, native entry and length agree; cross-component
 // add/store scheduling remains. Existing node query 34; point difference 129;
 // both 48; coherent vector homes 127/34/129/48; outputs first 48. Clamped steps 34;
 // destination pointer 24; both 34; delta-first 34, with steps/pointer/both 34/24/34;
@@ -441,6 +441,9 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 // Native low/high loop clamp 7 plain (kept); upper/lower clamp 12; low/high with
 // current-component reuse 83; full clamped correction macro/branches 61/54; shared
 // smoothing difference with macro/low-high/high-low 63/62/62. Cross-store scheduling remains.
+// Round 281: component reference 27; named updated value 7; both 27; short ordinal 141;
+// ordinary while 7; component pointer 27; point-pointer traversal 258; sequential bounds 7.
+// All restored; frame and length agree, cross-store scheduling remains.
 // @retail 0xde190
 void function_de190(long arg_159e6d)
 {
@@ -1939,6 +1942,10 @@ bool __stdcall function_c5460(long object_index, long ignore_index, point3f cons
 // Multi-use forward subobject 77; native ignore assignment branches 76; separate
 // selected vehicle 76; forward/ignore and forward/selected vehicle 77 each; ignore with
 // selected vehicle 76; all three 77; all three with fallback point setter 80. Frame/input homes remain.
+// Round 281: signed-byte/short/word/dword retry ordinals with separate/shared successive
+// point output 81/81, 73/73, 73/73, 76/76 (all 348 bytes). Three-point gains restored.
+// Short/word result-controlled completion 90/90; short with shared point 90 (360 bytes).
+// All original code restored; frame 0x1c/0x20 and input homes remain.
 // @retail 0xe0070
 void function_e0070(long arg_159e6d, long vehicle_index)
 {
@@ -1995,6 +2002,9 @@ void __stdcall function_1c3770(long object_index, dword flags);
 // Settling field at both uses 82; tag receiver at use 64; both 81; settling reads
 // with shared promoted/native-short getter 99/89; both reads with those getters 102/100;
 // both reads with direct valid-body admission 72. Entry count/convention and flag stores remain.
+// Round 281: shared entry/query input-output count 68/73; entry with short body/getter
+// 72/87; query with short body/getter 77/105; tag at use on entry/query graphs 69/79.
+// All restored; extra EBP and body/flag scheduling remain.
 // @retail 0xe0c70
 void function_e0c70(long arg_159e6d)
 {

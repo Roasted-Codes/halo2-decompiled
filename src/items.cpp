@@ -1047,6 +1047,10 @@ struct s_item_flags_view_10b850
 // named bounce coefficient and with attachment fields 887/887; step/coefficient and all three 893/893;
 // direct bound selection 813. Native collision location/object-node/material/all layouts 887/863/859/894.
 // All restored. Coefficient and collision layouts reach frame 0x148 without an eligible gain.
+// Round 281: existing record-returning cross for all four orientation outputs 1084
+// (4298 bytes, frame 0x148). Complete cosine products before projection, all six
+// computation orders 825 each; kji before crosses/stores 824/824 (4103 bytes).
+// All original helpers and body restored; frame and native Boolean/vector homes remain.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
