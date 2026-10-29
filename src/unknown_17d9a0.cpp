@@ -621,6 +621,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Round 221: native basis/rotation/both/position/basis-position/rotation-position/all setters
 // 726/564/726/560/717/560/733; all plus axis setter 592. Four-point position gains rejected;
 // original basis, complete rotation copy, matrix position and body restored.
+// Round 178: complete-vector memcmp 771; with decoded-output-first copy 774;
+// result-first angle 770; both 776; with the complete rotation-result setter
+// 771/774/770/776. Original equality, plane and rotation producers restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

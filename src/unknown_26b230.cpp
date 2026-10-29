@@ -166,7 +166,7 @@ void function_268840()
 	function_268c90();
 }
 
-// score 242 (was 242): frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
+// score 221 (was 221): frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
 // Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
 // Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
@@ -229,6 +229,9 @@ void function_268840()
 // Round 33: With matched child interfaces, positive actor admission 242; deletion-owned if/else
 // 221; both 221; child continuation condition alone/with admission 242/242; with deletion/both
 // 221/221; all three with Boolean retention 222. Keep only the deletion-owned if/else.
+// Round 178: On the deletion-owned graph, pool after setup 278; plus Boolean retention 286;
+// plus complete expiry 284; both 302; with long child-step result 276/277/282/288.
+// Original pool observations, retention, expiry and child-step widths restored.
 // @retail 0x268c90
 void function_268c90()
 {
