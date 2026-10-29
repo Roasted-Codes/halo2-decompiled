@@ -353,6 +353,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // transform, point capture, defined vertex failures, complete body and include set restored.
 // Round 187: Native byte-data/offset versus point-table fetch inputs, long/word count and
 // early/result-first eligibility, all eight 235. Original fetch contract and body restored.
+// Round 403: real triangle-reference cursor with readonly metadata/surface table/range
+// bound/vertex cursor combinations 210/210/211/193/213/210/213; complete graph
+// with Boolean result 224. Original traversal and defined-failure body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

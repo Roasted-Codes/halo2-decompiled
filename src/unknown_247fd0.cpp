@@ -439,6 +439,9 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // Round 188: joint reciprocal result stages, ternary/explicit/default-update pairs
 // (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2):
 // 356/357/356/351/356/351/357/353. Five-point nonmatch leads rejected; original results restored.
+// Round 403: entry previous-weight/age-step/motion-coefficient producers, masks 1-7,
+// 429/447/451/449/449/448/449; all with combined header assignment 449.
+// Original parameter producers, motion helper and complete body restored; late EBP remains.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)

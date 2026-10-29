@@ -455,6 +455,9 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // with actor/timer/short both 208/208/206; actual bool field 166, conditional 174,
 // bool carrier with conjunction/conditional 198/175. Raw-byte conditional 146/146/147
 // changed the integer carrier and was excluded. Complete body and field restored.
+// Round 403: returned vehicle/unit/both point receivers 205/162/201;
+// with the shared separation producer 205/162/201; both with native
+// separation/Boolean special 201/196. Original body restored; CL/tail remains.
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {

@@ -120,6 +120,9 @@
 // Round 186: Selected native basis receivers, seven subsets and the shared selected source
 // 713/680/777/698/755/767/754/800. Original copies, helpers, floating trees and sixth-component
 // integer conversion restored.
+// Round 403: native double storage for rounded sine/modulation and complete maxima,
+// masks 1-7: 580/580/581/756/753/753/756; all with both wave factors 771.
+// One-point leads dropped; original scalar precision, frame graph and conversion restored.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

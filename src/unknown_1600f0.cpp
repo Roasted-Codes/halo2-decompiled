@@ -1423,6 +1423,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 271: entry native rectangle declarations for title/fixed/optional caption groups,
 // every subset and all with complete rectangle identities, 689 each. Original producers,
 // native object lifetimes and body restored; frame 0x790 versus 0x79c remains.
+// Round 403: native rectangles; ordinary height/fade storage and direct first-color
+// output, masks 1-7: 734/713/753/726/764/742/783; all without unused parameter
+// addresses 783. Original scalars, color copy and complete body restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
