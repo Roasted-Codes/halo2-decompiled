@@ -403,6 +403,9 @@ void function_245400(s_source_245400 const *source, long index,
 // 207/207. Original producers, equality and all body operations restored.
 // Full native transform values, mutable/const with native plane field and point workspace
 // subsets: 223 each; source enters ECX but frame grows to 0x58 and length 796. Original restored.
+// Nonnull source-reference formal in original/first positions 203/203; each with native plane
+// ordinals 222, uniform material-table reads 210, both 231. Sole caller 3/3/107/107 in each order.
+// Original pointer definition, declaration and call restored; source/frame/side homes remain.
 // @retail 0x245540
 void function_245540(long arg_0, s_source_245400 const *arg_1,
 	transform4x3f const *arg_2, real arg_3, real arg_4,

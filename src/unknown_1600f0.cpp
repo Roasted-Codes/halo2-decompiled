@@ -1373,6 +1373,9 @@ PRIVATE inline long score_string_list_1608e0()
 // Round 218: Completed collector counts cached, player/team/both long 795/782/832;
 // native short 795/789/813; mixed short-long/long-short 832/813. All restored.
 // Frame/viewer/coordinate homes remain; promoted player-only count recovers frame 0x79c but regresses.
+// Repeated viewer field as short/long/reference 801/788/773; retained options receiver 793; viewer
+// short/long/reference with options 825/789/803; viewer short and retained time mode 815.
+// Frame/viewer/coordinate homes remain.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
