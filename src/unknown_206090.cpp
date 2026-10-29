@@ -96,7 +96,7 @@ PRIVATE __forceinline void function_206092(vector3f const *arg_0, vector3f const
 PRIVATE __forceinline real function_206093(vector3f const *arg_0)
 {
     vector3f magnitude_input = *arg_0;
-    return (real)sqrt((double)magnitude_input.k * magnitude_input.k + (double)magnitude_input.j * magnitude_input.j + (double)magnitude_input.i * magnitude_input.i);
+    return (real)sqrt(magnitude_input.k * magnitude_input.k + magnitude_input.j * magnitude_input.j + magnitude_input.i * magnitude_input.i);
 }
 
 PRIVATE __forceinline real function_206094(vector3f *arg_0)
@@ -113,9 +113,9 @@ PRIVATE __forceinline real function_206094(vector3f *arg_0)
 
 PRIVATE __forceinline real function_206097(vector3f *arg_0)
 {
-    double local_2 = (double)arg_0->i * arg_0->i;
-    local_2 += (double)arg_0->k * arg_0->k;
-    local_2 += (double)arg_0->j * arg_0->j;
+    double local_2 = arg_0->i * arg_0->i;
+    local_2 += arg_0->k * arg_0->k;
+    local_2 += arg_0->j * arg_0->j;
     real local_0 = (real)sqrt(local_2);
     if (fabs(local_0) < 0.0001f)
         return 0.0f;
@@ -141,7 +141,7 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
-// score 1405 (was 1405): frame 0x5d0 versus 0x58c, component/velocity homes and indexed contact induction remain.
+// score 1364 (was 1405): frame 0x5d0 versus 0x58c, component/velocity homes and indexed contact induction remain.
 // Frame 0x5d0 versus 0x58c; component/velocity homes, contact induction and scheduling remain.
 // Earlier 1585 (was 1596): Frame 0x590 versus 0x58c; component/velocity homes and contact induction remain.
 // Earlier 1600 from 1600: frame 0x580 versus 0x58c; velocity homes and contact induction differ;
@@ -214,6 +214,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // 1440/1441/1405/1405/1440/1441/1405; all with native output copies 1405. Single-phase local sums
 // reach retail length but regress; combined sums restore frame 0x5d0. Original body and every
 // private producer restored.
+// Round 153: float products in the magnitude helper and the normalizer give retail's fld/fmul-mem x87 shape, 1364
+// kept (plain). Without the snapshot copy 1606 (5990 bytes); buffered cross 1431/1445; float third-block magnitude
+// 1402; float time-phase expression 1386 plain (retail's exact x87 block); single-exit normalizer through
+// vector3f_scale 1581 and tangent vector from the contact field 1624 (both without the snapshot); contact pointer 1644.
 // Round 108 (fast control 1403): the first loop's element pointer starts at +0x50 in retail, +0x54
 // here; retail reads +0x88 once, keeps the first velocity's components in xmm2-4 from the loop top
 // and computes the cross k, j, i (stores j, k, i). First-loop cross through function_206092 1472;

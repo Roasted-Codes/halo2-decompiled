@@ -8,7 +8,9 @@ helpers only they call. */
 #include "globals.h"
 #include "data_array.h"
 #include "unknown_0259d0.h"
+#include "bit_vector.h"
 #include "vector_products.h"
+#include "unknown_1428b0.h"
 #include "unknown_1c62f0.h"
 #include "unknown_1cafc0.h"
 #include "unknown_1cec30.h"
@@ -423,6 +425,12 @@ bool function_f42f0(long vehicle_index);
 
 /* a vehicle's steering: the angle to its velocity, eased by the
    definition's steering curve, and its throttle and turn rates */
+PRIVATE inline void vehicle_approach(real *value, real const *rates, real bound, real dt);
+
+// score 237 (was 246): frame and cross/dot schedule, rate-bound and final-angle homes differ.
+// Shared cross/dot/approach subsets 262/246/262/239/248/239/248; both dots 235
+// (regrouping restored). Exponent and ordinary clamp subsets 246 each; all with
+// shared rate approach 237, retained after plain confirmation.
 // @retail 0xeec90
 void function_eec90(long vehicle_index, real *steering)
 {
@@ -446,46 +454,28 @@ void function_eec90(long vehicle_index, real *steering)
 	}
 	else
 	{
-		real bound;
-
-		bound = (0.0f > vehicle->throttle ? *(real *)(definition + 0x1f8) : *(real *)(definition + 0x1f4)) * vehicle->throttle;
-		if (vehicle->speed > bound)
-		{
-			function_2053c0(&vehicle->speed, (real const *)(definition + 0x1f4), -1.0f, dt);
-			if (bound >= vehicle->speed)
-				vehicle->speed = bound;
-		}
-		else if (bound > vehicle->speed)
-		{
-			function_2053c0(&vehicle->speed, (real const *)(definition + 0x1f4), 1.0f, dt);
-			if (vehicle->speed >= bound)
-				vehicle->speed = bound;
-		}
+		real bound = (0.0f > vehicle->throttle ? *(real *)(definition + 0x1f8) : *(real *)(definition + 0x1f4)) * vehicle->throttle;
+		vehicle_approach(&vehicle->speed, (real const *)(definition + 0x1f4), bound, dt);
 		bound = (0.0f > vehicle->steering ? *(real *)(definition + 0x230) : *(real *)(definition + 0x22c)) * vehicle->steering;
-		if (vehicle->turn > bound)
-		{
-			function_2053c0(&vehicle->turn, (real const *)(definition + 0x22c), -1.0f, dt);
-			if (bound >= vehicle->turn)
-				vehicle->turn = bound;
-		}
-		else if (bound > vehicle->turn)
-		{
-			function_2053c0(&vehicle->turn, (real const *)(definition + 0x22c), 1.0f, dt);
-			if (vehicle->turn >= bound)
-				vehicle->turn = bound;
-		}
+		vehicle_approach(&vehicle->turn, (real const *)(definition + 0x22c), bound, dt);
 	}
 
 	real maximum_angle = (real)((*(real *)(definition + 0x250) == 0.0f ? 1.0 : *(real *)(definition + 0x250)) *
 		0.017453292384743690);
-	real exponent = *(real *)(definition + 0x254) == 0.0f ? 1.0f : *(real *)(definition + 0x254);
+	real exponent = *(real *)(definition + 0x254) == 0.0f ? 1.0 : *(real *)(definition + 0x254);
 
-	angle = PIN(angle, -3.1415927f, 3.1415927f);
+	if (angle < -3.1415927f)
+		angle = -3.1415927f;
+	else if (angle > 3.1415927f)
+		angle = 3.1415927f;
 
 	real sign = angle >= 0.0f ? 1.0f : -1.0f;
 	real eased = (real)pow(fabs(angle / maximum_angle), exponent) * sign * maximum_angle;
 
-	eased = PIN(eased, -3.1415927f, 3.1415927f);
+	if (eased < -3.1415927f)
+		eased = -3.1415927f;
+	else if (eased > 3.1415927f)
+		eased = 3.1415927f;
 
 	real target = vehicle->gear ? eased : 0.0f - eased;
 	real rate = *(real *)(definition + 0x210) * 0.017453292f;
@@ -535,6 +525,10 @@ PRIVATE inline void vehicle_normalize2d(point2f *v)
 
 /* direct turn control: the input turned into the frame of the velocity,
    the angle it asks the vehicle to turn, and whether it's reversing */
+// score 306 (was 324): frame 0x20 versus 0x28, initial magnitude and vector homes differ.
+// Entry magnitude/direction/shared-normalizer subsets 306/337/324/327/309/339/303
+// restored; early magnitude observation needs a match. Existing turn approach 330.
+// Shared byte writer 306, retained after plain confirmation; with turn approach/product terms 310/310.
 // @retail 0xef070
 void function_ef070(long vehicle_index)
 {
@@ -625,10 +619,7 @@ void function_ef070(long vehicle_index)
 		if (vehicle->turn >= bound)
 			vehicle->turn = bound;
 	}
-	if (reversing && dt > 0.09f)
-		vehicle->flags349 |= 2;
-	else
-		vehicle->flags349 &= ~2;
+	byte_flags_set(&vehicle->flags349, 1, reversing && dt > 0.09f);
 }
 
 /* the vehicle tuning values (0x4678b8..0x4678d8) */
@@ -1826,18 +1817,6 @@ real function_f14f0(short gear, long vehicle_index)
 }
 
 /* a torque curve's torque at an engine angular velocity */
-// score 32 (was 77): in the last block retail gives xmm0 to the slope/fraction chain and xmm1 to
-// the shared zero (and the clamp result); ours the other way round, so the fabs/clamp registers
-// swap and the fraction is copied to xmm0 at the return. Tried (on the definition's maximum read at
-// each use, which took 77 to 32): `torque * fraction` 32; early `return 0.0f` per failed test 32;
-// the zero return inside the else 32, in each arm 32; `torque`/`fraction` declared at the top 32;
-// the fraction divided in a second statement 32; the intercept written into the fraction 85;
-// slope/intercept declared first 32; the clamp in a named local 32; the parameters reordered 32
-// (either order); a single `result` 81; peak operands swapped 77 (before the field read). Round 151:
-// `fraction == PIN(...)` 31; the torque local before the magnitude test 51; `fraction *= torque` 32;
-// range/torque magnitudes named 32/32/32; `0.0f <= range` 32; `range < 0.0f ? ...` 34,
-// for the torque 37; the bound compared first 32; `pow(...) * torque` returned in the pin arm 109;
-// a separate scale for the powered fraction 32.
 // @retail 0xf15d0
 real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, real angular_velocity)
 {
@@ -1863,6 +1842,7 @@ real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, rea
 	}
 	else
 	{
+		real result;
 		real range = VEHICLE_MAX_ANGULAR_VELOCITY(definition) - peak;
 
 		if ((range >= 0.0f ? range : 0.0f - range) > 0.0001f)
@@ -1879,9 +1859,12 @@ real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, rea
 				{
 					fraction = (real)pow(fraction, curve->past_peak_torque_exponent);
 				}
-				return fraction * torque;
+				result = fraction * torque;
 			}
+			else result = 0.0f;
 		}
+		else result = 0.0f;
+		return result;
 	}
 	return 0.0f;
 }
@@ -2013,6 +1996,10 @@ bool function_f5d70(long vehicle_index);
 /* runs the vehicle's engine for a tick: its load follows the throttle, a
    new gear engages after a delay (at once when it changes direction), the
    shift timers count, and the gear's torque spins the engine up */
+// score 156 (was 195): Kept conditional throttle result; extra frame word and cached shift-byte home remain.
+// Conditional / both-branch throttle 156 kept plain; input-first 191; field-only clamp 192;
+// conditional with clamp 191, native gear 178, direction roles / scalar names 156/156.
+// Computed load 156; uniform raw speed 199, with load 199, with native gear 200.
 // @retail 0xf1950
 void __stdcall function_f1950(long vehicle_index, real throttle_input, short new_gear)
 {
@@ -2021,12 +2008,7 @@ void __stdcall function_f1950(long vehicle_index, real throttle_input, short new
 
 	if (VEHICLE_MAX_ANGULAR_VELOCITY(definition) > 0.001f)
 	{
-		real throttle = 0.0f;
-
-		if (!vehicle->unknown385 && !function_f5d70(vehicle_index))
-		{
-			throttle = throttle_input;
-		}
+		real throttle = !vehicle->unknown385 && !function_f5d70(vehicle_index) ? throttle_input : 0.0f;
 
 		char current = vehicle->gear;
 		real gear_ratio = function_f14f0(current, vehicle_index);
@@ -2162,15 +2144,15 @@ void function_f5ee0(long vehicle_index);
 
 /* a wheel's spin advanced by its angular velocity, wrapped to the
    definition's period */
-PRIVATE inline real vehicle_wheel_spin(real spin, real period)
+PRIVATE inline real vehicle_wheel_spin(real spin, real const *period)
 {
-	if (period > 0.001f)
+	if ((*period) > 0.001f)
 	{
 		if (!(spin > 0.0f))
 		{
-			spin += period;
+			spin += (*period);
 		}
-		return (real)fmod(spin, period);
+		return (real)fmod(spin, (*period));
 	}
 	return 0.0f;
 }
@@ -2178,6 +2160,9 @@ PRIVATE inline real vehicle_wheel_spin(real spin, real period)
 /* the physics of type 0 vehicles (the differential-steered ones): the
    engine drives each side's contacts, the turn trading torque between
    the sides */
+// score 115 (was 192): Kept live period receiver, native twice-used gear and result-first torque; zero/scalar residency and spin schedule remain.
+// Live period 136; native gear 190; both 113; scalar roles 192/136/190/113; result-first torque 101 kept plain.
+// Spin exit / period-first / both 101; named absolute steering with each 127; early torque zero 140.
 // @retail 0xf1cd0
 void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -2197,16 +2182,13 @@ void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state
 	long i;
 
 	function_f1950(vehicle_index, engine_throttle, function_f1740(vehicle_index, gear_throttle));
-	if (vehicle->gear == NONE)
+	short gear = vehicle->gear;
+	torque = 0.0f;
+	if (gear != NONE)
 	{
-		torque = 0.0f;
-		torque_magnitude = torque;
+		torque = function_f14f0(gear, vehicle_index) * VEHICLE_GET(vehicle_index)->unknown378;
 	}
-	else
-	{
-		torque = function_f14f0(vehicle->gear, vehicle_index) * VEHICLE_GET(vehicle_index)->unknown378;
-		torque_magnitude = torque >= 0.0f ? torque : 0.0f - torque;
-	}
+	torque_magnitude = torque >= 0.0f ? torque : 0.0f - torque;
 
 	real turn_torque = torque_magnitude * turn;
 
@@ -2217,9 +2199,9 @@ void __stdcall function_f1cd0(long vehicle_index, s_vehicle_physics_state *state
 		state->contacts[i].torque = (i & 1) ? right : left;
 	}
 	vehicle->unknown368 += left * dt;
-	vehicle->unknown368 = vehicle_wheel_spin(vehicle->unknown368, *(real *)(definition + 0x20c));
+	vehicle->unknown368 = vehicle_wheel_spin(vehicle->unknown368, (real const *)(definition + 0x20c));
 	vehicle->unknown36c += right * dt;
-	vehicle->unknown36c = vehicle_wheel_spin(vehicle->unknown36c, *(real *)(definition + 0x20c));
+	vehicle->unknown36c = vehicle_wheel_spin(vehicle->unknown36c, (real const *)(definition + 0x20c));
 	function_2056e0(vehicle_index, state, function_f5e00(vehicle_index), NULL, NULL);
 	function_f1c80(vehicle_index, state);
 	function_f5ee0(vehicle_index);
@@ -2231,28 +2213,25 @@ int __fastcall function_142a60(transform4x3f const *a, transform4x3f const *b, t
 
 /* a wheel's spin advanced by its angular velocity, wrapped into the
    definition's period */
-PRIVATE inline real vehicle_wheel_spin_wrap(real spin, real period)
+PRIVATE inline void vehicle_wheel_spin_wrap(real *spin, real period)
 {
-	spin = period > 0.001f ? (real)fmod(spin, period) : 0.0f;
-	if (0.0f > spin)
+	*spin = period > 0.001f ? (real)fmod(*spin, period) : 0.0f;
+	if (0.0f > *spin)
 	{
-		spin += period;
+		*spin += period;
 	}
-	return spin;
 }
 
 /* the contact turned about its up axis by half the steering angle, in the
    state's frame */
 PRIVATE inline void vehicle_contact_steer(s_vehicle_physics_state *state, s_vehicle_contact *contact, real sine,
-	real cosine)
+	real cosine, quaternionf *rotation)
 {
-	quaternionf rotation;
-
-	rotation.i = 0.0f;
-	rotation.j = 0.0f;
-	rotation.k = sine;
-	rotation.w = cosine;
-	function_141e10(&contact->matrix.rotation, &rotation);
+	rotation->i = 0.0f;
+	rotation->j = 0.0f;
+	rotation->k = sine;
+	rotation->w = cosine;
+	function_141e10(&contact->matrix.rotation, rotation);
 	contact->matrix.position.x = 0.0f;
 	contact->matrix.position.y = 0.0f;
 	contact->matrix.position.z = 0.0f;
@@ -2263,6 +2242,12 @@ PRIVATE inline void vehicle_contact_steer(s_vehicle_physics_state *state, s_vehi
 /* the physics of type 1 vehicles (the wheel-steered ones): the engine's
    torque to every contact, the steered contacts turned, and the wheels'
    spin */
+// score 189 (was 357): Shared quaternion frame, initial vehicle/state homes and gear width agree;
+// torque/contact homes, flag extraction and spin allocation remain. Shared workspace/in-place spin
+// and original bits 304/257/201/272/216; native short gear on the two legal graphs 187/202.
+// Early one-use bit forms 334/92/121 and their short-gear/return-value forms
+// 155/172/101/161/238/263 restored. Bit expressions at their original use point,
+// after contact stores, value/pointer period and original/short gear 201/187/216/198; t09 retained after plain confirmation.
 // @retail 0xf1f80
 void __stdcall function_f1f80(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -2296,18 +2281,24 @@ void __stdcall function_f1f80(long vehicle_index, s_vehicle_physics_state *state
 	{
 		torque = 0.0f;
 	}
-	else if (vehicle->gear == NONE)
-	{
-		torque = 0.0f;
-	}
 	else
 	{
-		torque = function_f14f0(vehicle->gear, vehicle_index) * VEHICLE_GET(vehicle_index)->unknown378;
+		short gear = vehicle->gear;
+
+		if (gear == NONE)
+		{
+			torque = 0.0f;
+		}
+		else
+		{
+			torque = function_f14f0(gear, vehicle_index) * VEHICLE_GET(vehicle_index)->unknown378;
+		}
 	}
 	for (i = 0; i < state->definition->contact_count; i++)
 	{
 		dword flags = state->definition->contacts[i].flags;
 		s_vehicle_contact *contact = &state->contacts[i];
+		quaternionf rotation;
 
 		contact->torque = torque;
 		if (braking)
@@ -2316,11 +2307,11 @@ void __stdcall function_f1f80(long vehicle_index, s_vehicle_physics_state *state
 		}
 		if (TEST_FIELD_BIT((flags >> 2) & 1))
 		{
-			vehicle_contact_steer(state, contact, sine, cosine);
+			vehicle_contact_steer(state, contact, sine, cosine, &rotation);
 		}
 		else if (TEST_FIELD_BIT((flags >> 3) & 1))
 		{
-			vehicle_contact_steer(state, contact, 0.0f - sine, cosine);
+			vehicle_contact_steer(state, contact, 0.0f - sine, cosine, &rotation);
 		}
 		else
 		{
@@ -2333,10 +2324,12 @@ void __stdcall function_f1f80(long vehicle_index, s_vehicle_physics_state *state
 
 	real spin = torque * dt;
 
-	vehicle->unknown360 = vehicle_wheel_spin_wrap(vehicle->unknown360 + spin, *(real *)(definition + 0x20c));
+	vehicle->unknown360 += spin;
+	vehicle_wheel_spin_wrap(&vehicle->unknown360, *(real *)(definition + 0x20c));
 	if (!(TEST_FIELD_BIT(VEHICLE_WORD_BITS(vehicle->flags348)->bit5)))
 	{
-		vehicle->unknown364 = vehicle_wheel_spin_wrap(vehicle->unknown364 + spin, *(real *)(definition + 0x20c));
+		vehicle->unknown364 += spin;
+		vehicle_wheel_spin_wrap(&vehicle->unknown364, *(real *)(definition + 0x20c));
 	}
 }
 
@@ -2360,6 +2353,10 @@ PRIVATE __forceinline real vehicle_friction(real speed, real friction, real scal
    desired speeds along the facing, its left and its up, friction where a
    control is idle, and a torque that turns the vehicle to face its
    facing, banked into its turns */
+// score 830 (was 872): Frame 0x10c versus 0xfc; scalar and matrix homes still differ.
+// Shared cross products 830 kept; shared friction/bank sums 879; both 867; shared
+// normalize/mass scales 861; cross/scales 836; sums/scales 865; all 846; all with
+// both point setters 846. Plain confirms four existing cross3f calls, unchanged call roles.
 // @retail 0xf2360
 void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -2430,9 +2427,7 @@ void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state
 
 	vector3f left;
 
-	left.i = facing->k * up.j - facing->j * up.k;
-	left.j = up.k * facing->i - facing->k * up.i;
-	left.k = facing->j * up.i - up.j * facing->i;
+	cross3f(&up, facing, &left);
 
 	real forward_speed = linear_velocity.j * facing->j + linear_velocity.i * facing->i + facing->k * linear_velocity.k;
 	real up_speed = linear_velocity.k * up.k + linear_velocity.j * up.j + linear_velocity.i * up.i;
@@ -2521,9 +2516,7 @@ void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state
 	vector3f axis;
 	vector3f banked;
 
-	axis.i = facing->j * up.k - facing->k * up.j;
-	axis.j = facing->k * up.i - up.k * facing->i;
-	axis.k = up.j * facing->i - facing->j * up.i;
+	cross3f(facing, &up, &axis);
 	banked.i = cosine * up.i + axis.i * sine;
 	banked.j = cosine * up.j + axis.j * sine;
 	banked.k = cosine * up.k + axis.k * sine;
@@ -2537,18 +2530,14 @@ void __stdcall function_f2360(long vehicle_index, s_vehicle_physics_state *state
 
 	current.scale = 1.0f;
 	current.forward = vehicle->forward;
-	current.left.i = vehicle->forward.k * vehicle->up.j - vehicle->up.k * vehicle->forward.j;
-	current.left.j = vehicle->up.k * vehicle->forward.i - vehicle->forward.k * vehicle->up.i;
-	current.left.k = vehicle->up.i * vehicle->forward.j - vehicle->forward.i * vehicle->up.j;
+	cross3f(&vehicle->up, &vehicle->forward, &current.left);
 	current.up = vehicle->up;
 	current.position.x = 0.0f;
 	current.position.y = 0.0f;
 	current.position.z = 0.0f;
 	desired.scale = 1.0f;
 	desired.forward = *facing;
-	desired.left.i = facing->k * banked.j - facing->j * banked.k;
-	desired.left.j = banked.k * facing->i - facing->k * banked.i;
-	desired.left.k = facing->j * banked.i - banked.j * facing->i;
+	cross3f(&banked, facing, &desired.left);
 	desired.up = banked;
 	desired.position.x = 0.0f;
 	desired.position.y = 0.0f;
@@ -2599,6 +2588,11 @@ PRIVATE inline real vehicle_angle_fraction(real angle)
    toward the controls' speed in the facing's frame, a yaw torque toward the
    steering, torques that hold the vehicle upright while it is off the
    ground, and its boost */
+// score 1053 (was 1124): Frame 0x80 versus 0x74; velocity and force homes still differ.
+// Existing inverse transform 1137; forward transform and accumulation 1053 kept;
+// both 1238; shared cross products 1130; inverse/cross 1134; forward/cross 1056;
+// all three 1222; all with mass scales 1254. Plain confirms the shared in-place
+// forward transform and vector accumulation; original incoming-velocity calculation kept.
 // @retail 0xf3010
 void __stdcall function_f3010(long vehicle_index, s_vehicle_physics_state *state, real steering)
 {
@@ -2755,21 +2749,11 @@ void __stdcall function_f3010(long vehicle_index, s_vehicle_physics_state *state
 				acceleration.j *= 0.9f;
 				acceleration.k *= 0.9f;
 			}
-			if (state->matrix.scale != 1.0f)
-			{
-				acceleration.i = state->matrix.scale * acceleration.i;
-				acceleration.j = state->matrix.scale * acceleration.j;
-				acceleration.k = state->matrix.scale * acceleration.k;
-			}
+			function_142640(&state->matrix, &acceleration, &acceleration);
 
 			real scale = state->unknown6c * vehicle->unknown370;
 
-			force.i += scale * (state->matrix.up.i * acceleration.k + state->matrix.left.i * acceleration.j +
-				state->matrix.forward.i * acceleration.i);
-			force.j += scale * (state->matrix.up.j * acceleration.k + state->matrix.left.j * acceleration.j +
-				state->matrix.forward.j * acceleration.i);
-			force.k += scale * (state->matrix.up.k * acceleration.k + state->matrix.left.k * acceleration.j +
-				state->matrix.forward.k * acceleration.i);
+			vector3f_add_scaled(&force, &acceleration, scale, &force);
 		}
 		if (vehicle->unknown370 > 0.0f)
 		{
@@ -3086,6 +3070,10 @@ PRIVATE inline void vehicle_cross(vector3f const *a, vector3f const *b, vector3f
 /* the orientation the vehicle's physics aims for: its facing held level,
    turned through its flip while it flips (returns whether it flips), else
    the state's own */
+// score 204 (was 204): Restored original body; projection/cross-product scheduling and angle precision remain.
+// Shared cross 204; external cross 326; native forward/up/both 263/269/298;
+// shared cross with forward/both 263/298. Wide angle 177 rejected without exact equality;
+// coordinated external force-inline 326, with wide angle 359; all original contracts restored.
 // @retail 0xf44a0
 bool __stdcall function_f44a0(long vehicle_index, matrix3x3 *facing, s_vehicle_physics_state *state,
 	matrix3x3 *result)
@@ -3735,6 +3723,10 @@ bool __stdcall function_f8070(long bit, word const *flags);
 /* the vehicle object type's function values (+0x4c): its boost, brakes,
    ground contact, speeds, steering, engine and wheels; false for a name it
    does not know */
+// score 864 (was 864): Frame 0x18 agrees; definition EBP and scalar/SSE allocation differ.
+// Complete definition snapshot, result-first, direct active predicate in seven nonempty
+// combinations 1006/864/1006/869/1002/869/1002; snapshot with numeric movement-case
+// source order 1006. Original observations, switch and body restored.
 // @retail 0xf6d10
 bool __stdcall function_f6d10(long vehicle_index, long name, real *value, bool *active)
 {
@@ -4196,6 +4188,13 @@ PRIVATE inline void vehicle_transpose(matrix3x3 *matrix)
    start, thrust toward the speed along the facing (faster diving, with
    boost), strafing, lift against gravity, and a torque that turns the
    vehicle toward its facing, pitched and banked into its turns */
+// score 1166 (was 1429): Frame 0x104 versus 0xd8; index/offset and vector/rotation homes remain.
+// Pitch magnitude 1375; scalar control magnitudes with original steering fabs and
+// desired-up add-scaled 1166; the flip-output matrix workspace 1181 (frame 0xdc).
+// Repeated compound argument: controls/normalization/all magnitudes/target scales
+// 1142/1142/1163/1162; force/brake/up/all vector forms 1142/1142/1108/1124 restored.
+// Three-use steering ratio 1168; fraction with separate magnitude assignment 1163,
+// a three-point incremental gain rejected. Keep original steering fabs and matrix homes.
 // @retail 0xf4800
 void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -4233,7 +4232,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	real pitch = (real)atan2(vehicle->forward.k, sqrt(vehicle->forward.i * vehicle->forward.i +
 		vehicle->forward.j * vehicle->forward.j));
 	real dive = 0.0f > pitch ? 1.0f : -1.0f;
-	real climb = PIN((real)fabs(pitch), 0.0f, 0.58904862f) * dive * g_4678d8 * 1.6976527f + 1.0f;
+	real climb = PIN((pitch >= 0.0f ? pitch : 0.0f - pitch), 0.0f, 0.58904862f) * dive * g_4678d8 * 1.6976527f + 1.0f;
 	real boost = 1.0f;
 
 	if (TEST_FIELD_BIT(VEHICLE_WORD_BITS(vehicle->flags348)->bit4))
@@ -4259,11 +4258,11 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	}
 	else if (vehicle->speed > 0.0f)
 	{
-		throttle = 0.001f > (real)fabs(maximum_speed) ? 0.0f : vehicle->speed / maximum_speed;
+		throttle = 0.001f > (maximum_speed >= 0.0f ? maximum_speed : 0.0f - maximum_speed) ? 0.0f : vehicle->speed / maximum_speed;
 	}
 	else
 	{
-		throttle = 0.001f > (real)fabs(*(real *)(definition + 0x1f8)) ? 0.0f :
+		throttle = 0.001f > (*(real *)(definition + 0x1f8) >= 0.0f ? *(real *)(definition + 0x1f8) : 0.0f - *(real *)(definition + 0x1f8)) ? 0.0f :
 			0.0f - vehicle->speed / *(real *)(definition + 0x1f8);
 	}
 	function_f1380(&acceleration, &target, &velocity, *(real *)(definition + 0x1fc) * throttle,
@@ -4278,7 +4277,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 		drift.k = 0.0f;
 		if (function_30bf0(&drift) != 0.0f)
 		{
-			real brake = 0.0f - (real)fabs(*(real *)(definition + 0x200)) * g_4678d0;
+			real brake = 0.0f - (*(real *)(definition + 0x200) >= 0.0f ? *(real *)(definition + 0x200) : 0.0f - *(real *)(definition + 0x200)) * g_4678d0;
 
 			acceleration.i += drift.i * brake;
 			acceleration.j += drift.j * brake;
@@ -4316,11 +4315,11 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 
 		if (strafe > 0.0f)
 		{
-			strafe_fraction = 0.001f > (real)fabs(strafe_maximum) ? 0.0f : strafe / strafe_maximum;
+			strafe_fraction = 0.001f > (strafe_maximum >= 0.0f ? strafe_maximum : 0.0f - strafe_maximum) ? 0.0f : strafe / strafe_maximum;
 		}
 		else
 		{
-			strafe_fraction = 0.001f > (real)fabs(strafe_maximum) ? 0.0f : 0.0f - strafe / strafe_maximum;
+			strafe_fraction = 0.001f > (strafe_maximum >= 0.0f ? strafe_maximum : 0.0f - strafe_maximum) ? 0.0f : 0.0f - strafe / strafe_maximum;
 		}
 		strafe_target.i = strafe * facing.left.i;
 		strafe_target.j = facing.left.j * strafe;
@@ -4343,7 +4342,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 		acceleration.k = strafe_acceleration.k + (acceleration.k - facing.left.k * along);
 		if (vehicle->turn == 0.0f)
 		{
-			real magnitude = (real)fabs(side_speed);
+			real magnitude = (side_speed >= 0.0f ? side_speed : 0.0f - side_speed);
 			real limit = g_4678d0 * *(real *)(definition + 0x238);
 			real brake = 0.0f - magnitude > limit ? 0.0f - magnitude : (limit > magnitude ? magnitude : limit);
 
@@ -4355,8 +4354,8 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	}
 
 	real horizontal_speed = (real)sqrt(velocity.i * velocity.i + velocity.j * velocity.j);
-	real fastest = (real)fabs(vehicle->speed);
-	real other = (real)fabs(vehicle->turn) > horizontal_speed ? (real)fabs(vehicle->turn) : horizontal_speed;
+	real fastest = (vehicle->speed >= 0.0f ? vehicle->speed : 0.0f - vehicle->speed);
+	real other = (vehicle->turn >= 0.0f ? vehicle->turn : 0.0f - vehicle->turn) > horizontal_speed ? (vehicle->turn >= 0.0f ? vehicle->turn : 0.0f - vehicle->turn) : horizontal_speed;
 
 	if (!(fastest > other))
 	{
@@ -4392,9 +4391,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 		real length;
 
 		desired.forward = vehicle->local_velocity;
-		desired.up.i = desired.forward.i * (0.0f - desired.forward.k) + g_4687b0->i;
-		desired.up.j = desired.forward.j * (0.0f - desired.forward.k) + g_4687b0->j;
-		desired.up.k = (0.0f - desired.forward.k) * desired.forward.k + g_4687b0->k;
+		vector3f_add_scaled(g_4687b0, &desired.forward, 0.0f - desired.forward.k, &desired.up);
 		length = (real)sqrt(desired.up.i * desired.up.i + desired.up.k * desired.up.k + desired.up.j * desired.up.j);
 		if (!(0.0001f > (real)fabs(length)))
 		{
@@ -4439,16 +4436,16 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	{
 		real maximum_steering = *(real *)(definition + 0x204) * 0.017453292f;
 		real speed_fraction = 0.001f > *(real *)(definition + 0x1f4) ? 0.0f :
-			(real)fabs(vehicle->speed) / *(real *)(definition + 0x1f4);
+			(vehicle->speed >= 0.0f ? vehicle->speed : 0.0f - vehicle->speed) / *(real *)(definition + 0x1f4);
 		real steering_fraction = (real)fabs(0.001f > maximum_steering ? 0.0f :
 			vehicle->steering_angle / maximum_steering);
 		real turn_fraction = 0.001f > *(real *)(definition + 0x22c) ? 0.0f :
 			vehicle->turn / *(real *)(definition + 0x22c);
-		real steering_bias = (real)fabs(steering_fraction) * 2.0f;
+		real steering_bias = (steering_fraction >= 0.0f ? steering_fraction : 0.0f - steering_fraction) * 2.0f;
 		real slip = velocity.j * desired.forward.i - desired.forward.j * velocity.i;
 		real slip_bank = 0.0f;
 
-		if (!(0.001f > (real)fabs(slip)))
+		if (!(0.001f > (slip >= 0.0f ? slip : 0.0f - slip)))
 		{
 			if (0.0f > slip)
 			{

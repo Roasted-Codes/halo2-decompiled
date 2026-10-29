@@ -1427,6 +1427,12 @@ void function_d0d20(long unit_index)
 
 /* sends request 0x13 when the unit holds two weapons and either of them
    fails 0x101640 */
+// score 68 (was 68): unit argument in EDI instead of retail stack/EBP; repeated pool-data
+// loads and the short-slot/default homes differ. Primary/secondary/both existing getters
+// 72/74/74; masked guard getter 68, with primary/secondary/both 72/74/74; both getters
+// with a shared guard receiver 70. One parameter address read at first guard/request 57/57,
+// with both getters at first guard/second getter 66/66 (exact-match-only; restored).
+// Both weapon results default-first 70. All executable source restored.
 // @retail 0xd1540
 void __stdcall function_d1540(long unit_index)
 {
@@ -1941,6 +1947,10 @@ struct s_unit_definition_weapon
 /* creates the unit definition's starting weapons (+0x1c0, +0x1c4) and
    gives them to the unit; deletes those it cannot take (or, in state 2,
    already has) */
+// score 95 (was 95): Frame 0xc8 versus 0xc4, spilled ordinal and admission-call convention remain.
+// Entry/definition creation workspace 95/95; outer created handle 95; workspace/handle 95;
+// invalid-item/creation continues 95; successful-admission continue 95; workspace/continues 95;
+// readonly definition/workspace 95; entry ordinal 98; existing masked-index getter 95.
 // @retail 0xccab0
 void function_ccab0(long unit_index)
 {
@@ -2039,6 +2049,11 @@ struct s_unit_weapon_hands
 	byte unknown0b;
 };
 
+// score 65 (was 65): Output ESI versus EDI and true constant BL remain.
+// Round 387: Existing masked lookup at entry/current/next, all seven subsets 65; native
+// parent/seat values 65; paired hand predicates
+// 64 (below gate); both weapon fields at uses 74; shared initial unit receiver 76; native seat
+// mask 65. Original body restored.
 // @retail 0xcb430
 void function_cb430(long unit_index, s_unit_weapon_hands *hands)
 {
@@ -2137,10 +2152,15 @@ bool __stdcall function_cd4e0(long unit_index, short hand, bool flag)
 
 /* the weapon the unit, or the first rider down its children with bit 27 of
    its definition's +0xbc, holds; which unit holds it */
+// score 77 (was 90): Frameless pool/argument/result allocation and first-lookup reload remain.
+// Complete pool snapshot 77 plain kept; header snapshot 94; separate initial/final result 90;
+// pool/result 77; headers/result 94; held-path exit 90; two-use unit lifetime 90; unit/result 90.
 // @retail 0xcbd80
 long __stdcall function_cbd80(long object_index, long *holder_index)
 {
-	long weapon_index = function_cbd50(object_index, UNIT_GET(object_index)->current_weapon_index);
+	s_record_pool *objects = g_4e0300;
+	long weapon_index = function_cbd50(object_index,
+		((s_unit_header *)objects->data)[object_index & 0xffff].unit->current_weapon_index);
 
 	if (weapon_index != NONE)
 	{
@@ -2151,9 +2171,9 @@ long __stdcall function_cbd80(long object_index, long *holder_index)
 	}
 	else
 	{
-		for (long child_index = UNIT_GET(object_index)->first_child_index; child_index != NONE;)
+		for (long child_index = ((s_unit_header *)objects->data)[object_index & 0xffff].unit->first_child_index; child_index != NONE;)
 		{
-			s_unit *child = UNIT_GET(child_index);
+			s_unit *child = ((s_unit_header *)objects->data)[child_index & 0xffff].unit;
 
 			if ((1 << child->type) & 3 && TEST_FIELD_BIT((*(dword *)(UNIT_DEFINITION_GET(child) + 0xbc) >> 27) & 1))
 			{
@@ -2810,6 +2830,10 @@ void function_c5740(long unit_index, bool start)
 /* plays the sounds of a unit's impact: its weapon's (+0x58) when it holds
    a weapon that allows it (0x1012c0), else the globals' material sound
    (+0x154, 0xb4 bytes each) and the definition's +0xac */
+// score 94 (was 94): Frameless length agrees; definition/material/pool register ownership and call setup remain.
+// Pool snapshot 92 (two-point gain rejected); headers 94; shared tag lifetime 94; pool/tag 92;
+// direct unit observations 94; conditional material result 94; weapon getter 121; pool/getter 135;
+// existing masked-index getter 94. Original body restored.
 // @retail 0xceee0
 void __stdcall function_ceee0(long unit_index, long definition_index, short material_index, point3f const *point,
 	vector3f const *forward)
@@ -4239,6 +4263,12 @@ void function_ce6b0(long unit_index, long name, long object_index, real scale)
    flips flag 29 with its sounds and fades +0x264 in (a fifth of a second)
    or out (0.8 s) by it; in state 1 or with the campaign flag it runs the
    state +0x2bc and its timer instead */
+// score 82 (was 82): frame 8 agrees; unit/index ESI/EDI are reversed, then control-bit and
+// flag-word scheduling differ. The sound call chain keeps the object in EDI instead of ESI
+// through 0xc5890 and 0x189210; root-location input at 0xba300 needs its owning body.
+// Native word bit-two view 142; dword bit-29 tests/stores/both 82/82/82;
+// word plus dword tests/stores/both 142/142/142; all plus native control mask 142.
+// Original fields, padding, tests and stores restored.
 // @retail 0xc50a0
 void function_c50a0(long unit_index)
 {

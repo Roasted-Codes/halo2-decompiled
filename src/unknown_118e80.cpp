@@ -288,6 +288,8 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // Round 34: Complete parent-transform value/const-value/reference/const-reference inputs
 // 329/329/220/220; those four with complete native up inputs 353/353/295/295.
 // Original producer and body restored; frame, early save and basis/position homes remain.
+// Round 390: Complete period/default-vector observations and per-use definition acquisition,
+// seven subsets plus native double period 279/242/313/263/296/297/321/341. Original body and helper restored.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {

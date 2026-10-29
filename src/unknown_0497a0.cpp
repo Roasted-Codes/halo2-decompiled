@@ -93,6 +93,13 @@
 // Round 209: Intrinsic copies at history/publication/all outputs 581/581/581; conditional origin 726;
 // origin and basis 825; basis 817; ordinary and late input snapshots 581; all boundaries 825. Restored;
 // actual frame 0x58/0x60, shape/basis/wave homes remain; original sixth-component conversion unchanged.
+// Round 385: Current 0x58-frame basis/wave-vector/wave-scalar homes, all seven subsets, and all with
+// the reciprocal home 581 each. Original names and complete body restored; frame 0x58/0x60,
+// shape/basis homes and thirteen excess bytes remain.
+// Round 227: Complete projected add-scaled values in existing/separate cross outputs 721/721;
+// with shared final scales 797/797; second cross at its consumer 699/699,
+// with shared final scales 825/825. Original projection graph restored;
+// frame 0x58/0x60 and shape/basis/wave homes remain.
 // Round 177: Existing vector setters for source-zero/source-other/both/depth/zero+depth/
 // other+depth/all 580/700/700/702/700/700/700; all plus native point setters 740.
 // One-point gain dropped; original body restored; frame 0x58 versus 0x60 remains.
@@ -467,6 +474,13 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Original scratch scopes, tint initialization, helper calls and endpoint masks restored.
 // Round 206: Whole camera-facing normal/side normalization through the existing two inline helpers,
 // all eight nonoriginal combinations [615, 615, 620, 620, 620, 620, 620, 620]. Grouping changes require an exact match; all restored.
+// Round 385: Final vertex extent/endpoint flags/both 618/622/626; native opacity alone/with
+// extent/flags/both 624/625/630/628; consistent next handle 634. All restored; frame/carrier, endpoint
+// placement and color/vector homes remain.
+// Round 227: Geometry point producers: camera plus scaled-add/minus setter/both
+// 615/615/615; planar setters alone/with plus/with minus/with both
+// 615/615/615/615; all with paired displacement values 630.
+// Original point producers restored; definition/output carriers and color/vector homes remain.
 // Round 177: Existing x87 conversion with C++ integer expression/accumulator/parallel terms/
 // unsigned channels/channel declaration order/late packed result/combined forms 624 each;
 // existing complete packer call 728. All restored; definition/output carriers and endpoint layout remain.

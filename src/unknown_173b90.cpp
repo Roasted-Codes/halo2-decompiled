@@ -898,6 +898,8 @@ public:
 // Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
 // 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
 // All record, request and completion forms restored.
+// Entry matrix/spawn/both workspaces with ordered completion 356/356/356;
+// with word receiver 353/353/353; both workspaces with original completion 292, with word receiver 290; original restored.
 // Round 387: Shared checked-datum boundary with native retained salt, tint consumer, word-pointer flags and ordered completion combinations 292/288/359/360/356/359/353/354; all restored.
 // Round 219: native negative-forward/perpendicular/both setters 294/292/294; cross setter 292;
 // negative/cross 294; perpendicular/cross 292; all 294; with normalization setter 294. Original
@@ -905,6 +907,9 @@ public:
 // Round 221: final completion accumulation, two-part eager/logical and incremental eager/logical,
 // long 376/366/374/366; bool 367/359/360/359. Original result and body restored; Boolean
 // accumulation reaches 1355 bytes but changes the frame and regresses.
+// Round 173: coupled count/visibility/cleanup/unlink inline summaries, all six pairs,
+// count/visibility/cleanup and all four 292 each. Original declarations and complete
+// caller/provider bodies restored; entry completion, flag publication and child/tint homes remain.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1124,6 +1129,9 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // Round 29: child set/clear 220; with early request/index 332; with shifted-word bit five 330;
 // with b-first cross products 366; duplicate tag carrier 314; conditional reference 220;
 // signed group 220; immutable tag 220. Original body restored; tag/group roles and child copy remain.
+// Round 248: definition-getter inline/noinline/both declarations 213 each; with child
+// set/clear stores 219 each; noinline/both with child stores and native word bit five 316/316.
+// Complete getter declaration and body restored; frame agrees, early EDI/tag and child homes remain.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

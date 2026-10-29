@@ -1061,6 +1061,10 @@ struct s_item_flags_view_10b850
 // Original producers, scalar input captures, in-place behavior and flow operands restored.
 // Round 33: Rotation source-component, turn-term and projection scalar role-name subsets,
 // then complete cosine-product roles: 813/813/813/813/813/813/813/813. Original body and all helpers restored.
+// Round 388: Native item receiver reference, with pointer/reference vector outputs and
+// both complete formal orders, 813 each; reversed original pointer contract 813;
+// reversed private dot formals on the latter and two new native receiver contracts 813 each.
+// Original rotation helper, all four callers and every dot tuple restored; frame remains 0x154.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

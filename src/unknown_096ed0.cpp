@@ -117,10 +117,17 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 169: Recovered receiver/output graph: selector, distinct chain-index and callback-output
 // identities, all seven subsets 170; native dword selector 170. Pending selector/index
 // interference and the four-byte cursor/entry/callback home shift remain.
+// Conditional pending/active/both aggregate zero joins 170/170/170;
+// post-query pending/active/both failure lifetimes 173/170/173; both joins with late/shared predicates 173/170.
+// Complete per-use/table-local/traversal-local/owner-local roots on the EBP graph 231/228/228/222; original body restored.
 // Round 173: native signed-byte/byte/short/word selector on the recovered EBP graph
 // 216/216/200/200; complete post-query selector publication at those widths
 // 278/278/266/266. Original selector, table observations and body restored; cursor/entry
 // homes and pending selector/chain-index residency remain.
+// Round 227: On the aligned receiver graph, early size reduction/conditional maxima/both
+// 170/170/170; positive availability and its three combinations 171 each;
+// all with a private pending total 218. Original reductions restored; selector/induction
+// interference and the four-byte cursor/entry/callback shift remain.
 // Round 175: On the recovered EBP graph, pending/active/both native chain-buffer names
 // 170/170/170; two-use pending callback handle 170, with either/both buffers 170/170/170;
 // complete graph with alternate buffer home order 170. Original executable body restored.
