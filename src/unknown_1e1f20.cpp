@@ -793,6 +793,9 @@ void swarm_leader_detach(long actor_index);
 // DH round 234 (fast control 261, ordinary 285): direct callback-field observations with
 // native iterator/cleanup lexical scopes and unsigned cleanup ordinal, eight forms 261 each.
 // Original body restored; frame 0x1c/0x20 and actor/displacement/countdown homes remain.
+// Round 186 (fast control 261, ordinary 285): participant pool/readonly pool/guarded data/pool-data
+// observations with original/const callback locals 262/262, 262/262, 261/261, 262/262.
+// Original pool observations, callback local and body restored; frame and cleanup homes remain.
 // @retail 0x1e1a00
 void __stdcall function_1e1a00(long actor_index, long value)
 {

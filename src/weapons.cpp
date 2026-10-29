@@ -3317,6 +3317,10 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // capture alone/selection/count/both/const both 621 each (fast control 637). Capture
 // plain 621 at 2533/2533 bytes versus baseline 565 at 2526/2533; rejected. Original body restored.
 // Round 168: Failure-threshold/result/recoil subsets 579/567/596/638/605/593/627/627 fast (control 637); ordinary t01/t02/t03/t05/t06/t07 635/573/626/636/600/627. Original 565 restored; preview-only frame recovery rejected.
+// Round 186 (fast control 637): ordinary holder with four initial producer orders
+// 652/655/570/637; the four direct-parameter forms give the same scores.
+// Barrel/holder before definition, original/direct inputs, ordinary 619/619.
+// Original holder qualification, producer order, parameter aliases and body restored.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
