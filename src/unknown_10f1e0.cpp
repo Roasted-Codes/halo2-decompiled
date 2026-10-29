@@ -1277,6 +1277,9 @@ long function_cbd50(long unit_index, short weapon_index);
 // Round 162: pool/data receivers 378/345; shared word unit slot 368; pool/data plus word
 // slot 400/368; data plus dword slot 350; pool plus long slot 390; data with native result
 // 329. Original lookup observations, status graph and argument handling restored.
+// Round 402: native unsigned first/second/controlling handle domains, seven subsets,
+// all 164; all handles with both unsigned identifier domains 188. Original signed
+// domains and body restored; pool/state allocation, count joins and byte normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
