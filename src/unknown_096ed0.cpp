@@ -124,6 +124,10 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 216/216/200/200; complete post-query selector publication at those widths
 // 278/278/266/266. Original selector, table observations and body restored; cursor/entry
 // homes and pending selector/chain-index residency remain.
+// Round 73: retail spills type around the first chain loop only (stored before the chain query, reloaded
+// into EBX at the join) and keeps the counter in ESI and the vtable in EBX; ours keeps type in EBX and
+// spills the counter. Renaming type (two names) or the chain counters (two names) 170 each; the first
+// chain counter declared with its zero before `type = 3` 189.
 // Round 227: On the aligned receiver graph, early size reduction/conditional maxima/both
 // 170/170/170; positive availability and its three combinations 171 each;
 // all with a private pending total 218. Original reductions restored; selector/induction
