@@ -2633,6 +2633,10 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // trigger flag as a named bool for both tests 189; the block declarations reversed 50.
 // Round 221: Complete logical index snapshot long/int/dword/const long 50 each;
 // all four with a separate optional follow-up result join 50 each. Original body restored.
+// Round 89: the reload follows the trigger-entry loop's 0x290e20 call (without that call or that loop the
+// first part gets `mov eax, ebp`); `return` for the walk's break 50; a found flag with the walk after the
+// loop 50; trigger count declared after the threshold 57; threshold as a ternary 50; follow-up event as
+// if/else 50.
 // Round 257: apply/event ordinary-inline-noinline boundary pairs on the recovered
 // pointer/result and actor-step graph 50 each (eight forms); EBP index reload remains.
 // @retail 0x202be0

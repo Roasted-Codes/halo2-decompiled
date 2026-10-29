@@ -3152,6 +3152,10 @@ void function_e4300(long arg_159e6d)
 // Round 282: physical low-byte mask/Boolean/named/early guards 91/91/91/91;
 // native word bitfield with Boolean/early guards 98/98; native byte bitfield 91/91.
 // Original physical word declaration and caller body restored.
+// Round 89: a noinline declaration of 0xe5930 here is ignored (it is defined in another file); one next to
+// its definition (src/unknown_0e57e0.cpp, contributor) gives 10 (61 bytes, unit in ESI as retail), and with
+// the flag test as TEST_FIELD_BIT this matches (alone that test is 98). A noinline declaration of this
+// function then keeps it out of 0xcaf00, which matches too.
 // @retail 0xe4bd0
 void function_e4bd0(long arg_159e6d)
 {
