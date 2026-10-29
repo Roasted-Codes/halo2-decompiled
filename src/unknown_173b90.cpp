@@ -1129,6 +1129,9 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // Round 29: child set/clear 220; with early request/index 332; with shifted-word bit five 330;
 // with b-first cross products 366; duplicate tag carrier 314; conditional reference 220;
 // signed group 220; immutable tag 220. Original body restored; tag/group roles and child copy remain.
+// Round 248: definition-getter inline/noinline/both declarations 213 each; with child
+// set/clear stores 219 each; noinline/both with child stores and native word bit five 316/316.
+// Complete getter declaration and body restored; frame agrees, early EDI/tag and child homes remain.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

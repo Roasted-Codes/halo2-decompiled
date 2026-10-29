@@ -1590,6 +1590,9 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // DL167: Existing scaled-add projected/candidate and shared ray-fallback add producers, seven
 // subsets 553/552/553/609/610/609/632; all with in-place vector sums 623. Original
 // producers, real inputs, word counts and helper restored (fast control/full baseline 552).
+// Round 249: shared final accepted-sum pointer with word/short/long/dword count
+// 612/612/612/619; native sum value with those domains 602/602/602/598.
+// Original separate averaging branches, count domains and all geometry restored.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

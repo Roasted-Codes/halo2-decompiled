@@ -699,6 +699,8 @@ void function_270590(s_path_source *source, s_type_c3b527 const *point, long nod
 // score 225 (was 225): ours sign extends g_46fbe4, which is declared short in
 // include/globals.h, where retail reads the same global as a dword; the frame
 // offsets differ as well.
+// Unsigned-word/dword result 306/225; byte preparation with long/word/dword result 225/306/225;
+// long preparation with long/word/dword result 311/309/311. Default observation and arithmetic restored.
 // @retail 0x1b99d0
 short __stdcall function_1b99d0(long actor_index, s_slot *slot)
 {
@@ -1299,6 +1301,11 @@ struct s_1ba091
 // actor/header observations alone 263/198; single cleanup-result join 258;
 // full-width same result 201; full-width specified with data/actor 288.
 // Original body, iterator record and every type restored.
+// the 0x14 frame agrees; retail acquires object-header data before
+// scaling the actor, ours loads it later. The eligibility mask, entry/result
+// carriers and reusable stack homes still differ.
+// Typed slot payload 198; payload/native parent field 198; payload/raw mask 207, with parent 207;
+// payload/separate entry and iterator 202, with parent 202; separate entry/raw mask 212, all 212.
 // @retail 0x1ba090
 long __stdcall function_1ba090(long actor_index, s_slot *slot)
 {
@@ -1404,9 +1411,11 @@ s_damage_object *function_d05c0(s_unit_child_iterator *iterator);
 void function_1e3400(long actor_index, long squad_index);
 void function_201ad0(long squad_index, long object_index);
 
-// score 218 (was 218): ours spills the cleared flag byte to a stack temporary
-// and branches around it, retail writes the byte straight into the actor, so
-// the whole chain of branches in this function is laid out differently.
+// score 218 (was 218): frame 0x32c and length agree; the driver byte spills
+// where retail retains BL, the squad pointer uses EBX instead of EDI, and the
+// seat walk and conversion homes differ.
+// Current-vehicle/root-index and seat-count/total-seats home names, each with
+// driver or complementary passenger ownership: eight forms, all 218.
 // @retail 0x1bb570
 void __stdcall function_1bb570(long vehicle_index, long actor_index)
 {

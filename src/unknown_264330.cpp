@@ -867,6 +867,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // Round 237: shared initial view lookup 372; actor/reference/prop at uses 414/503/415;
 // actor-reference/actor-prop/reference-prop/all 573/468/570/657 (fast control 372; full 331).
 // All restored; actor ESI and saved/squad/flag homes remain.
+// Round 245: Signed-short three-input priority trees in six candidate orders
+// 352/352/350/351/353/353; two reversed comparison trees 352/351
+// (fast control 356, full 331). Sub-eight gains rejected; original body restored.
 // Round 174 (fast control 372/1262, full 331/1251): existing saved-pointer
 // actor_snapshot/retained_actor/actor_saved/saved_owner identities, each with
 // original/actor_squad receiver identity, 372 each. All restored; full frame 0x20

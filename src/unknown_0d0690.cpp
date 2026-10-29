@@ -1261,6 +1261,8 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // 531/561/559/559; entry declarations 531/561/559/559. Original bool result and every
 // vector/color/rotation operation restored; frame 0x2c versus 0x28 and block/query/result homes
 // remain. Both caller levels preserve their original measurements.
+// Round 245: Ordinary normalization/clamp/curve inline availability, each and all
+// seven combinations, 529 each; all three plus ordinary negation 529. All restored.
 // Round 384: channel-local sample/lower/upper/sample-lower/sample-upper/lower-upper/all
 // clamp captures 591/582/569/581/566/562/569; plain clamp branch stores 572.
 // All eight lose the matched caller; original complete clamp and target body restored.
@@ -1270,6 +1272,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 390: conditional last-selection publication with native entry pointer,
 // combined admission mask and live-count masks 0-7: 529/565/570/567/567/561/574/570.
 // Original scan, positive result, complete math body and all helper/caller contracts restored.
+// Round 247: current-frame normal/color/both role names, entry declarations and their
+// three naming combinations, bounded-color consumption scope with both names: 529 each.
+// Original vector/color homes, declaration phases, selection and complete body restored.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1389,6 +1394,9 @@ real function_30bf0(vector3f *vector);
 // rejected). Original numeric returns/input copy 469/467; entry/root default 489/471; captured
 // length/default plus capture 439/476; coordinated block-query order/order plus capture 455/439.
 // All original helper contracts and bodies restored.
+// Round 245: Rotation trig/axis/cross/projection schedules ACXSP/AXCPS/AXSCP/CAXPS/
+// SAXCP/ASXCP/ACSXP/AXCSP 364/364/430/364/430/430/364/364.
+// Cosine after cross with sine first recovers frame 0x40 and length 1870 at 430; all restored.
 // Round 385: Plain negate/rotate/normalize component loops and pairs/all,
 // long ordinals 422/486/426/505/404/503/485; all with short ordinals 509. Original helpers restored.
 // @retail 0xd4080

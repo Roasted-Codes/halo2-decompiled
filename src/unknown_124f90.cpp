@@ -3456,6 +3456,9 @@ struct s_128ca0
 // 227; word countdown 229; conditional/word 234; complete arms/word 224; all 217, with role names
 // 217. Sub-eight gains 227/229 restored; all other forms restored.
 // Round 168: Native processed real gain with original/early declaration and signed/unsigned raw bits 215 each; all four with shared scale 287. Original body restored; gain homes and clamp joins remain.
+// Round 247: sequential inner/outer/both reference-input gain sums 269/215/269; both with shared
+// scale 242, before pitch 276, before pitch with scale 256, role names 269 and entry declaration
+// with scale 242. Reference-input sequences recover frame 0x494 but regress; original body restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

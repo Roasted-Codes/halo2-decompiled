@@ -1696,6 +1696,9 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // Round 164: nonredundant actor/unit gates, draw-first ordered admission, their seven
 // combinations and all with readonly actor 263 each; all original observations restored.
 // Ammunition span named at its arithmetic producer, with options/probability/delay result-production combinations 263/310/282/315/263/310/282/315; original expressions and result producers restored.
+// Round 249: plain native two-slot shared-query traversal, long/short/word/byte
+// ordinal 275/324/324/324; existing unit receiver with those domains 275/324/324/324.
+// Original private queries, native object declaration and complete body restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

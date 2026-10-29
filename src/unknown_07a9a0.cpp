@@ -1104,6 +1104,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Available, first, last, spread, party count, team count, team size and combined
 // party-boundary slot names 766 each (fast); original names restored.
 // Round 380: Shared capacity height/product/both cases 766/877/876; team NONE/width/both cases 900/937/940; shared imbalance cases 936; all three selectors 963. Original selectors restored.
+// Round 245: Current balance graph result byte/short/long/dword 784/841/841/841;
+// paired group-decision domains 784/844/847/847. All original Boolean carriers restored;
+// frame/session/lookup remain.
 // Round 169: Admission/identity/excess result-join subsets 815/778/827/789/859/803/785;
 // all joins with entry result 785. Original workspace lifetimes and returns restored;
 // frame, session convention and opening lookup expansion remain.
