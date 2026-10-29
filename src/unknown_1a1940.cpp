@@ -119,11 +119,10 @@ void *c_page_heap::allocate_pages(long alignment_mask, long size, long unused)
 		bool free_run = true;
 		long page = index;
 		long checked = index;
-		while (page < end && free_run)
+		for (; page < end && free_run; page++)
 		{
 			free_run = !(bits[page >> 5] & (1 << (page & 0x1f)));
-			page++;
-			checked = page;
+			checked = page + 1;
 		}
 		if (free_run)
 			break;
@@ -138,8 +137,8 @@ void *c_page_heap::allocate_pages(long alignment_mask, long size, long unused)
 	{
 		for (long p = index; p < index + pages; p++)
 			bits[p >> 5] |= 1 << (p & 0x1f);
-		*used_pages += pages;
 		result = base + (index << 12);
+		*used_pages += pages;
 	}
 local_0:
 	return result;
