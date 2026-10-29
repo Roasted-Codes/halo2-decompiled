@@ -3234,20 +3234,24 @@ void __stdcall function_e2fa0(long arg_159e6d, long object_index, void *unused)
 
 /* counts the ticks an actor's biped has been falling too far to jump back
    (+0x3ab), and reports it once a second */
-// score 154 (was 208): Frame 0xa0 recovered; incoming index, native flag tests and probe/energy homes differ.
+// score 88 (was 154): Frame 0xa0, EBX index, native flag loads and probe homes agree; probe/energy and timer scheduling differ.
 // Caller-only noinline declaration 208, with collision arms 206 (two-point gain dropped).
 // Native conversion boundary 166; collision arms 162; Boolean bits 183; both 181;
 // actual count clamp 154 kept; workspace names 166; complete energy parts 166; all 177.
+// Round 196: deferred count with original/conditional collision calls and original/Boolean bits
+// 169/170/88/165; post-probe selected count and clamp 169/170/88/165. Outcome zeroing plus Boolean bits 88 kept.
+// On that graph, named mask ternary/arms 84/84 (four-point additions rejected); complete energy parts 88,
+// complete setters 93, reused up base 88, native time inputs 162. Original call tuple and arithmetic retained.
 // @retail 0xe30c0
 void function_e30c0(long arg_159e6d)
 {
 	s_biped *biped = BIPED_GET(arg_159e6d);
 	byte *definition = BIPED_DEFINITION_GET(biped);
 	byte *state = (byte *)biped + *(short *)((byte *)biped + 0x12a);
-	long count = 0;
+	long count;
 
-	if (!((biped->flags_348 >> 7) & 1) && biped->physics_mode == 1 && !((biped->flags_134 >> 9) & 1) &&
-		!((*(dword *)(definition + 0x1f0) >> 2) & 1) && biped->actor_index != NONE &&
+	if (!TEST_FIELD_BIT((biped->flags_348 >> 7) & 1) && biped->physics_mode == 1 && !TEST_FIELD_BIT((biped->flags_134 >> 9) & 1) &&
+		!TEST_FIELD_BIT((*(dword *)(definition + 0x1f0) >> 2) & 1) && biped->actor_index != NONE &&
 		*(long *)(state + 0x7c) != 0xe0000c3 && biped->unknown399 > function_1469f0(0.5f))
 	{
 		byte *globals = *(byte **)((byte *)g_4e034c + 0x144);
@@ -3300,7 +3304,11 @@ void function_e30c0(long arg_159e6d)
 				count = 0xfe;
 			}
 		}
+		else
+			count = 0;
 	}
+	else
+		count = 0;
 	biped->unknown3ab = (byte)count;
 	if (biped->unknown3ab >= vehicle_round_ticks((real)g_510c54->field_2_3))
 	{

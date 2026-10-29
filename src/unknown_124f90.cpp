@@ -1248,6 +1248,9 @@ long function_2197f0(real gain);
 // Round 160: Interpolation input orders a/t/b 149, b/a/t 148, b/t/a 148, t/a/b 149, t/b/a 148; immutable
 // base plus release gain 149; interpolation/addition home names 149/149. All executable lines and helper
 // contracts restored. One-point previews excluded by the minimum-gain rule.
+// Round 196: native table-array base 200; readonly table 200; short ordinal 170;
+// gain inside gate 234; readonly class/base-release/common result/unsigned gain 200/200/212/200.
+// All restored; table base changes incoming register transport without recovering the entry gain home.
 // @retail 0x127010
 long function_127010(short class_index)
 {
