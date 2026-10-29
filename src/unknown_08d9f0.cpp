@@ -239,6 +239,8 @@ void function_8dd70(void);
 // Round 269: Native session-admission chain split at all seven call-boundary
 // subsets, then all with separate manager/interface gates: 221 each. Original
 // complete chain, short readiness, observations and entire body restored.
+// Native gateway/handler entry declarations with immutable entry decision,
+// seven subsets and complete receiver role names: 221 each. Original lifetimes restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

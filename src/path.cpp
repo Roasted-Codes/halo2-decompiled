@@ -576,6 +576,10 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 // Round 250: signed retry-word ownership before/after output defaults, short/long
 // 103/207/103/207; with separate final retry publication 103/207/103/207.
 // All restored; avoidance materialization and retry-word residency remain.
+// Round 252: flags-first compound/nested avoidance gates 147/147; nonzero remainder
+// with original/compound/nested production 198/203/203 (original: 1116 bytes, first +0x1b1);
+// low-bit parity with original/compound/nested production 214/224/224. Positive-word
+// quotient bounds preserve these predicates; all bodies restored at 98.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {

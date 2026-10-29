@@ -439,7 +439,7 @@ short function_1b8cc0(long object_index, long *seat_object_index);
 bool function_1b9200(long object_index, long prop_index);
 point3f *function_b9dd0(long object_index, point3f *result);
 
-// score 166 (was 189): retail keeps the special-vehicle flag in CL at the shared tail (the
+// score 166 (was 166): retail keeps the special-vehicle flag in CL at the shared tail (the
 // special path does `mov cl, 1; jmp tail`, the scan's exits reload it from the dead actor
 // argument slot) and lays the tail out after the passenger scan; ours reloads the flag from
 // memory there and places the tail right after the special test, so the lockstep compare is
@@ -451,6 +451,10 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // Round 270: reused vehicle identity 202; guarded reused prop identity 166; both 202;
 // native player-seat fields 166; vehicle/prop/both with those fields 202/166/202;
 // all native owners with bool special 221 at 861 bytes. Original restored.
+// Round 252: native actor/timer/both 166/167/167; normalized conditional 208/208,
+// with actor/timer/short both 208/208/206; actual bool field 166, conditional 174,
+// bool carrier with conjunction/conditional 198/175. Raw-byte conditional 146/146/147
+// changed the integer carrier and was excluded. Complete body and field restored.
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {

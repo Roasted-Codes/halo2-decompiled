@@ -328,6 +328,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 32 on branch-owned definition/result-at-join: all BSP observations 234;
 // all collision metadata observations 228; CRT query snapshot 172; BSP/metadata 231;
 // BSP/copy 234; metadata/copy 228; all 231, instance-first all 222. Original body restored.
+// Round 251: bounded vertex byte/signed-byte/word/unsigned-long ordinals
+// 259/259/259/172; each with a complete post-geometry range-end expression
+// 269/269/269/196. Original ordinal and bounds restored; frame/BSP/section and
+// defined vertex joins remain.
 // Round 387: BSP/section carriers and range/plane homes remain. Native fetch output/section/both
 // references 172 each; remaining index-output-section, output-index-section and section-output-
 // index contracts 172 each; output reference with index-first and both references with output-

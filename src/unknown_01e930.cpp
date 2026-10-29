@@ -398,6 +398,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 269: Successful allocation/movie/texture phase nesting, seven subsets,
 // and all with post-protection acceptance nested: 245 each at 1104 bytes.
 // Original early cleanup returns, helpers and full body restored; frame stays 0x3c.
+// Timestamp producer original with inclusive/selected clamp 245/244; forced
+// with original/inclusive/selected clamp 244/245/244; outlined with all three
+// clamps 310 each. Original helper contract, clamp and full body restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {
