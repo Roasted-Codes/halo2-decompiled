@@ -336,7 +336,14 @@ void c_widget::v21()
 #include "slot_handler.h"
 static __forceinline long real_to_long(real value);
 
-// score 89 (was 89): both draw blocks add the left edge to the width in a fresh register before
+// score 88 (was 89): the second block keeps the base edges in named locals, so the right edge's
+// base is one add into the width's register and the two offsets convert in retail's order.
+// The first block still adds the width to the left edge before the offset, which needs a copy of
+// the left edge, and both blocks still pick different registers for the same values.
+// y before x in the second block only 89 (homes right); in both blocks 93; width + left operand
+// order 89; height before width 91; right edge re-derived from the placement after the left offset
+// 108; the base edges kept in named locals in both blocks 92; the conversions moved before the
+// right edge's base 91; the two blocks' offsets swapped 89.
 // x + left (retail adds it into the width's register afterwards), and the two coordinate homes are
 // swapped (retail converts y first). y before x in the second block only 89 (homes right);
 // in both blocks 93; width + left operand order 89; height before width 91; right edge re-derived
@@ -416,13 +423,15 @@ void c_widget::v12(long a)
 			from.x0 = 0.0f;
 			from.x1 = (real)element->width;
 			from.y1 = (real)element->height;
-			to.x0 = (real)(placement->second_x + bounds.b);
-			to.y0 = (real)(placement->second_y + bounds.c);
-			to.y1 = to.y0 - from.y1;
-			to.x1 = to.x0 + from.x1;
-			offset_x = (real)x;
+			real left_edge = (real)(placement->second_x + bounds.b);
+			real top_edge = (real)(placement->second_y + bounds.c);
+			to.x0 = left_edge;
+			to.y0 = top_edge;
+			to.y1 = top_edge - from.y1;
 			offset_y = (real)y;
+			offset_x = (real)x;
 			to.x0 += offset_x;
+			to.x1 = left_edge + from.x1;
 			to.y0 += offset_y;
 			to.x1 += offset_x;
 			to.y1 += offset_y;
