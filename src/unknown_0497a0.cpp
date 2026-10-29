@@ -93,6 +93,14 @@
 // Round 209: Intrinsic copies at history/publication/all outputs 581/581/581; conditional origin 726;
 // origin and basis 825; basis 817; ordinary and late input snapshots 581; all boundaries 825. Restored;
 // actual frame 0x58/0x60, shape/basis/wave homes remain; original sixth-component conversion unchanged.
+// Round 110: retail has no integer truncation of the sixth input product (scale * d.k): written
+// as a plain real product 648 (2629 bytes); with both shape pointers set at entry 620 (2622 bytes);
+// plus the wave's sine arguments read from the global point, frame 0x60 agrees: 600 (2636 bytes);
+// plus the first wave through vector3f_add_scaled 575 (2622 bytes, frame 0x60; v2/v4 homes,
+// shape0's slot and the sine evaluation order still differ: not kept, the sines then read the
+// global while the waves add to its local copy); that form with the sines reading the copy 660;
+// both waves/second wave through vector3f_add_scaled 646/627 (frame 0x54); s1 before the cross
+// product or after s0 575/575. The truncation is a behaviour difference retail does not have.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

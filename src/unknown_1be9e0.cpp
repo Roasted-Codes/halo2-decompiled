@@ -120,7 +120,7 @@ long __stdcall function_1bead0(long actor_index, s_slot *slot)
 /* invites the actor's clump members near enough, the nearest first */
 static __forceinline long real_to_long(real value);
 
-// score 24 (was 88): retail keeps the count test's g_46fbe4 return as its own
+// score 24 (was 24): retail keeps the count test's g_46fbe4 return as its own
 // tail after it and puts the shared g_46fbe8 return last, where ours jumps back
 // to the countdown's g_46fbe4 return and falls into g_46fbe8 (445 bytes against
 // 457). Round 371: typed slot payload and short counters 88; payload/single
@@ -140,6 +140,13 @@ static __forceinline long real_to_long(real value);
 // Countdown-local short/long branch result 90/116; one eligible-branch
 // short/long result 90/94; each with a separate decrement 90/116/90/94.
 // Original status tails and decrement expression restored.
+// Round 110: a second `return g_46fbe8;` after the count test keeps the count
+// test's g_46fbe4 return separate (retail's blocks) but VC lays the shared
+// g_46fbe8 return right after the countdown's: 90 (461 bytes); with nested
+// else returns 90; early node-test return with explicit inner returns 87/90;
+// flat early returns 143; one final return for the count failure 131;
+// count result by if/else 90; else-return nesting alone 24; count test
+// `>= 2` first on the explicit-return graph 24.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {
