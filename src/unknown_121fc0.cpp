@@ -46,6 +46,10 @@ static inline char *function_xe9ecc4(char *string, char const *delimiters, char 
 	return token;
 }
 
+// score 128 (was 128): frame 0xa44 agrees; EBP is saved at token traversal rather than the
+// outer block, and read-size/count/cursor homes differ. Unsigned token / unique / both counts
+// 128/128/128; signed-word token / unique / both 232/144/231; returned copy destination 126,
+// with unsigned counts 126; returned name 199, both returned paths 124 (one-use result, restored).
 // @retail 0x121fc0
 void function_121fc0(void)
 {

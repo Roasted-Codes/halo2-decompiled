@@ -2002,10 +2002,15 @@ bool function_f5d70(long vehicle_index);
 /* runs the vehicle's engine for a tick: its load follows the throttle, a
    new gear engages after a delay (at once when it changes direction), the
    shift timers count, and the gear's torque spins the engine up */
-// score 156 (was 195): Kept conditional throttle result; extra frame word and cached shift-byte home remain.
+// score 156 (was 156): extra frame word and cached shift-byte home remain; conditional throttle retained.
 // Conditional / both-branch throttle 156 kept plain; input-first 191; field-only clamp 192;
 // conditional with clamp 191, native gear 178, direction roles / scalar names 156/156.
 // Computed load 156; uniform raw speed 199, with load 199, with native gear 200.
+// Full current gear 184; uniform gear reads 197; requested direction first 156, with full/live
+// gear 184/197; named shift time 156, with full/live gear 184/197. Separate limited result 152,
+// with full gear / requested direction first / live gear 182/152/197; word delay 155, with full
+// gear 184, with limited result 151. Uniform shift phase byte/word/long 156/154/183; limited
+// result with word phase 150; limited result with word delay and word phase 181. All restored.
 // @retail 0xf1950
 void __stdcall function_f1950(long vehicle_index, real throttle_input, short new_gear)
 {
