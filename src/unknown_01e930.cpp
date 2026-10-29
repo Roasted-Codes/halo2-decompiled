@@ -398,6 +398,8 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Timestamp producer original with inclusive/selected clamp 245/244; forced
 // with original/inclusive/selected clamp 244/245/244; outlined with all three
 // clamps 310 each. Original helper contract, clamp and full body restored.
+// Separate native constant audio arrays at entry: surround bins/volumes, stereo bins/volumes,
+// surround pair/stereo pair/both bins/all 290/300/289/299/307/296/297/306. All restored.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {
