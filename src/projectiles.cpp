@@ -1613,6 +1613,10 @@ real function_17c900(short function_type, real input);
 // readonly center with separate result, with/without setters 393/393. Reuse the existing target
 // point and publish once, scalar/shared setter 365/365; with early index-only salt 348/348.
 // Shared setter plus early salt kept, plain 348; all game-call arguments unchanged.
+// DH round 232: Complete rotation cross/output/both 352/353/345 (345 at retail length,
+// three-point lead rejected); lead-speed product alone/with cross/with rotation/with both
+// 361/374/365/368; all with complete wandering direction 369. All restored; index/output
+// contract and normalization/rotation homes remain. Original arithmetic grouping retained.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -2447,6 +2451,11 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 // DH round 218: existing sound producer 1272; with complete position aggregate, readonly aggregate,
 // sound record name, aggregate/name, both sound/effect array names, aggregate/array names and
 // caller inline declaration all 1272. Every form 4728/4828 bytes, frame unchanged; all restored.
+// DH round 232: Producer-phase effect/sound/both array defaults 1191/1191/1157;
+// primary-scale default at selection 1189, with effect/sound/both defaults 1205/1205/1211;
+// both arrays and both scale defaults at their real phases 1201. Five-point 1157 at
+// 4832/4828 bytes rejected; primary-scale lifetime recovers frame 0x21c but regresses.
+// All executable forms restored; frame 0x220/0x218 and velocity transport remain.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
