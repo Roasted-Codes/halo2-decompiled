@@ -1166,6 +1166,11 @@ bool function_a9940(long index, vector3f *up, vector3f *forward);
 // store in the default-orientation arm, 307; a volatile flag 234 does not). Orientations through an
 // inline out-parameter helper 234; render branch nested under the model test with a return 234;
 // flag computed from the orientation test 312. The esi reload after 0xbfed0 is unique in retail.
+// Round 90: node loop from 0 with `node != 0 &&` in its test 245 (the test stays in the loop; retail's
+// missing loop-head pad follows from the 8-byte count guard, not a threaded label); 0xbfed0 plain with
+// its flags pointer stepped (still matches) 234; no-model mirrored flag read before the matrix 234;
+// 0xb8bd0 marked inline and called in the no-model branch 397 (inlined at every site: matched 0xbcc20
+// and 0x11b710 break); node index declared at the top of the render branch 234.
 // @retail 0xbd090
 void __stdcall function_bd090(long object_index)
 {

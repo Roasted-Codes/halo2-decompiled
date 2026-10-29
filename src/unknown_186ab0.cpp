@@ -150,9 +150,9 @@ void __stdcall function_187510(long arg_0, real arg_1, real arg_2);
 void player_action_initialize(s_player_action *arg_0);
 
 #pragma inline_depth(0)
-// score 135 (was 135): BLOCKED-BY 0xcfe40 (its index arrives in eax, retail ecx); frame 0x54 agrees;
-// selector input, count width, cold clear and output/angle scheduling differ.
-// frame 0x54 agrees; request/choice carriers, protected input convention and cyclic alignment differ.
+// score 134 (was 134): frame 0x54 and selection inputs agree; comparison order,
+// byte-count extension, cyclic operand order, cold clear and output/angle scheduling differ.
+// Earlier input-convention gaps are absent in this baseline; both selection helpers and the count query match.
 // Earlier 279 (was 323): frame 0x54 agrees; selection widths/registers at calls differ;
 // named root / first atan2 / second atan2 / first fmod / second fmod results 161 each;
 // both atan2 / both fmod / all results 161 each (frame 0x5c vs 0x54).
@@ -200,6 +200,9 @@ void player_action_initialize(s_player_action *arg_0);
 // split masks 182/183; publication after action update 143/184, split masks 185/184.
 // Round 342: Complete inclination squared-product pairs, reversed pairs and named sum 148 each; squared accumulator 150;
 // with symmetric named angle shifts 148/148/148/150. All enlarge the frame to 0x5c; original expressions restored.
+// Round 194: shared initial/count/both object producers 388/212/406; cyclic producer 385;
+// initial/cyclic, count/cyclic and all object producers 416/395/426; all with late header
+// accessor 438. Original observations and numerical/output expressions restored.
 // @retail 0x186ab0
 void __stdcall function_186ab0(long arg_0, real arg_1, real arg_2, s_player_action *arg_3)
 {

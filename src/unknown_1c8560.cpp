@@ -56,6 +56,12 @@ PRIVATE __forceinline byte *function_1c8561(s_1c8560_iterator *arg_0)
 // score 67 (was 84): the iterator step returns the datum and the loop tests the pointer, as in
 // retail, but the block that computes the found datum is laid out after the exit test here and
 // before it in retail, which moves the two exits of the loop.
+// The control flow is the same in both builds (the scan's failure branches and its exhaustion
+// reach the not-found block, the scan's jne reaches the found block, and the found block re-tests
+// the index and jumps back to the not-found block); only the place of the found block differs:
+// retail puts it between the not-found block and the shared test (0x1c85d7 falling into
+// 0x1c85f4), ours puts it after the loop body.
+// Tried: actor arm first 64 at 364 bytes; with the step's arms swapped too 88 at 369
 // score 67 (was 67): actor arm first 64 at 364 bytes; with the step's arms swapped too 88 at 369
 // (found block where retail has it, but the not-found block is copied after the test where
 // retail jumps back to it); store orders, early return, inline, data_find_index,
