@@ -2710,6 +2710,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 244: Paired-getter graph with shared scale linear/angular/both 50/50/50; common scale workspace
 // alone/with linear/angular/both 50/50/50/50; shared pair and single admission exit 50. Staged saves, five
 // address orders and final call moves remain; original source restored.
+// Round 183: target entry inline/noinline 50/50; state-update inline alone/with entry
+// inline/noinline 50/50/50; state-update noinline alone/with entry inline/noinline 50/50/50.
+// Paired getter unchanged; all contracts restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

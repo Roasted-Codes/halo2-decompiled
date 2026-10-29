@@ -2799,6 +2799,9 @@ PRIVATE inline void squad_item_set_team(s_widget_item *item, short team)
 // Round 166: unsigned rows 100; bitmap presence 106; absent text 100; row while 100; native
 // animation shift 117; unsigned presence/animation 106/117; presence text animation 109;
 // recovered-prefix game-first/query/unsigned/animation 143/171/171/170.
+// Round 183: existing name/appearance/team payloads before validity bits, all seven nonempty
+// combinations 100 each; all three with one current-item receiver 293. Original setter bodies
+// and complete target restored; receiver reload, row query and animation homes remain.
 // @retail 0x253339
 void c_network_squad_browser_screen::v3()
 {
