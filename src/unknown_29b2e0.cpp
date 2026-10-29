@@ -74,6 +74,12 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 }
 
 // score 389 (was 389): frame 0x2c and length agree; early J load and magnitude/yaw homes differ.
+// Round 89 (fast; aligned count 239 at 389): the 2-D normalize through normalize3d after the k store
+// 398 (sibling 0x29b990 lost, 10); the actor angle fields read at each use as retail does 404; the two
+// angle defaults assigned in the else arm 397 (the three magnitudes then share retail's [esp+0xc]
+// slot, but the frame drops to 0x24); only the first angle's default in the else arm 406 (frame 0x28);
+// J read into a local before the length 399 (still folded). Retail's else arm copies the angle zero
+// from the register that holds the other angle (movaps xmm0, xmm2).
 // early J preload and magnitude/yaw home remain; indexed long/short normalization
 // loops 417/421; pointer loop 423; loop common result 423; real absolute first/both 399/395; loop with
 // real absolute first/both 421/416.

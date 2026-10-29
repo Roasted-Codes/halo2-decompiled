@@ -501,6 +501,13 @@ long function_243b10(long key_b, bool team_only, long *second)
 // 173: that gives retail's exact x87 sequence, so keep it in any later fix. Left: retail spills the
 // inner index (the frame's extra dword) and keeps the table in EBP through the inner loop; ours keeps
 // the index in EAX and folds the entry flags load to `[ecx + ebp + 0x16]`, borrowing EBP.
+// Round 89 (plain, each with the accumulated distance): 0x243b10's `if (count > 0) do ... while`
+// loop 186; an options local as 0x243b10 has 171 (clause code identical, only the key's registers
+// move); the select through the global with the table local after it 169 at 717 B (the slot moves
+// to the stack, caller 0x240160 lost); the index renamed 171 (identical); ctf_options() in the key
+// and the marker test 173; the position through marker_position() 173; the table at each use 200.
+// Retail loads the team mode into EBP while EAX still holds the options pointer (ours coalesces both
+// in EBP), so EAX looks busy in retail's clause 1 too; the index spill is the cause to find.
 // @retail 0x243c00
 void function_243c00(long slot)
 {

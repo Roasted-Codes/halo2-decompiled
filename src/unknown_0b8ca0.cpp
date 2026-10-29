@@ -631,6 +631,14 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 }
 
 // score 231 (was 231): Caller-dependent alignment and scalar/angle homes remain.
+// Round 89: the reduced image self-aligns like retail, so trials were measured there (baseline 247)
+// and confirmed plain: the existing function_baf80 for the root walk 280 (stays out of line; retail
+// calls it out of line from 48 other functions, so this loop is its own); the table read inside the
+// root loop (retail's read after the NONE test, the table re-read after the loop) 216, plain 237;
+// plus a bool result (retail's stack byte) 220; plus the existing function_caf60 for the marker
+// position (retail inlines it) 167 at 895 B, with retail's threaded cluster loop, but plain 288 at
+// 855 B; plus the angle sum in real 191. Lead: apply those three once the full build self-aligns
+// (BLOCKED-BY 0x268c90: without `and esp, -8` EBP is free and holds the object table).
 // caller-dependent frame alignment and scalar homes differ;
 // Caller-dependent eight-byte alignment and scalar/angle homes remain.
 // Earlier 231 (from 231): caller-dependent frame alignment and scalar homes differ;
@@ -1654,8 +1662,18 @@ void function_b8840(long index);
 long function_baf80(long index);
 void function_bba20(long index);
 
-// score 305 (was 305): the frame (0x64) and the body length (1236) agree with retail.
-// What still differs: retail keeps the pool pointer in EBX and re-derives pool->data from it,
+transform4x3f *function_b8bd0(long object_index, short node_index);
+
+// score 285 (was 305): the frame (0x64) agrees; 1239 bytes against 1236. The entry now matches up to
+// +0x76 (pool in EBX, -1 in EAX). Retail inlines the node matrix lookup (0xb8bd0's body, here called
+// out of line because its file is /Ob1) and re-derives pool->data into EBX after the ancestry loop
+// for both the parent and the header, where ours takes the header from the entry's pool->data.
+// Round 89: the node matrix through function_b8bd0 at its use, the link through the early parent
+// pointer (retail's two parent lookups) kept, 305 -> 285 (a local for the matrix 285 too); on it the
+// same fresh lookup written in place as 0xbdef0 does 350; the header from g_4e0300->data 298; index
+// not volatile 319; the bit 7 and byte 0xc0 bit 6 tests by shift 290; the header and its active flag
+// read before the parent 294.
+// Earlier (at 305): retail keeps the pool pointer in EBX and re-derives pool->data from it,
 // ours keeps the pool in ECX and pool->data in EDI, so retail holds -1 in EAX and the object's
 // parent link in ECX where ours holds them in EBX and EAX.
 // Retail also shift-tests the object's flag bit 7 where ours masks it, takes the parent pointer
@@ -1709,8 +1727,6 @@ void __stdcall function_b93b0(long parent_index, volatile long index, volatile s
     function_b7300(index);
     if ((bool)((*(dword *)(object + 4) >> 8) & 1)) function_b87b0(index);
     if ((object[0xc0] & 0x40) && header->type != 7) function_b8840(index);
-    parent = (byte *)OBJECT_GET(parent_index);
-    transform4x3f *nodes = (transform4x3f *)(parent + *(short *)(parent + 0x116));
     *(long *)(object + 0x14) = parent_index;
     short node_index = node;
     object[0x18] = (byte)node_index;
@@ -1721,7 +1737,7 @@ void __stdcall function_b93b0(long parent_index, volatile long index, volatile s
     *(short *)(object + 0x2c) = NONE;
     *(short *)(object + 0x2e) = g_4686c4;
     transform4x3f inverse;
-    function_141590(&nodes[node_index], &inverse);
+    function_141590(function_b8bd0(parent_index, node_index), &inverse);
     point3f position;
     vector3f forward, up;
     object_attachment_point(&inverse, (point3f *)(object + 0x64), &position);

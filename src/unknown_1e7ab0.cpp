@@ -229,6 +229,13 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // 665 [413] (inlined again); plus cases 0/1/31 after 18 666 [355] (retail's case layout); plus the player
 // index as NONE then an if (retail's or/cmp/je shape) 667 [361]. Register roles (retail: state EDI,
 // player ESI, unit index spilled, unit EBX, headers EBP) still differ in all of them.
+// Round 89 (fast; per-case byte sizes compared through both jump tables): cases 0/1/31
+// after 18 650; plus the existing function_14de70 for the player index (retail's or/cmp/je entry, the
+// state base loaded first) 652; plus a plain player pointer 772 at 2132 B, but structurally closest:
+// retail's case order, 20 of 28 case sizes equal, 40 calls as retail, unit index spilled; left are
+// request_weapon out of line (cases 15/18/16/23/9 short), state/player in ESI/EDI (retail EDI/ESI)
+// and headers/unit in EBX/EBP (retail EBP/EBX); request_weapon forced inline 929 (more callees
+// inline, the 0x1e8eb0 tails unmerge); request_weapon taking the unit index 657 (still out of line).
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {
