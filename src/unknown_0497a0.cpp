@@ -699,7 +699,7 @@ void __stdcall function_43720(s_43740_input *input)
     function_52d40(input->bitmap, input->vertices.shader, input->tag, false);
 }
 
-// score 62 (was 63): retail reads the object's field before the frame is set up
+// score 62 (was 62): retail reads the object's field before the frame is set up
 // and compares it with -1, ours loads it into ebp and compares ebp. Retail
 // rereads the tag for input.tag (now matched), keeps the slot index in ebp after
 // the texture test and tests the normal flag as shader + 0x2c. Tried: early
@@ -707,6 +707,8 @@ void __stdcall function_43720(s_43740_input *input)
 // an inline helper taking the tag 62; the normal flag read through the shader
 // pointer 66 (definition moves to the stack); a vertex count local first 64 (it
 // swaps source and definition registers and 0x42b20 stops matching).
+// Round 197 fast trials: Populated request definition readback, direct/stored source and slot x
+// definition/shader normal x retained/removed slot anchor 62, 62, 67, 67, 62, 62, 67, 67.
 // @retail 0x43740
 void function_43740(s_ribbon_source *source, s_ribbon_definition *definition, short slot)
 {
