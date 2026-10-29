@@ -218,6 +218,12 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // kept (plain). Without the snapshot copy 1606 (5990 bytes); buffered cross 1431/1445; float third-block magnitude
 // 1402; float time-phase expression 1386 plain (retail's exact x87 block); single-exit normalizer through
 // vector3f_scale 1581 and tangent vector from the contact field 1624 (both without the snapshot); contact pointer 1644.
+// Round 108 (fast control 1403): the first loop's element pointer starts at +0x50 in retail, +0x54
+// here; retail reads +0x88 once, keeps the first velocity's components in xmm2-4 from the loop top
+// and computes the cross k, j, i (stores j, k, i). First-loop cross through function_206092 1472;
+// +0x88 named once 1451 (read once, as retail); operands of the steering product swapped 1403
+// (same code); retail's cross operand form written out 1439 (diagnostic); ray record at function
+// scope 1403 (frame 0x5cc). All restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {

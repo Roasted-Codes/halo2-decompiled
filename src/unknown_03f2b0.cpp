@@ -1484,6 +1484,13 @@ struct s_133f70;
 // Round 153 (plain): success declared first 173; inline active-entry getter (retail's dead entry lea) 177; with
 // success first 175; plus signed-char previous through a levels pointer 309 (byte forms right, both pool sites fold
 // record + offset where retail adds first); 0x23690's order read through its address 182 (ret 0x1c).
+// Round 108 (plain control 175, aligned 76; fast control 353): header pointer formed before the
+// count store 176; retail's two-step `add eax, ecx; lea ebx, [eax + 0x44]` (and +0xbc) comes back
+// when the record address and the member address sit in separate blocks under the same NONE test
+// (record set in one `if (index != NONE)`, member in a second; diagnostic, not a kept form): cache
+// site 239f, both sites 239f, both with a signed-char previous level 266 plain (aligned 75, retail's
+// 382 instructions); cache slot as a ternary 304f (folds, adds a jmp). The tail remains
+// BLOCKED-BY 0x23690. All restored.
 // @retail 0x4b5d0
 void function_4b5d0(bool force, long override, long object_index, real distance, real priority,
     s_133f70 *record, point3f const *unused, bool project_nodes)
