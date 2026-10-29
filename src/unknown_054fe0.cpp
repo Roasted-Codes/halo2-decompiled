@@ -1140,6 +1140,8 @@ static inline bool session_member_get_qos(s_network_observer *observer, c_class_
 // (two stack arguments): 112, host arm first 112, with continue 112; the same
 // with host read after the observer 109/109. Retail also re-reads member_count
 // in the member check where ours reuses the loop's load.
+// Round 198: guarded-result graphs at the existing channel/observer/member QoS helpers, seven
+// combinations 67 each; all three with late host read 86.
 // @retail 0x64480
 void network_session_get_member_latency(s_session_member_latency *latency, c_class_58d20 *session)
 {
@@ -1366,6 +1368,10 @@ struct s_player_properties
 // default store order 224; no `current` with both/0x40/0x70 groups typed real 204/179/182 (not real
 // types). The name count stays in memory through the first loop in every form (the per-player memset
 // alone decides it); retail keeps it in esi. Retail also compares the clamped team as a movsx'd long.
+// Round 180: Absent-member continues in collection/update/both 184/184/184; cache completion after
+// copy alone/with collection/update/both 180/180/180/180, bounded short count 226. On that cache
+// graph, promoted team/direct current/direct cache observation subsets 183/237/240/180/183/216/220,
+// all with short count 220. Four-point form rejected; original full body restored at 184.
 // @retail 0x65cb0
 void network_session_interface_update_player_properties(c_class_58d20 *session)
 {
@@ -1683,6 +1689,10 @@ static __forceinline bool function_65341(c_class_58d20 **out)
 // getter 142 at retail's length; existing getters with forceinline declarations 162 (kept out of
 // line); per-case getter copies 155 and switch in the body 155 (the session then goes through a
 // stack slot); existing getters without /Ob1 173; per-case result assignments 149.
+// Round 71: with scalar SSE, early status/variant plus a post-call variant reset 146;
+// the reset alone 136; early variant plus reset 138; nested success guards 146;
+// zero-then-assign state 145; ordinary inline selector 238 (398 bytes); state/result
+// declarations swapped 145; pointer-terminated user loop 145. Original restored.
 // @retail 0x65340
 void function_065340(void)
 {

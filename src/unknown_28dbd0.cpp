@@ -73,7 +73,7 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 	return local_1;
 }
 
-// score 186 (was 186): frame 0x11c against retail's 0x118; the request home is four bytes late and the
+// score 185 (was 185): frame 0x11c against retail's 0x118; the request home is four bytes late and the
 // rotation's cross-term homes differ (retail spills two scalar cross terms, sine and cosine). Forms tried:
 // Round 43: mixed two-scalar cross pairs k/j/i-first 241/232/232; request-forward launch copy 246;
 // distinct forward input/local output 235; velocity output with shared/scalar speed scaling 209/209;
@@ -149,6 +149,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // Round 262: complete fixed-axis/constructed-point/both values 234/324/352;
 // each with two-use source index 234/324/352; readonly axis/point-setter
 // publication on the full graph 352/368. Original values, helpers and body restored.
+// Round 238: Nested forced dot/scale/dot+scale/dot+cross/scale+cross/all expansion 185 each; all
+// with inline/automatic rotation 185/185. Original helper and declarations restored; frame
+// 0x11c/0x118 remains.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

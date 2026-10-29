@@ -1380,6 +1380,10 @@ PRIVATE __forceinline bool function_274a51(long arg_0, s_object_seat const *arg_
 
 /* puts the actors an ai index names into the free seats of a vehicle (or
    makes them walk to them), nearest first, best seat first */
+// score 41 (was 41): Frame agrees; iterator-handle/candidate scaling, leave-request registers and seat loads across clearing remain.
+// Round 244: shared displacement dot 41; existing distance producer 278 (782 bytes);
+// pointer-result for traversal 274, with shared dot 274; capacity-first admission 45,
+// with traversal 278; existing request output/seat reference formals 41/41. All restored.
 // @retail 0x274a50
 void function_274a50(long ai_index, long vehicle_index, long filter_range, bool load)
 {
@@ -2537,6 +2541,10 @@ struct s_scenario_scripting_view
 
 /* points the current command script at the point of a point set nearest the
    current actor */
+// score 80 (was 80): actor/set/counter allocation and delayed scripting-data observation still differ.
+// Round 242: search point-table/count/actor-position snapshots 92/86/87;
+// point-table+count, point-table+position, count+position, all three 83/91/97/90;
+// all with loop-local short counter 91. Original complete search restored.
 // @retail 0x2769d0
 void function_2769d0(long point_reference)
 {

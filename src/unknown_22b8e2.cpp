@@ -42,6 +42,9 @@ void function_2d140(long, real const *, long, long, s_filter_vector const *);
 // and bound schedule worse; case/default order 157); offsets added in place 145; a copy plus
 // `+=` per case 163; the two reciprocals first 144, with the per-case sums 160 (bound block start
 // now retail's, frame +8); the table filled vertex by vertex 173/180.
+// Native offset/resource/sequence data declarations, all seven combinations 120;
+// complete native graph plus case-local converted pairs/default point 163.
+// Mode/resource/point homes, offset join and bound scheduling remain; original declarations retained.
 // @retail 0x22b8e2
 void function_22b8e2(s_22b8e2 const *arg_0, long arg_1, color4f const *arg_2)
 {

@@ -95,6 +95,9 @@ static inline bool slot_flag_clear_2403b0(s_slot_table *table, long team)
 // Round 77: unit/weapon/both through object_get 95/95/95 (the pool read stays shared: both callees
 // between them only read memory in this build, so the reload looks like a callee-summary effect);
 // the entry guard split in two 95; the team as a long 119.
+// Native cause-setter/event-sender/notification noinline boundaries, all seven
+// subsets 95; native marker-query noinline boundary 95. Existing declarations,
+// helper bodies, pool observations, two stores and complete scoring graph restored.
 // @retail 0x2403b0
 void __stdcall function_2403b0(long player_index)
 {

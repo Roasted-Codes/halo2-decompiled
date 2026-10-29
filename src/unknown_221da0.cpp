@@ -852,11 +852,17 @@ real function_18cac0(long arg_0);
 // bounds, side priority, strict maximum and full body restored.
 // Round 265: all six lexical orders of door/side/inner long slots, then both
 // uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
+// Round 179: three-state side on the unaligned shared-membership graph, complete arms in
+// long/short/signed-byte/byte 155/179/224/224; first-side default 232/229/230/230. Original
+// ordinal, early absent-side continue, clear return, helpers and complete body restored.
 // Round 186: Initial camera-cluster short/long with guarded/conditional/default-result/early-null
 // admission 218/272/247/275/247/275/218/272. Original direct observations and whole body restored.
 // Round 188: camera-provider/membership ordinary/forced/separate-noinline declaration
 // pairs (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2):
 // 155/169/155/577/155/577/169/585. Original shared inline contracts and body restored.
+// Round 408: all-use structure reads with native real storage and/or final-array
+// publication 229/155/229/155; with consistent audibility 190/192/190/192.
+// Original cached structure, library clears and complete ownership graph restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {

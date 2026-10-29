@@ -90,6 +90,8 @@ static inline void point_along_vector_1c19b0(point3f const *point, vector3f cons
 // sample_end/contact_end names, location/node and start/origin declaration orders 23 each.
 // Round 393: origin input/trace/collision library copies in seven subsets 23 each;
 // native initial origin with both output copies 215. Original producers and complete body restored.
+// Round 90: end named below/ground/target 23/26/23; both conversions passed straight to the call 26;
+// a position pointer for the final call 160; the step scale written in the call 23; tick names 23.
 // @retail 0x1c19b0
 bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_type_f17a25 *path)
 {
@@ -176,6 +178,8 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 // orders 95/94/95; a private copy of the prop iterator 99, with separate returns 96.
 // Current index before lookup/next cursor, rejection guards, reused post-scan
 // decision and closest-first combinations 80, 80, 85, 85, 80, 80, 85, 85.
+// Round 406: existing 2D point difference with direct actor/signedness/selected
+// result policies 84/88/84/88/95/112/95/112; all restored.
 // @retail 0x1c1d50
 bool __stdcall function_1c1d50(long actor_index, s_type_f17a25 *path)
 {

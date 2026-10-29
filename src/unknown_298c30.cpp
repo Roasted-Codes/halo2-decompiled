@@ -142,6 +142,14 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // DH round 234: complete cosine products/all sine products, with reused/separate second
 // trig producers 442/408/442/408; those graphs with native word ordinals 471/471/471/472.
 // All restored; entry/normalized homes and cleanup differ on the retail-size frame.
+// Round 237: arccosine inline declaration, ordinary inline normalizer and ordinary inline
+// candidate emitter, all seven nonempty combinations 408 each; all with queued-function
+// noinline declaration 408. Original helper bodies and declarations restored;
+// matched scoring and the shared-normalizer/caller controls stay 0/749/445.
+// Round 240: Direct two-angle array indexing with angle/candidate/endpoint
+// byte-byte-byte, short-byte-byte, long-byte-byte, short-short-byte,
+// short-byte-short, short-short-short, long-long-byte and long-long-long
+// domains: 408/408/409/458/417/471/463/495. Original cursor, counts and body restored.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
@@ -370,6 +378,15 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // definition, external declaration and both real calls restored.
 // Round 393: Native planar pivot with eight coherent existing rotation-producer role orders:
 // 755/755/755/755/755/755/755/755. Original pivot, helper contracts and both transform outputs restored.
+// Round 396: Native real root APIs in direction/distance/planar normalizers, seven
+// subsets and all with both obstacle roots: eight forms 749 each. All original APIs,
+// helper bodies and precision restored; frame, eager radius and trace/pivot homes remain.
+// Round 240: Split-output planar frame with shared difference/normalization, settings-radius
+// rereads and result-first getter, seven subsets 776/841/788/797/784/835/812;
+// full graph plus shared planar difference 808. Original helpers/body restored;
+// frame/radius and trace/pivot/result homes remain.
+// Round 249: Consistent side/whole-angle/both/bool-side+angle observations 781/767/755/813;
+// on the split-output planar frame 756/786/805/806. Original reads, frame and helpers restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

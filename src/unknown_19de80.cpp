@@ -356,10 +356,15 @@ static inline bool teams_enabled_19e1c0()
 // `!=`, `<=`, a while, the body in the if and a single score compare 421/403/390/390/390; the
 // result local plain, without its initialiser, and with the text buffer first 701/665/433; the
 // volatile result without its initialiser 449; every form restored.
+// Round 272: entry declarations for cause/effect/both teams and both with opponent
+// score, inherited/ordinary result 390/691/390/691/390/691/390/691. Original lifetimes restored.
 // Round 393: Length/copy/comparison/format noinline declarations with inherited result 390/390/390/390;
 // ordinary result 691/691/691/691. All declarations and original case bodies restored.
 // Round 395: consumed name capacity with result after/before copy, result-fed capacity, and direct capacity exits
 // 618/649/519/621; ordinary result with those four capacity lifetimes 692/692/692/692. All restored.
+// Round 409: native cause/effect/both team-field addresses 390/390/394; formatter outcomes 414;
+// with cause/effect/both 411/411/414 (411 is retail length); all with ordinary final result 713.
+// Original result, team values, complete copy/format paths and body restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {

@@ -207,6 +207,8 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // Round 233: Common override attenuation, readonly override metadata and native
 // used-bit expression in seven subsets, then complete used-word expression: 982/886/982/886/982/886/982/982.
 // Common-result forms require a match; all original producers and body restored.
+// Round 407: completed choice-duplicate ordinal long/dword/short/word, each with
+// original/repeated-tag snapshot on the short-query graph 948/948/948/948/947/947/934/934. All restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
@@ -536,6 +538,9 @@ PRIVATE __forceinline void sound_environment_play_cue(long tag)
 // Round 259: Two independent caller-owned cue requests at entry/listener/active/branch
 // scope, each with initializer output first/last, 223 each. Original helper-owned
 // requests and complete body restored; frame, BSP/camera/query and duration homes remain.
+// DL175: Native short/word listener ordinals [346, 346]; const aggregate sentinel tags 270; short then
+// word ordinals with const/mutable tags [346, 346, 346, 346]; signed-byte listener 346. Mutable
+// aggregate alone is an excluded archived repeat. Original listener domain and bulk fill restored.
 // @retail 0x18bb80
 void __stdcall function_18bb80(real elapsed)
 {

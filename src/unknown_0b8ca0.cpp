@@ -684,9 +684,15 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // scores this body 247; there a bool result 276, short result 235 (plain 239, no self-alignment),
 // marker/position/offset declared at function scope 247 each. Retail also keeps the player-index
 // NONE test at the loop latch and widens the zoom argument to 32 bits. Original body restored.
+// Round 189: actual initial/next cluster-query ordinary/inline/separate-noinline
+// declaration pairs (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2), with direct radius,
+// 239 each. Original declarations and radius form restored; caller-dependent alignment remains.
 // Round 176: Comparison-produced near/facing/both long results 236/235/237; Boolean results 287/283/277;
 // one per-player success exit with comparison-produced long/Boolean result 237/277. Direct original
 // radius observations throughout; original result, inherited radius storage and all body statements restored.
+// Round 409: complete pool observations 251; one admitted unit handle throughout 262; both 251;
+// unsigned full handle alone/pool/unit/all 257/257/247/247; all with Boolean result 274.
+// Direct radius in all; original complete body restored.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
@@ -1723,6 +1729,9 @@ transform4x3f *function_b8bd0(long object_index, short node_index);
 // shift subsets 281/285/285/290/281/285/285/290; four-point gain rejected. On native activity,
 // ancestry exit result alone/unsigned offset/uniform pool reads/both 290/290/299/299.
 // Complete original header, private helper and body restored; pool-data, node lookup and SIMD homes remain.
+// Round 191: complete entry/ancestry and accepted-refresh table graphs, reused byte/native
+// receivers 321/329, separate byte/native phase tables 304/328; with the physical slot
+// instead of the byte offset 320/320/303/303. All regress; original table reads restored.
 // @retail 0xb93b0
 void __stdcall function_b93b0(long parent_index, volatile long index, volatile short node)
 {
