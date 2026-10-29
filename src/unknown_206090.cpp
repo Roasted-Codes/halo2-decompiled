@@ -141,7 +141,7 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
-// score 1364 (was 1405): frame 0x5d0 versus 0x58c, component/velocity homes and indexed contact induction remain.
+// score 1364 (was 1364): frame 0x5d0 versus 0x58c, component/velocity homes and indexed contact induction remain.
 // Frame 0x5d0 versus 0x58c; component/velocity homes, contact induction and scheduling remain.
 // Earlier 1585 (was 1596): Frame 0x590 versus 0x58c; component/velocity homes and contact induction remain.
 // Earlier 1600 from 1600: frame 0x580 versus 0x58c; velocity homes and contact induction differ;
@@ -224,6 +224,9 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // +0x88 named once 1451 (read once, as retail); operands of the steering product swapped 1403
 // (same code); retail's cross operand form written out 1439 (diagnostic); ray record at function
 // scope 1403 (frame 0x5cc). All restored.
+// Round 253: Native component cursors scale/add/paired normalizers/scale-add/
+// scale-normalizers/add-normalizers/all/all with ordered end tests
+// 1638/1877/1557/1671/1535/1809/1633/3684. Original complete kernels, captures and body restored.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
