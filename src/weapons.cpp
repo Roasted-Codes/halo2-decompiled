@@ -3579,6 +3579,10 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // Kept scale-override default plus valid candidate, plain 1420/5680; frame and pool carriers remain.
 // Round 246: complementary activity result bool/byte/short/long 1440/1440/1459/1459; the same
 // with entry declaration 1440/1440/1459/1459. Original persistent result restored.
+// Round 280: complete four-way ramp/blend producer forms: named rates 1420;
+// named steps 1420; next values with immediate stores 1420; bounded next values
+// 1432; next values with rates/steps 1420/1420; bounded values with rates/steps
+// 1432/1432. Original producer expressions and stores restored.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

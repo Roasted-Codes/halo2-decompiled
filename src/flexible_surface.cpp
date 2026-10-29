@@ -571,6 +571,10 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // Round 209: Fresh type-field reads/cursors 498/497; with per-scan results 482/498; existing oriented
 // tangent setter 473, tangent and normal setters 472 (one-point lead dropped); both setters with fresh
 // cursors/results 497/482. All restored; frame 0x44/0x2c, descriptor scans and outer D3D expansion remain.
+// Round 280: paired first-match scans normal/tangent and binormal/uv 514;
+// normal/binormal and tangent/uv 514; normal/uv and tangent/binormal 504;
+// triple normal/tangent/binormal 481, normal/tangent/uv 495, normal/binormal/uv 495;
+// all four 491; triple tangent/binormal/uv 487. All original scans restored.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {

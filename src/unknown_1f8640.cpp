@@ -448,6 +448,10 @@ struct s_1f8a70_actor
 // both, long route, long+deferred, long+scope and all lifetime forms
 // 404/433/404/433/412/440/412/440. Callee already matches and returns the output pointer;
 // original caller/body restored, with no interface edit.
+// Round 280: actual scratch-admission-owned final result, bool/byte/short/long
+// with entry default 402/410/448/444; without the default and with literal failed
+// return 410/411/426/411. Default-free forms hoist only the pool pointer load
+// (first +5); data staging and result/route homes remain. All original code restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
