@@ -325,6 +325,10 @@ PRIVATE __forceinline void function_1b9201(long arg_0, vector3f *arg_1)
 // score 11 (was 11): the seat loop keeps the seat count in EBP and the index
 // in ESI here, retail keeps the count in ESI and the index in EBP, so the loop
 // preamble is laid out differently. The rest of the function matches.
+// The shared forward helper 302; state after or between the vector declarations
+// 11; split or function-scope state 11; const seat or state 11; result between
+// the lookups 11; split seat initialization 11; index-first with state after the
+// vectors 11; a positive-count guard 135.
 // @retail 0x1b9200
 bool function_1b9200(long object_index, long prop_index)
 {
