@@ -935,6 +935,11 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 388: Shared scale/normalizer ordinary inline singly/both 385/385/385;
 // scale noinline 425; normalizer noinline 451; noinline scale/ordinary normalizer 425;
 // ordinary scale/noinline normalizer 451; both noinline 415. Original declarations restored.
+// Round 172 DL: Complete first-node rejection ownership with bool/byte/signed-byte/
+// short storage 427/427/427/413; the same four with native complete geometric
+// vector storage 427/427/427/413. Boolean and byte forms reserve 0x24 versus
+// retail 0x28; short restores extent but regresses. Original acceptance,
+// types, helper calls, history qualifier and complete traversal restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1129,6 +1134,12 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Round 220: Normalizer complete input via native/readonly/component/library copy
 // 518/518/172/518; each with zero-length guard return 518/518/172/518.
 // Original normalizer and complete body restored; true-return host and y forwarding remain.
+// Round 172 DL: Native vector storage for sides/entry/both/angular/distance/all,
+// then sides/all with the native normalizer, 172 each. Shared real totals with
+// one final comparison, angular arm first, if/value/result/entry-if/entry-value
+// 279/398/269/279/398; distance arm first if/value/entry-result 417/399/407.
+// All original types, tests, helper calls and complete body restored;
+// early true-return host and side-direction forwarding remain.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1335,6 +1346,12 @@ bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start
 // Round 388: Both corner-success carriers byte/short/word/long 444/440/440/450,
 // with the same domains declared at selection 444/440/440/450. Four-point gains
 // above 30 rejected; original Boolean carriers and declarations restored.
+// Round 172 DL: Selected successor in the ordinary for increment 444; its
+// entry declaration 444; ordinary output-index/radius/both storage 486/469/491;
+// paired word corner results 440; current-record lifetime ending at metadata
+// publication 494, with paired word results 485. The four-count gain fails
+// the eight-count gate. Original successor lifetime, both qualifiers,
+// Boolean corner results, snapshot and full body restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

@@ -2748,7 +2748,7 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
-// score 122 (was 155): frame 0x3c versus 0x38, action/decision and input homes remain.
+// score 122 (was 122): frame 0x3c versus 0x38, action/decision and input homes remain.
 // Returned action comparison plus a separate existing channel-copy statement recover
 // native query/play ordering at retail length; the shared result exit is retained.
 // frame 0x3c versus 0x38; the escaped action short has its own
@@ -2804,6 +2804,11 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // indexed-base/all summaries 155 each; all with the actual returned-action word
 // test 149. The six-count gain fails the eight-count gate; every declaration,
 // provider contract and the complete caller restored. Frame 0x3c remains.
+// Round 172 DL: Escaped action-role name 122; complete query/play/overlay role names 122;
+// Boolean aggregate with completed-success exit 127, also with those names 127.
+// Whole availability decision on returned-query/separate-copy graph, signed/Boolean
+// aggregate and shared/direct success exit 156/158/163/158. All restored;
+// frame 0x3c versus 0x38 and small-home packing remain.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
