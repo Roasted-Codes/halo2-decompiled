@@ -112,6 +112,11 @@ __forceinline void function_293133(real arg_0, vector3f const *arg_1, vector3f *
 // fadd orders, reorders the rotation); result renamed object_index/result/zz_index/aa_index 68 each
 // (slot unchanged); result declared first 69; existing random real for the fraction 145; angle
 // field passed straight to the rotation 80.
+// result, conversion and sine stack homes differ; rotation
+// registers also differ.
+// Transient creation handle with range result, trig input and shared cross boundaries:
+// 361/358/360/357/360/357/359/364. Result, conversion and sine homes plus rotation registers
+// remain.
 // @retail 0x293130
 long __stdcall function_293130(long arg_0)
 {

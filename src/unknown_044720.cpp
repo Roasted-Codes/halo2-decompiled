@@ -161,16 +161,17 @@ void function_44720(void)
         ++index;
     }
 }
-// @retail 0x44c90
-// score 107 (was 107): retail keeps the entry index in eax and the table base
-// in ebp with a frame four bytes smaller, ours puts the index in ebp and the
-// frame four bytes larger, so every local sits four bytes higher
-// score 107 (was 107): level != 31 at the call (no cached byte) gives retail's 0x40 frame
+// score 107 (was 107): frame 0x44 versus retail 0x40; entry-offset construction
+// and the geometry flag reloads differ.
+// Earlier: level != 31 at the call (no cached byte) gives retail's 0x40 frame
 // and call setup, 135 (487 bytes, aligned 42 against 59); retail also re-reads the flags
 // word in the inlined geometry lookup where ours keeps it. On that form: short transform
 // 141; material index read first 135; transform first 136; the lookup given
 // &g_4ba138[(short)index] 136 (503 bytes, flags re-read, but the scenario structure
 // pointer hoisted into ebx).
+// Native context at part/entry/function scope with cached/live level 107/135 each;
+// native context with byte/word level 133/138. Original storage restored; frame and geometry reloads remain.
+// @retail 0x44c90
 void __stdcall function_44c90(long group, dword selection_mask, long level,
     dword and_mask, dword or_mask, dword fallback_and_mask, dword fallback_or_mask, bool force)
 {
@@ -309,6 +310,10 @@ void __stdcall function_44c90(long group, dword selection_mask, long level,
 // Round 63: aligned query/position union with separate center 202 (frame 0x10a4); original-name and
 // reversed-declaration forms 202/202, with long index 203; center lexical rename 202; long index with
 // const entry 191; entry/index declarations swapped 191; short index local 190. Original body restored.
+// Round 180: Large query declared after both list headers with separate center; bound
+// alignment/library center capture subsets 199/199/199/199. Complete native query copy on the same
+// four graphs 207/207/207/207. Separate storage grows frame to 0x10a4; all original alignments,
+// copies, calls and full body restored.
 // @retail 0x45560
 void function_45560(short entry_index, point3f const *center, real radius)
 {

@@ -48,7 +48,7 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 	arg_0->z = arg_3 + arg_1->z;
 }
 
-// score 65 (was 79): the distances go through plane_distance_to_point, which gives retail's
+// score 65 (was 65): the distances go through plane_distance_to_point, which gives retail's
 // sum order in every unrolled copy; the current distance still takes xmm3 for retail's xmm2,
 // with delta y/z in xmm4/xmm2 for xmm3/xmm4 (z subtracted first) and the z interpolation
 // multiplied into delta.z's register where retail multiplies into t's. Round 81: explicit
@@ -70,10 +70,10 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // computed before delta, without the span local. In the 4x unrolled body the copies' current-distance
 // sums differ: retail copy 1 i*x + k*z + y*j, copy 2 i*x + y*j + z*k; ours copy 1 i*x + k*z + j*y,
 // copy 2 i*x + z*k + y*j.
-// score 65 (was 65): distance/delta XMM homes and final Z-product destination remain.
+// Earlier: distance/delta XMM homes and final Z-product destination remain.
 // Existing interpolation inputs by vector/point/both values 709/498/872; native component
 // array 65; shared scale stage 353; point-value return 519; early Z product 307; vector/early Z 709.
-// score 65 (was 65): distance/delta SSE homes and destructive Z-product destination remain;
+// Earlier: distance/delta SSE homes and destructive Z-product destination remain;
 // direction-output-point-fraction 65; point-output-direction-fraction 65; direction-point-fraction-output 65;
 // point-direction-output-fraction 65; products before stores 65; equality bound 1280;
 // emission-count scope 194; complete XY before publication 124.
@@ -81,10 +81,14 @@ PRIVATE __forceinline void function_11fc81(point3f *arg_0, point3f const *arg_1,
 // Complete endpoint consumer 297; distance-input consumer 332; complete edge consumer 297;
 // difference input reference 65; complete plane input 392; current/prior classifications
 // at use 1268/455; retained-side classifications 469.
-// score 65 (was 65): same XMM homes (ours delta z takes xmm2 and receives the z product).
+// Earlier: same XMM homes (ours delta z takes xmm2 and receives the z product).
 // Loop-carried updates as distance/inside/point and inside/distance/point 65/65; z product
 // written k * t 65; current distance as two statements like the previous one 83; span
 // before delta with t passed inline 65.
+// Round 177: Remaining capacity on the shared-distance graph 452; with output cursor
+// 484; capacity-return exits alone/with cursor 1245/1245; count at writes 452;
+// last-index bound alone/with count at writes 455/455; unsigned output count 452.
+// Original direct capacity tests, signed count, loop, helpers and float trees restored.
 // @retail 0x11fc80
 long function_11fc80(
 	plane3f const *plane,
