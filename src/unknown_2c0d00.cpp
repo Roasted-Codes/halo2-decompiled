@@ -1105,6 +1105,12 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Native unsigned/signed byte returns with original tests, terminal comparison values and
 // a shared narrow result 172/172/172/172/172/172; shared-dot second-side-first ordinary
 // storage with narrow value returns 350/350 at 1465 bytes. Original bool contract restored.
+// Round 382: both direction constructions before normalization, first/second
+// construction and normalization orders, with original/late perpendicular:
+// 178/395/386/395/178/395/386/395. Original complete producer sequence restored.
+// Round 251: complete side-direction first/second-input staging 411/409;
+// entry-direction first/second-input staging 410/410; side/entry first-first,
+// first-second, second-first, second-second 472/472/457/471. Original outputs and body restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1299,6 +1305,11 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 234: entry-snapshot/displacement/conversion scope endings and combinations
 // 442/444/442/444/442/444/442; tangent consumption scope 444. Two-point gains rejected; original body restored.
 // Round 379: Data/single-step/both terminal exits 484/444/484; data-first acquisition alone/with data/single/both exits 470/478/470/478; traversal-only radius with both exits 485. Original body restored.
+// Round 165: Early actual data-result NULL lifetime coupled with source-radius/output-
+// index/traversal store subsets 469/486/491/466/471/487/496; combined existing endpoint setters
+// 496. Original data producer, both inherited local qualifiers, arm order and endpoint
+// construction restored. Frame 0x11c versus 0x10c, persistent zero and metadata/radius homes
+// remain.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

@@ -1050,7 +1050,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 	default: __assume(0);
 	}
 }
-// score 766 (was 766): Frame 0xd4 versus 0xb4, session input and protected opening lookup expansion remain.
+// score 766 (was 766): retail's frame is 0xb4 and it takes the session in EAX and the output pointer
+// on the stack, while ours has a 0xd4 frame and takes both on the stack; retail also calls the matched
+// 0x192e60 out of line, ours inlines it.
 // frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte
 // Frame 0xd4 versus 0xb4, session input and initial lookup expansion remain.
 // Earlier: frame 0xd4 versus 0xb4, opening session home and lookup expansion remain; tried byte

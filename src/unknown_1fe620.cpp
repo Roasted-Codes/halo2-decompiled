@@ -60,6 +60,9 @@ static __forceinline long real_to_long(real value);
 // Round 381: Shared angular caps with joined/terminal/conditional/nested results 465/431/431/465;
 // force-inline repeats 465/431/431/465. Original independent caps restored; frame/input ownership
 // remain.
+// Round 170: Common adjusted-timer float/conversion, timer-scope and entry reuse, direct initial conversion,
+// integer/store join, direct final conversion, shared entry results and entry scratch
+// 450/450/458/450/443/450/458/450. Original three conversions and all arithmetic groups restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {
