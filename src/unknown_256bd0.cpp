@@ -203,6 +203,10 @@ struct s_object_flags_256bd0
 // Round 216: real iterator zero aggregate/full aggregate/CRT clear/index defaults
 // 243/244/242/231; before the flags lookup 247/253/246/223. Original iterator input,
 // initializer and private step restored; frame 0x114/0x110, cached activity and homes remain.
+// Round 72: active test outside with the next result named, index copied, then the entry
+// selected 288 (frame 0x110 but the entry block reorders); select then copy inside the active
+// test 201; iterator before the minimum 205; reversed minimum compare 201; selection stored
+// before the minimum 201.
 // Full native position/direction/placement copies on noinline-initializer/ordinary-datum
 // boundaries, all seven subsets 194 each; all copies with selected-before-minimum publication
 // 194. Frame 0x110 recovered, but seven-point gains rejected; all declarations and bodies restored.

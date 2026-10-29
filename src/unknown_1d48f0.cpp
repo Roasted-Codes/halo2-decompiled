@@ -170,6 +170,22 @@ const dword g_455978[81] = {
 // 306/341/314/306; each with shared optional-ray difference 306/341/314/306.
 // Native copies lengthen the body; optional-state homes and selective
 // location/range expansion remain. All endpoint producers and helpers restored.
+// Round 387: Optional-state homes and selective location/range expansion remain. Actual in-place
+// transform with input/output native home, aggregate/CRT point publication and complete basis
+// setter combinations: eight forms 352 each at 2070/2083 bytes. Original separate input/output
+// matrices and every existing producer restored.
+// Round 389: native missing-location result bool/byte/short/long 477/477/487/486;
+// each with entry constant initialization 477/477/487/486. Original positive result and
+// lifetime restored; aligned frame agrees, optional-state homes and helper expansion remain.
+// Round 392: selected-cluster outcome in short at current/entry/control/SSE boundaries
+// 314/474/472/472; long 314/477/475/475. Current lifetime reaches retail length,
+// but homes and selective helper expansion remain. Original Boolean outcome restored.
+// Round 257: inflated-bound scalar before descriptor construction 461, const 461;
+// both with six-use center 496/496; early filter 459/459; center and filter 497/497.
+// Original scalar lifetime, field observations and descriptor stores restored.
+// Round 250: native lower/upper/translation vector producers, subsets 1..7
+// 494/490/547/365/508/521/562; all with complete endpoint copy 601.
+// All restored; optional-state homes and selective helper expansion remain.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

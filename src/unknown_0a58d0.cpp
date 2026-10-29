@@ -852,6 +852,12 @@ PRIVATE inline bool z_state_real_valid(real value)
  return (*(long *)&value & 0x7f800000) != 0x7f800000;
 }
 
+// matches retail byte for byte: both decoded counts are read into long locals, the first from the
+// stored byte before the first word read and the second from the state field after it, which
+// reproduces retail's register use in the widening and in the final bound test.
+// Long, unsigned long and int first-count locals all match; an unsigned short local gives 37 and a
+// byte second-count local gives 9.
+// Earlier forms (before the 0x195240 argument
 // score 9 (was 9): the two mask-count arguments are extended into ECX/EDX where retail
 // uses EAX (so the first word store comes after the second count load), and the bound test
 // holds the size in EAX where retail uses ECX. Earlier forms (before the 0x195240 argument
@@ -947,8 +953,10 @@ bool function_a6d50(long flags_address, long state_address, s_bitstream *stream)
   if (result && (state[0x61] <= 16)) result = true; else result = false;
   if (state[0x61] > 0)
   {
-   *(word *)(state + 0x62) = (word)function_1959c0(stream, state[0x61]);
-   *(word *)(state + 0x64) = (word)function_1959c0(stream, state[0x61]);
+   long first_bit_count = state[0x61];
+   *(word *)(state + 0x62) = (word)function_1959c0(stream, first_bit_count);
+   long bit_count = state[0x61];
+   *(word *)(state + 0x64) = (word)function_1959c0(stream, bit_count);
   }
   *flags |= 0x200;
  }

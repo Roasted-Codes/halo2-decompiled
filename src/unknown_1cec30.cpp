@@ -18,6 +18,7 @@ static __forceinline long real_to_long(real value);
 #include "unknown_122870.h"
 #include "normalize3d.h"
 #include "constraint_helpers_314090.h"
+#include "joint_descriptions_312920.h"
 
 void __cdecl function_2d91d0(void *array, long element_size);
 
@@ -1839,12 +1840,6 @@ struct s_component_joint_model
     s_component_joint_hinge *hinges;
 };
 
-class c_component_joint_strength
-{
-public:
-    void set_strength(real strength);
-};
-
 // @retail 0x1d35d0
 void function_1d35d0(s_havok_component *component, long constraint_index, real scale)
 {
@@ -1878,7 +1873,7 @@ void function_1d35d0(s_havok_component *component, long constraint_index, real s
             joint[0x84 / 4] = (real)sin((angles->plane_minimum > angles->plane_maximum ? angles->plane_maximum : angles->plane_minimum) * scale * 0.01745329238474369f);
             joint[0x88 / 4] = (real)sin((angles->plane_minimum > angles->plane_maximum ? angles->plane_minimum : angles->plane_maximum) * scale * 0.01745329238474369f);
             joint[0x80 / 4] = (real)cos((angles->cone_minimum > angles->cone_maximum ? angles->cone_minimum : angles->cone_maximum) * scale * 0.01745329238474369f);
-            ((c_component_joint_strength *)joint)->set_strength((override_strength != 0.0f ? override_strength : angles->strength) * scale);
+            ((lane_a_ragdoll *)joint)->set_strength((override_strength != 0.0f ? override_strength : angles->strength) * scale);
         }
         break;
     case 1:
@@ -1900,36 +1895,6 @@ void function_1d35d0(s_havok_component *component, long constraint_index, real s
     }
 }
 
-struct c_component_joint_snapshot_0
-{
-    __m128 data[6];
-    c_component_joint_snapshot_0();
-};
-struct c_component_joint_reader_0
-{
-    void read(c_component_joint_snapshot_0 *output);
-};
-
-struct c_component_joint_snapshot_1
-{
-    __m128 data[9];
-    c_component_joint_snapshot_1();
-};
-struct c_component_joint_reader_1
-{
-    void read(c_component_joint_snapshot_1 *output);
-};
-
-struct c_component_joint_snapshot_2
-{
-    __m128 data[9];
-    c_component_joint_snapshot_2();
-};
-struct c_component_joint_reader_2
-{
-    void read(c_component_joint_snapshot_2 *output);
-};
-
 // @retail 0x1cff80
 void function_1cff80(s_havok_component_element0c const *constraint, point3f *pivot_a, point3f *pivot_b)
 {
@@ -1937,12 +1902,12 @@ void function_1cff80(s_havok_component_element0c const *constraint, point3f *piv
     {
     case 2:
         {
-            c_component_joint_reader_2 *joint = (c_component_joint_reader_2 *)constraint->contact;
+            lane_a_ragdoll *joint = (lane_a_ragdoll *)constraint->contact;
             c_component_joint_snapshot_2 snapshot;
-            joint->read(&snapshot);
-            real x = snapshot.data[1].m128_f32[0];
-            real y = snapshot.data[1].m128_f32[1];
-            real z = snapshot.data[1].m128_f32[2];
+            joint->export_description(&snapshot);
+            real x = snapshot.pivot_a.m128_f32[0];
+            real y = snapshot.pivot_a.m128_f32[1];
+            real z = snapshot.pivot_a.m128_f32[2];
             pivot_a->x = x;
             pivot_a->y = y;
             pivot_a->z = z;
@@ -1953,12 +1918,12 @@ void function_1cff80(s_havok_component_element0c const *constraint, point3f *piv
         break;
     case 1:
         {
-            c_component_joint_reader_1 *joint = (c_component_joint_reader_1 *)constraint->contact;
+            lane_a_limited_hinge *joint = (lane_a_limited_hinge *)constraint->contact;
             c_component_joint_snapshot_1 snapshot;
-            joint->read(&snapshot);
-            real x = snapshot.data[1].m128_f32[0];
-            real y = snapshot.data[1].m128_f32[1];
-            real z = snapshot.data[1].m128_f32[2];
+            joint->export_description(&snapshot);
+            real x = snapshot.pivot_a.m128_f32[0];
+            real y = snapshot.pivot_a.m128_f32[1];
+            real z = snapshot.pivot_a.m128_f32[2];
             pivot_a->x = x;
             pivot_a->y = y;
             pivot_a->z = z;
@@ -1969,12 +1934,12 @@ void function_1cff80(s_havok_component_element0c const *constraint, point3f *piv
         break;
     case 0:
         {
-            c_component_joint_reader_0 *joint = (c_component_joint_reader_0 *)constraint->contact;
+            lane_a_hinge *joint = (lane_a_hinge *)constraint->contact;
             c_component_joint_snapshot_0 snapshot;
-            joint->read(&snapshot);
-            real x = snapshot.data[1].m128_f32[0];
-            real y = snapshot.data[1].m128_f32[1];
-            real z = snapshot.data[1].m128_f32[2];
+            joint->export_description(&snapshot);
+            real x = snapshot.pivot_a.m128_f32[0];
+            real y = snapshot.pivot_a.m128_f32[1];
+            real z = snapshot.pivot_a.m128_f32[2];
             pivot_a->x = x;
             pivot_a->y = y;
             pivot_a->z = z;
@@ -2863,6 +2828,12 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // converter position declared first 206; translation read before rotations 254; converter force-inline 206 (plain).
 // Round 33: Native transform-value converter input, with pointer/reference output, output order
 // and actual output-address return combinations: 321/321/321/321/321/321/321/321. Original converter/body restored.
+// Round 233: Call-free native body records first/second/both, then each with
+// readonly first links, both with first-link/count order and both refinements:
+// 317/203/332/317/203/332/374/374. Original records, output reloads and protected call tuple restored.
+// Round 182: first/second/both actual link references 206/206/206; native body
+// record references confined to count/node searches, alone/with either/both links
+// and mutable body records, 332/332/332/332/332. Original records and body restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

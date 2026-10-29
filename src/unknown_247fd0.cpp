@@ -422,9 +422,23 @@ void function_246e60(long arg_0, dword arg_1, s_particle_impact const *arg_2, s_
 // 368 (retail's load/and/store), both 367 (both exact, later registers move); flag bit 4 through a
 // word read 374 (retail's `shr al, 4; test al, 1`, but the definition is reloaded from the stack);
 // all three 364 (1659 bytes). /G5, /G6 and /G7 compile-only all fold as ours does.
+// System-getter/cache ordinary-inline-noinline declaration pairs, eight non-original
+// forms, 356 each; getter-inline pairs lose a reduced matched caller. All declarations restored.
 // Round 383: coherent live particle/live descriptor/retained allocation pool 709/367/359;
 // particle+descriptor/particle+pool/descriptor+pool/all/all with live settings
 // 731/752/367/755/807. Original record observations, helper graph and complete body restored.
+// Existing cache update method 356; with initial shared scale/blend sum/loop lookup
+// 376/356/376; scale+lookup/scale+blend/lookup+blend/all 397/376/376/398. All restored.
+// Round 264: collision/terminal-dispatch ordinary-inline-noinline caller declaration
+// pairs, eight combinations 356 each; consistent dispatcher inline/noinline in its
+// defining unit and every forward declaration 423/356. Every declaration and body
+// restored; late EBP preservation, random/blend/getter homes remain.
+// Round 186: Independent native blend/probe/placement consumer-scope masks 0-7 on the retained
+// motion graph 465/465/466/466/465/465/466/466. Original grouped workspace, native collision, source
+// velocity and complete body restored.
+// Round 188: joint reciprocal result stages, ternary/explicit/default-update pairs
+// (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2):
+// 356/357/356/351/356/351/357/353. Five-point nonmatch leads rejected; original results restored.
 // @retail 0x247950
 void function_247950(s_particle_system_datum *arg_2, s_particle_spawn_definition const *arg_3,
 	dword arg_4, real arg_5, real arg_6, real arg_7, s_247950 *arg_1, s_247fd0 *arg_0)
