@@ -951,6 +951,8 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // Round 389: scalar-selector single-result chains, positive nesting, regular/alternate/constant
 // defaults, negative/positive ternaries and mixed publication 224/226/219/231/228/224/235/224.
 // Five-point default-result gain also loses dispatcher 38; original result graph/callers restored.
+// Round 259: five complete shared inline-append formal orders and actual output
+// pointer/reference result contracts 224 each (eight forms). Original helper and all calls restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
@@ -1206,6 +1208,8 @@ void c_sound_effects::add_source_mixbins(s_sound_mixbin_source *source, bool rea
 // Round 389: actual appended-pair pointer/reference returns, signed/unsigned destinations
 // and forced/ordinary inline combinations 215 each, 640/606 bytes. Original append producer,
 // every caller and the frame 0x10/x87 send graph restored.
+// Round 259: native output-reference append with six complete formal orders and
+// pointer/reference output results: eight forms 200 each. Original helper and all calls restored.
 // @retail 0x2af920
 void c_sound_effects::add_sends(s_sound_send_parameters *parameters, long unused, long mode, s_mixbin_settings *mixbins)
 {

@@ -1914,6 +1914,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Round 161: Coordinated definition/header inline query/setter/sampler/query-setter/query-
 // sampler/setter-sampler/all-three/aiming sampler: 411 each (unchanged reduced control 411; full
 // 410). Every specification restored.
+// Round 258: Complete final offset aggregate/const/assignment/library snapshots, each with
+// scalar/shared adjustment subtraction, 571/575/571/575/571/575/571/575 against reduced 411.
+// Original field observations, helpers and body restored; full score remains 410.
 // Round 386: real/double ammunition-frame storage 439/462; named last-frame
 // conditional with long/real/double result 411/417/438; complete result arms
 // 411/423/442 (fast control 411, full 410). Original integer frame and body restored.

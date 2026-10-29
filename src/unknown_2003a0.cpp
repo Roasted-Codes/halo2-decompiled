@@ -1824,6 +1824,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 27: lookup/consideration expansion boundaries, ordinary/inline/forced
 // in all eight non-original pairs [546,546,305,546,546,305,462,462]. Original
 // helper bodies and metadata restored; coupled count/best/point homes remain.
+// Round 260: five complete consideration input/selection/output formal group orders,
+// and nearest/best/both native output reference contracts, 257 in all eight forms.
+// Original helper signature, both callers and complete executable body restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2014,6 +2017,8 @@ bool function_1df5d0(short team_a, short team_b);
 // Round 164: shared swarm input 179; shared pool getter 179; aggregation phase 235; phase swarm 235;
 // phase pool getter 235; iteration actor scope 182; actor scope swarm 182; all native scopes 235.
 // Zero/sentinel iterator seeds 243/228; actor pointer/health names 179/179; shared actor level 248; shared definition flags 179; live last-update reads 179; health publication before count 179. Cursor memory home and contribution allocation remain.
+// Round 257: complete live squad observations by byte displacement 357 each
+// with native count/header begin/both; native accessor 374/375/374/375. All restored.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2180,6 +2185,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // live state getter 275. Original body and rounding helper restored; early saves and intersection spill remain.
 // Exact tick result 312; native word index/actor type 275/275; complete point value 275;
 // value/lexical order 275; failed-team result 275; first-overlap exit 305; early output object 275.
+// Round 260: the existing shared rounding producer at all three conversions, with every
+// subset of entry area/point-pair/location storage, 275 in all eight forms. Original
+// producer, helper bodies, declaration scopes and executable body restored.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2604,6 +2612,8 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // trigger flag as a named bool for both tests 189; the block declarations reversed 50.
 // Round 221: Complete logical index snapshot long/int/dword/const long 50 each;
 // all four with a separate optional follow-up result join 50 each. Original body restored.
+// Round 257: apply/event ordinary-inline-noinline boundary pairs on the recovered
+// pointer/result and actor-step graph 50 each (eight forms); EBP index reload remains.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {
@@ -2795,6 +2805,9 @@ static __forceinline long real_to_long(real value);
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
 // Round 117: Activity input group/squad/both 227/227/227; conversion-workspace names 227; factor-first periods 227; ordinary inline group/squad 227/227.
 // Round 121: Boolean group-step contract 227; unused group/squad/both suffix words removed 228/228/228; typed squad-step return 227. Original records and helper contracts restored.
+// Round 260: native group/squad/both iterator reference formals 227 each; group or squad
+// references with its activity input 227 each; both references with group/squad/both activity
+// inputs 227 each. Original helper contracts, observations and all four walks restored.
 // @retail 0x202720
 void function_202720(void)
 {
@@ -2978,6 +2991,9 @@ void function_2011f0(long arg_0);
 // 336/391/334/389 at the same lengths. Gains of two/four are below threshold; body restored.
 // Round 198: Placement/prior-object lookup declarations, ordinary/inline/noinline
 // in all eight non-original pairs, 338 each. Frame 0x134 agrees; original boundaries restored.
+// Round 257: all group-table fields observed through a byte displacement
+// 485; with one squad receiver 426, promoted difficulty 495, both 414;
+// native group-array observations 538/466/537/452 in the same order. All restored.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {

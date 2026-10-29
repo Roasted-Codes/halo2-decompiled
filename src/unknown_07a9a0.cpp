@@ -1113,6 +1113,8 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Round 389: independent player/peer, machine/member and party induction identities,
 // all seven subsets, then entry declarations for all five counters: 766 each (fast).
 // Original counter names and declaration lifetimes restored; frame/session/lookup remain.
+// Round 261: explicit initial histogram memset with word/short/long/dword cells
+// 820/820/844/844; each with byte balance argument 871/871/870/870. Original clear and cells restored.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

@@ -177,6 +177,9 @@ const dword g_455978[81] = {
 // Round 389: native missing-location result bool/byte/short/long 477/477/487/486;
 // each with entry constant initialization 477/477/487/486. Original positive result and
 // lifetime restored; aligned frame agrees, optional-state homes and helper expansion remain.
+// Round 257: inflated-bound scalar before descriptor construction 461, const 461;
+// both with six-use center 496/496; early filter 459/459; center and filter 497/497.
+// Original scalar lifetime, field observations and descriptor stores restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

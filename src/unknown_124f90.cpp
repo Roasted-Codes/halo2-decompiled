@@ -3685,6 +3685,8 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 389: query directly into the final point 563; first/second/both rotations in place
 // with complete vector snapshots 1030/1035/1008; query reuse with those graphs 1042/1047/1020;
 // complete reuse with native output-pointer return 1020. Original distinct workspaces restored.
+// Round 259: existing rotation output pointer/reference results, pointer/reference output
+// formals and ordinary/forced expansion: eight forms 535 each. Original helper restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

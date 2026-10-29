@@ -847,6 +847,8 @@ real function_18cac0(long arg_0);
 // `&table[0]`, split clears, a table member at +4, a clear or the whole body in an inline helper all
 // realign; a table of 0x1f0 dwords does not, 0x1f4 does (the frame size is not the trigger); only
 // /O1 or /Os or /Oy- (diagnostic flags, not kept) avoid it.
+// Round 265: all six lexical orders of door/side/inner long slots, then both
+// uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
