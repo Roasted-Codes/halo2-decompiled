@@ -83,6 +83,8 @@ struct s_spawn_scenario_23aea0
 // globals' last member (retail's memset clears it) 102; running destination index 120.
 // No-link compiles of 1728 loop shapes, counter types and destination forms all fold the
 // global into a pointer induction variable; retail keeps the integer offset 0x18..0xa8.
+// Scalar-default memcpy/memmove 142/156; defaults plus scalar overrides 142/141;
+// derived type dword/short/word/byte with long ordinals 105/325/325/348.
 // @retail 0x23aea0
 void function_23aea0()
 {

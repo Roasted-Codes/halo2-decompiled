@@ -72,6 +72,8 @@ static inline long file_handle_build_2170e0(long generation, short index, bool f
 // short/word successful index 131/131.
 // Compound match 133; nested match 133; complete match result 116; type match result 133; reversed
 // comparison inputs with those four forms 133/133/116/133.
+// Record constructor/native-field constructor 91/91; per-iteration record/constructor 91/91;
+// overlap-safe library copy/native fields 123/123; unsigned-word/full index helper 94/133.
 // @retail 0x2170e0
 long function_2170e0(long file_index)
 {
