@@ -1439,6 +1439,9 @@ void __stdcall function_18560(byte *context, s_packed_shader_range const *range)
 // Round 222: External destination references, indexed pair/constant-zero/constant-one
 // subsets 267/287/287/287/287/296/296; all with reused preserved mask 274. Constant-one
 // forms lose a matched writer sibling; complete original helper and body restored.
+// Mapped source/index/descriptor-slot uninitialized declarations at branch entry,
+// seven subsets, then all at function entry, 267 each. Original producer points,
+// scopes, shared writer and complete body restored; descriptor/index schedule remains.
 // @retail 0x19ca0
 void function_19ca0(byte *state, word const *range)
 {
