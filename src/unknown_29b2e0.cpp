@@ -132,6 +132,9 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // (the first angle's spill then reuses the 2D vector's slot) 397; yaw only 406; pitch only 406; that with
 // the first angle declared at function scope 397; plain reciprocal scaling in the normalizer 400
 // (0x29b990 6).
+// Round 395: actor/object/both pools at use 490/428/481; all repeated coefficients
+// once 400; actor/object/both with coefficients 485/455/494; all with coefficient
+// role names 494. Original receivers, coefficient reads, copies and helpers restored.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

@@ -235,6 +235,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Round 220: Entry-getter failure guards, per-use table, both, readonly table,
 // readonly with guards/per-use/both, and conditional nullable result 620 each.
 // Original getter, state/player/unit receivers and complete body restored.
+// Round 395: player pool at use 742; object-table context once 669; both 758;
+// each with ordinary child result 760/643/769; both with case-entry iterator
+// 758, with ordinary child result 769. Original pools, qualifiers and body restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

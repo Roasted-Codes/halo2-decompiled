@@ -1388,6 +1388,9 @@ real function_30bf0(vector3f *vector);
 // All original helper contracts and bodies restored.
 // Round 385: Plain negate/rotate/normalize component loops and pairs/all,
 // long ordinals 422/486/426/505/404/503/485; all with short ordinals 509. Original helpers restored.
+// Round 395: decoded-base/query/blend phase with one final pin exit, limited/
+// turned scopes and normal declaration priority in all eight combinations: 364 each.
+// Original phase graph, native lifetimes, helpers and inherited homes restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {
@@ -1742,7 +1745,7 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
     point->weight[3] = dequantize16(source[4]);
 }
 
-// score 782 (was 790): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
+// score 782 (was 782): Frame 0x90 agrees; status/mesh/sample homes and material/magnitude expansion remain.
 // Earlier: Frame 0x90 agrees; result +0x3c versus +0x24, mesh +0x2c versus +0x20, and helper expansion
 // remain. Existing scalar clamp output pointer 811; weight loop 819; native sample table 819;
 // block-success samples 831; parallel running luminance 818; clamp plus narrow samples 799; with
@@ -1795,6 +1798,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // scale/add helpers in seven subsets 782/782/782/828/828/828/828;
 // all three with chained default colors 827. Frame 0x90 and displaced status/mesh homes
 // remain; original body, all loops, sample lifetimes and helper bodies restored.
+// Round 395: Nested/failure-first luminance decisions 782/810; dynamic-first
+// validity with original/nested/failure-first luminance 782/782/786; base-first
+// validity with those decisions 783/783/797. Original native output graph restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {
