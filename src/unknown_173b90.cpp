@@ -901,6 +901,9 @@ public:
 // Round 219: native negative-forward/perpendicular/both setters 294/292/294; cross setter 292;
 // negative/cross 294; perpendicular/cross 292; all 294; with normalization setter 294. Original
 // restored.
+// Round 221: final completion accumulation, two-part eager/logical and incremental eager/logical,
+// long 376/366/374/366; bool 367/359/360/359. Original result and body restored; Boolean
+// accumulation reaches 1355 bytes but changes the frame and regresses.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

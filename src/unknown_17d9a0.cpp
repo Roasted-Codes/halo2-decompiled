@@ -614,6 +614,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Round 236: complete square lifetimes before angle/before sine/between sine-cosine, reversed
 // cosine-pair/square orders, early-square pair combinations and six-part names
 // 617/607/564/611/564/611/583/564; all restored.
+// Round 221: native basis/rotation/both/position/basis-position/rotation-position/all setters
+// 726/564/726/560/717/560/733; all plus axis setter 592. Four-point position gains rejected;
+// original basis, complete rotation copy, matrix position and body restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

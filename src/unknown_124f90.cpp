@@ -3676,6 +3676,9 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 219: native rotation/left/rotation+left setters 1050/647/986; velocity setter 543;
 // rotation+velocity 1045; left+velocity 646; all 986; with interpolated point setter 986. Original
 // restored.
+// Round 221: original native fallback copied from the existing immutable object by aggregate/library,
+// each with aggregate/library occlusion and field/aggregate publication: 739 each, 2085 bytes.
+// All eight restored; original helper and stack fallback retained; temporary declaration removed.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {
