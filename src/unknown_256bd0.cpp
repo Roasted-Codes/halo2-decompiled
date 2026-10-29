@@ -210,6 +210,13 @@ struct s_object_flags_256bd0
 // Full native position/direction/placement copies on noinline-initializer/ordinary-datum
 // boundaries, all seven subsets 194 each; all copies with selected-before-minimum publication
 // 194. Frame 0x110 recovered, but seven-point gains rejected; all declarations and bodies restored.
+// Round 72 (lane 8): retail's step tests the activity byte on its own and assigns the entry inside
+// it (`if (active) { if (next) entry = datum; object_index = datum_index; }`): that gives retail's
+// `cmovne ebp` and the index store ahead of the exit test (loop body as retail, 1075 B) but stays 201,
+// since the hoisted activity byte still adds the frame word; with the entry as a ternary 279; on
+// that shape `distance < minimum`, a forceinline step and the iterator declared first 201 each.
+// The hoist is not ours to fix: the matched 0x268510 reloads the same global only because its loop
+// calls an out-of-line function; here 0x6b380 is the only call.
 // Round 191: out-of-line initializer/ordinary datum declarations with nested/branch-result/
 // active-ternary/combined-ternary entries, byte/native records each 194/262/290/262.
 // Nested forms recover frame 0x110 at 1070 bytes but gain seven only; all declarations,

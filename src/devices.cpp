@@ -637,6 +637,8 @@ struct s_device_machine_view
 // score 42 (was 42): the group-flag test is two bytes longer than retail's: ours shifts the flags byte down by
 // one before the second test, retail tests bit 2 directly; retail also clears the result in
 // case 0x1200055f where ours does not.
+// Actual signed group flags with Boolean/masks/early load/default; actual group bitfields with
+// direct/second/both/default tests 43/120/54/122/50/50/50/122. Original executable source restored.
 // @retail 0x106d70
 bool __stdcall device_export_function(long device_index, long name, real *value, bool *active)
 {

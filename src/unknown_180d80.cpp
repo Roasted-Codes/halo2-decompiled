@@ -115,11 +115,13 @@ __forceinline void function_180d83(transform4x3f const *arg_0, point3f *arg_1)
 // luminance terms red, blue, green 92 (other orders 94-95, grouped 290); transform rows
 // with the left product first 93, operands swapped 94, one expression per row 317;
 // luminance and transform changes together 91.
-// score 94 (was 94): early input receiver, opposite count/counter homes and
+// early input receiver, opposite count/counter homes and
 // transform carriers differ; strip equality 100, short equality 548, vertex
 // equality 95, both 548, combined count rejection 647; transform references
 // and packed-record memcpy 94, separate transform input/output 170.
 // early input register and count homes remain; normalizer inline 94; pack noinline 94; buffer inline 94; transform inline 94; nesting depth two 94; allocation byte count 169; published short count 169; short count and inline 169.
+// Shared vertex ordinal with output base/offset 284/293; shared short/long strip ordinal 528/418;
+// base/strip and offset/strip combinations 531/405/533/415. Restored.
 // @retail 0x180d80
 long __stdcall function_180d80(s_180d84 const *arg_0, transform4x3f const *arg_1, long arg_2, s_cluster_query const *arg_3, bool arg_4, s_180d81 const *arg_5, s_180d83 *arg_6)
 {

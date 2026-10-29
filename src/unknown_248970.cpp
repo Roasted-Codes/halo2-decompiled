@@ -188,11 +188,17 @@ public:
 // both 231; pool/count/both with read-only metadata 234/226/231;
 // pool/count with plain while, mutable/read-only metadata 231/231.
 // Original body restored; frame, metadata/head homes and coordinate cleanup remain.
+// Round 400: Native seventeen-value output array reference, with read-only metadata, word
+// viewer ordinal and indexed child-table observations in all eight subsets
+// 227/227/259/259/243/243/246/246. Original pointer contract and caller declaration restored.
 // Round 251: actual metadata/allocated/linked/updated external object references
 // singly 227 each; metadata with each child 227 each; all four 227. Original
 // distinct pointer receivers restored; metadata/head/frame and x87 homes remain.
 // Round 187: Complete squared-distance with scaled-double/coordinate-scope/early-falloff masks 0-7
 // 227/227/227/227/227/227/227/227. Original arithmetic and full body restored.
+// Round 274: Native shared signed count field with independent child-count declaration,
+// bounded short viewer and indexed child-field subsets 227/227/259/259/243/243/264/264.
+// Original shared header and complete body restored; frame and metadata/head homes remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

@@ -97,6 +97,10 @@ short __stdcall function_2551c0(long actor_index)
 // order and the output term order change code. Cross i/k/j 49; projection (1 - cosine) first
 // 72; dot3f(axis, vector) 72; outputs v*cos - cross*sin + projection*axis 133 (814 bytes);
 // score as the distance part times the dot part 43.
+// Round 181: native slot data block 89 (820 bytes, larger frame); restored slot view with rotation
+// inputs axis/vector/sine/cosine or axis/sine/cosine/vector or cosine/sine/axis/vector 43 each;
+// vector/sine/cosine/axis, sine/cosine/axis/vector, axis/cosine/sine/vector and
+// sine/cosine/vector/axis 72 each. Early cross products and score-dot carriers remain.
 // @retail 0x2551f0
 bool __stdcall function_2551f0(long actor_index, s_slot *slot)
 {

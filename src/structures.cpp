@@ -348,11 +348,17 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 228 on the branch-owned geometry join: filled-output pointer success with native
 // section/output references and index-first order, all eight contracts 172 each. Original
 // Boolean fetch, defined failures and caller roles restored; BSP/section residence remains.
+// Round 400: Existing vertex getter as a section member with bool/byte/word/long results
+// 172/172/172/172; as a vertex-block member
+// 172/172/172/172. Every defined failure and suppressed later fetch restored.
 // Round 185: Direct collision-point transform input with aggregate/library/overlap-safe/shared-
 // setter copies at entry 199/199/205/243; case-owned copies 251/251/257/296. Original in-place
 // transform, point capture, defined vertex failures, complete body and include set restored.
 // Round 187: Native byte-data/offset versus point-table fetch inputs, long/word count and
 // early/result-first eligibility, all eight 235. Original fetch contract and body restored.
+// Round 403: real triangle-reference cursor with readonly metadata/surface table/range
+// bound/vertex cursor combinations 210/210/211/193/213/210/213; complete graph
+// with Boolean result 224. Original traversal and defined-failure body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
@@ -655,11 +661,15 @@ done:
 
 #undef COLLISION_OBJECT_14A8E0
 
-// score 125 (was 125): retail keeps the exclusion flag in BL (`mov bl, 1` / `xor bl, bl`, tested again
+// score 125 (was 125): frame 0x64 agrees; exclusion BL, NONE/EBX and spilled result allocation still differ.
+// Earlier: retail keeps the exclusion flag in BL (`mov bl, 1` / `xor bl, bl`, tested again
 // after the failed lightmap query), NONE in EBX and the result in its parameter slot; VC threads our
 // flag. Flag as a helper out-parameter 168 (kept in memory); early-outs through the availability
 // helper 149 (440 bytes, aligned closer); scenery getter call 146 (out of line); function-scope flag
 // 125 (identical); early-out helper with an if/else flag 149.
+// Existing model and collision probe declarations ordinary/inline/noinline, independently and
+// jointly, 125 in all eight forms. Both original declarations restored; their definitions,
+// arguments and the entire body are unchanged.
 // @retail 0x14af40
 bool function_14af40(bool include_objects, point3f const *point, vector3f const *direction,
     long ignore_object_index, bool result, void *surface, point3f *probe)

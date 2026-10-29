@@ -627,9 +627,21 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // 517,503,463,451. Original datum observations and receiver pair restored.
 // Round 180: Entry forward/marker/audibility outputs, masks 1-7, then all in reverse declaration
 // order: 280/280/280/280/280/280/280/280. Original executable body restored.
+// Round 401: Category membership read from a shifted signed/unsigned mask
+// 286/286; with complete two-use negative adjustment 282/282, distance pair
+// 305/305, angle pair 310/310. Frame 0x8c and protected root-location destination
+// remain; all original field observations and the receiver pair restored.
+// Round 178: distance pair read once 306; angle pair once 314; negative adjustment
+// once 276 (four-point gain below the gate); distance+angle 324; distance+adjustment
+// 307; angle+adjustment 315; all five properties 324; all with readonly receiver 324.
+// Original observations and body restored; protected root-location convention remains.
 // Round 186: Complete source-kind char/byte/short/long with address/value owner selection
 // 346/346/338/351/358/358/350/363. Original field observations, multi-use handle helper and complete
 // body restored.
+// DL176: Native distance/angle/both property-array loops with long ordinals 280/331/331; both with
+// short/word/unsigned-long ordinals 367/367/331; shared long/short ordinal 331/367. Original
+// scalar fields, property tests, receiver pair and full body restored; protected root-location and
+// datum/tag homes remain.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

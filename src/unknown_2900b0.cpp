@@ -288,7 +288,19 @@ PRIVATE __forceinline void center_update_28f8d0(s_28f8d0 *arg_0)
 	}
 }
 
-// score 28 (was 38): the entry now tests the actor index against an
+// score 28 (was 38): the entry compares the actor index with an immediate -1
+// and the origin copy takes ebp as its temporary, as retail does. What is left
+// is the order of the first loads: ours reads the origin pointer (g_468788)
+// before the actor pool, retail reads the pool, the pool's data and then the
+// origin, so the copy's source sits in edx here and in ecx there, the actor
+// pointer's add lands between the copy's second and third component instead of
+// between its first and second, and the same swap of ecx and edx shows in the
+// loop (retail scales the object index into edx and keeps the pool pointer in
+// ecx) and in the averaging step (retail sign-extends the count into eax and
+// ours into ecx). Check it with its caller 0x1e3b60 and 0x28f890 in the image
+// (alone it takes a stack argument, 151).
+// Tried: an early return 38, the actor index in a local 38, a dword compare
+// with 0xffffffff 38, field_14 cleared after reading field_18 38, a point3f
 // immediate -1 and the origin copy takes ebp as its temporary, as retail
 // does. What is left is the order of the first loads: ours reads the origin
 // pointer (g_468788) before the actor pool, retail reads the pool, the
@@ -301,6 +313,30 @@ PRIVATE __forceinline void center_update_28f8d0(s_28f8d0 *arg_0)
 // an early return 38, the actor index in a local 38, a dword compare with
 // 0xffffffff 38, field_14 cleared after reading field_18 38, a point3f
 // assignment for the copy 70, actor_get after the centre update 115,
+// perception_get at each use 101, the actor index in a local read after the
+// centre update 111, the origin copy ahead of actor_get 99, memcpy for the
+// copy 38, a named centre pointer in the centre update 42, the copy field by
+// field 116, field_14 cleared before the copy 39, the three actor NONE stores
+// as one chained assignment 40, the creature pointer through an if/else
+// getter 38, the actor's sample reset (memset, stores, call) as an inline
+// helper 108, the count in a local 38, the copy helper taking the destination
+// first 38. Round 22: the actor pointer computed before the copy 38 (through
+// base + index and through actor_get alike), the copy after the actor pointer
+// 38, the copy inside the centre update 38, the origin pointer in a named
+// local 28, the copy through a pointer local to the centre 43, the copy
+// through a local point 111, the copy helper taking the destination by
+// reference 28, the copy helper not force-inlined 30, the copy helper's
+// plain point assignment the same code as the dword-struct copy it replaced.
+// Also in round 22: the index masked at the call site 28 (the same code), the
+// object lookup through object_header_get 28 (the same code), the copy helper
+// taking the source by reference 28 (the same code), the copy helper reading
+// the global itself 58, the copy first with the pool and the index after it
+// 99, the actor pointer in one statement 38, the pool as a named local 30
+// (it also swaps the centre sum's operands), the divisor in a named local 60.
+// The origin pointer's load comes first with the copy in the middle of the
+// three statements, next to the copy with the copy last and ahead of the pool
+// with the copy first, so the source order cannot put it where retail has it
+// (after the pool's data, before the index multiply).
 // perception_get at each use 101, the actor index in a local read after
 // the centre update 111. Retail has all seven registers live during the origin
 // copy (the actor pointer's add interleaves with it, ebp is the copy temporary),

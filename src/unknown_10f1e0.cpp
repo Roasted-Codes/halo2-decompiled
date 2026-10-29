@@ -1279,6 +1279,9 @@ long function_cbd50(long unit_index, short weapon_index);
 // Round 162: pool/data receivers 378/345; shared word unit slot 368; pool/data plus word
 // slot 400/368; data plus dword slot 350; pool plus long slot 390; data with native result
 // 329. Original lookup observations, status graph and argument handling restored.
+// Round 402: native unsigned first/second/controlling handle domains, seven subsets,
+// all 164; all handles with both unsigned identifier domains 188. Original signed
+// domains and body restored; pool/state allocation, count joins and byte normalization remain.
 // @retail 0x110ab0
 bool __stdcall function_110ab0(long unit_index)
 {
@@ -1454,6 +1457,10 @@ bool __stdcall function_110ab0(long unit_index)
 // Round 389: Plain two-held-slot traversal with long/short/word/byte indices, slot-first
 // validity joins 470/494/494/523; shared validity-first joins 470/494/494/491 (fast control
 // 450). Original paired queries and complete body restored; frame eight and state homes remain.
+// Round 174: transposed overlay/request dispatch with bool/byte/short/long
+// permission 663/725/829/792; first/second/both overlay defaults before inner
+// dispatch 497/478/581; both with byte permission 545. Original graph restored;
+// frame eight versus twelve and requested/state/result homes remain.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -1756,10 +1763,17 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // screen inputs 1027/1027/1123; aggregate construction 1027/1027/1123;
 // ordinary inline field/aggregate returns 1010/1010. Frame 0xcc remains;
 // original bounds helper, direction snapshot and all consumers restored.
+// Round 400: Actual bounds outputs as four-real reference/pointer, native interval pair and
+// separate yaw/pitch intervals 790/790/790/790; each output-first
+// 790/790/790/790. Original output contract and every arithmetic tree restored.
 // Round 269: Existing projection boundary includes the angle-conversion call,
 // caller pointer/reference, private vector and native angle value: forced
 // 928/928/961/933; ordinary inline 1180/1180/1184/1230. Original two helpers,
 // separate conversion calls, direction snapshot and complete body restored.
+// DL176: Independent ID/ratio cursors and paired indexed traversal 882/882/903; ID-end with
+// indexed ratio 897; paired ID-end/ratio-end 889/861; paired short/word ordinal 903/903. Original
+// indexed do-loop, all input observations, helpers and complete body restored; frame and first-
+// angle/overlay expansion remain.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -2462,6 +2476,10 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // with actual transform/point/both/direction/transform-direction/point-direction/
 // all workspaces uninitialized at entry, 699 each. Frame 0x80 and ret 4
 // remain; original displacement statements and every lifetime restored.
+// Round 174: control/state/tag receiver initialization at the completed request
+// phase, seven subsets, 709/708/714/675/702/704/705; all with Boolean transition
+// 725. Original initializers and body restored; request/control homes and ret 4
+// versus retail ret 8 remain.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2757,7 +2775,7 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
     return elapsed;
 }
 
-// score 122 (was 122): frame 0x3c versus 0x38, action/decision and input homes remain.
+// score 61 (was 122): frame 0x3c versus 0x38, action/decision and input homes remain.
 // Returned action comparison plus a separate existing channel-copy statement recover
 // native query/play ordering at retail length; the shared result exit is retained.
 // frame 0x3c versus 0x38; the escaped action short has its own
@@ -2818,6 +2836,13 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // Whole availability decision on returned-query/separate-copy graph, signed/Boolean
 // aggregate and shared/direct success exit 156/158/163/158. All restored;
 // frame 0x3c versus 0x38 and small-home packing remain.
+// Round 174: chained/result-first successful publication with signed/Boolean aggregate
+// 122/122/128/128; two-use base-channel entry/set lifetimes with original/chained
+// publication 122 each. Original body restored; frame 0x3c and short packing remain.
+// DL176: Selected-set guard/call carrier with signed/Boolean aggregate and shared/direct success
+// 69/61/71/61; consistent mode-at-use combinations 171/194/200/194; single renamed set with
+// Boolean/signed aggregate 127/122. Keep the two-use selected-set carrier and Boolean aggregate,
+// plain confirmed 61; frame 0x3c versus 0x38 and action-short packing remain.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)
@@ -2832,7 +2857,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
     long lookup = g_4408f8[type];
     long animation = NONE;
     if (lookup != NONE) animation = g_46fc30[lookup];
-    signed char result = false;
+    bool result = false;
     bool force_overlay = false;
     short action;
     c_animation_channel *overlay;
@@ -2875,7 +2900,8 @@ bool function_10ff40(long unit_index, long type, short side, short value,
             *(real *)(definition + 0x108) >= overlay->frame_position * (1.0f / 30.0f))
             goto done;
     }
-    if (set != NONE)
+    long selected_set = set;
+    if (selected_set != NONE)
     {
         long selected_mode = 0x7000101;
         long play_flags = 2;
@@ -2883,7 +2909,7 @@ bool function_10ff40(long unit_index, long type, short side, short value,
             play_flags = 14;
         if ((unit->parent_index == NONE || *(short *)((byte *)unit + 0x1fc) == NONE) && mode != NONE)
             selected_mode = mode;
-        result = function_10f430(unit_index, selected_mode, 0x7000101, 0x7000101, set, 0.0f, false, play_flags);
+        result = function_10f430(unit_index, selected_mode, 0x7000101, 0x7000101, selected_set, 0.0f, false, play_flags);
     }
     if (animation != NONE)
     {
