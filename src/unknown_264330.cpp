@@ -201,6 +201,10 @@ owner_selected:
 // or without an object local (96); the facing as a const reference (99); a volatile load of the second object
 // pointer (103; 102 without the object local: it keeps the element address in esi instead); no object local
 // (67); the two ifs folded to if / else if (66); direction.i computed before the facing (67).
+// Round 242: native displacement initializer / position copy then subtract 67/67;
+// either with native-width narrowed category 76/76; existing facing getter plus either
+// direction form 109/109, with native-width category 75/75. Original body restored;
+// header-base retention and the second object lookup still differ.
 // @retail 0x264940
 void function_264940(long actor_index, long prop_ref_index)
 {

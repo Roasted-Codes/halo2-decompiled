@@ -2537,6 +2537,10 @@ struct s_scenario_scripting_view
 
 /* points the current command script at the point of a point set nearest the
    current actor */
+// score 80 (was 80): actor/set/counter allocation and delayed scripting-data observation still differ.
+// Round 242: search point-table/count/actor-position snapshots 92/86/87;
+// point-table+count, point-table+position, count+position, all three 83/91/97/90;
+// all with loop-local short counter 91. Original complete search restored.
 // @retail 0x2769d0
 void function_2769d0(long point_reference)
 {

@@ -530,6 +530,9 @@ PRIVATE inline void record_rotate_vector(vector3f *vector, vector3f const *axis,
 // Parallel displacement/elevation/both product parts 215/90/215; collision-offset parts 90;
 // displacement with collision parts 215; elevation with collision parts 90; all parts 215;
 // native point aggregate initializer 90. Original body and rotation helper retained.
+// Round 242: fused add/scale at trace/elevation/collision 90/215/90; trace+elevation,
+// trace+collision, elevation+collision, all three 215/90/215/215; all with ordinary radius 113.
+// Original complete body and rotation helper restored; ring conversion and rotation spill remain.
 // @retail 0x26d570
 long function_26d570(long object_index)
 {
