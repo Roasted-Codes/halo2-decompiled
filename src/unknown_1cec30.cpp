@@ -1,4 +1,3 @@
-#include "constraint_helpers_314090.h"
 // @flags /O2 /Ob1 /arch:SSE /Gr
 #include "orientations_storage.h"
 #include "slot_handler.h"
@@ -18,6 +17,7 @@ static __forceinline long real_to_long(real value);
 #include "havok_reference.h"
 #include "unknown_122870.h"
 #include "normalize3d.h"
+#include "constraint_helpers_314090.h"
 
 void __cdecl function_2d91d0(void *array, long element_size);
 
@@ -1985,9 +1985,9 @@ void function_1cff80(s_havok_component_element0c const *constraint, point3f *piv
         break;
     case 4:
         {
-            c_component_joint_reader_4 *joint = (c_component_joint_reader_4 *)constraint->contact;
+            lane_a_ball_socket *joint = (lane_a_ball_socket *)constraint->contact;
             c_component_joint_snapshot_4 snapshot;
-            joint->read(&snapshot);
+            joint->export_description(&snapshot);
             real x = snapshot.pivot_a.m128_f32[0];
             real y = snapshot.pivot_a.m128_f32[1];
             real z = snapshot.pivot_a.m128_f32[2];

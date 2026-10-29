@@ -1,9 +1,9 @@
-#include "constraint_helpers_314090.h"
 #include "unknown_11c920.h"
 #include "globals.h"
 #include "unknown_1cec30.h"
 #include "unknown_1efac0.h"
 #include "havok_reference.h"
+#include "constraint_helpers_314090.h"
 #include <new>
 // @flags /O2 /arch:SSE /Gr
 
@@ -73,12 +73,12 @@ void function_1d1540(s_havok_component *arg_0)
    if (*(real *)(local_7 + 8) != 1.0f || *(real *)(local_7 + 0xc) != 1.0f)
    {
     s_314320 local_8;
-    ((s_314450 *)local_3)->function_314450(&local_8);
+    local_3->export_description(&local_8);
     local_8.field_4 *= *(real *)(local_7 + 8);
     local_8.field_8 *= *(real *)(local_7 + 8);
     local_8.field_c *= *(real *)(local_7 + 0xc);
     local_8.field_10 *= *(real *)(local_7 + 0xc);
-    ((s_314450 *)local_3)->function_314480(&local_8);
+    local_3->import_description(&local_8);
    }
   }
   c_havok_reference_counted *local_9 = (c_havok_reference_counted *)local_3;
