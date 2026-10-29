@@ -1683,6 +1683,10 @@ static __forceinline bool function_65341(c_class_58d20 **out)
 // getter 142 at retail's length; existing getters with forceinline declarations 162 (kept out of
 // line); per-case getter copies 155 and switch in the body 155 (the session then goes through a
 // stack slot); existing getters without /Ob1 173; per-case result assignments 149.
+// Round 71: with scalar SSE, early status/variant plus a post-call variant reset 146;
+// the reset alone 136; early variant plus reset 138; nested success guards 146;
+// zero-then-assign state 145; ordinary inline selector 238 (398 bytes); state/result
+// declarations swapped 145; pointer-terminated user loop 145. Original restored.
 // @retail 0x65340
 void function_065340(void)
 {
