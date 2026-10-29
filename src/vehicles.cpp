@@ -12,6 +12,7 @@ helpers only they call. */
 #include "unknown_1cafc0.h"
 #include "unknown_1cec30.h"
 #include "effects.h"
+#include "bit_vector.h"
 #include "object_markers.h"
 #include "object_iterator.h"
 #include "unknown_1eb550.h"
@@ -663,6 +664,17 @@ PRIVATE inline void vehicle_approach(real *value, real const *rates, real bound,
 
 /* a vehicle's control: its drift and boost flags, braking, the steering of
    its control type, and its root node's movement */
+// score 100 (was 189): flag carriers/writers, clamp polarity and lookup ordering differ;
+// Four-byte frame and root-rate/difference tail agree; flag carriers/writers, clamp polarity and
+// initial lookup ordering still differ.
+// Round 384: shared reversing writer, with boost-mode/active-boost subsets 179/129/185/190;
+// native root-bit counterparts 179/129/191/190; boost-mode writer alone with original/native root
+// bit 187/187.
+// On both shared writers: two-use root input 120; real rate receiver 122 (isolated seven-point
+// gain dropped); shared point difference 121; paired root/rates 104, root/difference 112,
+// rates/difference 114; all three 100.
+// Retained both shared writers and all three native root producers. Original throttle comparison
+// and every flag/vector/call value preserved.
 // @retail 0xef4f0
 void __stdcall function_ef4f0(long vehicle_index, real *steering)
 {
@@ -679,11 +691,11 @@ void __stdcall function_ef4f0(long vehicle_index, real *steering)
 			vehicle->throttle = g_4678d4;
 	}
 	*steering = 0.0f;
-	SET_FLAG(*(word *)&vehicle->flags348, 3, (vehicle->control_flags & 2) ||
+	byte_flags_set(&vehicle->flags348, 3, (vehicle->control_flags & 2) ||
 		TEST_FIELD_BIT(VEHICLE_DEFINITION_FLAGS(definition)->bit4) &&
 		(vehicle->throttle > 0.0f && 0.0f > vehicle->speed || 0.0f > vehicle->throttle && vehicle->speed > 0.0f));
 	if (TEST_FIELD_BIT(VEHICLE_DEFINITION_FLAGS(definition)->bit17))
-		SET_FLAG(*(word *)&vehicle->flags348, 5,
+		byte_flags_set(&vehicle->flags348, 5,
 			TEST_FIELD_BIT(((s_vehicle_flag_bits const *)&vehicle->control_flags)->bit11));
 	*(word *)&vehicle->flags348 &= ~FLAG(4);
 	if (TEST_FIELD_BIT(((s_vehicle_flag_bits const *)(definition + 0xbc))->bit28) &&
@@ -735,13 +747,13 @@ void __stdcall function_ef4f0(long vehicle_index, real *steering)
 		s_vehicle *current = VEHICLE_GET(vehicle_index);
 		real dt = g_510c54->rate;
 		point3f const *root = (point3f const *)((byte *)current + *(short *)((byte *)current + 0x116) + 0x28);
-		real bound = (0.0f > vehicle->unknown3e0 ? *(real *)(definition + 0x1f8) : *(real *)(definition + 0x1f4)) *
-			vehicle->unknown3e0;
+		real root_input = vehicle->unknown3e0;
+		real const *rates = (real const *)(definition + 0x1f4);
+		real bound = (0.0f > root_input ? rates[1] : rates[0]) *
+			root_input;
 
-		vehicle_approach(&vehicle->unknown3dc, (real const *)(definition + 0x1f4), bound, dt);
-		vehicle->unknown3f0.i = root->x - vehicle->unknown3e4.x;
-		vehicle->unknown3f0.j = root->y - vehicle->unknown3e4.y;
-		vehicle->unknown3f0.k = root->z - vehicle->unknown3e4.z;
+		vehicle_approach(&vehicle->unknown3dc, rates, bound, dt);
+		vector3d_from_points3d(&vehicle->unknown3e4, root, &vehicle->unknown3f0);
 		vehicle->unknown3e4 = *root;
 	}
 }
@@ -1877,6 +1889,15 @@ real __stdcall function_f1540(long vehicle_index, short gear, real angular_veloc
 /* the gear the vehicle shifts to: neutral (NONE) when it coasts slowly, the
    reverse gear (0) or first gear when the throttle changes direction, and
    up or down a gear at its engine's shift points */
+// score 12 (was 157): downshift upper-bound residence and exit displacements differ;
+// Retail downshift loads count-minus-one into the returned register; ours preserves the prior
+// gear if lower exceeds that bound, leaving two instructions and exit displacements.
+// Round 384: delayed current 189; long result 151; single short result 175; delayed/single 191;
+// long/single 153; delayed/long/single 147; uniform current fields short/long 191/147.
+// Native higher candidate with original/delayed current and early/single exits 154/151/114/66;
+// three-use gear ordinal 66; eligibility before lower calculation 12, with ordinal 12.
+// Retained short result, delayed current, native higher candidate and eligibility-first single
+// exit; no downshift value changed.
 // @retail 0xf1740
 short __stdcall function_f1740(long vehicle_index, real throttle_input)
 {
@@ -1884,8 +1905,6 @@ short __stdcall function_f1740(long vehicle_index, real throttle_input)
 	byte *definition = VEHICLE_DEFINITION_GET(vehicle);
 	s_game_time_globals *time = g_510c54;
 	volatile bool braking;
-	char current = vehicle->gear;
-	short gear = current;
 
 	if (vehicle->unknown384 && (0.5f > vehicle->unknown384 * time->rate || (vehicle->control_flags & 2)))
 	{
@@ -1895,6 +1914,9 @@ short __stdcall function_f1740(long vehicle_index, real throttle_input)
 	{
 		braking = false;
 	}
+	char current = vehicle->gear;
+	short gear = current;
+
 	if (VEHICLE_MAX_ANGULAR_VELOCITY(definition) >= 0.001f)
 	{
 		real throttle = braking ? 0.0f : throttle_input;
@@ -1906,7 +1928,8 @@ short __stdcall function_f1740(long vehicle_index, real throttle_input)
 			if (VEHICLE_MAX_ANGULAR_VELOCITY(definition) * 0.25f > angular_velocity ||
 				(vehicle->unknown248 == NONE && vehicle->unknown386 * time->rate > 1.0f))
 			{
-				return NONE;
+				gear = NONE;
+				goto done;
 			}
 		}
 		else if (*(short *)(definition + 0x1f0) == 1)
@@ -1915,14 +1938,16 @@ short __stdcall function_f1740(long vehicle_index, real throttle_input)
 			{
 				if (!braking)
 				{
-					return 0;
+					gear = 0;
+					goto done;
 				}
 			}
 			else if (current < 1)
 			{
 				if (!braking)
 				{
-					return 1;
+					gear = 1;
+					goto done;
 				}
 			}
 			else
@@ -1932,24 +1957,31 @@ short __stdcall function_f1740(long vehicle_index, real throttle_input)
 				if (vehicle->unknown387 * time->rate > definition_gear->min_time_to_upshift && throttle >= ratio &&
 					ratio > definition_gear->engine_upshift_scale)
 				{
-					gear = current + 1;
-					if (gear < 1)
+					long higher = current + 1;
+					if (higher < 1)
 					{
-						gear = 1;
+						higher = 1;
 					}
-					else if (gear > VEHICLE_GEAR_COUNT(definition) - 1)
+					else if (higher > VEHICLE_GEAR_COUNT(definition) - 1)
 					{
-						gear = (short)(VEHICLE_GEAR_COUNT(definition) - 1);
+						higher = VEHICLE_GEAR_COUNT(definition) - 1;
 					}
+					gear = (short)higher;
 				}
 				if (vehicle->unknown388 * time->rate > definition_gear->min_time_to_downshift &&
 					definition_gear->engine_downshift_scale > ratio)
 				{
+					if (gear <= 0)
+					{
+						gear = 1;
+						goto done;
+					}
 					long lower = current - 1;
 
-					if (gear <= 0 || lower < 1)
+					if (lower < 1)
 					{
-						return 1;
+						gear = 1;
+						goto done;
 					}
 					if (lower <= VEHICLE_GEAR_COUNT(definition) - 1)
 					{
@@ -1959,6 +1991,7 @@ short __stdcall function_f1740(long vehicle_index, real throttle_input)
 			}
 		}
 	}
+done:
 	return gear;
 }
 
@@ -3356,6 +3389,14 @@ extern byte g_5107ee;
    marker's downward pitch, the distance and the vehicle's speed; the
    effect's last marker sits between the marker and the hit, aimed along
    the reflected ray */
+// score 160 (was 186): count/marker/strength homes and reflection schedule differ;
+// Frame 0x8cc agrees; count/marker carriers, strength residence and reflection schedule remain.
+// Round 384: sixteen-marker capacity 186; with shared vector setter 170; indexed loop 186, with
+// setter 170; complete reflection input captures 190/205/190/205.
+// Late facing producer and scalar/point home names 170 each (four forms); plain admission-owned
+// long/short/word loops 170/163/160, readonly marker 170.
+// Retained sixteen native marker records, shared vector assignment and plain word-indexed marker
+// loop; requested count and all vector/call values unchanged.
 // @retail 0xf62f0
 void __stdcall function_f62f0(long vehicle_index)
 {
@@ -3366,81 +3407,77 @@ void __stdcall function_f62f0(long vehicle_index)
 
 		if (*(long *)(definition + 0x2a0) != NONE && vehicle->unknown25c > 0.0f)
 		{
-			s_object_marker markers[15];
+			s_object_marker markers[16];
 			short count = function_b8d30(vehicle_index, 0xf0000bb, markers, 15, false);
 
-			if (count > 0)
+			for (word marker_index = 0; marker_index < count; ++marker_index)
 			{
-				s_object_marker *marker = markers;
-				long remaining;
+				s_object_marker *marker = &markers[marker_index];
+				s_vehicle_wash_collision collision;
+				vector3f direction;
+				vector3f vector;
 
-				for (remaining = (word)count; remaining; remaining--, marker++)
+				collision.unknown24 = NONE;
+				random_vector_in_cone(&marker->matrix.forward, &direction, &g_4e7408->seed, 0.0f, 15.0f);
+				vector3f_assign(&vector, direction.i, direction.j, direction.k);
+				if (function_1697c0(0x800007, &marker->matrix.position, &vector, vehicle_index, NONE,
+					(s_collision_result_1697c0 *)&collision))
 				{
-					s_vehicle_wash_collision collision;
-					vector3f direction;
-					vector3f vector;
+					real strength = (1.0f - collision.t) * (0.0f - marker->matrix.forward.k) * vehicle->unknown25c;
 
-					collision.unknown24 = NONE;
-					random_vector_in_cone(&marker->matrix.forward, &direction, &g_4e7408->seed, 0.0f, 15.0f);
-					vector = direction;
-					if (function_1697c0(0x800007, &marker->matrix.position, &vector, vehicle_index, NONE,
-						(s_collision_result_1697c0 *)&collision))
+					if (!(0.0f > strength))
 					{
-						real strength = (1.0f - collision.t) * (0.0f - marker->matrix.forward.k) * vehicle->unknown25c;
-
-						if (!(0.0f > strength))
+						if (strength > 1.0f)
 						{
-							if (strength > 1.0f)
-							{
-								strength = 1.0f;
-							}
-							else if (!(strength > 0.0f))
-							{
-								continue;
-							}
-
-							s_effect_marker effect_markers[7];
-							s_effect_parameters parameters;
-							point3f middle;
-							vector3f facing = direction;
-							real dot;
-
-							middle.x = (marker->matrix.position.x + collision.point.x) * 0.5f;
-							middle.y = (marker->matrix.position.y + collision.point.y) * 0.5f;
-							middle.z = (marker->matrix.position.z + collision.point.z) * 0.5f;
-							function_1201a0(&facing, g_4687bc);
-							function_1763a0(&collision.point, &facing, effect_markers, &collision.normal);
-							dot = (collision.normal.k * facing.k + collision.normal.j * facing.j +
-								facing.i * collision.normal.i) * 2.0f;
-							memset(&parameters, 0, sizeof(parameters));
-							effect_markers[6].position = middle;
-							parameters.unknown34 = 0;
-							parameters.unknown38 = 0;
-							parameters.unknown3c = 0;
-							parameters.unknown30 = 0;
-							parameters.source = NULL;
-							parameters.tag_index = *(long *)(definition + 0x2a0);
-							effect_markers[6].forward.i = facing.i - collision.normal.i * dot;
-							effect_markers[6].forward.j = facing.j - collision.normal.j * dot;
-							effect_markers[6].forward.k = facing.k - collision.normal.k * dot;
-							parameters.color_a = 0xff808080;
-							parameters.color_b = 0xff808080;
-							effect_markers[6].name = 0x80000ba;
-							parameters.unknown18 = NONE;
-							parameters.object_index = NONE;
-							parameters.owner.unknown4 = NONE;
-							parameters.owner.unknown0 = NONE;
-							parameters.owner.unknown8 = NONE;
-							parameters.marker_count = 7;
-							parameters.markers = effect_markers;
-							parameters.flags = 4;
-							parameters.scale_a = strength;
-							parameters.scale_b = strength;
-							effect_new_from_parameters(&parameters);
+							strength = 1.0f;
 						}
+						else if (!(strength > 0.0f))
+						{
+							continue;
+						}
+
+						s_effect_marker effect_markers[7];
+						s_effect_parameters parameters;
+						point3f middle;
+						vector3f facing = direction;
+						real dot;
+
+						middle.x = (marker->matrix.position.x + collision.point.x) * 0.5f;
+						middle.y = (marker->matrix.position.y + collision.point.y) * 0.5f;
+						middle.z = (marker->matrix.position.z + collision.point.z) * 0.5f;
+						function_1201a0(&facing, g_4687bc);
+						function_1763a0(&collision.point, &facing, effect_markers, &collision.normal);
+						dot = (collision.normal.k * facing.k + collision.normal.j * facing.j +
+							facing.i * collision.normal.i) * 2.0f;
+						memset(&parameters, 0, sizeof(parameters));
+						effect_markers[6].position = middle;
+						parameters.unknown34 = 0;
+						parameters.unknown38 = 0;
+						parameters.unknown3c = 0;
+						parameters.unknown30 = 0;
+						parameters.source = NULL;
+						parameters.tag_index = *(long *)(definition + 0x2a0);
+						effect_markers[6].forward.i = facing.i - collision.normal.i * dot;
+						effect_markers[6].forward.j = facing.j - collision.normal.j * dot;
+						effect_markers[6].forward.k = facing.k - collision.normal.k * dot;
+						parameters.color_a = 0xff808080;
+						parameters.color_b = 0xff808080;
+						effect_markers[6].name = 0x80000ba;
+						parameters.unknown18 = NONE;
+						parameters.object_index = NONE;
+						parameters.owner.unknown4 = NONE;
+						parameters.owner.unknown0 = NONE;
+						parameters.owner.unknown8 = NONE;
+						parameters.marker_count = 7;
+						parameters.markers = effect_markers;
+						parameters.flags = 4;
+						parameters.scale_a = strength;
+						parameters.scale_b = strength;
+						effect_new_from_parameters(&parameters);
 					}
 				}
 			}
+
 		}
 	}
 }
