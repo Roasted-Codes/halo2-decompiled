@@ -3020,6 +3020,8 @@ struct s_voice_route_choice
 // Round 250: signed range admission, original/conditional headset 367/367;
 // with split nearest selection 433/433; complete mode observation 440/440,
 // with split nearest 512/512. All restored; entry saves and cursor bias remain.
+// Round 395: signed nearest-index validity 419; with choice receiver 412, branch radio 415, both 414;
+// three mixer pairs on those four graphs 428/402/422/421. Original validity tests and full body restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

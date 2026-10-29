@@ -1272,6 +1272,9 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // Round 390: conditional last-selection publication with native entry pointer,
 // combined admission mask and live-count masks 0-7: 529/565/570/567/567/561/574/570.
 // Original scan, positive result, complete math body and all helper/caller contracts restored.
+// Round 392: dead first-clamp workspace reused for either later clamp, native/CRT
+// normal copies before/after intrinsic length: 567/581/566/588 for each workspace.
+// CRT forms lose a matched caller; original distinct color objects and body restored.
 // Round 247: current-frame normal/color/both role names, entry declarations and their
 // three naming combinations, bounded-color consumption scope with both names: 529 each.
 // Original vector/color homes, declaration phases, selection and complete body restored.

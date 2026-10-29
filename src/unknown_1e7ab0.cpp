@@ -242,6 +242,10 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // Round 220: Entry-getter failure guards, per-use table, both, readonly table,
 // readonly with guards/per-use/both, and conditional nullable result 620 each.
 // Original getter, state/player/unit receivers and complete body restored.
+// Round 393: Existing weapon-accessor role orders, header-first unit accessor and readonly player inputs:
+// 620/620/620/620/620/620/620/620. All helper contracts and complete original case graph restored.
+// Round 395: existing-result completion after reset pairs 10/11, 12/13, 2/16 and all six
+// 630/630/670/670; with ordinary player carrier 792/792/805/805. All original cases restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

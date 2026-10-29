@@ -476,6 +476,9 @@ real function_30bf0(vector3f *vector);
 // DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
 // 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
 // Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
+// Round 394: empty/non-player/both seat continue exits, each with native/seat-scope
+// query outputs, 205 each; both with later up 205; both with long index 209.
+// Original eligibility, cursor and output scopes restored; result/range/SIMD homes remain.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
