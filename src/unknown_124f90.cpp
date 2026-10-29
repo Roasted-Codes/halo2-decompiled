@@ -144,8 +144,10 @@ real sound_get_minimum_distance(s_sound const *sound, long definition_index)
 	return function_xaa8231(definition->class_index)->minimum_distance;
 }
 
+/* inline: callers that keep it out of line (0x21d060) then save their scratch
+   registers around it, as retail does */
 // @retail 0x125010
-real sound_get_maximum_distance(s_sound const *sound, long definition_index)
+inline real sound_get_maximum_distance(s_sound const *sound, long definition_index)
 {
 	s_sound_definition *definition;
 
@@ -3410,7 +3412,7 @@ struct s_128ca0
 	byte field_468[0x10];
 };
 
-// score 234 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
+// score 215 (was 234): Frame 0x49c versus 0x494; initial gain argument homes and joined integer clamp stores remain.
 // Aggregate packet 314; later packet lifetime 288; role names 241; real gain field 294; full memset 321.
 // Existing shared bit clamp 234; unsigned gain carrier 241; shared branch gain workspace 241;
 // long next-chunk candidate 254; completed-chunk early exit 241.
@@ -3450,6 +3452,9 @@ struct s_128ca0
 // so ours is one instruction short and every later line shifts; that with a scale local shared by
 // the pitch and the call 258 (retail's shared scale load; the location add and the pitch/argument
 // temporaries' slots remain); with decibels_add outside 260. All restored.
+// Round 219: readonly conditional next chunk 239; complete countdown arms 215 (plain, kept); both
+// 227; word countdown 229; conditional/word 234; complete arms/word 224; all 217, with role names
+// 217. Sub-eight gains 227/229 restored; all other forms restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3497,12 +3502,14 @@ void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization c
 		if (local_1->effect_index != NONE)
 		{
 			s_sound_controller_view *local_13 = (s_sound_controller_view *)((s_record_pool *)g_51ebd8)->data + (local_1->effect_index & 0xffff);
-			byte local_14 = 0xff;
+			byte local_14;
 			if (local_13->unknown04 != NONE)
 			{
 				local_14 = local_13->playing_count & 0x7f;
 				local_13->playing_count = (local_13->playing_count - 1) & 0x7f;
 			}
+			else
+				local_14 = 0xff;
 			local_1->unknown03 = local_14;
 		}
 		local_1->flags |= 0x200;
@@ -3668,6 +3675,12 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // Round 364: raw cross parts at each row/before outputs/before coefficients
 // 535/1050/1050; named dot parts 544; with those raw-cross boundaries
 // 542/1050/1050; joint entry coefficient declarations 1050. Original helper restored.
+// Round 219: native rotation/left/rotation+left setters 1050/647/986; velocity setter 543;
+// rotation+velocity 1045; left+velocity 646; all 986; with interpolated point setter 986. Original
+// restored.
+// Round 221: original native fallback copied from the existing immutable object by aggregate/library,
+// each with aggregate/library occlusion and field/aggregate publication: 739 each, 2085 bytes.
+// All eight restored; original helper and stack fallback retained; temporary declaration removed.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

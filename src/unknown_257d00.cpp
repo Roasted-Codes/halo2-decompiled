@@ -1672,6 +1672,9 @@ void function_b7360(long object_index);
 // Round 253: success-first selection result short/long/byte/word 472/472/482/472;
 // actual-default failure production at those widths 488/488/508/488.
 // Original selection test and full executable body restored.
+// Round 175: inner selector groups DNAB/NABD/BAND/ANBD/BNAD/NBAD/ABDN/DBAN
+// 470/470/470/471/471/470/471/470; A=0..4, B=5..8, N=9/10, D=default.
+// One-count reductions rejected; original inner and outer dispatch restored.
 // @retail 0x258cf0
 short __stdcall function_258cf0(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
@@ -2108,6 +2111,12 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Round 240: Internal turning-result byte/short/long 491/491/491; facing-completion
 // byte/short/long 491/583/584; both short/long 583/584 (fast control 491, full 478).
 // Actor/state ownership and first point home persist; original predicates restored.
+// Round 175: consistent case-disjoint position/displacement/planar-direction names,
+// seven family subsets and all with iterator/completion/result names, 491 each
+// (unchanged reduced control 491; full 478). Original lexical identities restored.
+// Round 31: conditional failure producers for spatial/countdown/both admissions 491/604/604;
+// scalar-predicate admissions 631; spatial+scalar 631; countdown+scalar 611; all 611; all with Boolean completion 611.
+// Reduced control 491 versus full 478; original default, all decision producers and complete body restored.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {

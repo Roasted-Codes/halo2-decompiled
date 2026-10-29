@@ -101,6 +101,8 @@ extern real g_4c9798[36];
 // complete bounded-size result 252; reused native pixel area 342; zero+size 322; zero+area 354;
 // size+area 342; all three 354; all with zero declared after mode 353. All restored; state
 // transport, protected rounding reloads and far-plane stores remain.
+// Round 219: short mode/height/both/all limit role names 239 each; entry halfword declarations 239;
+// readonly mode/height/both 239 each. Original restored.
 // Round 166: Existing native state fields 239; shared width-first/height-first bounded dimensions
 // 298/306; with native fields 298/306; native fields with reused signed pixel capacity 333; shared
 // width/capacity without/with native fields 322/322. Original short mode/height, scalar
@@ -113,6 +115,13 @@ extern real g_4c9798[36];
 // early border zero alone/with tag/direction/both 342 each, zero after mode
 // with both views 297. Border forms recover frame 0x28 but regress; original
 // short mode/height, observations, copies and protected call inputs restored.
+// Round 222: Existing native projection/opposite/near-normal vector setters, all seven
+// subsets 252/255/264/239/252/255/264; all with both point setters 264. Frame
+// 0x24/0x28 and state/rounding homes remain; complete original body restored.
+// Round 174: entry tag category captured as short/long 239/239; complete raw sizing flags
+// 237; short/long tag with raw flags 237/237; tag short/long with entry border zero
+// 342/342; short tag, raw flags and zero 335. Two-count gains and exact-only tag copies
+// restored; frame 0x24/0x28, state transport and protected rounding reloads remain.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

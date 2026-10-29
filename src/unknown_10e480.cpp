@@ -145,9 +145,14 @@ extern real g_547648;
 void c_animation_channel_data_get(c_animation_channel const *channel, s_animation_data *data);
 
 // score 207 (was 207): Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
-// frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
-// Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
-// Frame 0x30 versus 0x2c, destination/ordinal homes and getter expansion remain.
+// Round 87: the cause is our inlining of 0x1c6440 in the weighted arm (retail calls it there and in the
+// third arm). With the getter out of line (noinline in its header, diagnostic only) the entry and the first
+// arm match retail (edi is the zero register, transforms is read from the stack): 174 at 940 bytes. Its
+// inlining here did not move with an extra getter use in the first arm, a shrunken third arm or the third
+// arm alone (which calls everything out of line even by itself). Tried: data write through a forceinline
+// wrapper 207; early return when the weighted play fails 207; unused reference dropped 212 (ret 0x14);
+// weight products global-first/grouped/frame-first 207/263/207; long sample frame used for the compare
+// and the conversion 257 (aligned 99/91 against 109/110).
 // Lane 8 r64: countdown weight with the `>= 3` case first (retail's fall-through) 215, kept; frame
 // byte in a long local 260 (32-bit compare as retail, aligned 119, 969 bytes); char/word loop index
 // 215 (identical: the loop stays a pointer plus spilled countdown); sampled flag declared before

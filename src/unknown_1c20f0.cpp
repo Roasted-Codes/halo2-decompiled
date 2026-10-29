@@ -40,6 +40,14 @@ struct s_structure_bsp_pathfinding_view
 	s_pathfinding_data *pathfinding;
 };
 
+/* function_1697c0 fills 0x5c bytes; the shared result type covers the first
+   0x4c (as path_transitions.cpp's transition buffer) */
+struct s_collision_result_buffer_1697c0
+{
+	s_collision_result_1697c0 result;
+	byte unknown4c[0x5c - 0x4c];
+};
+
 /* the priority this handler always reports */
 short g_47ffa8 = 3;
 
@@ -49,7 +57,22 @@ void __stdcall actor_behavior_81_update48(long object_index, long unused);
 
 static __forceinline long real_to_long(real value);
 
-// score 81 (was 81): frame 0xc4 versus 0xd4; direction/counter roles and endpoint scheduling differ.
+/* the point t along vector from point */
+static inline void point_along_vector_1c19b0(point3f const *point, vector3f const *vector, real t, point3f *result)
+{
+	result->x = vector->i * t + point->x;
+	result->y = vector->j * t + point->y;
+	result->z = vector->k * t + point->z;
+}
+
+// score 23 (was 81): frame 0xd4 and registers agree; the end point sits at 0x40 below the second
+// rounded tick count (0x4c) and the actor-position temp (0x50), where retail has 0x48 above 0x40/0x44,
+// and its stores are scheduled before the call pushes. Round 152: full 0x5c collision buffer 69;
+// point-along-vector steps in place 163, through an `ahead` point 54; single exit 23; end/ahead
+// declarations swapped 23; tick locals at loop scope 23; end or delta at function scope 23/30.
+// A compile-only frame probe puts both 4-byte slots below end only with the final call after the
+// loop (a found flag), not tried in a real build.
+// Earlier: frame 0xc4 versus 0xd4; direction/counter roles and endpoint scheduling differ.
 // The collision workspace remains 16 bytes smaller; local offsets and loop layout differ.
 // Reused step scale 228; with shared delta 228, endpoint setter 220, both 220;
 // with start setter 228, start/delta 228, both setters 227, all three 227.
@@ -70,14 +93,15 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 	real distance;
 	point3f start;
 	short i;
-	s_collision_result_1697c0 collision;
+	s_collision_result_buffer_1697c0 collision;
+	bool result = false;
 
 	if (bsp->pathfinding_count > 0)
 	{
 		pathfinding = bsp->pathfinding;
 	}
 	height = actor->position.z;
-	collision.unknown24 = NONE;
+	collision.result.unknown24 = NONE;
 	distance = 0.0f;
 	origin = actor->position;
 	if (actor->unknown27c.unknown10 != NONE)
@@ -87,34 +111,30 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 		function_26c590(pathfinding, &actor->position, actor->unknown27c.unknown10, NONE, *direction_slot, 5.0f, NULL, &trace);
 		origin = trace.point;
 		distance = trace.distance;
-		if (function_1697c0(0x1808c2d, &origin, g_4687bc, actor->unknown018, NONE, &collision))
+		if (function_1697c0(0x1808c2d, &origin, g_4687bc, actor->unknown018, NONE, &collision.result))
 		{
-			origin = collision.point;
+			origin = collision.result.point;
 		}
 	}
-	start.x = g_4687b0->i * 0.2f + origin.x;
-	start.y = g_4687b0->j * 0.2f + origin.y;
-	start.z = g_4687b0->k * 0.2f + origin.z;
+	point_along_vector_1c19b0(&origin, g_4687b0, 0.2f, &start);
 	for (i = 0; i < 4; i++)
 	{
 		real scale = (i + 1) * 0.25f;
+		point3f ahead;
 		point3f end;
 		vector3f delta;
 		long node_index;
 		s_type_c3b527 location;
 
-		end.x = g_4687b0->i * 0.4f + (direction->i * scale + origin.x);
-		end.y = g_4687b0->j * 0.4f + (direction->j * scale + origin.y);
-		end.z = g_4687b0->k * 0.4f + (direction->k * scale + origin.z);
-		delta.i = end.x - start.x;
-		delta.j = end.y - start.y;
-		delta.k = end.z - start.z;
-		if (function_1697c0(0x1808c2d, &start, &delta, actor->unknown018, NONE, &collision))
+		point_along_vector_1c19b0(&origin, direction, scale, &ahead);
+		point_along_vector_1c19b0(&ahead, g_4687b0, 0.4f, &end);
+		vector3d_from_points3d(&start, &end, &delta);
+		if (function_1697c0(0x1808c2d, &start, &delta, actor->unknown018, NONE, &collision.result))
 		{
 			break;
 		}
-		node_index = function_26d100(g_4687b0, (long *)&location, &collision, &end);
-		if (!(height + 0.1f > collision.point.z) || !(2.0f > origin.z - collision.point.z))
+		node_index = function_26d100(g_4687b0, (long *)&location, &collision.result, &end);
+		if (!(height + 0.1f > collision.result.point.z) || !(2.0f > origin.z - collision.result.point.z))
 		{
 			break;
 		}
@@ -124,21 +144,17 @@ bool __stdcall function_1c19b0(long actor_index, vector3f const *direction, s_ty
 
 			if ((node->flags & 1) && (!(node->flags & 2) || !function_1fa6b0(node, pathfinding)))
 			{
-				long ticks;
-				long ticks_extra;
-				real seconds = g_510c54->field_2_3;
-				real seconds_extra;
+				long ticks = real_to_long(g_510c54->field_2_3);
+				long ticks_extra = real_to_long(g_510c54->field_2_3 * 1.5f);
 
-				ticks = real_to_long(seconds);
-				seconds_extra = g_510c54->field_2_3 * 1.5f;
-				ticks_extra = real_to_long(seconds_extra);
-				return function_1f34b0(actor_index, &actor->position, direction,
+				result = function_1f34b0(actor_index, &actor->position, direction,
 					(i + 1) * 0.25f + distance + 0.5f, (short)((real)ticks * distance + (real)ticks_extra));
+				break;
 			}
 		}
-		height = collision.point.z;
+		height = collision.result.point.z;
 	}
-	return false;
+	return result;
 }
 
 // score 80 (was 80): actor/sentinel allocation and rotated prop walk differ at the 0x0c frame.

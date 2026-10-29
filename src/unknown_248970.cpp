@@ -52,6 +52,9 @@ public:
 };
 
 // score 227 (was 227): retail's convention since round 67 (flag in AL, location stacked, 0x175270
+// frame 0x10/0x14; metadata/head/count homes and x87 cleanup differ.
+// Earlier: retail's convention since round 67 (flag in AL, location stacked, 0x175270
+// retail's convention since round 67 (flag in AL, location stacked, 0x175270
 // the child loop advances a 0xb8-stride cursor over the child table instead
 // of recomputing field_34 + i * 0xb8, as retail does; field_4 is now read before the metadata
 // call and the flag is stored after the position copy, as retail does.
@@ -175,6 +178,12 @@ public:
 // inlines it too (213 -> 337, retail calls it); inactive arm first on that 248; the existing
 // forceinline link body (retail inlines 0x2483f0, salt read first) gives retail's ECX position and
 // spilled head but moves the location into EBX, 253.
+// Round 386: isolated metadata/head/count lexical homes in all seven subsets 227 each;
+// all three with an earlier uninitialized count declaration 227. Original body restored.
+// Round 173: existing falloff helper with ordinary/inline/forceinline/noinline contracts
+// 307/226/226/307; each with the complete coordinate-double phase closed 307/226/226/307.
+// One-count inline gain restored, including all provider declarations; input delivery
+// agrees, frame 0x10/0x14 and metadata/x87/child allocation remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
