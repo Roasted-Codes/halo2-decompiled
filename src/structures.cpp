@@ -324,6 +324,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 32 on branch-owned definition/result-at-join: all BSP observations 234;
 // all collision metadata observations 228; CRT query snapshot 172; BSP/metadata 231;
 // BSP/copy 234; metadata/copy 228; all 231, instance-first all 222. Original body restored.
+// Round 251: bounded vertex byte/signed-byte/word/unsigned-long ordinals
+// 259/259/259/172; each with a complete post-geometry range-end expression
+// 269/269/269/196. Original ordinal and bounds restored; frame/BSP/section and
+// defined vertex joins remain.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

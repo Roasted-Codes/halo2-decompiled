@@ -174,6 +174,9 @@ public:
 // 307/226/226/307; each with the complete coordinate-double phase closed 307/226/226/307.
 // One-count inline gain restored, including all provider declarations; input delivery
 // agrees, frame 0x10/0x14 and metadata/x87/child allocation remain.
+// Round 251: actual metadata/allocated/linked/updated external object references
+// singly 227 each; metadata with each child 227 each; all four 227. Original
+// distinct pointer receivers restored; metadata/head/frame and x87 homes remain.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)

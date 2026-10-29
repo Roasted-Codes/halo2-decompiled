@@ -271,6 +271,10 @@ void __stdcall function_1160c0(real dt)
 // Round 32: existing in-place axis scale 179; original-angle segment-first 276;
 // tiny-axis-owned fallback 294; scale/segment 276; scale/fallback 294; segment/fallback 247;
 // all 247, cosine-first all 247. Original producers, fallback and include set restored.
+// Round 251: interpolation-owned stiffness 315; velocity-owned reciprocal 294;
+// both 320; rest offset after readonly angle/trigonometry 229; with stiffness/
+// reciprocal/both 299/288/310; all with the native prediction constructor 310.
+// Original producer points and complete body restored; segment/previous/axis homes remain.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

@@ -3894,6 +3894,10 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 218: Exhaustive award result, entry declaration with before/after subtype leaves and
 // ordinary/excluded category first 579/591/584/602; selection declaration counterparts 579/591/584/602.
 // All restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
+// Round 251: existing initializer returned-workspace receivers, first/second/both
+// events 576/536/610; immutable receivers 576/536/610; paired mixed receivers
+// 610/610. Both original native event constructions and complete body restored;
+// extra frame dword and attacker/category/NONE homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4121,7 +4125,7 @@ struct s_score_zone_view
     short count;
 };
 void function_15fe20(long team_index, color3f *color);
-// score 88 (was 119): frame 0x48c, four bytes long; two team-color copies (retail loads all three words, then
+// score 88 (was 88): frame 0x48c, four bytes long; two team-color copies (retail loads all three words, then
 // stores through ESI/EDI), the -1 register reused for the unit/slot NONE tests, a byte shift count
 // and scratch-register renames remain.
 // Earlier: frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
@@ -4182,6 +4186,9 @@ void function_15fe20(long team_index, color3f *color);
 // exhaustive weapon selection, either arm order, with/without the repeated unit-index capture 88;
 // producer declaration and direct slot-selection initializer 88. Keep only direct selection (plain 88,
 // 2692/2688 bytes). Frame and initial color-copy gap remain; final NONE allocation improves.
+// Round 251: paired player-score/rival-score/rival-index lexical homes, all seven subsets
+// 88 each; all three with statistic-selector name 88. Original selection names restored;
+// color transfer, NONE reuse and shift-count read width remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
