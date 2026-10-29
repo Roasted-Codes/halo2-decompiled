@@ -947,6 +947,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Existing primary lookup/transition lookup/channel-start inline declarations,
 // their three pairs, all three, and all three kept out of line: 210 each.
 // Original declaration contracts, identifier homes and complete body restored.
+// Round 383: existing variant helper ordinary/forced/noinline/inline-noinline
+// contracts 210/338/210/210; offset helper counterparts 210/654/210/210.
+// Original class declarations and complete body restored.
 // Round 170: Failure-owned false result, byte/bool/short/long, with bool then byte prior-loop truth
 // 357/337/346/344/357/337/346/344. Original entry false, constructors and protected queries restored.
 // @retail 0x1cd070
