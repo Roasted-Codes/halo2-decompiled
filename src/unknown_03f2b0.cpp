@@ -1380,7 +1380,7 @@ struct s_batch_cache_4b5d0
 
 struct s_133f70;
 
-// score 175 (was 175): Full frame 0x33f8 agrees; distance staging, nullable entry and cache/result homes remain.
+// score 175 (was 175): frame 0x33f8 agrees; distance staging, nullable-entry/cache adds and result homes remain.
 // Round 15: split entry-count declaration 213; cache levels base with 0xbc at the index 197; native entry
 // arithmetic 197; full second-cache record 325; two-step second cache 197; Boolean builder with wide previous 177;
 // signed-byte previous 319; direct cache publication 348. Levels offset and Boolean builder with wide previous kept.
@@ -1475,6 +1475,7 @@ struct s_133f70;
 // scope 176/175. All restored; distance staging and cache/result scheduling remain.
 // Round 218: Count/writer/projection/coefficient inline and noinline declarations:
 // 175/175/175/175/175/175/175/175 (fast control 175). Original restored.
+// Round 237: Actual object type/cache-link/tag receiver fields, all seven combinations, then all with readonly header: eight calibrated scores 175. Original views and complete executable source restored.
 // Round 87 (plain; fast now gives 353): the tail from the 0x23690 call on (about 80 of the 175) follows
 // that callee's convention: ours passes the level in AX, retail pushes all seven arguments (`ret 0x1c`,
 // `movsx ecx` of the level), BLOCKED-BY 0x23690. Head forms: the 0x4ed284 test nested with an entry

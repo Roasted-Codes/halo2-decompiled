@@ -140,6 +140,9 @@ __forceinline s_object_ai_data *function_28dbd5(s_handler_object_view *arg_0)
 // z is stored back unchanged), but launch through vector3f_scale 186, both offsets through a point
 // add-scaled helper 192, both 192, the random offset as a vector added to the point 236 (1220 bytes),
 // all three 253, the rotation sum through vector3f_add then the cross subtraction 224.
+// Round 63: delayed first cross scale 228; scalar crosses on delayed-sine schedules 180/209;
+// typed request field 186; own-address zero read 247; direct sums on delayed-sine schedules 216/224;
+// inline library forward copy 186. Original helper and body restored.
 // @retail 0x28dbd0
 long function_28dbd0(long arg_0, long arg_1, long arg_2, s_28dab2 const *arg_3, bool arg_4)
 {

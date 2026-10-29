@@ -413,6 +413,9 @@ PRIVATE inline long polygon_round_19f(real value)
 // xmm numbering rotates); a plain address read of the variant 423 and one volatile read 422 (both
 // frame 0x30, but the two matched callers lose); a named fade width before the loop 374 (our
 // compiler then multiplies by a reciprocal where retail divides; not kept); a vertex pointer 397.
+// Round 66: existing double-input distance helper at entry, entry+vertex and all three sites
+// 379/379/399; pre-loop counter, entry counter, entry wrapped index, entry predecessor and
+// a plain while loop 379 each. Both callers stayed matched; all executable forms restored.
 // @retail 0x19f680
 void function_19f680(long tag, long group, long pass, long variant, void *context,
     point2f const *vertices, long count, point3f const *center, real radius,

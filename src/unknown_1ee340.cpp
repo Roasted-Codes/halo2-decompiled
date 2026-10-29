@@ -239,6 +239,7 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // projection/ray identities: 192/192/192/192/192/192/192/192. Origin retention and edge spills still leave
 // the short frame
 // original identities restored.
+// Round 222: Intrinsic origin/start/both copies 282/204/270; complete vector constructors 192; origin/start/both with constructors 282/204/270; all with normal-output constructor 269. All restored; frame 0x84 versus 0x90 and retained-origin/edge homes remain.
 // Round 163: endpoint float setters, second/first/both/both before edges,
 // 260/251/216/214; with shared ray-start input 260/247/217/215.
 // Paired endpoints recover frame 0x90 but retain entry/edge scheduling differences;

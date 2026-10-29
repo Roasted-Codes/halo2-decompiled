@@ -757,7 +757,8 @@ void __stdcall vector_constructor_iterator(void *arg_0, unsigned arg_1, int arg_
 void *__fastcall function_31bc70(void *arg_0);
 real function_18cac0(long arg_0);
 
-// score 155 (was 155): frame 0x8ac agrees; camera/gain-view allocation and maximum-tail registers differ.
+// score 155 (was 155): frame 0x8ac agrees; camera ESI/EBP and persistent clear-result/side homes differ.
+// frame 0x8ac agrees; camera/gain-view allocation and maximum-tail registers differ.
 // frame 0x8ac agrees; persistent camera/gain and scalar homes differ.
 // Earlier: Frame 0x8ac agrees; camera ESI/EBP, table-view and side homes remain.
 // Earlier: aligned EBP frame 0x8b4 versus direct 0x8ac; native large-clear and scalar homes differed.
@@ -828,6 +829,9 @@ real function_18cac0(long arg_0);
 // names with all three 155. Original executable body restored.
 // Round 370: consistent camera-provider observations with native table, default-first side and
 // after-clear structure interactions 253/253/270/269/253/253/270/269; restored.
+// Round 237: On the shared membership graph, native side short/word/signed-byte/byte
+// 179/179/224/224; first-side-default forms 230 each. Both clears, constructor, live bounds,
+// strict maximum and original side result restored.
 // Selected-mask address on shared membership with final-array ownership, consistent audibility
 // and native real storage: 266/266/260/260/263/263/266/266; exact-only pointer forms restored.
 // Round 108: retail clears and indexes the 0x800-byte table in place (`[esp + eax*4 + 0xbc]`,

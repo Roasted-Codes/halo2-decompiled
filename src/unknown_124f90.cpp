@@ -2071,6 +2071,9 @@ static inline void approach_126660(real *value, real delta, real lower, real upp
 // score 17 (was 17): retail adds the clamped unknown18 step through a copy
 // register and adds the clamped unknown14 step in place; ours does the
 // opposite, so the two sites trade xmm1 and xmm2.
+// Round 29: target-first helper on the first three/four clamps 33/33; forceinline 33;
+// third clamp only 130; symmetric bounds 106; value-first 122; both fades 96;
+// clamp-first addition 33; named delta 104; target pointer 99. Original restored.
 // @retail 0x126660
 void sound_environments_update(s_sound_environment const *requests)
 {
