@@ -658,7 +658,9 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
     widget->function_22f52e()->set_text(text);
 }
 
-// score 573 (was 573): Frame 0x85c agrees; EBP bias 0x70, flag/time/state homes and timing-result schedule remain.
+// score 573 (was 573): retail biases EBP by 0x70 (lea ebp,[esp-0x70]) and keeps the friend flags in
+// ESI and the timestamp in EDI; ours uses a plain frame, spills the flags to a slot and packs the six
+// small locals differently.
 // Frame 0x85c agrees; EBP bias 0x70, flags/time/state homes and status-helper transport remain.
 // Earlier: frame 0x85c agrees; EBP bias and flag/time/state
 // frame 0x85c agrees; EBP bias and flag/time/state
@@ -712,6 +714,7 @@ PRIVATE __forceinline void show_friend_detail(c_text_widget_45a5e0 *widget, word
 // Publication helper native widget/buffer-array/both references 573 each; array input
 // first 573; ordinary inline with widget/array/both references 573 each; both references
 // with text-first formals 573. Original helper and every publication call restored.
+// Round 380: Bit extraction after widgets at bool/byte/short/long width 642/642/640/628; in the data branch 639/639/633/640. Original extraction and carriers restored.
 // @retail 0x2b65b8
 void c_y_menu_player_selected_screen::update_friend_details(XONLINE_FRIEND const *friend_, s_friend_session_2b642e *session)
 {

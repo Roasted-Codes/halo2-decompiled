@@ -24,6 +24,8 @@ struct s_slot_82
 	byte unknown3a[0x40 - 0x3a];
 };
 
+/* the same slot's data block after the header (s_slot's unknownc), as
+   function_1c1160 reads it */
 struct s_slot_82_data
 {
 	bool unknown00;
@@ -270,7 +272,13 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 	return true;
 }
 
-// score 63 (was 63): frame 0x24 and status loads agree; actor lookup order, early
+// score 15 (was 63): the unknown22a byte is tested in CL (retail AL), the seat
+// count and the seat table swap ECX and EDX, and retail loads the unit for the
+// seat request before its stores. Unit read in each arm 75; flag local 17; seat
+// pointer local 11 (fixes the seat registers, flips the dot product's x term),
+// with the dot arguments swapped 13; forceinline seat search helper 17; tag
+// lookup written out 15; object pointer local 17; request stores reordered 15.
+// frame 0x24 and status loads agree; actor lookup order, early
 // slot retention and object/tag registers differ. Earlier forms: wide result 97;
 // shared predicate 112/115/120; actor-offset form 112; request at entry 70.
 // Round 162: native payload 115, with found-seat result 115; whole-slot found-seat result 65;
@@ -279,32 +287,32 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 // @retail 0x1c1160
 short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 {
-	s_slot_82 *state = (s_slot_82 *)slot;
 	short result = g_46fbe8;
-	s_actor_view *actor = actor_get(actor_index);
+	s_slot_82_data *state = (s_slot_82_data *)slot->unknownc;
 
-	if (actor->unknown504 == 2)
+	if (actor_get(actor_index)->unknown504 == 2)
 	{
+		s_actor_view *actor = actor_get(actor_index);
 		s_unit_request action;
 		long unit_index = actor->unknown018;
 
 		if (actor->unknown22a)
 		{
 			if (!function_110ab0(unit_index) &&
-				(!state->unknown20 || dot3f((vector3f *)&state->unknown14, &actor->unknown290) > 0.9f))
+				(!state->unknown14 || dot3f((vector3f *)&state->unknown08, &actor->unknown290) > 0.9f))
 			{
 				action.type = 0x35;
-				action.type35.has_vector = state->unknown20;
-				if (state->unknown20)
+				action.type35.has_vector = state->unknown14;
+				if (state->unknown14)
 				{
-					action.type35.vector = *(vector3f *)&state->unknown14;
+					action.type35.vector = *(vector3f *)&state->unknown08;
 				}
-				state->unknown0c = function_e6900(actor->unknown018, &action);
+				state->unknown00 = function_e6900(actor->unknown018, &action);
 			}
 		}
 		else if (!function_110ab0(unit_index))
 		{
-			long vehicle_index = state->unknown10;
+			long vehicle_index = state->unknown04;
 
 			result = g_46fbe4;
 			if (vehicle_index != NONE)

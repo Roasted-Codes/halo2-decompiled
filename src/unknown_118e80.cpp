@@ -282,6 +282,9 @@ PRIVATE __forceinline void world_up_1197b0(long object_index, vector3f *up)
 // static-inline vector position setter 217; world-up position output before/after the up result 206/205;
 // world-up output order 205; position declaration order 205; entry position with inline store 205;
 // scoped temporary velocity with inline position store 205. Original helper and body restored.
+// Round 30: Complete parent-handle long/dword lifetimes 220/220; transform-first arms with those
+// handles 227/227; separate outlined producer original/transform-first 472/472; outlined handle
+// long/dword pair 472/472. Original forced producer, input copies and all body code restored.
 // @retail 0x1197b0
 void function_1197b0(long object_index)
 {
