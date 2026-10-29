@@ -842,6 +842,12 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 }
 
 // score 224 (was 224): Frame 0x20 versus 0x18, mode/input-level homes and the second x87 tail sum remain.
+// Retail loads level, offset and the send level with integer moves (/arch:SSE has no movd, so level
+// in EBP is bounced through a temp before each add) and never shares send + level between appends.
+// Round 152: send level from an out-parameter getter 224 (promoted, identical); gains at use, byte
+// alternate and plain long bins 289 (this moves to the stack, dispatcher changes); front/rear sums
+// through a by-value forceinline append 230 (still shared); level and offset read at each use 308;
+// volatile send level 266 (diagnostic, reverted: mode keeps EBP).
 // Earlier 238 from 254; complete scalar selector result 228 plain (one-use copy rejected); default-first/early
 // scalar/reference 232/243/238 fast; native-bit forms 226/224/224/227 with direct-route regressions.
 // Earlier: Frame 0x1c versus 0x18, mode/level homes and x87 tail sums remain; external
