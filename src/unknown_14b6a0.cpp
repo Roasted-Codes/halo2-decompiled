@@ -229,6 +229,9 @@ void function_14bac0()
 // aggregate/CRT clear 230 each; both aggregates 230; first aggregate/native recipient aggregate
 // 250; both cleared/native recipient 279. Original initialization and iterators restored; frame
 // 0x44/0x3c, readiness homes and recipient overlap remain.
+// Round 175: Complementary destination/alternate/both readiness 233/240/242;
+// with the native result-tested recipient iterator 254/254/259; both as byte/long
+// 242/286. Original readiness, iterators, points, counters and executable body restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

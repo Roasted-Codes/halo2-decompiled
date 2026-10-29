@@ -1214,7 +1214,7 @@ bool function_e8510(long unit_index, bool immediate, bool silent, bool primary)
 
 bool function_10fd40(long unit_index, long action_name, long state_name, bool flag);
 byte function_10fcd0(long unit_index, long unknown, long state_name, long action_name);
-void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary);
+void __stdcall function_d0870(long weapon_index, long unit_index, long secondary);
 void __stdcall function_fff40(long weapon_index, bool silent, bool immediate);
 
 /* a unit's weapon animations: its vehicle seat's weapon's, or the

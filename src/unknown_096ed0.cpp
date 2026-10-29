@@ -118,6 +118,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 216/216/200/200; complete post-query selector publication at those widths
 // 278/278/266/266. Original selector, table observations and body restored; cursor/entry
 // homes and pending selector/chain-index residency remain.
+// Round 175: On the recovered EBP graph, pending/active/both native chain-buffer names
+// 170/170/170; two-use pending callback handle 170, with either/both buffers 170/170/170;
+// complete graph with alternate buffer home order 170. Original executable body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

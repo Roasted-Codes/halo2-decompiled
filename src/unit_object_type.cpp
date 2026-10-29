@@ -1836,7 +1836,7 @@ void __stdcall function_cea70(long mode, short slot_index, long weapon_index, lo
    definition's +0x158 or +0x15c), at the unit's marker +0x160 when the
    weapon has it, else at the weapon definition's +0x284 */
 // @retail 0xd0870
-void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary)
+void __stdcall function_d0870(long weapon_index, long unit_index, long secondary)
 {
 	byte *local_98b918_2 = UNIT_DEFINITION_GET(UNIT_GET(unit_index));
 	byte *local_67e06b = UNIT_DEFINITION_GET(UNIT_GET(weapon_index));
@@ -1850,19 +1850,12 @@ void __stdcall function_d0870(long weapon_index, long unit_index, bool secondary
 	{
 		parent_marker_name = *(long *)(local_98b918_2 + 0x15c);
 	}
+	s_object_marker marker;
 	long marker_name = *(long *)(local_98b918_2 + 0x160);
-	if (marker_name == NONE || marker_name == 0)
+	if (marker_name == NONE || marker_name == 0 ||
+		!function_b8d30(weapon_index, marker_name, &marker, 1, true))
 	{
 		marker_name = *(long *)(local_67e06b + 0x284);
-	}
-	else
-	{
-		s_object_marker marker;
-
-		if (!function_b8d30(weapon_index, marker_name, &marker, 1, true))
-		{
-			marker_name = *(long *)(local_67e06b + 0x284);
-		}
 	}
 	function_10cec0(weapon_index, unit_index, parent_marker_name, marker_name);
 }
@@ -3212,6 +3205,11 @@ bool function_d1080(long unit_index, transform4x3f *matrix, s_unit_camera_data *
 /* the state of a unit's weapon use: 6 or 5 for the flags when asked, 7
    past the definition's limit at +0x114, else 3; otherwise 0xc96b0's
    range (2 when forced, at most 1 when asked), held to 1 for players */
+// score 64 (was 64): Frame and lookups agree; first +0x2f has flag/b register roles and ret 0x14/0x18.
+// Round 175: held clamp 58 (possible operand fix; exact-only, restored); existing bit view 74;
+// common zero result 87; held/bit 58, held/result 92; actual bit/result 97, all three 88;
+// all test-derived results 89 at 292 bytes. Two duplicate generated forms excluded;
+// original body and every call restored.
 // @retail 0xc9770
 long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool held, bool force, real c, real d)
 {
@@ -3615,6 +3613,11 @@ void function_d03e0(long unit_index, long definition_index)
 
 /* applies the unit's melee damage to what it hit (a device of type 7 with
    bit 5 at +0x1cc is triggered first), then ends its state +0x2bc */
+// score 61: Second object lookup is merged and the surface-call argument width differs.
+// Round 175: default before initializer 56; existing masked-index helper at second/first/both
+// lookups 61/61/61, with early default 56/56; owner before flags 58; both orders 53
+// with or without the neutral helper. Not kept: the NONE material default ahead of
+// 0xd6660 is cleared by its memset (behaviour change).
 // @retail 0xcfc90
 void __stdcall function_cfc90(long unit_index, long definition_index, s_unit_melee_hit const *hit)
 {
