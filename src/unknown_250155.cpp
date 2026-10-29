@@ -1947,6 +1947,8 @@ extern dword g_54d5b8;
 // bytes). Tried: that copy with the dialog set before the switch, inside the guard,
 // or with a goto to the store 81; case 4 as `if (!g_51ec99) {...; break;} goto
 // shown;` 37; `case 1:` with the default 36.
+// Round 186: dialog result at entry long/int/dword/unsigned-int, native-scope int/dword/unsigned-int
+// 36 each; full unsigned state 36. Original body restored; shared tail placement remains.
 // @retail 0x250804
 void c_session_lobby_screen::show_session_state()
 {
