@@ -279,7 +279,7 @@ done:
 // buffer register and selector/tag scheduling remain different.
 // Numeric case order 49; descending 52; native copy 54; direct selector 57 at 171 bytes;
 // const variant 54; scalar names 54; entry variant/tag declarations 54/54.
-// score 49 (was 49): extra buffer EBX cache and selector/tag schedule remain.
+// Earlier: extra buffer EBX cache and selector/tag schedule remain.
 // Coordinated getter inline/inline-noinline/noinline 49/49/49; parser inline 49; null-definition exit 72;
 // native tag member 49; native member with null exit 72; terminal case first 54.
 // extra buffer save and selector/tag schedule remain; name-block order 54;
@@ -291,6 +291,10 @@ done:
 // extra EBX buffer cache and selector/tag scheduling remain.
 // Translator inline/noinline 49/49; native copy inline/noinline 49/49; both inline 49;
 // selected parameter 49; even-priority cases 56; low/high pairs 51.
+// DL179: Session getter inline/noinline crossed with ordinary, forceinline, noinline
+// and inline-noinline shared variant-wrapper declarations 49/49/52/52/49/49/52/52;
+// code rows 37/37/39/39/37/37/39/39. Getter inline loses two checked callers;
+// wrapper outlining loses the checked variant parser. All original declarations restored.
 // @retail 0x22d456
 void __stdcall parse_gametype(long string_handle, word *buffer)
 {

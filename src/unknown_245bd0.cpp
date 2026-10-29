@@ -258,6 +258,42 @@ PRIVATE inline void shape_copy_header(s_shape_header const *source, s_shape_head
 // __forceinline give identical code (compile-only); a nested unit-vector helper taking the
 // distance (reciprocal inside it) with length_sq3f gets the in-place products (compile-only xmm
 // diff 13) but swaps x/y and folds the last dot term, 129 (and a one-caller helper).
+// the sphere test's normal: retail multiplies the x and z
+// differences in place (normal x/y/z in xmm1/xmm3/xmm2) and loads 1.0 in each arm;
+// ours multiplies copies of the scale and hoists 1.0 into xmm0 before the fsqrt.
+// The unit-z arm's zero stores chained (y first, then x) 57 (each order with y or z
+// first 57, x first 61); depth before plane->d 61-65; distance-squared order i,k,j 61,
+// k,i,j 59; the scale helper's statement orders 61-158, operand orders 57;
+// scale declared first 61; the difference vector by fields 61; in-place scale + copy 397.
+// the first float of the pair is loaded into XMM2 here and
+// into XMM1 in retail, so the registers of the following subtractions are
+// swapped as well.
+// separate normal workspace 397; default normal workspace 397;
+// displacement in output normal 181; radius-square local 61; component-square lifetimes 61;
+// immutable distance 61; sphere reference 61; point reference 61. Sphere XMM homes still differ.
+// sphere displacement/normal homes and reciprocal-one hoisting remain.
+// Shared scaled difference 57; original-grouping squared-distance accumulator and paired
+// difference 61/61; normal memset and accumulator/reset 176/180; plain component scale
+// loop and shared-difference loop 57/57; normal reset with scale loop 175.
+// sphere displacement XMM homes and the early reciprocal-one load remain.
+// Shared squared length/self product 152/152; outside-sphere exit 57; root declared first 57;
+// default output before normalization 174; center/sphere value copies 397/396; center plus squared helper 397.
+// displacement/normal XMM homes and early reciprocal-one load remain;
+// late radius with scale, native factor and partial squared distance 62, 65, 65, 397, 397, 397, 397, 61.
+// sphere displacement/normal coalescing and reciprocal-one hoisting remain.
+// Containment-test return, successful plane/depth pointer returns, normal-first projection,
+// projection value, existing reverse dot in either input order and test/projection result all 57.
+// the normal's x and z products go in place only when the sum's first reads of
+// the difference's x and z are memory reads and y's is not; a pointer local to the difference read
+// for x and z in a statement sum x, z, y, with the dot product's inputs swapped and the unit-z
+// zeros stored separately, matches. Unit-z arm first 62; double reciprocal 397; reciprocal in the
+// call 57; regrouped sums 57-61; direct statement sums in each order 61; dot swap 57; zero stores
+// 61; difference in the plane normal 177; squared-length/self-dot helpers with both fixes 152.
+// Y405: Squared-distance axial array loop, original j term then axes 2 and 0, long/short
+// ordinal with either projection input order and chained/separate zeros: all eight 397 at
+// 456/678 (sphere helper outlined). Existing helper forced inline on the same eight graphs:
+// 235/235/244/244/257/257/262/262. Original helper/query restored; displacement/normal homes
+// and reciprocal-one hoisting remain.
 // @retail 0x245ef0
 bool function_245ef0(s_shapes const *shapes, point3f const *point, s_shape_result *result)
 {
@@ -307,6 +343,8 @@ PRIVATE inline real shape_dot_reverse(vector3f const *a, vector3f const *b)
 
 // score 40 (was 40): the float is loaded into XMM1 and moved to XMM0; retail loads it into XMM0 and
 // moves XMM5 into XMM1.
+// Existing offset/scale/plane-product force-inline declarations, all seven combinations 40;
+// native result byte 69.
 // @retail 0x2461a0
 bool function_2461a0(
 	s_sphere const *sphere,
@@ -472,7 +510,7 @@ bool function_246360(
 
 // score 53 (was 53): the multiplier is kept in XMM1 and multiplied into XMM0; retail loads the
 // multiplier into XMM0 and multiplies by XMM1.
-// score 53 (was 53): plane object reference 210; origin reference 57; direction reference 53;
+// Earlier: plane object reference 210; origin reference 57; direction reference 53;
 // projected-start initializer 53; projected-direction initializer 53; paired initializers 55;
 // vertex-end traversal 66; quotient update 53. Projection operands and edge allocation still differ.
 // operand text order of the six products is canonicalised (each flip 53);
@@ -480,6 +518,10 @@ bool function_246360(
 // point-plus-scaled-normal helper 83, though it gives retail's three plane-first loads for the
 // start point and the last two direction products (only the first direction product and the
 // edge loop's registers still differ).
+// Round 184: Complete named/start-direction product phases, six-product ownership, interleaved
+// components, array products and interleaved products 157/113/157/157/112/113/189/157; existing
+// add-scaled direction/start/both 84/84/83; existing projection inline/forced 53/53. All
+// restored.
 // @retail 0x2466b0
 bool function_2466b0(
 	point3f const *start,

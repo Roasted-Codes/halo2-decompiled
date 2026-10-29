@@ -654,6 +654,8 @@ struct s_1f9762
 // bytes); the last arm written before the not-last arm (`else if (last)`) 105; the approach
 // after the direction test inside the not-last arm 104; `!reached &&` on the projection test 67.
 // A compile-only layout screen moved the approach block with none of ~10 forms.
+// Selected projection by value across four three-vector lexical orders, last/validity-first guards
+// 133/264 in every order; extra vector storage grows the frame and does not recover native tails.
 // @retail 0x1f9760
 bool function_1f9760(long actor_index, long object_index, point3f const *point, real distance,
 	bool *last_out, bool *direction_valid_out, vector3f *direction_out)
@@ -734,8 +736,11 @@ bool function_1f8100(long actor_index, point3f const *origin, point3f const *tar
 
 real normalize2d(point2f *v);
 
-// score 171 (was 171): frame 0x48 and entry stores agree; the found-search re-test,
-// trajectory result DL, retry homes, object/query allocation and movement tails differ.
+// score 135 (was 171): frame 0x48 agrees and the code matches retail to the first trajectory call;
+// retail then caches the trajectory result in DL (spilled around calls, `mov al, dl` on the short
+// exits, no store after the request) where ours keeps it only on the stack, so the unit-state table
+// goes to EDX not ESI and the first facing store loads EAX/ECX; retail also returns the validity
+// flag (`mov al, bl`) where ours folds that exit to `xor al, al`, 12 bytes short in all.
 // The trajectory helper uses retail ret 0x2c; the older extra-EDX blocker is absent.
 // frame 0x48, entry initialization and trajectory convention agree.
 // The found-type scan has an extra bound test; trajectory result registers, retry scalar homes,
@@ -801,6 +806,17 @@ real normalize2d(point2f *v);
 // Round 224 continuation: Native planar normalization/output workspace on the corrected trajectory convention, crossed with
 // earlier result, entry planar declaration and complete memcpy publication, eight forms 267 each.
 // Original 3D output, planar uses, declarations, comparisons and full body restored.
+// Round 72 (lane 8): kept 135: the `for` scan with the selection and `break` inside, the facing
+// fallback in its own `vector3f facing` local (retail's separate first-success store and shared
+// facing store, default-axis store with the dead k store), retry outputs assigned horizontal first,
+// and the request result assigned to `result` in an `if`/`else if` with the planar arm. Tried on the
+// way: one result for validity and trajectory with a single exit 284, with the original returns 171
+// (invalid exit still folded), with the new tail 182/236/243; inline unit-state helper call 171
+// (same code); explicit returns in both facing arms 206 (result takes EBX, target leaves it), in one
+// arm 135; typed or per-field request point 135/199; `result` declared at the top, before validity
+// or before the actor 135 each; fast-to-force inside the valid block 246; `return valid;` 135 (folded);
+// the original while scan on this graph 204 (935 B); `!(base_speed * 1.2f >= chosen_speed)` 135 (gives
+// retail's comiss/jae, same count).
 // @retail 0x1f8160
 bool function_1f8160(long actor_index, signed char const *types, point3f const *target, bool force)
 {
@@ -828,20 +844,21 @@ bool function_1f8160(long actor_index, signed char const *types, point3f const *
             }
             else
             {
-                short i = 0;
-                while (i < 6 && !(*types & (1 << i)))
-                    ++i;
-                if (i < 6)
+                for (short i = 0; i < 6; i++)
                 {
-                    if (i <= selected_type)
-                        selected_type = i;
-                    real selected_speed = 0.0f;
-                    byte *globals = (byte *)g_4e034c;
-                    if (selected_type >= 0 && selected_type < 6 && globals && *(long *)(globals + 0xc8) > 0)
-                        selected_speed = *(real *)(*(byte **)(globals + 0xcc) + 0x80 + selected_type * 4);
-                    speed = selected_speed;
-                    first_type = i == 0;
-                    valid = true;
+                    if (*types & (1 << i))
+                    {
+                        if (i <= selected_type)
+                            selected_type = i;
+                        real selected_speed = 0.0f;
+                        byte *globals = (byte *)g_4e034c;
+                        if (selected_type >= 0 && selected_type < 6 && globals && *(long *)(globals + 0xc8) > 0)
+                            selected_speed = *(real *)(*(byte **)(globals + 0xcc) + 0x80 + selected_type * 4);
+                        speed = selected_speed;
+                        first_type = i == 0;
+                        valid = true;
+                        break;
+                    }
                 }
             }
         }
@@ -865,8 +882,8 @@ bool function_1f8160(long actor_index, signed char const *types, point3f const *
                 &direction, NULL, NULL, NULL, &retry_vertical, &retry_horizontal))
             {
                 result = true;
-                vertical = retry_vertical;
                 horizontal = retry_horizontal;
+                vertical = retry_vertical;
                 chosen_speed = retry_speed;
             }
         }
@@ -878,9 +895,9 @@ bool function_1f8160(long actor_index, signed char const *types, point3f const *
                 s_unit_request request;
                 request.type = 0x2e;
                 *(point3f *)((byte *)&request + 4) = *target;
-                return function_e6900(actor->unknown018, &request);
+                result = function_e6900(actor->unknown018, &request);
             }
-            if (!first_type)
+            else if (!first_type)
             {
                 real base_speed = 0.0f;
                 byte *globals = (byte *)g_4e034c;
@@ -893,23 +910,21 @@ bool function_1f8160(long actor_index, signed char const *types, point3f const *
                     *(real *)((byte *)actor + 0x470) = horizontal;
                     *(real *)((byte *)actor + 0x474) = vertical > 1.2f ? vertical : 1.2f;
                     direction.k = 0.0f;
-                    if (normalize2d((point2f *)&direction) <= 0.0f)
+                    if (normalize2d((point2f *)&direction) > 0.0f)
                     {
-                        direction = actor->unknown290;
-                        if (direction.k != 0.0f)
-                        {
-                            direction.k = 0.0f;
-                            if (normalize2d((point2f *)&direction) <= 0.0f)
-                            {
-                                direction = *g_4687a8;
-                                *(point2f *)((byte *)actor + 0x468) = *(point2f *)&direction;
-                                return result;
-                            }
-                            *(point2f *)((byte *)actor + 0x468) = *(point2f *)&direction;
-                            return result;
-                        }
+                        *(point2f *)((byte *)actor + 0x468) = *(point2f *)&direction;
                     }
-                    *(point2f *)((byte *)actor + 0x468) = *(point2f *)&direction;
+                    else
+                    {
+                        vector3f facing = actor->unknown290;
+                        if (facing.k != 0.0f)
+                        {
+                            facing.k = 0.0f;
+                            if (normalize2d((point2f *)&facing) <= 0.0f)
+                                facing = *g_4687a8;
+                        }
+                        *(point2f *)((byte *)actor + 0x468) = *(point2f *)&facing;
+                    }
                 }
             }
         }
@@ -1037,7 +1052,8 @@ done:
 real function_50650(real cosine);
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
 
-// score 137 (was 137): frame 0x1c agrees; two excess bytes, actor/object roles (EDI/ESI), the hoisted velocity j load,
+// score 137 (was 137): frame 0x1c agrees; actor/object homes, velocity preload and final minimum remain (fast control 117, full 137).
+// Earlier: frame 0x1c agrees; two excess bytes, actor/object roles (EDI/ESI), the hoisted velocity j load,
 // the first clamp's x87 order and the epilogue pops' place in the final minimum remain.
 // Independent facing/velocity scopes 331; late turning minimum 350; branch-defined following
 // factor 335; frame pointer 399; inline depth one 308 (fast). Scalar velocity 309;
@@ -1071,6 +1087,9 @@ real function_50650(real cosine);
 // projections 117; speed/projections 302; spans/projections 117; all 302; all with facing default
 // first 300 (fast control 117, full 137). All restored; actor/object homes, velocity preload
 // and the final minimum/epilogue placement remain.
+// Round 403: native settings 117; readonly settings 117; native settings actor 117; readonly native
+// actor 117; readonly object 117; readonly settings actor 117; readonly native receivers 117; native
+// settings getter 117. Opening body restored.
 // @retail 0x1f9e70
 real function_1f9e70(long actor_index, long object_index, point2f const *position,
     vector2f const *path_direction, vector2f const *facing, vector2f const *desired,
@@ -1312,7 +1331,7 @@ PRIVATE inline real movement_normalize2d(point2f *v)
     return 0.0f;
 }
 
-// score 252 (was 252): Frame 0x3c, length, result/flag homes and exits agree. Retail's zero, radius and
+// score 238 (was 252): Frame 0x3c, result/flag homes and exits agree (1182 bytes against 1173). Retail's zero, radius and
 // direction sit in other SSE registers (xmm1/xmm5/xmm2-3; it keeps the result in xmm0 up to the type exit),
 // shares the left type-0 arm's `+ target.y` and flag re-test with the type-1 arm (ours threads that arm),
 // spills the lateral term to the type slot, and puts radius/desired, then direction, below the
@@ -1381,6 +1400,13 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 // 3D setters, seven nonempty combinations 267/295/295/267/267/295/295;
 // all producers with native long side 289. Original body restored; ordinary input
 // and steering producer forms do not recover the zero/radius or initial homes.
+// Round 72 (lane 8): kept 238: the pathfinding pointer preset to NULL and set by an `if` (retail's
+// `xor eax, eax` before the count test) with the clamp and arccosine through the existing 0x50650
+// (inlined as retail; the hand-written copy removed). The preset alone 252 (block now as retail),
+// the helper alone 263. Retail also pushes the entry's +0x14 value through a stack slot: a named
+// float local for it at the call 217 (argument block and both exits then as retail, 1178 B), with
+// the helper 252, declared before the sector 242 (one-use local, not kept); cosine dot y-first 238;
+// the type exit as `goto done` 251 (1173 B).
 // @retail 0x1f99d0
 real function_1f99d0(long actor_index, long object_index, short type, point2f const *target,
     point2f const *origin, point2f const *facing, s_obstacle_list const *obstacles)
@@ -1440,7 +1466,9 @@ real function_1f99d0(long actor_index, long object_index, short type, point2f co
         if (sector != NONE)
         {
             byte *structure = (byte *)g_4e0348;
-            s_pathfinding_data *pathfinding = *(long *)(structure + 0xc4) > 0 ? *(s_pathfinding_data **)(structure + 0xc8) : 0;
+            s_pathfinding_data *pathfinding = NULL;
+            if (*(long *)(structure + 0xc4) > 0)
+                pathfinding = *(s_pathfinding_data **)(structure + 0xc8);
             s_avoidance_trace trace;
             if (function_26ccb0(pathfinding, obstacles, NONE, (point2f *)&local_origin, sector, NONE,
                 (point2f *)&local_direction, *(real *)(entry + 0x14), distance, false, false, false, 0, &trace))
@@ -1448,8 +1476,7 @@ real function_1f99d0(long actor_index, long object_index, short type, point2f co
         }
         real cosine = desired.x * direction.x + desired.y * direction.y;
         cosine = (real)(cosine > 1.0f ? 1.0 : cosine);
-        cosine = cosine < -1.0f ? -1.0f : (cosine > 1.0f ? 1.0f : cosine);
-        result = (real)acos(cosine);
+        result = function_50650(cosine);
         if (left) return 0.0f - result;
     }
 done:

@@ -177,6 +177,11 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Round 182: input-updated clamp result in all six formal orders 438 each;
 // lower-failure nesting with forward/reverse orders 438/438 (1814 bytes).
 // Original repeated helper, all four uses and movement body restored.
+// Round 238: Shared add/scale/affine blend with actual sum/current-workspace homes 5/5, 22/22,
+// 6/6, 5/22, 22/5, 6/5, 5/6 and 22/6: 383 each. Original helpers, vectors and body restored.
+// Round 240: Plain native-component blend/clamp loops: fused long/short/byte
+// 409/479/479; blend before original clamps 383/415/415; fused with shared current
+// coefficient/complete expression parts 409/409. Frame/input homes remain; original body restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

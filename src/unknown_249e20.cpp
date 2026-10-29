@@ -199,6 +199,9 @@ void function_249d10(s_structure_bsp_view *bsp, dword *bits, long index)
 // epilogues except the entry constants) and with the statement interpolation 76 (171); the
 // 255 default with the decode written as two stages (0 / 0xff, then `value != 0 && value !=
 // 0xff`) loads retail's 255 at entry at retail's 182 bytes but re-tests the byte, 65.
+// Round 177: Entry cluster extrema with original/normalized equality: word interval/
+// zero-first 66/71, byte interval/zero-first 72/76 for each. Original late extrema,
+// receiver, sample, interpolation and fallback restored.
 // @retail 0x249d60
 real function_249d60(s_structure_bsp_view *bsp, long cluster_a, long cluster_b)
 {

@@ -618,6 +618,18 @@ __forceinline byte *job_thread_buffer_get(s_async_task *task, dword *size);
 // body_size where retail reuses the dispatch load, and the buffer goes eax -> ebp; size sums
 // and the case-1 comparison in either order 166-167; getter fresh pointer reads 163 (0x2adb10
 // 279).
+// header/body carriers, dispatch loads, scratch capacity and
+// signature receiver differ; short-lived body/header/both size reads 182/174/182;
+// reversed signature equality 68; Boolean equality 68; inline depth one 68;
+// global optimization off 491; frame pointer 246.
+// retail computes the remaining size in each buffer arm (re-read
+// after the scratch-buffer stores) and clamps the capacity by it; that per-arm form
+// loses the entry ebp save: written into size by the getter 179, capacity clamped
+// by remaining 181, remaining clamped by capacity 234. Total as sizeof first 68;
+// body size grouped with sizeof 68.
+// Round 402: current-graph shared byte count, seek-position home, both, full signature
+// outputs, count/signatures, position/signatures, all outputs and role-named signatures
+// 68 each; all restored. Frame 0x2c agrees; dispatch/buffer and signature registers remain.
 // @retail 0x2ad7c0
 PRIVATE long __stdcall signed_file_read_work(s_async_task *task, s_signed_file_read_parameters *parameters, long parameters_size)
 {

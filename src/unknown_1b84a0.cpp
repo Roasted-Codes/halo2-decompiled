@@ -105,6 +105,9 @@ void function_262800(long actor_index, s_reference reference, bool unknown);
 // it, one actor lookup at the top 52 (index EBP and view EBX as retail, actor/state ESI/EDI swapped),
 // plus the state declared first 52, a prop index local 52 or the typed slot data block 52; the
 // NONE case as an early store and return 91 (actor EDI as retail, more pushes sink).
+// Round 173: Role allocation names in all seven index/actor/view subsets 47 each; indexed data block with
+// complete names 47. Direct concrete callback input, alone/one actor lookup/role names/both, 47/52/47/52.
+// Original body, input declaration and table entry restored; late EBX save and register ownership remain.
 // Round 270: native success/else-return gates for active, facing and release phases,
 // all seven subsets 47; full gates with the slot data member 47. Original restored.
 // Round 252: native node reference with/without the data block 47/47; actor reference
@@ -227,7 +230,8 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
     bool alternate, s_type_c3b527 *point, vector3f *facing,
     signed char *type, bool *available);
 
-// score 212 (was 257): frame 0x1634 versus 0x162c; scaled actor offset and
+// score 212 (was 212): aligned frame 0x1634 versus 0x162c and actor/slot/scratch homes remain.
+// Earlier: frame 0x1634 versus 0x162c; scaled actor offset and
 // slot/scratch homes remain, with a 14-byte length deficit.
 // Round 198: payload/native input/read-only input/input scope 323 each; clamp 322;
 // typed preparation/both scopes 257/257; scopes plus clamp 259; early payload receiver 257;
@@ -248,6 +252,11 @@ bool function_1f4a20(s_1f4a20_entry const *entries, long actor_index, s_referenc
 // Round 395: actor at use 303; invalid-search guard 212 (plain kept); complete
 // success test 305; guard/actor 300, actor/test 296, guard/test 240 (retail length);
 // all three and search-entry availability 305/305. Original actor and success flow kept.
+// Round 398: marker-index preparation/call scopes crossed with search-phase ending and movement-input scope
+// 212/212/258/258/212/212/258/258; all restored.
+// Round 400: Character/distance scope before scratch, entry payload pointer and readonly
+// character in masks 1-7, then complete movement scope: 212/212/212/212/212/212/212/212.
+// Original lifetimes restored.
 // @retail 0x1b85a0
 bool __stdcall function_1b85a0(long actor_index, s_slot *slot)
 {
