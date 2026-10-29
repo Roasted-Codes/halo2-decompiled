@@ -11,6 +11,7 @@
 #include "unknown_218850.h"
 #include "unknown_2ae170.h"
 #include "unknown_21e230.h"
+#include "unknown_218ac0.h"
 
 /* the sound globals (unknown_01e930.h), viewed for their DirectSound object */
 struct s_sound_globals_view
@@ -719,7 +720,8 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 428 (was 428): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 370 (was 428): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // Frame 0xc agrees; selected-primary storage, destination construction and integer-bit/SSE staging differ.
 // Earlier: frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // frame 0xc agrees; retail copies the input level into a dead argument slot through a
@@ -791,6 +793,17 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // right word 456/456, signed byte 438/438; word route with ordinary inline 428,
 // word route alone 428 plain (kept); long/dword/byte route 438 each. Only the native
 // 0-or-1 route word remains; original append declaration and all gain trees retained.
+// Round 154: the first branch's sums are decibels_add (unknown_218ac0.h) on levels selected through
+// pointers, with a bool alternate and long bins: 393 (kept); levels as reals through an explicit
+// pointer, passed as long bits 384 (kept); value-selected real levels 390 (convention changes);
+// append gain by const reference 393 (0x2af920 worse); else-branch long level/offset with gains read
+// at use 459; else-branch long level only 426; pointer-selecting send-level helper 406 (0x2af450
+// worse); /Op diagnostic no change. Retail uses level/level2's stack homes directly as decibels_add's
+// first operand and pushes each sum from a slot through a GPR; the else branch still differs.
+// Else-branch offset as long bits from decibels_add 370 (kept); then front/rear levels read at use
+// 415, gains read at use 403, send level and offset declared before the gains 401 (all three move
+// the convention), named appended sums 370 (identical), offset operands swapped 370. Our !flag3
+// sums are x87 (retail SSE, pushed from a slot through a GPR, as if the append took long bits).
 // Round 168: Retained word route with right long/word/dword/signed-byte domains 451/450/451/428; primary scalar with inline/inline-noinline/cdecl/stdcall 437/437/449/437. Cdecl loses dispatcher; all restored.
 // Round 247: native flag2 and primary pointer, original/native flag3 428/424; with shared
 // ordinary input 471/463; right from left 461/461, with shared input 494/494. Four-point
@@ -803,14 +816,17 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 {
 	if ((bool)((parameters->flags >> 2) & 1))
 	{
-		word alternate = TEST_FLAG(parameters->flags, 3) != 0;
-		word left = alternate ? 0 : 6;
-		byte right = alternate ? 1 : 7;
-		real level2 = rear ? m_settings.level20 : m_settings.level28;
-		real const &level = rear ? m_settings.level1c : m_settings.level24;
-		sound_stream_append_mixbin(mixbins, left, level + parameters->level);
-		sound_stream_append_mixbin(mixbins, right, parameters->level + level);
-		add_send(2, mode, level2 + parameters->level, mixbins);
+		bool alternate = (bool)((parameters->flags >> 3) & 1);
+		long left = alternate ? 0 : 6;
+		long right = alternate ? 1 : 7;
+		real level = *(rear ? &m_settings.level1c : &m_settings.level24);
+		real level2 = *(rear ? &m_settings.level20 : &m_settings.level28);
+		long sum = decibels_add(*(long *)&level, *(long *)&parameters->level);
+		sound_stream_append_mixbin(mixbins, left, *(real *)&sum);
+		sum = decibels_add(*(long *)&parameters->level, *(long *)&level);
+		sound_stream_append_mixbin(mixbins, right, *(real *)&sum);
+		sum = decibels_add(*(long *)&level2, *(long *)&parameters->level);
+		add_send(2, mode, *(real *)&sum, mixbins);
 		add_send(10, mode, parameters->level_offset, mixbins);
 	}
 	else
@@ -818,7 +834,7 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 		real left_gain = parameters->gain0c;
 		real right_gain = parameters->gain10;
 		real send_level = sound_effects_send_level(this, parameters, mode);
-		real offset = parameters->level_offset + parameters->level;
+		long offset = decibels_add(*(long *)&parameters->level_offset, *(long *)&parameters->level);
 		if (!TEST_FIELD_BIT(parameters->flag3))
 		{
 			sound_stream_append_mixbin(mixbins, m_buffers->mixbin00, left_gain + (send_level + parameters->level));
@@ -827,11 +843,11 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 			switch (mode)
 			{
 			case 0:
-				sound_mixbins_add(mixbins, mixbin08, offset);
+				sound_mixbins_add(mixbins, mixbin08, *(real *)&offset);
 				break;
 			case 1:
-				sound_mixbins_add(mixbins, mixbin08, offset + m_settings.gain);
-				sound_mixbins_add(mixbins, mixbin08, offset + m_settings.gain);
+				sound_mixbins_add(mixbins, mixbin08, *(real *)&offset + m_settings.gain);
+				sound_mixbins_add(mixbins, mixbin08, *(real *)&offset + m_settings.gain);
 				break;
 			}
 		}
@@ -855,11 +871,11 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 			switch (mode)
 			{
 			case 0:
-				sound_mixbins_add(mixbins, 10, offset);
+				sound_mixbins_add(mixbins, 10, *(real *)&offset);
 				break;
 			case 1:
-				sound_mixbins_add(mixbins, 10, left_gain + offset);
-				sound_mixbins_add(mixbins, 10, right_gain + offset);
+				sound_mixbins_add(mixbins, 10, left_gain + *(real *)&offset);
+				sound_mixbins_add(mixbins, 10, right_gain + *(real *)&offset);
 				break;
 			}
 		}
