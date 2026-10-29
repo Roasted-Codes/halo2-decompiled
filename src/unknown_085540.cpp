@@ -806,12 +806,16 @@ static inline long view_buffer_write(s_ring_buffer *buffer, long count, const vo
 }
 bool function_1995a0(const byte *source, dword source_size, byte *destination, long *compressed_size, dword capacity, long level);
 
-// score 90 (was 90): ours is seven bytes longer: the running total is zeroed
+// score 49 (was 90): the length and the frame now match retail's; what is left is the
+// prologue (retail pushes ebp before ebx and copies the count into its stack slot), the
+// loop head (retail keeps the count test at the top of the head, ours peels the first
+// pass), and the registers for the count and the destination address in the loop body.
 // in a stack slot here and in a register in retail, and the two stack slots
 // that hold the count and the flag are at other offsets.
 // Round 109: direct view plus writer forceinline 93; unsigned writer result 93;
 // writer reference 93; native count 93; unsigned offset 93; word kind 93;
 // named packet record 93; moving payload pointer 144.
+// Round 109: with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
 // score 90 (was 90): with the chunk test through a bool (unrotated loop, base rebuilt each pass), the
 // count in a `remaining` local (compressed size scoped to the compressor call, copied when it
 // succeeds), no gotos and the last write tested for success first, only four single instructions
@@ -821,41 +825,34 @@ bool function_1995a0(const byte *source, dword source_size, byte *destination, l
 // @retail 0x86800
 bool function_86800(dword capacity, c_simulation_view *view, dword source_size, byte *destination)
 {
- c_simulation_view *const *view_argument = &view;
  bool result;
  long compressed_size;
  result = function_1995a0(game_state_globals.base_address, source_size, destination, &compressed_size, capacity, 9);
  if (result)
  {
+  struct { short kind; short size; long offset; } header;
   long offset = 0;
   for (;;)
   {
-   struct { short kind; short size; long offset; } header;
+   if (compressed_size <= 0) break;
    memset(&header, 0, sizeof(header));
    header.kind = 1;
-   if (compressed_size > 0)
-   {
-    header.size = (short)(compressed_size > 1024 ? 1024 : compressed_size);
-    s_ring_buffer *buffer = (s_ring_buffer *)&(*view_argument)->unknown9c;
-    header.offset = offset;
-    if (view_buffer_write(buffer, sizeof(header), &header) == NONE ||
-     view_buffer_write(buffer, header.size, destination + offset) == NONE)
-     { result = false; goto local_0; }
-    compressed_size -= header.size;
-    offset += header.size;
-    (*view_argument)->unknownac++;
-   }
-   else
-   {
-    header.size = 0;
-    s_ring_buffer *buffer = (s_ring_buffer *)&(*view_argument)->unknown9c;
-    header.offset = offset;
-    if (view_buffer_write(buffer, sizeof(header), &header) == NONE)
-     { result = false; goto local_0; }
-    (*view_argument)->unknownac++;
-    break;
-   }
+   header.size = (short)(compressed_size > 1024 ? 1024 : compressed_size);
+   s_ring_buffer *buffer = (s_ring_buffer *)&view->unknown9c;
+   header.offset = offset;
+   if (view_buffer_write(buffer, sizeof(header), &header) == NONE ||
+    view_buffer_write(buffer, header.size, destination + offset) == NONE)
+    { result = false; goto local_0; }
+   compressed_size -= header.size;
+   offset += header.size;
+   view->unknownac++;
   }
+  header.size = 0;
+  s_ring_buffer *buffer = (s_ring_buffer *)&view->unknown9c;
+  header.offset = offset;
+  if (view_buffer_write(buffer, sizeof(header), &header) == NONE)
+   { result = false; goto local_0; }
+  view->unknownac++;
  }
 local_0:
  return result;
@@ -959,9 +956,10 @@ bool function_869a0(c_simulation_view *view, void *block)
 
 bool function_68670(byte *source, long size, void *block);
 
-// score 97 (was 97): the two fields of the record are read into the registers in the opposite
+// score 95 (was 97): the window fields now load in retail's order, but retail subtracts the span
+// from 0x200 into eax where we subtract 0x200 from the span, and our ring buffer update reuses
+// the start read before the read call instead of reloading it as retail does.
 // order (+0x1c before +0x18), so the rest of the block follows differently.
-// score 97 (was 97): a `used = next - end` local gives retail's window test exactly (135 from the
 // listing shift); retail also reloads the buffer start after each read call and loads the header
 // size after the start store, as if the call might touch the buffer. Window as shift 97; window
 // pointer 97; inline read method 135; header size per use 135; buffer hoisted out of the loop 204.
@@ -977,7 +975,7 @@ void __stdcall function_865d0(c_simulation_view *view)
   s_link_connection *connection = link_connection_get(view->unknown3c);
   if (connection->state != 5 || !(connection->flags & 0x10)) break;
   s_network_stream_header *stream = network_stream_get(connection->stream_index);
-  if ((512 - (stream->window.next - stream->window.end)) * 32 < 0x600) break;
+  if (((stream->window.next - stream->window.end) - 0x200) * 32 > -0x600) break;
   s_ring_buffer *buffer = (s_ring_buffer *)&view->unknown9c;
   buffer->read_wrapped(buffer->start, sizeof(header), &header);
   buffer->start = (buffer->start + (long)sizeof(header)) % buffer->size;
