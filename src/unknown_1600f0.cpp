@@ -1387,6 +1387,9 @@ PRIVATE inline long score_string_list_1608e0()
 // unchanged; every original operation and body restored.
 // Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
 // output as well: 756 each; original declaration lifetimes restored.
+// Round 169: Native score-table/team-element receivers, mutable/readonly combinations 772;
+// immutable native score-table selection 799. One duplicate readonly source excluded.
+// Original byte observations restored; frame/viewer/coordinate homes remain.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
