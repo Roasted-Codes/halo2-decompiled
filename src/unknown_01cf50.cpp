@@ -361,6 +361,8 @@ bool function_0159b0(long edge, short format, long levels, long usage_index,
 bool function_015a60(short format, long width, long height, long depth,
 	long levels, long usage_index, D3DVolumeTexture **out);
 
+// Tried (MiniMax S run 10): the mipmap limit at bitmap + 0x14 read into a local before the
+// texture pointer is cleared scores 70 against 72; under the keep bar.
 // @retail 0x1d000
 bool function_1d000(byte *bitmap)
 {
@@ -369,10 +371,10 @@ bool function_1d000(byte *bitmap)
 	char depth = *(char *)(bitmap + 8);
 	short width = *(short *)(bitmap + 4);
 	short format = *(short *)(bitmap + 0xc);
-	short max_levels = *(short *)(bitmap + 0x14);
 	void **texture = (void **)(bitmap + 0x50);
 	*texture = NULL;
-	short levels = bitmap_get_mipmap_count(width, height, depth, format, linear, max_levels);
+	short levels = bitmap_get_mipmap_count(width, height, depth, format, linear,
+		*(short *)(bitmap + 0x14));
 	*(short *)(bitmap + 0x14) = levels;
 	if (g_5093b0)
 	{
@@ -2794,8 +2796,6 @@ PRIVATE __forceinline dword stream_register_mask(byte const *descriptor)
 
 // The streams are walked with a for loop, so the index is zeroed where retail zeroes it and
 // the count of the streams is compared against the zero in the register retail uses.
-// score 10 (was 10): the count of the streams is loaded into ecx here and into eax in retail,
-// the compare against zero uses a second zero register, and esi is pushed later.
 // @retail 0x1c8c0
 bool function_1c8c0(byte const *definition, dword mask,
     s_1c8c0_stream const *third, s_1c8c0_stream const *second, s_1c8c0_stream const *first)
@@ -2975,26 +2975,23 @@ s_runtime_device_configuration g_runtime_device_configuration;
 long g_467008, g_46700c;
 bool g_5093bc;
 
-// score 49 (was 50): the settings are copied field by field, which keeps the three stores in
-// retail's order, the two flag bytes are read back from the configuration in memory, the back
-// buffer fields are assigned in the order retail stores them, and the branch that reports the
-// failure clears the result before the device pointer.
+// score 70. Tried (MiniMax S run 10): copying the settings field by field, assigning the depth
+// format after the back buffer width and clearing the result before the device pointer gives 68;
+// reading the two flag bytes back through a byte pointer to g_runtime_device_configuration as
+// well gives 49. That cast of the global's address is not kept without a match.
 // @retail 0x128c0
 bool function_128c0(s_128c0_settings const *settings)
 {
-    g_runtime_device_configuration.packed = *(dword const *)settings;
-    g_runtime_device_configuration.quality = settings->quality;
-    g_runtime_device_configuration.extra = settings->extra;
+    g_runtime_device_configuration = *(s_runtime_device_configuration const *)settings;
     bool result = true;
     D3DPRESENT_PARAMETERS parameters;
     memset(&parameters, 0, sizeof(parameters));
     parameters.Windowed = false;
     parameters.Flags = D3DPRESENTFLAG_LOCKABLE_BACKBUFFER;
     parameters.EnableAutoDepthStencil = true;
-    byte const *config_bytes = (byte const *)&g_runtime_device_configuration;
+    parameters.AutoDepthStencilFormat = (D3DFORMAT)(D3DFMT_D24S8 + ((byte)g_485ac8 != 0));
     parameters.BackBufferFormat = D3DFMT_A8R8G8B8;
     parameters.BackBufferWidth = g_485a8a.a.v3 - g_485a8a.a.v1;
-    parameters.AutoDepthStencilFormat = (D3DFORMAT)(D3DFMT_D24S8 + ((byte)config_bytes[0] != 0));
     parameters.BackBufferHeight = g_485a8a.a.v2 - g_485a8a.a.v0;
     switch (g_485aca)
     {
@@ -3004,11 +3001,11 @@ bool function_128c0(s_128c0_settings const *settings)
         break;
     case 1:
         parameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-        parameters.FullScreen_PresentationInterval = 1 + (config_bytes[1] ? 0x80000000 : 0);
+        parameters.FullScreen_PresentationInterval = 1 + ((g_485ac8 >> 8) ? 0x80000000 : 0);
         break;
     case 2:
         parameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-        parameters.FullScreen_PresentationInterval = 2 + (config_bytes[1] ? 0x80000000 : 0);
+        parameters.FullScreen_PresentationInterval = 2 + ((g_485ac8 >> 8) ? 0x80000000 : 0);
         break;
     default:
         parameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
@@ -3023,8 +3020,8 @@ bool function_128c0(s_128c0_settings const *settings)
         D3DDevice_Reset(&parameters);
     if (!g_5093b0)
     {
-        result = false;
         g_5093b0 = NULL;
+        result = false;
     }
     else
     {
@@ -5978,8 +5975,8 @@ struct s_2e3f0_record;
 long __stdcall function_2e9e0(byte const *context, s_2e3f0_record const *record);
 void function_46ea0(long tag, point3f const *position);
 
-// The g_4b8438 store is written through an unsigned int lvalue, so type-based alias analysis
-// keeps it before the range comparison of the inlined call, where retail emits it.
+// Tried (MiniMax S run 10): writing the g_4b8438 store through an unsigned int lvalue
+// (*(unsigned int *)&g_4b8438 = 0) scores 73 against 76; not kept (a cast of the global's address).
 // score 3 (was 22): the g_4b8438 store is emitted after the range comparison of the inlined call,
 // where retail emits it before.
 // @retail 0x2df00
@@ -6001,7 +5998,7 @@ void function_2df00()
     g_4b82f8 = 1; D3DDevice_SetRenderState(D3DRS_DESTBLEND, 1);
     g_4b8324 = 0x8006; D3DDevice_SetRenderState(D3DRS_BLENDOP, 0x8006);
     g_4b82ec = 0; D3DDevice_SetRenderState(D3DRS_ALPHATESTENABLE, 0);
-    *(unsigned int *)&g_4b8438 = 0; D3DDevice_SetRenderState(D3DRS_ZENABLE, 0);
+    g_4b8438 = 0; D3DDevice_SetRenderState(D3DRS_ZENABLE, 0);
     g_4b82e0 = 0x203; D3DDevice_SetRenderState(D3DRS_ZFUNC, 0x203);
     g_4b82fc = 0; D3DDevice_SetRenderState(D3DRS_ZWRITEENABLE, 0);
     g_4b8450 = 0; D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
