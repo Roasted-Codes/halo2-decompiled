@@ -116,6 +116,9 @@ void function_117080(long);
 // scalar clear 76, unsigned slot 76. All restored; record-address and search homes remain.
 // Coupled pool/datum/absolute-slot identities, seven subsets and entry-slot lifetime
 // on the complete role-name graph: 50/50/50/50/50/50/50/50. Original body restored.
+// Round 71: pool global read at each use 54 (retail's reload after the `lea`; aligned 16 against 18), with a
+// record local/surface_record/no slot/no slot plus surface_record 54/54/54/54; the record address stays
+// folded (`[eax + ecx + 0xc]`, retail `add eax, edx`) in every form whose store precedes the first call.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -375,6 +378,12 @@ void __stdcall function_117790(long index)
 // Round 221: Origin pointer observed at use 148; definition at every use 168; both 171;
 // record at every use 270; with origin/definition/both 252/321/303; all plus shared correction
 // difference helper 303. Original captures restored; pool-base and copy carriers remain.
+// Round 71: the squared distance as i*i + j*j + k*k (or length_sq3f) gives retail's z, y, x schedule
+// (aligned 39 -> 25) but scores 83: the data base stays in EBP (retail EBX), so the `add esi` comes one
+// load early, the code before the first loop is a byte short and a jump over the loop pad appears. On that
+// form: attachment fields read in full 106 (retail's walk from the vertex field and the second vertex
+// read, but the pin OR splits into load/or/store, 522 bytes), with bit_vector_set 106; definition read
+// after the origin copy 73 (aligned 48).
 // @retail 0x117a80
 void function_117a80(long index)
 {
@@ -505,6 +514,12 @@ void function_117dd0(long index, vector3f *wind)
 // point-history transfers alone/projection/cursor/all 212/213/207/199; in-place projection 153.
 // On projected normal, early weights/acceleration first/force first/both/all 102/113/103/113/110;
 // weight point setters 104, with all 112. Normal.k cursor recovered at 103/102; sub-eight gains restored.
+// Round 71: the else loop through a vertex pointer (`vertex->previous = vertex->position`) gives retail's
+// else loop and its pad exactly and retail's 744 bytes (aligned 85 -> 66) but scores 116 (the main loop's
+// shifts); with acceleration and force as first addends 113 (aligned 59); with the tangent through
+// vector3f_add_scaled(..., -dot, ...) 196 (normal.k cursor, 712 bytes), plus dot3f 195; with the projection
+// through scale_vector_by_double 150 (normal.k cursor, frame changes). Retail loads acceleration.i/j into
+// a register before adding (ours folds the memory operand).
 // @retail 0x118140
 void function_118140(long index)
 {

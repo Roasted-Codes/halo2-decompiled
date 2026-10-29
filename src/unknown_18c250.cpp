@@ -113,6 +113,11 @@ static inline vector3f *function_x84d9e8(vector3f *vector, vector3f const *axis,
 // value-returning cross 123; reference cross interface 6; array component cross 6.
 // Axis/input/both scalar snapshots 48/53/56; paired products 34;
 // cross inputs by value axis/input/both 150/157/193; rotation axis by value 150.
+// Round 70: retail loads axis j for the i-row first product and vector i for the j-row one; VC picks
+// the loaded operand itself (all 64 product operand orders and all helper parameter orders give this
+// code or worse). Axis/vector pointer aliases in the helper 11 (fixes those two, flips the k-row
+// second product), vector alias first 12; axis local before the call 39; point-typed helper 6;
+// input alias 13; cross/rotation statement orders 7-39; helper in another file 6; angle wrapper 38.
 // @retail 0x18c250
 bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {
