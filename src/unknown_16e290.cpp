@@ -12,6 +12,7 @@
 #include "unknown_03bcb0.h"
 
 #include <string.h>
+#include "vector_products.h"
 
 bool function_12dcb0(s_geometry_block_info *block);
 
@@ -1469,12 +1470,21 @@ struct s_camera_clip_reference_16ebf0
 	byte field_14[4];
 };
 
-// score 209 (was 209): frame 0x98 agrees. Left: retail passes the narrow flag to 0x171d00 in DL (its
+// score 140 (was 209): frame 0x98 agrees. Left: retail passes the narrow flag to 0x171d00 in DL (its
 // fraction pointer in EAX, the slot shared with the early state spill at 0x34), BLOCKED-BY 0x171d00
 // (src/unknown_170d70.cpp is held: it takes the flag on the stack and the end point in EDX here, ESI in
 // retail); retail struct-copies the state's forward/up/position through pointers it keeps (forward in
 // EBX, up spilled at 0x3c, position in EBP) and reads the cross-product inputs back from the copied
 // locals; the saved-state/direction homes follow.
+// Round 74: forward/up struct-copied from the state and passed to the shared cross3f (retail's
+// copies through EBX/EAX and cross inputs read back from the copied locals) 153; the volatile saved
+// state dropped 153; left computed before the matrix's forward/up copies and the position copied
+// after them 140. With the flag passed as a constant (diagnostic only) forward and point take retail's
+// slots 0x1c/0x28: the location/fraction slot order follows the stack-resident flag, BLOCKED-BY
+// 0x171d00 as well. At 140 or worse: up copied first 145; up matrix copy first 155; scale after the
+// cross 165 / last 166; position before the matrix copies 192; flag false by default 171; volatile
+// kept 153; position pointer late 167; state pointers kept for the store-back 167; interpolation
+// products as remainder * original 153 (code identical).
 // Round 67 (fast): forward/up struct copies and the matrix position copy through three state pointers
 // (each also used for the store-back) 212 (964 bytes; copy pattern as retail, forward local 0x24 for
 // retail 0x1c); that without the volatile saved state 212 (state spilled at 0x1c for retail 0x34); the
@@ -1580,7 +1590,6 @@ void function_16ebf0(long user_index)
 {
 	transform4x3f adjustment = *g_4687d0;
 	byte *state = (byte *)g_4e9bd4 + user_index * 0x358;
-	byte *volatile saved_state = state;
 	if (user_index != NONE)
 	{
 		if (function_155760(user_index) == 0)
@@ -1604,22 +1613,14 @@ void function_16ebf0(long user_index)
 		}
 	}
 	point3f *original_position = (point3f *)(state + 0xb8);
-	vector3f forward;
-	forward.i = ((vector3f *)(state + 0xd8))->i;
-	forward.j = ((vector3f *)(state + 0xd8))->j;
-	forward.k = ((vector3f *)(state + 0xd8))->k;
-	vector3f up;
-	up.i = ((vector3f *)(state + 0xe4))->i;
-	up.j = ((vector3f *)(state + 0xe4))->j;
-	up.k = ((vector3f *)(state + 0xe4))->k;
+	vector3f forward = *((vector3f *)(state + 0xd8));
+	vector3f up = *((vector3f *)(state + 0xe4));
 	transform4x3f matrix;
 	matrix.scale = 1.0f;
+	cross3f(&up, &forward, &matrix.left);
 	matrix.forward = *((vector3f *)(state + 0xd8));
 	matrix.up = *((vector3f *)(state + 0xe4));
-	real_point3d_set(&matrix.position, original_position->x, original_position->y, original_position->z);
-	matrix.left.i = forward.k * up.j - up.k * forward.j;
-	matrix.left.j = up.k * forward.i - forward.k * up.i;
-	matrix.left.k = forward.j * up.i - up.j * forward.i;
+	matrix.position = *original_position;
 	function_142a60(&matrix, &adjustment, &matrix);
 	forward = matrix.forward;
 	up = matrix.up;
@@ -1634,7 +1635,7 @@ void function_16ebf0(long user_index)
 			up = *g_4687b0;
 		}
 	}
-	if (!(*(dword *)(saved_state + 8) & 0x10))
+	if (!(*(dword *)(state + 8) & 0x10))
 	{
 		s_location location;
 		function_11bed0(&location, &point);
