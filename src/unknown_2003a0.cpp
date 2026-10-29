@@ -1827,6 +1827,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 27: lookup/consideration expansion boundaries, ordinary/inline/forced
 // in all eight non-original pairs [546,546,305,546,546,305,462,462]. Original
 // helper bodies and metadata restored; coupled count/best/point homes remain.
+// Best-reference value result 362; result-first formal 362; point value with best result
+// 409, result-first 409. Nearest-distance value result 382; result-first formal 382;
+// point value with nearest result 447, result-first 447. Native pointer outputs restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2186,6 +2189,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // live state getter 275. Original body and rounding helper restored; early saves and intersection spill remain.
 // Exact tick result 312; native word index/actor type 275/275; complete point value 275;
 // value/lexical order 275; failed-team result 275; first-overlap exit 305; early output object 275.
+// Native squad/actor/both byte wake results 275/285/285; eager logical update 346;
+// retained actor eligibility 337; squad byte/logical 346; squad byte/eligibility 337;
+// both bytes/eligibility 344. Original Boolean results and predicate placement restored.
 // @retail 0x201ea0
 void function_201ea0(void)
 {

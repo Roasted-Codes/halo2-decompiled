@@ -1948,6 +1948,10 @@ struct s_unit_definition_weapon
 /* creates the unit definition's starting weapons (+0x1c0, +0x1c4) and
    gives them to the unit; deletes those it cannot take (or, in state 2,
    already has) */
+// score 95 (was 95): Frame 0xc8 versus 0xc4, spilled ordinal and admission-call convention remain.
+// Entry/definition creation workspace 95/95; outer created handle 95; workspace/handle 95;
+// invalid-item/creation continues 95; successful-admission continue 95; workspace/continues 95;
+// readonly definition/workspace 95; entry ordinal 98; existing masked-index getter 95.
 // @retail 0xccab0
 void function_ccab0(long unit_index)
 {
@@ -2144,10 +2148,15 @@ bool __stdcall function_cd4e0(long unit_index, short hand, bool flag)
 
 /* the weapon the unit, or the first rider down its children with bit 27 of
    its definition's +0xbc, holds; which unit holds it */
+// score 77 (was 90): Frameless pool/argument/result allocation and first-lookup reload remain.
+// Complete pool snapshot 77 plain kept; header snapshot 94; separate initial/final result 90;
+// pool/result 77; headers/result 94; held-path exit 90; two-use unit lifetime 90; unit/result 90.
 // @retail 0xcbd80
 long __stdcall function_cbd80(long object_index, long *holder_index)
 {
-	long weapon_index = function_cbd50(object_index, UNIT_GET(object_index)->current_weapon_index);
+	s_record_pool *objects = g_4e0300;
+	long weapon_index = function_cbd50(object_index,
+		((s_unit_header *)objects->data)[object_index & 0xffff].unit->current_weapon_index);
 
 	if (weapon_index != NONE)
 	{
@@ -2158,9 +2167,9 @@ long __stdcall function_cbd80(long object_index, long *holder_index)
 	}
 	else
 	{
-		for (long child_index = UNIT_GET(object_index)->first_child_index; child_index != NONE;)
+		for (long child_index = ((s_unit_header *)objects->data)[object_index & 0xffff].unit->first_child_index; child_index != NONE;)
 		{
-			s_unit *child = UNIT_GET(child_index);
+			s_unit *child = ((s_unit_header *)objects->data)[child_index & 0xffff].unit;
 
 			if ((1 << child->type) & 3 && TEST_FIELD_BIT((*(dword *)(UNIT_DEFINITION_GET(child) + 0xbc) >> 27) & 1))
 			{
@@ -2817,6 +2826,10 @@ void function_c5740(long unit_index, bool start)
 /* plays the sounds of a unit's impact: its weapon's (+0x58) when it holds
    a weapon that allows it (0x1012c0), else the globals' material sound
    (+0x154, 0xb4 bytes each) and the definition's +0xac */
+// score 94 (was 94): Frameless length agrees; definition/material/pool register ownership and call setup remain.
+// Pool snapshot 92 (two-point gain rejected); headers 94; shared tag lifetime 94; pool/tag 92;
+// direct unit observations 94; conditional material result 94; weapon getter 121; pool/getter 135;
+// existing masked-index getter 94. Original body restored.
 // @retail 0xceee0
 void __stdcall function_ceee0(long unit_index, long definition_index, short material_index, point3f const *point,
 	vector3f const *forward)
