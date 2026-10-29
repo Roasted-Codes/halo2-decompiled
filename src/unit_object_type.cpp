@@ -3218,6 +3218,9 @@ bool function_d1080(long unit_index, transform4x3f *matrix, s_unit_camera_data *
 // common zero result 87; held/bit 58, held/result 92; actual bit/result 97, all three 88;
 // all test-derived results 89 at 292 bytes. Two duplicate generated forms excluded;
 // original body and every call restored.
+// Round 179: one shared range/result with bit/result-arm/definition-scope combinations
+// 64/70/80/87/74/81/64/76. Blocked return from initialized range, with native bit and
+// terminal result clamp, 64/64/74/74; with held operand 58/58/58/58 (exact-only, restored).
 // @retail 0xc9770
 long __stdcall function_c9770(long unit_index, bool flag, bool a, bool b, bool held, bool force, real c, real d)
 {
@@ -3627,11 +3630,14 @@ void function_d03e0(long unit_index, long definition_index)
 
 /* applies the unit's melee damage to what it hit (a device of type 7 with
    bit 5 at +0x1cc is triggered first), then ends its state +0x2bc */
-// score 61: Second object lookup is merged and the surface-call argument width differs.
+// score 61 (was 61): Second object lookup is merged and the surface-call argument width differs.
 // Round 175: default before initializer 56; existing masked-index helper at second/first/both
 // lookups 61/61/61, with early default 56/56; owner before flags 58; both orders 53
 // with or without the neutral helper. Not kept: the NONE material default ahead of
 // 0xd6660 is cleared by its memset (behaviour change).
+// Round 179: omit overwritten material default 125; node direction from completed direction 108;
+// marker scope 61; default/direction 126, default/scope 125, direction/scope 108; all 126;
+// all with owner before flags 126. Original body restored.
 // @retail 0xcfc90
 void __stdcall function_cfc90(long unit_index, long definition_index, s_unit_melee_hit const *hit)
 {
@@ -3674,10 +3680,19 @@ void __stdcall function_cfc90(long unit_index, long definition_index, s_unit_mel
 /* whether a unit may enter the vehicle's seat from a marker: near enough
    (+0x98), facing it (+0xa0), the marker facing the unit (+0x9c), and
    moving with the vehicle (+0xa4) */
+// score 33 (was 85): Frame 0x24 and argument homes agree; normalization starts differing at +0x7f.
+// Angle order 84; with comparison result 92; nonzero normalization arm first 78/86;
+// shared point difference 45/67, with normalization 43/65; entry Boolean result 33.
+// Paired offset parts 137/130; both masked getters 43/33, with parts 137/130; first getter 43.
+// Squared-length/dot helpers 10, normalization helpers 14/13, shared scale and length 14;
+// all changed-grouping forms restored. Complete scale/point/both setters 33; shared scale 33.
+// Eight parallel scale product orders/compound assignments with squared length all 10, exact-only.
+// Retain shared point difference, entry result and retail symmetric angle order with original float tree.
 // @retail 0xc9040
 bool function_c9040(long vehicle_index, long unit_index, short seat_index, vector3f const *forward,
 	point3f const *position)
 {
+	bool result = false;
 	s_unit *unit = UNIT_GET(unit_index);
 	byte *seat = (byte *)&UNIT_SEATS(UNIT_DEFINITION_GET(UNIT_GET(vehicle_index)))[seat_index];
 	point3f center;
@@ -3685,25 +3700,22 @@ bool function_c9040(long vehicle_index, long unit_index, short seat_index, vecto
 	real distance;
 
 	function_cafc0(unit_index, &center);
-	direction.i = position->x - center.x;
-	direction.j = position->y - center.y;
-	direction.k = position->z - center.z;
+	vector3d_from_points3d(&center, position, &direction);
 	distance = (real)sqrt(direction.k * direction.k + direction.j * direction.j + direction.i * direction.i);
-	if (0.0001f > (real)fabs(distance))
-	{
-		distance = 0.0f;
-	}
-	else
+	if (!(0.0001f > (real)fabs(distance)))
 	{
 		real scale = 1.0f / distance;
-
 		direction.i = scale * direction.i;
 		direction.j = direction.j * scale;
 		direction.k = direction.k * scale;
 	}
+	else
+	{
+		distance = 0.0f;
+	}
 	if (*(real *)(seat + 0x98) > distance &&
-		*(real *)(seat + 0xa0) >= function_11cf50(&direction, &unit->unknown168) &&
-		*(real *)(seat + 0x9c) >= 3.1415927f - function_11cf50(&direction, forward))
+		*(real *)(seat + 0xa0) >= function_11cf50(&unit->unknown168, &direction) &&
+		*(real *)(seat + 0x9c) >= 3.1415927f - function_11cf50(forward, &direction))
 	{
 		vector3f unit_velocity;
 		vector3f vehicle_velocity;
@@ -3715,10 +3727,10 @@ bool function_c9040(long vehicle_index, long unit_index, short seat_index, vecto
 		real dz = unit_velocity.k - vehicle_velocity.k;
 		if (*(real *)(seat + 0xa4) >= (real)sqrt(dz * dz + dy * dy + dx * dx))
 		{
-			return true;
+			result = true;
 		}
 	}
-	return false;
+	return result;
 }
 
 /* pushes the unit off its parent (when it is not seated; seated units

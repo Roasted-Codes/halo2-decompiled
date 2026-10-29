@@ -2017,6 +2017,9 @@ bool function_1df5d0(short team_a, short team_b);
 // Round 164: shared swarm input 179; shared pool getter 179; aggregation phase 235; phase swarm 235;
 // phase pool getter 235; iteration actor scope 182; actor scope swarm 182; all native scopes 235.
 // Zero/sentinel iterator seeds 243/228; actor pointer/health names 179/179; shared actor level 248; shared definition flags 179; live last-update reads 179; health publication before count 179. Cursor memory home and contribution allocation remain.
+// Round 179: Actual first iterator initialization before disjoint header resets, with
+// receiver/hostility lifetimes and chained zeroes, 228/228/227/227/234/234/237/237.
+// Original begin order and complete body restored; cursor/contribution homes remain.
 // @retail 0x203360
 void function_203360(long squad_index)
 {
@@ -2987,6 +2990,9 @@ void function_2011f0(long arg_0);
 // 336/391/334/389 at the same lengths. Gains of two/four are below threshold; body restored.
 // Round 198: Placement/prior-object lookup declarations, ordinary/inline/noinline
 // in all eight non-original pairs, 338 each. Frame 0x134 agrees; original boundaries restored.
+// Round 179: Natural short attempt counter on recovered category/seat-output frame 338;
+// with promoted difficulty/signed placement/both 344/359/357; full-width fallback on
+// those four graphs 354/359/354/359. Frame 0x134 and original body retained.
 // @retail 0x201520
 void function_201520(short arg_0, long arg_1, long arg_2, long arg_3, long arg_4)
 {
