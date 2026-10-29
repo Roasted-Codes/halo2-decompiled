@@ -1426,7 +1426,10 @@ bool __stdcall function_e8b20(long unit_index, long type)
    new one taken out */
 // score 11 (was 29): only the entry block's order differs (retail loads the global and the
 // actions pointer before `cmp ecx, 8; sete bl`). Tried: unit_action_active() 95; primary
-// declared first 11; primary inside the block 82; a unit local 90; an early-return guard 11.
+// declared first 11; primary inside the block 82; a unit local 90; an early-return guard 11;
+// actions read inside the test with primary first 11; the bit test as its expression 11; the test
+// result named first 11; `type == 8` in each call argument 82; the then-block as a call of the
+// switch-finished action 252, with that action inline 252 (not inlined).
 // @retail 0xe8c10
 void __stdcall unit_action_weapon_switch_interrupted(long unit_index, long type)
 {
