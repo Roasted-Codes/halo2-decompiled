@@ -517,6 +517,9 @@ void function_3dd10(long object_index, bool force);
 // Upper-first conditional/branches 201/244; lower-upper/upper-lower clamp stages 273/252; per-channel values lower/upper-first 240/243; all channel values lower/upper-first 245/254.
 // Direct rounded seeds 84; shared double hue delta 156; both 156; symmetric six HSV products 84;
 // products/direct seeds 84; products/delta 156; all three 156; positive hue arm on all three 156.
+// Round 183: direct field observations in weight/selection/both scans 150/161/161; live count
+// alone/with weight/selection/both 84/150/161/161; all with the signed first bound 619
+// (unrolled). Original rolled scans, receiver graph and arithmetic restored.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
@@ -653,9 +656,11 @@ color3f *function_131c20(color3f const *a, color3f const *b, dword flags, real t
 // Direct size/24 count 161; const base, entry and function views 91;
 // unsigned count 171; component clamp loop 91; scale loop and both loops 90
 // (one-count gain rejected).
-// score 91 (was 91): current takes edi (the 0x131c20 result register) where retail gives the
+// current takes edi (the 0x131c20 result register) where retail gives the
 // blend function pointer edi and current ebx, base on the stack. Current declared first 91;
 // count before base 174; current from base each pass 98; copy before the entry 133; memcpy copy 91.
+// Shared count/inner-array/both snapshots 177/164/194; outer-array snapshot 206; outer plus
+// count/inner/both 213/210/228; shared inner index with count and array 188.
 // @retail 0xbe8e0
 bool __stdcall function_be8e0(long object_index)
 {

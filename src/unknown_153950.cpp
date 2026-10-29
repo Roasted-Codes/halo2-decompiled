@@ -404,7 +404,7 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 	slot->flags |= 1;
 }
 
-// score 64 (was 64): dot/cross product operands, rotation xmm roles and
+// score 60 (was 60): dot/cross product operands, rotation xmm roles and
 // final component reloads still differ; executable tail is three bytes short.
 // Norm scalar 67; nested norm tests 64; early 2D cross 207; direction
 // copy loop 271; rotation/scale/both component loops 166/166/166;
@@ -423,6 +423,11 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 // vector3f_scale for the final scale 60, dot3f(u, e) / dot3f(e, u) for the projection 60/60 and cross3f
 // for the axis cross 59 (all four kept: they replace hand-written helper bodies); the final scale through
 // &slot->vector 61 (reloads u.j as retail but reschedules the rotation).
+// Earlier: every operand and term order of the 2D dot/cross and of the rotation's dot
+// Round 177: Complete dot2/cross2/initial-normal/projection/rotation-cross/update products
+// 78/78/58/60/60/60; early dot+cross+normal 56; complete rotation and four early/rotation
+// combinations 60 and 56/56/56/56. Normal producer orders ijk/ikj/jik/jki/kij
+// 64/56/64/64/56. Two- and four-point gains rejected; original complete body restored.
 // @retail 0x154df0
 void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vector3f *direction, real priority)
 {

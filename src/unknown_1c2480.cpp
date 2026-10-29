@@ -71,6 +71,29 @@ void function_1c3440(c_1c3450 *arg_0)
 	function_1c3450(arg_0);
 }
 
+#include "havok_reference.h"
+
+struct s_47f048_object;
+extern s_47f048_object *g_47f048;
+/* the bsp shape 0x1c2910 makes */
+c_havok_reference_counted *g_4f55b0;
+
+/* drops the references to the bsp shape 0x1c2910 makes and to g_47f048 and
+   clears both; retail builds it without link-time code generation (with
+   it, the second release folds its count address into the object) */
+// @retail 0x1c2890
+void function_1c2890(void)
+{
+	c_havok_reference_counted *shape = g_4f55b0;
+	if (shape)
+	{
+		havok_reference_remove(shape);
+		g_4f55b0 = NULL;
+	}
+	havok_reference_remove((c_havok_reference_counted *)g_47f048);
+	g_47f048 = NULL;
+}
+
 class c_2de7b0
 {
 public:

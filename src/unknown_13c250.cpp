@@ -105,6 +105,8 @@ __forceinline bool function_13c253(s_13c251 const *arg_1)
 // Found candidate apart from the best, its tag a switch case 186; index ranking loop 171;
 // plain count 281; found plus index 179; found, index and plain count 205; append helper taking
 // the count's address 286; with the index loop 258.
+// Shared first / next / validity / first-next / first-valid / next-valid / all boundaries
+// 144 each; all shared boundaries with an ordinary count 281.
 // @retail 0x13c250
 void __stdcall function_13c250(long arg_1, long arg_2, long arg_3)
 {

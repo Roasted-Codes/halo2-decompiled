@@ -248,6 +248,10 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // DH round 230: Post-getter countdown snapshot in byte/short/long/word domains 207/216/280/215;
 // the same complete if/else weight producers 207/216/280/215. Original observations and body restored;
 // frame 0x30/0x2c, destination/ordinal homes and weighted getter expansion remain.
+// DH round 236: positive channel constructed at entry with independent countdown-channel,
+// real ordinal and existing sample-result entry lifetimes, eight subsets
+// 279/375/279/375/317/391/317/391. Original separate constructions, observations and body restored;
+// frame 0x30/0x2c, destination/ordinal homes and weighted getter expansion remain.
 // Round 398: actual eligibility retained for sampling and loop-result accumulation,
 // bitwise bool/byte/short/long 306/306/303/304; logical
 // accumulation with those carriers 324/324/314/310. Original result and body restored.

@@ -358,6 +358,9 @@ short *function_e70b0(long unit_index, short *value);
 // Slot data block through slot->unknownc 49; existing unit action-state helper call 49 and existing prop
 // getter 49 (both kept: they replace hand-written copies, same code); nested final actor-state test 49;
 // named random delay 49.
+// Round 404: Native slot data block, then countdown/mode/elapsed combinations and entry cast order, all
+// eight 49 at 443/443. Data block canonicalizes unchanged; complete original body and type restored.
+// Actor/index and final-call allocation remain.
 // @retail 0x1afb30
 void __stdcall function_1afb30(long actor_index, s_slot *slot)
 {

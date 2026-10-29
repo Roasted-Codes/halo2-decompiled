@@ -473,13 +473,13 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // score 56 (was 56): Offset initialization, scalar initializer order, property reloads and rotation scheduling differ.
 // Combined entry decisions 53; entry decisions with shared cache 53; scale/alpha/both result locals 119/56/119;
 // saved successor 217; particle cache with scale result 119; combined entry/property/cache 116.
-// score 56 (was 56): entry branch, property reload pairs and rotation scheduling differ;
+// Earlier: entry branch, property reload pairs and rotation scheduling differ;
 // forward/left/up/all axis receivers 118/55/55/118; forward/left/up/first-pair values 182/167/181/289;
 // left/up receivers with empty-list return and scale-first initialization 52/52, but the return only repeats the loop test (reverted in review).
 // Captured position/late output 353; captured velocity/late output 357; both 437;
 // translation component loop 56; inner cache member 56; derived mask at use 198;
 // scale initialized at property selection 273; translation value 160.
-// score 56 (was 56): the definitions indexed (index++) put the offset's zero store after the
+// Earlier: the definitions indexed (index++) put the offset's zero store after the
 // list test and fix the three reload pairs (with scale declared first, all but the rotation
 // blocks match), but turn the rotations' products around and add 10 bytes: indexed 119,
 // indexed with scale first 117; plus split += rows 116; plus a matrix pointer local 123.
@@ -487,6 +487,10 @@ typedef void (__stdcall *particle_callback_175610)(s_particle_175610 *, s_partic
 // 0x173c10 for both hand-written mask refreshes 56 (same code, kept); on the indexed form with scale
 // first, input-first products 117 and a greedy screen of every rotation row's term order 116 at best;
 // the offset as a for-loop init 56.
+// Complete position/velocity/both row products 127/56/127; all-products before stores 164/121/171;
+// both input copies on complete-product graph 170; shared translation add with row products 127.
+// Indexed definitions plus scale-first defaults with those six product graphs 103/117/103/141/153/116.
+// Entry/reload order and matrix/input product scheduling remain; original body retained.
 // @retail 0x175610
 void function_175610(s_particle_value_cache *cache, s_particle_system_datum *system, s_particle_location_datum *location, particle_callback_175610 callback, void *context)
 {
@@ -1088,7 +1092,20 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
     result->k = a->i * b->j - a->j * b->i;
 }
 
-// score 213 (was 213): Frame/length agree; early EDI, tag/mask and child-render homes remain.
+// score 135 (was 213): frame and length agree, and so do the entry saves. Left: the tag index lands
+// in EAX (retail EDX, 0x137bd0's register) and the extra `mov edx, eax` shifts the camera block;
+// retail tests definition bit 5 as `mov dl; shr dl, 5; test dl, 1`; it reloads the location
+// after 0x1e4e0 (BLOCKED-BY 0x1e4e0, todo) and calls 0x1751d0 before pushing 0x40e30's arguments.
+// Round 74: retail's visibility semantics (not forced, bit 9 clear, cluster not in the set and not
+// visible: nothing is tested or stamped and the system draws) 213 -> 207; the fade sets the draw
+// flag (`draw = fade > 0`, `draw = true` when visible: retail's `mov bl, 1`) 166 (as `||` 175,
+// without the else 170); the child flag copied as a set/clear if/else 135 (1380 bytes). At 135 or
+// worse: early location index/request system 134 (one point); tag group as a switch 144, group read
+// twice 144, inverted test 135, reference declared first 135, const tag 135, tag through a named
+// definition 136, long group 135; bit 5 as byte shifts 135 (still `test byte`), in this function's
+// word-flag form 310 (retail's three instructions, but the location loop then runs out of step),
+// named 324; the in-view comparison written in place 297 (with the word form 351); cross product
+// before/between the camera copies 135; tag read into a local for 0x40e30 166.
 // Round 57: the child flag copy as a set/clear if/else (retail's `test word; or word / and byte`)
 // gives retail's entry saves (the early exits reach the child loop, which then uses edi) and
 // child loop, but the inner tag value lands in eax (retail edx) and the extra `mov edx, eax`
@@ -1183,8 +1200,7 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
                         long cluster = system->location.cluster_index;
                         bool visible = function_3eb20(cluster) || (bool)(((dword)*(word const *)((byte const *)system + 0xc) >> 10) & 1);
                         bool in_pool = (g_547f88.flags[cluster >> 5] & (1 << (cluster & 31))) != 0;
-                        if (!force_visible && !(bool)(((dword)*(word const *)((byte const *)definition + 0x16) >> 9) & 1) && !in_pool && !visible) draw = false;
-                        else
+                        if (force_visible || (bool)(((dword)*(word const *)((byte const *)definition + 0x16) >> 9) & 1) || in_pool || visible)
                         {
                             if (!visible && !force_visible)
                             {
@@ -1210,8 +1226,9 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
                                 if (!visible)
                                 {
                                     real distance = (real)(sqrt(delta.k * delta.k + delta.j * delta.j + delta.i * delta.i) * g_4b9dcc);
-                                    if (!(function_249bb0((s_distance_fade const *)definition, distance) > 0.0f)) draw = false;
+                                    draw = function_249bb0((s_distance_fade const *)definition, distance) > 0.0f;
                                 }
+                                else draw = true;
                                 *(dword *)((byte *)location + 0x30) = g_4ba034;
                             }
                         }
@@ -1237,7 +1254,10 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
     for (long child_index = system->first_child_index; child_index != NONE; )
     {
         s_particle_system_datum *child = DATUM(g_510c74, s_particle_system_datum, child_index);
-        child->flag10 = system->flag10;
+        if (system->flag10)
+            child->flag10 = true;
+        else
+            child->flag10 = false;
         function_174420(child_index, view_pass, camera_relative, force_visible);
         child_index = child->next_index;
     }
@@ -1248,7 +1268,7 @@ void __stdcall function_174420(long system_index, bool view_pass, bool camera_re
 long function_155760(long index);
 bool function_17afd0(long effect_index, long value);
 
-// score 101 (was 101): frame 0x14 agrees; retail keeps the NONE sentinel and the owner in ebp
+// score 102 (was 102): frame 0x14 agrees; retail keeps the NONE sentinel and the owner in ebp
 // (coalesced; later NONE tests use immediates) and the availability flag in bl; ours keeps the
 // sentinel in ebx, the owner in edi and the flag in al, and tests the definition's bit 9 as a
 // byte instead of a shifted word. Owner/NONE coalescing and Boolean homes differ.
@@ -1275,6 +1295,9 @@ bool function_17afd0(long effect_index, long value);
 // NONE/owner sharing and availability/Boolean homes remain.
 // Next-used helper entry/advance/both 200/202/244; native draw/query+draw bits 101/128;
 // native bits with entry/advance helper 195/198; inline/outline-inline query 101/101.
+// Arm-specific draw calls with original/word flag 134/137; camera scoped 143/129;
+// arm-specific draw and camera 144/121; direct other-view eligibility 144/121.
+// NONE/owner sharing and Boolean homes remain; original shared draw call retained.
 // @retail 0x174220
 void __stdcall function_174220(bool view_pass)
 {
