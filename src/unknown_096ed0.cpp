@@ -13,7 +13,8 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 170 (was 170): the peers table is now read through a local, so `this` stays in EBP, the
+// score 132 (was 132): frame 0x48, receiver EBP and pending counter ESI agree; selector,
+// cursor/entry/query homes and load scheduling remain. Earlier 170: the peers table is read through a local; the
 // index is read inside the enabled test, the cursor is declared under the index test, advanced
 // before the stores and the size is one expression, so retail's prologue and output block match.
 // Left: our cursor, entry pointer and item-priority slots sit 4 bytes below retail's and our
@@ -117,10 +118,34 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 169: Recovered receiver/output graph: selector, distinct chain-index and callback-output
 // identities, all seven subsets 170; native dword selector 170. Pending selector/index
 // interference and the four-byte cursor/entry/callback home shift remain.
+// Conditional pending/active/both aggregate zero joins 170/170/170;
+// post-query pending/active/both failure lifetimes 173/170/173; both joins with late/shared predicates 173/170.
+// Complete per-use/table-local/traversal-local/owner-local roots on the EBP graph 231/228/228/222; original body restored.
 // Round 173: native signed-byte/byte/short/word selector on the recovered EBP graph
 // 216/216/200/200; complete post-query selector publication at those widths
 // 278/278/266/266. Original selector, table observations and body restored; cursor/entry
 // homes and pending selector/chain-index residency remain.
+// Round 73: retail spills type around the first chain loop only (stored before the chain query, reloaded
+// into EBX at the join) and keeps the counter in ESI and the vtable in EBX; ours keeps type in EBX and
+// spills the counter. Renaming type (two names) or the chain counters (two names) 170 each; the first
+// chain counter declared with its zero before `type = 3` 189.
+// Round 396: real pending/active array cursors after/before lookup on the EBP graph
+// 216,132,242,221,148,247,247,252; active post-lookup cursor kept at 132 plain, 823/814 bytes.
+// Pending selector now spills at +0x20 versus +0x34; cursor/query homes remain four bytes low.
+// Round 227: On the aligned receiver graph, early size reduction/conditional maxima/both
+// 170/170/170; positive availability and its three combinations 171 each;
+// all with a private pending total 218. Original reductions restored; selector/induction
+// interference and the four-byte cursor/entry/callback shift remain.
+// Round 175: On the recovered EBP graph, pending/active/both native chain-buffer names
+// 170/170/170; two-use pending callback handle 170, with either/both buffers 170/170/170;
+// complete graph with alternate buffer home order 170. Original executable body restored.
+// Round 180: Pending/active selector constants after queries and single-item counts after
+// callbacks, masks 1-7, then all with single-item selectors after callbacks:
+// 172/170/172/229/230/229/230/229. Original executable body restored.
+// Round 399: retained active-cursor graph, output/selector/input names in masks 1-7,
+// all with callback-output names, native count/index names, those with selector/input,
+// explicit remaining-count pointer walk and that walk with count/selector names: 132 each.
+// Active remaining count still coalesces with selector at +0x20; complete body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
@@ -187,14 +212,16 @@ long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 								handles_count = replication_table_get_chain(table, handle, handles);
 								priority = 0.0f;
 								size = 0;
+								long const *active_cursor = handles;
 								for (long i = 0; i < handles_count; i++)
 								{
 									real item_priority;
-									table->owner->v9(handles[i], a1, &item_priority);
+									table->owner->v9(*active_cursor, a1, &item_priority);
 									if (item_priority > 0.0f)
 										priority = priority > item_priority ? priority : item_priority;
 									else
 										blocked = true;
+									++active_cursor;
 								}
 								if (blocked)
 									priority = 0.0f;

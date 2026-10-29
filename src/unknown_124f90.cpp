@@ -3463,6 +3463,13 @@ struct s_128ca0
 // permutation sums 238 each (identical code). Retail loads the location gain into its own register
 // before the inner sum (one instruction more); every form folds it into addss, and that one-line
 // shift dominates the positional score. Next: find that load, then the single-exit pin.
+// Round 168: Native processed real gain with original/early declaration and signed/unsigned raw bits 215 each; all four with shared scale 287. Original body restored; gain homes and clamp joins remain.
+// Round 247: sequential inner/outer/both reference-input gain sums 269/215/269; both with shared
+// scale 242, before pitch 276, before pitch with scale 256, role names 269 and entry declaration
+// with scale 242. Reference-input sequences recover frame 0x494 but regress; original body restored.
+// Round 224: Live definition/permutation/playback, definition-permutation/definition-playback/
+// permutation-playback/all/all-pitch-parameters 307/364/681/385/709/864/878/878. Definition-only
+// recovers frame 0x494 but regresses; original receivers, gain homes and complete countdown arms restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {
@@ -3694,6 +3701,11 @@ PRIVATE inline void function_1275d8(quaternionf const *arg_0, vector3f const *ar
 // 461); that plus the existing const g_44a2a0 (extern in sound_driver.h) 719 (frame 0xe0, 2106 bytes,
 // aligned 410); plus the fallback getter 747. Retail evaluates the inlined 0x16f3a0 cmov again in its
 // second fallback copy and inlines 0x1420f0/0x1427f0; BLOCKED-BY 0x16f3a0 (noinline for its callers).
+// Round 389: query directly into the final point 563; first/second/both rotations in place
+// with complete vector snapshots 1030/1035/1008; query reuse with those graphs 1042/1047/1020;
+// complete reuse with native output-pointer return 1020. Original distinct workspaces restored.
+// Round 259: existing rotation output pointer/reference results, pointer/reference output
+// formals and ordinary/forced expansion: eight forms 535 each. Original helper restored.
 // @retail 0x127400
 void function_127400(bool arg_0)
 {

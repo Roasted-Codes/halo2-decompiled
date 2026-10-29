@@ -847,6 +847,16 @@ real function_18cac0(long arg_0);
 // `&table[0]`, split clears, a table member at +4, a clear or the whole body in an inline helper all
 // realign; a table of 0x1f0 dwords does not, 0x1f4 does (the frame size is not the trigger); only
 // /O1 or /Os or /Oy- (diagnostic flags, not kept) avoid it.
+// Round 184: Entry declarations of gain/door/pair-mask arrays, masks 1-7, then all in reversed
+// declaration order: eight at 155. Original scopes, both library clears, per-door construction, live
+// bounds, side priority, strict maximum and full body restored.
+// Round 265: all six lexical orders of door/side/inner long slots, then both
+// uninitialized pre-clear declaration orders, 155 each. Original declarations and body restored.
+// Round 186: Initial camera-cluster short/long with guarded/conditional/default-result/early-null
+// admission 218/272/247/275/247/275/218/272. Original direct observations and whole body restored.
+// Round 188: camera-provider/membership ordinary/forced/separate-noinline declaration
+// pairs (1,0)/(2,0)/(0,1)/(0,2)/(1,1)/(1,2)/(2,1)/(2,2):
+// 155/169/155/577/155/577/169/585. Original shared inline contracts and body restored.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
