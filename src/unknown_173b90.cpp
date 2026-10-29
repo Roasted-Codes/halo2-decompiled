@@ -824,7 +824,6 @@ public:
 	virtual long count() = 0;
 	virtual long const *names() = 0;
 };
-
 // score 292 (was 292): frame 0x60, 1372 bytes against 1355. Left: our entry stores a `result`
 // slot (retail has none and returns `xor eax, eax` / `mov eax, 1` from the bool expression);
 // ours merges the flag-9 word update with the flag-8 clear (retail stores the word, clears flag 8
@@ -888,6 +887,17 @@ public:
 // [292, 366, 361, 366]; with word-pointer/bit-five flag idiom [359, 369, 359, 369]. Original result and flags restored.
 // Round 232: four complete positive/negative factor orders, direct or all six
 // products staged before output, 292 each. Original two-use helper restored.
+// Round 214: Direct selector/for-owned child handle/both 292 each; tint at the color-call
+// expression, alone/with selector/with child-for/with both, 288 each (four-point gains rejected).
+// All three with Boolean completion storage 344. Original body and every call restored;
+// entry result/flag publication and child/tint homes remain.
+// Round 163: recursive inline/cross forceinline/both/recursive noinline
+// boundaries 292 each; complete ordered completion on each graph 356 each
+// (1355 bytes, frame 0x5c). Original result, declarations and boundaries restored;
+// entry completion storage, word/byte publication and child/tint homes remain.
+// Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
+// 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
+// All record, request and completion forms restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
@@ -1104,6 +1114,9 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // Round 217: Selector inline/noinline/inline-out-of-line boundaries 213/213/213;
 // with child set/clear 219/219/219; with word bit five and child stores 316/316
 // (fast). Original selector declarations, complete body and call tuples restored.
+// Round 29: child set/clear 220; with early request/index 332; with shifted-word bit five 330;
+// with b-first cross products 366; duplicate tag carrier 314; conditional reference 220;
+// signed group 220; immutable tag 220. Original body restored; tag/group roles and child copy remain.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

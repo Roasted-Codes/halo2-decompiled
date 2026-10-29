@@ -495,6 +495,12 @@ long function_243b10(long key_b, bool team_only, long *second)
 // Round 8 (plain, on the function_2417a1 copy): the distance through magnitude2d 172; the other
 // position read at each use 223 (666 B); the table local at the loop top 169 / 180 (the slot moves to
 // the stack, caller 0x240160 lost); the marker select as if/else 188; the index declared first 172.
+// Round 87 (plain): the entry as `marker_entries + results[j]` 173, the sum as dy * dy + dx * dx 173,
+// a flags local for the three clauses 173, rejected markers `continue` 173 (all four identical code);
+// the squared distance accumulated (`d = dx * dx; d += dy * dy;` as 0x1b0cd0's file does) then sqrt
+// 173: that gives retail's exact x87 sequence, so keep it in any later fix. Left: retail spills the
+// inner index (the frame's extra dword) and keeps the table in EBP through the inner loop; ours keeps
+// the index in EAX and folds the entry flags load to `[ecx + ebp + 0x16]`, borrowing EBP.
 // @retail 0x243c00
 void function_243c00(long slot)
 {
@@ -1643,6 +1649,7 @@ void function_242e00(long player_index, long team);
 // tail's marker entry through an element pointer (`entry = &...marker_entries[marker_index]; point =
 // entry->position;`) gives 2 on the kept order, only the 0xba300 call differing; it needs a match, so
 // apply it together with the held 0xba300 change. Round 103: 0xba300 is still contributor code (DIFF 24).
+// Round 87: unchanged; 0xba300 still contributor code (DIFF 24) and every caller of it is todo.
 // @retail 0x242660
 void function_242660(long object_index, bool arg_1)
 {

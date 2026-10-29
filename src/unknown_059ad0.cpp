@@ -2182,36 +2182,23 @@ void network_session_leave_joining(c_class_58d20 *session)
 	network_session_update_leaving_join(session);
 }
 
-// score 3 (was 3): retail sets the NONE carrier after clearing the state
-// block; ours sets it before the clear. Tried: the copy as a word loop
-// 49, as a pointer range or a byte loop 0 (not kept: the matched siblings
-// 0x61180 and 0x614a0 copy the same way with memcpy).
-// Complete field construction without scratch clear 48; clock before record
-// 28, after scratch clear 3; immutable initialized record 48; typed state
-// destination 11, without scratch clear 48, with immutable record 48, with
-// earlier clock 28. The original eight-byte frame and memcpy remain.
-// our NONE request sentinel is defined before clearing the
-// state block; retail defines it afterwards. Tried: the copy as a word loop
-// New trials: memmove 42; request field fill 3; clear result as copy target 9;
-// all-one record fill 31; tail-only clear 32; fill with memmove 37;
-// tail clear with fill 30; tail clear with memmove 46. Destination sentinel
-// after copy 30; scratch sentinel after clear 29, as fill 29; sentinel before
-// clock 15; destination fill 30; copy-result sentinel 27; fill before clock 15;
-// typed destination with late sentinel 26.
-// retail sets the NONE carrier (ebx) after clearing the state block; ours sets
-// it before the clear. The carrier must stay live across the clear: set after it in the source,
-// it moves to eax and ebx is no longer saved. Tried: the copy as a word loop 49, as a pointer
-// range or a byte loop 0 (not kept: the matched siblings 0x61180 and 0x614a0 copy the same way
-// with memcpy); complete field construction without scratch clear 48; clock before record 28,
-// after scratch clear 3; immutable initialized record 48; typed state destination 11, without
-// scratch clear 48, with immutable record 48, with earlier clock 28; memmove 42; request field
-// fill 3; clear result as copy target 9; all-one record fill 31; tail-only clear 32; fill with
-// memmove 37; tail clear with fill 30; tail clear with memmove 46; NONE set after the state
-// clear 29; NONE before the clock 15; field fill (0xff memset) after the state clear 29; zero
-// initializer for the record 27; state-block pointer local for the clear and the copy 11.
-// Scratch source pointer: direct clear with record/pointer fields 3/3;
-// with returned state-copy destination 9/9. Source from scratch clear with
-// record/pointer fields 38/35; with returned state destination 40/37.
+// score 3 (was 3): retail sets the NONE carrier (EBX) after clearing the state block; ours sets
+// it before the clear. The carrier must stay live across the clear: set after it in the source, it
+// moves to EAX and EBX is no longer saved. Tried: the copy as a word loop 49, as a pointer range or
+// a byte loop 0 (not kept: the matched siblings 0x61180 and 0x614a0 copy the same way with memcpy);
+// complete field construction without scratch clear 48; clock before record 28, after scratch clear
+// 3; immutable initialized record 48; typed state destination 11, without scratch clear 48, with
+// immutable record 48, with earlier clock 28; memmove 42; request field fill 3; clear result as copy
+// target 9; all-one record fill 31; tail-only clear 32; fill with memmove 37; tail clear with fill
+// 30; tail clear with memmove 46; destination sentinel after copy 30; scratch sentinel after clear
+// 29, as fill 29; NONE before the clock 15 (NONE takes EBP, the clock EBX); destination fill 30;
+// copy-result sentinel 27; fill before clock 15; typed destination with late sentinel 26; zero
+// initializer for the record 27; state-block pointer local for the clear and the copy 11; scratch
+// source pointer: direct clear with record/pointer fields 3/3, with returned state-copy destination
+// 9/9; source from scratch clear with record/pointer fields 38/35, with returned state destination
+// 40/37. Round 87: clock after the state clear 28; state store before the copy 6, before the clear
+// 6; sizeof the record type in the record clear and the copy 3; `void *state_data` (0x5e030's
+// form) declared before the clear 3, between the clock and NONE 3.
 // @retail 0x61330
 void network_session_leave_join_request(c_class_58d20 *session)
 {
@@ -4364,27 +4351,28 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 /* retail calls 0x5f6a0, 0x58d20, 0x58d90 and 0x75870 here instead of
    inlining them; only the time read for the peer's reply time is inline */
 #pragma inline_depth(0)
-
-// score 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
+// score 305 (was 305): frame 0xd8 agrees; result/identity/selection byte homes and
+// acknowledgement placement differ.
+// Earlier 305 (was 310): the invalid-state exits and the missing-sender exit return the result directly
 // instead of going through the shared exit, so each one gets its own epilogue and the extent matches
 // retail's 1264 bytes. The three boolean stack homes are still rotated relative to retail.
-// score 310 (was 318): the acknowledgement block returns the result directly instead of going through
+// Earlier 310 (was 318): the acknowledgement block returns the result directly instead of going through
 // the shared exit, so its epilogue is the one retail emits. The three boolean stack homes are still
 // rotated relative to retail and the invalid-state exit is still emitted twice.
-// score 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
+// Earlier 318 (was 325): the channel-state test keeps the identity comparison in place instead of copying
 // it into a named flag, so the comparison is tested once as retail does. The three boolean stack homes
 // are still rotated relative to retail and the invalid-state exit is still emitted twice.
-// score 325 (was 335): the acceptance test is written as the no-sender case followed by the
+// Earlier 325 (was 335): the acceptance test is written as the no-sender case followed by the
 // acknowledgement, so the acknowledgement block stays out of line at the end of the function instead of
 // being pulled into the middle of it. The three boolean stack homes are still rotated relative to retail.
-// score 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
+// Earlier 344 (was 348): the state test is a separate if/else-if chain so the invalid-state exit is a
 // distinct arm, the peer-map update takes the remote member first (the callee is symmetric in its two
 // member arguments), and the channel-state test is split into a named flag. The three boolean stack
 // homes are still rotated relative to retail and the invalid-state exit is still duplicated.
-// score 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
+// Earlier 348 (was 356): the valid-state range is an else-if chain, so the invalid-state exit is a
 // separate arm instead of a merged join, and the identity pointer is taken before the member-state
 // pointer. The acceptance/identity byte homes and the duplicated invalid-state exit remain.
-// score 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
+// Earlier 358 (was 370): the identity comparison is a predicate and the two timeout reasons are
 // separate arms; the extent is 1265/1264 bytes. Acceptance/identity homes and acknowledgement
 // placement remain.
 // Earlier: Aligned frame 0xd8 agrees; acceptance/identity homes and acknowledgement placement remain.
@@ -4435,6 +4423,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // Round 145: Equal-version rejection before preference: original predicates 396; newer predicate
 // 393; equality predicate 394; both predicates 391. Identity-equality counterparts
 // 406/403/404/401; all restored.
+// Round 214: Native-equality/distinct-exit graph: acceptance, selection, both, identity, identity/acceptance,
+// identity/selection and all Boolean home names 305 each; all names with entry selection constants 372.
+// All executable forms restored; result/identity/selection homes and acknowledgement placement remain.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

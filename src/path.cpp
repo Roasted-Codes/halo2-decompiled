@@ -314,6 +314,14 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 // 105; entry point workspaces 105; entry distance outputs 105; attractor with point/
 // distance entry declarations 137/137; failure CRT vector copy 105; all groups 137.
 // All restored; full score 121, frame 0x30 and incoming target/EBP differences remain.
+// Round 273 (fast control 105): direct optional-output parameters 105; full lookup
+// result 117, full traversal cursor 126, lookup/direct outputs 117; double offset names
+// 105; full success carrier 140; complete squared-sum local 105, accumulated z-x-y sum
+// 101; natural tested parent walk 105, with lookup/direct outputs 138. All restored.
+// Round 275 (fast control 105): minimum from tests 107; minimum plus full child 104;
+// direct selected end 105, with minimum 107; independent direction node 105; readonly
+// source view 105; minimum/direct end/direction node 107; complete distance names on
+// minimum/direction graph 107. All restored; the one-point 104 form is dropped.
 // @retail 0x270750
 bool function_270750(byte *buffer, long unknown, s_actor_point_target const *target,
 	real *distance, long a, long b)
@@ -392,7 +400,8 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
-// score 372 (was 372): the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
+// score 363 (was 372): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
+// Earlier: the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
 // Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
 // all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
 // point-difference helpers alone/everywhere 398/398; depth-indexed step fields 385; direct data and step fields 372 (kept);
@@ -400,6 +409,9 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 // Signed/unsigned Boolean bit 380/372; capped word on unsigned/signed graphs 401/398; signed word/CRT
 // clear 376; signed/CRT clear 393; entry counts 376; origin/target names 380; promoted cap 398, with CRT
 // clear 377. All restored.
+// Round 274: full-width initialization/link/path/scan carriers 400/363/378/414; initialization+link 401;
+// link+path 441 (parent 282); path+scan 422; all four 407; previous-node presence 409, with initialization 433.
+// Only the actual bounded full-width link count is retained: 363 plain, 1390/1388 bytes; parent stays 155.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,
@@ -422,7 +434,7 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	short previous_index = NONE;
 	s_path_node_key_view *previous = NULL;
 	short count = 0;
-	short link_count = 0;
+	long link_count = 0;
 	bool complete = true;
 	while (node_index != NONE)
 	{
@@ -538,7 +550,8 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	return count;
 }
 
-// score 168 (was 239): frame 0x5ac, actor lookup and direct avoidance-byte copy agree; retry-mask reload and tail layout differ.
+// score 155 (was 168): Frame 0x5ac and entry agree; avoidance materialization, retry-mask reload and distance-return tail differ.
+// Earlier: frame 0x5ac, actor lookup and direct avoidance-byte copy agree; retry-mask reload and tail layout differ.
 // Tried: one result exit 308; stage array names 356; both 308; reversed arrays 356; named destination fields 360;
 // direct reconstruction count 357; full avoidance if/else 354; success first 362; shared rounding helper 363; helper plus one exit 314.
 // With direct data/step fields in the callee: original parent 353; original with actor NULL before the index test 350;
@@ -546,6 +559,9 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 // Boolean field alone 239; byte local with Boolean/original field 200/200; separate retry increment 239;
 // byte/increment 200; complete final-count selection 239; direct Boolean field 168 (kept, plain), with
 // separate increment 168.
+// Round 274: output defaults before avoidance 165; complete short-circuit avoidance 159; full-width
+// lookup 339, success 216; defaults/avoidance 155 (plain, kept), defaults/lookup 339,
+// defaults/success 216; complete avoidance with both wide result carriers 326.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {
@@ -590,10 +606,9 @@ bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view 
 			}
 			else
 			{
-				bool avoid = state->unknownac;
 				long object_index = NONE, type = NONE;
-				if (!avoid && result->location.flags > 0)
-					avoid = (result->location.flags / (1 << (byte)result->location.count)) % 2 == 1;
+				bool avoid = state->unknownac || (result->location.flags > 0 &&
+					(result->location.flags / (1 << (byte)result->location.count)) % 2 == 1);
 				success = function_2c41b0(actor_index, state, smoothed_count, name_b343c4, avoid,
 					&final_count, final_steps, &complete, &object_index, &type, &result->unknowna6);
 				if (success)
@@ -764,6 +779,7 @@ bool function_2715a0(byte *buffer)
 	return result;
 }
 
+// score 501 (was 533): two mask tests read as field bits (TEST_FIELD_BIT) give retail's load-and-shift; the rest still differs.
 // @retail 0x271630
 PRIVATE bool function_271630(s_type_f17a25 *state)
 {
@@ -813,7 +829,7 @@ PRIVATE bool function_271630(s_type_f17a25 *state)
 			{
 				continue;
 			}
-			if (!(link->flags & 1) || (node->flag0c && (link->flags & 0x1000)))
+			if (!(link->flags & 1) || (node->flag0c && TEST_FIELD_BIT((link->flags >> 12) & 1)))
 			{
 				continue;
 			}
@@ -831,7 +847,7 @@ PRIVATE bool function_271630(s_type_f17a25 *state)
 					}
 				}
 			}
-			if (blocked || (!input->unknown04 && (link->flags & 2) &&
+			if (blocked || (!input->unknown04 && TEST_FIELD_BIT((link->flags >> 1) & 1) &&
 				function_1fa6b0(&((s_pathfinding_data *)state->pathfinding)->nodes[link->node_index],
 					(s_pathfinding_data *)state->pathfinding)))
 			{
@@ -1031,10 +1047,33 @@ PRIVATE void function_271fd0(s_type_f17a25 *state, short node_index, short cost)
 	}
 }
 
+/* a flag field read as word bits: retail reads these flags with a load, a
+   shift and a test of the low bit */
+struct s_flag_word_bits
+{
+	word bit0 : 1;
+	word bit1 : 1;
+	word bit2 : 1;
+	word bit3 : 1;
+	word bit4 : 1;
+	word bit5 : 1;
+	word bit6 : 1;
+	word bit7 : 1;
+	word bit8 : 1;
+	word bit9 : 1;
+	word bit10 : 1;
+	word bit11 : 1;
+	word bit12 : 1;
+	word bit13 : 1;
+	word bit14 : 1;
+	word bit15 : 1;
+};
+
 /* Surface records interpret their payload differently by type. Retail's
    vertex indices are unsigned words: its comparisons with long NONE do not
    reject 0xffff. Only destination sector words have an effective NONE test.
    Link type stores write the low short; the upper short stays untouched. */
+// score 452 (was 475): flag 1 of the surface read through a word bitfield view gives retail's load-and-shift; the rest still differs.
 // @retail 0x272020
 PRIVATE short function_272020(s_pathfinding_data const *pathfinding,
 	s_path_node_key_view const *node, s_path_link_view *links, s_type_f17a25 const *state)
@@ -1195,7 +1234,7 @@ PRIVATE short function_272020(s_pathfinding_data const *pathfinding,
 					}
 					long flags = state->settings.unknown04;
 					if (!(((flags & 0x400) && (surface->unknown0c & 1)) ||
-						((flags & 0x800) && (surface->unknown0c & 2)) ||
+						((flags & 0x800) && TEST_FIELD_BIT(((s_flag_word_bits *)&surface->unknown0c)->bit1)) ||
 						((flags & 0x1000) && (surface->unknown0c & 4))))
 					{
 						break;

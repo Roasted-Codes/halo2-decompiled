@@ -87,15 +87,22 @@ void function_1bbc00(long player_index, long vehicle_index)
 
 static __forceinline long real_to_long(real value);
 
-// score 8 (was 44): retail moves the vehicle index into EAX before it forms
+// score 8 (was 8): retail moves the vehicle index into EAX before it forms
 // the iterator address in EBX for the first child call, and in the child loop
 // keeps the object pointer in EAX and converts the tick count through ECX/DX
 // where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
 // player vehicle 77; the actor looked up at each store 45; separate conversion
 // locals in the loop 15; the loop product passed straight to the conversion
+// 8; the block locals in two other orders 8.
+// Earlier 8 from 44.
+// Existing slot-query long/short 61/8; guarded long/short 70/38;
+// query-first long/short 77/46; shared-query rounding names/separate loop carriers 61/61.
 // 8; the block locals in two other orders 8. Separately, from the 44 form: the clock
 // local moved into the player block with the slot local declared first, 8 (the same
 // lines); pointer, type, scope, direct-store and helper forms on it give the same bytes.
+// Earlier 44 -> 8 came from clock/player lifetimes.
+// Round 220: Bounded slot-scan short/word/char/byte induction 84/84/85/85;
+// first-match result termination with those widths 97/97/97/97. Original body restored.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {
@@ -160,6 +167,10 @@ __declspec(noinline) bool function_f5dc0(long object_index);
 // Tag field and all body forms restored; the full/low-word reuse and later schedules remain.
 // Native squad full/low-word fields alone/with timer/with flag/with both 49/49/49/49;
 // the same native field forms with a saved second actor read 67/67/67/67.
+// Round 273: one tick-rate short/long carrier 129/129; multiplier-first
+// products 49; explicit transition/distance call boundaries 49/49;
+// short rate/transition boundary 129; failed-entry-first 49, with short rate 129;
+// actor observed at every field use 199. All restored; full/low-word reuse remains.
 // @retail 0x1bba70
 void function_1bba70(long actor_index, long vehicle_index, long seat_index)
 {

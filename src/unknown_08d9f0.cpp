@@ -114,6 +114,7 @@ void function_7f930(void);
 void pending_messages_reset(void);
 void function_53210(void);
 void function_8dd70(void);
+// score 230 (was 230): entry predicate, helper boundaries and global reloads differ;
 // Lane 10 r11 (forms reverted: reading globals through casts of their own addresses is not kept
 // without a match): message pointer read through its address 231; noinline 0x662f0 in its header
 // 266, with 0xb2cc0 too 321 (calls pair with retail's); all seven network pointers (0x510560..
@@ -121,8 +122,6 @@ void function_8dd70(void);
 // Retail reloads them after every call and pointer store, as LTCG does for address-taken globals:
 // find the original code that takes their addresses (a dispose or setup passing &g) rather than
 // casting at the reads. Entry flag: retail's sete/cmp not produced by a negated or explicit test.
-
-// score 230 (was 230): entry predicate, helper boundaries and global reloads differ;
 // Round 9 (lane 11, fast): a noinline declaration of 0x662f0 in this file (before or after its header)
 // leaves it inlined 231/231; in include/unknown_0662e0.h it stays out of line 286; with 0xb2cc0 noinline in
 // network_message_types.h too 379 (728 bytes, every registration called as in retail); plus one
@@ -200,13 +199,22 @@ void function_8dd70(void);
 // Complete link/search/scalar/gateway/ready publication orders 0-1-2-3-4, 1-0-2-3-4,
 // 0-2-1-3-4, 0-2-3-1-4, 3-0-1-2-4, 0-4-1-2-3, 1-2-0-3-4 and 2-3-0-4-1 each 230.
 // Each search reset clears before both sentinels; original complete publication order restored.
+// Round 69: no retail code or data uses any of the seven pointer addresses as a value, and 0x51057c is
+// unused, so the address-take was folded away in retail. Entry flag set by if/else (true first or false
+// first), by a ternary, or as `!= true` 230/230/230/229; an early return in place of the wrapping
+// block 230.
 // Round 197: Definite short observer/list/both else 244/226/239; canonical link with observer/list/both else 240/229/237; both else with bool/byte link 232/232. All restored.
 // Uninitialized function-scope link/observer/session/link-observer/link-session/observer-session/all
 // short declarations and complete stage-role names 230 each; every assignment kept at its stage.
+// Round 223: Canonical true tests on retained short link/observer/session stages, seven subsets 228/250/250/250/250/250/250; all with canonical entry consumption 250. Original truth tests and stage flow restored.
+// Run 18 (lane D): entry flag compared against false and read a second time on the failure path
+// (230 -> 221): the prologue now matches retail's sete/cmp byte for byte. Still differs: retail
+// calls 0x662f0 and the nine registration wrappers out of line and reloads the seven network
+// pointers after every call; ours expands them and keeps the link result in EBP.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
-	bool initialize = !g_4d8ba0;
+	bool initialize = (g_4d8ba0 == false);
 	if (initialize)
 	{
 		network_configuration_initialize();
@@ -302,6 +310,7 @@ void function_8d9f0(void)
 				}
 			}
 		}
-		function_8dd70();
+		if (initialize)
+			function_8dd70();
 	}
 }

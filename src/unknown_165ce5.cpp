@@ -1379,7 +1379,7 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 232 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal differ.
+// score 232 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal remain.
 // Earlier 241 from 241: frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
@@ -1472,6 +1472,21 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // all plus primary-pointer admission 587. Original complementary states and all calls restored.
 // Round 370 (fast control 234): scope-factored clear decision with active-default, callback
 // and member-rate interactions 434/410/434/410/401/397/401/397; original body restored.
+// Round 165: Native overlay argument-pair flags/set/outer-lifetime subsets
+// 386/234/386/234/386/234/386; combined role names 386 (fast control 234, full baseline 232).
+// Original pair types, scopes, names and every smoothing input restored. Frame 0x28 versus 0x2c,
+// unit/mode homes and shared look reciprocal remain.
+// Round 212: plain two-axis aiming-spring traversal, long/short/dword/word indices,
+// direct/output-storage receiver [578, 578, 578, 578, 578, 578, 578, 578]. Original independent
+// calls restored; frame and look homes remain.
+// Round 373 (fast control 234): Structured overlay continuation, with callback/active/both
+// choices 234/234/392/392; reusable no-overlay decision with those four forms
+// 421/421/403/403. Original body and every smoothing input restored.
+// Round 246: complementary activity bool/byte/short/long 424/424/423/425; the same with
+// callback selection at update 424/424/423/425 (fast). Original activity and callback restored.
+// Round 251 (fast control 234): loop-scoped orientation byte-offset/ordinal/base/cursor
+// 410/234/409/254; the four at entry 561/234/576/558. Ordinal forms keep frame
+// 0x28; the other forms grow it to 0x30. Original buffer lifetime and body restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1818,7 +1833,7 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 
 /* samples a weapon's animation, its overlays and its sway into the user's
    orientations, then builds the weapon's node matrices */
-// score 410 (was 410): current frame 0x78 and initial copies agree; early blend byte and user/weapon/sway homes differ.
+// score 410 (was 410): Frame 0x78 and initial copies agree; early blend byte and user/weapon/sway homes differ.
 // Earlier frame 0x58 versus 0x78; root/channel overlap and later sway homes remained.
 // Earlier root/channel homes overlapped in frame 0x58 vs 0x78; kept the nonnegative ammo arm and common index-derived adjustment bit.
 // Frame 0x78 and root/channel homes agree; early blend byte and later receiver/sway homes differ.
@@ -1878,6 +1893,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Round 243: Owner-mediated state, handle at every use, both, buffer root at every use,
 // state/buffer, handle/buffer, all three and state with immutable buffer snapshot:
 // 497/529/494/743/742/775/767/497 (fast control 411/2166). Complete original body restored.
+// Round 161: Coordinated definition/header inline query/setter/sampler/query-setter/query-
+// sampler/setter-sampler/all-three/aiming sampler: 411 each (unchanged reduced control 411; full
+// 410). Every specification restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
@@ -2111,10 +2129,6 @@ void function_1421b0(transform4x3f *out, point3f const *position, quaternionf co
 void function_1dd7a0(long *reference);
 
 /* attaches the arms to the weapon's markers while the unit's aiming blends */
-// score 9 (was 9): the object pointer and the entry index are kept in swapped registers in the
-// second lookup (retail builds the arms marker group in the index's register, ecx; ours in the base's,
-// edx). The arguments arrive as in retail (eax and two stack words, ret 8), so the caller is not the
-// cause. Tried: a weapon definition local like the arms one (9), the group as index + pointer (9).
 // @retail 0x168644
 void function_168644(long user_index, s_first_person_model *arms, s_first_person_model *arg_2f82bc)
 {
@@ -2163,7 +2177,11 @@ void function_168644(long user_index, s_first_person_model *arms, s_first_person
 								s_168644_marker_group *weapon_group = &((s_168644_render_model *)
 									g_4e3b44[weapon_render_model_index & 0xffff].bytes)->marker_groups[weapon_group_index];
 
-								if (arms_group->marker_count > 0 && weapon_group->marker_count > 0)
+								/* read once through the pointer: retail builds the arms group in the
+								   index's register (ecx) and reads its count from there */
+								long arms_marker_count = *(volatile long *)&arms_group->marker_count;
+
+								if (arms_marker_count > 0 && weapon_group->marker_count > 0)
 								{
 									s_168644_marker *weapon_marker = weapon_group->markers;
 									s_168644_marker *arms_marker = arms_group->markers;

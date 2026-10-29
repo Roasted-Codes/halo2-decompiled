@@ -556,6 +556,9 @@ extern "C" void _ReadWriteBarrier(void);
 // score 6 (was 6): retail loads the slot pointer into ECX before the actor
 // index is masked, ours loads it after the actor lookup and after the branch
 // that tests the actor, so the two builds are one instruction out of step.
+// This round: slot data block 29, without barrier 50, actor-first 31;
+// const actor 6; const state without barrier 44; data block/const actor
+// without barrier 50; const data state 29; actor object reference 6.
 // @retail 0x1ba8c0
 void __stdcall function_1ba8c0(long actor_index, s_slot *slot, s_slot_target_list *list)
 {
@@ -1023,9 +1026,16 @@ s_slot_handler_2x g_47e9d0 =
 	1, 10, 1.5f, 0x5b
 };
 
-// score 47 (was 47): g_46fbe4 and g_46fbe8 are read as bytes here but as
-// dwords in retail; they are declared short in include/globals.h, which is not
-// mine to change.
+// score 47 (was 47): pool/status carriers and return scheduling differ; conversion homes agree at 216/212 bytes.
+// Prior narrow status 60 at 212 bytes; retail uses wide status loads while only low words are returned.
+// Slot data block: actor-first long/short status with nested or rejection guards 47/47 and 60/60;
+// block-first long 63/63; block-first short 45/45 at 214/212, a two-point gain restored.
+// g_46fbe4 and g_46fbe8 have signed-word loads here versus
+// dword loads in retail; their shared declarations remain short.
+// Single-observation continuation selected by complementary tests, slot-data
+// view with long if/ternary result 86/86 and short result 77/77;
+// whole-slot receiver with the same choices 86/86/77/77.
+// Native pool/status carriers and the shared status load width remain.
 // @retail 0x1ba4e0
 short __stdcall function_1ba4e0(long actor_index, s_slot *slot, bool active)
 {

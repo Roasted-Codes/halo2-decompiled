@@ -2,6 +2,56 @@
 
 The newest entry comes first.
 
+## 2026-10-28: 9905 functions match
+
+```
+matched 9905 of 11326 game functions (1634469 of 2786206 bytes, 58.66%)
+matched 1226 of 1436 Havok functions (162581 of 290362 bytes, 55.99%)
+```
+
+45 new matches, none lost:
+- @averycpawelek's #872, #874: `0x2d73f0`, `0x2d7460`, `0x2d74d0`, `0x2d7570`, `0x2d76f0`, `0x2d7720`, `0x2d7860`, `0x2d7c00`, `0x2d7ca0`, `0x2d8080`, `0x314090`, `0x3140a0`, `0x3140c0`, `0x314140`, `0x3141b0`, `0x3141c0`, `0x3141f0`, `0x3142f0`, `0x314320`, `0x314350`, `0x314360`, `0x3143e0`, `0x314450`, `0x314480`, `0x3144b0`, `0x314580`, `0x314650`, `0x314830`, `0x314840`, `0x314860`, `0x3148e0`, `0x314950`, `0x314960`, `0x314980`, `0x3149b0`, `0x314b50`, `0x314b80`, `0x314b90`, `0x314cc0`, `0x314d50`, `0x314dd0`, `0x314e00`, `0x314fa0`, `0x3155f0` and `0x315720` match.
+
+## 2026-10-28: 9905 functions match
+
+```
+matched 9905 of 11326 game functions (1634469 of 2786206 bytes, 58.66%)
+matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
+```
+
+8 new matches, none lost:
+- Machine 3's batch 147 (#873): `0xcccd0`, `0xd05c0`, `0xd1000`, `0xeaad0`, `0x115a40`, `0x156960`, `0x187510` and `0x1c1320` match.
+
+## 2026-10-28: 9897 functions match
+
+```
+matched 9897 of 11326 game functions (1631770 of 2786206 bytes, 58.57%)
+matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
+```
+
+2 new matches, none lost:
+- @averycpawelek's #869: `0x1e9720` and `0x1f34b0` match.
+
+## 2026-10-28: 9895 functions match
+
+```
+matched 9895 of 11326 game functions (1631501 of 2786206 bytes, 58.56%)
+matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
+```
+
+11 new matches, none lost:
+- Machine 3's batch 146 (#868): `0xee7f0`, `0x1b8ae0`, `0x1bc5d0`, `0x1be120`, `0x213800`, `0x213e30`, `0x213e90`, `0x213f10`, `0x214100`, `0x214e40` and `0x25ccd0` match.
+
+## 2026-10-28: 9884 functions match
+
+```
+matched 9884 of 11326 game functions (1628915 of 2786206 bytes, 58.46%)
+matched 1181 of 1436 Havok functions (159264 of 290362 bytes, 54.85%)
+```
+
+5 new matches, none lost:
+- @averycpawelek's #862: `0xcfe40`, `0xd0e60`, `0xe2d80`, `0xeccc0` and `0x168644` match.
+
 ## 2026-10-28: 9879 functions match
 
 ```

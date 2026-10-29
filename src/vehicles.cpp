@@ -1812,7 +1812,11 @@ real function_f14f0(short gear, long vehicle_index)
 // the zero return inside the else 32, in each arm 32; `torque`/`fraction` declared at the top 32;
 // the fraction divided in a second statement 32; the intercept written into the fraction 85;
 // slope/intercept declared first 32; the clamp in a named local 32; the parameters reordered 32
-// (either order); a single `result` 81; peak operands swapped 77 (before the field read).
+// (either order); a single `result` 81; peak operands swapped 77 (before the field read). Round 151:
+// `fraction == PIN(...)` 31; the torque local before the magnitude test 51; `fraction *= torque` 32;
+// range/torque magnitudes named 32/32/32; `0.0f <= range` 32; `range < 0.0f ? ...` 34,
+// for the torque 37; the bound compared first 32; `pow(...) * torque` returned in the pin arm 109;
+// a separate scale for the powered fraction 32.
 // @retail 0xf15d0
 real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, real angular_velocity)
 {
@@ -3275,13 +3279,16 @@ long __stdcall effect_new_from_parameters(s_effect_parameters *parameters);
 /* a hovering vehicle's wash: from each of its engine markers, a ray down a
    cone around the marker's forward, and the definition's effect where it
    hits, fading with the distance */
-// score 53 (was 53): from the marker count sum on, retail's scratch registers run one step
+// score 48 (was 53): from the marker count sum on, retail's scratch registers run one step
 // ahead of ours (retail `movsx ecx, ax; add edi, ecx`, ours `movsx eax, ax; add eax, edi`; in the
-// loop retail dx/eax/ecx where ours use cx/edx/eax), plus the 0x146320 set-up pair (its declared
-// order, BLOCKED-BY 0x146320: seed declared first fixes the pair only, 51). Tried: the sum's
-// operands swapped 53; `count += second` 53; a short local for the second count 53; `i` declared
-// first 53; declarations without initialisers 53; `long i` 117; the loop bound written as the sum
-// of the two counts 52; a short count 128; the speed choice as an if/else 53, into a named local 53.
+// loop retail dx/eax/ecx where ours use cx/edx/eax; ours loads the definition first in the effect
+// block), plus the 0x146320 set-up pair (its declared order, BLOCKED-BY 0x146320: seed declared
+// first fixes the pair only, 51). Tried: the sum's operands swapped 53; `count += second` 53; a short
+// local for the second count 53; `i` declared first 53; declarations without initialisers 53; `long
+// i` 117; the loop bound written as the sum of the two counts 52; a short count 128; the speed choice
+// as an if/else 53, into a named local 53. Round 85: the tag index stored after the owner fields
+// (retail's store order) 48 (kept); then colors before the source 49; scale after the memset 48;
+// `i` declared in the for 48; `count +=` 48; the sum's operands swapped 48.
 // @retail 0xf6060
 void __stdcall function_f6060(long vehicle_index)
 {
@@ -3329,12 +3336,12 @@ void __stdcall function_f6060(long vehicle_index)
 				parameters.source = NULL;
 				parameters.color_a = 0xff808080;
 				parameters.color_b = 0xff808080;
-				parameters.tag_index = *(long *)(definition + 0x2a0);
 				parameters.unknown18 = NONE;
 				parameters.object_index = NONE;
 				parameters.owner.unknown4 = NONE;
 				parameters.owner.unknown0 = NONE;
 				parameters.owner.unknown8 = NONE;
+				parameters.tag_index = *(long *)(definition + 0x2a0);
 				parameters.marker_count = 6;
 				parameters.markers = effect_markers;
 				parameters.flags = 4;
@@ -3933,6 +3940,12 @@ PRIVATE inline void vehicle_iterator_new(s_type_f1af8e *iterator)
 
 /* whether a moving vehicle is within ten world units of a player on foot,
    and which */
+// score 131 (was 131): frame 0x114 agrees; player-scan allocation and scheduling still differ.
+// Bounded short/word/char/byte player counts 137/130/134/129;
+// those four with result-first common exit 137/130/134/129;
+// existing velocity magnitude helper 131, native difference with/without it
+// 135/135 (match-only), plain vehicle for loop 131.
+// Original body restored.
 // @retail 0xf7a60
 bool __stdcall function_f7a60(long *vehicle_index)
 {

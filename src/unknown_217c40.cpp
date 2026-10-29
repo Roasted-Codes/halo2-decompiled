@@ -123,12 +123,21 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // Raw coordinates reused as first/second/both normalized component locals 501/501/501;
 // vertical normalized components first on original/first/second/both reuse 551/551/551/551;
 // both coordinate reuses with shared trig magnitudes 501. All restored; frame 0x38 remains.
+// Round 161: First/second/both double coordinate carriers 564/553/586;
+// native double trig magnitudes alone/first/second/both coordinates 557/588/576/580;
+// actual input axes with all carriers 580; early first/second/both real angles 562/543/566.
+// All original carriers, observations, casts and arithmetic restored.
 // Round 208: existing shared controller successor 515 at 2024/2012 bytes; independent
 // raw/angle/trig/normalization phase schedules 546/537/537/536/536/543/560/508. Both exact callers
 // preserved in all nine comparisons. All restored; frame 0x38/0x40, rounded angle homes and
 // simultaneous snap work remain.
 // Round 370: double threshold, rounded absolute-angle carrier and rounded-angle formal
 // domains, then all with short quadrant 501/508/508/501/501/508/508/508; helpers and body restored.
+// Round 254: native short copy/first-inverse/both/second-inverse/copy-second/both-inverse/all
+// mapping induction 625/538/626/535/646/544/648; all byte 648. Original long loops restored.
+// Round 220: Selected trig magnitude in shared/separate native phase scalars, with long/word/byte/char
+// controller induction, 501/548/539/539 each. Byte/char recover frame 0x40 and first +0x1b but regress;
+// every form retains 2012 bytes and both matched callers. Original body restored.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {

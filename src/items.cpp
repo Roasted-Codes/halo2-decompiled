@@ -982,7 +982,7 @@ struct s_item_flags_view_10b850
     byte flag6 : 1;
     byte flag7 : 1;
 };
-// score 813 (was 813): Frame 0x154 versus 0x12c, entry Boolean bytes and carrier/collision/rotation homes remain.
+// score 813 (was 813): Frame 0x154 versus 0x12c; entry Boolean publications and carrier/collision/flow/marker/rotation homes differ.
 
 // Earlier: Frame 0x154 versus 0x12c, entry Boolean bytes and collision/carrier/rotation homes still differ.
 // Earlier: Frame 0x154 versus 0x12c and Boolean/vector homes remain.
@@ -1040,10 +1040,18 @@ struct s_item_flags_view_10b850
 // Round 219: Independent motion-copy/gravity-update/floor-speed observation order masks 1-7; all
 // with projection role names; existing direct-output side cross helper:
 // 812/813/812/863/862/863/862/862/921. Original body restored.
+// Round 373: Reused scalar axis components in ijk order, with sine/cosine/both
+// snapshots 850/894/879/909; kji axis input order with the same four forms
+// 864/845/879/909. Frame remains 0x154; all original helpers and body restored.
 // Round 159: Native attachment fields 813; step field at each use and with attachment fields 893/893;
 // named bounce coefficient and with attachment fields 887/887; step/coefficient and all three 893/893;
 // direct bound selection 813. Native collision location/object-node/material/all layouts 887/863/859/894.
 // All restored. Coefficient and collision layouts reach frame 0x148 without an eligible gain.
+// Round 378: Existing shared scaled-add at all four sites, with carrier/settled/position
+// polarity masks 0-7: 813/896/814/896/874/899/874/899. Original accumulation,
+// result carriers, full body and helpers restored; frame 0x154/0x12c remains.
+// Round 161: Native item flag8/flag29/state0/flag8-29/flag8-state/flag29-state/all-three 813 each;
+// late flag14 view 846. Original actual item declaration and whole body restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

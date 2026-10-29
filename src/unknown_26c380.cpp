@@ -143,7 +143,7 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 	return success;
 }
 
-// score 418 (was 418): the frame is 0x5c against retail's 0x64; retail keeps the
+// score 418 (was 418): frame 0x5c versus 0x64; full/planar normal overlap, pathfinding/NONE roles, memory flags and tails differ.
 // pathfinding pointer in EBP and the -1 edge seed in EDX where ours keeps them in EBX
 // and EDI, and retail keeps a byte local at [esp+0xe] where ours has a long zero at
 // [esp+0x14].
@@ -188,6 +188,15 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // 421/418/421/418/421/418/421; all endings with Boolean success 583. Original body restored.
 // Round 226: Complete endpoint/distance, progress-distance and sector-history names,
 // all seven subsets and the complete Boolean-role group 418 each. All names and body restored.
+// Round 254: magnitude accumulator/squared-sum/real-result/accumulator-result
+// 428/418/423/425; each with all three product parts 426/417/417/428. One-point
+// reductions rejected; original helper, normal storage and body restored.
+// Round 236: shared vector type / squared-length helper / point setter / vector+length /
+// vector+point / length+point / all / all with native normal initialization
+// 418/418/469/418/469/469/469/469; all restored.
+// Round 239: actual blocked/admission/both byte fields with long result 418/418/418;
+// with bool result 577/583/577; both char fields with long/bool result 418/577. All restored.
+// Blocked-field forms also move the matched edge helper to 10.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,
