@@ -151,6 +151,9 @@ void __stdcall cache_copy_record_use(char const *map_name);
 // Round 240: One shared full-width priority ordinal, signed/unsigned, with state
 // first and/or constant true result first: eight forms 367. Request source,
 // dependency bound and write options remain; all original input reads restored.
+// Round 162: State-arm success results bool/byte/short/long 531/559/627/637; the same declarations
+// first 531/559/627/637. All shrink the aligned frame to 0x108 versus 0x110. Original success
+// lifetime, all state arms and observations restored.
 // @retail 0x2141f0
 bool function_2141f0(void)
 {

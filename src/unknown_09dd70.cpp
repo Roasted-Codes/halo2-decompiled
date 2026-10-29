@@ -456,7 +456,7 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 12 (was 12): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
+// score 4 (was 4): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
 // the final field_f4 copy into the object's +0x2b8 goes through EAX in retail
 // and through ECX in ours; the field_92 read now precedes the +0x2a8 store, as retail has it.
 // object lookup gives 4, kept out: one use) and copies field_f4 at the end through EAX (ours ECX).
@@ -522,6 +522,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // original helper 101; early field_92 local 169; value cursor 223.
 // Round 221: Scalar memcpy tail/both publications 12/12; with branch-produced player result 153/153;
 // memmove tail/both 34/89, with branch-produced player result 158/172. All restored.
+// Round 173: native final outer/marked/child object receivers, all seven subsets 4 each;
+// all native receivers with unsigned child handle 4. Original restored; both tail copies
+// still use ECX instead of EAX, with the entry and attachment loop otherwise exact.
 // @retail 0x9d950
 void c_unit_type::v31(long arg_0, long arg_1, long arg_2, long arg_3)
 {

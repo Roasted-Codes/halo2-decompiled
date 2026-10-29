@@ -126,6 +126,12 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // Round 211: Caller-side CRT copies for first/second/rotation inputs, all seven combinations, 389
 // each; all three plus planar input copy 404/1696. Original copies and helpers restored; early J
 // and magnitude/yaw home reuse remain. All three matched controls survived.
+// Round 87: retail gives the two angles no home of their own: the yaw shares the magnitude slot
+// (+0xc), the pitch uses the scale parameter's slot, and the else path writes 0 from the zero register
+// at the merge. Both zeroed only in the else branch gives that ending, but the frame shrinks to 0x24
+// (the first angle's spill then reuses the 2D vector's slot) 397; yaw only 406; pitch only 406; that with
+// the first angle declared at function scope 397; plain reciprocal scaling in the normalizer 400
+// (0x29b990 6).
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

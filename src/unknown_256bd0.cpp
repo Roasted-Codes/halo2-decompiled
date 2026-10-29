@@ -190,12 +190,22 @@ struct s_object_flags_256bd0
 // with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
 // placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and
 // iterator restored; activity spill and native geometry homes remain.
+// Live tag payload reference 219, with spawned/perception/both shared getters 225/219/225; live
+// tag-instance record 218, with spawned/perception/both getters 226/218/226. Activity spill and
+// native geometry/selection homes remain; original receivers and call values restored.
+// Round 171: noinline initializer/ordinary datum step with minimum/selection/both lifetimes
+// 195/195/196; later object result 194, with minimum/selection/both 195/195/196; complete graph
+// with early uninitialized cursor 196. Frame 0x110 recovered at 1070 bytes, but the best seven-point
+// gain is below threshold. Original declarations, lifetimes, helper and complete body restored.
 // Round 238: actual slot countdown/unit tag link/variant tag field declarations,
 // all seven subsets 201 each; all three with read-only tag receivers 201.
 // Original slot, tag views, field observations and iterator restored.
 // Round 216: real iterator zero aggregate/full aggregate/CRT clear/index defaults
 // 243/244/242/231; before the flags lookup 247/253/246/223. Original iterator input,
 // initializer and private step restored; frame 0x114/0x110, cached activity and homes remain.
+// Full native position/direction/placement copies on noinline-initializer/ordinary-datum
+// boundaries, all seven subsets 194 each; all copies with selected-before-minimum publication
+// 194. Frame 0x110 recovered, but seven-point gains rejected; all declarations and bodies restored.
 // @retail 0x256bd0
 short __stdcall function_256bd0(long actor_index, s_slot *slot, bool active)
 {
