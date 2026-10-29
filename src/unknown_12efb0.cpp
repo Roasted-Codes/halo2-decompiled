@@ -222,6 +222,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // the existing entry_at_index getter 612 plain (aligned rows 497 -> 803, ebx/edi/esi roles move), with the
 // long index 612. Retail assigns the NULL record before the table's own NULL test.
 // Round 235: query-table/tag-input/falloff-radius consumption scopes, all seven combinations 616 each; source-selection consumption scope 616.
+// Round 172: complete native accumulated results in scalar/merge/both/color/scalar-color/merge-color/all
+// 1015/1012/1288/1144/1416/1459/1671; all with signed-byte palette 1671.
+// Original field publication, input captures and helpers restored; palette/record and SSE carriers remain.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

@@ -2839,6 +2839,9 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Round 202: Full name switch with unknown-name exit/classifier/upper-first output subsets
 // 430/412/409/414/411/415/403; all with direct activity publication 411.
 // Original activity admission, dispatch, classifier and output normalization restored.
+// Round 172: existing activity operation as weapon/tag member, mutable/readonly receiver and
+// other object by pointer/native reference, all eight 398. Original free helper, record declarations
+// and marked body restored; frame eight/four and object/tag/activity homes remain.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3297,6 +3300,9 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Chained tag/scale/both defaults 637/637/637; chained admission-failure alone/with
 // tags/with scales/with both 636 each; all reverse chains 637 (fast control 637).
 // One-point gain rejected; original initialization graph and body restored.
+// Round 172: real weapon/tag/barrel-record fields in seven nonempty family subsets, then all
+// with native tag bits, all eight 637 (fast control 637; full baseline 565). Original padding,
+// macros, inherited aliases/qualification and body restored; frame and receiver/scalar homes remain.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {

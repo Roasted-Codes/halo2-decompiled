@@ -518,7 +518,7 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 	*out = rotated;
 }
 
-// score 564 (was 572): frame 0x21dc and 3647-byte length agree; first +0x41 is the definition-pointer spill.
+// score 564 (was 564): frame 0x21dc and 3647-byte length agree; first +0x41 is the definition-pointer spill.
 // Plane/count homes, initial face-call scheduling and rotation spills remain.
 // Earlier aligned frame 0x21e4 versus 0x21dc, count/plane/axis homes and rotation scheduling remain.
 // The axis uses vector3d_from_points3d with length summed in retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
@@ -603,6 +603,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // restored.
 // Round 243: Existing tag record with native signed mode, const/mutable 572/572; actual limit
 // flags byte/word/bool 572 each; tag plus each native flag declaration 572 each. All restored.
+// Round 172: shared grouping/selected plane with short/word/long/dword outstanding total,
+// original first-use lifetime 843/843/840/840; group-entry lifetime 843/843/840/840.
+// Original separate planes and total restored; definition/count/plane homes and rotation spills remain.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
