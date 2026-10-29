@@ -1210,7 +1210,7 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // j93: Frame 0x60 agrees; clock hoisting, conversion copy and three vector homes remain; typed offset output recovers movement/offset homes.
 // wide event results 371; wide target result 374; state per use 433; state eligibility snapshot 338; typed
 // offset output 99; offset outer direction 99; offset blend before delta 99; offset outer query homes 99.
-// score 99 (was 99): Clock conversion schedule, integer copy and geometry homes remain. branch
+// Earlier: Clock conversion schedule, integer copy and geometry homes remain. branch
 // decay result 398; delta before conversion 100; smoothing value samples 345; sampled early delta
 // 389; native rounded count 99; stored width rounded count 396; branch decay late delta 394;
 // sampled branch decay 402; ordinary conversion inline 373; branch exponent result 416.
@@ -1218,17 +1218,20 @@ PRIVATE __forceinline long round_tick_count(real ticks)
 // clock/compare schedule, conversion copy and geometry homes remain.
 // Fast: smoothed field 99; desired field 99; both fields 99; native position 393;
 // native origin 383; both geometry inputs 431; prop record 99; field and geometry 431.
-// score 99 (was 99): clock conversion, interpolation registers and three geometry homes remain;
+// Earlier: clock conversion, interpolation registers and three geometry homes remain;
 // interpolation product inputs 99; direct delta 99; direct blend 99; delta-first addition 99;
 // direct pair 414; direct delta/addition 99; direct blend/addition 99; direct pair/addition 414.
 // Clock conversion schedule, integer copy and geometry homes remain. branch
 // decay result 398; delta before conversion 100; smoothing value samples 345; sampled early delta
 // 389; native rounded count 99; stored width rounded count 396; branch decay late delta 394;
 // sampled branch decay 402; ordinary conversion inline 373; branch exponent result 416.
-// score 99 (was 99): the tick-rate conversion is hoisted above the decay test (both arms start the
+// Earlier: the tick-rate conversion is hoisted above the decay test (both arms start the
 // same); the vector homes offset/ahead/target/direction are offset/direction/ahead/target here.
 // Ticks ternary 99; rounding of a ternary 170; 0.25 first 99; negated test 103; a seconds-to-ticks
 // helper for both or one arm 99; vector local names 99; vector declarations moved 99.
+// Native target assignment 133; offset setter 101; both 135; projected-point aggregate 99;
+// target/aggregate 133; offset/aggregate 101; all producers 135; read-only projected point 135.
+// Clock conversion/copy and direction/ahead/target homes remain; all producers restored.
 // @retail 0x267c50
 void function_267c50(long actor_index)
 {

@@ -161,16 +161,17 @@ void function_44720(void)
         ++index;
     }
 }
-// @retail 0x44c90
-// score 107 (was 107): retail keeps the entry index in eax and the table base
-// in ebp with a frame four bytes smaller, ours puts the index in ebp and the
-// frame four bytes larger, so every local sits four bytes higher
-// score 107 (was 107): level != 31 at the call (no cached byte) gives retail's 0x40 frame
+// score 107 (was 107): frame 0x44 versus retail 0x40; entry-offset construction
+// and the geometry flag reloads differ.
+// Earlier: level != 31 at the call (no cached byte) gives retail's 0x40 frame
 // and call setup, 135 (487 bytes, aligned 42 against 59); retail also re-reads the flags
 // word in the inlined geometry lookup where ours keeps it. On that form: short transform
 // 141; material index read first 135; transform first 136; the lookup given
 // &g_4ba138[(short)index] 136 (503 bytes, flags re-read, but the scenario structure
 // pointer hoisted into ebx).
+// Native context at part/entry/function scope with cached/live level 107/135 each;
+// native context with byte/word level 133/138. Original storage restored; frame and geometry reloads remain.
+// @retail 0x44c90
 void __stdcall function_44c90(long group, dword selection_mask, long level,
     dword and_mask, dword or_mask, dword fallback_and_mask, dword fallback_or_mask, bool force)
 {
