@@ -406,6 +406,14 @@ static __forceinline s_havok_contact_entities *joint_constraint_create(s_havok_c
 // EBX, the NONE test kept); the whole tail as a forceinline helper 22; a contact element pointer
 // 23; the index declared at function scope 22; a bool set at the found break and tested after the
 // loop 22 (the same layout: the size guard still joins the loop's normal exit).
+// This round: retail's tail has two copies of the epilogue, and its zero-size guard jumps to
+// the one the found path falls into, so that block has two predecessors and the flag update
+// stays whole; ours jumps to the loop's own copy, so the found path's block has one
+// predecessor and the update sinks into it. `break`, `goto done`, the update after the loop
+// behind a flag, the bit-field set, the `|` and `+` forms and the update dropped all compile
+// to the same bytes (22); an explicit `if (size > 0)` adds a second guard (1828 bytes, 86).
+// This round: an early `if (size <= 0) return;` before the loop adds its own copy of the
+// epilogue (1828 bytes, 86); `break` in the found path is canonicalised into the same bytes (22).
 // @retail 0x1d77d0
 void __stdcall function_1d77d0(s_havok_component *component, s_physics_model_owner *owner)
 {
