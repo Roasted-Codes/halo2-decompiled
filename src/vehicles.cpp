@@ -8,6 +8,7 @@ helpers only they call. */
 #include "globals.h"
 #include "data_array.h"
 #include "unknown_0259d0.h"
+#include "vector_products.h"
 #include "unknown_1c62f0.h"
 #include "unknown_1cafc0.h"
 #include "unknown_1cec30.h"
@@ -764,6 +765,10 @@ __forceinline long vehicle_round(real value)
 
 /* flips a vehicle back over: a spin about its forward (or its side) for up
    to two seconds while it's upside down */
+// score 79 (was 139): strength slot +0x10/+0xc, vector scheduling and final AL differ.
+// Double literals 98; shared crosses 140; both 79 (kept); angular/both scales 83/83;
+// scaled sum 83; single result/vector names 79/79; seven scalar name/scope forms 79;
+// coefficient at use 93, with shared sum 95. Only the cross-helper header is needed.
 // @retail 0xef870
 bool function_ef870(long vehicle_index)
 {
@@ -774,7 +779,7 @@ bool function_ef870(long vehicle_index)
 		(long)vehicle->unknown34e < vehicle_round((real)g_510c54->field_2_3 * 2.0f) &&
 		0.9f >= vehicle->up.k)
 	{
-		real strength = vehicle->unknown34d == 2 || vehicle->unknown34d == 4 ? 0.3f : -0.3f;
+		real strength = vehicle->unknown34d == 2 || vehicle->unknown34d == 4 ? 0.3 : -0.3;
 		vector3f linear_velocity;
 		vector3f angular_velocity;
 		vector3f axis;
@@ -782,9 +787,7 @@ bool function_ef870(long vehicle_index)
 		function_ba1d0(vehicle_index, &linear_velocity, &angular_velocity);
 		if (vehicle->unknown34d == 4 || vehicle->unknown34d == 3)
 		{
-			axis.i = vehicle->up.k * vehicle->forward.j - vehicle->up.j * vehicle->forward.k;
-			axis.j = vehicle->up.i * vehicle->forward.k - vehicle->up.k * vehicle->forward.i;
-			axis.k = vehicle->forward.i * vehicle->up.j - vehicle->up.i * vehicle->forward.j;
+			cross3f(&vehicle->forward, &vehicle->up, &axis);
 		}
 		else
 		{
@@ -803,9 +806,7 @@ bool function_ef870(long vehicle_index)
 			vector3f side;
 			real down = 0.0f - vehicle->forward.k;
 
-			side.i = vehicle->up.k * vehicle->forward.j - vehicle->forward.k * vehicle->up.j;
-			side.j = vehicle->forward.k * vehicle->up.i - vehicle->up.k * vehicle->forward.i;
-			side.k = vehicle->forward.i * vehicle->up.j - vehicle->forward.j * vehicle->up.i;
+			cross3f(&vehicle->forward, &vehicle->up, &side);
 			axis.i = down * side.i + axis.i;
 			axis.j = side.j * down + axis.j;
 			axis.k = side.k * down + axis.k;
@@ -3978,6 +3979,10 @@ bool __stdcall function_f7a60(long *vehicle_index)
 
 /* whether an occupied vehicle (one with its flag 2 at +0x10a set) is within
    ten world units of a player on foot, and which */
+// score 142 (was 142): frame 0x114/0x118 and current-vehicle storage differ.
+// Outer declarations, const vehicle, loop scope, single result, shared center and
+// point-difference helper all 142; indexed seats 156; native unsigned seat mask
+// with plain pointer stepping 140 at 561/549 (-2, restored). Original body retained.
 // @retail 0xf7ca0
 bool __stdcall function_f7ca0(long *vehicle_index)
 {

@@ -1392,6 +1392,10 @@ bool __stdcall unit_action_weapon_switch(long unit_index, s_unit_request *reques
 }
 
 /* a weapon switch waiting for the old weapon to be put away */
+// score 47 (was 76): type preload, hand/table homes and put-away call convention differ.
+// Numeric-hand helper 70; helper with single result 47 (kept); result/primary first
+// 70/71; short/bool hand 71/83; direct fields 57; hand name 70; direct/result 82;
+// short/result 45 (-2, restored); five coherent callee orders 47, all restored.
 // @retail 0xe8b20
 bool __stdcall function_e8b20(long unit_index, long type)
 {
@@ -1404,7 +1408,7 @@ bool __stdcall function_e8b20(long unit_index, long type)
 	{
 		if (function_1140b0(unit_index, primary ? 0x8000025 : 0xd000539))
 		{
-			long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), hand != 0);
+			long weapon_index = unit_action_hand_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), hand);
 
 			if (weapon_index != NONE)
 			{
@@ -1412,12 +1416,12 @@ bool __stdcall function_e8b20(long unit_index, long type)
 				function_100350(weapon_index);
 			}
 		}
-		return false;
+		result = false;
 	}
-	if (!function_110ab0(unit_index) && function_e8510(unit_index, false, false, primary))
+	else if (!function_110ab0(unit_index) && function_e8510(unit_index, false, false, primary))
 	{
 		function_e8720(unit_index, 0x7000101, false, false, primary);
-		return false;
+		result = false;
 	}
 	return result;
 }
@@ -1538,6 +1542,10 @@ void __stdcall function_191fab(long definition_index, long value);
 void __stdcall function_1ca260(long actor_index, long player_index, long weapon_index, long other_weapon_index);
 
 /* picks up a weapon (type 20), in the way the request's mode asks */
+// score 68 (was 68): request/weapon EBX/EBP homes and getter expansion differ.
+// Caller getter noinline/inline 68/68; weapon/request names 68/68; result/array first
+// 131/131; long admission 87; call-result carrier 69. Provider noinline 44 at retail
+// length loses five matches; provider inline 68. Original body and declarations restored.
 // @retail 0xe9000
 bool __stdcall unit_action_pickup_weapon(long unit_index, s_unit_request *request)
 {
@@ -3416,13 +3424,14 @@ bool __stdcall function_ec2d0(long unit_index, s_unit_request *request)
 
 void function_e5750(long unit_index);
 
+// score 52 (was 72): unit lookup is at use; the final helper remains expanded (95/67).
+// Early guard, comparison local, byte/long/short type, const pointer and header lookup
+// all 72; direct post-call unit lookup 52.
 // @retail 0xec330
 void __stdcall function_ec330(long unit_index, long type)
 {
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-
 	function_ec0d0(unit_index, 0x6000542, 0x400000c);
-	if (unit->object_type == 0)
+	if (UNIT_ACTION_UNIT_GET(unit_index)->object_type == 0)
 		function_e5750(unit_index);
 }
 
