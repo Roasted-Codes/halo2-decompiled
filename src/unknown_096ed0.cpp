@@ -121,6 +121,10 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 216/216/200/200; complete post-query selector publication at those widths
 // 278/278/266/266. Original selector, table observations and body restored; cursor/entry
 // homes and pending selector/chain-index residency remain.
+// Round 227: On the aligned receiver graph, early size reduction/conditional maxima/both
+// 170/170/170; positive availability and its three combinations 171 each;
+// all with a private pending total 218. Original reductions restored; selector/induction
+// interference and the four-byte cursor/entry/callback shift remain.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

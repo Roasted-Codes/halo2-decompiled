@@ -165,6 +165,10 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Round 175: ordinary-inline cross/offset/rotation helpers, all seven subsets, 629 each;
 // all five existing helpers ordinary-inline 629. Original forced expansions restored;
 // frame agrees, early success save and hit/basis/rotation homes remain.
+// Round 227: Whole rotation sine-cross/base/both shared producers
+// 731/648/713; result-first root/with sine/with base/with both
+// 726/654/725/633; all with common promoted angle 721.
+// Original helpers and all in-place snapshots restored; early success and workspace homes remain.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)
