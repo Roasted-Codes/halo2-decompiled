@@ -705,6 +705,9 @@ long animation_events_dispatch(s_graph_tag *graph, s_animation *animation, dword
 // Chained/reversed event-word resets 99/99; unsigned mask 97; index-first identity 161; sampled
 // callback parameter with/without chaining 132/132; first-pair callback with/without chaining
 // 138/138.
+// Round 408: dispatcher inline/noinline/both declarations 97 each; those with
+// direct callback transport 125 each; inline/both with early state clear 116 each.
+// Original dispatcher contract, state writes and callback transport restored.
 // @retail 0x1c66a0
 void __stdcall c_animation_channel_advance(c_animation_channel *channel, real frame, s_animation_state *state,
 	animation_event_callback callback, long user)

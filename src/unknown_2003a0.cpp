@@ -477,6 +477,8 @@ s_squad_definition_entry *function_203330(s_squad_definition_view const *squad);
 // 92; entry pointer in the scan 92; a 72-form screen of count/entries selection (if/ternary/value),
 // loop form (for/for-init/while), alternate local/field and >=/== exhaustion test: all 92.
 // The definition lookup now calls the existing getter 0x203330 (byte-identical).
+// Round 407: branch-owned next at entry/end 89/95; late current/handle/definition 93/123/89;
+// all late 122; all late with branch-owned next 116, with late palette 116. All restored.
 // @retail 0x204ec0
 void function_204ec0(s_squad_iterator *iterator, short squad_index, short flags, short mode)
 {
@@ -1525,6 +1527,8 @@ bool function_2104b0(short output_index, point3f const *point, point3f *out);
 // splits around its first load); with the entry expression at each use 154; point per arm 69; point
 // at each use 69; first test through the entry expression 70; entry operand order, inline palette,
 // entries-base local, typed location record and an entry declared before the loop 76 each.
+// Round 407: native entry-point field reference with cached/live squad, byte/native actor
+// and assignment/library fallback copy 58/58/58/58/76/76/76/76. Entry base still splits; all restored.
 // @retail 0x204950
 real function_204950(long actor_index, long squad_index, short mode)
 {
@@ -1958,13 +1962,15 @@ bool function_1e11b0(long actor_index, bool active);
 // Actual squad/actor/both record references 64/64/64;
 // result from update 79; retained Boolean guard/result 70; proven success exit 79;
 // update result with squad reference 79; Boolean result with actor reference 70.
-// score 64 (was 64): the squad pointer stays in EBX where retail keeps the handle in EBP and spills
+// Earlier: the squad pointer stays in EBX where retail keeps the handle in EBP and spills
 // the pointer to the handle's argument slot; loop rotation and return width as above. Inlined
 // actor step under the depth-zero pragma (stays a call) 100; the step inlined with the pragma
 // dropped and the two callees declared noinline 78 (184 bytes; unrotated loop and the or-byte
 // flag store as in retail, structural 16 against 19); that with no parameter address 78, an actor
 // index local 78, both 78, the squad getter 78, the iterator's handle stored 85, the squad
 // re-fetched after the loop 76.
+// Round 407: uniform live squad lookup with native flag test/store and initializer-owned
+// handle combinations 84/89/78/83/88/93/82/87. Receiver refresh grows the body; all restored.
 // @retail 0x203bf0
 bool function_203bf0(long squad_index)
 {
