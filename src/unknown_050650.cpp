@@ -186,7 +186,8 @@ real normalize2d(point2f *vector);
 
 static inline real actor_looking_normalize2d(point2f *vector)
 {
-	real magnitude = (real)sqrt(vector->x * vector->x + vector->y * vector->y);
+	real x_square = vector->x * vector->x;
+	real magnitude = (real)sqrt(x_square + vector->y * vector->y);
 	if (!(fabs(magnitude) < 0.0001f))
 	{
 		real scale = 1.f / magnitude;
@@ -198,7 +199,10 @@ static inline real actor_looking_normalize2d(point2f *vector)
 }
 
 /* A switch selects whether the vertical component is compared. */
-// score 6 (was 40): only the final horizontal products and their result branch differ. Vector parameters
+// score 2 (was 40): the horizontal dot now matches retail instruction for instruction; the last
+// difference is the scheduler's placement of the x87 add: retail sums the two squares after the
+// reference's second component is stored, ours sums them before that store.
+// Vector parameters
 // swapped, aggregate 2D copies and the 3D result assignment (kept). The aim renamed 40; declarations
 // swapped 39; forceinline/shared first normalization 40/40; a product accumulation 20; a commuted sum 14;
 // the final comparison assigned 25; nested comparison/single product local 6/6; product operands swapped 8;
@@ -212,6 +216,8 @@ static inline real actor_looking_normalize2d(point2f *vector)
 // at function scope 6; named native vector2f components 6; complete named dot 6; both named products 14; single-exit
 // byte/integer results 57/62; direct horizontal success on that graph 62; full conjunction assignment 83;
 // single exit plus y-first normalization stores 8; single exit plus native fast normalization 4 (restored).
+// Single exit with the horizontal sum's term and operand orders 12/12/6/12, parenthesised terms 4, a
+// named dot 68, named factors 47, pointers to the locals 38; none better than the plain single exit.
 // @retail 0x296d60
 PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f const *aim, bool three_dimensional)
 {
@@ -219,14 +225,16 @@ PRIVATE bool function_296d60(real cosine, vector3f const *reference, vector3f co
 	if (three_dimensional)
 	{
 		result = reference->k * aim->k + reference->j * aim->j + reference->i * aim->i > cosine;
-		return result;
 	}
-	point2f aim_horizontal = *(point2f const *)aim;
-	point2f reference_horizontal = *(point2f const *)reference;
-	if (actor_looking_normalize2d(&aim_horizontal) > 0.f &&
-		normalize2d(&reference_horizontal) > 0.f &&
-		reference_horizontal.y * aim_horizontal.y + aim_horizontal.x * reference_horizontal.x > cosine)
-		result = true;
+	else
+	{
+		point2f aim_horizontal = *(point2f const *)aim;
+		point2f reference_horizontal = *(point2f const *)reference;
+		if (actor_looking_normalize2d(&aim_horizontal) > 0.f &&
+			normalize2d(&reference_horizontal) > 0.f &&
+			reference_horizontal.x * aim_horizontal.x + aim_horizontal.y * reference_horizontal.y > cosine)
+			result = true;
+	}
 	return result;
 }
 
