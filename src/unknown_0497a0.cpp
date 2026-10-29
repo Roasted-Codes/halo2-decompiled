@@ -106,6 +106,10 @@
 // Round 180: Separate second displacement, entry projection cross outputs and entry
 // uninitialized primary shape, masks 1-7, then all with entry special cross output:
 // 656/581/656/581/656/581/656/656. Original executable body restored.
+// Round 237: existing integer truncation helper 716; first input scaled in place 581,
+// with truncation helper 716; second input scaled in place 593, with helper 716;
+// both input scales 593, with helper 716, with direct sixth scalar 716.
+// Original snapshots, conversion and complete body restored; frame 0x58/0x60 remains.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

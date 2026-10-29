@@ -1946,6 +1946,9 @@ bool __stdcall function_c5460(long object_index, long ignore_index, point3f cons
 // point output 81/81, 73/73, 73/73, 76/76 (all 348 bytes). Three-point gains restored.
 // Short/word result-controlled completion 90/90; short with shared point 90 (360 bytes).
 // All original code restored; frame 0x1c/0x20 and input homes remain.
+// Round 237: physical header type/fallback geometry/both 76/76/76; typed first/fallback/both
+// successful-query returns 76/76/76; typed failed-query arm 76; typed root-header receiver 76.
+// All declarations, snapshots and original body restored; frame/input homes remain.
 // @retail 0xe0070
 void function_e0070(long arg_159e6d, long vehicle_index)
 {
@@ -3146,6 +3149,9 @@ void function_e4300(long arg_159e6d)
 // Round 282: physical low-byte mask/Boolean/named/early guards 91/91/91/91;
 // native word bitfield with Boolean/early guards 98/98; native byte bitfield 91/91.
 // Original physical word declaration and caller body restored.
+// Round 237: reset-inline/first-call-inline/both declarations 91/91/91; queued caller
+// noinline alone/with reset/with first/with both 91/91/91/91; all three inline 91.
+// All temporary declarations restored; the reset dispatch still expands.
 // @retail 0xe4bd0
 void function_e4bd0(long arg_159e6d)
 {

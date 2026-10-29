@@ -142,6 +142,10 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // DH round 234: complete cosine products/all sine products, with reused/separate second
 // trig producers 442/408/442/408; those graphs with native word ordinals 471/471/471/472.
 // All restored; entry/normalized homes and cleanup differ on the retail-size frame.
+// Round 237: arccosine inline declaration, ordinary inline normalizer and ordinary inline
+// candidate emitter, all seven nonempty combinations 408 each; all with queued-function
+// noinline declaration 408. Original helper bodies and declarations restored;
+// matched scoring and the shared-normalizer/caller controls stay 0/749/445.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)
