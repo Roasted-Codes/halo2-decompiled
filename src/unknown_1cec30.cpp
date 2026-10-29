@@ -2856,6 +2856,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // plain statements (no embedded assignment, same code, kept) 206; the child counter declared first 208.
 // First link before count first/second/both 205/224/275; loop link locals first/second 206/206;
 // converter position declared first 206; translation read before rotations 254; converter force-inline 206 (plain).
+// Round 33: Native transform-value converter input, with pointer/reference output, output order
+// and actual output-address return combinations: 321/321/321/321/321/321/321/321. Original converter/body restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

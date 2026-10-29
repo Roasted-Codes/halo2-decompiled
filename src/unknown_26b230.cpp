@@ -166,7 +166,7 @@ void function_268840()
 	function_268c90();
 }
 
-// score 242 (was 242): Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
+// score 221 (was 242): Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
@@ -219,6 +219,9 @@ void function_268840()
 // DL159: actor-boundary player-pool lifetime 246; all squared products named 246; full-width expiry alone/with products 250/250; signed-byte retention alone/with products 247/247; both result domains alone/with products 251/251. Original observations, arithmetic and child interfaces restored.
 // Round 251: Branch-scoped retention bool/byte/short/long 247/247/247/246; with pool after iterator setup 297/297/296/297. Original actor-wide scope, pool observations and child interfaces restored.
 // Round 29: Outer-walk initialization/advance inline-inline, inline-outlined, forced-inline, forced-forced, forced-outlined, outlined-inline, outlined-forced, outlined-outlined: 242/386/242/242/386/346/346/406. Outlined forms also lose two matched controls; every helper contract restored.
+// Round 33: With matched child interfaces, positive actor admission 242; deletion-owned if/else
+// 221; both 221; child continuation condition alone/with admission 242/242; with deletion/both
+// 221/221; all three with Boolean retention 222. Keep only the deletion-owned if/else.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -273,42 +276,45 @@ void function_268c90()
 					if (!keep && *(long *)(actor + 0x18) != NONE)
 						keep = function_bba80(*(long *)(actor + 0x18));
 				}
-				if (keep) { clump[0x3c] = 1; continue; }
-				long extra = *(long *)(actor + 0x26c);
-				if (extra == *(long *)(actor + 0x18)) extra = NONE;
-				byte *current = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
-				long unit = *(long *)(current + 0x18);
-				long proxy = *(long *)(current + 0x1c);
-				function_1e2a90(actor_index);
-				if (unit != NONE)
+				if (!keep)
 				{
-					function_b83b0(unit, true);
-					function_b8460(unit, true);
-				}
-				else if (proxy != NONE) swarm_delete(proxy);
-				if (extra != NONE)
-				{
-					byte *object = NULL;
-					if ((extra & 0xffff) < g_4e0300->high_water_index)
+					long extra = *(long *)(actor + 0x26c);
+					if (extra == *(long *)(actor + 0x18)) extra = NONE;
+					byte *current = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
+					long unit = *(long *)(current + 0x18);
+					long proxy = *(long *)(current + 0x1c);
+					function_1e2a90(actor_index);
+					if (unit != NONE)
 					{
-						byte *header = g_4e0300->data + (extra & 0xffff) * g_4e0300->size;
-						if (*(short *)header && *(short *)header == (extra >> 16) &&
-							(1 << header[3])) object = *(byte **)(header + 8);
+						function_b83b0(unit, true);
+						function_b8460(unit, true);
 					}
-					if (object)
+					else if (proxy != NONE) swarm_delete(proxy);
+					if (extra != NONE)
 					{
-						s_object_child_iterator children;
-						function_d0620(extra, &children);
-						bool child_available = function_d0690(&children);
-						while (child_available)
+						byte *object = NULL;
+						if ((extra & 0xffff) < g_4e0300->high_water_index)
 						{
-							byte *child = *(byte **)(g_4e0300->data + (children.child_index & 0xffff) * 12 + 8);
-							if (!child[0xaa]) break;
-							child_available = function_d0690(&children);
+							byte *header = g_4e0300->data + (extra & 0xffff) * g_4e0300->size;
+							if (*(short *)header && *(short *)header == (extra >> 16) &&
+								(1 << header[3])) object = *(byte **)(header + 8);
 						}
-						if (!child_available) function_b8540(extra);
+						if (object)
+						{
+							s_object_child_iterator children;
+							function_d0620(extra, &children);
+							bool child_available = function_d0690(&children);
+							while (child_available)
+							{
+								byte *child = *(byte **)(g_4e0300->data + (children.child_index & 0xffff) * 12 + 8);
+								if (!child[0xaa]) break;
+								child_available = function_d0690(&children);
+							}
+							if (!child_available) function_b8540(extra);
+						}
 					}
 				}
+				else clump[0x3c] = 1;
 			}
 		}
 		if (!*(short *)(clump + 0x10)) function_2691b0(clumps.clump_index);
