@@ -834,6 +834,10 @@ real function_18cac0(long arg_0);
 // strict maximum and original side result restored.
 // Selected-mask address on shared membership with final-array ownership, consistent audibility
 // and native real storage: 266/266/260/260/263/263/266/266; exact-only pointer forms restored.
+// Round 153: plain real table with memset 240 (aligned frame); audibility read before the door query 238; table
+// indexed directly with memset's return for the final call 203 (plain frame, return pointer spilled), with the
+// audibility read 249; batch count read once 153 (retail's countdown; one-use local). Compile-only: every clear of
+// a directly addressed table aligns the frame.
 // @retail 0x221a70
 void __stdcall function_221a70(long arg_0, s_voice_position_batch *arg_1)
 {
