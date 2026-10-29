@@ -1808,18 +1808,6 @@ real function_f14f0(short gear, long vehicle_index)
 }
 
 /* a torque curve's torque at an engine angular velocity */
-// score 32 (was 77): in the last block retail gives xmm0 to the slope/fraction chain and xmm1 to
-// the shared zero (and the clamp result); ours the other way round, so the fabs/clamp registers
-// swap and the fraction is copied to xmm0 at the return. Tried (on the definition's maximum read at
-// each use, which took 77 to 32): `torque * fraction` 32; early `return 0.0f` per failed test 32;
-// the zero return inside the else 32, in each arm 32; `torque`/`fraction` declared at the top 32;
-// the fraction divided in a second statement 32; the intercept written into the fraction 85;
-// slope/intercept declared first 32; the clamp in a named local 32; the parameters reordered 32
-// (either order); a single `result` 81; peak operands swapped 77 (before the field read). Round 151:
-// `fraction == PIN(...)` 31; the torque local before the magnitude test 51; `fraction *= torque` 32;
-// range/torque magnitudes named 32/32/32; `0.0f <= range` 32; `range < 0.0f ? ...` 34,
-// for the torque 37; the bound compared first 32; `pow(...) * torque` returned in the pin arm 109;
-// a separate scale for the powered fraction 32.
 // @retail 0xf15d0
 real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, real angular_velocity)
 {
@@ -1845,6 +1833,7 @@ real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, rea
 	}
 	else
 	{
+		real result;
 		real range = VEHICLE_MAX_ANGULAR_VELOCITY(definition) - peak;
 
 		if ((range >= 0.0f ? range : 0.0f - range) > 0.0001f)
@@ -1861,9 +1850,12 @@ real function_f15d0(long vehicle_index, s_vehicle_torque_curve const *curve, rea
 				{
 					fraction = (real)pow(fraction, curve->past_peak_torque_exponent);
 				}
-				return fraction * torque;
+				result = fraction * torque;
 			}
+			else result = 0.0f;
 		}
+		else result = 0.0f;
+		return result;
 	}
 	return 0.0f;
 }
@@ -4174,6 +4166,13 @@ PRIVATE inline void vehicle_transpose(matrix3x3 *matrix)
    start, thrust toward the speed along the facing (faster diving, with
    boost), strafing, lift against gravity, and a torque that turns the
    vehicle toward its facing, pitched and banked into its turns */
+// score 1166 (was 1429): Frame 0x104 versus 0xd8; index/offset and vector/rotation homes remain.
+// Pitch magnitude 1375; scalar control magnitudes with original steering fabs and
+// desired-up add-scaled 1166; the flip-output matrix workspace 1181 (frame 0xdc).
+// Repeated compound argument: controls/normalization/all magnitudes/target scales
+// 1142/1142/1163/1162; force/brake/up/all vector forms 1142/1142/1108/1124 restored.
+// Three-use steering ratio 1168; fraction with separate magnitude assignment 1163,
+// a three-point incremental gain rejected. Keep original steering fabs and matrix homes.
 // @retail 0xf4800
 void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state)
 {
@@ -4211,7 +4210,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	real pitch = (real)atan2(vehicle->forward.k, sqrt(vehicle->forward.i * vehicle->forward.i +
 		vehicle->forward.j * vehicle->forward.j));
 	real dive = 0.0f > pitch ? 1.0f : -1.0f;
-	real climb = PIN((real)fabs(pitch), 0.0f, 0.58904862f) * dive * g_4678d8 * 1.6976527f + 1.0f;
+	real climb = PIN((pitch >= 0.0f ? pitch : 0.0f - pitch), 0.0f, 0.58904862f) * dive * g_4678d8 * 1.6976527f + 1.0f;
 	real boost = 1.0f;
 
 	if (TEST_FIELD_BIT(VEHICLE_WORD_BITS(vehicle->flags348)->bit4))
@@ -4237,11 +4236,11 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	}
 	else if (vehicle->speed > 0.0f)
 	{
-		throttle = 0.001f > (real)fabs(maximum_speed) ? 0.0f : vehicle->speed / maximum_speed;
+		throttle = 0.001f > (maximum_speed >= 0.0f ? maximum_speed : 0.0f - maximum_speed) ? 0.0f : vehicle->speed / maximum_speed;
 	}
 	else
 	{
-		throttle = 0.001f > (real)fabs(*(real *)(definition + 0x1f8)) ? 0.0f :
+		throttle = 0.001f > (*(real *)(definition + 0x1f8) >= 0.0f ? *(real *)(definition + 0x1f8) : 0.0f - *(real *)(definition + 0x1f8)) ? 0.0f :
 			0.0f - vehicle->speed / *(real *)(definition + 0x1f8);
 	}
 	function_f1380(&acceleration, &target, &velocity, *(real *)(definition + 0x1fc) * throttle,
@@ -4256,7 +4255,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 		drift.k = 0.0f;
 		if (function_30bf0(&drift) != 0.0f)
 		{
-			real brake = 0.0f - (real)fabs(*(real *)(definition + 0x200)) * g_4678d0;
+			real brake = 0.0f - (*(real *)(definition + 0x200) >= 0.0f ? *(real *)(definition + 0x200) : 0.0f - *(real *)(definition + 0x200)) * g_4678d0;
 
 			acceleration.i += drift.i * brake;
 			acceleration.j += drift.j * brake;
@@ -4294,11 +4293,11 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 
 		if (strafe > 0.0f)
 		{
-			strafe_fraction = 0.001f > (real)fabs(strafe_maximum) ? 0.0f : strafe / strafe_maximum;
+			strafe_fraction = 0.001f > (strafe_maximum >= 0.0f ? strafe_maximum : 0.0f - strafe_maximum) ? 0.0f : strafe / strafe_maximum;
 		}
 		else
 		{
-			strafe_fraction = 0.001f > (real)fabs(strafe_maximum) ? 0.0f : 0.0f - strafe / strafe_maximum;
+			strafe_fraction = 0.001f > (strafe_maximum >= 0.0f ? strafe_maximum : 0.0f - strafe_maximum) ? 0.0f : 0.0f - strafe / strafe_maximum;
 		}
 		strafe_target.i = strafe * facing.left.i;
 		strafe_target.j = facing.left.j * strafe;
@@ -4321,7 +4320,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 		acceleration.k = strafe_acceleration.k + (acceleration.k - facing.left.k * along);
 		if (vehicle->turn == 0.0f)
 		{
-			real magnitude = (real)fabs(side_speed);
+			real magnitude = (side_speed >= 0.0f ? side_speed : 0.0f - side_speed);
 			real limit = g_4678d0 * *(real *)(definition + 0x238);
 			real brake = 0.0f - magnitude > limit ? 0.0f - magnitude : (limit > magnitude ? magnitude : limit);
 
@@ -4333,8 +4332,8 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	}
 
 	real horizontal_speed = (real)sqrt(velocity.i * velocity.i + velocity.j * velocity.j);
-	real fastest = (real)fabs(vehicle->speed);
-	real other = (real)fabs(vehicle->turn) > horizontal_speed ? (real)fabs(vehicle->turn) : horizontal_speed;
+	real fastest = (vehicle->speed >= 0.0f ? vehicle->speed : 0.0f - vehicle->speed);
+	real other = (vehicle->turn >= 0.0f ? vehicle->turn : 0.0f - vehicle->turn) > horizontal_speed ? (vehicle->turn >= 0.0f ? vehicle->turn : 0.0f - vehicle->turn) : horizontal_speed;
 
 	if (!(fastest > other))
 	{
@@ -4370,9 +4369,7 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 		real length;
 
 		desired.forward = vehicle->local_velocity;
-		desired.up.i = desired.forward.i * (0.0f - desired.forward.k) + g_4687b0->i;
-		desired.up.j = desired.forward.j * (0.0f - desired.forward.k) + g_4687b0->j;
-		desired.up.k = (0.0f - desired.forward.k) * desired.forward.k + g_4687b0->k;
+		vector3f_add_scaled(g_4687b0, &desired.forward, 0.0f - desired.forward.k, &desired.up);
 		length = (real)sqrt(desired.up.i * desired.up.i + desired.up.k * desired.up.k + desired.up.j * desired.up.j);
 		if (!(0.0001f > (real)fabs(length)))
 		{
@@ -4417,16 +4414,16 @@ void __stdcall function_f4800(long vehicle_index, s_vehicle_physics_state *state
 	{
 		real maximum_steering = *(real *)(definition + 0x204) * 0.017453292f;
 		real speed_fraction = 0.001f > *(real *)(definition + 0x1f4) ? 0.0f :
-			(real)fabs(vehicle->speed) / *(real *)(definition + 0x1f4);
+			(vehicle->speed >= 0.0f ? vehicle->speed : 0.0f - vehicle->speed) / *(real *)(definition + 0x1f4);
 		real steering_fraction = (real)fabs(0.001f > maximum_steering ? 0.0f :
 			vehicle->steering_angle / maximum_steering);
 		real turn_fraction = 0.001f > *(real *)(definition + 0x22c) ? 0.0f :
 			vehicle->turn / *(real *)(definition + 0x22c);
-		real steering_bias = (real)fabs(steering_fraction) * 2.0f;
+		real steering_bias = (steering_fraction >= 0.0f ? steering_fraction : 0.0f - steering_fraction) * 2.0f;
 		real slip = velocity.j * desired.forward.i - desired.forward.j * velocity.i;
 		real slip_bank = 0.0f;
 
-		if (!(0.001f > (real)fabs(slip)))
+		if (!(0.001f > (slip >= 0.0f ? slip : 0.0f - slip)))
 		{
 			if (0.0f > slip)
 			{
