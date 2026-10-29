@@ -192,26 +192,24 @@ short __stdcall function_1c04f0(long actor_index, s_slot *slot, bool active)
 	return result;
 }
 
-// score 143 (was 143): Frame 0xa0 versus 0xb0; native homes, request/collision argument
-// allocation and point/goal publication differ. The movement helper now expands; the current
-// shared collision output is 0x4c while the writer reaches the word at +0x5a.
-// Native slot data 143; local full collision output 140 (frame 0xb0), with slot data 140;
-// complete point setter/vector setter/position-add/both vector producers 140 each;
-// material initialized at declaration 138; native slot/point/vector producers 140.
-// Partial unit copy 104, with aggregate target or CRT point copy 104 each (all restored);
-// CRT point copy/aggregate target alone 140/140; aggregate target/early material 138;
-// uniform unit copy at entry 234, after position 161, with early material/slot data 161/161.
-// frame 0xa0 versus 0xb0; action/collision argument registers
-// and destination publication scheduling differ. The movement helper already expands.
-// Earlier: complete 0x5c collision 140, with early material 138; uniform unit index
-// captures 234/161; native slot-data 143; target/request/point/probe names on full output 140.
-// Full output with shared scaled target, whole-point initialization or shared distance
-// difference, alone and together with native slot-data: eight forms 140 each; restored.
-// frame 0xa0 versus 0xb0; target copy and goal registers differ.
-// Movement helper already inlines; the collision output still reserves 0x4c, not 0x5c.
-// Round 210: Complete shared collision extent with native slot-data access 140; destination, request,
-// paired destination/request, hit/probe, both point names, target/request/probe names and
-// all workspace names 140 each. The three-point frame correction is restored.
+// score 143 (was 143): frame 0xa0 versus 0xb0 (the 0x1697c0 output is 0x5c bytes here; the shared
+// header type is 0x4c), then scratch registers rotated by one from the 0x110ab0 argument on
+// (eax/ecx/edx), which also moves the request/collision arguments, the target copy and the
+// inlined 0x1f4460 head. The movement helper already expands.
+// Tried: native slot-data block 143; full 0x5c collision output (frame 0xb0) 140, with native
+// slot-data 140; complete point setter/vector setter/position-add/both vector producers 140 each;
+// destination, request, destination/request, hit/probe, both point names, target/request/probe
+// names and all workspace names 140 each; full output with shared scaled target, whole-point
+// initialization or shared distance difference, alone and with native slot-data: eight forms 140;
+// material initialized at declaration 138, aggregate target/early material 138; partial unit copy
+// 104 and with aggregate target or CRT point copy 104 (restored); CRT point copy/aggregate target
+// alone 140/140; uniform unit copy at entry 234, after position 161, with early material/slot data
+// 161/161. The three-point frame correction is kept.
+// Round 108: collision NONE store before the vector math 141 (138 with the 0x5c output: gives
+// retail's store order); with the 0x5c output, stamp through the existing 0x146650 getter 138,
+// stamp stores swapped 141, slot pointer declared after the lookups 138, `== false` test 138,
+// height declared at its definition 138. Deleting the whole stamp block (diagnostic) leaves 10
+// aligned differences: everything after it then takes retail's registers.
 // @retail 0x1c0670
 bool __stdcall function_1c0670(long actor_index, s_slot *slot)
 {

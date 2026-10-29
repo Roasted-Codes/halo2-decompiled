@@ -166,7 +166,10 @@ void function_268840()
 	function_268c90();
 }
 
-// score 242 (was 242): Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
+// score 242 (was 242): frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
+// Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
+// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
+// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
 // Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
@@ -218,7 +221,14 @@ void function_268840()
 // remain.
 // DL159: actor-boundary player-pool lifetime 246; all squared products named 246; full-width expiry alone/with products 250/250; signed-byte retention alone/with products 247/247; both result domains alone/with products 251/251. Original observations, arithmetic and child interfaces restored.
 // Round 251: Branch-scoped retention bool/byte/short/long 247/247/247/246; with pool after iterator setup 297/297/296/297. Original actor-wide scope, pool observations and child interfaces restored.
+// Round 167: actual point/child/both output declarations at entry 242 each;
+// point/child/both lexical homes 242 each; both entry workspaces with both
+// role names 242; existing three-component point difference with the original
+// z/y/x squared-sum tree 242. Original workspaces, names and scalar body restored.
 // Round 29: Outer-walk initialization/advance inline-inline, inline-outlined, forced-inline, forced-forced, forced-outlined, outlined-inline, outlined-forced, outlined-outlined: 242/386/242/242/386/346/346/406. Outlined forms also lose two matched controls; every helper contract restored.
+// Round 33: With matched child interfaces, positive actor admission 242; deletion-owned if/else
+// 221; both 221; child continuation condition alone/with admission 242/242; with deletion/both
+// 221/221; all three with Boolean retention 222. Keep only the deletion-owned if/else.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -273,42 +283,45 @@ void function_268c90()
 					if (!keep && *(long *)(actor + 0x18) != NONE)
 						keep = function_bba80(*(long *)(actor + 0x18));
 				}
-				if (keep) { clump[0x3c] = 1; continue; }
-				long extra = *(long *)(actor + 0x26c);
-				if (extra == *(long *)(actor + 0x18)) extra = NONE;
-				byte *current = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
-				long unit = *(long *)(current + 0x18);
-				long proxy = *(long *)(current + 0x1c);
-				function_1e2a90(actor_index);
-				if (unit != NONE)
+				if (!keep)
 				{
-					function_b83b0(unit, true);
-					function_b8460(unit, true);
-				}
-				else if (proxy != NONE) swarm_delete(proxy);
-				if (extra != NONE)
-				{
-					byte *object = NULL;
-					if ((extra & 0xffff) < g_4e0300->high_water_index)
+					long extra = *(long *)(actor + 0x26c);
+					if (extra == *(long *)(actor + 0x18)) extra = NONE;
+					byte *current = g_4f55f0->data + (actor_index & 0xffff) * 0x888;
+					long unit = *(long *)(current + 0x18);
+					long proxy = *(long *)(current + 0x1c);
+					function_1e2a90(actor_index);
+					if (unit != NONE)
 					{
-						byte *header = g_4e0300->data + (extra & 0xffff) * g_4e0300->size;
-						if (*(short *)header && *(short *)header == (extra >> 16) &&
-							(1 << header[3])) object = *(byte **)(header + 8);
+						function_b83b0(unit, true);
+						function_b8460(unit, true);
 					}
-					if (object)
+					else if (proxy != NONE) swarm_delete(proxy);
+					if (extra != NONE)
 					{
-						s_object_child_iterator children;
-						function_d0620(extra, &children);
-						bool child_available = function_d0690(&children);
-						while (child_available)
+						byte *object = NULL;
+						if ((extra & 0xffff) < g_4e0300->high_water_index)
 						{
-							byte *child = *(byte **)(g_4e0300->data + (children.child_index & 0xffff) * 12 + 8);
-							if (!child[0xaa]) break;
-							child_available = function_d0690(&children);
+							byte *header = g_4e0300->data + (extra & 0xffff) * g_4e0300->size;
+							if (*(short *)header && *(short *)header == (extra >> 16) &&
+								(1 << header[3])) object = *(byte **)(header + 8);
 						}
-						if (!child_available) function_b8540(extra);
+						if (object)
+						{
+							s_object_child_iterator children;
+							function_d0620(extra, &children);
+							bool child_available = function_d0690(&children);
+							while (child_available)
+							{
+								byte *child = *(byte **)(g_4e0300->data + (children.child_index & 0xffff) * 12 + 8);
+								if (!child[0xaa]) break;
+								child_available = function_d0690(&children);
+							}
+							if (!child_available) function_b8540(extra);
+						}
 					}
 				}
+				else clump[0x3c] = 1;
 			}
 		}
 		if (!*(short *)(clump + 0x10)) function_2691b0(clumps.clump_index);
@@ -2227,10 +2240,19 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 27: actor-step/getter expansion boundaries, ordinary/inline/forced
 // in all eight non-original pairs [283,283,283,283,283,283,283,283]. Original
 // declarations and bodies restored; early reset SI and later homes remain.
+// Round 167: existing absent-leaf location initializer 283; visibility cluster,
+// row-count and row-pointer scalar homes in all seven combinations 283 each.
+// Original reset and names restored; early reset SI and later allocation remain.
 // Round 250: existing native structure count 283; with per-iteration candidate,
 // short/long cursor and selected carriers 384/336/383/337;
 // corresponding direct indexed fields 374/336/375/337. Original body restored.
 // Round 29: Real distance member and entry cluster/candidate array declarations in all seven combinations, then the entry distance workspace: 283 each. Original publication and declaration lifetimes restored.
+// Round 383: shared existing location reset ordinary/inline/forced/outlined 283/283/283/346;
+// with consistently retained clump heads 391/391/391/411. Original helper linkage, both original
+// helper callers, root observations and complete executable body restored.
+// Round 244: Five alternate location-reset field orders 283 each; reset-word-first with either sentinel
+// chain 283/283; reset between sentinels with invalid-cluster-first merge 283. Early reset SI and
+// visibility/selection homes remain; original field publications restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

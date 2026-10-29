@@ -1638,7 +1638,15 @@ real function_2683f0(long actor_index, long node_index, short type)
 	return result;
 }
 
-// score 684 (was 684): Frame 0x7c/0x80, sentinel/link homes and conversion expansion remain.
+// score 564 (was 724): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
+// frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
+// the forward transform (retail if/else straight from the unit) and the scoring block differ.
+// Round 152: iterator 669 fast; NONE results before the actor lookup 666 fast, right after it 656
+// fast (673 plain); short best level 604; matching-object arm as a branch 584; forward if/else read
+// from the unit 775 (frame 0x74); retain set before the distance test and visible defaulted true
+// and cleared 564 (kept); visible alone 572.
+// Earlier: Frame 0x7c/0x80, sentinel/link homes and conversion expansion remain.
 // Earlier 684 (was 684): frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
 // frame 0x7c versus 0x80; saved links and conversion expansion remain.
 // frame 0x7c versus 0x80; sentinel homes, loop header and tick calls differ.
@@ -1699,16 +1707,18 @@ void function_266640(long actor_index)
 {
 	long const *actor_reference = &actor_index;
 	s_actor_view *actor = actor_get(actor_index);
+	long best_node = NONE, strongest_node = NONE;
 	byte *data = (byte *)actor;
 	memset(data + 0x324, 0, 0x10);
-	long best_node = NONE, strongest_node = NONE;
-	long best_level = 0;
+	short best_level = 0;
 	real strongest = 0.0f;
-	long next;
-	for (long index = actor_get(actor_index)->first_prop_index; index != NONE; index = next)
+	s_actor_prop_iterator iterator;
+	iterator.next = actor_get(actor_index)->first_prop_index;
+	s_prop_node_view *entry;
+	while ((entry = actor_next_prop(&iterator)) != NULL)
 	{
-		s_prop_datum *node = prop_ref_get(index);
-		next = *(long *)((byte *)node + 0x2c);
+		s_prop_datum *node = (s_prop_datum *)entry;
+		long index = iterator.index;
 		s_type_f95cd3 *view = NULL;
 		if (node->tracking_index != NONE)
 		{
@@ -1743,8 +1753,9 @@ void function_266640(long actor_index)
 					bool very_close = false;
 					if (node->unknown28 < 8.0f) close = true;
 					else if (*(bool *)((byte *)state + 0x62) && other &&
-						*(long *)(data + 0x338) != NONE && *(long *)((byte *)other + 0x338) != NONE)
-						close = prop_ref_get(*(long *)(data + 0x338))->object_index == prop_ref_get(*(long *)((byte *)other + 0x338))->object_index;
+						*(long *)(data + 0x338) != NONE && *(long *)((byte *)other + 0x338) != NONE &&
+						prop_ref_get(*(long *)(data + 0x338))->object_index == prop_ref_get(*(long *)((byte *)other + 0x338))->object_index)
+						close = true;
 					if (view->unknown06 == 0 || view->unknown06 == 1)
 						very_close = node->unknown28 < 3.0f;
 					if (close) ++*(char *)(data + 0x326);
@@ -1846,7 +1857,9 @@ void function_266640(long actor_index)
 				direction.k = actor->position.z - point.z;
 				real distance = function_30bf0(&direction);
 				bool established = actor->unknown31c == player_slot && actor->unknown31e > (short)threshold;
+				bool retain = true;
 				if (!(distance > 0.0f)) continue;
+				bool visible = true;
 				long reference = function_25d810(unit_index, *actor_reference, false);
 				vector3f velocity = unit->velocity;
 				vector3f relative;
@@ -1861,7 +1874,8 @@ void function_266640(long actor_index)
 					real value = relative.k * direction.k + relative.j * direction.j + relative.i * direction.i;
 					if (value > approach) approach = value;
 				}
-				bool visible = reference == NONE || prop_ref_get(reference)->unknown27 >= 1;
+				if (reference != NONE && prop_ref_get(reference)->unknown27 < 1)
+					visible = false;
 				real facing = 0.0f, score = 0.0f;
 				bool positive = false;
 				if (distance < 15.0f)
@@ -1886,7 +1900,6 @@ void function_266640(long actor_index)
 					}
 					else if (visible && !(distance > 3.5f && approach < 0.5f)) positive = score > 0.0f;
 				}
-				bool retain = true;
 				if (positive)
 				{
 					if (actor->unknown31c != NONE)
