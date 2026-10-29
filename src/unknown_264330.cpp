@@ -505,6 +505,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // decrement 420, with timer/planar/both 423/421/424; complete precision graph with
 // wide decrement 424 (fast control 420). Original precision, domains and body restored;
 // frame 0xa4 and actor/node/flag homes remain. Planar precision forms were exact-only.
+// Round 238: Concrete motion/context/both output types 420 each; motion/context/both with the
+// native actor receiver 420 each; both with context-first declarations 420; all with entry
+// workspaces 420. All original types, declarations, fields, qualifier and directives restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
