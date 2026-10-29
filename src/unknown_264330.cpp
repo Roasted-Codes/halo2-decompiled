@@ -292,6 +292,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 205: Complete actor/reference/prop getter receiver masks 1/2/3/4/5/6/7
 // 353/586/586/499/499/778/778; all with current-time observations 748. Original
 // object snapshot and complete body restored; frame and object/view homes remain.
+// Round 241: actual shared direction, category and distance fields in every nonempty
+// subset, then all fields with the existing object getter: 353 each in eight forms.
+// Original shared layout, pointer observations and complete body restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)

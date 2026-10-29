@@ -3041,6 +3041,9 @@ long __stdcall function_177040(long particle_system_index, long effect_index)
 // Round 58: literal false at exhaustion 176; hit as `result = true; return result;` with literal/variable
 // exhaustion 176/176 (VC folds the constant result each time, no early BL); found flag breaking out of
 // each loop 281; found flag in all three loop conditions 281. Retail returns BL only at the early exit.
+// Round 241: native player record/datum iterators 255/255; effect record/datum iterators
+// with inline/called scans 325/325/352/352; paired native iterators 324/324. Original
+// scalar searches, initial guard, false result and complete body restored.
 // @retail 0x1778d0
 bool function_1778d0(void)
 {

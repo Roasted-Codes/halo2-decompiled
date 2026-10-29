@@ -2850,6 +2850,9 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // snapshot/bound pairs and all 369/369/419; index through if/else 313; a body-link table local 209;
 // the child search as a while with the compound test 206 (same code); the second index assigned in
 // plain statements (no embedded assignment, same code, kept) 206; the child counter declared first 208.
+// Round 241: native requested-node shorts first/second/both 338/226/354; independent
+// readonly model snapshots first/second 221/321; both snapshots with first/second/both
+// shorts 267/325/283. Original frame, body and protected relative-call contract restored.
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,
