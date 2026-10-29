@@ -613,6 +613,12 @@ bool __stdcall function_1ffe00(long actor_index, long object_index);
 // Uniform five-point memcpy producers 397; case 2 first 401; chained defaults
 // 395; both 399. Uniform memmove producers with those forms 444/442/442/440.
 // All shorter than retail; original setters, cases and defaults restored.
+// Round 224: Native external point fields and byte result/point-valid, seven subsets
+// 336/345/345/336/336/345/345; native points plus byte result/word point-valid 356. All source and
+// record declarations restored.
+// Round 224 continuation: Result-owned point publication at the common return, crossed with case-2-first/shared defaults/
+// long result, eight forms 336/341/334/339/350/346/351/347. Two-point shared-default form rejected;
+// original result, epilogue, cases, setters and full body restored.
 // Lane T round 28 (older base): All eight ordinary/inline/noinline state-query/origin-output declaration
 // pairs 446 (unchanged fast control 446; full baseline 445). All provider and
 // consumer declarations restored; saved-register timing and Boolean defaults remain.
@@ -874,7 +880,8 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 54 (was 54): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
+// score 54 (was 54): frame 0x38 and entry homes agree; scaled-pitch schedule, later yaw homes and helper transport differ.
+// the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
 // limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
@@ -887,9 +894,15 @@ real g_55e5cc = 0.08726646f;
 // projections 173/159/170; shared dot 62; projections plus dot/upper-first 170/168.
 // Shared dot with upper-first/later pitch 60/58; reverse dot alone/upper-first/later
 // pitch 58/56/54 (kept). Addition grouping and all marked call arguments are unchanged.
+// Round 236: scale-first products / scaled-angle names / branch-defined scale / products+branch /
+// products+names / names+branch / native copies / copies+branch 54/54/253/253/54/253/54/253; all
+// restored.
 // Round 162: final-local pitch clamps 207; paired raw angle carriers 56, with clamps 207;
 // existing paired-angle view 54, with clamps 207; byte result 51 (three-point gain, restored);
 // branch-produced result 249, with clamps 253. Scaled pitch and sampler registers still differ.
+// Round 224: Native yaw/pitch bound records and full-width result, seven subsets
+// 56/70/209/70/72/86/219; both records in pitch/yaw order 210. No exact match; original scalar
+// homes and body restored.
 // @retail 0x297660
 PRIVATE bool function_297660(long actor_index, bool use_aiming_direction, bool use_character_bounds,
 	s_type_952051 *specification)
@@ -1141,7 +1154,7 @@ struct s_actor_looking_turn_request
 	vector3f forward;
 };
 
-// score 530 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
+// score 506 (was 530): frame 0xd0 versus retail 0xc8, early getter scheduling, vector homes and branch layout differ.
 // Tried the out-of-line predicate declaration 546 fast; horizontal aggregate copies 562 fast; initial native setters 546 fast;
 // explicit looking success/fallback stores 532 fast, 527 plain (three-point gain, restored); target point or selected vector
 // renamed 546 fast each; validity at function scope 546 fast; aggregate inputs plus explicit stores 549 fast;
@@ -1154,6 +1167,9 @@ struct s_actor_looking_turn_request
 // Uniform 17 aggregate memcpy producers on disjoint outputs, varied by actual
 // predicate boundary and long animation carrier 534/540/562/563 fast; native
 // memmove variants 624/630/670/671. Best memcpy form 525 plain at 2020/2020; restored.
+// Round 224 continuation: Native long parallel validity/idle/both/turn-override/validity-turn/idle-turn/all, then all-word
+// 528/539/525/535/529/532/540/553 fast (control 546). Parallel validity plus idle 506 plain,
+// 2040/2020 bytes, kept; original producers, tests and call tuples retained. Full frame remains 0xd0.
 // Lane T round 28 (older base): Inline predicate with long/unsigned-short/unsigned-long animation storage
 // 534/530/534; noinline predicate with those carriers 590 each; ordinary predicate
 // with long/unsigned-short 534/530. Original carrier and declarations restored; frame/validity homes remain.
@@ -1163,7 +1179,7 @@ void function_298370(long actor_index)
 	s_actor_looking_view *actor = actor_looking_get(actor_index);
 	s_actor_looking_object *unit = actor_looking_object_get(actor->unit_index);
 	short animation_state = ((s_actor_looking_animation *)((byte *)unit + unit->animation_offset))->state;
-	bool idle = false;
+	long idle = false;
 	bool allow_turn = false;
 	bool has_target_point = false;
 	point3f arg_0e6828;
@@ -1175,7 +1191,7 @@ void function_298370(long actor_index)
 	if (function_2973f0(actor_index, &looking_cosine, &aiming_cosine, &idle_aiming_cosine, &idle_looking_cosine))
 	{
 		vector3f direction;
-		bool valid = false;
+		long valid = false;
 		if (animation_state == 6)
 		{
 			s_object_marker marker;
@@ -1258,7 +1274,7 @@ void function_298370(long actor_index)
 			actor->aiming = false;
 		}
 
-		bool looking_valid = false;
+		long looking_valid = false;
 		if (animation_state == 6)
 		{
 			direction = actor->field_xe66477;
