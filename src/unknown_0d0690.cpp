@@ -1250,6 +1250,17 @@ PRIVATE __forceinline real lighting_normalize_ordered(vector3f *v, real square)
 // reused channel scalars 555; native adjusted-value construction 551. All restored.
 // Curve helper per-use header/bounds/both 534/545/529; clamp in mapping expression 529;
 // with per-use header/bounds/both 534/576/564; header guard return 529. All restored.
+// Round 161: Native clamp/rotation/negation results 716/568/611; clamp-rotation/clamp-
+// negation/rotation-negation/all 728/808/649/831; all with ordinary clamp inline 831. Negation
+// result forms lose the matched caller; original helpers and body restored.
+// Paired scalar-output recovery: numeric/vector results 578/578; helper guard 574;
+// parallel products 577; early numeric returns/input copy 577/586; entry/root defaults
+// 570/573; captured length/default plus capture 577/560; coordinated order/order plus capture 577/577.
+// Every paired helper, input observation, signature and call restored.
+// Round 165: Positive selection result byte/word/long/dword at original declaration
+// 531/561/559/559; entry declarations 531/561/559/559. Original bool result and every
+// vector/color/rotation operation restored; frame 0x2c versus 0x28 and block/query/result homes
+// remain. Both caller levels preserve their original measurements.
 // @retail 0xd37f0
 bool function_d37f0(s_lighting_parameter_block *block, long type, s_effect_color_query const *query,
 	s_lighting_record *record, color3f const *base, color3f const *lightmap)
@@ -1364,6 +1375,11 @@ real function_30bf0(vector3f *vector);
 // Round 217: Repeated primary direction/secondary direction/both/reflected color/secondary+color/
 // both+color/primary+color/secondary+all-colors views 367/468/468/368/471/471/370/471 fast.
 // In-place direction views recover frame 0x40 but regress; original fields, scratch and helpers restored.
+// Round 161: Optional magnitude output with void/numeric/vector result 411/411/411; guard 493;
+// native clamp/rotation/input graph 555/454/999; all normalizer products 321 (callee 577,
+// rejected). Original numeric returns/input copy 469/467; entry/root default 489/471; captured
+// length/default plus capture 439/476; coordinated block-query order/order plus capture 455/439.
+// All original helper contracts and bodies restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

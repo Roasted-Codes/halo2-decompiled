@@ -486,6 +486,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Round 254: complete per-use actor/node/both getters 465/668/705; each on native
 // for traversal 460/664/705; paired getters with long sample/update 720/711.
 // First six recover frame 0xa0 but grow code and retain stacked actor input; all restored.
+// Round 239: original shared actor/reference/prop getter force-inline declarations,
+// all seven subsets and all three with unsigned full next/current handles: 420 each.
+// Original getters, handle domains and body restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {
@@ -806,7 +809,7 @@ short function_25c9d0(long actor_index, long prop_ref_index, bool player, long s
 short function_25cb60(long actor_index, long object_index, short type, void *sample,
 	void *point, long location, long sight);
 short function_25cca0(long prop_ref_index);
-long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
+short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range);
 void function_26bfa0(long object_index, long *location_index, s_location_view *location);
 real function_296600(long actor_index, long prop_ref_index);
 

@@ -101,6 +101,14 @@ extern real g_4c9798[36];
 // complete bounded-size result 252; reused native pixel area 342; zero+size 322; zero+area 354;
 // size+area 342; all three 354; all with zero declared after mode 353. All restored; state
 // transport, protected rounding reloads and far-plane stores remain.
+// Round 166: Existing native state fields 239; shared width-first/height-first bounded dimensions
+// 298/306; with native fields 298/306; native fields with reused signed pixel capacity 333; shared
+// width/capacity without/with native fields 322/322. Original short mode/height, scalar
+// observations and far-normal copy restored.
+// Round 279: both category-admission predicates kept for publication and border, each
+// with multiple consumers: bool [363,348]; byte [363,348]; short [383,393];
+// long [373,388] (each pair late/entry zero border). Original body restored; state transport,
+// rounding reloads and the missing frame word remain.
 // Round 249: Existing native tag/direction/both field views 239 each;
 // early border zero alone/with tag/direction/both 342 each, zero after mode
 // with both views 297. Border forms recover frame 0x28 but regress; original

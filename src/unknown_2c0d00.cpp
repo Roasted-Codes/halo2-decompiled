@@ -926,6 +926,7 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 255: complete geometric truth carriers byte/short/word/long 385/398/397/401;
 // the same four with native byte side 385/398/397/401. Original Boolean results
 // and side parameter restored; frame 0x28 and zero/radius schedule remain.
+// Round 379: End/start/both endpoint addresses at use 385/462/451; traversal-lifetime edge alone/with end/start/both 385/385/462/451; complete receiver graph with node fields 421. Original body and helpers restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1107,6 +1108,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Native unsigned/signed byte returns with original tests, terminal comparison values and
 // a shared narrow result 172/172/172/172/172/172; shared-dot second-side-first ordinary
 // storage with narrow value returns 350/350 at 1465 bytes. Original bool contract restored.
+// Round 382: both direction constructions before normalization, first/second
+// construction and normalization orders, with original/late perpendicular:
+// 178/395/386/395/178/395/386/395. Original complete producer sequence restored.
 // Round 251: complete side-direction first/second-input staging 411/409;
 // entry-direction first/second-input staging 410/410; side/entry first-first,
 // first-second, second-first, second-second 472/472/457/471. Original outputs and body restored.
@@ -1306,6 +1310,12 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Round 255: entry ordinal/count/fallback zero lifetimes 444, 444, 444;
 // ordinal-count/ordinal-fallback/count-fallback/all 444, 471, 471, 472;
 // all with byte fallback 472. Original lifetimes restored; frame remains 0x11c.
+// Round 379: Data/single-step/both terminal exits 484/444/484; data-first acquisition alone/with data/single/both exits 470/478/470/478; traversal-only radius with both exits 485. Original body restored.
+// Round 165: Early actual data-result NULL lifetime coupled with source-radius/output-
+// index/traversal store subsets 469/486/491/466/471/487/496; combined existing endpoint setters
+// 496. Original data producer, both inherited local qualifiers, arm order and endpoint
+// construction restored. Frame 0x11c versus 0x10c, persistent zero and metadata/radius homes
+// remain.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

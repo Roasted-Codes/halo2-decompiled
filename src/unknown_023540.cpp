@@ -2748,7 +2748,8 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
     coordinates[1] = ((x * sine + y * cosine) * scale + 1.0f) * 0.5f;
 }
 
-// score 334 (was 334): Frame 0x58 and extent agree; sampler constants, bitmap call and scale/trig homes remain.
+// score 282 (was 334): Frame 0x58 agrees; six excess bytes, sampler constants,
+// bitmap-call transport and scale/trig homes remain.
 // Round 139: the first difference (+0x194, the stage loop's constants 2/3 in EBP/EDI where retail
 // has EDI/EBP and 0 in EBX) follows from the 0x144f0 call: retail passes the fallback in EBX, so
 // its 0 lives there. 0x144f0 sits in a contributor file this round; no new form tried.
@@ -2807,6 +2808,10 @@ static __forceinline void texture_corner_rotate(real x, real y, real cosine, rea
 // Signed integral corner inputs char/short/int/long in the existing rotation helper
 // 334/334/334/334; each with native coordinate outputs
 // 334/334/334/334. Original helper and all eight calls restored.
+// Round 378: Paired scaled pixel diameters 282; complete half extents 334;
+// native rectangle 282/334; independent second trig 280/338; rectangle plus trig
+// 280/338. Keep only paired diameters 282 (plain), 2028 bytes; the extra two-point
+// trig step is rejected. Original trig storage, arrays, helpers and calls retained.
 // @retail 0x29b00
 void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
     real first_angle, real first_scale, long second_bitmap, real second_alpha,
@@ -2876,11 +2881,13 @@ void __stdcall function_29b00(long tag, short first_bitmap, real first_alpha,
         first_texture_scale *= inverse_scale;
         second_texture_scale *= inverse_scale;
     }
+    real scaled_width = scale * width;
+    real scaled_height = scale * height;
     real bounds[4];
-    bounds[0] = 320.0f - scale * width * 0.5f;
-    bounds[1] = 320.0f + scale * width * 0.5f;
-    bounds[2] = 240.0f - scale * height * 0.5f;
-    bounds[3] = 240.0f + scale * height * 0.5f;
+    bounds[0] = 320.0f - scaled_width * 0.5f;
+    bounds[1] = 320.0f + scaled_width * 0.5f;
+    bounds[2] = 240.0f - scaled_height * 0.5f;
+    bounds[3] = 240.0f + scaled_height * 0.5f;
     if (first_texture_scale == 0.0f) first_texture_scale = 1.0f;
     if (second_texture_scale == 0.0f) second_texture_scale = 1.0f;
     real first_coordinates[8], second_coordinates[8];
@@ -3121,7 +3128,7 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
     D3DDevice_SetRenderState(D3DRS_ZBIAS, 0);
 }
 
-// score 934 (was 934): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
+// score 853 (was 934): frame 0x2c agrees; capability/save roles, state expansion and scalar homes differ.
 // Earlier: Frame 0x2c agrees; capability/save roles and state expansion remain.
 // frame 0x2c agrees; saved registers, mode flags and state-call expansion differ.
 // Short capability flags 1195; short rescale state 1204; color homes renamed 978;
@@ -3159,6 +3166,20 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // 1161/1202/1231; rounded result read once 1375; read once with byte channels 1325. All restored.
 // Round 232: native mode-one/two/three input layouts, all seven subsets 934;
 // complete premultiplied-color production with all layouts 935. All restored.
+// Round 164: bounded byte exponent alone/with reused threshold predicates 1182/1165;
+// signed byte 1013/1207; word 1200/1246; reused thresholds alone 1204; shared shifted
+// color-input word 934. All restored; original values, calls and directives retained.
+// Round 166: negative permission as bool 853 (plain), both permissions remain 0/1;
+// original long small-permission retained. Other values, operations and calls unchanged.
+// Round 166: Permissions small/negative: bool/bool and signed/signed 1088; short/byte 854;
+// byte/short 931; short/bool 854; bool/short 931; signed/byte and byte/signed 1088. Direct first-
+// alpha fields: long/long 942; bool/bool and signed/signed 1093; short/bool and short/byte 859;
+// long/bool 858. Carrier ablations: short/long 936; long/bool 853 plain, kept; word/bool,
+// word/byte and short/signed 854. On the recovered long/bool graph, redundant case 1/2/3/all false
+// stores removed 1167/855/1186/1195; shared mode tail alone/with case-one cleanup 1186/1190;
+// complete case results 1219; maximum result 1210. Restore all other carriers, memory
+// observations, cases and result lifetimes. Frame 0x2c agrees; mode bound ESI/EDI, full-width
+// small-permission test and state expansion remain.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)
@@ -3167,7 +3188,7 @@ bool __stdcall function_3a5c0(byte const *configuration, real low, real high, lo
     real offset = 0.0f;
     bool small = false;
     long allow_small = false;
-    long allow_negative = false;
+    bool allow_negative = false;
     real maximum = 1.0f;
     real inverse_distance = 1.0f / g_48565c;
     low *= inverse_distance;

@@ -321,6 +321,12 @@ extern real g_47f05c;
 // 190/192/190; consistent height reads alone/with input/list/both 205 each
 // (frame 0xd4); all with body-byte reads 220. Two-point input gain below gate;
 // original declarations, cached fields, calls and complete body restored.
+// Round 224: Consistent per-use count/list/component-data observations, seven subsets
+// 229/221/228/190/227/221/228; all with entry selection/result constants 198 at retail length.
+// Two-point component-data form rejected; original snapshots and full body restored.
+// Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
+// 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
+// and full body restored; frame 0xd0 and shape/count/alignment homes remain.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -1241,6 +1247,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Existing selection/tangent/speed dot inputs reversed independently, in all seven combinations,
 // and together with the accepted-count lexical home: 421 each. Helpers and body restored.
 // Round 152: Eight relative/desired/direction library-copy forms 421 each; complete accepted-count producer shared by insertion, increment, store and both tests 419, with one-contact-first 419 (2089 bytes). Two-point forms rejected; original copies, qualified count, cursor and response order restored.
+// Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
+// inline query with each support contract 434; the other five pairs 421.
+// Original declarations, qualified count, candidate cursor and response order restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
