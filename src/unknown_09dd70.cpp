@@ -456,7 +456,10 @@ static __forceinline byte *function_9d952(long arg_0)
     return (byte *)((s_object_header *)g_4e0300->data)[arg_0 & 0xffff].object;
 }
 
-// score 4 (was 4): retail reads field_92 before the +0x2a8 store (a field_92 local read before the
+// score 4 (was 4): only the final field_f4 copy into the object's +0x2b8 differs (in both duplicated
+// tails): retail moves it through EAX, ours through ECX. The field_92 read precedes the +0x2a8 store,
+// as retail has it (a field_92 local read before the object lookup, 12 -> 4).
+// retail reads field_92 before the +0x2a8 store (a field_92 local read before the
 // the final field_f4 copy into the object's +0x2b8 goes through EAX in retail
 // and through ECX in ours; the field_92 read now precedes the +0x2a8 store, as retail has it.
 // object lookup gives 4, kept out: one use) and copies field_f4 at the end through EAX (ours ECX).
@@ -522,6 +525,9 @@ static __forceinline byte *function_9d952(long arg_0)
 // original helper 101; early field_92 local 169; value cursor 223.
 // Round 221: Scalar memcpy tail/both publications 12/12; with branch-produced player result 153/153;
 // memmove tail/both 34/89, with branch-produced player result 158/172. All restored.
+// Round 88: +0xd4 field read at each use 4; copied value named first 4; +0xd4 local at block scope 4;
+// flag-arm object pointer at block scope 4; dword +0xd4 local with a braced else arm 4; a 600 s
+// permuter run (11 tries), none below 4.
 // Round 173: native final outer/marked/child object receivers, all seven subsets 4 each;
 // all native receivers with unsigned child handle 4. Original restored; both tail copies
 // still use ECX instead of EAX, with the entry and attachment loop otherwise exact.

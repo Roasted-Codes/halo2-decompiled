@@ -11,6 +11,11 @@ __declspec(align(16)) const dword g_4124a0[4] = {0x80000000, 0x80000000, 0x80000
 // temporary of its own and adds the broadcast of arg_3 to the masked term, and only
 // the register that holds the second argument still differs: ours keeps it in ECX,
 // retail in EDX.
+// Retry, 20 attempts: reuse arg_1 for arg_2, input/output locals and references,
+// pointer snapshots, aligned-load intrinsic, parameter addresses and a pointer
+// array all score 2. Loading arg_1 first or removing the arg_0 snapshot scores
+// 3 (arg_1 takes EAX); an entry output snapshot scores 7; a volatile __m128 copy
+// does not compile. Original retained; no outgoing calls.
 // @retail 0x1ce210 standard
 void __cdecl function_1ce210(const __m128 *arg_0, const __m128 *arg_1, const __m128 *arg_2, real arg_3, __m128 *arg_4)
 {

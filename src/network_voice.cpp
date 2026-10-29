@@ -1296,6 +1296,13 @@ bool voice_channels_have_player(s_voice_channels *channels, long player)
 // conjunction, nested success and two failure exits 111 each; forced conditional 94, ordinary conditional
 // 285. Every form loses 0x56160; 94 preserves 0x54990 but loses 0x56380. Original helper and grouped body
 // restored.
+// Round 396: named complete contribution/payload and payload-header/header-payload
+// accumulation on the grouped graph: post-tested inner 255,255,255,255;
+// pre-tested inner 111,111,111,111 at 347 bytes loses 0x54990. Original restored.
+// Round 188: real group subtotal, direct/named contribution/group/function entry width,
+// post/pre-tested inner: 233/233/241/267/128/128/104/130; original-site width bool/byte
+// and direct subtotal byte/long identity: 233/233/233/257. All legal gains lose 0x54990;
+// group-width 241 preserves it but hoists one-use computation, so restored. Original grouped total retained.
 // @retail 0x56220
 long voice_channels_get_bandwidth(s_voice_channels *channels, long player)
 {
@@ -3017,6 +3024,14 @@ struct s_voice_route_choice
 // Round 220: Selected route pointer on byte-bitwise radio graph: original/choice receiver/
 // three pairs/descriptor/both/receiver-three/receiver-descriptor/all
 // 533/533/541/536/543/541/536/543. Original index, observations and workspaces restored.
+// Round 396: shared routed-admission predicate across settings/reduction, at both
+// observation boundaries with choice receiver and bitwise/branch radio:
+// 1085,1088,1085,1088,1088,1090,1088,1090. All lose both callers and suppress expansion; original restored.
+// Round 250: signed range admission, original/conditional headset 367/367;
+// with split nearest selection 433/433; complete mode observation 440/440,
+// with split nearest 512/512. All restored; entry saves and cursor bias remain.
+// Round 395: signed nearest-index validity 419; with choice receiver 412, branch radio 415, both 414;
+// three mixer pairs on those four graphs 428/402/422/421. Original validity tests and full body restored.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

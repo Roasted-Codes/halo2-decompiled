@@ -232,6 +232,15 @@ void function_8dd70(void);
 // initialized root lifetimes 219/230/235/228/225/235/232; all seven roots 215 (897 bytes).
 // Exact-only snapshots restored; frame/entry agree, helper calls, readiness and global
 // reloads remain. The six-count form fails the eight-count gate as well.
+// Round 172: coordinated native AL success return domains at the existing
+// trim/interface providers, byte/bool, char/bool, bool/byte, bool/char,
+// byte/byte, char/char, byte/char and char/byte: 221 each.
+// Every declaration and both provider return contracts restored.
+// Round 269: Native session-admission chain split at all seven call-boundary
+// subsets, then all with separate manager/interface gates: 221 each. Original
+// complete chain, short readiness, observations and entire body restored.
+// Native gateway/handler entry declarations with immutable entry decision,
+// seven subsets and complete receiver role names: 221 each. Original lifetimes restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {

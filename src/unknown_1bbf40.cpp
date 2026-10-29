@@ -27,6 +27,8 @@ struct s_slot_5a
 
 void function_1f86a0(long index);
 
+static __forceinline long real_to_long(real value);
+
 short __stdcall function_1bbf40(long actor_index, s_slot *slot);
 short __stdcall function_1bc2a0(long actor_index, s_slot *slot);
 short __stdcall function_1bc6d0(long actor_index);
@@ -332,6 +334,8 @@ real function_1e3920(long actor_index);
 // Earlier result-first 53; output/reference and failure-cleanup forms did not close the carrier gap.
 // Per-use actor receiver with nested failure-first and output-home names 117/117; early admission 140/140;
 // success-first 116/116; success-first/early admission 138/138. All forms grow to 368 or 372 bytes.
+// Typed request reference fields 46; complete request Boolean 89; named movement kind 46;
+// typed fields/kind 46; Boolean with fields/kind/both 89/89/89; aggregate zero with fields/Boolean 99.
 // Round 110: selection compared inside the else-if 46; reference declared before the scratch call 46;
 // success branch first 46; flag store before the result 46; out locals swapped 46; the reference
 // compared as a long value 46; the search part as an inline helper 223 (its callee inlined).
@@ -435,9 +439,22 @@ short function_1b8cc0(long object_index, long *seat_object_index);
 bool function_1b9200(long object_index, long prop_index);
 point3f *function_b9dd0(long object_index, point3f *result);
 
-// score 189 (was 189): the boolean result is kept in EAX here and in CL
-// there, so the branch
-// that follows it and the whole chain of branches are laid out differently.
+// score 166 (was 166): retail keeps the special-vehicle flag in CL at the shared tail (the
+// special path does `mov cl, 1; jmp tail`, the scan's exits reload it from the dead actor
+// argument slot) and lays the tail out after the passenger scan; ours reloads the flag from
+// memory there and places the tail right after the special test, so the lockstep compare is
+// shifted through the scan. Round 70: the rounding inlined through a forceinline declaration
+// of real_to_long (as unknown_1bba20.cpp does) 189 -> 166. With it: bool flag 198 (every
+// stack slot as retail, aligned 61); flag set in an if/else around the scan 198; flag set in
+// an if 200; flag at function scope 198; proximity deltas declared x, y, z (retail squares z
+// first) 166 (198 with the bool); sum written x + y + z 198 (with the bool).
+// Round 270: reused vehicle identity 202; guarded reused prop identity 166; both 202;
+// native player-seat fields 166; vehicle/prop/both with those fields 202/166/202;
+// all native owners with bool special 221 at 861 bytes. Original restored.
+// Round 252: native actor/timer/both 166/167/167; normalized conditional 208/208,
+// with actor/timer/short both 208/208/206; actual bool field 166, conditional 174,
+// bool carrier with conjunction/conditional 198/175. Raw-byte conditional 146/146/147
+// changed the integer carrier and was excluded. Complete body and field restored.
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {

@@ -137,6 +137,9 @@ static __forceinline long real_to_long(real value);
 // participant-sum declaration 24; direct accepted return 67; count result 90;
 // node-level return removed on the narrow-sum graph 81.
 // they need no casts).
+// Round 165: explicit negative eligibility exits, original/full-width retry snapshot,
+// status-three-first and both 24/27/43/46; positive nested eligibility with the same
+// three alternatives 24/27/43/46. Narrow sum, early counter and original body restored.
 // Countdown-local short/long branch result 90/116; one eligible-branch
 // short/long result 90/94; each with a separate decrement 90/116/90/94.
 // Original status tails and decrement expression restored.

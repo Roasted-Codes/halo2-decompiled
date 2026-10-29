@@ -249,6 +249,16 @@ struct s_item_object_2bc1
 // reads the rate, so the rate and its forty-times multiply land in different
 // registers than ours; the countdown is also still decremented in al, while
 // retail keeps the decremented byte in cl.
+// Round 8: MSVC gives al to whichever byte value is compared as a signed byte
+// and moves the other one out of the way, so the countdown can only sit in cl
+// while the timer is the compared value; retail compares the countdown and
+// copies it into al, which no form here reproduces: the countdown compared
+// inside the test 91, before the test 91, as an int expression 67 (a 32-bit
+// test), through an int local 91, the expiry test before the store 91, a
+// redundant timer test as well 100; the rate in its own short local 61 (the
+// same code); the maximum line before the object pointer 70.
+// The expiry tested as `timer <= 1` 61 (the countdown lands in cl as in retail, but
+// retail compares it through a copy in al); not kept, gain under 8.
 // Standard convention (see docs/DECOMPILING.md):
 //   1. Retail keeps it __stdcall: the team argument is read from [esp + 0x3c]
 //      and the function returns with ret 4. Without the marker LTCG moves the

@@ -416,9 +416,8 @@ PRIVATE inline real trace_normalize_direction(vector3f *vector)
 struct s_type_c3b527;
 
 // @retail 0x26c4e0
-bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
-	s_path_trace_result *trace, s_pathfinding_data *pathfinding,
-	long sector_index, long target_sector_index, long location)
+bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start, long sector_index,
+	s_type_c3b527 const *end, long target_sector_index, long location, s_path_trace_result *trace)
 {
 	point3f const *origin = (point3f const *)start;
 	point3f const *target = (point3f const *)end;

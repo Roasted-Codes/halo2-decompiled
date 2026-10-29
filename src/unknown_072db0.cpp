@@ -1584,7 +1584,10 @@ static __forceinline void query_restore_pending()
 }
 static inline bool query_variant_available(long index)
 {
-    return g_47d8f4.count && (g_47d8f4.flags & 2) && function_1934f0(&g_551ae8[index]);
+    long result = false;
+    if (g_47d8f4.count && (g_47d8f4.flags & 2))
+        result = function_1934f0(&g_551ae8[index]);
+    return result;
 }
 
 #pragma optimize("g", off)
@@ -1595,8 +1598,9 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-
-// score 737 (was 737): frame 0xc0 agrees; initial user/identity and request-output homes remain.
+// score 719 (was 719): Frame 0xc0 agrees; initial cursor base/home, slot and request/completion homes remain.
+// frame 0xc0 agrees; native completion-group cursor retained;
+// initial cursor base/home, slot expansion and request/completion homes still differ.
 // Earlier: Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
 // Frame 0xc0 agrees; initial user/identity homes, logon dispatch and request/completion allocation remain.
 // Frame 0xc0 agrees; user cursor spills and identity uses EBX; cursor base, dispatch and completion homes remain.
@@ -1663,6 +1667,23 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // observations 728/739/770/737/728/739/770/770. Direct user observations kept, plain 728.
 // On that receiver graph, native char/byte admission with mutable/readonly identity: 728 each;
 // original admission field and identity retained. All call roles and state transitions preserved.
+// Round 387: Existing availability producer with single-exit bool/byte/short/long result and
+// combined/nested admission: 728/728/728/728/719/719/719/719. Native long result retained, plain
+// 719 at 2878/2862; all file matches preserved. Cursor base, slot expansion and request/completion
+// homes remain.
+// Round 390: existing native properties object with separate identity assignment,
+// producer-scoped team result and readonly slot masks 0-7: 719 each. Original
+// buffer, declarations, helper settings and complete body restored.
+// Round 392: distinct user/request/completion induction identities, all seven subsets,
+// then nested reset/descriptor role names: 719 each. Original identifiers and body restored.
+// Round 224: Native cached owner/property/both fields 728 each; owner/property/both with
+// test-produced admission 728 each; both with comparison-local team and with both result lifetimes
+// 728/728. Original cache views, admission/team lifetimes, predicates and task transitions restored.
+// Round 269: Slot/identity/properties, slot/properties/identity, identity/slot/properties
+// and properties/slot/identity initializations 767/767/759/741; readonly slot
+// forms give the same scores. Original order and full body restored; cursor base still differs.
+// Native user/request/completion group-array endpoints in subsets 1/2/4/3/5/6/7
+// 781/729/709/748/790/731/745; all equality endpoints 745. Completion-only kept, plain 709.
 // @retail 0x74aa0
 void function_074aa0(void)
 {
@@ -1791,17 +1812,18 @@ void function_074aa0(void)
                 if (online_stats_read_result(g_50c46c, (XONLINE_STAT_SPEC *)g_50c474,
                     (word)g_50c470, g_50e9fc, sizeof(g_50e9fc)))
                 {
-                    for (short group = 0; group < 5; group++)
+                    for (s_search_value_group *completed_values = g_509454; completed_values < g_509454 + 5; ++completed_values)
+                    {
                         for (long i = 0; i < 16; i++)
                         {
-                            s_search_player_values *player = &g_509454[group].players[i];
+                            s_search_player_values *player = &completed_values->players[i];
                             if (player->state != 2 && player->state != 5) continue;
                             if (!query_variant_available(i)) { player->state = 1; continue; }
                             long received = 0;
                             for (long record_index = 0; record_index < g_50c470; record_index++)
                             {
                                 s_cache_property_record *record = &g_50c474[record_index];
-                                const byte *identity = (const byte *)&g_509454[group] +
+                                const byte *identity = (const byte *)completed_values +
                                     (g_551ae8[i].type == 5 ? 0x10 : 4);
                                 if (!memcmp(identity, record->identity, 12) && record->type == g_551ae8[i].field_8)
                                     for (dword property_index = 0; property_index < (dword)record->count; property_index++)
@@ -1815,7 +1837,7 @@ void function_074aa0(void)
                                             long bounded = value;
                                             if (bounded < g_46722c[field][0]) bounded = g_46722c[field][0];
                                             else if (bounded > g_46722c[field][1]) bounded = g_46722c[field][1];
-                                            s_search_value *destination = &g_509454[group].players[index].values[field];
+                                            s_search_value *destination = &completed_values->players[index].values[field];
                                             if (!destination->valid || destination->value != bounded)
                                             { destination->value = bounded; destination->valid = true; }
                                         }
@@ -1830,6 +1852,7 @@ void function_074aa0(void)
                             }
                             failed = failed || received != 6;
                         }
+                    }
                     function_80aa0(g_50c474, g_50c470);
                 }
                 else { query_restore_pending(); failed = true; }

@@ -192,6 +192,21 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // boundaries, all seven subsets and producer-count ending after snapshot: 886 each.
 // Round 224: shared inline iterator first/second/both 968/1007/1103; shared calling iterator
 // first/second/both 905/915/899; real iterator-step first/second 953/919. Original scans restored.
+// Round 385: Existing allocator sentinel/zero/final-flag initialization, all seven subsets 886 each;
+// all with exhaustive allocation result 890. Original helper and body restored; entry zero,
+// target/primary/query-array homes and choice carriers remain.
+// DL167: Existing-record lookup from completed long/dword/short/word search ordinal
+// 892/892/893/893; each with a repeated target-tag snapshot 893/893/906/906. All
+// original scans, result publication, fields and helpers restored (fast/full control 886).
+// Round 249: native choice-muted/target-audible/target-muted byte domains, seven
+// subsets 915/890/886/898/886/890/890; all signed bytes 890. Original bool fields,
+// record layouts, complete body and every gain expression restored.
+// Round 225: target-step snapshot 889; target-tag snapshot 886; both 894 at retail length;
+// live pool 886; step/pool 889; tag/pool 886; all 894; all with direct computed gain 894.
+// Original target observations, pool snapshot and computed gain local restored.
+// Round 233: Common override attenuation, readonly override metadata and native
+// used-bit expression in seven subsets, then complete used-word expression: 982/886/982/886/982/886/982/982.
+// Common-result forms require a match; all original producers and body restored.
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)
