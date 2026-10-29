@@ -183,6 +183,9 @@ struct s_object_flags_256bd0
 // Round 208: actual entry-result output through pointer/reference, each formal order and bool/byte
 // success, 201 each. All original step and caller contracts restored; frame 0x114/0x110, cached
 // activity and geometry/selection homes remain.
+// Round 377: real datum-member storage, byte/native entry 201/201;
+// separate actual cursor/index outputs 202/202; conditional-entry byte/native
+// and split outputs 274/274/274/274. All helper/header/body changes restored; activity spill remains.
 // Round 211: Placement constructed before marker/after position/after direction 219/210/210; each
 // with a separate refreshed actor 219/210/210; refreshed actor alone 201; early
 // placement/refreshed actor/shared displacement 237. Original constructor, receiver, calls and

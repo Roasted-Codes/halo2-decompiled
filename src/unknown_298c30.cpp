@@ -352,6 +352,8 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // Unsigned-word edge pair/center/both/facing/edge-facing/center-facing/all results
 // 776/779/776/775/775/790/756; all four native-dword results 752 (fast control 749).
 // Frame/radius and trace/pivot homes remain; original result widths and body restored.
+// Round 382: maximum-selection presence/absence states as bool/byte/short/long
+// 783/783/783/783/778/753/778/770; no exact match. Original ordinal and full body restored.
 // @retail 0x299460
 bool function_299460(long arg_0, s_298c46 *arg_1, s_298c30 const *arg_2,
 	point3f const *arg_3, vector3f const *arg_4, vector3f const *arg_5,

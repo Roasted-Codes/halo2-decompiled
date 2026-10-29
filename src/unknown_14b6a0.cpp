@@ -210,6 +210,9 @@ void function_14bac0()
 // Second scan through 0x6b380 on its own iterator 257/259 (frame 0x48, no slot sharing); the centre
 // probing in a bare block 257 (no sharing); second iterator scoped to its block 230 (identical);
 // separate point declarations in five orders 233 each (layout unchanged).
+// Round 377: one native iterator on the first-pass/probe graph, original/request/marker
+// carrier combinations 334/333/333/334/333/333/332/333. All give frame 0x50 and 1084 bytes;
+// original iterators, signed carriers, probes and readiness restored.
 // Round 245: shared point setter at translation 230; overlap-safe marker inputs 230;
 // both 230; overlap-safe accepted points 241, with translation/marker inputs/both 241/244/244;
 // complete publication graph with native recipient iterator 262. Original source restored.

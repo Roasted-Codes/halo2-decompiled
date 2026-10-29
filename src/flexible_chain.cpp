@@ -253,6 +253,12 @@ void __stdcall function_1160c0(real dt)
 // Round 219: Exhaustive segment-pointer result, inner/outer invariant vertical and sine/cosine
 // order 297/297/309/309; default-pointer counterparts 281/281/309/309. All restored;
 // segment/previous/axis homes and rotation schedule remain.
+// Round 380: matched symmetric angle, segment-first, tick-before-stiffness and delayed
+// rest-offset combinations 177/276/181/279/213/271/216/273; two-point best dropped.
+// Original angle arguments, producers and complete executable body restored.
+// Round 382: complete delta/axis squared-product phases, three-use free blend weight,
+// all combinations and full projection products 179/179/179/179/179/179/179/179.
+// Original product phases and complete executable body restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

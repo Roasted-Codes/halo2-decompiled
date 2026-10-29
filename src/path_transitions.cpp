@@ -326,8 +326,8 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
     return false;
 }
 
-// score 31 (was 154): frame 0xe34 and retail length agree; collector flags, scan/selected-index
-// comparison and copy widths, and alignment-dot j ordering remain. Earlier at 154:
+// score 31 (was 31): frame 0xe34 and retail length agree; collector flags, scan/selected-index
+// comparison and copy widths remain. Earlier at 154:
 // the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // the flags argument to 0x26f930 is 16-bit in retail (as for 0x26fc80,
 // BLOCKED-BY 0x26f930's `long flags`), which shifts the loop padding; the alignment dot's j
@@ -346,6 +346,9 @@ bool function_26fe90(long actor_index, long object_index, real distance, s_objec
 // marker array: 154/154/154/154/154/154/154/154. Protected query promotion, loop padding and dot allocation
 // remain
 // original declaration scopes restored.
+// Round 379: query before defaults 32; false result after providers 164; entry short count 31;
+// query/result 164, query/count 32, result/count 164, all three 164; selected-index Boolean 98.
+// Original body restored; the alignment dot agrees on this graph.
 // @retail 0x26f990
 bool function_26f990(long actor_index, long object_index, real distance, s_object_marker *out, point3f *point)
 {

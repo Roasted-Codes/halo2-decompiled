@@ -1094,6 +1094,10 @@ struct s_game_engine_globals_connections_view
 // and time/connection homes remain.
 // Native widget metadata with glyph enum, immutable complete background and tail store order:
 // eight calibrated scores 170; metadata type and helper graph restored.
+// Round 380: numeric-buffer terminator after widths, name terminator at entry and
+// time terminator before name parsing, all seven subsets 175/232/228/231/262/173/176;
+// complete form with direct connection input 176. Calibrated widget/query roots;
+// original private initialization phases, all copies and executable body restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

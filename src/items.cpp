@@ -1047,6 +1047,9 @@ struct s_item_flags_view_10b850
 // named bounce coefficient and with attachment fields 887/887; step/coefficient and all three 893/893;
 // direct bound selection 813. Native collision location/object-node/material/all layouts 887/863/859/894.
 // All restored. Coefficient and collision layouts reach frame 0x148 without an eligible gain.
+// Round 378: Existing shared scaled-add at all four sites, with carrier/settled/position
+// polarity masks 0-7: 813/896/814/896/874/899/874/899. Original accumulation,
+// result carriers, full body and helpers restored; frame 0x154/0x12c remains.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {

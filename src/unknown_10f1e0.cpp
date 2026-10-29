@@ -1648,7 +1648,7 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 	result->k = up->k * input_direction.k + up->j * input_direction.j + up->i * input_direction.i;
 }
 
-// score 805 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// score 790 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // frame 0xcc versus 0xd4 and first angle expansion remain.
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
@@ -1701,6 +1701,10 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // Round 210: Animation-ID fields at every use: overlay/primary pair/secondary 867/863/833;
 // overlay-primary/overlay-secondary/primary-secondary/all 879/857/856/874;
 // graph at every use 873. Original ID ownership and all executable source restored.
+// Round 380: on the complete-direction/early-graph body, Boolean definition bit 11/10/both
+// 835/838/830; early two-use centered bool alone/with bit 11/with bit 10/both
+// 858/854/859/790; combined byte predicate 790. Keep the Boolean combined form,
+// plain confirmed at 790 (3386/3403); original floating grouping and all call roles retained.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)
@@ -1730,7 +1734,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 		channel.set(state->graph_tag_index, 0x800, control->animation_108, NONE, NONE, NONE, NONE))
 		channel.sample(1.0f, node_mask, node_count, transforms);
 	control->flags &= ~0x60;
-	if (!(definition->flags & 0x800) && state->graph_tag_index != NONE)
+	if (!(bool)((definition->flags >> 11) & 1) && state->graph_tag_index != NONE)
 	{
 		if (*(real *)((byte *)unit + 0x208) > 0.0f &&
 			*(short *)((byte *)UNIT_ANIMATION_CONTROL(UNIT_ANIMATION_OBJECT(unit_index)) + 0x36) == NONE)
@@ -1758,7 +1762,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 					i++;
 				} while (i < 3);
 			}
-			if (!(definition->flags & 0x400))
+			if (!(bool)((definition->flags >> 10) & 1))
 			{
 				vector2f angles;
 				angles.i = g_4687c4->x;
@@ -1788,6 +1792,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 						else if (screen_b) bounds_112070(screen_b, (real *)control->unknown04);
 						active = function_111590(unit_index, 4);
 						active &= !((state->unknown7c == 0x700005c || state->unknown7c == 0x700005d) && !unit_animation_state_finished(state));
+						bool angles_centered = fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f;
 						if (control->slots[4].unknown1)
 						{
 							real weight = function_1d9370((s_1d9240 *)&control->slots[4]);
@@ -1805,7 +1810,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 									else
 									{
 										if (0.0001f > wb) { wa = 1.0f; wb = 0.0f; }
-										if (wa > 0.0001f && (wa < 0.9999f || !(fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f)))
+										if (wa > 0.0001f && (wa < 0.9999f || !(angles_centered)))
 											a.sample_aiming(angles.i, angles.j, wa, node_mask, node_count, transforms);
 									}
 									if (wb > 0.0001f)
@@ -1813,7 +1818,7 @@ void __stdcall function_112070(long unit_index, dword const *node_mask, long nod
 								}
 								else if (screen_a)
 								{
-									if (weight < 0.9999f || !(fabs(angles.j) < 0.0001f && fabs(angles.i) < 0.0001f))
+									if (weight < 0.9999f || !(angles_centered))
 										a.sample_aiming(angles.i, angles.j, weight, node_mask, node_count, transforms);
 								}
 								else if (screen_b)
