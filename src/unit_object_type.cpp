@@ -7450,7 +7450,7 @@ struct s_unit_melee_collision
    hit (through the player code when it asks), plays the impact and
    applies the second damage to the striker */
 // @retail 0xcf3d0
-void __stdcall function_cf3d0(long unit_index, long name, long flags, real scale)
+void __stdcall function_cf3d0(long unit_index, long name, byte flags, real scale)
 {
 	s_unit *unit = UNIT_GET(unit_index);
 	byte *local_98b918_2 = UNIT_DEFINITION_GET(unit);
@@ -7628,7 +7628,7 @@ void __stdcall function_cf3d0(long unit_index, long name, long flags, real scale
 		{
 			goto impact;
 		}
-		if (!(byte)flags)
+		if (!flags)
 		{
 			if (function_a76b0(unit_index, 0))
 			{
