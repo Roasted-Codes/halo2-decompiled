@@ -14,7 +14,7 @@
 
 #include "vector_products.h"
 #include "normalize3d.h"
-// score 581 (was 594): the frame is 0x64 against retail's 0x60 and the body is
+// score 581 (was 581): the frame is 0x58 against retail's 0x60 (ret 0x20 agrees) and the body is
 // thirteen bytes longer; retail keeps the primary shape in the stack slot at [esp+0x14]
 // and the secondary shape in EDI, ours keeps the inverse at [esp+0x14] and the
 // secondary shape at [esp+0x10].
@@ -83,6 +83,9 @@
 // Round 206: shared vector-add first/second/both wave stages 690/581/690; paired camera
 // add-scaled 702, with first/second/both waves 708/703/709; all with shared default scale 708.
 // Second-wave vector-add kept at plain 581 (2635 bytes); frame 0x64 and shape/basis homes remain.
+// Round 88 (frame now 0x58): both shape pointers NULL then one if/else at entry 622 at retail
+// length (retail's entry exactly; the 8-byte frame shift costs every slot); declarations swapped
+// 622; test inverted 627; inv after the shapes 621; both ternaries at entry 708.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,

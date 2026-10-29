@@ -341,6 +341,12 @@ void function_11bed0(s_location *location, point3f const *point);
 // shared salted getter 117; native while 93; absolute-slot continue 110;
 // returned-datum eligibility/native index 147; typed returned datum 147; typed datum/aggregate 147;
 // returned-datum eligibility/shared getter 192. Location expansion and datum/element register ownership remain.
+// Round 88: 0x219d90's datum walk with a pool local (`s_record_pool *data = LOOPING_SOUNDS;`,
+// next_sound_datum first, then the inline scan) is retail's code once 0x11bed0 is called: it
+// matches with 0x11bed0 kept out of line (161 while it is inlined); without the pool local 161;
+// the called advance 98. BLOCKED-BY 0x1d48f0: with 0x11bed0 out of line, a caller that declares
+// a 16-byte-aligned local itself (0x1d48f0's Havok locals) moves 0x14a280's bsp to the stack; an
+// aligned local that comes from an inlined helper does not, and no other caller does.
 // @retail 0x21a100
 void looping_sound_update_locations(void)
 {
@@ -1166,7 +1172,7 @@ void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 	}
 }
 
-// score 87 (was 97): the range additions still fuse; the 0x10 frame versus 4 and direction stores differ.
+// score 87 (was 87): the range additions still fuse; the 0x10 frame versus 4 and direction stores differ.
 // Before the shared direction workspace, only the range tails differed. Round 58:
 // split declarations and assignments 97; assignment in the
 // distance test 97; force-inline helper declaration 97; const results 97; entry-scope results 97;
@@ -1174,6 +1180,11 @@ void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 // Zero-first exit/if-else 102/102; double range/trig consumers 97/79 (precision form restored);
 // shared direction and scale in-place/workspace 97/87 (workspace kept); cosine before yaw 97;
 // complete offset before publication 94. Original real casts and component grouping are preserved.
+// Round 88: our compiler keeps the unfused add only when the range result has one use (returned,
+// stored or spilled at once, as in 0x1252f0); kept on the x87 stack for several uses it fuses.
+// Direction and scale in place on the output 97 (260 B, only the three adds differ); ranges as
+// direction arguments 101; scale_vector_by_double in place 108, on the workspace 76 (297 B, the
+// pitch/yaw values spill: further from retail, not kept); a named seed pointer 110.
 // @retail 0x21ce60
 void function_21ce60(s_type_a82d9f const *detail, vector3f *offset)
 {
@@ -1265,31 +1276,28 @@ bool looping_sound_prepare_detail(s_type_a82d9f const *detail, long looping_soun
 bool g_4e636d;
 real sound_get_minimum_distance(s_sound const *sound, long definition_index);
 
-// score 101 (was 101): the minimum query expands and the unused maximum query vanishes,
-// removing retail's spill. Caller noinline/inline declarations, separately/both, and
-// direct field reads 101 each; native receiver 103. Definition-side minimum/maximum/both
-// noinline 87/120/83; direct/native receivers with both 73/65. Maximum/both inline with
-// noinline 11/11; minimum inline 65. Guarded receiver/distinct ordinals 0/0, but the
-// matched declaration form loses other matches; detail cursor 10. Caller noinline with
-// provider inline 101. All provider declarations and the original body restored.
+/* reads the distances of the definition's first track that has a loop sound
+   (the maximum is read and dropped) and then scans the detail sounds; retail
+   tests the first track on every pass and keeps both distance reads out of line */
 // @retail 0x21d060
 void function_21d060(long definition_index, s_type_99c531 const *source)
 {
 	if (g_4e636d && source->audible == 1)
 	{
 		looping_sound_definition *definition = (looping_sound_definition *)g_4e3b44[definition_index & 0xffff].bytes;
-		/* Retail repeatedly tests the first track; no track-pointer advance survives. */
-		for (short i = 0; i < definition->track_count; ++i)
+		short i = 0;
+		while (i < definition->track_count)
 		{
-			long track_sound = definition->tracks->loop_sound_index;
-			if (track_sound != NONE)
+			looping_sound_track_definition *track = definition->tracks; /* never advanced */
+			if (track->loop_sound_index != NONE)
 			{
-				real minimum = sound_get_minimum_distance((s_sound const *)source, track_sound);
-				sound_get_maximum_distance((s_sound const *)source, track_sound);
+				real minimum = sound_get_minimum_distance((s_sound const *)source, track->loop_sound_index);
+				sound_get_maximum_distance((s_sound const *)source, track->loop_sound_index);
 				if (minimum != 0.f)
 					return;
 				break;
 			}
+			++i;
 		}
 		for (long i = 0; i < definition->detail_sound_count; ++i)
 		{
