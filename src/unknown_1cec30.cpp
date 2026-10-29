@@ -2670,7 +2670,7 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 50 (was 114): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
+// score 50 (was 50): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
 // retail stages them (the reduced image stages them as retail and leaves 7: the five rigid-body reads
 // address [offset + data] where retail has [data + offset], and the 0x1d1010 call copies the component
 // to ESI before the index to ECX).
@@ -2743,6 +2743,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // two-use change pointer 50; reversed velocity declarations 50; guarded do-while 53;
 // reversed loop comparison 52; preincrement 50; outer-block index 50; per-iteration body index 50.
 // Original body restored; entry saves, five address forms and the final argument moves remain.
+// Round 383: retained pre-clamp body/owner handle/native repeated array receivers 190/190/53;
+// body+owner/body+array/owner+array/all/all with plain while 193/189/190/192/192 (controlled
+// preview 50). Original body, paired getter, observation graph and all interfaces restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
