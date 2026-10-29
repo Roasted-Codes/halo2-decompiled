@@ -144,8 +144,10 @@ real sound_get_minimum_distance(s_sound const *sound, long definition_index)
 	return function_xaa8231(definition->class_index)->minimum_distance;
 }
 
+/* inline: callers that keep it out of line (0x21d060) then save their scratch
+   registers around it, as retail does */
 // @retail 0x125010
-real sound_get_maximum_distance(s_sound const *sound, long definition_index)
+inline real sound_get_maximum_distance(s_sound const *sound, long definition_index)
 {
 	s_sound_definition *definition;
 
