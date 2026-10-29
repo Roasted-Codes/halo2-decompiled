@@ -2153,7 +2153,7 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 	long rigid_body_index, bool started);
 
 /* places the biped's ragdoll bodies, from its root rigid body outward */
-// score 6 (was 70): frame 0x110, entry and length 224 agree; six mask/Boolean/output stack offsets differ.
+// score 6 (was 6): frame 0x110, entry and length 224 agree; six mask/Boolean/output stack offsets differ.
 // Native one-word visited mask 91 kept; root clamp 143, with native mask 100; common result 123;
 // declaration-time zero 100, with common result 123; result first 100, with common result 123.
 // Lookup/output scope 86 (five-point incremental gain, 11 extra bytes; restored); with root clamp 101;
@@ -2170,6 +2170,10 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 // 25/32/25/32, entry defaults 104/106/104/106; original indexed mask 6/13/6/13.
 // Unescaped default plus indexed mask and shared placement output 6 plain, kept.
 // Consumed lookup scope with array/scalar and shared/distinct output 99/97/103/101.
+// Round 402: placement destination before mask/list, after lookup or before root,
+// started/placement-succeeded names, late mask declaration and combined native names
+// 6 each; list scope through placement/mask with shared output 99/99, distinct output
+// 103/103. All restored; six mask/Boolean/output homes remain.
 // @retail 0xe1b60
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 {
