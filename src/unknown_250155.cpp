@@ -2099,11 +2099,13 @@ void function_1905bf(long controller, bool flag);
 // score 93 (was 93): the call at the top of the function goes to another
 // helper in ours and to retail's 0x14917c, and the branches around it land in
 // the other order
-// score 93 (was 93): with a bool result every instruction is retail's; retail's one exit
+// with a bool result every instruction is retail's; retail's one exit
 // follows the base call and the not-signed-in block comes last, ours puts the exit last.
 // Base call after the if/else with the else returning 137; the base call in every
 // path that reaches it 107; not-signed-in early return 106; bool result first and
 // returned by the early test 111; constant returns with a direct base return 137.
+// Success from inherited failure test at long/bool/signed-char/short width 153/142/143/154; direct
+// event index reads with those widths 153/142/143/154. Original result producer retained.
 // @retail 0x250b1e
 bool c_session_lobby_screen::v10(s_widget_event *event)
 {

@@ -137,6 +137,8 @@ static __forceinline char *upload_copy_ab(char *destination, char const *source,
 // start in the parameter list 40; the length in a named local after the sign tests 40;
 // string + start with start unmodified 28 but start then arrives in edx (0xb5f10 differs);
 // that with a plain string parameter 41; start = string + start 40.
+// Cursor displacement with fixed/explicit maximum, unequal/ordered end tests and signed/unsigned
+// returns: eight forms 36 each; threshold rejected, shared find changed.
 // @retail 0xb6220
 bool function_b6220(char const *volatile string, long start, long count, char *destination)
 {

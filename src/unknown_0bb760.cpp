@@ -517,6 +517,8 @@ void function_3dd10(long object_index, bool force);
 // Upper-first conditional/branches 201/244; lower-upper/upper-lower clamp stages 273/252; per-channel values lower/upper-first 240/243; all channel values lower/upper-first 245/254.
 // Direct rounded seeds 84; shared double hue delta 156; both 156; symmetric six HSV products 84;
 // products/direct seeds 84; products/delta 156; all three 156; positive hue arm on all three 156.
+// HSV lower/upper/mixed buffers lifted individually, each pair and all to choice-count scope: seven
+// forms 84; all three at function entry 84.
 // @retail 0xbe240
 void __stdcall function_be240(long object_index, dword color_mask, color3f const *colors)
 {
