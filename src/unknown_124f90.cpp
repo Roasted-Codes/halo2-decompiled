@@ -1458,6 +1458,9 @@ void looping_sound_controller_release(long index);
 // pool local 43 (stack convention); effect index local 5; byte count local 5; count pointer 5;
 // nested decrement tests 5; harness: char field, cast, `--`/`&=`, `+ 0x7f`, long/short/dword
 // temporaries, mask first, bitfield, release without the depth pragma all keep EBP or worsen.
+// Round 107: a dword decrement moves the pool to EBX (diagnostic); tests swapped 40; index parameter
+// read through its address 46; `(word)` controller index 31; `(count + 0xff) & 0x7f` 5; controller
+// pool local 5; decrement helper (kept out of line by the pragma) 29, forced inline 29.
 // Final pool-release inline/noinline declarations 5/5; controller/playback/both direct lookups
 // 58/59/81; unsigned cyclic remainder 5; shared cleanup exit 5; controller-first predicate 40.
 // @retail 0x127390
