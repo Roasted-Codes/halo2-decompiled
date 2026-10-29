@@ -1824,6 +1824,9 @@ PRIVATE __forceinline void squad_area_consider(byte *squad, byte const *definiti
 // Round 27: lookup/consideration expansion boundaries, ordinary/inline/forced
 // in all eight non-original pairs [546,546,305,546,546,305,462,462]. Original
 // helper bodies and metadata restored; coupled count/best/point homes remain.
+// Round 176: Native player record 257; datum iterator 262; both 262; native squad state 257;
+// squad/player 257; squad/datum 262; all three 262; all/shared actor walk 262.
+// Datum storage grows the frame to 0x40; original records and both private helpers restored.
 // @retail 0x204450
 void function_204450(long definition_index, long squad_index)
 {
@@ -2180,6 +2183,9 @@ PRIVATE __forceinline long squad_tick_round(real ticks)
 // live state getter 275. Original body and rounding helper restored; early saves and intersection spill remain.
 // Exact tick result 312; native word index/actor type 275/275; complete point value 275;
 // value/lexical order 275; failed-team result 275; first-overlap exit 305; early output object 275.
+// Round 176: Complemented squad/overlap/both/actor/squad-actor/overlap-actor/all carriers
+// 330/307/316/322/345/336/330; all with shared raised-point scaled add 330.
+// Original complete result graph and every eager call restored.
 // @retail 0x201ea0
 void function_201ea0(void)
 {
@@ -2792,6 +2798,9 @@ static __forceinline long real_to_long(real value);
 // Phase-local native squad timer/final/both 252/262/259; phase-local native groups 293; all phase-local native walks 314.
 // Round 117: Activity input group/squad/both 227/227/227; conversion-workspace names 227; factor-first periods 227; ordinary inline group/squad 227/227.
 // Round 121: Boolean group-step contract 227; unused group/squad/both suffix words removed 228/228/228; typed squad-step return 227. Original records and helper contracts restored.
+// Round 176: Shared conversion input/output/both scratch 227/227/227; input/output/both with
+// native groups 250/250/250; both with native group/squad walks 256; phase-local groups 292.
+// All computation points preserved; original four walks and scratch scopes restored.
 // @retail 0x202720
 void function_202720(void)
 {

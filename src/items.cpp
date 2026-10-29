@@ -1052,6 +1052,9 @@ struct s_item_flags_view_10b850
 // result carriers, full body and helpers restored; frame 0x154/0x12c remains.
 // Round 161: Native item flag8/flag29/state0/flag8-29/flag8-state/flag29-state/all-three 813 each;
 // late flag14 view 846. Original actual item declaration and whole body restored.
+// Round 176: Library input captures in rotation/dot/both/cross/rotation-cross/dot-cross/all
+// 931/1229/1381/1400/1517/1736/1829; all with library matrix copy 1829.
+// Original producers, scalar input captures, in-place behavior and flow operands restored.
 // @retail 0x10b850
 void __stdcall function_10b850(long object_index)
 {
