@@ -4415,6 +4415,9 @@ bool session_peer_map_set_connected(s_session_peer_map *map, const s_session_mem
 // as in retail, but the state <= 2 exit keeps its own block); only the three state-test exits through
 // `done:` 308; all exits through `done:` with one `state <= 2 || state > 8` test 357 (1264 bytes, the
 // reason-2 block placed last); better/same declared at entry 367, with every exit through `done:` 381.
+// Round 72: sender test inverted ahead of reason 5 317; acknowledgement after the shared exit 305
+// (same code); its result set before the state-7 test 305; preference/equal flags swapped 305;
+// both declared after the member lookup 314. Retail reloads the result byte on every exit.
 // @retail 0x5e7f0
 bool __stdcall function_05e7f0(c_class_58d20 *session, const s_type_99af70 *address, const void *message,
  long *reason, bool *has_identity, s_session_member_identity *identity)

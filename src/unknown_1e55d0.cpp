@@ -100,6 +100,9 @@ static __forceinline long real_to_long(real value);
 // aligned frame and length (1164 bytes), the automatic aligned local 307; both break the matched
 // functions 0xb77d0, 0x1c4b00, 0x1ed340 and 0x2901e0 (29/49/133/45) that the plain form keeps
 // matching. Original body restored; plain frame and callee propagation remain.
+// Round 390: Separate target inline/noinline contracts with manual/aligned-byte/automatic
+// capsule lifetimes and aligned-byte period observation: 353/353/305/305/307/307/306/306. Original body restored.
+// Aligned forms recover frame 0x94 but lose four matched controls; declaration contracts do not fix it.
 // @retail 0x1e55d0
 void __stdcall function_1e55d0(s_biped_physics_move *move, void *physics, s_biped_physics_output *output)
 {

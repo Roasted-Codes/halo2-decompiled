@@ -232,6 +232,10 @@ void function_14bac0()
 // aggregate/CRT clear 230 each; both aggregates 230; first aggregate/native recipient aggregate
 // 250; both cleared/native recipient 279. Original initialization and iterators restored; frame
 // 0x44/0x3c, readiness homes and recipient overlap remain.
+// Shared in-place vector addition with native recipient/difference/query-input combinations 230/259/230/259/230/259/230/259; original storage and helpers restored.
+// Round 175: Complementary destination/alternate/both readiness 233/240/242;
+// with the native result-tested recipient iterator 254/254/259; both as byte/long
+// 242/286. Original readiness, iterators, points, counters and executable body restored.
 // Existing in-place vector sum with shared displacement/live ancestry headers/both 230 each;
 // sum alone 230; all four with the native recipient call 259 each. Original geometry,
 // both iterators and includes restored; frame 0x44/0x3c and readiness homes remain.
@@ -240,6 +244,10 @@ void function_14bac0()
 // iterator 268 (retail's or/inc/js scan); with the 0x6b380 second scan 270; final scan on the global with
 // the three `players` reloads dropped 295, with the 0x6b380 scan 294; with that scan, centre/height/radius
 // or its iterator declared at the block top 259/259 (declaration scopes do not move the packing).
+// Round 227: Existing final reset record-inline/datum-inline/called/step producers
+// 268/268/306/290; with native recipient iterator
+// 270/270/328/296. Original final scan and both request traversals restored;
+// frame 0x44/0x3c, point/recipient sharing and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

@@ -338,6 +338,12 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // Round 385: Natural nonterminal continuation pairs with long/bool departure
 // and memcpy 340/340/338/338, with memmove 323/340/307/307. Original terminal tests restored.
 // Round 387: Parameter-derived current index live before classification, with Boolean departure, CRT overlap compaction and constant heading combinations 245/215/236/277/261/247/250/251; no added completion flag. Original body restored.
+// Round 233: Complete current/candidate coordinate carriers at each candidate,
+// squared-distance expression in seven subsets, then overlap CRT compaction:
+// 253/287/278/203/253/287/278/289. All original coordinate reads, arithmetic and body restored.
+// Round 182: native unsigned-word input count, long/bool departure and
+// late/early heading crossed with memcpy/memmove 260/232/258/239/253/259/261/266;
+// matched caller becomes 34 in each reduced trial. Original signature and body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {
@@ -570,6 +576,11 @@ PRIVATE __forceinline bool clip_points_equal_23a6f0(point2f const *a, point2f co
 // false/false results 284 each. Count ECX and prior-side byte home remain; original body restored.
 // Round 366: previous-distance carry 156; two-use intersection pointer 129; both 156; shared 2-D difference 129, with distance/pointer/both 156/129/156; joint point cursor 262. All restored.
 // Round 369: prior/current/both outside values 257/268/325; outside values with test-assigned fraction 253/266/316; both with negative accumulation 344; complementary side presence 134. All restored.
+// Round 109: retail loads count once into ECX after the alias copy (`mov ecx, [count]; movsx edi, cx`,
+// guard `test cx, cx`), so ECX is busy at entry and the previous side spills (+0xd, current +0xc);
+// ours reads count from memory twice and keeps the previous side in CL. The alias test reversed 130;
+// the clipped reset after the alias copy 220; mask declared first 132; plane n.j * dy 129; the
+// previous side as `0 <= distance` 129 (compile-only screens of nine more orders and spellings: none).
 // @retail 0x23a6f0
 short function_23a6f0(point2f *output, short count, point2f const *points,
 	plane2f const *plane, short capacity, dword *point_mask, bool *clipped, real epsilon)
