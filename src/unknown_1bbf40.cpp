@@ -339,6 +339,9 @@ real function_1e3920(long actor_index);
 // Round 110: selection compared inside the else-if 46; reference declared before the scratch call 46;
 // success branch first 46; flag store before the result 46; out locals swapped 46; the reference
 // compared as a long value 46; the search part as an inline helper 223 (its callee inlined).
+// The scratch release written in each branch 47 (342 bytes, same carriers); the failing actor re-read
+// into `actor` 46; the selection tested without a local 46; the search outputs or the reference
+// declared at the top of the function 46/46.
 // @retail 0x1bcab0
 bool __stdcall function_1bcab0(long actor_index, s_slot *slot)
 {

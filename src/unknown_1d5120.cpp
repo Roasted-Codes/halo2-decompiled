@@ -87,28 +87,22 @@ void function_1d56f0(s_havok_component *component)
     }
 }
 
-// score 79 (was 79): frame 0x104 and MXCSR homes agree; result/direction/callback homes and setter convention
-// differ; tried rotation value 190; pose value 232; rotation simd 150; info first copy 87; source pose value
-// 216; completed count 149; filter value 119; initial height value 79.
-// the success byte's frame home sits eight bytes above
-// retail's and the callback slot four bytes high, and the loop's branch
-// update still takes the signed-subtraction form.
-// score 77 (was 79): with the presence callback's real 12-byte size, its false-initialising
-// constructor, the inc/dec update and the callback declared first, every frame home and the whole
-// body up to the success tail agree; left: the rigid-body lookup's address operand order and the
-// success tail, BLOCKED-BY 0x1d0cf0 (retail passes it the component in EBX, ours pushes it).
-// inc/dec update alone 90; with the 12-byte callback 80; callback after the direction 80; callback
-// declared at the world add 86; the 12-byte callback with the subtraction update 119.
-// score 77 (was 77): rigid-body address operand order and success-tail setter convention remain.
-// Two-use body/motion sources 223/215; output columns 021/102/201/210 78/80/80/79;
-// translation publication/input before rotation 84/83. Frame and callback homes stay correct.
-// score 77 (was 77): first difference is still the lookup's `[base+index]` against retail's `[index+base]`; the tail waits on BLOCKED-BY 0x1d0cf0 (retail passes transform in EAX, component in EBX, index in ECX, plain ret). Body pointer local 77; filter first 102; shape before the transform copy 77; direct rigid_bodies indexing 77; transform by assignment 77; a harness keeps base first for every entry statement order and lookup spelling.
-// lookup address operands and setter input convention remain; count publication after
-// rotation columns 0/1/2, translation construction and pose copy 77 each; query-derived success 110;
-// derived success with late count 110; collision-first branch 77. Correct frame homes preserved on restore.
-// score 77 (was 77): lookup address operands and setter component convention remain;
-// shape/filter/both/reversed fields before lookup 110/109/107/105; shape/filter/both
-// before snapshot 77/102/84; pose before input construction 217.
+// score 77 (was 77): every frame home and the body up to the success tail agree; left: the rigid-body
+// lookup's address operands (ours `[base+index]`, retail `[index+base]`) and the success tail, BLOCKED-BY
+// 0x1d0cf0 (retail passes it the transform in EAX, the component in EBX and the index in ECX, plain ret;
+// ours pushes index and component), which also moves the release path's scratch registers.
+// Tried: rotation value 190; pose value 232; rotation simd 150; info first copy 87; source pose value 216;
+// completed count 149; filter value 119; initial height value 79; inc/dec update alone 90; with the
+// 12-byte callback 80; callback after the direction 80; callback declared at the world add 86; the 12-byte
+// callback with the subtraction update 119; two-use body/motion sources 223/215; output columns
+// 021/102/201/210 78/80/80/79; translation publication/input before rotation 84/83; body pointer local 77;
+// filter first 102; shape before the transform copy 77; direct rigid_bodies indexing 77; transform by
+// assignment 77; count publication after rotation columns 0/1/2, translation construction and pose copy 77
+// each; query-derived success 110; derived success with late count 110; collision-first branch 77;
+// shape/filter/both/reversed fields before lookup 110/109/107/105; shape/filter/both before snapshot
+// 77/102/84; pose before input construction 217; a component-first getter 77; the tail through the
+// existing matrix setter (0x1d0c20, called out of line here) 113; `(data + index)->rigid_body` 77; the
+// body pointer declared at the top 77; a named index local 77.
 // @retail 0x1d5120
 bool function_1d5120(s_havok_component *arg_0, long arg_1, long arg_2, long arg_3,
  real arg_4, long *arg_5, long arg_6)

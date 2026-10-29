@@ -346,13 +346,18 @@ void __stdcall function_b5a70(long player_index, long type, long count, long obj
 // in ebx and the player on the stack); only has_player dropped (90, same flip); a local
 // copy of the player (119); both dropped with the count read through its address as in
 // 0xb5a70 (113: the player still goes on the stack).
-// score 79 (was 79): retail reads the player's machine field twice (its dead `add ebx, edx`
+// Retail reads the player's machine field twice (its dead `add ebx, edx`
 // after the folded load); doing so moves LTCG's register parameter from the player to the count
 // (ebx) and the five callers differ. Natural for loop with the player used only at its test 119;
 // machine field read twice on the entry-flag form / the opening body 85 / 99 (callers differ);
 // entry flag after the state read 101; loop index declared at the top 101; existing event player
 // getter with the double read 85 (callers differ). The entry-flag form (player tested at entry only,
-// re-measured 101) keeps the callers and is closest when aligned.
+// re-measured 101) keeps the callers and is closest when aligned. Retail reloads g_4cf77c after the
+// loop's calls (as for a field of an address-taken struct global); ours keeps the world in ebx across
+// them (a5930/a5980 are leaves), which takes ebx from the player. Tried: has_player kept with the slot
+// masked at its use 85 (callers differ); a5930/a5980 moved to a /GL- file 103 (0xa3990 lost); the world
+// global read at each use 79; slot at entry with the player tested at its use 90 (callers differ); both
+// entry values computed inside the state test 106 (callers differ).
 // @retail 0xb5ba0
 void __stdcall function_b5ba0(long player_index, long type, long count, long object_indices,
     long size, void const *data, long timeout)
