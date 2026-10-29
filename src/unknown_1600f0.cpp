@@ -1115,6 +1115,9 @@ struct s_game_engine_globals_connections_view
 // Original shared bounds restored; frame/prefix agree, deferred icon tail and later homes remain.
 // Round 394: Existing icon-query/time-formatter/name-parser inline declarations, all seven
 // subsets 170 each; all three separate noinline declarations 170. Original declarations restored.
+// Round 271: existing short/name/connection widget initializer inline class contracts,
+// all seven subsets and joint noinline contracts, 170 each on calibrated roots.
+// Original owning header and complete body restored; deferred icon tail remains.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,
@@ -1314,7 +1317,7 @@ PRIVATE inline long score_string_list_1608e0()
 	}
 	return result;
 }
-// score 689 (was 756): native rectangle objects recover retail length; frame 0x790 versus 0x79c;
+// score 689 (was 689): native rectangle objects recover retail length; frame 0x790 versus 0x79c;
 // the local player sits in EDI (retail EBX) and the
 // x coordinate in EBX (retail EDI); the color locals' slots (retail keeps background below foreground)
 // and the shared 0.0/1.0 registers of the fade clamps differ.
@@ -1417,6 +1420,9 @@ PRIVATE inline long score_string_list_1608e0()
 // field conversions 689/689/694/694. Ordinary scalar-input objects kept, plain 689 at 2879 bytes.
 // Round 394: Complete dim team-last/complementary-brightness/both 758/758/760; icon denial
 // 756, with team-last/brightness/both 758/758/760; recurring flag field 756. Original body restored.
+// Round 271: entry native rectangle declarations for title/fixed/optional caption groups,
+// every subset and all with complete rectangle identities, 689 each. Original producers,
+// native object lifetimes and body restored; frame 0x790 versus 0x79c remains.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {

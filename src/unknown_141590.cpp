@@ -807,6 +807,10 @@ void function_143250(
 // 2055/2088/2107/2123/2146/2179/2279; all arrays at entry 2279
 // (fast control 2040, full 2039). Original shared matrix and publication orders restored;
 // full frame 0x300, rotation admission and basis/matrix homes remain.
+// Round 271: exact first/second/both native retail matrix store orders after complete
+// producers, 2040/2051/2051; separate shared 49-element array alone/first/second/both
+// 2279/2279/2294/2294; complete graph with basis identity 2294 (fast control 2040).
+// Original shared workspace, publications and complete polynomial body restored.
 // @retail 0x143600
 real *function_143600(real const *rotation, unsigned long order, real const *coefficients, real *result)
 {
