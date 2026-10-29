@@ -298,6 +298,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Round 231: native unit mask byte/char/word/long 440/440/449/439;
 // each with positive-view-first magnitude 431/431/436/437. Byte masks recover frame
 // 0x20 but regress; original optional pointer, observation timing and full body restored.
+// Round 240: Native tracking-record receiver with distinct current-state, sequential
+// object-vector workspace and positive-view arm combinations 426/425/426/425/428/427/428/427.
+// Frame remains 0x24/0x20; original separate view, states, vectors and body restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -895,6 +898,10 @@ real function_296600(long actor_index, long prop_ref_index);
 // both flags+parent 333; byte pair/+parent 358/359. Shared mode 371/366/368;
 // shared object getters ordinary/ancestry/all 333 each. Full flag25/pair/pair+parent
 // 354/350/351 versus 331; all restored. Actor ESI/EBX and saved/squad homes remain.
+// Round 240: Complete pre-branch object/suppression/current acquisition in six
+// producer orders 360/360/376/394/391/387; first two with the saved-pointer declaration
+// before actor construction 360/360 (fast control 356, full 331).
+// Original observations, qualified local pointer and complete body restored.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {
