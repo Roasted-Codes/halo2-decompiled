@@ -614,6 +614,7 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Round 236: complete square lifetimes before angle/before sine/between sine-cosine, reversed
 // cosine-pair/square orders, early-square pair combinations and six-part names
 // 617/607/564/611/564/611/583/564; all restored.
+// Round 387: Negative/positive decoded-plane native setters, uniform per-use tag lookup and combinations 581/798/814/785/741/851/820/820; complete squared-axis sum included last. All restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

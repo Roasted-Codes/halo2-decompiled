@@ -309,6 +309,11 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // result with source-owned definition 195/207. Branch-owned definition null default
 // and geometry-join byte result 172 (733/726 bytes), plain confirmed; retained.
 // Frame 0x58 agrees; BSP/section residence, range/plane homes and vertex joins remain.
+// Round 384: strip receiver after readonly part lookup with original/readonly
+// strip/reference/both 201/201/201/201; each with the two-use native first-index snapshot
+// 230/230/230/230.
+// Original strip acquisition, native byte result and complete defined-failure body restored;
+// BSP/section and range/plane homes remain.
 // Round 249: Complete pointer/lower/upper eligibility exits in all six orders
 // 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
 // defined-failure helper and complete query restored; BSP/section homes remain.

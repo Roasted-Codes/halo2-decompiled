@@ -1383,6 +1383,8 @@ real function_30bf0(vector3f *vector);
 // rejected). Original numeric returns/input copy 469/467; entry/root default 489/471; captured
 // length/default plus capture 439/476; coordinated block-query order/order plus capture 455/439.
 // All original helper contracts and bodies restored.
+// Round 385: Plain negate/rotate/normalize component loops and pairs/all,
+// long ordinals 422/486/426/505/404/503/485; all with short ordinals 509. Original helpers restored.
 // @retail 0xd4080
 void function_d4080(long type, s_effect_color_query const *query, s_lighting_record *record, long flag)
 {

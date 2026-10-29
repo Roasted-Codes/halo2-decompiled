@@ -1896,6 +1896,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Round 161: Coordinated definition/header inline query/setter/sampler/query-setter/query-
 // sampler/setter-sampler/all-three/aiming sampler: 411 each (unchanged reduced control 411; full
 // 410). Every specification restored.
+// Round 386: real/double ammunition-frame storage 439/462; named last-frame
+// conditional with long/real/double result 411/417/438; complete result arms
+// 411/423/442 (fast control 411, full 410). Original integer frame and body restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {

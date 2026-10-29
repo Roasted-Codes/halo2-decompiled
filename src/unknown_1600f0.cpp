@@ -1098,6 +1098,9 @@ struct s_game_engine_globals_connections_view
 // time terminator before name parsing, all seven subsets 175/232/228/231/262/173/176;
 // complete form with direct connection input 176. Calibrated widget/query roots;
 // original private initialization phases, all copies and executable body restored.
+// Round 383: complete native background/foreground/both/foreground-first aggregate producers
+// 170/170/170/308; paired color role identities on those graphs 170/170/170/308.
+// Original producers, dim arithmetic, all copies and complete body restored.
 // Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
 // with each field combination, then all with immutable widths: eight calibrated scores 170.
 // Original field domains and declaration lifetimes restored.

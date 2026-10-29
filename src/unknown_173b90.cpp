@@ -898,6 +898,7 @@ public:
 // Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
 // 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
 // All record, request and completion forms restored.
+// Round 387: Shared checked-datum boundary with native retained salt, tint consumer, word-pointer flags and ordered completion combinations 292/288/359/360/356/359/353/354; all restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {

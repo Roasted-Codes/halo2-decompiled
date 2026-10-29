@@ -51,7 +51,8 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 239 (was 239): retail's convention since round 67 (flag in AL, location stacked, 0x175270
+// score 227 (was 227): frame 0x10/0x14; metadata/head/count homes and x87 cleanup differ.
+// Earlier: retail's convention since round 67 (flag in AL, location stacked, 0x175270
 // the child loop advances a 0xb8-stride cursor over the child table instead
 // of recomputing field_34 + i * 0xb8, as retail does; field_4 is now read before the metadata
 // call and the flag is stored after the position copy, as retail does.
@@ -166,6 +167,8 @@ public:
 // Round 250: complete native location layout 239; early head 240;
 // inactive-first 243; both 244; those four with a closed coordinate
 // phase 239/240/243/244. Original input type, header and body restored.
+// Round 386: isolated metadata/head/count lexical homes in all seven subsets 227 each;
+// all three with an earlier uninitialized count declaration 227. Original body restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
