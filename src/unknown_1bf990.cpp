@@ -339,6 +339,9 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 271: native first/second/both object-header getters and retained header outputs
 // 186/186/186/186/186/186; both native headers with long/exhaustive seated results
 // 195/186. Original lookups, requests, predicate and complete body restored.
+// Round 273: movement flag/destination/section output declarations at entry, seven
+// subsets 186 each; all three with the query-result declaration at entry 186.
+// Original output declarations and complete body restored; actor/pool and request tails remain.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {

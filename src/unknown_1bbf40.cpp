@@ -455,6 +455,9 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // with actor/timer/short both 208/208/206; actual bool field 166, conditional 174,
 // bool carrier with conjunction/conditional 198/175. Raw-byte conditional 146/146/147
 // changed the integer carrier and was excluded. Complete body and field restored.
+// Round 273: complete separation from the existing header/native producers, each with
+// reverse sum/shared square/shared dot/all squared parts, 166/166/166/166 and
+// 200/200/200/200. Native producer grows the frame to 0x40; original graph restored.
 // @retail 0x1bbf40
 short __stdcall function_1bbf40(long actor_index, s_slot *slot)
 {
