@@ -623,6 +623,10 @@ PRIVATE __forceinline void loop_location_clear(s_type_99c531 *location)
 // 517,503,463,451. Original datum observations and receiver pair restored.
 // Round 180: Entry forward/marker/audibility outputs, masks 1-7, then all in reverse declaration
 // order: 280/280/280/280/280/280/280/280. Original executable body restored.
+// Round 401: Category membership read from a shifted signed/unsigned mask
+// 286/286; with complete two-use negative adjustment 282/282, distance pair
+// 305/305, angle pair 310/310. Frame 0x8c and protected root-location destination
+// remain; all original field observations and the receiver pair restored.
 // @retail 0x18cbc0
 void function_18cbc0(long looping_sound_index, s_type_99c531 *location)
 {

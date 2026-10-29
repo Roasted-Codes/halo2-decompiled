@@ -142,6 +142,11 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // all with callback-output names, native count/index names, those with selector/input,
 // explicit remaining-count pointer walk and that walk with count/selector names: 132 each.
 // Active remaining count still coalesces with selector at +0x20; complete body restored.
+// Round 401: Active buffer endpoints with relational/equality bounds 153/153;
+// pending endpoints 236/236; all four paired endpoint graphs 242. Each endpoint
+// is formed after the signed positive-count test. Active endpoints recover cursor,
+// selector and query homes but reverse the two buffers (834/814 bytes). Two native
+// buffer-name orders with each active bound 153/153/153/153. Original restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

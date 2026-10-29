@@ -1350,6 +1350,10 @@ bool function_100350(long weapon_index);
 
 /* switches the weapon in a hand (types 8 and 18: the first and second
    hand) */
+// score 131 (was 146): frame 8 versus 4, pool/header homes, failure exits
+// and put-away argument residency remain. Signed-word slot 146; Boolean hand
+// ordinal 136; both 131 (kept, 392/402 bytes). Common result 152; with word slot
+// 156; with Boolean hand 166; all three 169; active-bit completion arm first 169.
 // @retail 0xe8980
 bool __stdcall unit_action_weapon_switch(long unit_index, s_unit_request *request)
 {
@@ -1357,7 +1361,7 @@ bool __stdcall unit_action_weapon_switch(long unit_index, s_unit_request *reques
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 	bool primary = request->type == 8;
-	long hand = !primary;
+	bool hand = !primary;
 
 	if (!switch_request->immediate)
 	{
@@ -1372,9 +1376,10 @@ bool __stdcall unit_action_weapon_switch(long unit_index, s_unit_request *reques
 
 	s_unit_action_unit *current = UNIT_ACTION_UNIT_GET(unit_index);
 	long weapon_index = NONE;
+	short slot = current->weapon_slots[hand];
 
-	if (current->weapon_slots[hand] != NONE)
-		weapon_index = current->weapon_object_indices[current->weapon_slots[hand]];
+	if (slot != NONE)
+		weapon_index = current->weapon_object_indices[slot];
 	if (unit->weapon_slots[hand] != NONE && (weapon_index == NONE || !function_cd6a0(unit_index, NONE, weapon_index)))
 		return false;
 
@@ -3123,44 +3128,42 @@ struct s_unit_request_move
 // @retail 0xeb7e0
 bool __stdcall function_eb7e0(long unit_index, s_unit_request *request)
 {
+	bool result = false;
 	s_unit_request_move *move = (s_unit_request_move *)request;
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
-	bool result = false;
 
-	if (unit->parent_object_index != NONE)
-		return result;
-	if (move->immediate)
+	if (unit->parent_object_index == NONE)
 	{
-		vector3f facing;
+		if (move->immediate)
+		{
+			vector3f facing;
 
-		facing.i = move->facing.x;
-		facing.j = move->facing.y;
-		facing.k = 0.0f;
-		function_b9a50(unit_index);
-		if (function_30bf0(&facing) > 0.0f)
-			function_b75a0(unit_index, NULL, &facing, g_4687b0, NULL, false);
-		function_e56f0(unit_index, &move->point);
+			vector3f_assign(&facing, move->facing.x, move->facing.y, 0.0f);
+			function_b9a50(unit_index);
+			if (function_30bf0(&facing) > 0.0f)
+				function_b75a0(unit_index, NULL, &facing, g_4687b0, NULL, false);
+			function_e56f0(unit_index, &move->point);
 
-		s_unit_actions *current = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
+			s_unit_actions *current = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
 
-		current->active[0] = 0;
-		current->active[1] = 0;
-		current->unknown36 = 0;
-		return true;
+			memset(current->active, 0, sizeof(current->active));
+			current->unknown36 = 0;
+			result = true;
+		}
+		else if (!(bit_vector_test(actions->active, move->type)))
+		{
+			vector3f facing;
+
+			vector3f_assign(&facing, move->facing.x, move->facing.y, 0.0f);
+			if (function_ee090(unit_index, 0x50000cb, 1, 0x60000cc, &move->point, &facing))
+			{
+				bit_vector_set(actions->active, move->type, true);
+				result = true;
+			}
+		}
 	}
-	if (UNIT_ACTION_ACTIVE(actions, move->type))
-		return result;
-
-	vector3f facing;
-
-	facing.i = move->facing.x;
-	facing.j = move->facing.y;
-	facing.k = 0.0f;
-	if (!function_ee090(unit_index, 0x50000cb, 1, 0x60000cc, &move->point, &facing))
-		return false;
-	actions->active[move->type >> 5] |= 1 << (move->type & 0x1f);
-	return true;
+	return result;
 }
 
 bool function_10f9b0(long unit_index, long state_name, long action_name, long a, transform4x3f *matrix, bool flag);
@@ -4591,6 +4594,12 @@ bool __stdcall function_ee090(long unit_index, long state_name, long mode, long 
 /* puts a unit back on its animation graph's root: placed where its root
    node is, facing the root's horizontal forward, its state animations, and
    the graph's default seat transform */
+// score 139 (was 139): frame 0xa0 agrees; object-pool/input residency,
+// forward preloads and the normalization fallback join differ.
+// Pool root/masked ordinal/both 139; full forward aggregate in all four lookup
+// graphs 152; aggregate with normalization-first fallback 132 (seven-point gain,
+// restored). Normalization-first alone 139; output-matrix scope 139, scope plus
+// aggregate 152, scope plus normalization-first 139, all three 132. Original restored.
 // @retail 0xee460
 bool __stdcall function_ee460(long unit_index, long state_name, long action_name)
 {
