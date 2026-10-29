@@ -511,8 +511,7 @@ bool function_1fef40(s_type_c3b527 const *target, long actor_index);
 extern vector3f *g_4687b0;
 void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real cosine); /* forced inline in src/unknown_1eb8a0.cpp */
 // score 130 (was 130): Frame 0x20 agrees; magnitude/zero residency, rotation schedule and final publication remain.
-
-// score 130 (was 130): retail tests the planar length after the scale products with the zero in
+// Earlier: retail tests the planar length after the scale products with the zero in
 // xmm0 and does not carry that zero into the inlined rotation (memory 0.0 for i, a fresh xorps for
 // j/k); ours zeroes xmm6 before the divide and keeps it through the rotation, whose loads, dot order
 // and registers then differ. Retail stores the velocity directly (speed * each component): with
@@ -620,6 +619,9 @@ void rotate_direction(vector3f *vector, vector3f const *axis, real sine, real co
 // comparisons 130/130/130/130; native output copy then component scales 145. Magnitude/zero, facing, rotation
 // and output schedules remain.
 // Round 317: Guard-scoped normalized scalars 130; native planar input 130; both 130; all speed-field reads 140; scalar declarations at planar entry 130; adjusted turn name 130; requested direction name 130; native guarded input plus field reads 131.
+// Round 262: complete vector setter at requested direction/turn input/both
+// 176/147/168; completed output workspace 130; workspace plus requested/turn/both
+// 176/147/168; direct final setter 147 (828 bytes). Original body restored.
 // @retail 0x1ff360
 long function_1ff360(long actor_index, point3f const *target, vector3f *velocity)
 {

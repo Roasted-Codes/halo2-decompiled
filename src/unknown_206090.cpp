@@ -224,6 +224,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // +0x88 named once 1451 (read once, as retail); operands of the steering product swapped 1403
 // (same code); retail's cross operand form written out 1439 (diagnostic); ray record at function
 // scope 1403 (frame 0x5cc). All restored.
+// Round 400: Joint coefficient branches 1364; word impact count 1386; word list probes 1369;
+// coefficient/count, coefficient/probes, count/probes, all word and all byte
+// 1378/1364/1399/1394/1410. The byte form has frame 0x5c8; the others 0x5d0.
+// Joint coefficients reach 6238 bytes without lowering the score.
 // Round 175: Native reference cross-formal subsets and magnitude input contract all 1364;
 // canonical object calls, no address cancellations. On the current float-product graph, ordinary
 // magnitude components/first-cross components/both/second-normalizer components/magnitude-normalizer/
@@ -233,6 +237,9 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // Round 253: Native component cursors scale/add/paired normalizers/scale-add/
 // scale-normalizers/add-normalizers/all/all with ordered end tests
 // 1638/1877/1557/1671/1535/1809/1633/3684. Original complete kernels, captures and body restored.
+// Round 274: Narrow velocity/query/ray phase scopes, seven subsets 1364/1364/1364/1362/1362/1362/1362;
+// all with bounded contact-velocity publication 1362. Two-point ray-scope lead below gate;
+// original full body and every helper restored, frame remains 0x5d0 versus 0x58c.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {

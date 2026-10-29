@@ -564,6 +564,9 @@ void simulation_player_collection_swap(s_type_c67652 *collection, long player_in
 // collection hoisted out of the loop 277, swap update through a local or an
 // index 32, `updates + ++*count - 1` 32, occupant key through
 // watcher->players 294, through player 291, `(collection->players + i)` 32.
+// J185: signed-word first/second/conflict ordinal subsets 291/257/292/179/281/288/313;
+// byte conflict ordinal 196. Native narrow counters grow the body; original counters, source observations,
+// exact key/copy expressions, call roles and all helper declarations restored.
 // @retail 0x83610
 void __stdcall function_83610(s_simulation_world_owner *watcher, long *count, s_simulation_player_update *updates)
 {

@@ -99,6 +99,10 @@ void unicode_string_snprintf(word *buffer, long maximum_count, word const *forma
 // expression 89 (403 bytes); both 113; length at the scan with chained zero
 // initialisation 121 (384 bytes); SUCCEEDED test returning true first 88. With the
 // length at the scan, chained/ULONGLONG/qwTeamID/owner-copy spellings compile identically.
+// Round 197 fast trials: Owner transfer with entry/scan length, late/early transfer and user/team
+// initial owner (first eight); bounded-copy returned prefix with entry/scan length, array/returned
+// path and branch/direct SDK result (last eight) 125, 125, 117, 116, 112, 112, 123, 129, 113, 119,
+// 126, 123, 131, 123, 126, 121.
 // @retail 0xb4120
 bool function_b4120(long kind, struct _XUID owner, wchar_t const *filename, wchar_t *arg_d4faef, dword *path_size)
 {

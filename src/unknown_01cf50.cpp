@@ -361,6 +361,8 @@ bool function_0159b0(long edge, short format, long levels, long usage_index,
 bool function_015a60(short format, long width, long height, long depth,
 	long levels, long usage_index, D3DVolumeTexture **out);
 
+// Tried (MiniMax S run 10): the mipmap limit at bitmap + 0x14 read into a local before the
+// texture pointer is cleared scores 70 against 72; under the keep bar.
 // @retail 0x1d000
 bool function_1d000(byte *bitmap)
 {
@@ -2792,8 +2794,8 @@ PRIVATE __forceinline dword stream_register_mask(byte const *descriptor)
     return mask;
 }
 
-// score 10 (was 10): the count of the streams is loaded into ecx here and into eax in retail,
-// the compare against zero uses a second zero register, and esi is pushed later.
+// The streams are walked with a for loop, so the index is zeroed where retail zeroes it and
+// the count of the streams is compared against the zero in the register retail uses.
 // @retail 0x1c8c0
 bool function_1c8c0(byte const *definition, dword mask,
     s_1c8c0_stream const *third, s_1c8c0_stream const *second, s_1c8c0_stream const *first)
@@ -2801,15 +2803,13 @@ bool function_1c8c0(byte const *definition, dword mask,
     long count = 0;
     if (*(long const *)(definition + 0x38) > 0)
     {
-      short i = 0;
-      do
+      for (short i = 0; i < *(long const *)(definition + 0x38); ++i)
       {
         s_stream_description const *stream = (s_stream_description const *)(*(byte *const *)(definition + 0x3c) + i * 32);
         mask &= ~stream_register_mask(g_43f408[stream->format]);
         function_1c620((s_shader_cache *)g_51f0f0, stream->buffer, stream->stride, stream->offset, g_43f408[stream->format]);
         ++count;
-        ++i;
-      } while (i < *(long const *)(definition + 0x38));
+      }
     }
     if (first)
     {
@@ -2975,6 +2975,10 @@ s_runtime_device_configuration g_runtime_device_configuration;
 long g_467008, g_46700c;
 bool g_5093bc;
 
+// score 70. Tried (MiniMax S run 10): copying the settings field by field, assigning the depth
+// format after the back buffer width and clearing the result before the device pointer gives 68;
+// reading the two flag bytes back through a byte pointer to g_runtime_device_configuration as
+// well gives 49. That cast of the global's address is not kept without a match.
 // @retail 0x128c0
 bool function_128c0(s_128c0_settings const *settings)
 {
@@ -5971,6 +5975,8 @@ struct s_2e3f0_record;
 long __stdcall function_2e9e0(byte const *context, s_2e3f0_record const *record);
 void function_46ea0(long tag, point3f const *position);
 
+// Tried (MiniMax S run 10): writing the g_4b8438 store through an unsigned int lvalue
+// (*(unsigned int *)&g_4b8438 = 0) scores 73 against 76; not kept (a cast of the global's address).
 // score 3 (was 22): the g_4b8438 store is emitted after the range comparison of the inlined call,
 // where retail emits it before.
 // @retail 0x2df00

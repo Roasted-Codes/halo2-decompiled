@@ -915,6 +915,10 @@ void function_1d1540(s_havok_component *component);
 // stack); the getter at each use 88; this function declared ahead of 0x1d1260 88; 0x1d0c20 defined
 // first 88. Without the 0x1d1260 call the component arrives in edi (89); without the 0x1d1540 call
 // it stays on the stack (77): the call to 0x1d1260 with the component live across it decides it.
+// Reset/rebuild inline/noinline contracts, original then aligned-copy/fixed-or-flag-first graphs
+// 81/81/81/81/81/81/81/81/88/88/88/88/27/27/27/27. Original executable source restored. All four 27
+// forms still lose matched 0x1d1b60 at 59 in the reduced image.
+// Both-inline paired form: plain 27 at 220 bytes; matched 0x1d1b60 loses 59; rejected.
 // @retail 0x1d0cf0
 void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_component *component, hkTransform const *transform)
 {
@@ -945,6 +949,17 @@ void havok_component_rigid_body_transform_set(long rigid_body_index, s_havok_com
 // set/initialization/library copy 81/71/71; translation memcpy 70; aligned forward/up column values
 // 49/49; defined ahead of 0x1d0cf0 38; 0x1d0cf0's set-copy forms 40/40/49; 0x1d0cf0 with retail's
 // body (component still on the stack) 40; 0x1d0cf0 with the component in edi 49.
+// Frame and component-in-EBX convention still differ; zero transform/translation/both 64/61/84;
+// rotation workspace/initialized workspace/initialized transform with workspace 78/106/107;
+// position input value 77; rotation input values 143. Original body restored.
+// Earlier: frame and component register still differ; external matrix/component records 38/38;
+// complete frame set/initialization/library copy 81/71/71; translation memcpy 70;
+// aligned forward/up column values 49/49. Original body retained.
+// Earlier: only 0x1d0cf0's convention (component in ebx) is left; defined ahead of
+// 0x1d0cf0 38; 0x1d0cf0's set-copy forms 40/40/49.
+// Round 184: Native left/all/left-up/forward-left columns 48/69/58/59; SIMD
+// translation/rotation/all/left-plus-translation 38/69/69/48. Original aligned values and all
+// matrix components restored.
 // @retail 0x1d0c20
 void havok_component_rigid_body_matrix_set(long rigid_body_index, s_havok_component *component, transform4x3f const *matrix)
 {
@@ -2179,6 +2194,9 @@ PRIVATE __forceinline void component_surface_vector_clear(hkVector4 *vector)
 // lengths 184; all with early speed sum 392. Original executable source restored.
 // Round 201: Successive normal/velocity sum workspace 109; with shared length/inverse/both
 // 115/109/123; the same four with persistent sample 109/115/109/123. Original accumulators restored.
+// Round 184: Native contact/material/both add boundaries 157/162/210; reversed complete inputs
+// 157/162/210; existing vector assignment at contact/material sums 144/114. Original sums and
+// matched sample boundary restored.
 // @retail 0x1d87b0
 void __stdcall function_1d87b0(s_havok_component_rigid_body *body, long body_index, s_havok_component *component)
 {
@@ -2713,6 +2731,9 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // Round 244: Paired-getter graph with shared scale linear/angular/both 50/50/50; common scale workspace
 // alone/with linear/angular/both 50/50/50/50; shared pair and single admission exit 50. Staged saves, five
 // address orders and final call moves remain; original source restored.
+// Round 183: target entry inline/noinline 50/50; state-update inline alone/with entry
+// inline/noinline 50/50/50; state-update noinline alone/with entry inline/noinline 50/50/50.
+// Paired getter unchanged; all contracts restored.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {

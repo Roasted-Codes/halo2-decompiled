@@ -96,6 +96,9 @@ PRIVATE __forceinline vector3f *function_249171(real arg_0, vector3f *arg_1)
 // sign 345; ring/sphere/both shared position producers 94/84/96; cone/disk point setters
 // 84/95; shared/named direction workspace 380/82; all position helpers 111;
 // direction/seed/reverse case orders 319/575/518.
+// Ordinary pooled scaling with fraction result reference-first/pointer 106/106; returned real 82;
+// ordinary-inline reference-first/pointer/return 819/819/976; returned real plus ordinary extent query
+// 443; ordinary-inline original reference 819.
 // @retail 0x249170
 void function_249170(real const *values, s_particle_spawn_state *particle, s_particle_spawn_definition const *definition, s_particle_system_datum const *system)
 {

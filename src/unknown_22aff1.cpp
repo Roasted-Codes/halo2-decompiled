@@ -92,6 +92,9 @@ PRIVATE __forceinline real function_22aff5(real arg_0)
 // used directly by repeated draw spacing 121; immutable palette with body cursor step 121.
 // Uniform two-row horizontal/vertical product and pair-sum operand orders 121 each;
 // complete input-color component publication 518.
+// Matched selection/transform separate declaration states default/inline/noinline,
+// all eight nondefault pairs 121 each; caller frame homes and rounded-offset memory/XMM
+// residency remain. Original helper declarations and complete body retained.
 // @retail 0x22aff1
 void function_22aff1(long arg_0, byte const *arg_1, byte const *arg_2, real const *arg_3)
 {

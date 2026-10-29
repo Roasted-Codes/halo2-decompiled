@@ -685,7 +685,11 @@ long log2_floor(dword value);
 
 /* builds a bitmap's hardware texture header over its description, pointing
    into the shared pixel data */
-// score 12 (was 12): Frame 8 and prefix through +0xe7 agree; post-guard logarithm copies and depth EAX result remain.
+// score 12 (was 12): the frame and the prefix through +0xe7 agree; in the two
+// later logarithm loops retail copies the value into the branch (cmp ebx, 1 /
+// mov edx, ebx / je) and counts the depth in EAX, while ours copies before
+// the test and counts the depth in EDX.
+// Kept: the hardware format a plain local (no volatile) and the
 // the last two log2 loops differ: retail copies the height and the
 // depth after the `cmp 1` test and counts the depth in EAX; ours copies before the `jbe` and
 // counts the depth in EDX. Kept: the hardware format a plain local (no volatile) and the
@@ -991,6 +995,9 @@ struct s_bitmap_texture_view
 // bitmap-view alias 3.
 // parameter role names 3; format level role names 3; native reduction width 3; immutable reduction table 3;
 // dimension bit declarations 3; named packed dimensions 3; full width dimension bits 57; shared zero header
+// fields 5. This round: the masked value in a named local 3; the array through a pointer local 3;
+// the mask with its operands the other way round 3; the store through a byte cast of the texture
+// pointer 3 (all four byte-identical to the baseline).
 // fields 5.
 // @retail 0x12d6d0
 void __stdcall function_12d6d0(s_bitmap_texture_view const *bitmap, long level, D3DTexture *texture)

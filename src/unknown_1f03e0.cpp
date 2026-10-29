@@ -338,8 +338,17 @@ extern real g_47f05c;
 // with early best-alignment constant 217; both 235. Entry declarations of point/center/delta
 // on those four graphs 217/235/217/235. Original snapshots and full body restored; frame 0xd0
 // and shape/count/alignment carriers still differ.
+// Round 178: selected-record result 241; one center per positive-count scan 254;
+// center with selected record 240; selected record with uniform height reads 243;
+// center with uniform height reads 238; all three 222; all with body-byte reads 254;
+// all with native ground fields 222. Uniform normal-first/up-first alignment products
+// 192/192, each with uniform height reads 205/205. The center alone recovers frame
+// 0xd4 but leaves the best alignment in XMM6; original body retained at 192.
 // Round 269: Height/validity/alignment rejection-guard subsets 1-7 all 192;
 // all three with fallback validity first 215. Original nested scan, snapshots and full body restored.
+// Round 274: Shared branch-distance home with separate/common clamp joins, crossed with
+// uniform height/body-byte observations 192/288/205/283/208/294/220/289. Original
+// branch-owned distances, snapshots and full body restored; frame and carriers remain.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -498,6 +507,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // shape_add 238; lowest declared before selected 142; axis declared at case scope 144. 0x1f2250's call
 // sites load the stepping flag before the base point in our build too, so the loop's ECX/EBX request/count
 // swap is not 0x1f2e60's parameter order.
+// DL179: Complete parallel projection products, paired first sums, normalization squares,
+// products+squares, sums+squares, joint products, joint products+squares and that graph
+// with the input-preserving first cross 146 each (991/977); original direct-output body restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -684,6 +696,11 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Round 158: Whole-dot multiplication operands commuted at initial, rotation and limit sites independently,
 // in pairs, all three, then with every rotation product. Scores [182, 183, 182, 183, 182, 183, 183, 183].
 // Original executable body restored.
+// Round 178: complete accepted-up conditional 287; immutable ground-normal input
+// 311; active-entry forward workspace 182; conditional plus ground input 334;
+// conditional plus forward 287; ground input plus forward 311; all three 334;
+// all with forward declared first 334. Input-split forms lose the matched caller;
+// original body and its 182 score retained.
 // Round 170: complete three-row axial/retained/swept product groups in three schedules
 // 180/180/180; row schedule 181; coordinate schedule 180; complete initial products 180;
 // cosine complement 183; both 182. Two-point gains rejected; original full body restored.
@@ -864,6 +881,9 @@ struct s_flags_1f0870
 // 590/590/590; complete parallel weighted sums in both motion modes 594, with forward/
 // lateral/both projections 594/591/602; all with byte step result 602. Original body and
 // helper boundaries restored; frame 0x34 and direct/vector homes remain.
+// Round 179: direct initial/fallback/both eight-byte library copies 604/612/646; direct shared
+// output setter 592; initial/fallback/both copies with that setter 595/600/641; native horizontal
+// point with both copies and shared publication 641. Original clean body and helpers restored.
 // Folded movement/history/both vector lifetimes 591/594/594; lateral shared across all three paths
 // 590; movement/lateral 590; history/lateral 594; all 598; all with bounded declaration first 598.
 // History reuse recovers frame 0x30 at 594/3060; captured flags/native enabled/both there 618/594/618.
@@ -1142,6 +1162,9 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // offset/position pointers 54; row i grouped (forward + left) + up 50 at 1043/1043; retail's
 // own row groupings (left + up, forward + left, forward + left) 59; one named output-velocity
 // pointer for both override blocks 265 (frame); a 600 s permuter run, none below 50.
+// Round 177: Independent matrix-axis pointer/reference boundaries, all eight forms 71;
+// shared in-place final override/support/both additions 83/88/83. Override loads recover
+// but coefficient allocation worsens; original helper, alias copy and body restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {
@@ -1280,6 +1303,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
 // inline query with each support contract 434; the other five pairs 421.
 // Original declarations, qualified count, candidate cursor and response order restored.
+// Round 179: retained selected record 433; initial speed zero after other outputs 453; both 458;
+// minimum-first acceptance 506; selected record/minimum 505; zero/minimum 490; all 498; all with
+// explicit final result 499. Original selected ordinal, publications, count and body restored.
 // Round 170: count initialized between surface/object publications 420; separate array store
 // and increment 421; both 420; one-based pass alone/with initialization/with split producer/all
 // 421/420/421/420; count initialized at the relative/desired boundary 520. One-point gains
@@ -1467,6 +1493,9 @@ bool havok_component_any_rigid_body_active(s_havok_component *component);
 // for the two contact dots 234 (same code: VC swaps the first two terms either way); with a
 // separate `__declspec(noinline)` declaration of 0x1f1df0 297 (1005 bytes: both calls out of line
 // as retail, 0x1f1df0 still matches; the arm layout and the supported flag's home are what remain).
+// Round 179: common normal/material-call join 254; native movement 253; combined preservation
+// mask/both 320/320; the same four joins with continue 254/253/320/320; original calls with the
+// combined preservation mask 324. Original body, magnitude, call sites and normal scopes restored.
 // Complete native contact record alone/real magnitude/noinline/both 230/233/301/300;
 // the same four forms with operation-specific normal names 230/233/301/300. All restored.
 // Round 235: Named squared sum with double/real movement 241/229; all three named squared
