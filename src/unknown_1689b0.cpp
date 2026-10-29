@@ -1587,6 +1587,9 @@ PRIVATE inline void camera_prism_point_16a8e0(s_prism const *prism, point2f cons
 // bytes 552 each (2898/2882). Original canonical bools, accepted word counts and geometry restored.
 // Round 226: Plain component loops for paired edge inputs/contact direction/residuals and
 // their pairs/all [672, 594, 556, 680, 674, 594, 682]; all with the three ray scales 660. All restored.
+// Round 174: reconstruction prism/point/output reference contracts in all seven
+// subsets 552; all with the actual point value 712 and frame 0xb970; original helper restored.
+// Frame 0xb964, sum homes and EBX/ESI query zero discrepancy remain.
 // @retail 0x16a8e0
 bool __stdcall function_16a8e0(long flags, point3f const *point, real radius,
 	long ignore_object, long ignore_parent, point3f *out, real *out_radius)

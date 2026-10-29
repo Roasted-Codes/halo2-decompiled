@@ -241,6 +241,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // Round 221: native destination-return contracts in scalar/merge/both/color/scalar-color/
 // merge-color/all helpers, then all with normalized publication, 616 each. All eight restored;
 // original free-helper contracts and source-weight capture retained.
+// Round 174: bounded contribution contracts without repeated scalar/merge/color
+// clamps in seven subsets 733/692/768/695/775/735/812; all with upper-first common
+// clamp 812. Color-only reaches retail length but regresses; original helpers restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

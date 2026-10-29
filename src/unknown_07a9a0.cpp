@@ -1110,6 +1110,9 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Round 220: Native dword histogram with forced capacity/teams/both/imbalance/
 // capacity-imbalance/teams-imbalance/all switch selectors/all seven selectors
 // 863/844/863/844/863/844/863/863. Frame 0xb4 recovered; original table and selectors restored.
+// Round 174: coordinated count-balance/addition inline and noinline summaries,
+// each boundary and four paired contracts, 766 each; all declarations restored.
+// Frame 0xd4/0xb4, stacked session and protected opening lookup remain.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {
