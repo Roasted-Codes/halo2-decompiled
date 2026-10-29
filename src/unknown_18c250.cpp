@@ -162,6 +162,8 @@ bool __stdcall function_18c250(long object_index, long tag_index, s_sound_marker
 // publication 55.
 // native byte type after normal gain 113; readonly object 55; readonly matrix 55; named machine row 55; native
 // row first 55; high location fields first 65; cluster-derived result 197; eligibility-derived result 199.
+// One shared header across type/machine consumers, cached/per-use type, long/bool result,
+// native/CRT location publication 144/144/181/181/178/178/186/186. Header lifetime adds receiver pressure; restored.
 // @retail 0x18c3b0
 bool __stdcall function_18c3b0(long object_index, long tag_index, s_sound_marker const *marker, s_type_99c531 *location)
 {

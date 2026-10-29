@@ -413,6 +413,8 @@ void function_1d90e0(long render_model_index, long node_index, transform4x3f *no
 // declared first 37; shared exit 37; state pair helper 148; state graph queries 37; mode/graph/
 // class orders 44-110; shifted word expression 37; clear before object chain 191; entry marker
 // workspaces 37; complete workspace boundaries 191; model after clear 191.
+// Complete unvisited decision with shift/mask tests and bool/byte/short/long iterator results
+// 55/42/55/42/83/88/81/86; back-edge reload order and later call carriers remain.
 // @retail 0x113980
 void __stdcall function_113980(long object_index, long target_index, bool alternate, real weight,
 	s_animation_state *state, s_graph_pair_iterator *iterator, long node_count, transform4x3f *nodes)

@@ -616,6 +616,9 @@ s_projectile_material_response g_547660;
 // Result-owned response cursor: endpoint 40, ordinal 39, relational endpoint 40;
 // direct ordinal/endpoint success returns 79/67; result cursor with per-use count
 // ordinal/endpoint 70/73; short ancestry with result ordinal 39. Restored.
+// Ordinal reset before material lookup, ancestry/entry lifetime with cursor/indexed candidates
+// 58/56/58/56; immutable current-material values with those four forms 58/56/58/56.
+// Native word input and response scan entry remain; opening body restored.
 // @retail 0xfd4c0
 s_projectile_material_response *__stdcall projectile_get_material_response(s_projectile_definition const *definition,
 	short material_index)
