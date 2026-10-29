@@ -165,6 +165,9 @@ PRIVATE __forceinline void function_2922b5(vector3f const *arg_0, vector3f const
 // Round 175: ordinary-inline cross/offset/rotation helpers, all seven subsets, 629 each;
 // all five existing helpers ordinary-inline 629. Original forced expansions restored;
 // frame agrees, early success save and hit/basis/rotation homes remain.
+// Round 392: four hit bits as byte mask at entry/active scope 766/766;
+// word/long/dword masks 762/765 each. Frame shrinks and code regresses;
+// original hit bytes, success, all helpers and in-place copies restored.
 // @retail 0x2922b0
 bool __stdcall function_2922b0(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, real *arg_4, real *arg_5, bool arg_6)

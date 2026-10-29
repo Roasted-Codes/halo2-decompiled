@@ -1673,6 +1673,8 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // Round 390: existing native properties object with separate identity assignment,
 // producer-scoped team result and readonly slot masks 0-7: 719 each. Original
 // buffer, declarations, helper settings and complete body restored.
+// Round 392: distinct user/request/completion induction identities, all seven subsets,
+// then nested reset/descriptor role names: 719 each. Original identifiers and body restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

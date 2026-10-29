@@ -177,6 +177,9 @@ const dword g_455978[81] = {
 // Round 389: native missing-location result bool/byte/short/long 477/477/487/486;
 // each with entry constant initialization 477/477/487/486. Original positive result and
 // lifetime restored; aligned frame agrees, optional-state homes and helper expansion remain.
+// Round 392: selected-cluster outcome in short at current/entry/control/SSE boundaries
+// 314/474/472/472; long 314/477/475/475. Current lifetime reaches retail length,
+// but homes and selective helper expansion remain. Original Boolean outcome restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,
