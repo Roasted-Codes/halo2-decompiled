@@ -426,7 +426,7 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 168 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// score 160 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
 // Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
 // Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
@@ -438,12 +438,15 @@ static inline dword surface_random()
 // Round 238: live direction inputs 209; complete output 199, with live inputs 188;
 // all three cosine products 188, with live inputs 183; sine/cosine role names 168/168;
 // separate trigonometric declarations with live inputs 209. Original snapshots and output order restored.
+// Round 32: shared initial RNG 160; shared table-index draws 160; both 160;
+// complete axis/direction CRT captures 168, with initial/table/both 160/160/160;
+// all with alternate shared RNG contract 160. Initial shared RNG retained, plain 160; frame 0x28 remains.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
 	s_surface_definition *definition = surface_definition(surface_record(index));
 	real time = (real)(g_510c54->game_time * (double)g_510c54->field_2_3);
-	dword random = surface_random();
+	dword random = random_next(&g_4e7408->seed);
 	double oscillation = cos(time * 0.005f);
 	real angle = (real)(random * (double)(1.0f/65535.0f) * oscillation * oscillation * 0.15f);
 	if (!g_55e714)
