@@ -1914,7 +1914,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
-// score 130 (was 130): Frame 0x40 versus 0x44, early color spill, cursor/query homes and zone-base scheduling remain.
+// score 128 (was 130): Frame 0x40 versus 0x44, early color spill, cursor/query homes and zone-base scheduling remain.
 // Earlier forms: frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
@@ -1946,6 +1946,10 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // Original zone producer and complete body restored; color/query frame remains 0x40 versus 0x44.
 // Round 198: register-only scale formal in five source positions 130 each; read-only descriptor/original scale/scale last/scale middle 130/130/130. All definitions, declarations and both calls restored.
 // Round 204: complete zone distance/products 133/133; forced zone expansion 130; signed-byte/native-long result 152/168; forced distance/products 133/133; long result plus distance 168. Whole original helper and body restored.
+// Round 151 (0x175a80 now takes retail's registers): inline color helper shared with 0x177040, colors as
+// its arguments 178 (frame 0x44 and early color loads, but the system keeps EDI, color B EBX, tinted spilled);
+// multiplied() as the call's argument 135; helper with colors first 185; inline member color update 185;
+// a loop-only definition copy 128; a cluster-array base local 128.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2575,7 +2579,8 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 30 (was 30): Frame 0x100 and extent agree; protected decal transfer, light argument scheduling and sound scratch carriers remain.
+// score 30 (was 30): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
+// Frame 0x100 and extent agree; protected decal transfer, light argument scheduling and sound scratch carriers remain.
 // Earlier 30 (was 38): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
 // 0x17e670), the attached light call's register arguments (computed before its pushes, retail after) and the sound
 // arms' scratch registers remain. Round 85: `effect` declared before `up` gives retail's EAX up (38 -> 30, kept);
@@ -2647,6 +2652,7 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // native up CRT copy 38; uniform placement CRT copies 38. Owned up restores the incoming
 // EAX up pointer but adds entry copies; every executable form restored.
 // Round 204: native placement up/forward/both/all transfers 119/221/237/250; placement plus damage vectors/all damage/all sound/velocity 374/416/427/427; definition after caller 38. Original executable source restored.
+// Round 379: Sound point/velocity/both setters 60/57/72; location before point/compressor 36/34; location and velocity before point 36; early location with velocity/point setter 61/61. Original body restored.
 // DH round 218: sound point/tail/all CRT copies 30/30/30; sound case tag/native or point CRT 69/69;
 // writable/const sound aggregates 47/47; aggregate plus sound tag 70. Opening body restored.
 // @retail 0x17a8a0

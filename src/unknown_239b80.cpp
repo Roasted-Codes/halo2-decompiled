@@ -332,6 +332,9 @@ long function_239d50(long count, point2f const *points, point2f *hull)
 // Round 239: separate lowest-scan/hull-pass/candidate-scan bound values, all
 // seven combinations 203 each; all bounds with overlapping CRT compaction 230.
 // Original bounds, equality helper, compaction and body restored; caller intact.
+// Round 382: all four coordinate epsilon thresholds in four producer orders,
+// with/without both candidate-angle thresholds, 204/204/204/204/204/204/204/204.
+// Original threshold expressions and complete executable body restored.
 // @retail 0x239e50
 short function_239e50(short count, point2f const *points, short *indices)
 {

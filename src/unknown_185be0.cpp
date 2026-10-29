@@ -242,9 +242,13 @@ union s_185be7
 // restored.
 // Round 243: Native latch fields 88/8e/8f/90/93, paired 8e+8f/88+90 and all five:
 // 780/780/780/780/777/780/780/777. Three-point nonmatch gains rejected; original byte fields restored.
+// Round 164: shared retained-response weight 926; paired bounded contributions staged
+// before blending 932; both 932; paired interpolated rates 780; rates with weight/
+// contributions/both 926/932/934; existing native forward-vector setter 920. All restored.
 // Round 235: Native output flag dword/analog field/trailing bytes, paired and complete layouts
 // 780/780/778/780/778/778/778; complete trailing dword 812. Two-point leads rejected; original output layout
 // and body restored.
+// Round 379: Packed word/dword selectors 820/778; word with selected-input promotion/conditional flags/both 821/820/821; dword with promotion/conditional flags/both 777/778/777. Gains at most three rejected; original layout, helper and body restored.
 // DH round 215: Pointer-output flag-helper formal orders (0,2,1)/(1,0,2)/(1,2,0)/
 // (2,0,1)/(2,1,0) 780 each; canonical byte/long predicate inputs 780/778; actual
 // destination reference 780. Two-point lead rejected; original contracts and body restored.

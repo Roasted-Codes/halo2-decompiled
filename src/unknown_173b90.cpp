@@ -1117,6 +1117,9 @@ static inline void cross_product3d_174420(vector3f const *a, vector3f const *b, 
 // Round 217: Selector inline/noinline/inline-out-of-line boundaries 213/213/213;
 // with child set/clear 219/219/219; with word bit five and child stores 316/316
 // (fast). Original selector declarations, complete body and call tuples restored.
+// Round 29: child set/clear 220; with early request/index 332; with shifted-word bit five 330;
+// with b-first cross products 366; duplicate tag carrier 314; conditional reference 220;
+// signed group 220; immutable tag 220. Original body restored; tag/group roles and child copy remain.
 // @retail 0x174420
 void __stdcall function_174420(long system_index, bool view_pass, bool camera_relative, bool force_visible)
 {

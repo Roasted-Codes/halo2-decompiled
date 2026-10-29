@@ -7,6 +7,7 @@
 #include "object_markers.h"
 #include "effects.h"
 #include "vector_products.h"
+#include "normalize3d.h"
 #include <math.h>
 #include <xtl.h>
 
@@ -63,17 +64,6 @@ static inline s_surface_object_header *surface_object_header(long index)
 static inline bool surface_pinned(s_surface_record *record, long i)
 {
 	return (record->pinned[i >> 5] & (1 << (i & 31))) != 0;
-}
-static inline real surface_normalize(vector3f *v)
-{
-	real length = (real)sqrt(v->i*v->i + v->j*v->j + v->k*v->k);
-	if (!(fabs(length) < 0.0001f))
-	{
-		real inverse = 1.0f / length;
-		v->i *= inverse; v->j *= inverse; v->k *= inverse;
-		return length;
-	}
-	return 0.0f;
 }
 
 static inline real surface_normalize_horizontal(vector3f *v)
@@ -266,7 +256,7 @@ bool function_1173e0(long object_index, long index)
 	return result;
 }
 
-// score 99 (was 165): frame 0x10 agrees; normalization/accumulation carriers and final normalization schedule differ.
+// score 4 (was 99): only the a/b normal.k addition schedules differ; frame and length agree.
 // Shared point differences 169; differences and cross product 108 (dropped, full); shared
 // scale normalization 166, with differences/cross 130 (dropped, full); normalize_inline 123; reversed edge
 // production 132 (dropped, full); named edges/readonly definition 130/130; cross only 165; normal-first
@@ -275,6 +265,9 @@ bool function_1173e0(long object_index, long index)
 // Plain component accumulation 109; with triangle cursor 176, vertex base 96, both 173.
 // Selected ordinary check 99/621.
 // Component-loop addition 96/633 discarded: only three points beyond the vertex-base form.
+// Shared add 99/633; with shared normalize 40/637; all normal-first 63; final vertex cursor 4/633;
+// only a normal-first 4; only b 7; only c 4; normal declared first 4; reused accumulation 260;
+// normal-field pointers 86; normalized contribution 223. Selected ordinary check 4/633.
 // @retail 0x117510
 void function_117510(long index)
 {
@@ -290,13 +283,14 @@ void function_117510(long index)
 		vector3d_from_points3d(&a->position, &b->position, &v);
 		vector3d_from_points3d(&a->position, &c->position, &u);
 		cross3f(&v, &u, &normal);
-		surface_normalize(&normal);
-		a->normal.i += normal.i; a->normal.j += normal.j; a->normal.k += normal.k;
-		b->normal.i += normal.i; b->normal.j += normal.j; b->normal.k += normal.k;
-		c->normal.i += normal.i; c->normal.j += normal.j; c->normal.k += normal.k;
+		normalize3d(&normal);
+		vector3f_add(&a->normal, &normal, &a->normal);
+		vector3f_add(&b->normal, &normal, &b->normal);
+		vector3f_add(&c->normal, &normal, &c->normal);
 	}
-	for (long i = 0; i < definition->vertex_count; ++i)
-		if (surface_normalize(&vertices[i].normal) == 0.0f) vertices[i].normal = *g_4687a8;
+	s_surface_vertex *vertex = vertices;
+	for (long i = 0; i < definition->vertex_count; ++i, ++vertex)
+		if (normalize3d(&vertex->normal) == 0.0f) vertex->normal = *g_4687a8;
 }
 
 // score 139 (was 154): frame 0x1c agrees; link-base/endpoint carriers, pinned-word test and correction staging differ.
@@ -370,6 +364,9 @@ void __stdcall function_117790(long index)
 // Complete squared displacement terms 81; point/vector/marker role identities 67; both 81;
 // native word attachment ordinal 96; with squares/roles/both 105/96/105; complete graph
 // with displacement declared before point acquisition 105. Original executable body restored.
+// Round 221: Origin pointer observed at use 148; definition at every use 168; both 171;
+// record at every use 270; with origin/definition/both 252/321/303; all plus shared correction
+// difference helper 303. Original captures restored; pool-base and copy carriers remain.
 // @retail 0x117a80
 void function_117a80(long index)
 {
@@ -438,6 +435,12 @@ static inline dword surface_random()
 // Round 219: immutable axis pointer 210; shared final double scale 168; both 210; native rotation
 // setter 168; axis/setter 210; scale/setter 168; all 210; readonly old with axis pointer 210.
 // Restored.
+// Round 381: RNG before time 199; oscillation before RNG 203; axis before/between trigs 168/168;
+// RNG-first/axis-between 199; oscillation-first/axis-first 203; rotation-scoped angle 201,
+// with shared final scale 201. Late angle reaches frame 0x20 but loses wind register; all restored.
+// Round 238: live direction inputs 209; complete output 199, with live inputs 188;
+// all three cosine products 188, with live inputs 183; sine/cosine role names 168/168;
+// separate trigonometric declarations with live inputs 209. Original snapshots and output order restored.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -484,6 +487,9 @@ void function_117dd0(long index, vector3f *wind)
 // All restored.
 // Complete late normal snapshot 189; with symmetric displacement 226, direct drag field 194, both 186;
 // early normal snapshot 192, with displacement 225, direct drag 194, both 186. Snapshots grow the frame.
+// Round 221: Shared point-setter boundaries for both weights/both sums/both 108/108/108;
+// complete tangent/force assignment boundaries alone/with either/both point phases 195 each;
+// all with intrinsic fast-history copy 194. One-point gains rejected; all original source restored.
 // Round 216: native projected-normal scale/vertex cursor/both 103/205/187; overlap-safe
 // point-history transfers alone/projection/cursor/all 212/213/207/199; in-place projection 153.
 // On projected normal, early weights/acceleration first/force first/both/all 102/113/103/113/110;
@@ -577,6 +583,13 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // Round 209: Fresh type-field reads/cursors 498/497; with per-scan results 482/498; existing oriented
 // tangent setter 473, tangent and normal setters 472 (one-point lead dropped); both setters with fresh
 // cursors/results 497/482. All restored; frame 0x44/0x2c, descriptor scans and outer D3D expansion remain.
+// Round 280: paired first-match scans normal/tangent and binormal/uv 514;
+// normal/binormal and tangent/uv 514; normal/uv and tangent/binormal 504;
+// triple normal/tangent/binormal 481, normal/tangent/uv 495, normal/binormal/uv 495;
+// all four 491; triple tangent/binormal/uv 487. All original scans restored.
+// Round 238: application inline/force-inline 485/485; format inline/force-inline 526/526;
+// both helpers inline or force-inline, all four combinations 528. Application-inline forms also
+// lose the 0x22a664 reduced control; all original helper declarations and calls restored.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {

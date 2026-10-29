@@ -379,7 +379,7 @@ void function_10cd50(long weapon_index);
 bool unit_action_active(long unit_index, long action_type);
 byte function_10fcd0(long unit_index, long unknown, long state_name, long action_name);
 bool function_100880(long weapon_index, long magazine_index);
-void function_c98a0(point2f const *direction, long unit_index, long type, short value);
+void __stdcall function_c98a0(point2f const *direction, long unit_index, long type, short value);
 bool function_10f930(long object_index, real time, bool from_end);
 /* who is responsible for damage (damage.cpp) */
 struct s_damage_owner
@@ -940,20 +940,16 @@ long function_ccb80(long unit_index)
 }
 
 /* adds to the unit's count of a grenade type and makes it current */
-// score 2 (was 27): the short delta recovers the stack load, EBX save and cleanup;
-// only the base/index operand order in the count update and address still differs.
-// Short/long/word delta 2/2/2; byte delta 27; offset-first addresses 2/2/2/27.
-// Native element address 2; base advance/shared unit/existing masked lookup 4/4/4.
 // @retail 0xcccd0
 short function_cccd0(long unit_index, short grenade_type, short delta)
 {
-	char *count = UNIT_GET(unit_index)->grenade_counts + grenade_type;
-
-	*count += delta;
 	s_unit *unit = UNIT_GET(unit_index);
-	unit->next_grenade_index = (char)grenade_type;
-	unit->current_grenade_index = (char)grenade_type;
-	return *count;
+
+	unit->grenade_counts[grenade_type] += delta;
+	s_unit *again = UNIT_GET(unit_index);
+	again->next_grenade_index = (char)grenade_type;
+	again->current_grenade_index = (char)grenade_type;
+	return unit->grenade_counts[grenade_type];
 }
 
 /* deletes the object +0x238 names */
@@ -2291,21 +2287,26 @@ bool function_c7750(s_unit_motion const *motion, real position, real velocity, r
 
 /* once: sets the unit's flag 21 and a random angle at +0x2d8 around its
    actor's direction (or its own facing) */
-// score 20 (was 20): Frame 0xc versus 0x10; flag-word preservation, angle/random scratch homes and final x87
-// adds differ. Native vector, 12-byte scratch and real[3] 23; bool flag 60; native/bool 60; outer workspace
-// 23; field angle 57; random-first native/bool 60; outer angle 23; real flag view 60; native view 60; scoped
-// vector/view/random-first 60; scoped vector 23; scoped view 60; native/scoped bitfield setter 60.
+// score 7 (was 20): Frame 0xc versus 0x10 (retail keeps the atan2 temp in the query buffer's first dword,
+// ours with range) and the last two x87 adds (retail adds the bound before the angle) differ; the query
+// writes a 12-byte vector, which the 8-byte buffer only gets away with here. Native vector, 12-byte scratch
+// and real[3] 23; bool flag 60; native/bool 60; outer workspace 23; field angle 57; random-first native/bool
+// 60; outer angle 23; real flag view 60; native view 60; scoped vector/view/random-first 60; scoped vector 23;
+// scoped view 60; native/scoped bitfield setter 60. Round 151: the set through bit_vector_set with the
+// TEST_FIELD_BIT test 7 (kept); then a vector/12-byte buffer 10/10; buffer before range 7; outer angle 7;
+// the random offset in a named local 5 (fixes the adds; one-use, not kept); range/buffer/angle/offset
+// declared at the top 5 each; range assigned before the atan2/store 50/53/38.
 // @retail 0xcfec0
 void function_cfec0(long unit_index)
 {
 	s_unit *unit = UNIT_GET(unit_index);
 
-	if (!((unit->flags_134 >> 21) & 1))
+	if (!TEST_FIELD_BIT((unit->flags_134 >> 21) & 1))
 	{
 		real range;
 		byte unknown[8];
 
-		unit->flags_134 |= 0x200000;
+		bit_vector_set(&unit->flags_134, 21, true);
 		if (unit->actor_index != NONE && function_1e3370(unit->actor_index, unknown))
 		{
 			unit->unknown2d8 = 0.0f;
@@ -2579,10 +2580,13 @@ struct s_unit_placement
 /* places the unit from the scenario: its +0xec and flags, and, when the
    placement says so, starts it dead (animation, damage, no weapons or
    grenades) */
-// score 22 (was 22): Frameless entry and animation lookup agree; 0xc98a0 takes the unit in EDX versus a
-// retail push, 0xcaa60 in EAX versus a push. Animation owner 22; initial scale local 65; scale/owner 65;
-// chained zero stores 22; dead-placement guard 22; const animation 22; owner/const animation 22;
-// owner/scale/chained stores 65.
+// score 10 (was 22): Frameless entry and animation lookup agree; retail passes 0xc98a0's direction in ECX
+// (ours pushes it) and pushes 0xcaa60's unit (ours EAX). Animation owner 22; initial scale local 65;
+// scale/owner 65; chained zero stores 22; dead-placement guard 22; const animation 22; owner/const
+// animation 22; owner/scale/chained stores 65. Round 151: 0xc98a0 declared __stdcall (the /Gr default
+// passed its unit in EDX) 10, kept; 0xcaa60's unit read once through its address 5 (not kept without a
+// match); 0xc98a0's unit read through its address 22/10; its direction declared last/second 7/10; a
+// separate output local for its value 10; its direction test named at entry 10.
 // @retail 0xc42e0
 void __stdcall function_c42e0(long unit_index, void const *placement)
 {
@@ -5738,8 +5742,12 @@ bool __stdcall function_cd0c0(long unit_index, long weapon_index, short mode)
    fell toward (front, back, left, right), plays its death (0x10ff40) and,
    from type 3, sets its ragdoll timer +0x1f5, its flags and (when the
    death had no animation) its deadness; a free biped turns to face it */
+// score 258 (was 277): Frame 0x24 now agrees; retail takes the direction in ECX (ours on the stack) and keeps
+// the unit pointer in EBX, the definition on the stack. Round 151: __stdcall in place of the file's /Gr
+// fastcall (which passed the unit in EDX) 258, kept; the unit read through its address 258; the
+// direction declared last/second 255/256 (no retail evidence, not kept).
 // @retail 0xc98a0
-void function_c98a0(point2f const *direction, long unit_index, long type, short value)
+void __stdcall function_c98a0(point2f const *direction, long unit_index, long type, short value)
 {
 	s_unit *unit = UNIT_GET(unit_index);
 	byte *definition = UNIT_DEFINITION_GET(unit);

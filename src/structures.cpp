@@ -255,7 +255,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
-// score 185 (was 185): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
+// score 172 (was 185): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
 // the BSP in EBP, retail the BSP in EBX with the section in its stack home), range/plane homes and
 // vertex joins remain. Retail never initialises its vertex flag (set only when a vertex exists,
 // tested only after the first vertex); that uninitialised success-only flag gives 165 (163 with
@@ -304,21 +304,30 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // vertex fetches as one && chain with the triangle test 257 (677 bytes); vertex helper taking the
 // block, read once per triangle 238; vertex getter returning the point or NULL 255; nested ifs in
 // place of the continues 185 (same code), with the result in the loop test 221.
+// Round 380: geometry-join byte/signed-byte result with source-owned definition and
+// residency-owned section default subsets 208/172/216/217 each; original entry byte/bool
+// result with source-owned definition 195/207. Branch-owned definition null default
+// and geometry-join byte result 172 (733/726 bytes), plain confirmed; retained.
+// Frame 0x58 agrees; BSP/section residence, range/plane homes and vertex joins remain.
+// Round 249: Complete pointer/lower/upper eligibility exits in all six orders
+// 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
+// defined-failure helper and complete query restored; BSP/section homes remain.
+// Round 223: Signed/unsigned word masked-plane storage with original/reference-base/surface-base/both table selections 213/188/214/210/215/196/216/224. Original full-width plane, table selectors and defined vertex failures restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
-	byte result = false;
 	point3f point = collision->point;
 	s_structure_bsp_view *bsp = (s_structure_bsp_view *)g_4e0348;
 	long surface_range_index = collision->surface_range_index;
 	long plane_index = collision->plane_index & 0x7fff;
 	long instance_index = collision->instance_index;
-	s_structure_instanced_geometry_definition *definition = NULL;
+	s_structure_instanced_geometry_definition *definition;
 	s_structure_section *section = NULL;
 	s_structure_surface_range *range;
 
 	if (collision->type == 1)
 	{
+		definition = NULL;
 		range = &bsp->surface_ranges[surface_range_index];
 		s_structure_cluster_view *cluster = &bsp->clusters[range->cluster_index];
 
@@ -344,6 +353,12 @@ bool structure_get_lightmap_triangle(s_structure_collision_result const *collisi
 		}
 	}
 
+	else
+	{
+		definition = NULL;
+	}
+
+	byte result = false;
 	triangle->unknown18 = 0;
 	if (section)
 	{

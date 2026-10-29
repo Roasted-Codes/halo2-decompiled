@@ -2150,6 +2150,13 @@ static __forceinline long player_round_ticks(real value)
 // Round 235: Native seat bitfield, existing weapon-flag query, both, actual player latch fields, paired
 // latch/metadata and complete native receiver forms 707/707/715/701/707/707/715/715. Original metadata,
 // declarations, player fields and body restored.
+// Complete player/unit/both field observations 1153/772/1221; each with separate
+// request records 1207/860/1332; both receivers with entry point outputs 1221;
+// with separate requests and entry points 1332. Original receiver/request/point graph restored.
+// Round 280: both cooldown outputs in short result carriers 713; earlier field
+// bindings 713; with activity-bound result 727, earlier bindings 727. Full-width
+// output carriers 718, earlier bindings 718; with activity-bound result 728,
+// earlier bindings 728. Original field/result lifetimes and stores restored.
 // @retail 0x14f820
 void __stdcall function_14f820(long player_index, long unit_index, byte *input)
 {
@@ -2704,7 +2711,7 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
-// score 17 (was 21): frame 0xc8 and retail length agree; tick/rate scheduling, the damage-tag
+// score 17 (was 17): frame 0xc8 and retail length agree; tick/rate scheduling, the damage-tag
 // pointer load and scratch registers in the later mode, slot and root blocks remain.
 // Earlier isolated damage-byte store order 19 was below the keep threshold.
 // Round 32: the trigger test through 0x11c5b0 148; the damage-type pointer read in the call 130;
@@ -2758,6 +2765,10 @@ struct s_unit_flags_14d8b0
 // Low-time/reset/both inline declarations 21/229/229; signed-word counter 23; unsigned datum 21;
 // unsigned handles 21; low-time inline with first native flag 19; native controls with that flag 21;
 // combined first native flag and damage-byte store order 17 (plain whole-program confirmed).
+// Round 379: function-scope event/damage/both 17/23/23; early tag input alone/with event/damage/both
+// 150/150/151/151; tag value after scratch store 17. Original executable body restored.
+// Round 164: separate root handle, branch-local short expiry result, tick/result/rate names,
+// all three names, joined slot result and root+slot result: 17 each. Original body retained.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

@@ -75,7 +75,7 @@ void function_2232a0(void)
 	function_2c8a0((byte const *)function_2232a1(&g_47f0f8[0]));
 }
 
-// score 109 (was 124): one-dword frame agrees; the count block, the count/layout join and the layout
+// score 109 (was 109): one-dword frame agrees; the count block, the count/layout join and the layout
 // arms now have retail's code: the clamp is the ternary the other player-count clamps use, and the
 // loop counter's zero assigned before the layout test keeps the join from being jump-threaded (with
 // it anywhere later every count-one path threads straight to the layout stores); the slot scan uses
@@ -189,6 +189,7 @@ void function_2232a0(void)
 // Round 87 (fast): slot data NULL at the loop top with no else arms 124 (gives retail's loop-top zero,
 // in EDX, but not the found arm's second zero); the NONE store then one ternary 117, one if/else 117;
 // the first with a pretested for loop 179, the second 166. 0x2b5d0's file is held by another lane.
+// Round 223: Complete shared successor with staged/direct optional source in do/for traversal 319/168/319/168; with twice-used terminal count 268/113/268/113. Original scan, source, traversal and terminal restored.
 // @retail 0x2234e0
 void function_2234e0(void)
 {
