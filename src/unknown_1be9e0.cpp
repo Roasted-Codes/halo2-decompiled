@@ -120,7 +120,7 @@ long __stdcall function_1bead0(long actor_index, s_slot *slot)
 /* invites the actor's clump members near enough, the nearest first */
 static __forceinline long real_to_long(real value);
 
-// score 24 (was 88): retail keeps the count test's g_46fbe4 return as its own
+// score 24 (was 24): retail keeps the count test's g_46fbe4 return as its own
 // tail after it and puts the shared g_46fbe8 return last, where ours jumps back
 // to the countdown's g_46fbe4 return and falls into g_46fbe8 (445 bytes against
 // 457). Round 371: typed slot payload and short counters 88; payload/single
@@ -133,6 +133,9 @@ static __forceinline long real_to_long(real value);
 // ready flag 98 (setg); count test as >= with both returns 24; final return
 // only 81; the two branches swapped 102; short counters 24 (same code, kept as
 // they need no casts).
+// Round 165: explicit negative eligibility exits, original/full-width retry snapshot,
+// status-three-first and both 24/27/43/46; positive nested eligibility with the same
+// three alternatives 24/27/43/46. Narrow sum, early counter and original body restored.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {

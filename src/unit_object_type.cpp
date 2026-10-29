@@ -1427,6 +1427,12 @@ void function_d0d20(long unit_index)
 
 /* sends request 0x13 when the unit holds two weapons and either of them
    fails 0x101640 */
+// score 68 (was 68): unit argument in EDI instead of retail stack/EBP; repeated pool-data
+// loads and the short-slot/default homes differ. Primary/secondary/both existing getters
+// 72/74/74; masked guard getter 68, with primary/secondary/both 72/74/74; both getters
+// with a shared guard receiver 70. One parameter address read at first guard/request 57/57,
+// with both getters at first guard/second getter 66/66 (exact-match-only; restored).
+// Both weapon results default-first 70. All executable source restored.
 // @retail 0xd1540
 void __stdcall function_d1540(long unit_index)
 {
@@ -4210,6 +4216,12 @@ void function_ce6b0(long unit_index, long name, long object_index, real scale)
    flips flag 29 with its sounds and fades +0x264 in (a fifth of a second)
    or out (0.8 s) by it; in state 1 or with the campaign flag it runs the
    state +0x2bc and its timer instead */
+// score 82 (was 82): frame 8 agrees; unit/index ESI/EDI are reversed, then control-bit and
+// flag-word scheduling differ. The sound call chain keeps the object in EDI instead of ESI
+// through 0xc5890 and 0x189210; root-location input at 0xba300 needs its owning body.
+// Native word bit-two view 142; dword bit-29 tests/stores/both 82/82/82;
+// word plus dword tests/stores/both 142/142/142; all plus native control mask 142.
+// Original fields, padding, tests and stores restored.
 // @retail 0xc50a0
 void function_c50a0(long unit_index)
 {

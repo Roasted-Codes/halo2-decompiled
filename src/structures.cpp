@@ -255,7 +255,7 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 	return false;
 }
 
-// score 172 (was 185): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
+// score 172 (was 172): Frame 0x58 agrees; BSP/section carriers (ours keeps the section in EBX and
 // the BSP in EBP, retail the BSP in EBX with the section in its stack home), range/plane homes and
 // vertex joins remain. Retail never initialises its vertex flag (set only when a vertex exists,
 // tested only after the first vertex); that uninitialised success-only flag gives 165 (163 with
@@ -313,6 +313,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // 185/188/208/210/187/186; native bool/byte bounds predicates 254/254. Original
 // defined-failure helper and complete query restored; BSP/section homes remain.
 // Round 223: Signed/unsigned word masked-plane storage with original/reference-base/surface-base/both table selections 213/188/214/210/215/196/216/224. Original full-width plane, table selectors and defined vertex failures restored.
+// Round 165: actual instance-table predicate shared at both selections, crossed with
+// native byte fetch and the reused surface ordinal, 228 in all four forms; the same
+// four with a canonical Boolean query result 232 each. Predicate shortens the frame;
+// original long instance lifetime, helper, byte result and defined failures restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {
