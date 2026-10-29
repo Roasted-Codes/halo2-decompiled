@@ -1462,6 +1462,9 @@ PRIVATE __forceinline hkBool contact_metadata_flag(long metadata)
 // Round 213: native aligned scratch
 // vector/renamed-vector/real/renamed-real/long/renamed-long/renamed-byte/renamed-SIMD [4, 4, 4,
 // 4, 4, 4, 4, 4]. Child-result join remains.
+// Round 70: selected-shape copy 13; shared root walk forced 4, plain 69; key predicate 4;
+// reduced if/else 4; forced walk with if/else 4; forced walk with key predicate 4;
+// initial forced walk only 4. Original body restored.
 // @retail 0x1c32d0
 hkBool c_contact_rule_filter::accepts(void const *query, s_contact_body_view const *a, s_contact_body_view const *b,
  c_contact_shape_container *container, long key)
