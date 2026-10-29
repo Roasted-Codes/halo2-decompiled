@@ -265,6 +265,9 @@ bool __stdcall function_1aa990(long actor_index, s_slot *slot)
 // Upper-first range with original/full role names 14/14; complete role names 11;
 // byte selection alone/upper-first/names/both 41/44/41/44; signed-byte selection 41
 // (fast control 11). Pool/fraction carriers and conditional range loads remain; all restored.
+// Round 33: lower-only scalar, split result predicates, range-field pointer and nested upper
+// scalar 17 each; guarded state value 59; noinline state/actor/fraction/admission helpers 11 each;
+// entry prop index with state wrapper/direct range 63; block prop index with them 17.
 // @retail 0x1aa9f0
 short __stdcall function_1aa9f0(long actor_index)
 {
