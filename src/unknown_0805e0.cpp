@@ -238,8 +238,7 @@ struct s_cached_player_source
 			byte field47;
 		};
 	};
-	dword field48;
-	dword field4c;
+	unsigned __int64 field48;
 	byte unknown50[0x70 - 0x50];
 	long field70;
 	long field74;
@@ -476,13 +475,6 @@ void function_1537f0(s_profile_record *record);
 // Round 146: identity byte/word/signed-word/signed-dword/header/byte-identity/word-flags/byte-
 // flags views 67 each.
 // Complete shared view library/native copies 128/128; per-visit library/native copies 128/128; shared-view array-end 126; ended input scopes 128; contiguous links 130; complete destination clear 148. Original body retained.
-/* a cached player: the identity it is known by and the record it comes from */
-struct s_cached_player_record
-{
-	s_cached_player_identity identity;
-	s_cached_player_source source;
-};
-
 // @retail 0x7f930
 void function_7f930(void)
 {
@@ -495,14 +487,16 @@ void function_7f930(void)
 	g_4cf988 = NONE;
 	for (long i = 0; i < 350; i++)
 	{
-		s_cached_player_record record;
-		memset(&record.identity, 0, sizeof(record.identity));
-		function_1537f0((s_profile_record *)&record.source);
+		s_cached_player_identity identity;
+		memset(&identity, 0, sizeof(identity));
+		s_cached_player_source source;
+		function_1537f0((s_profile_record *)&source);
+		memset(source.unknown7c, 0, sizeof(source.unknown7c) + sizeof(source.field7f) + sizeof(source.unknown80));
+		source.field7f = 0xff;
 		s_player_configuration_cache_entry *entry = &g_4cf98c[i];
-		function_7f8b0((s_cached_player_view *)&entry->player, &record.identity, &record.source, NULL);
+		function_7f8b0((s_cached_player_view *)&entry->player, &identity, &source, NULL);
 		entry->next = entry->next_other = entry->unknown58 = entry->previous_other = NONE;
-		entry->flags = 0;
-		entry->field_64 = 0;
+		memset(&entry->flags, 0, sizeof(entry->flags) + sizeof(entry->unknown64));
 	}
 }
 
