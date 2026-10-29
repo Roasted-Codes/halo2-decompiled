@@ -378,6 +378,9 @@ __forceinline void function_2994a1(point2f const *arg_0, real arg_1,
 // definition, external declaration and both real calls restored.
 // Round 393: Native planar pivot with eight coherent existing rotation-producer role orders:
 // 755/755/755/755/755/755/755/755. Original pivot, helper contracts and both transform outputs restored.
+// Round 396: Native real root APIs in direction/distance/planar normalizers, seven
+// subsets and all with both obstacle roots: eight forms 749 each. All original APIs,
+// helper bodies and precision restored; frame, eager radius and trace/pivot homes remain.
 // Round 240: Split-output planar frame with shared difference/normalization, settings-radius
 // rereads and result-first getter, seven subsets 776/841/788/797/784/835/812;
 // full graph plus shared planar difference 808. Original helpers/body restored;

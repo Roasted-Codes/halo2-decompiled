@@ -125,6 +125,17 @@ extern real g_4c9798[36];
 // 237; short/long tag with raw flags 237/237; tag short/long with entry border zero
 // 342/342; short tag, raw flags and zero 335. Two-count gains and exact-only tag copies
 // restored; frame 0x24/0x28, state transport and protected rounding reloads remain.
+// Round 72 (lane 8): the cause of the state transport is the tag test: ours compares the word
+// against a constant 1 it shares with `mode = 1` (ECX), so state arrives in EAX and moves to EDI;
+// retail loads the word with movsx and tests it with `dec eax`, which leaves ECX for the state
+// record (the entry then matches retail but for the frame). Only the steering spelling
+// `... - 1 == 0` gives that here (319, 1479 B; with an entry border zero 240/238), not kept.
+// Also tried: the tag word in a named local 239; long mode 243; offset as a ternary 335; distance
+// read before the aspect 240. Retail also passes width/height to 0x1ddd0 in ESI/EDI (ours: EAX
+// and the stack; 0x1ddd0's other callers are in a contributor file).
+// Round 191: distance field at every use with saved/lower-live/upper-live/both-live
+// depth observations 330/323/330/324; with entry-owned border zero 267/268/267/268.
+// All regress; original distance/depth snapshots and border restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

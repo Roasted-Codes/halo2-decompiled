@@ -419,6 +419,10 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 // Round 250: actual advancing initialization receiver, short/long ordinal 349/401;
 // safely capped word 374/374; separate edge memset 384/353, with word 384/386.
 // Keep only the receiver with the original short ordinal: 349 plain, 1395/1388 bytes.
+// Round 173: Native bounded word link count on the advancing initialization receiver, with geometry and
+// history/receiver name subsets, 359 each at 1388 bytes. Independent traversal defaults at entry on those
+// four forms 383 each at 1411 bytes, first +0x19. Geometry names canonicalize. Original long link count and
+// full body restored.
 // Round 187: Shared initial/traversal node receiver with capped-word/CRT-edge-fill/early-constant
 // masks 0-7 350/374/384/384/372/343/396/411. Original advancing step receiver, link count and
 // complete body restored.

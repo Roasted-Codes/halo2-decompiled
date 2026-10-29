@@ -452,12 +452,16 @@ void function_144f0(long tag, short stage, long fallback, short fallback_index, 
 void function_1cf50(void);
 
 #pragma inline_depth(0)
-// score 100 (was 100): the record index is scaled by 0x40 in retail and by 0x4 here, and the table retail reads is not the one this tree reads
+// score 100 (was 100): no frame; hoisted zero and material-call convention, then color/draw scheduling differ.
+// Earlier: the record index is scaled by 0x40 in retail and by 0x4 here, and the table retail reads is not the one this tree reads
 // Current stride agrees; the hoisted zero, callee convention and color/draw
 // scheduling differ. Record view, byte-channel locals, material/color results,
 // block-pool/byte-offset lifetimes and typed-record for 100; byte bitmap 98.
-// score 100 (was 100): BLOCKED-BY 0x144f0, which retail calls with the tag, stage and index in
+// Earlier: BLOCKED-BY 0x144f0, which retail calls with the tag, stage and index in
 // EAX/ECX/EBX and three pushes (ours four pushes and the priority in XMM2, zero held in EBX).
+// Tag read at every use with all cache-store orders 99; store-order forms without that change
+// 100; bitmap read at every use 98. One- and two-point gains rejected. All original cache
+// stores and field observations restored.
 // @retail 0x44040
 void __stdcall function_44040(long cell, short mask)
 {
@@ -921,7 +925,11 @@ void __stdcall function_2cbc0(bool enabled)
 	function_133720(current, enabled);
 }
 
-// score 64 (was 64): the frame is four bytes larger and the camera buffer sits at another offset, and the float subtraction uses x87 where retail uses SSE
+// score 95 (was 95): frame 0x1c0 and camera/query registers agree; x87 offset,
+// dropped identifier and scan jump/padding remain. Earlier: frame four bytes larger,
+// camera home displaced, subtraction x87. Existing camera/effect/visibility noinline
+// boundaries, all seven subsets 95; cursor-result scan 76/297, but normalized
+// instruction edits worsen 9 to 33; restore the Boolean scan and all declarations.
 // @retail 0x3f2c0
 void function_3f2c0(s_planar_camera_source const *source, byte const *view, long object_index, long identifier)
 {
@@ -1314,6 +1322,9 @@ short function_4bcc0(byte *output, long object_index, real distance, long overri
 // twice-used source count 43; source count with direct level 83.
 // Native word buffer 43; default tag scope with byte/word data 98/98; native word clear 43;
 // actual object fields with byte/word data 43/43; initial-selection result alone/with fields 43/43.
+// DL179: Inline clobber contract on the existing outlined cache setter, crossed with
+// eight ordinary/inline/noinline getter and selector pairs, 43 each. Original complete
+// target and all provider declarations restored; count/current/wanted allocation remains.
 // @retail 0x4c190
 bool function_4c190(long *count, long object_index, bool defaults, long tag,
     short *level, signed char fallback_level, signed char *sections, bool *fallback)
@@ -1497,6 +1508,9 @@ struct s_133f70;
 // Round 265: six lexical orders of entry/failure/compacted-slot long values and
 // both uninitialized entry/slot storage orders before the query, 175 each on the expanded control.
 // Original declarations, names, compaction, cache observations and complete body restored.
+// Round 174: function-scope fallback/reuse/level-change result homes, all seven
+// subsets, 175 each; all plus the builder result 175. Original producer points,
+// separate iteration storage and complete body restored; distance staging remains.
 // DH round 236: full-width coefficient-order interface on the current callee graph, with
 // bool/long success, long/signed-byte previous and inner/entry success storage:
 // 175/238/319/175/327/238/319/327 on the calibrated caller image (narrow control 353).

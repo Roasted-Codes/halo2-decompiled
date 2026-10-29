@@ -40,7 +40,7 @@ long function_26d100(vector3f const *up, long *unknown, s_collision_result_1697c
 
 /* finds the location of the object's root: a unit's (0), a vehicle's (1),
    otherwise the pathfinding location under its center */
-// score 94 (was 94): query homes, case-tail and point-copy scheduling still differ.
+// score 89 (94 with a volatile read of location, dropped in review): query homes, case-tail and point-copy scheduling still differ.
 // case-tail and point-copy scheduling differ; nine excess bytes remain.
 // Query index captured after the location guard: kind zero/one/both 150/158/155;
 // null-output-first counterparts 167/158/155; result assigned per dispatch arm 140/140.
@@ -129,8 +129,7 @@ void function_26bfa0(long object_index, long *location_index, s_location_view *l
 				query_point.y = object->center.y;
 				query_point.z = object->center.z;
 				contact.collision.unknown24 = NONE;
-				/* read from the argument's stack slot: retail passes the location on the stack */
-				result = function_26d100(g_4687b0, (long *)(*(s_location_view *const volatile *)&location), &contact.collision, &query_point);
+				result = function_26d100(g_4687b0, (long *)location, &contact.collision, &query_point);
 			}
 		}
 		break;
