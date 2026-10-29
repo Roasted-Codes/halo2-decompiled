@@ -660,6 +660,9 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Round 379: called shared append on first/second/third/first-second/first-third/last-two/all
 // descriptors 468/469/413/609/548/541/679 fast; uniform existing raw inline append 335
 // (control 334, full 336). All original calls and executable body restored.
+// Round 247: full CRT clears at native declaration, first/second/first-second/third/first-third/
+// last-two/all 334/333/333/333/333/332/332 fast; all after member copy 336 (control 334,
+// full 336). No qualifying gain; all aggregate declarations and shared initializers restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -781,6 +784,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // right word 456/456, signed byte 438/438; word route with ordinary inline 428,
 // word route alone 428 plain (kept); long/dword/byte route 438 each. Only the native
 // 0-or-1 route word remains; original append declaration and all gain trees retained.
+// Round 247: native flag2 and primary pointer, original/native flag3 428/424; with shared
+// ordinary input 471/463; right from left 461/461, with shared input 494/494. Four-point
+// gain rejected; original field view, destinations and complete body restored.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
