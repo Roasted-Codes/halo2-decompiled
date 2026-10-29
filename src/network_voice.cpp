@@ -2688,6 +2688,10 @@ finish:
 // Round 196: query-carrier names singly/paired, comparison-input names singly/paired,
 // comparison ordinal and copy ordinal names [2, 2, 2, 2, 2, 2, 2, 2]; original source restored.
 // Round 198: read-only mask/source/both 2/2/2; unsigned/signed-word/unsigned-word copy ordinal 123/318/318; unsigned comparison/both ordinals 162/186. Opening body restored.
+// Round 107 (plain checks: --fast shows 2 even for a full-build match): this body matched in the full
+// build of lane 5 round 82 and network_voice.cpp has not changed since, so the reload order follows the
+// rest of the image. Mask declared first, logging call inside the loop, empty declared first, reason
+// declared first, `if (changed) log; else return;`: 2 each, same pair swapped.
 // @retail 0x54590
 void function_54590(void)
 {
@@ -2989,6 +2993,12 @@ struct s_voice_route_choice
 // Shared priority call with a nearest-path return, original/choice receiver/three pairs/
 // native descriptor 402/401/419/424; shared priority with a combined routing decision,
 // corresponding forms 402/401/419/424. All original routing and engine calls restored.
+// Round 379: coordinated formal orders 1023/1203/1230/0213/0132/0312/2013/3012
+// 363/363/363/363/364/364/363/364; first three preserve both callers, the other five lose them.
+// Original definition and every call restored; entry saves and cursor bias remain.
+// Round 381: headset accumulation after routing 423; settings publication after decisions 435;
+// both 494; with the actual choice receiver 423/435/494; both with conditional radio 416,
+// with the receiver 416. All restored; original byte accumulation and input reads retained.
 // @retail 0x57eb0
 void function_57eb0(s_voice_player_settings *settings, long talker,
 	const s_voice_route_choice *choices, long count)

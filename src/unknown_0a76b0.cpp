@@ -1155,28 +1155,26 @@ void __stdcall unit_action_throw_grenade_interrupted(long unit_index, long type)
 }
 
 /* puts away the weapon in a unit's hand */
+// score 55 (was 66): pool/hand allocation, slot comparison width and repeated receiver lookup differ.
+// Short/long slot domains 59/66; long hand with char/short/long slot 67/60/67;
+// short hand and slot 58; existing ordinal/boolean hand getters 60/55.
+// Ordinary boolean hand getter 55; retained.
 // @retail 0xe8460
 void function_e8460(long unit_index, bool primary)
 {
-	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
-	char index = (&unit->current_weapon_index)[!primary];
+	long weapon_index = unit_action_weapon_get(UNIT_ACTION_UNIT_GET(unit_index), !primary);
 
-	if (index != NONE)
+	if (weapon_index != NONE)
 	{
-		long weapon_index = unit->weapon_object_indices[index];
+		s_unit_action_unit *current = UNIT_ACTION_UNIT_GET(unit_index);
 
-		if (weapon_index != NONE)
-		{
-			s_unit_action_unit *current = UNIT_ACTION_UNIT_GET(unit_index);
-
-			function_1015a0(weapon_index);
-			function_100130(weapon_index, true);
-			*(short *)((byte *)UNIT_ACTION_UNIT_GET(weapon_index) + 0x16e) = 0;
-			function_104080(weapon_index);
-			function_10cd50(weapon_index);
-			(&current->current_weapon_index)[!primary] = NONE;
-			function_ee7f0(unit_index, primary ? 0x18 : 0x19);
-		}
+		function_1015a0(weapon_index);
+		function_100130(weapon_index, true);
+		*(short *)((byte *)UNIT_ACTION_UNIT_GET(weapon_index) + 0x16e) = 0;
+		function_104080(weapon_index);
+		function_10cd50(weapon_index);
+		(&current->current_weapon_index)[!primary] = NONE;
+		function_ee7f0(unit_index, primary ? 0x18 : 0x19);
 	}
 }
 
@@ -2619,13 +2617,14 @@ bool function_eaad0(long unit_index)
 		else
 		{
 			if (!function_10f430(unit_index, 0x7000101, 0x7000101, 0x7000101, 0x400004a, 0.0f, 0, 2))
-				return result;
+				goto done;
 			function_b9c60(unit_index, false);
 			function_a8b10(unit_index);
 		}
-		function_d12b0(vehicle_index, (short)seat_index, 0, 0);
 		result = true;
+		function_d12b0(vehicle_index, seat_index, 0, 0);
 	}
+done:
 	return result;
 }
 
@@ -3834,6 +3833,10 @@ void function_1c4b00(long object_index, void *a, void *b, long c);
 
 /* the pose sat down from finished: the unit leaps to the kept point on a
    ballistic arc */
+// score 66 (was 66): frame 0x1c agrees; scalar output homes and x87/SSE speed transport differ.
+// Minimum/selected/both scalar output names 66/66/66; existing scaler 66;
+// scaler with those three name sets 66/66/66; both names, scaler and
+// reversed scalar declarations 66. Original body and includes restored.
 // @retail 0xecdc0
 void __stdcall function_ecdc0(long unit_index, long type)
 {

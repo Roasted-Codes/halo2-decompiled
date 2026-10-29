@@ -1056,6 +1056,8 @@ void function_d0590(s_unit_child_iterator *iterator, long object_index)
 // @retail 0xd05c0
 s_damage_object *function_d05c0(s_unit_child_iterator *iterator)
 {
+	s_damage_object *result = NULL;
+
 	while (iterator->next_index != NONE)
 	{
 		long unit_index = iterator->next_index;
@@ -1066,10 +1068,11 @@ s_damage_object *function_d05c0(s_unit_child_iterator *iterator)
 		{
 			iterator->unit_index = unit_index;
 			iterator->seat_index = unit->parent_seat_index;
-			return (s_damage_object *)unit;
+			result = (s_damage_object *)unit;
+			break;
 		}
 	}
-	return 0;
+	return result;
 }
 
 /* clears the unit's weapon indices, then its weapons and +0x238 */
@@ -1244,7 +1247,7 @@ void function_d1000(long unit_index)
 
 	if (function_d1080(unit_index, &matrix, &camera))
 	{
-		unit->unknown270 = matrix.position;
+		real_point3d_set(&unit->unknown270, matrix.position.x, matrix.position.y, matrix.position.z);
 	}
 	unit->unknown27c.i = 0.0f;
 	unit->unknown27c.j = 0.0f;
@@ -3902,6 +3905,11 @@ bool function_c5eb0(long unit_index)
 
 /* turns a vector into the frame of a player's seat (seats without bit 4):
    built from the vehicle's up and the world's axes */
+// score 28 (was 28): frame 0x4c and vector stack argument agree; input j/k load order
+// and the forward-contribution carriers remain. Scalar j/k/i declarations 28; uniform
+// forward products 28; both shared crosses 91; crosses plus uniform products 91;
+// native input vector 63, with uniform products 63, with crosses 101, all three 101;
+// existing scale-aware transform alone/with shared crosses 173/173. Original body retained.
 // @retail 0xcb810
 bool function_cb810(long unit_index, vector3f *vector)
 {

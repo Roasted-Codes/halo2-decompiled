@@ -348,6 +348,9 @@ static inline bool teams_enabled_19e1c0()
 // Round 224: ordinary result completed on every no-output path: all failure tails 715;
 // name/score/name+score entry defaults 713/707/692; timer/name+timer/score+timer/all entry
 // defaults 716/712/712/710 (fast). Frame 0x204 recovers, copy tails still merge; all restored.
+// Round 66: ordinary result with element-address name buffers, a shared name pointer,
+// result-derived first terminator, a first-case pointer, a first-case exit, their combination,
+// an independent first-case length and destination element addresses 701 each; all restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {
