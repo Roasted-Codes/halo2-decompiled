@@ -935,6 +935,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 388: Shared scale/normalizer ordinary inline singly/both 385/385/385;
 // scale noinline 425; normalizer noinline 451; noinline scale/ordinary normalizer 425;
 // ordinary scale/noinline normalizer 451; both noinline 415. Original declarations restored.
+// Round 175: Full-width unsigned incoming/ring/complete selected-vertex domains and all
+// subsets 385 each; all with unsigned equality-only ring-edge anchor 385. Native word values
+// and distinct NONE bit patterns preserved. All original domains, histories and body restored.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1129,6 +1132,10 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Round 220: Normalizer complete input via native/readonly/component/library copy
 // 518/518/172/518; each with zero-length guard return 518/518/172/518.
 // Original normalizer and complete body restored; true-return host and y forwarding remain.
+// Round 175: Return produced by the initial length test/native scale input/both/symmetric side
+// product terms/result with terms/scale with terms/all/all with if-form clamps
+// 359/470/466/172/359/470/466/471. Native scale input loses both matched geometry siblings;
+// all original helper inputs, qualifier, branch returns, arithmetic and body restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)
@@ -1335,6 +1342,10 @@ bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start
 // Round 388: Both corner-success carriers byte/short/word/long 444/440/440/450,
 // with the same domains declared at selection 444/440/440/450. Four-point gains
 // above 30 rejected; original Boolean carriers and declarations restored.
+// Round 175: Existing selector inline/noinline declarations 444/444; output receiver formed
+// after successful selection alone/inline/noinline 502/502/502; the same three with the immutable
+// current type retained across all uses 502/502/502. All original declarations, address and
+// metadata lifetimes, native record snapshot, qualifiers and complete body restored.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)
