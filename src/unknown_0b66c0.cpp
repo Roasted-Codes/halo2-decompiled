@@ -313,6 +313,9 @@ bool function_7af40(s_type_99af70 const *address);
 // score 32 (was 32): the connection state is cleared with the three field stores in a different
 // order here, the flag is written as a word here and or-ed into the field in retail, and the two
 // calls take their arguments in a different order.
+// DL180: open inline 32; open noinline 32; valid inline 32; valid noinline 90; both inline 32;
+// open inline/valid noinline 90; open noinline/valid inline 32; both noinline 90. Original
+// executable body restored.
 // @retail 0xb5d40
 bool s_http_connection_ab::connect(long address, word port, char const *path, bool flag)
 {
