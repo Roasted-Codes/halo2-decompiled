@@ -87,28 +87,24 @@ void function_1bbc00(long player_index, long vehicle_index)
 
 static __forceinline long real_to_long(real value);
 
-// score 2 (was 8): the child object is kept in a local, so retail's object
-// pointer stays in EAX and the tick count is converted through ECX/DX like
-// retail; only the 0xd0620 call setup still differs, ours forms the iterator
-// address in EBX before it moves the vehicle index into EAX.
-// Tried: the iterator started from the stored
-// the iterator address in EBX for the first child call, and in the child loop
-// keeps the object pointer in EAX and converts the tick count through ECX/DX
-// where ours uses ECX and EDX/CX. Tried: the iterator started from the stored
-// player vehicle 77; the actor looked up at each store 45; separate conversion
-// locals in the loop 15; the loop product passed straight to the conversion
-// 8; the block locals in two other orders 8; the player and vehicle parameters
-// swapped 12; the child object in a local with the index read from it 8.
-// 8; the block locals in two other orders 8.
-// Earlier 8 from 44.
-// Existing slot-query long/short 61/8; guarded long/short 70/38;
-// query-first long/short 77/46; shared-query rounding names/separate loop carriers 61/61.
-// 8; the block locals in two other orders 8. Separately, from the 44 form: the clock
-// local moved into the player block with the slot local declared first, 8 (the same
-// lines); pointer, type, scope, direct-store and helper forms on it give the same bytes.
-// Earlier 44 -> 8 came from clock/player lifetimes.
-// Round 220: Bounded slot-scan short/word/char/byte induction 84/84/85/85;
-// first-match result termination with those widths 97/97/97/97. Original body restored.
+// score 2 (was 2): BLOCKED-BY 0xd0620 (its formal order): only the setup order of 0xd0620's two
+// register arguments differs (retail moves the vehicle index into EAX before it forms the
+// iterator's address in EBX; 0xc9200 differs by the same two lines). With 0xd0620 declared as
+// (iterator, object_index) in its definition, every declaration and every call site, this
+// function, 0xc9200 and 0xdb670 match and nothing is lost, but that needs call-site edits in
+// damage.cpp and unknown_26b230.cpp. The child object is kept in a local, so retail's object
+// pointer stays in EAX and the tick count converts through ECX/DX like retail.
+// Tried: the iterator started from the stored player vehicle 77 (77 again on this base); the
+// actor looked up at each store 45; separate conversion locals in the loop 15; the loop product
+// passed straight to the conversion 8; the block locals in two other orders 8; the player and
+// vehicle parameters swapped 12; the child object in a local with the index read from it 8;
+// existing slot-query long/short 61/8; guarded long/short 70/38; query-first long/short 77/46;
+// shared-query rounding names/separate loop carriers 61/61; the clock local in the player block
+// with the slot local first 8; pointer, type, scope, direct-store and helper forms 8; bounded
+// slot-scan short/word/char/byte induction 84/84/85/85, with first-match termination 97 each;
+// the iterator's address in a local (declared before the call, with the block locals, assigned
+// first) 2; a 300 s permuter run, none below 2; the iterator declared at function scope or first
+// in the player block 2/2; the tick conversion before the player stores 21.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {
