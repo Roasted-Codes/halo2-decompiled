@@ -83,6 +83,9 @@ real normalize2d(point2f *arg_0);
 // Round 253: successive squared sums/projection/both side sums/both squared-projection/
 // squared-side/projection-side/all/all plus radius first 264/220/220/264/264/220/264/264.
 // Original complete expressions and executable body restored.
+// Round 256: shared final scaled add/far sum/planar center-then-displace subsets
+// 220 each; full producers with radius first 215 (five-point form restored).
+// Output EBX/EBP and point/vector homes remain; frame 0x90 agrees.
 // @retail 0x1badc0
 bool __stdcall function_1badc0(long arg_0, long arg_1, point3f const *arg_2,
     s_type_c3b527 *arg_3, long *arg_4, bool arg_5, bool *arg_6)

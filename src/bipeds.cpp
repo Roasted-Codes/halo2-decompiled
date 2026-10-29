@@ -432,7 +432,7 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 
 /* moves the biped's camera offset (+0x3cc) toward its head marker,
    relative to its root node, a little each tick */
-// score 7 (was 24): frame 0x9c, native entry and length agree; cross-component
+// score 7 (was 7): frame 0x9c, native entry and length agree; cross-component
 // add/store scheduling remains. Existing node query 34; point difference 129;
 // both 48; coherent vector homes 127/34/129/48; outputs first 48. Clamped steps 34;
 // destination pointer 24; both 34; delta-first 34, with steps/pointer/both 34/24/34;
@@ -441,6 +441,9 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 // Native low/high loop clamp 7 plain (kept); upper/lower clamp 12; low/high with
 // current-component reuse 83; full clamped correction macro/branches 61/54; shared
 // smoothing difference with macro/low-high/high-low 63/62/62. Cross-store scheduling remains.
+// Round 281: component reference 27; named updated value 7; both 27; short ordinal 141;
+// ordinary while 7; component pointer 27; point-pointer traversal 258; sequential bounds 7.
+// All restored; frame and length agree, cross-store scheduling remains.
 // @retail 0xde190
 void function_de190(long arg_159e6d)
 {
@@ -1939,6 +1942,10 @@ bool __stdcall function_c5460(long object_index, long ignore_index, point3f cons
 // Multi-use forward subobject 77; native ignore assignment branches 76; separate
 // selected vehicle 76; forward/ignore and forward/selected vehicle 77 each; ignore with
 // selected vehicle 76; all three 77; all three with fallback point setter 80. Frame/input homes remain.
+// Round 281: signed-byte/short/word/dword retry ordinals with separate/shared successive
+// point output 81/81, 73/73, 73/73, 76/76 (all 348 bytes). Three-point gains restored.
+// Short/word result-controlled completion 90/90; short with shared point 90 (360 bytes).
+// All original code restored; frame 0x1c/0x20 and input homes remain.
 // @retail 0xe0070
 void function_e0070(long arg_159e6d, long vehicle_index)
 {
@@ -1995,6 +2002,9 @@ void __stdcall function_1c3770(long object_index, dword flags);
 // Settling field at both uses 82; tag receiver at use 64; both 81; settling reads
 // with shared promoted/native-short getter 99/89; both reads with those getters 102/100;
 // both reads with direct valid-body admission 72. Entry count/convention and flag stores remain.
+// Round 281: shared entry/query input-output count 68/73; entry with short body/getter
+// 72/87; query with short body/getter 77/105; tag at use on entry/query graphs 69/79.
+// All restored; extra EBP and body/flag scheduling remain.
 // @retail 0xe0c70
 void function_e0c70(long arg_159e6d)
 {
@@ -2139,37 +2149,41 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 	long rigid_body_index, bool started);
 
 /* places the biped's ragdoll bodies, from its root rigid body outward */
-// score 91 (was 134): frame 0x114 versus 0x110; escaped result byte, zero/save staging and root admission differ.
+// score 70 (was 91): frame 0x114 versus 0x110; entry saves and result/visited homes differ.
 // Native one-word visited mask 91 kept; root clamp 143, with native mask 100; common result 123;
 // declaration-time zero 100, with common result 123; result first 100, with common result 123.
 // Lookup/output scope 86 (five-point incremental gain, 11 extra bytes; restored); with root clamp 101;
 // mask initialized after admission 96; output-only Boolean 103; result after first placement 122;
 // output-only after placement 103. Native mask body retained.
+// Round 282: mask before admission, array/scalar with range/clamp and initialized/output-only
+// result [89,85,91,70,86,82,80,84]; ending lookup scope on this graph [86,88,83,85].
+// One-word mask before admission, root clamp and output-only result 70 plain, kept;
+// output receiver is never read by its matched consumer. All original call roles retained.
 // @retail 0xe1b60
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 {
 	s_list_rigid_bodies list;
 	long count;
-	bool result = false;
+	dword visited[1];
 
 	function_181bd0(arg_159e6d, &list);
 	count = havok_component_get(BIPED_GET(arg_159e6d)->havok_component_index)->rigid_bodies.size;
+	memset(visited, 0, sizeof(visited));
 	if (PIN(count, 1, 32) == count && list.count > 0)
 	{
 		long root = list.lists[0];
 
-		if (root >= 0 && root <= count - 1)
+		if (PIN(root, 0, count - 1) == root)
 		{
-			dword visited[1];
+			bool result;
 			bool started;
 
-			memset(visited, 0, sizeof(visited));
 			started = function_e1c40(arg_159e6d, point, value, root, NONE, NONE, 0);
 			visited[root >> 5] |= 1 << (root & 0x1f);
 			return function_e23e0(arg_159e6d, point, value, &result, visited, root, started);
 		}
 	}
-	return result;
+	return false;
 }
 
 void function_b8840(long unit_index);
@@ -3129,6 +3143,9 @@ void function_e4300(long arg_159e6d)
 // Separate reset noinline declaration 91; Boolean flag test 98; both 98; noinline with
 // field-use object lookup 94; Boolean lookup with/without noinline 101/101; both call-boundary
 // declarations with Boolean test 98, with field-use lookup 101. Original body/declarations restored.
+// Round 282: physical low-byte mask/Boolean/named/early guards 91/91/91/91;
+// native word bitfield with Boolean/early guards 98/98; native byte bitfield 91/91.
+// Original physical word declaration and caller body restored.
 // @retail 0xe4bd0
 void function_e4bd0(long arg_159e6d)
 {
@@ -3371,7 +3388,7 @@ void function_e3700(long arg_159e6d)
 
 /* the airborne biped: falling damage, a random spin for one that tumbles,
    and its airborne animation */
-// score 8 (was 90): frame 0x10 agrees; cross operand loads and the first scaled-product carrier differ, one byte long.
+// score 8 (was 8): frame 0x10 agrees; cross operand loads and the first scaled-product carrier differ, one byte long.
 // Getter declaration at caller only 177; bounded-random helper 194 (range rounding differs);
 // shared cross 177; both helpers 194; unit-random/both helpers 177/177; entry axis 194;
 // role names and branch stores 190. Separate out-of-line getter declaration 90, plain confirmed.
@@ -3381,6 +3398,8 @@ void function_e3700(long arg_159e6d)
 // computed tick spin, native up copy and both [11, 122, 120]. Best plain 8.
 // Earlier named/staged normalized draws with scalar/shared updates and spin/tick lifetimes
 // 30/32/27/29/29/31/28/30. Named fractions preserve both random products; branch stores recover the tail.
+// Round 282: negative cross-factor orders in all seven row subsets 8 each; entry axis on k-order 8.
+// Existing scale/add helpers, in-place/distinct increment 56/56; with shared cross 58/53. Restored.
 // @retail 0xe40d0
 void __stdcall function_e40d0(long arg_159e6d, long *names)
 {

@@ -593,6 +593,8 @@ void function_158850(long *type, long *count)
 }
 
 #define PIN(x, lo, hi) ((x) < (lo) ? (lo) : ((x) > (hi) ? (hi) : (x)))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define FLOOR(n, floor) ((n) < (floor) ? (floor) : (n))
 
 /* the juggernauts (juggernaut.cpp) */
 struct s_juggernaut_globals
@@ -4118,8 +4120,11 @@ struct s_score_zone_view
     s_player_zone_progress players[16];
     short count;
 };
-// score 440 (was 440): Frame 0x48c and early scalar homes agree; text initialization, palette/zone homes and charge spills remain.
-// Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
+void function_15fe20(long team_index, color3f *color);
+// score 119 (was 440): retail length; two team-color copies (retail loads all three words, then
+// stores through ESI/EDI), the -1 register reused for the unit/slot NONE tests, a byte shift count
+// and scratch-register renames remain.
+// Earlier: frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
 // Fast bounded copies: team pair 513, individual pair 616, rival pair 482 (plain 485);
 // unsigned player 541, best-store order 542; rival pair plus earlier rounds 478 (plain 481).
 // Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
@@ -4133,9 +4138,9 @@ struct s_score_zone_view
 // result 684; individual best-score-first declarations 472. Frame 0x48c and early homes agree;
 // reversed text/color homes and zone/charge allocation remain.
 // Frame 0x48c and early scalar homes agree; text/color/zone homes and charge spills remain.
-// Earlier 481 (was 544): scalar homes now agree; text-workspace and later call/store allocation differ.
-// Earlier 475 (was 475): Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
-// Earlier 472 (was 472): frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
+// Earlier: scalar homes now agree; text-workspace and later call/store allocation differ.
+// Earlier: Frame 0x48c and early scalar homes agree; text/color/zone allocation remains. Team text names 475; rival color output 586; own color output 568; early zone pointer 558; invalid-input return 552 (plain).
+// Earlier: frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills
 // Round 201: Shared team text 469 (three-point gain rejected); shared team color 484; shared iterator after copy recovery 472; native word presence mask 472; short score selectors 608; charge qualifier removed after copy recovery 495.
 // Team color library copies 472; individual iterator chained reset 473; zone iterator chained reset 472; shared
 // zone output index 522; common zone count clear 472. Text/color homes and native zone/charge allocation remain.
@@ -4161,6 +4166,12 @@ struct s_score_zone_view
 // all mutable/immutable 423/440/433/440/440/440/433/433; one-use call-result
 // forms rejected despite the 423 first-transfer recovery. Existing rival output
 // object consumed directly 493. All restored; team-color/zone/charge allocation remains.
+// Round 88: FLOOR(MAX(rival, score), 1) macros 430 (retail evaluates the maximum twice); zones local at
+// the top of the mode-8 block 326; sibling iterator init order 325; present before zone_count 326;
+// volatile dropped from the charge local 302 (retail length); weapon declared before the unit test 302;
+// object_header_get for the unit 302 (identical, not kept); zone team colors through 0x15fe20 265;
+// unicode_string_copy for the team score text 119; masked shift count 548; team color through a
+// value copy 356 (both not kept).
 // Round 219: Rival metadata before color, team/individual/both 566/518/566; own score before text
 // alone/with team/with individual/with both 476/545/523/564; all rival metadata before text 590.
 // All restored; native color transfers, zone homes and charge spills remain.
@@ -4251,8 +4262,7 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                     long mode = g_4e6948->mode_180;
                     if ((mode >= 3 && mode <= 4) || mode == 8) game_engine_format_time(score, text);
                     else function_1630e0(text, (word const *)L"%d", score);
-                    wcsncpy((wchar_t *)display->score_text, (wchar_t const *)text, 7);
-                    display->score_text[7] = 0;
+                    unicode_string_copy(display->score_text, text, 8);
                 }
                 display->score = score;
                 color3f color;
@@ -4267,8 +4277,8 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                 long best_score = -32768;
                 s_engine_player_iterator iterator;
                 iterator.data = g_4e8c24;
-                iterator.index = NONE;
                 iterator.absolute_index = NONE;
+                iterator.index = NONE;
                 while (player_iterator_next((long *)&iterator))
                 {
                     if (iterator.index != player_index)
@@ -4306,19 +4316,18 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
             }
             if (!rounds && display->limit == 0)
             {
-                long highest = display->rival_score > display->score ? display->rival_score : display->score;
-                display->limit = highest < 1 ? 1 : highest;
+                display->limit = FLOOR(MAX(display->rival_score, display->score), 1);
             }
             if (g_4e6948->mode_180 == 8)
             {
-                display->zone_count = 0;
+                s_score_zone_view *zones = (s_score_zone_view *)g_4e9ae8;
                 dword present = 0;
+                display->zone_count = 0;
                 s_engine_player_iterator iterator;
                 iterator.data = g_4e8c24;
-                iterator.index = NONE;
                 iterator.absolute_index = NONE;
+                iterator.index = NONE;
                 while (player_iterator_next((long *)&iterator)) present |= 1 << iterator.index;
-                s_score_zone_view *zones = (s_score_zone_view *)g_4e9ae8;
                 for (long zone = 0; zone < zones->count; zone++)
                 {
                     if (zones->indices[zone] != NONE)
@@ -4330,10 +4339,7 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                             s_engine_player *owner = engine_player_get(holder);
                             color3f color = *g_468714;
                             if (owner->team != NONE)
-                            {
-                                color3f team_color;
-                                color = *function_7f720(&team_color, owner->team);
-                            }
+                                function_15fe20(owner->team, &color);
                             for (long p = 0; p < 16; p++)
                                 if (((word)present & (1 << p)) && zones->players[p].zone == zone && progress <= zones->players[p].progress)
                                     progress = zones->players[p].progress;
@@ -4356,10 +4362,7 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
                                 }
                                 color3f color = *g_468714;
                                 if (owner->team != NONE)
-                                {
-                                    color3f team_color;
-                                    color = *function_7f720(&team_color, owner->team);
-                                }
+                                    function_15fe20(owner->team, &color);
                                 display->zone_colors[display->zone_count] = pack_color3f(&color);
                                 display->zone_progress[display->zone_count] = (real)progress * (1.0f / 63.0f);
                             }
@@ -4376,15 +4379,15 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
             else display->zone_count = 0;
         }
         else result = false;
+        long weapon = NONE;
         if (player->unit_index != NONE)
         {
-            long weapon = NONE;
             byte *unit = ((byte **)(g_4e0300->data + (player->unit_index & 0xffff) * 12))[2];
             short slot = *(char *)(unit + 0x212);
             if (slot != NONE) weapon = ((long *)(unit + 0x218))[slot];
             if (function_162b10(weapon))
             {
-                volatile real  charge = function_242140(weapon);
+                real charge = function_242140(weapon);
                 if (charge > 0.0f) { display->charge = true; display->charge_fraction = charge; }
             }
             else if (g_4e6948->mode_180 == 8)
