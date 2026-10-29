@@ -328,6 +328,10 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 32 on branch-owned definition/result-at-join: all BSP observations 234;
 // all collision metadata observations 228; CRT query snapshot 172; BSP/metadata 231;
 // BSP/copy 234; metadata/copy 228; all 231, instance-first all 222. Original body restored.
+// Round 251: bounded vertex byte/signed-byte/word/unsigned-long ordinals
+// 259/259/259/172; each with a complete post-geometry range-end expression
+// 269/269/269/196. Original ordinal and bounds restored; frame/BSP/section and
+// defined vertex joins remain.
 // Round 387: BSP/section carriers and range/plane homes remain. Native fetch output/section/both
 // references 172 each; remaining index-output-section, output-index-section and section-output-
 // index contracts 172 each; output reference with index-first and both references with output-
@@ -341,6 +345,11 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 228 on the branch-owned geometry join: filled-output pointer success with native
 // section/output references and index-first order, all eight contracts 172 each. Original
 // Boolean fetch, defined failures and caller roles restored; BSP/section residence remains.
+// Round 185: Direct collision-point transform input with aggregate/library/overlap-safe/shared-
+// setter copies at entry 199/199/205/243; case-owned copies 251/251/257/296. Original in-place
+// transform, point capture, defined vertex failures, complete body and include set restored.
+// Round 187: Native byte-data/offset versus point-table fetch inputs, long/word count and
+// early/result-first eligibility, all eight 235. Original fetch contract and body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

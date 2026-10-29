@@ -1757,10 +1757,17 @@ PRIVATE __forceinline bool unit_action_pause(long unit_index, s_unit_request *re
 // 0xe9370 and 0xe9500 (score 139 each) are 17 bytes short through unit_action_pause, which
 // reaches function_e7020; see the note there.
 /* pauses a unit's animation (type 23) */
+// score 127 (was 139): saved EBX/result BL still replace retail scratch ECX/stack byte;
+// sentinel, channel flags and completion homes differ. False-first bool/byte/short/long
+// completions 135/129/142/139; true-first 127/133/153/149. True-first bool kept;
+// existing shared helper and its other caller unchanged.
 // @retail 0xe9370
 bool __stdcall function_e9370(long unit_index, s_unit_request *request)
 {
-	return unit_action_pause(unit_index, request, 0x700005c);
+	bool result = true;
+	if (!unit_action_pause(unit_index, request, 0x700005c))
+		result = false;
+	return result;
 }
 
 /* pauses a unit's animation (type 24) */
@@ -2966,41 +2973,49 @@ bool __stdcall unit_action_vehicle_board_update(long unit_index, long type)
 
 /* ejects from a vehicle (type 32), or (when asked) finishes an ejection at
    once */
+// score 15 (was 138): failure-exit order and header/active-store scheduling remain.
+// Late success, entry-first, byte/long/word completions 138 each; per-use actions 133;
+// common completion 15; common callback 109 (restored); split admission 115;
+// flags publication 35, split flags 118; structured completion 15 (kept),
+// structured flags 35; structured result after vehicle lookup 30.
 // @retail 0xeb3c0
 bool __stdcall unit_action_vehicle_ejection(long unit_index, s_unit_request *request)
 {
+	bool result = false;
 	s_unit_action_unit *unit = UNIT_ACTION_UNIT_GET(unit_index);
 	s_unit_actions *actions = UNIT_ACTIONS_GET(unit);
 	long vehicle_index = unit->parent_object_index;
-	bool result = false;
-
-	if (vehicle_index == NONE || unit->seat_index == NONE)
-		return result;
-	if (*((bool *)request + 5))
-		function_e69c0(unit_index, 0x20);
-	if (UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index)), 0x20))
-		return false;
-	function_e69c0(unit_index, 0x1d);
-	function_e69c0(unit_index, 0x1c);
-	function_e69c0(unit_index, 0x1f);
-	function_e69c0(unit_index, 0x1b);
-	function_e69c0(unit_index, 0x1a);
-	function_e69c0(unit_index, 0x16);
-	if (*((bool *)request + 5))
+	if (vehicle_index != NONE && unit->seat_index != NONE)
 	{
-		function_e6960(unit_index, 0x20);
-		function_cc810(vehicle_index);
-		return true;
+		if (*((bool *)request + 5))
+			function_e69c0(unit_index, 0x20);
+		if (!UNIT_ACTION_ACTIVE(UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index)), 0x20))
+		{
+			function_e69c0(unit_index, 0x1d);
+			function_e69c0(unit_index, 0x1c);
+			function_e69c0(unit_index, 0x1f);
+			function_e69c0(unit_index, 0x1b);
+			function_e69c0(unit_index, 0x1a);
+			function_e69c0(unit_index, 0x16);
+			if (*((bool *)request + 5))
+			{
+				function_e6960(unit_index, 0x20);
+				result = true;
+				function_cc810(vehicle_index);
+			}
+			else if (function_10f430(unit_index, 0x7000101, 0x7000101, 0x7000101, 0x80000c4, 0.0f, 0, 2))
+			{
+				if (*((bool *)request + 4))
+					actions->unknown00 |= 2;
+				else
+					actions->unknown00 &= ~2;
+				actions->active[1] |= 1;
+				result = true;
+				function_cc810(vehicle_index);
+			}
+		}
 	}
-	if (!function_10f430(unit_index, 0x7000101, 0x7000101, 0x7000101, 0x80000c4, 0.0f, 0, 2))
-		return false;
-	if (*((bool *)request + 4))
-		actions->unknown00 |= 2;
-	else
-		actions->unknown00 &= ~2;
-	actions->active[1] |= 1;
-	function_cc810(vehicle_index);
-	return true;
+	return result;
 }
 
 void function_152140(long player_index);
@@ -3400,6 +3415,10 @@ void __stdcall function_b8890(long unit_index);
 
 /* returns a unit to its state and action animations from a pose: a biped
    keeps where the pose left it */
+// score 126 (was 126): frame 0x118 versus 0xe4; header/type and facing-copy scheduling differ.
+// Inverse scope, late object matrices, both and late orientation 126 each; full facing copy 127;
+// one inverse workspace 127 (frame 0xe4); scoped role names 126; facing memcpy 127;
+// one matrix workspace 127 (frame 0xe4), plus facing copy 128; role names alone/with copy 127/128.
 // @retail 0xec0d0
 void __stdcall function_ec0d0(long unit_index, long state_name, long action_name)
 {
@@ -3494,16 +3513,20 @@ void __stdcall function_ec330(long unit_index, long type)
 bool __stdcall function_ec380(long unit_index, s_unit_request *request)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	short mode = *(short *)((byte *)request + 4);
-	long name;
+	long mode = *(short *)((byte *)request + 4);
+	long name = NONE;
 
-	if (mode < 0)
-		return false;
-	if (mode <= 1)
-		name = 0xa00022d;
-	else if (mode == 2)
-		name = 0xb00022e;
-	else
+	if (mode >= 0)
+	{
+		if (mode > 1)
+		{
+			if (mode == 2)
+				name = 0xb00022e;
+		}
+		else
+			name = 0xa00022d;
+	}
+	if (name == NONE)
 		return false;
 
 	c_animation_channel *channel = NULL;
@@ -3522,14 +3545,14 @@ bool __stdcall function_ec380(long unit_index, s_unit_request *request)
 			actions->point_ticks = (short)unit_action_round_long((real)g_510c54->field_2_3 * event_time);
 		else
 			actions->point_ticks = (short)unit_action_round_long((real)g_510c54->field_2_3 * 0.8f);
-		actions->active[1] |= 0x200;
+		bit_vector_set(actions->active, 41, true);
 		return true;
 	}
 	function_edff0(unit_index);
 	actions->point_mode = *((byte *)request + 4);
 	actions->point_target = *(long *)((byte *)request + 8);
 	actions->point_ticks = 2;
-	actions->active[1] |= 0x200;
+	bit_vector_set(actions->active, 41, true);
 	return true;
 }
 
@@ -4179,8 +4202,6 @@ tick:
 }
 
 /* a unit's flinch (type 51): its animation, and its time */
-// score 136 (was 136): ours inlines c_animation_channel::get_duration (0x1c6ea0), which retail
-// calls; that accounts for most of the 79 extra bytes. The rest of the body lines up.
 // @retail 0xed800
 bool __stdcall function_ed800(long unit_index, s_unit_request *request)
 {
@@ -4200,8 +4221,8 @@ bool __stdcall function_ed800(long unit_index, s_unit_request *request)
 		}
 		else
 		{
-			actions->flinch_ticks = (short)unit_action_round_long((real)g_510c54->field_2_3 *
-				(state->channels[0].get_duration() * 0.33333334f));
+			real fallback_time = state->channels[0].get_duration() * 0.33333334f;
+			actions->flinch_ticks = (short)unit_action_round_long((real)g_510c54->field_2_3 * fallback_time);
 		}
 	}
 	actions->active[1] |= 0x80000;

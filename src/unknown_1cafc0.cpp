@@ -584,6 +584,9 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // and rolled request expansions regress; original helper and status restored.
 // Round 170: Primary/alternate/both native resolved-input records, mutable then const, both library and
 // both aggregate copies 603/508/644/603/508/644/644/619. Original queries and input observations restored.
+// Round 231: unsigned mode/class/type identifier pairs across fallback and request phases,
+// all seven subsets 399 each; all immutable identifiers 399. Original signed domains,
+// native query publications, request helpers and complete executable body restored.
 // Round 164: resolver/query/fallback inline-contract subsets and real dword flags 399 each;
 // set/mode/class-type/all-key/options/output/all-formal names 399 each, with existing
 // status and identifier roles 399. All sixteen preserve frame eight and both 0x40 LEAs; restored.
@@ -959,6 +962,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // original word operations, availability observations and Boolean interface restored.
 // Round 263: previous-record/validity inline/noinline declarations singly and all four pairs
 // 210/210/210/210/210/210/210/210. Original constructors, provider declarations and protected query restored.
+// Round 185: Prior-name record initialization/assignment/library copies, eager/logical joins,
+// 271/257 in each pair; overlap-safe copy 265/272. Eager copies recover identifier homes but regress
+// overall. Original names, identifier scopes, queries, publication and complete body restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

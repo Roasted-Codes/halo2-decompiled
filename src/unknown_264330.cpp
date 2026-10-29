@@ -297,6 +297,9 @@ void function_264940(long actor_index, long prop_ref_index)
 // Original shared layout, pointer observations and complete body restored.
 // Round 397: one sequential object-vector workspace; unit predicate, separate current state and signed approach masks 0..7
 // 353/447/351/447/371/465/369/465; all restored.
+// Round 231: native unit mask byte/char/word/long 440/440/449/439;
+// each with positive-view-first magnitude 431/431/436/437. Byte masks recover frame
+// 0x20 but regress; original optional pointer, observation timing and full body restored.
 // @retail 0x264330
 void __stdcall function_264330(long actor_index, long prop_ref_index, s_2641c0 *context,
 	s_2640c0 *motion, bool force)
@@ -497,6 +500,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Round 384: retained actor/node/both lookups 441/442/462; unsigned full handles 420;
 // unsigned handles with retained actor/node/both 441/442/462; all on a plain linked-list for 466.
 // All lookup lifetimes, handle domains, traversal and complete original body restored.
+// Round 231: case orders 04231/04321/02341/03241 give 436/441/436/441;
+// 40231/40321/23041/32041 give 436/441/446/433. Last form recovers frame 0xa0
+// and 1616 bytes but keeps stacked actor input; every original case and body restored.
 // Round 389: native double timer/planar pair/both 423/421/424; unsigned bounded
 // decrement 420, with timer/planar/both 423/421/424; complete precision graph with
 // wide decrement 424 (fast control 420). Original precision, domains and body restored;
@@ -876,6 +882,9 @@ real function_296600(long actor_index, long prop_ref_index);
 // actor_snapshot/retained_actor/actor_saved/saved_owner identities, each with
 // original/actor_squad receiver identity, 372 each. All restored; full frame 0x20
 // agrees, actor ESI/EBX and saved/squad/flag homes remain.
+// Round 231: positive current/unit bool-byte-short pairs 372/372/372/372/372/365/365/365;
+// short-current priority tree/accumulator/full-width priorities 366/364/368 (fast control 372).
+// Accumulator ordinary 338 versus 331, rejected; original predicates, priorities and body restored.
 // Round 389: suppression byte/short/long 372/363/366; unsigned timestamp 372; native
 // wide timestamp alone/with byte/short/long suppression 377/377/377/376 (fast control
 // 372). Short suppression plain 344 versus 331; all original types and body restored.

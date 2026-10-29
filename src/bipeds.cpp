@@ -444,6 +444,7 @@ void function_de080(vector3f const *forward, vector3f const *up, vector2f *forwa
 // Round 281: component reference 27; named updated value 7; both 27; short ordinal 141;
 // ordinary while 7; component pointer 27; point-pointer traversal 258; sequential bounds 7.
 // All restored; frame and length agree, cross-store scheduling remains.
+// Round 171: Projected correction 7; staged subtraction 49; conditional clamp 7, staged 49, in-place 34; direct clamp outcomes 179; unsigned ordinal 7, projected 7. Cross-store scheduling remains; original body restored.
 // @retail 0xde190
 void function_de190(long arg_159e6d)
 {
@@ -497,11 +498,11 @@ void function_e5930(long unit_index);
 
 /* resets the biped's state: its flags, landing and melee timers, its ground
    contact and its physics mode */
-// score 118 (was 118): frame 8 and reset/getter prefix agree through +0x10a; shifted flag materialization,
 // flag-store scheduling and the final helper's unwanted expansion remain.
 // Boolean predicate 121; native word flags 114; reset zero/NONE/both chains 118;
 // chains with Boolean predicate 121; counter/index/initial block library clear or fill
 // 129/138/127; second receiver scope 118; native tag dword or bit member 121;
+// native word stores with the tag in a named flag 113 (MiniMax B run 14; under the keep bar, restored).
 // either tag form with native word stores 113 (subthreshold, restored).
 // @retail 0xde4c0
 void __stdcall function_de4c0(long arg_159e6d)
@@ -2007,6 +2008,7 @@ void __stdcall function_1c3770(long object_index, dword flags);
 // All restored; extra EBP and body/flag scheduling remain.
 // Round 396: Entry-zero query output with retained/at-use count, shared long/short getter,
 // and entry/at-use tag: 91/109/84/101/97/111/93/113. All restored; entry EBP remains.
+// Round 171: Paired flag field with retained/native body and retained/fresh count: word 63/73/82/87, byte 103/115/105/117. Extra EBP, validated-index transport and flag scheduling remain; original body and object declaration restored.
 // @retail 0xe0c70
 void function_e0c70(long arg_159e6d)
 {
@@ -3093,6 +3095,11 @@ void __stdcall function_e2e90(long arg_159e6d, long *field_7c, long *state_name,
 
 /* starts the biped's landing: its landing time, and for one that can
    collapse, a ragdoll for a random part of it */
+// matches retail: the halved landing time is tested as a byte (AL) and widened to 16
+// bits (CX) only inside the branch, so retail's seed pointer load comes between the
+// test and the widening.
+// Earlier (score 4): the range was widened in CX and the test ran on CL, before the
+// seed pointer load. A signed range also deriving the byte
 // score 4 (was 4): the range is widened in CX, but ours tests CL before the seed pointer; retail
 // tests AL, then loads the seed pointer before widening CX. A signed range also deriving the byte
 // test 4; an independent byte 8; an unsigned range 4; explicit byte narrowing 4; a two-view union 4;
@@ -3115,11 +3122,10 @@ void function_e3f00(long arg_159e6d)
 	function_114b60(NONE, 0x14, arg_159e6d, 0xd, 0);
 	if (biped->unknown39d > 1 && TEST_FIELD_BIT((*(dword *)(definition + 0x1f0) >> 10) & 1) && biped->physics_mode != 3)
 	{
-		short range = biped->unknown39d >> 1;
-		byte half = range;
-
-		if (half > 0)
+		if ((biped->unknown39d >> 1) > 0)
 		{
+			short range = biped->unknown39d >> 1;
+
 			biped->unknown39d += (byte)random_index(&g_4e7408->unknown0, range);
 		}
 		function_b9b90(arg_159e6d, false);
@@ -3395,7 +3401,10 @@ void function_e3700(long arg_159e6d)
 
 /* the airborne biped: falling damage, a random spin for one that tumbles,
    and its airborne animation */
-// score 8 (was 8): frame 0x10 agrees; cross operand loads and the first scaled-product carrier differ, one byte long.
+// score 6 (was 8): the cross product's three components are computed in named locals,
+// which recovers retail's product order. Left: the scaled add's first product (the shared
+// helper computes component * scale, retail scale * component), the call to the unmatched
+// 0xe3910 and the branch displacements that follow from it.
 // Getter declaration at caller only 177; bounded-random helper 194 (range rounding differs);
 // shared cross 177; both helpers 194; unit-random/both helpers 177/177; entry axis 194;
 // role names and branch stores 190. Separate out-of-line getter declaration 90, plain confirmed.
@@ -3407,6 +3416,8 @@ void function_e3700(long arg_159e6d)
 // 30/32/27/29/29/31/28/30. Named fractions preserve both random products; branch stores recover the tail.
 // Round 282: negative cross-factor orders in all seven row subsets 8 each; entry axis on k-order 8.
 // Existing scale/add helpers, in-place/distinct increment 56/56; with shared cross 58/53. Restored.
+// This round: the third product's operands the other way 8; the second term in a local 8; the negated
+// component 84 (570 bytes); the three products in named locals 6 (kept).
 // @retail 0xe40d0
 void __stdcall function_e40d0(long arg_159e6d, long *names)
 {
@@ -3432,9 +3443,13 @@ void __stdcall function_e40d0(long arg_159e6d, long *names)
 
 			if (0.8f > biped->up.k)
 			{
-				axis.i = biped->up.j * g_4687b0->k - g_4687b0->j * biped->up.k;
-				axis.j = g_4687b0->i * biped->up.k - biped->up.i * g_4687b0->k;
-				axis.k = g_4687b0->j * biped->up.i - biped->up.j * g_4687b0->i;
+				real cross_i = biped->up.j * g_4687b0->k - g_4687b0->j * biped->up.k;
+				real cross_j = g_4687b0->i * biped->up.k - biped->up.i * g_4687b0->k;
+				real cross_k = g_4687b0->j * biped->up.i - biped->up.j * g_4687b0->i;
+
+				axis.i = cross_i;
+				axis.j = cross_j;
+				axis.k = cross_k;
 				found = function_30bf0(&axis) > 0.0f;
 			}
 			if (!found)

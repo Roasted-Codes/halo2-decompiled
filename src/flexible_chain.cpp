@@ -274,6 +274,10 @@ void __stdcall function_1160c0(real dt)
 // Round 32: existing in-place axis scale 179; original-angle segment-first 276;
 // tiny-axis-owned fallback 294; scale/segment 276; scale/fallback 294; segment/fallback 247;
 // all 247, cosine-first all 247. Original producers, fallback and include set restored.
+// Round 251: interpolation-owned stiffness 315; velocity-owned reciprocal 294;
+// both 320; rest offset after readonly angle/trigonometry 229; with stiffness/
+// reciprocal/both 299/288/310; all with the native prediction constructor 310.
+// Original producer points and complete body restored; segment/previous/axis homes remain.
 // Round 393: published-node previous, three-use old-position snapshot and native velocity
 // publication subsets 179/263/263/262/262/390/390; all with immutable snapshot 390. Body restored.
 // Round 262: complete segment/node/both receivers at uses 350/193/359;
@@ -286,6 +290,9 @@ void __stdcall function_1160c0(real dt)
 // invariant vertical on those four graphs 338/338/326/326. All original induction and scopes restored.
 // Round 397: one direction workspace; complete target scalars, noninitial branch first and readonly segment masks 0..7
 // 246/318/277/323/246/318/277/323; all restored.
+// Round 185: Plain target/interpolation/velocity coordinate-loop subsets
+// 188/194/200/639/194/200/634; all with complete direction loop 615. Original native arithmetic
+// statements, copies, segment loop, homes and every call tuple restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

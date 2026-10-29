@@ -74,6 +74,8 @@ PRIVATE inline c_channel_effects_view *channel_effects()
 }
 
 // score 545 (was 545): frame 0x22c versus 0x224; stream/gain homes and mixed math remain.
+// the level-energy block summed in double (the gain converter returning double) 528, but the
+// shared converter costs the matched 0x21f8a0 (0 -> 67): restored (MiniMax E run 12).
 // frame 0x22c versus 0x224; stream/gain homes and math expansion differ.
 // native input direct bit 541; all native input bits 548; captured direct use 540;
 // shared gain converter 629; inline depth one 541; native output bits with captured direct 544.

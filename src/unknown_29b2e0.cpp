@@ -142,6 +142,9 @@ PRIVATE __forceinline void function_29b6c0(vector3f const *arg_0,
 // 398/395/400/389/389/389/398/398. Original roots/products and all helper contracts restored.
 // Round 395: paired square operations J-first in vector/point/both 398/395/400; reversed two-term
 // sums in vector/point/both 389/389/389; both J-first and reversed 400, with named sums 398. All restored.
+// Round 395: actor/object/both pools at use 490/428/481; all repeated coefficients
+// once 400; actor/object/both with coefficients 485/455/494; all with coefficient
+// role names 494. Original receivers, coefficient reads, copies and helpers restored.
 // @retail 0x29b2e0
 void function_29b2e0(long arg_0, long arg_1, vector3f const *arg_2,
     vector3f const *arg_3, real arg_4, vector3f *arg_5)

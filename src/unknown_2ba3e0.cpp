@@ -434,6 +434,10 @@ PRIVATE __forceinline vector3f *normalize_particle_velocity_2b(vector3f *v)
 // with shared scale alone/with those additions 138/177/183. All restored; final stores, lower tail and reload order remain.
 // Round 394: direct previous-vector scale producer with native/quarter/maximum/maximum+quarter/
 // initial/initial+quarter/initial+maximum/all scales 208/203/208/203/208/203/208/203; restored.
+// DH round 232: On the retained pointer-output graph, quarter-output/final-add composition 117;
+// final component loop 111; scaled-add publication 115; normalizer loop/ordinary inline/inverse
+// lifetime/native slot names 47 each; both publication and normalizer loops 107 at retail length.
+// Every executable form restored; lower-tail stores and back-edge reload order remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {

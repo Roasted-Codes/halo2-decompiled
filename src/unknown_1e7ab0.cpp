@@ -246,6 +246,9 @@ PRIVATE inline long request_weapon(s_player_request_view *player, long slot, byt
 // 620/620/620/620/620/620/620/620. All helper contracts and complete original case graph restored.
 // Round 395: existing-result completion after reset pairs 10/11, 12/13, 2/16 and all six
 // 630/630/670/670; with ordinary player carrier 792/792/805/805. All original cases restored.
+// Round 395: player pool at use 742; object-table context once 669; both 758;
+// each with ordinary child result 760/643/769; both with case-entry iterator
+// 758, with ordinary child result 769. Original pools, qualifiers and body restored.
 // @retail 0x1e7ab0
 bool function_1e7ab0(long local_index, long type)
 {

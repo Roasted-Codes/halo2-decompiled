@@ -1379,7 +1379,7 @@ point2f *g_4687c4;
    sway springs, the weapons' animations, zoom overlays and idles */
 static __forceinline real function_x82e52f(dword *seed, char const *file, long line);
 
-// score 232 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal remain.
+// score 218 (was 232): frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal remain.
 // Earlier 241 from 241: frame 0x30 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
 // frame 0x28 vs 0x2c; esi/edi saved before the unit test (retail after it,
@@ -1498,6 +1498,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 34 (fast control 234, full 232): independent primary/idle pointer or reference
 // receivers, all four combinations 234 each; those four with first-weapon fields
 // observed directly 578 each. Original shared channel lifetime and body restored.
+// Round 182: actual aiming-input vector homes before/after other locals 521/521;
+// native real/double input scalars 485/510; confined aiming phases repeat
+// 521/521/485/510 (fast control 234). Original inputs, calls and body restored.
 // Round 389 (fast control 234, full 232): late magnitude double 428; reused native idle tick
 // 290; both 427; both named animation-period summands 234. Native double period/duration
 // alone, with magnitude, with idle tick and with both 390/415/397/414 (exact-only).
@@ -1508,6 +1511,11 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 249: native user active-bit stores with original/dispatch/final/both weapon-bit
 // access 234 each; complete native user observations with those four forms 470 each.
 // Original records, flag snapshot, stores and every smoothing input restored.
+// Round 268: uniform direct zoom/idle/both channel receivers 220/234/220;
+// native input root alone/with zoom/with idle/with both 441/444/441/444;
+// all with flags declared at assignment 444 (fast control 234, full baseline 232).
+// Only direct zoom-channel access kept: plain 218, 2193/2199 bytes, differing rows 217 -> 212.
+// Frame 0x28 versus 0x2c, unit/mode homes and shared look reciprocal remain.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1619,30 +1627,29 @@ void __stdcall function_166d75(long user_index)
 						no_scope = true;
 					}
 				}
-				channel = &weapon->channel98;
-				if (function_0b6760((s_index_pair *)channel))
+				if (function_0b6760((s_index_pair *)&weapon->channel98))
 				{
 					if (!no_zoom)
 					{
 						if (no_scope)
 						{
-							channel->rate = PIN(zoom, 0.5f, 1.0f);
+							weapon->channel98.rate = PIN(zoom, 0.5f, 1.0f);
 						}
 						else
 						{
-							channel->rate = 1.0f;
+							weapon->channel98.rate = 1.0f;
 						}
 					}
 					else if (!no_scope)
 					{
-						channel->rate = 1.0f;
+						weapon->channel98.rate = 1.0f;
 					}
-					weapon->animation.channel_update(channel, NULL, 0);
+					weapon->animation.channel_update(&weapon->channel98, NULL, 0);
 					if (no_zoom && no_scope ||
-						!no_scope && channel->unknown08 != 0x60000d8 ||
-						!no_zoom && no_scope && channel->unknown08 == 0x60000d8)
+						!no_scope && weapon->channel98.unknown08 != 0x60000d8 ||
+						!no_zoom && no_scope && weapon->channel98.unknown08 == 0x60000d8)
 					{
-						channel->clear();
+						weapon->channel98.clear();
 						if (no_zoom && no_scope)
 						{
 							if (weapon->animation.animation_name != 0x400000c)
@@ -1653,7 +1660,7 @@ void __stdcall function_166d75(long user_index)
 						}
 					}
 				}
-				if ((!no_zoom || !no_scope) && !function_0b6760((s_index_pair *)channel))
+				if ((!no_zoom || !no_scope) && !function_0b6760((s_index_pair *)&weapon->channel98))
 				{
 					long set;
 					dword channel_flags;
@@ -1668,7 +1675,7 @@ void __stdcall function_166d75(long user_index)
 						channel_flags = 0x803f;
 						set = 0x6000060;
 					}
-					weapon->animation.overlay_play_for_class(channel, channel_flags, mode, 0x7000101, set);
+					weapon->animation.overlay_play_for_class(&weapon->channel98, channel_flags, mode, 0x7000101, set);
 					first_person_weapon_save_orientations(user_index, field_x11c898, 0.1335f);
 				}
 overlay:

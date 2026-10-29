@@ -151,6 +151,9 @@ bool function_a7670(long object_index);
 // cleanup 181/181/181/181/196/196/196/196. Original recursive declaration and cursor restored.
 // Round 33: Complementary first membership result bool/byte/short/long with cursor cleanup,
 // then indexed cleanup: 181/181/182/260/196/196/197/264. Original result, both eager scans and body restored.
+// Round 176: Real pending field at +0xae as byte/signed-byte, each with Boolean/byte admission and
+// first-membership carriers, eight at 181. Native record offsets and all truth values preserved;
+// original pending field, flag carriers, signed bounds, both eager scans, retry and cleanup restored.
 // @retail 0x278f00
 void function_278f00()
 {
