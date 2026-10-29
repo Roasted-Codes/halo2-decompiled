@@ -879,8 +879,8 @@ void __stdcall function_16c840(long user_index, long unused, s_observer_command 
 	}
 
 	camera = camera_scripting_state;
-	short camera_mode = camera->mode;
-	switch (camera_mode)
+	short mode_kind = camera->mode;
+	switch (mode_kind)
 	{
 	case _camera_scripting_mode_point:
 		{
