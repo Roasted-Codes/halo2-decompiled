@@ -291,7 +291,7 @@ void function_141590(transform4x3f const *in, transform4x3f *out);
 int __fastcall function_142a60(transform4x3f const *a, transform4x3f const *b, transform4x3f *result);
 real function_f5e00(long vehicle_index);
 extern real g_47f05c;
-// score 192 (was 202): frame 0xd0 versus 0xd4; retail keeps the shape in ESI and the count in EBP
+// score 192 (was 192): frame 0xd0 versus 0xd4; retail keeps the shape in ESI and the count in EBP
 // (index and best in their stack homes, the best dot in XMM7), tests the count once and reads the
 // body index byte at each use.
 // Round 68 (kept): the distance from a center point through vector3d_from_points3d, as the file's
@@ -317,6 +317,16 @@ extern real g_47f05c;
 // value with shape reads 233; selected-entry result 272; best comparison first 201; selected index
 // assigned before alignment 202; transform role names 202; inverse/body/relative declarations 202;
 // names with common scope 202; byte success 282; byte validity 202.
+// Round 249: Native external input/component-list fields singly/together
+// 190/192/190; consistent height reads alone/with input/list/both 205 each
+// (frame 0xd4); all with body-byte reads 220. Two-point input gain below gate;
+// original declarations, cached fields, calls and complete body restored.
+// Round 224: Consistent per-use count/list/component-data observations, seven subsets
+// 229/221/228/190/227/221/228; all with entry selection/result constants 198 at retail length.
+// Two-point component-data form rejected; original snapshots and full body restored.
+// Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
+// 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
+// and full body restored; frame 0xd0 and shape/count/alignment homes remain.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -1237,6 +1247,9 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Existing selection/tangent/speed dot inputs reversed independently, in all seven combinations,
 // and together with the accepted-count lexical home: 421 each. Helpers and body restored.
 // Round 152: Eight relative/desired/direction library-copy forms 421 each; complete accepted-count producer shared by insertion, increment, store and both tests 419, with one-contact-first 419 (2089 bytes). Two-point forms rejected; original copies, qualified count, cursor and response order restored.
+// Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
+// inline query with each support contract 434; the other five pairs 421.
+// Original declarations, qualified count, candidate cursor and response order restored.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)

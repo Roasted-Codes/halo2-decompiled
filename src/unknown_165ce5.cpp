@@ -1472,11 +1472,21 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // all plus primary-pointer admission 587. Original complementary states and all calls restored.
 // Round 370 (fast control 234): scope-factored clear decision with active-default, callback
 // and member-rate interactions 434/410/434/410/401/397/401/397; original body restored.
+// Round 165: Native overlay argument-pair flags/set/outer-lifetime subsets
+// 386/234/386/234/386/234/386; combined role names 386 (fast control 234, full baseline 232).
+// Original pair types, scopes, names and every smoothing input restored. Frame 0x28 versus 0x2c,
+// unit/mode homes and shared look reciprocal remain.
+// Round 212: plain two-axis aiming-spring traversal, long/short/dword/word indices,
+// direct/output-storage receiver [578, 578, 578, 578, 578, 578, 578, 578]. Original independent
+// calls restored; frame and look homes remain.
 // Round 373 (fast control 234): Structured overlay continuation, with callback/active/both
 // choices 234/234/392/392; reusable no-overlay decision with those four forms
 // 421/421/403/403. Original body and every smoothing input restored.
 // Round 246: complementary activity bool/byte/short/long 424/424/423/425; the same with
 // callback selection at update 424/424/423/425 (fast). Original activity and callback restored.
+// Round 251 (fast control 234): loop-scoped orientation byte-offset/ordinal/base/cursor
+// 410/234/409/254; the four at entry 561/234/576/558. Ordinal forms keep frame
+// 0x28; the other forms grow it to 0x30. Original buffer lifetime and body restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {

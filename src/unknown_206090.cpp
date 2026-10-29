@@ -141,7 +141,8 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
-// score 1405 (was 1405): Frame 0x5d0 versus 0x58c; component/velocity homes, contact induction and scheduling remain.
+// score 1405 (was 1405): frame 0x5d0 versus 0x58c, component/velocity homes and indexed contact induction remain.
+// Frame 0x5d0 versus 0x58c; component/velocity homes, contact induction and scheduling remain.
 // Earlier 1585 (was 1596): Frame 0x590 versus 0x58c; component/velocity homes and contact induction remain.
 // Earlier 1600 from 1600: frame 0x580 versus 0x58c; velocity homes and contact induction differ;
 // frame pointer 2092; inline depth zero 3049, eight 1600; point/contact row tables 1600/1600;
@@ -202,6 +203,9 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // result 1414 plain kept, named predicate 1433 plain restored. Result/field combinations
 // 1412/1403/1408/1411 fast; completion result with direct arm/velocity fields 1405 plain kept. On that
 // graph normal/forward/direct velocity/byte flags 1436/1517/1470/1403 fast, all restored.
+// Round 237: Contact-counter entry constants individually/paired/joint
+// 1444/1444/1493/1422/1463/1463/1492; all with entry moving-surface result 1484 fast (control 1403
+// versus full 1405). Complete original counter/result lifetimes restored.
 // Earlier 1405 from 1435.
 // Round 161: Native point storage with direct record/arm/velocity/record-arm/record-velocity/arm-velocity/all
 // observations 1445/1402/1428/1416/1415/1506/1429; complete native point members 1429.

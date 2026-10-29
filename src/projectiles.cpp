@@ -361,12 +361,23 @@ bool __stdcall function_fa9a0(long *value)
 // Same-arithmetic private normalizer: one magnitude exit 86; separate result 93;
 // native failure guard 87; direct complete-vector output with those 122/116/122,
 // alone 122; one magnitude exit with local home names 86. Restored.
+// Native final-time guard 87; entry/result-phase output requests 104/106;
+// entry requests with final-time guard 104; forced existing normalizer 87;
+// forced normalizer with guard 87, entry requests 104, result requests/guard 106.
+// Original body, expression grouping, output order and private helper attribute restored.
 // Complete setters: input 81; output 87; fallback 90; fallback/output 114;
 // input/output 70 (plain 70, three caller matches lost); all 104; complete
 // time arms with output/all setters 100/118. Native point/output 70; with late
 // time/full arms/conditional time 94/95/70; input/output late/entry time 94/96;
 // native point/output entry time 96; input setter/library output copy 81.
 // The 70 forms change input registers; 81 gains only six. All restored.
+// Complete fallback-source branch/conditional aggregate 122/122; corresponding
+// shared output setters 114/114; conditional output aggregate 122; explicit output
+// arms 103; selected source with conditional seconds 115; with shared delta 117. Restored.
+// Actual speed-predicate ownership at entry/delta/result boundary 92/94/71;
+// entry native width 90; entry seconds 92; selected source 102; shared input 86;
+// shared input/output 105. Result-boundary predicate plain 71 loses six caller
+// matches through its extra stacked input; all predicate forms restored.
 // @retail 0xfa580
 bool function_fa580(real speed, point3f const *origin, point3f const *target, vector3f *direction,
 	real *distance, real *speed_out, real *time)
@@ -866,6 +877,9 @@ void function_fd7d0(long object_index, point3f const *point, byte const *effects
 // Early attachment counter 109; native while cursor 72; both 109; parent declaration
 // at entry 72; parent/tag names 72; incoming operand names 72; all-use parent
 // observations 72; those with early counter 109. Restored.
+// Scan-owned tag 133; complete projectile observations 201; full decay quotient 72;
+// tag/receiver 183; tag/quotient 133; receiver/quotient 201; all producers 183;
+// direct native void completion with all producers 183. Every body statement restored.
 // Separate parent type admission 72; separate type/owner/state admissions 72;
 // native parent mask named at its computation 72; scan-scoped child receiver 72;
 // receiver with those parent tests/mask 72/72/72; receiver/named reciprocal 72. Restored.
@@ -957,6 +971,9 @@ real function_30bf0(vector3f *v);
 // Entry velocity workspace 244; reversed entry vector declarations 244; output-first
 // vector names 244/244; shared complete delta producer 245; common result exit 258;
 // that with entry velocity 258; result-first with entry velocity 266 (frame 0x2c). Restored.
+// Actual squared-time producer with found test 244; test-derived trajectory result
+// 245; repeated time square alone/with found/result 244/244/245; result with native
+// minimum clamp 246; coefficient home names 245; all scalar producer forms 246. Restored.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1149,6 +1166,12 @@ extern vector3f *g_4687ac;
 // scope 163; negative/loop 204; negative/scope 173; loop/scope and all three 204.
 // Negative with initial-ray scope 175 (frame 0x3c); consistent radius at use with
 // initial scope alone/side scope/endpoint loop 173/173/201. Frame and ray homes remain.
+// Original-producer all-ray vector reuse 163; side/query workspace reuse 163; complete
+// vector reuse 166 (756 bytes, frame 0x3c); with shared inputs 165, radius reads 179,
+// both 189; complete reuse with early admission 183, plus shared inputs 186. Restored.
+// Round 279: all four endpoints through existing point setters, with query-vector reuse
+// and result-first exit combinations 163/184/163/183; existing scaled-vector sums on the
+// same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1303,6 +1326,9 @@ void function_fcea0(long effects_index, point3f const *point, vector3f const *di
 // Attachment bitfield/word/complete conditional results 190/188/192; attachment/all
 // overrides after selector 121/176; bitfield/complete conditional attachment after
 // selector 163/179; all overrides with word result after selector 175. Restored.
+// Coherent workspace names 115; paired-table initialization loop 249; sound-table
+// reads at use 115; names with loop/reads 249/115; loop with reads and all three 249;
+// separate direct-counter table initialization loops 249. Original body restored.
 // @retail 0xfd0e0
 void function_fd0e0(long definition_index, real scale_a, real scale_b, vector3f const *direction,
 	point3f const *point, vector3f const *normal, word index, bool attached, long object_index,
@@ -1418,17 +1444,18 @@ PRIVATE inline long projectile_object_root(long object_index)
 /* the projectile type's new callback: its target, lifetime, range,
    attachment, starting velocity and spin, whether it starts under water,
    and the seat flags of the unit that fired it */
-// score 360 (was 371): first +6 is pool/input register allocation; the speed update
-// remains a call where the surrounding code expands it, and the body is 85 bytes short.
+// score 332 (was 360): frame 4 agrees; pool/input and tag receiver allocation differ at +0xb.
+// Speed update is still called instead of expanded; 1226/1261 bytes.
 // Native flag tests 380; complete water result 375; both 380; plain velocity-component
 // loop 364 fast, 360 plain (kept); loop/flags 381; loop/water 364; all three 381;
 // chained target initialization with all three 381. Unchanged reduced control 375.
+// Complete object/tag/both observations 550/332/735; shared scaled addition 364;
+// with tag/object/both observations 344/523/715; initial setter on complete graph 713;
+// retained entry tag identity 396. Tag observations alone kept, plain 332; others restored.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
 	s_projectile *projectile = PROJECTILE_GET(projectile_index);
-	s_projectile_definition *definition = PROJECTILE_DEFINITION_GET(projectile->tag_index);
-	byte *definition_bytes = (byte *)definition;
 
 	*(dword *)&projectile->flags |= 2;
 	projectile->target.object_index = NONE;
@@ -1442,49 +1469,49 @@ bool __stdcall function_f8200(long projectile_index, byte const *data, long unus
 	*(short *)((byte *)projectile + 0x1aa) = 0;
 	*(real *)((byte *)projectile + 0x16c) = function_fd8b0(projectile->tag_index, *(long const *)(data + 0x5c));
 
-	if (*(real *)(definition_bytes + 0x184) == *(real *)(definition_bytes + 0x188))
+	if (*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x184) == *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x188))
 	{
-		*(real *)((byte *)projectile + 0x18c) = *(real *)(definition_bytes + 0x184);
+		*(real *)((byte *)projectile + 0x18c) = *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x184);
 	}
 	else
 	{
 		*(real *)((byte *)projectile + 0x18c) =
-			projectile_random_range(*(real *)(definition_bytes + 0x184), *(real *)(definition_bytes + 0x188));
+			projectile_random_range(*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x184), *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x188));
 	}
 
 	real ticks;
 
-	if (definition->flags & 4)
-		ticks = g_510c54->field_2_3 * *(real *)(definition_bytes + 0xd4);
-	else if (*(real *)(definition_bytes + 0xd4) == *(real *)(definition_bytes + 0xd8))
-		ticks = g_510c54->field_2_3 * *(real *)(definition_bytes + 0xd4);
+	if ((PROJECTILE_DEFINITION_GET(projectile->tag_index))->flags & 4)
+		ticks = g_510c54->field_2_3 * *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4);
+	else if (*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4) == *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd8))
+		ticks = g_510c54->field_2_3 * *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4);
 	else
-		ticks = projectile_random_range(*(real *)(definition_bytes + 0xd4), *(real *)(definition_bytes + 0xd8)) *
+		ticks = projectile_random_range(*(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd4), *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xd8)) *
 			g_510c54->field_2_3;
 	if (ticks >= 1.0f)
 		*(real *)((byte *)projectile + 0x15c) = 1.0f / ticks;
 
-	real arming_ticks = g_510c54->field_2_3 * *(real *)(definition_bytes + 0xcc);
+	real arming_ticks = g_510c54->field_2_3 * *(real *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0xcc);
 
 	if (arming_ticks >= 1.0f)
 		*(real *)((byte *)projectile + 0x164) = 1.0f / arming_ticks;
 
 	projectile->attachment_index = NONE;
-	for (short i = 0; i < *(long *)(definition_bytes + 0x94); i++)
+	for (short i = 0; i < *(long *)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x94); i++)
 	{
-		if (*(long *)(*(byte **)(definition_bytes + 0x98) + i * 0x18) == 'cont')
+		if (*(long *)(*(byte **)(((byte *)PROJECTILE_DEFINITION_GET(projectile->tag_index)) + 0x98) + i * 0x18) == 'cont')
 		{
 			projectile->attachment_index = i;
 			break;
 		}
 	}
 
-	real speed = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
+	real speed = *(real *)((byte *)projectile + 0x16c) * (PROJECTILE_DEFINITION_GET(projectile->tag_index))->unknown17c;
 	vector3f *forward = (vector3f *)((byte *)projectile + 0x70);
 
 	for (long component = 0; component < 3; ++component)
 		projectile->linear_velocity.n[component] += forward->n[component] * speed;
-	*(real *)((byte *)projectile + 0x190) = *(real *)((byte *)projectile + 0x16c) * definition->unknown17c;
+	*(real *)((byte *)projectile + 0x190) = *(real *)((byte *)projectile + 0x16c) * (PROJECTILE_DEFINITION_GET(projectile->tag_index))->unknown17c;
 	*(dword *)&projectile->flags &= ~0x100;
 
 	bool under_water = false;
@@ -1566,14 +1593,21 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
-// score 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
+// score 348 (was 382): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
+// Earlier 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
 // Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
 // shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
 // complete spherical direction 401; early index-only salt 377 (five-point gain dropped); target-distance
 // name 382; shared normalizer 382; dot after trigonometry 382; early salt plus field reads 387.
+// DH round 218: separate final aim point/common output 393, both point setters 382, both 393;
+// early salt with separate result/setters/both 375/377/375 (seven-/five-point leads restored);
+// readonly center with separate result, with/without setters 393/393. Reuse the existing target
+// point and publish once, scalar/shared setter 365/365; with early index-only salt 348/348.
+// Shared setter plus early salt kept, plain 348; all game-call arguments unchanged.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
+	long salt = projectile_index >> 16;
 	s_projectile *projectile = PROJECTILE_GET(projectile_index);
 	s_projectile_definition *definition = PROJECTILE_DEFINITION_GET(projectile->tag_index);
 	point3f *center = (point3f *)((byte *)projectile + 0x30);
@@ -1626,16 +1660,11 @@ void function_f87f0(long projectile_index, point3f *aim_point)
 		real cosine = (real)cos(angle);
 		real along = dot * (1.0f - cosine);
 
-		aim_point->x = (to_target.i * along + axis.i * cosine - (axis.j * to_target.k - axis.k * to_target.j) * sine) * amount +
-			arg_0e6828.x;
-		aim_point->y = (to_target.j * along + axis.j * cosine - (axis.k * to_target.i - to_target.k * axis.i) * sine) *
-			amount + arg_0e6828.y;
-		aim_point->z = (to_target.k * along + axis.k * cosine - (to_target.j * axis.i - axis.j * to_target.i) * sine) *
-			amount + arg_0e6828.z;
-		return;
+		real_point3d_set(&arg_0e6828, (to_target.i * along + axis.i * cosine - (axis.j * to_target.k - axis.k * to_target.j) * sine) * amount + arg_0e6828.x,
+			(to_target.j * along + axis.j * cosine - (axis.k * to_target.i - to_target.k * axis.i) * sine) * amount + arg_0e6828.y,
+			(to_target.k * along + axis.k * cosine - (to_target.j * axis.i - axis.j * to_target.i) * sine) * amount + arg_0e6828.z);
 	}
-
-	if (!TEST_FIELD_BIT(definition->flag_bits.unknown7))
+	else if (!TEST_FIELD_BIT(definition->flag_bits.unknown7))
 	{
 		vector3f offset;
 
@@ -1653,19 +1682,16 @@ void function_f87f0(long projectile_index, point3f *aim_point)
 		else
 			amount = 0.0f;
 
-		long salt = projectile_index >> 16;
 		real time_a = (real)((g_510c54->game_time + salt * 3) & 0xffff) * g_510c54->rate;
 		real time_b = (real)((g_510c54->game_time + salt * 7) & 0xffff) * g_510c54->rate;
 		real yaw = function_17c900(10, time_b * (1.0f / 3.0f)) * 6.2831855f;
 		real pitch = 3.1415927f - function_17c900(10, time_a * (1.0f / 3.0f)) * 1.5707964f;
 		real cosine_pitch = (real)cos(pitch);
 
-		aim_point->x = (real)cos(yaw) * cosine_pitch * amount + arg_0e6828.x;
-		aim_point->y = (real)sin(yaw) * cosine_pitch * amount + arg_0e6828.y;
-		aim_point->z = (real)sin(pitch) * amount + arg_0e6828.z;
-		return;
+		real_point3d_set(&arg_0e6828, (real)cos(yaw) * cosine_pitch * amount + arg_0e6828.x,
+			(real)sin(yaw) * cosine_pitch * amount + arg_0e6828.y,
+			(real)sin(pitch) * amount + arg_0e6828.z);
 	}
-
 	*aim_point = arg_0e6828;
 }
 
@@ -2403,11 +2429,15 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 /* a projectile's collision: damage to what it hit, the response of the
    material hit (detonating, bouncing, reflecting, attaching), the impact
    effects and sounds, then the projectile's action */
-// score 1162 (was 1185): frame 0x220 versus 0x218, velocity on the stack versus eax, input normalization and effect scheduling remain.
+// score 1162 (was 1162): Frame 0x220 versus 0x218, stacked velocity and normalization/effect scheduling remain.
+// Earlier 1162 (was 1185): frame 0x220 versus 0x218, velocity on the stack versus eax, input normalization and effect scheduling remain.
 // Independent damage scopes 1162 (kept); direct sound/late effects/both/scoped both 1223/1185/1223/1199; role names/chains/external normalization 1185/1185/1323.
 // Full count/potential conjunction/input aggregate/assignment helper/uninitialized direction 1201/1216/1198/1198/1185; array aggregates/plain loop/unsigned index 1166/1348/1185.
 // Those eight forms on damage scopes 1169/1199/1199/1194/1162/1162/1348/1162; coordinated velocity positions 1185/1185/1185/1201/1201.
 // Input copy/full normalization/intermediate normalization first 1186/1186/1198; on damage scopes 1163/1159/1170 (1159 three-point tail restored).
+// DH round 218: existing sound producer 1272; with complete position aggregate, readonly aggregate,
+// sound record name, aggregate/name, both sound/effect array names, aggregate/array names and
+// caller inline declaration all 1272. Every form 4728/4828 bytes, frame unchanged; all restored.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
