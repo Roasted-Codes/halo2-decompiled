@@ -1146,6 +1146,10 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // 279/398/269/279/398; distance arm first if/value/entry-result 417/399/407.
 // All original types, tests, helper calls and complete body restored;
 // early true-return host and side-direction forwarding remain.
+// Round 174: shared false exit/distance-first/both 243/386/402; later
+// perpendicular alone/false-exit/distance-first/both 180/251/394/410; all with
+// ordinary first-side storage 378. Original body and qualifier restored; early
+// true host and side-component forwarding remain.
 // Round 175: Return produced by the initial length test/native scale input/both/symmetric side
 // product terms/result with terms/scale with terms/all/all with if-form clamps
 // 359/470/466/172/359/470/466/471. Native scale input loses both matched geometry siblings;

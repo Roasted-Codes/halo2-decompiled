@@ -1198,6 +1198,10 @@ extern vector3f *g_4687ac;
 // bounded initial ray 165; positive/both with original query reuse 163 each. Actual
 // initial displacement retained after the read-only query 180; with shared cross,
 // later query reuse or both 180 each. Original body restored; frame/tag/query homes remain.
+// DL176: Whole actual query-result lifetime in bool/byte/short/long 182/177/172/168; with
+// consistent radius-field reads 198/193/179/185. Full-width result reaches 756 bytes but
+// regresses. Original result exits, cached radius, simultaneous endpoints and body restored;
+// frame/tag/query homes remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1659,6 +1663,10 @@ real function_17c900(short function_type, real input);
 // DH round 234: caller output promoted before final branches with target/output reads, after
 // target-copy acquisition or at the target producer 361/371/395/411; readonly input objects
 // with those four boundaries 361/371/395/411. All restored; input contract and vector homes remain.
+// DL176: Ret-4 stdcall, inline target, both 348/348/348; with salt at its drift expression
+// 365/365/365; both with native signed-word salt late/early 366/360. Original convention, summary,
+// salt and complete body restored; stacked-index/output-EBX transport and normalization homes
+// remain.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {

@@ -303,6 +303,9 @@ __inline void transform_point(s_camera const *camera, point3f const *p, point3f 
 // Round 14: forced shared transform 718; helper camera home 234 (frame 0x2c); with snapshots
 // y,x,z / x,z,y / y,z,x / z,x,y / z,y,x 234/207/204/231/227; best plus outer reversed point 204;
 // outer reversed point 195; pointer-returning helper with it 195. All restored.
+// DL175: Uniform transform term permutations, every parallel product named, early uninitialized
+// reversed-point scratch and direct inverse factors [195, 195, 195, 195, 195, 213, 195, 207]. All
+// arithmetic-order forms are exact-only; original helper and body restored.
 // @retail 0x30830
 long function_30830(point3f const *a, s_camera const *camera, vector3f const *d, point2f const *scale, bool perspective, bool negate, point2f *out)
 {

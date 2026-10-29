@@ -402,7 +402,7 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 	slot->flags |= 1;
 }
 
-// score 64 (was 64): dot/cross product operands, rotation xmm roles and
+// score 60 (was 60): dot/cross product operands, rotation xmm roles and
 // final component reloads still differ; executable tail is three bytes short.
 // Norm scalar 67; nested norm tests 64; early 2D cross 207; direction
 // copy loop 271; rotation/scale/both component loops 166/166/166;
@@ -414,9 +414,13 @@ void function_154d70(s_speed_request *request, s_speed_slot *slot, real scale)
 // Timer rereads and long update 64; validity result and angle-phase scope 85;
 // forward snapshot 126; normal snapshot 119; entry sine/cosine 64;
 // both draws after normalizing the cross vector 174.
-// score 64 (was 64): every operand and term order of the 2D dot/cross and of the rotation's dot
+// Earlier: every operand and term order of the 2D dot/cross and of the rotation's dot
 // compiles alike; of the rotation's statement orders (axis components, projection, sine and
 // cosine) the written one is best, j/i/k 63; cosine first worse.
+// Round 177: Complete dot2/cross2/initial-normal/projection/rotation-cross/update products
+// 78/78/58/60/60/60; early dot+cross+normal 56; complete rotation and four early/rotation
+// combinations 60 and 56/56/56/56. Normal producer orders ijk/ikj/jik/jki/kij
+// 64/56/64/64/56. Two- and four-point gains rejected; original complete body restored.
 // @retail 0x154df0
 void function_154df0(long index, s_speed_bounds *bounds, s_speed_slot *slot, vector3f *direction, real priority)
 {

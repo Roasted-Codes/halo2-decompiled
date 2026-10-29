@@ -448,6 +448,9 @@ point3f *function_b9dd0(long object_index, point3f *result);
 // stack slot as retail, aligned 61); flag set in an if/else around the scan 198; flag set in
 // an if 200; flag at function scope 198; proximity deltas declared x, y, z (retail squares z
 // first) 166 (198 with the bool); sum written x + y + z 198 (with the bool).
+// Round 173: Point-buffer and iterator declarations at the seat phase, and completed player-query scope,
+// all seven subsets 166 each; all workspaces with Boolean special carrier 198. Original body restored; CL
+// predicate transport and the shared tail remain.
 // Round 270: reused vehicle identity 202; guarded reused prop identity 166; both 202;
 // native player-seat fields 166; vehicle/prop/both with those fields 202/166/202;
 // all native owners with bool special 221 at 861 bytes. Original restored.
