@@ -132,6 +132,10 @@ __forceinline void function_2992ba(short arg_0, bool arg_1, real arg_2, point2f 
 // Round 240: Shared normalizer factor-first, early uninitialized factor and role names,
 // all seven combinations 408; native epsilon-rejection return 408. Internal magnitude/
 // reciprocal lifetime forms do not recover entry/XY homes or cleanup; helper restored.
+// Round 68: split center around the object lookup with the unused carrier removed 409;
+// shared displacement helper 438; direction declared first 409; component direction copy 450;
+// entry/both magnitude captures 409/409; object-index address at entry 409 and at all uses 405
+// (three-point gain rejected); unused input moved behind the stack inputs at definition/caller 444.
 // @retail 0x298d90
 void function_298d90(long arg_0, long arg_1, s_298c30 const *arg_2, point2f const *arg_3,
 	point2f const *arg_4, point2f const *arg_5, real arg_6, point2f const *arg_7, point2f const *arg_8)

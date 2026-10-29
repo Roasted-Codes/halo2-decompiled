@@ -132,7 +132,10 @@ static __forceinline long real_to_long(real value);
 // them 37; the 16-bit participant sum 24 (kept); returned ternaries 91 (cmov);
 // ready flag 98 (setg); count test as >= with both returns 24; final return
 // only 81; the two branches swapped 102; short counters 24 (same code, kept as
-// they need no casts).
+// they need no casts). Round 68: count in an else 24; countdown success return 90;
+// countdown arms reversed 87 (retail length); accepted arms reversed 57; earlier
+// participant-sum declaration 24; direct accepted return 67; count result 90;
+// node-level return removed on the narrow-sum graph 81.
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {
