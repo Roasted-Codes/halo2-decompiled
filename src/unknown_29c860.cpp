@@ -53,6 +53,12 @@ __forceinline void function_29c9ee(vector3f const *arg_0, vector3f const *arg_1,
 // second limit 77. Retail preloads one axis component across fsin and
 // reloads the rest from [eax] each use; ours keeps one more component
 // live, so the zero lands in xmm6 and cos in xmm4 (retail xmm4/xmm3).
+// The first difference is in the inlined 0x11cc90: retail loads a->j and
+// folds b->i in the cross term (the standalone 0x11cc90 and ours do the
+// reverse). Rotation in place on the source vector 67; the helper in
+// 0x11d3b0's clean form 101; sine/cosine as helper arguments 67; source
+// vector initialised at the top 194; the two 2-D vector parameters swapped
+// at the definition and both calls 71.
 // @retail 0x29c860
 void function_29c860(long arg_0, long arg_1, point2f const *arg_2,
 	point2f const *arg_3, real arg_4, vector3f *arg_5)
