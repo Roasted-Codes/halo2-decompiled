@@ -246,6 +246,9 @@ void __stdcall function_1160c0(real dt)
 // combined, 194 each.
 // Round 371: first-node position copied before direction 179, kept; previous-first
 // publication, complete scalar cross/axial terms and their combinations 179 each.
+// Round 249: Complete rest-offset/recurrent-previous/working-position CRT copies,
+// all seven nonempty combinations 179 each; all overlap-safe copies 419 (frame
+// 0xa0, 1266 bytes). Original native copies, homes and arithmetic restored.
 // Complete previous-position scalars, with complete axis/rest-offset/prediction
 // coordinate sets 345, 335, 332, 323, 345, 335, 332, 323.
 // Native segment index before lookup, explicit last-segment arm, uniform

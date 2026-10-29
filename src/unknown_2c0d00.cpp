@@ -1108,6 +1108,9 @@ real function_11cc90(vector2f const *a, vector2f const *b);
 // Round 382: both direction constructions before normalization, first/second
 // construction and normalization orders, with original/late perpendicular:
 // 178/395/386/395/178/395/386/395. Original complete producer sequence restored.
+// Round 251: complete side-direction first/second-input staging 411/409;
+// entry-direction first/second-input staging 410/410; side/entry first-first,
+// first-second, second-first, second-second 472/472/457/471. Original outputs and body restored.
 // @retail 0x2c2a70
 bool function_2c2a70(point2f const *origin, point2f const *endpoint,
     point2f const *first, point2f const *second, point2f const *target)

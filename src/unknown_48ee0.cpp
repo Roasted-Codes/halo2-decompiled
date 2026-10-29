@@ -109,6 +109,10 @@ extern real g_4c9798[36];
 // with multiple consumers: bool [363,348]; byte [363,348]; short [383,393];
 // long [373,388] (each pair late/entry zero border). Original body restored; state transport,
 // rounding reloads and the missing frame word remain.
+// Round 249: Existing native tag/direction/both field views 239 each;
+// early border zero alone/with tag/direction/both 342 each, zero after mode
+// with both views 297. Border forms recover frame 0x28 but regress; original
+// short mode/height, observations, copies and protected call inputs restored.
 // @retail 0x48ee0
 void function_48ee0(byte const *matrix, byte const *state, byte const *tag)
 {

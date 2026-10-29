@@ -1777,6 +1777,9 @@ PRIVATE __forceinline void surface_sample_unpack(short const *source, s_sample_p
 // Cross-path shared mesh/texture coordinates/material/mesh-texture/mesh-material/texture-material/all
 // 790/787/790/787/790/787/787; all with result first 787. Shared texture coordinates with
 // short/word/signed-byte/byte status 790/790/820/820. Three-point gain rejected; all restored.
+// Round 251: separate per-path long/dword/short/word status lifetimes
+// 809/809/812/812; the same lifetimes after admission 809/809/812/812. All use
+// frame 0x8c; original shared status, frame 0x90 and complete body restored.
 // @retail 0xd1e10
 long __stdcall function_d1e10(void const *surface, s_effect_color_query *query, long flags, bool value)
 {

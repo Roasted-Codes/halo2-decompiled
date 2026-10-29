@@ -607,6 +607,9 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // roles in all seven subsets 564 each; the uninitialized tag declaration before both scratch
 // arrays 564. Original names, declarations and whole body restored; first tag/count/plane homes
 // still differ.
+// Round 253: native long initial/admission/selection/initial-admission/initial-selection/
+// admission-selection/all/all with emission induction 730/767/710/765/707/781/779/756.
+// Original signed short induction web, addressed counts and complete body restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)

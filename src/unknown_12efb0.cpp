@@ -231,6 +231,9 @@ static __forceinline void function_12efb5(s_12efb6 *arg_0, real const *arg_1, re
 // all three plus shared native color scaling at normalization 616. Original free helpers, source-
 // weight capture, body and includes restored. Palette/selected-record and zero/accumulator
 // carriers remain.
+// Round 253: multi-use scenario receiver with short/char/long palette 616/705/713;
+// each with plain cluster cursor 616/705/713; readonly selected record alone/with cursor
+// 616/616. Original source acquisition, loop and executable body restored.
 // @retail 0x12efb0
 void function_12efb0(long arg_0, point3f const *arg_1, vector3f const *arg_2, s_12efb0 *arg_3)
 {

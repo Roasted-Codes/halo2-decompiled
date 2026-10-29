@@ -51,7 +51,7 @@ public:
 		s_247fd0 *arg_3, transform4x3f const *arg_4, dword arg_5);
 };
 
-// score 239 (was 215): retail's convention since round 67 (flag in AL, location stacked, 0x175270
+// score 239 (was 239): retail's convention since round 67 (flag in AL, location stacked, 0x175270
 // then matches). Left: frame 0x10 versus 0x14 (our position pointer folds into [edi+0x10] where
 // retail keeps it in ECX and spills field_4 to a fifth slot), the inactive (viewer-loop) arm laid
 // out first in retail, the x87 pops before the radius multiply, and the child link (retail inlines
@@ -156,6 +156,9 @@ public:
 // 0.70). Left: our frame stays 0x10 because the position pointer folds into [edi+0x10] (retail keeps
 // it in ecx and spills field_4 to a fifth slot); then the child link (retail inlines 0x2483f0) and
 // the x87 cleanup after the square root.
+// Round 250: complete native location layout 239; early head 240;
+// inactive-first 243; both 244; those four with a closed coordinate
+// phase 239/240/243/244. Original input type, header and body restored.
 // @retail 0x248970
 void function_248970(s_particle_location_datum *arg_0, bool arg_5, real arg_1, s_particle_system_datum *arg_2,
 	real *arg_3, transform4x3f const *arg_4)
