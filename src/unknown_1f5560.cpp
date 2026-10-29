@@ -1375,6 +1375,9 @@ PRIVATE inline real movement_normalize2d(point2f *v)
 // Round 10 (lane 11): one signed offset for the type-zero arm 293 (1140 bytes); `return 0.0f` at the type
 // exit 252 (same code); direction renamed to sort last 252 (same code); flag declared after the
 // normalization 287; side dot product with the side terms first 252 (same code).
+// Round 28: Ordinary origin with eight consistent native parameter orders 272 each;
+// register inputs before/between/after ordered type/origin/facing/obstacles, 1173 or 1164 bytes.
+// Original definition, declarations and both callers restored; early flag/normalization homes remain.
 // Ordinary origin with existing 2D product producer across paired projections,
 // cosine and side classification 267 in all seven combinations; complete products
 // plus side-offset arms 278. Exact length throughout; original body restored.

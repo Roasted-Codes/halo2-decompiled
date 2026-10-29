@@ -1637,6 +1637,8 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 
 // score 263 (was 263): Frame 0x14 and actor ESI agree; the probability and delay clamps now match
 // retail's code; the actor index stays in EDI instead of EBX and the object pool is reloaded instead
+// Frame 0x14 and actor ESI agree; input EBX/object-pool EDI allocation and scalar/ammunition homes remain.
+// Earlier: probability/delay clamps agree; the actor index stays in EDI instead of EBX and the object pool is reloaded instead
 // of kept in a register.
 // Tried ammo clear before value 314; two weapon for 314; shared fraction range 308; probability clamp branches 322; delay clamp branches 345; shared range native homes 308.
 // Equipment-phase unit handle 308; weapon-pair entry workspace 308; rounds-pair entry workspace 308;
@@ -1684,6 +1686,7 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // Round 280: shared random-state receiver at entry/after actor/before query/after
 // query 340/340/340/333; shared seed-field receiver at those same acquisition
 // points 340/340/340/333. Every draw retained; all original receivers restored.
+// Round 29: Current/secondary result and actual weapon-pair dword domains in all seven combinations, then the real word ordinal: 263 each. Original result/pair types, ordinal and all code restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

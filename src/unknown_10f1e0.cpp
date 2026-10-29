@@ -1431,6 +1431,10 @@ bool __stdcall function_110ab0(long unit_index)
 // frame eight versus twelve and requested/state/result homes remain.
 // Round 220: Shared eleven-request overlay membership bool/byte/short/long through logical OR
 // 641/641/633/637; conditional-result counterparts 627/627/619/623. Original body restored.
+// Round 30: Complete depletion complement bool/byte/short/long 450/450/466/477; with late overlay
+// complement 458/458/445/477. The short pair recovers frame twelve but gains only five (dropped).
+// On that frame: true result here/at entry 445/445; entry byte/signed byte 548/548; live entry true
+// default bool/byte/short/long 511/563/559/548. All statuses, defaults and lifetimes restored.
 // @retail 0x1103a0
 bool __stdcall function_1103a0(long unit_index, long requested, bool allow)
 {
@@ -2398,6 +2402,9 @@ PRIVATE inline bool function_111651(c_animation_channel const *arg_0)
 // DH round 215: Eager native field comparisons with Boolean/byte/short/long
 // results, ordinary inline 717/717/807/766; forced inline 726/726/872/829. Original
 // short-circuit helper, interface, request values and complete body restored.
+// Round 30: Complete transition complement bool/byte/short/long 727/727/668/667; coupled with
+// permission-override complement 727/727/668/667. Original flags, helper and body restored;
+// request/control homes and ret 4 versus ret 8 remain.
 // @retail 0x111650
 bool __stdcall function_111650(long arg_0, long *arg_1)
 {
@@ -2729,6 +2736,9 @@ static inline real channel_elapsed_seconds(c_animation_channel const *channel)
 // DH round 215: Mutually exclusive base/overlay eligibility join with signed-byte/Boolean/
 // byte/short success storage 172/165/172/159; paired true publication chained
 // 172/166/172/159. Original decisions, copy expression and complete body restored.
+// Round 30: Immutable set/mode/lookup results at entry in seven subsets, then all with the constant
+// animation default at entry: 173/173/167/194/189/199/189/173 (expanded control 155).
+// Original table observations and all lifetimes restored; frame 0x3c versus 0x38 remains.
 // @retail 0x10ff40
 bool function_10ff40(long unit_index, long type, short side, short value,
     bool *flag, short *side_out, short *value_out)

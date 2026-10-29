@@ -1385,6 +1385,8 @@ PRIVATE inline long score_string_list_1608e0()
 // DH round 215: Row-geometry/team-RGB/player-RGB home identities, all seven subsets,
 // and all three with the heading-rectangle identity 756 each. Frame/viewer/coordinate homes
 // unchanged; every original operation and body restored.
+// Round 30: Entry title/caption/team-localization arrays, all seven subsets, then entry collector
+// output as well: 756 each; original declaration lifetimes restored.
 // @retail 0x1608e0
 void __stdcall function_1608e0(long player_index, s_score_panel_1608e0 *panel, real alpha)
 {
