@@ -284,6 +284,8 @@ void __stdcall function_1160c0(real dt)
 // Original body restored; segment/previous/axis homes and rotation scheduling remain.
 // Round 395: native node cursor 329; with readonly segment 329, invariant reciprocal 327, both 327;
 // invariant vertical on those four graphs 338/338/326/326. All original induction and scopes restored.
+// Round 397: one direction workspace; complete target scalars, noninitial branch first and readonly segment masks 0..7
+// 246/318/277/323/246/318/277/323; all restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {
