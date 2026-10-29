@@ -1669,6 +1669,9 @@ real function_17c900(short function_type, real input);
 // 365/365/365; both with native signed-word salt late/early 366/360. Original convention, summary,
 // salt and complete body restored; stacked-index/output-EBX transport and normalization homes
 // remain.
+// DH round 236: lead/turn/drift vector storage promoted without moving their input reads,
+// all seven subsets 348 each; complete promoted graph with role-based point/vector names 348.
+// Original branch storage and complete body restored; input transport and vector homes remain.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {

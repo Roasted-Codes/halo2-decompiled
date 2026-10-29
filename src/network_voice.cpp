@@ -3037,6 +3037,10 @@ struct s_voice_route_choice
 // Round 250: signed range admission, original/conditional headset 367/367;
 // with split nearest selection 433/433; complete mode observation 440/440,
 // with split nearest 512/512. All restored; entry saves and cursor bias remain.
+// Round 237: explicit pair/descriptor/both library clears 387/391/395; complete pair values
+// 379; complete descriptor values 373; pair clear with descriptor values 370; pair values
+// with descriptor clear 378; complete values for both 374. Original body restored;
+// both callers and both exact callee controls survive; entry/cursor homes remain.
 // Round 395: signed nearest-index validity 419; with choice receiver 412, branch radio 415, both 414;
 // three mixer pairs on those four graphs 428/402/422/421. Original validity tests and full body restored.
 // @retail 0x57eb0

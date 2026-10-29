@@ -1511,6 +1511,10 @@ struct s_133f70;
 // Round 174: function-scope fallback/reuse/level-change result homes, all seven
 // subsets, 175 each; all plus the builder result 175. Original producer points,
 // separate iteration storage and complete body restored; distance staging remains.
+// DH round 236: full-width coefficient-order interface on the current callee graph, with
+// bool/long success, long/signed-byte previous and inner/entry success storage:
+// 175/238/319/175/327/238/319/327 on the calibrated caller image (narrow control 353).
+// Original interface and entire body restored; distance/cache homes and call transport remain.
 // Round 398: complete once-read query object/tag/both 357/352/335; each with
 // allocation-scoped projection workspace 357/352/335; immutable joint inputs
 // with either workspace 335/335. All original field observations and body restored.

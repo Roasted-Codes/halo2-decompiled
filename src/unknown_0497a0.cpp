@@ -106,6 +106,10 @@
 // Round 180: Separate second displacement, entry projection cross outputs and entry
 // uninitialized primary shape, masks 1-7, then all with entry special cross output:
 // 656/581/656/581/656/581/656/656. Original executable body restored.
+// Round 237: existing integer truncation helper 716; first input scaled in place 581,
+// with truncation helper 716; second input scaled in place 593, with helper 716;
+// both input scales 593, with helper 716, with direct sixth scalar 716.
+// Original snapshots, conversion and complete body restored; frame 0x58/0x60 remains.
 // Round 110: retail has no integer truncation of the sixth input product (scale * d.k): written
 // as a plain real product 648 (2629 bytes); with both shape pointers set at entry 620 (2622 bytes);
 // plus the wave's sine arguments read from the global point, frame 0x60 agrees: 600 (2636 bytes);
