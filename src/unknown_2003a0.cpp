@@ -2602,6 +2602,8 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // Round 71: the one real difference is that load (EBP still holds the index; 0x202e90 saves EBP);
 // the short-output casts dropped 50; the pending arms swapped 145; the result as a short 50; the
 // trigger flag as a named bool for both tests 189; the block declarations reversed 50.
+// Round 221: Complete logical index snapshot long/int/dword/const long 50 each;
+// all four with a separate optional follow-up result join 50 each. Original body restored.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {

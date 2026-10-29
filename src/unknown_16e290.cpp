@@ -1564,6 +1564,8 @@ struct s_camera_clip_reference_16ebf0
 // Typed state/saved-state/both field receivers 209/209/209; each with native
 // directions 221/221/221; both with native position 232, with complete native
 // direction/position copies 204 (five-point gain dropped). Original types and body restored.
+// Round 170: Plain two-attempt validation loop, byte/short/long/dword ordinal, then native input copies
+// on the same loop graph 657/658/656/656/695/706/704/704. Original validation, copies and qualifier restored.
 // @retail 0x16ebf0
 void function_16ebf0(long user_index)
 {

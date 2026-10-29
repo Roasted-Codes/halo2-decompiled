@@ -57,6 +57,9 @@ static __forceinline long real_to_long(real value);
 // Timer draw without the named timer locals 373; flag declared at its block 395; random state
 // read before the 0x1fe410 test 428; first/third draws through slot_random_range 395; sign
 // test through _random 417. All restored.
+// Round 170: Common adjusted-timer float/conversion, timer-scope and entry reuse, direct initial conversion,
+// integer/store join, direct final conversion, shared entry results and entry scratch
+// 450/450/458/450/443/450/458/450. Original three conversions and all arithmetic groups restored.
 // @retail 0x1fe620
 void function_1fe620(long arg_0, byte const *arg_1, byte const *arg_2)
 {

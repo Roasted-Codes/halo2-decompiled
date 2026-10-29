@@ -100,6 +100,9 @@ static __forceinline long real_to_long(real value);
 // 8; the block locals in two other orders 8. Separately, from the 44 form: the clock
 // local moved into the player block with the slot local declared first, 8 (the same
 // lines); pointer, type, scope, direct-store and helper forms on it give the same bytes.
+// Earlier 44 -> 8 came from clock/player lifetimes.
+// Round 220: Bounded slot-scan short/word/char/byte induction 84/84/85/85;
+// first-match result termination with those widths 97/97/97/97. Original body restored.
 // @retail 0x1bbcc0
 void function_1bbcc0(long player_index, long vehicle_index, long seat_index)
 {

@@ -702,6 +702,9 @@ done:
 // the same; typed details pointer 111; kind/value/count as three ternaries 111; kind compare
 // reversed 111. Retail also keeps the search pointer in EDI through the scoring block (both
 // detail-threshold globals CSEd), which needs count in EBP and kind on the stack.
+// Round 221: Single details induction with byte bounds, detail-relative/named scores 166/173;
+// owner-record bounds 186/170; complete conditional input producers give the same four counts.
+// All restored. Unchanged reduced control 113 versus full baseline 111.
 // @retail 0x91000
 void __stdcall session_search_score_and_sort(s_session_search *search)
 {

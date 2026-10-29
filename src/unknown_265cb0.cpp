@@ -363,7 +363,7 @@ short __stdcall function_c8b80(long object_index, s_object_seat *seats, short ma
 bool function_26d370(point3f const *point, vector3f const *direction, plane3f const *plane, real *distance);
 real function_30bf0(vector3f *vector);
 
-// score 184 (was 184): result/range homes, inverse SIMD groups and seat-threshold reloads remain.
+// score 152 (was 184): result/range homes and inverse SIMD groups remain; seat thresholds now stay in memory.
 // result/range homes, inverse SIMD groups and seat-threshold reloads remain.
 // Round 57: retail's result stores are a spill of a long result (dword store, `mov ax, word` reload at
 // each tail-duplicated exit). Plain long result 241 (result home +0xc); short return type with every
@@ -460,8 +460,12 @@ real function_30bf0(vector3f *vector);
 // so retail's `mov ax, word ptr` exits need only the short return: BLOCKED-BY the 0x25c9d0 declaration in
 // src/unknown_25d690.cpp); the clipped delta as point + motion * amount through a point helper and
 // vector3d_from_points3d 254, with the first delta and motion through vector3d_from_points3d too 255.
+// Round 28 (m3 KIMI2): short return/early exits 255; ordinary result 325; facing locals with early exits 180;
+// reversed publication 180; short/facing/single select 197; short/facing/explicit 3-or-2 stores 152 (plain, kept);
+// mode/settings failure exits 188/202; publication order, ordinary result, distance declaration, projected order,
+// facing and outer declaration orders 152 each; direct count-down 197; direct accumulators 245.
 // @retail 0x263810
-long function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
+short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
 	volatile long result = 0;
 	if (mode == 0 || mode == 1)
@@ -517,9 +521,10 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 					real secondary, primary;
 					if (!actor->unknown007 && use_facing)
 					{
+						real facing_secondary, facing_primary;
 						function_263740(actor_index, &delta, (vector3f *)((byte *)actor + 0x2a8),
 							(vector3f *)((byte *)actor + 0x2b4), (vector3f *)((byte *)actor + 0x2c0),
-							range, scale, &secondary, &primary);
+							range, scale, &facing_secondary, &facing_primary);
 						long object_index = *(long *)((byte *)actor + 0x26c);
 						if (object_index != NONE)
 						{
@@ -541,13 +546,15 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 										cross3f(forward, &side, &up);
 										real a, b;
 										function_263740(actor_index, &delta, forward, &side, &up, range, scale, &a, &b);
-										if (a > secondary) secondary = a;
-										if (b > primary) primary = b;
+										if (a > facing_secondary) facing_secondary = a;
+										if (b > facing_primary) facing_primary = b;
 									}
 								}
 								++seat;
 							}
 						}
+						secondary = facing_secondary;
+						primary = facing_primary;
 					}
 					else
 					{
@@ -555,7 +562,12 @@ long function_263810(point3f const *origin, long actor_index, point3f const *poi
 						secondary = scaled_range * 0.7f;
 					}
 					if (mode == 0 && secondary * secondary > distance_squared)
-						result = distance_squared < 36.0f ? 3 : 2;
+					{
+						if (distance_squared < 36.0f)
+							result = 3;
+						else
+							result = 2;
+					}
 					else if (primary * primary > distance_squared)
 						result = 1;
 				}
