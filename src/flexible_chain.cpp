@@ -271,6 +271,9 @@ void __stdcall function_1160c0(real dt)
 // Round 32: existing in-place axis scale 179; original-angle segment-first 276;
 // tiny-axis-owned fallback 294; scale/segment 276; scale/fallback 294; segment/fallback 247;
 // all 247, cosine-first all 247. Original producers, fallback and include set restored.
+// Round 262: complete segment/node/both receivers at uses 350/193/359;
+// repeated stiffness alone/segment/node/both 301/475/309/480 (restored);
+// separate segment base 278. Original receivers and computed stiffness restored.
 // @retail 0x1161f0
 void __stdcall function_1161f0(s_chain_record *record, s_chain_definition *definition, real dt)
 {

@@ -2120,6 +2120,9 @@ short __stdcall function_259d90(long actor_index, long object_index, s_cs_state 
 // Round 259: separate inline/noinline declarations for the dispatch, facing, animation
 // and notification callees 491/491/491/491/491/491/491/491 (fast control 491, full 478).
 // All declarations and every call restored; actor/state and first point homes remain.
+// Round 262: reference-check/state-publication/secondary-motion/request-admission
+// inline and noinline declarations 491/491/491/491/491/491/491/491 (fast control 491; full 478).
+// Every declaration and complete callback body restored; actor/state and point homes remain.
 // @retail 0x259430
 short __stdcall function_259430(long arg_0, long arg_1, s_cs_state *arg_2, long arg_3)
 {
