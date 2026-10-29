@@ -437,7 +437,8 @@ static inline void store_contact_axis_31f620(__m128 &result, __m128 const &axis,
 		_mm_store_ps((float *)&result, rotated_axis(axis, body));
 }
 
-static inline __m128 normalized_axis(__m128 const &axis)
+// Retail inlines both normalization sites in the contact builder.
+static __forceinline __m128 normalized_axis(__m128 const &axis)
 {
 	__m128 square = _mm_mul_ps(axis, axis);
 	__m128 xy = _mm_add_ss(_mm_shuffle_ps(square, square, 0x55), square);
@@ -448,7 +449,8 @@ static inline __m128 normalized_axis(__m128 const &axis)
 	return _mm_mul_ps(_mm_shuffle_ps(factor, factor, 0), axis);
 }
 
-static inline float linear_coupling(solver_linear_row_31e7b0 const *a,
+// Retail also inlines the normal-row and friction-row coupling calculations.
+static __forceinline float linear_coupling(solver_linear_row_31e7b0 const *a,
 	solver_linear_row_31e7b0 const *b, solver_body_31e7b0 const *body_a,
 	solver_body_31e7b0 const *body_b)
 {
@@ -463,10 +465,11 @@ static inline float linear_coupling(solver_linear_row_31e7b0 const *a,
 
 // Contact normal rows, optional coupled pairs, a two-axis friction block,
 // and a radius-scaled angular friction row for a multi-point manifold.
-// score 1110 (was 1240): explicit aligned stores for body A and output-reference
-// transforms for body B improve register allocation (2894/3182 bytes).
-// Scalar normalization, countdown loops and header-pointer snapshots did not
-// beat this variant; helper inlining, loop layout and register lifetimes remain.
+// score 840 (was 1110): inline normalization/coupling, retain countdown loops,
+// and address friction rows from the current cursor with a shared final update.
+// Header setup now matches; cursor allocation, SIMD scratch loads/stores and
+// x87 scheduling still differ (3245/3182 bytes). Explicit axis reloads and
+// scalar-load helpers did not improve this variant.
 // @retail 0x31f620
 void __cdecl lane_b_contact_build(void const *points_, long count,
 	void *properties_, void *solver_data_, void const *input_, void *output_)
@@ -478,23 +481,25 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 	solver_output_31e7b0 *output = (solver_output_31e7b0 *)output_;
 	solver_body_31e7b0 const *body_a = input->a;
 	solver_body_31e7b0 const *body_b = input->b;
+	float total_impulse = 0.0f;
 	float inverse_count = 1.0f / count;
+	__m128 *first_terms = output->terms;
 	contact_header_31f620 *header = (contact_header_31f620 *)output->operations;
 	header->properties = properties;
 	header->opcode = 0x11801;
 	header->a = body_a;
 	header->b = body_b;
 	header->property_stride = sizeof(*properties);
-	header->terms = output->terms;
+	header->terms = first_terms;
 	unsigned long *op = (unsigned long *)(header + 1);
 	solver_linear_row_31e7b0 *row = (solver_linear_row_31e7b0 *)output->terms;
+	float total_friction = 0.0f;
 	__m128 position_sum = _mm_setzero_ps();
 	__m128 normal_sum = _mm_setzero_ps();
-	float total_impulse = 0.0f, total_friction = 0.0f;
-	for (long i = 0; i < count; ++i, ++row)
+	lane_b_contact_point const *point = points;
+	contact_property_31f620 *property = properties;
+	for (long remaining = count; --remaining >= 0; ++point, ++property, ++row)
 	{
-		lane_b_contact_point const *point = points + i;
-		contact_property_31f620 *property = properties + i;
 		row->linear = point->normal;
 		__m128 relative_a = _mm_sub_ps(point->position, body_a->center);
 		__m128 relative_b = _mm_sub_ps(point->position, body_b->center);
@@ -561,7 +566,8 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 		normal = points->normal;
 		if (sum_three(_mm_mul_ps(normal, normal)) < 0.9f)
 		{
-			normal = _mm_set_ps(0.0f, 0.0f, 1.0f, 0.0f);
+			normal = _mm_setzero_ps();
+			normal.m128_f32[1] = 1.0f;
 			friction_limit = 0.0f;
 		}
 	}
@@ -584,7 +590,6 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 	state->tangent_b = normalized_axis(state->tangent_b);
 	state->tangent_a = cross_axis(normal, state->tangent_b);
 	__m128 mean_point = _mm_mul_ps(_mm_set1_ps(inverse_count), position_sum);
-	solver_linear_row_31e7b0 *friction_rows = row;
 	row->linear = state->tangent_a;
 	__m128 relative_a = _mm_sub_ps(mean_point, body_a->center);
 	__m128 relative_b = _mm_sub_ps(mean_point, body_b->center);
@@ -611,12 +616,12 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 	row->a.m128_f32[3] = 1.0f / diagonal;
 	row->linear.m128_f32[3] = state->tangent_bias_b * input->error_scale;
 	++row;
-	float coupling = linear_coupling(friction_rows + 1, friction_rows, body_a, body_b);
-	float first_diagonal = friction_rows[0].b.m128_f32[3];
-	float second_diagonal = friction_rows[1].b.m128_f32[3];
+	float coupling = linear_coupling(row - 1, row - 2, body_a, body_b);
+	float first_diagonal = row[-2].b.m128_f32[3];
+	float second_diagonal = row[-1].b.m128_f32[3];
 	float inverse_determinant = 1.0f / (first_diagonal * second_diagonal - coupling * coupling);
-	friction_rows[0].b.m128_f32[3] = inverse_determinant * second_diagonal;
-	friction_rows[1].b.m128_f32[3] = inverse_determinant * first_diagonal;
+	row[-2].b.m128_f32[3] = inverse_determinant * second_diagonal;
+	row[-1].b.m128_f32[3] = inverse_determinant * first_diagonal;
 	contact_friction_op_31f620 *friction_op = (contact_friction_op_31f620 *)op;
 	friction_op->opcode = 0x51407;
 	friction_op->results = (char *)state + 4;
@@ -626,12 +631,13 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 	op += 5;
 	if (count > 1)
 	{
-		if (state->flags & 4)
+		while (state->flags & 4)
 		{
 			state->radius = 0.0f;
-			for (long i = 0; i < count; ++i)
+			lane_b_contact_point const *point = points;
+			for (long remaining = count; --remaining >= 0; ++point)
 			{
-				__m128 distance = _mm_sub_ps(points[i].position, mean_point);
+				__m128 distance = _mm_sub_ps(point->position, mean_point);
 				float squared = sum_three(_mm_mul_ps(distance, distance));
 				float length;
 				_mm_store_ss(&length, _mm_sqrt_ss(_mm_set_ss(squared)));
@@ -655,9 +661,8 @@ void __cdecl lane_b_contact_build(void const *points_, long count,
 		friction_op->opcode = 0x61808;
 		angular_row->a.m128_f32[3] *= 1.0f / state->radius;
 		angular_row->b.m128_f32[3] = state->angular_bias * input->error_scale;
-		output->terms = (__m128 *)(angular_row + 1);
-		output->operations = op + 1;
-		return;
+		row = (solver_linear_row_31e7b0 *)(angular_row + 1);
+		++op;
 	}
 	output->operations = op;
 	output->terms = (__m128 *)row;
