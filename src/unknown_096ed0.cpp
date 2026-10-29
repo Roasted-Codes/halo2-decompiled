@@ -117,6 +117,9 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // Round 169: Recovered receiver/output graph: selector, distinct chain-index and callback-output
 // identities, all seven subsets 170; native dword selector 170. Pending selector/index
 // interference and the four-byte cursor/entry/callback home shift remain.
+// Conditional pending/active/both aggregate zero joins 170/170/170;
+// post-query pending/active/both failure lifetimes 173/170/173; both joins with late/shared predicates 173/170.
+// Complete per-use/table-local/traversal-local/owner-local roots on the EBP graph 231/228/228/222; original body restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {

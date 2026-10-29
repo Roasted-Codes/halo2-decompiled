@@ -226,6 +226,7 @@ void function_14bac0()
 // aggregate/CRT clear 230 each; both aggregates 230; first aggregate/native recipient aggregate
 // 250; both cleared/native recipient 279. Original initialization and iterators restored; frame
 // 0x44/0x3c, readiness homes and recipient overlap remain.
+// Shared in-place vector addition with native recipient/difference/query-input combinations 230/259/230/259/230/259/230/259; original storage and helpers restored.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

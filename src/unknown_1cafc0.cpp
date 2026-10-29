@@ -946,6 +946,9 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Original declaration contracts, identifier homes and complete body restored.
 // Round 170: Failure-owned false result, byte/bool/short/long, with bool then byte prior-loop truth
 // 357/337/346/344/357/337/346/344. Original entry false, constructors and protected queries restored.
+// Native word flag-bit publication at entry/transition/disabled joins 210/318/318/210/210/318/318/210;
+// native completion return contracts 222/222/206/206; reused transition-availability bool/byte/short/long 273/273/264/266;
+// original word operations, availability observations and Boolean interface restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {

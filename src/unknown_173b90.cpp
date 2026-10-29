@@ -898,6 +898,8 @@ public:
 // Round 234: native checked-particle record, mutable/readonly, ordinary/aggregate spawn
 // 292 each; those four with direct ordered completion 356 each (1355 bytes, frame 0x5c).
 // All record, request and completion forms restored.
+// Entry matrix/spawn/both workspaces with ordered completion 356/356/356;
+// with word receiver 353/353/353; both workspaces with original completion 292, with word receiver 290; original restored.
 // @retail 0x174a30
 bool function_174a30(s_particle_system_datum *particle_system, real dt)
 {
