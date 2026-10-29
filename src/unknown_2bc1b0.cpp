@@ -148,6 +148,9 @@ struct s_placement_2bc1
 // compare after them, 223 bytes); test result as a bool before the fill 76; fill then send helper 32;
 // mode read into a local before the fill 31 (load order right, constant 4 not shared in eax);
 // function-scope event filled before the test 32. The placement copy is ecx here, eax in retail.
+// Round 70: byte-array placement 5; creation assignment in the marker test 5 (on the current
+// body); placement at function scope 5; event without its block scope 32 (fill moves before the
+// test); named marker-test bool 5.
 // Marker-query inline declarations 5; native tag hierarchy 5; creation/announcement/both names 5/5/5;
 // missing-tag return 5; tag field at both uses 50; direct tag receiver 5; native tag with both names 5.
 // @retail 0x2bc1f0

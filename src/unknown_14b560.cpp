@@ -2123,7 +2123,6 @@ static __forceinline long player_round_ticks(real value)
     __asm { fistp result }
     return result;
 }
-
 // score 701 (was 701): frame 0x4c versus 0x74; request/pointer homes and call expansion remain.
 // frame 0x4c versus 0x74; request/pointer homes and call expansion differ.
 // Frame 0x4c versus 0x74; request/pointer homes and selective expansion remain.
@@ -2144,6 +2143,10 @@ static __forceinline long player_round_ticks(real value)
 // inlined candidate pointer 708; two request workspaces 804; permuter 697 but a false match
 // (swapped callee arguments and byte/short volatile type stores, all wrong against retail),
 // its neutral remainder 701. Original body kept.
+// Round 214: Shared rounding 735; complete lunge/movement/both squared results 701 each;
+// shared rounding with either/both squared results and the renamed request 735 each.
+// Native view-helper input with two-use latch/view player receivers 700 (one-point gain rejected).
+// Original helper, complete body and includes restored; frame 0x4c/0x74 and call expansion remain.
 // Round 235: Native seat bitfield, existing weapon-flag query, both, actual player latch fields, paired
 // latch/metadata and complete native receiver forms 707/707/715/701/707/707/715/715. Original metadata,
 // declarations, player fields and body restored.
@@ -2708,7 +2711,7 @@ struct s_unit_flags_14d8b0
 	word bit8 : 1;
 };
 
-// score 17 (was 21): frame 0xc8 and retail length agree; tick/rate scheduling, the damage-tag
+// score 17 (was 17): frame 0xc8 and retail length agree; tick/rate scheduling, the damage-tag
 // pointer load and scratch registers in the later mode, slot and root blocks remain.
 // Earlier isolated damage-byte store order 19 was below the keep threshold.
 // Round 32: the trigger test through 0x11c5b0 148; the damage-type pointer read in the call 130;
@@ -2762,6 +2765,10 @@ struct s_unit_flags_14d8b0
 // Low-time/reset/both inline declarations 21/229/229; signed-word counter 23; unsigned datum 21;
 // unsigned handles 21; low-time inline with first native flag 19; native controls with that flag 21;
 // combined first native flag and damage-byte store order 17 (plain whole-program confirmed).
+// Round 379: function-scope event/damage/both 17/23/23; early tag input alone/with event/damage/both
+// 150/150/151/151; tag value after scratch store 17. Original executable body restored.
+// Round 164: separate root handle, branch-local short expiry result, tick/result/rate names,
+// all three names, joined slot result and root+slot result: 17 each. Original body retained.
 // @retail 0x14d8b0
 void function_14d8b0(void)
 {

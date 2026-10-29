@@ -97,6 +97,8 @@ void function_1c2690()
 // pointer observations listener/first/second 4; complete pointer observations
 // listener/second/first 4; both pool pointers before the stores 4; both pool pointers with
 // byte saved entry state 4.
+// Round 70: the NONE store before/between the two valid writes 5/5 (stores keep source order);
+// explicit operator delete 4; deletion through an inline helper 4; chained valid clear 4.
 // @retail 0x1c27a0
 void function_1c27a0()
 {

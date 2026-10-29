@@ -156,6 +156,9 @@ const dword g_455978[81] = {
 // Round 232: shared affine candidate alone/radius/blend/both 306 each;
 // with planar normalization on the same four graphs 307/307/307/304.
 // Two-point gain rejected; original producers and all helper contracts restored.
+// Round 214: Endpoint home alone/with sample/with radial/with both direction names 306 each;
+// immutable named count alone/with endpoint/with all three/with full ray-query name 306 each.
+// All restored; optional-state, sample/ray homes and selective helper expansion remain.
 // Round 163: shared endpoint sum into point/native copy/float-set copy/vector
 // 306/341/314/306; each with shared optional-ray difference 306/341/314/306.
 // Native copies lengthen the body; optional-state homes and selective
