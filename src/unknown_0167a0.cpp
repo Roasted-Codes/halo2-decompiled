@@ -169,6 +169,9 @@ PRIVATE inline byte const *material_parameters(long tag)
 // Round 76: entry stored directly into its field, no reference, 47 (the table reload now hoists as in
 // retail; first difference +0x19e -> +0x1a7; restored, same count); entry through the existing entry local 183; packed word read
 // inside the chain index 47; tables re-read once into its local 47; named chain/pass bases 47.
+// Round 155: entry table from the local 151; entry stored to its field directly 47 (table reload in place,
+// the second index load hoists instead); plus range stored directly 163; entry local reused 183;
+// direct entry store with swapped index sum 47.
 // @retail 0x16b90
 void __stdcall function_16b90(byte *state, long tag, long first, long second,
     long third, long fourth, real scale)
