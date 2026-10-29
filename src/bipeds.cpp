@@ -2005,6 +2005,8 @@ void __stdcall function_1c3770(long object_index, dword flags);
 // Round 281: shared entry/query input-output count 68/73; entry with short body/getter
 // 72/87; query with short body/getter 77/105; tag at use on entry/query graphs 69/79.
 // All restored; extra EBP and body/flag scheduling remain.
+// Round 396: Entry-zero query output with retained/at-use count, shared long/short getter,
+// and entry/at-use tag: 91/109/84/101/97/111/93/113. All restored; entry EBP remains.
 // @retail 0xe0c70
 void function_e0c70(long arg_159e6d)
 {
@@ -2149,7 +2151,7 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 	long rigid_body_index, bool started);
 
 /* places the biped's ragdoll bodies, from its root rigid body outward */
-// score 70 (was 91): frame 0x114 versus 0x110; entry saves and result/visited homes differ.
+// score 6 (was 70): frame 0x110, entry and length 224 agree; six mask/Boolean/output stack offsets differ.
 // Native one-word visited mask 91 kept; root clamp 143, with native mask 100; common result 123;
 // declaration-time zero 100, with common result 123; result first 100, with common result 123.
 // Lookup/output scope 86 (five-point incremental gain, 11 extra bytes; restored); with root clamp 101;
@@ -2159,6 +2161,13 @@ bool __stdcall function_e23e0(long arg_159e6d, point3f const *point, real value,
 // result [89,85,91,70,86,82,80,84]; ending lookup scope on this graph [86,88,83,85].
 // One-word mask before admission, root clamp and output-only result 70 plain, kept;
 // output receiver is never read by its matched consumer. All original call roles retained.
+// Round 396: Shared placement/traversal Boolean with native array/scalar and long/char root,
+// direct/assigned return: 65/79/105/103 twice. Shared false-default result with nested/guard
+// exits and late/entry initialization: array 61/98/118/121, scalar 49/96/111/119.
+// Separate actual function-return default, shared/distinct output, mask names: scalar
+// 25/32/25/32, entry defaults 104/106/104/106; original indexed mask 6/13/6/13.
+// Unescaped default plus indexed mask and shared placement output 6 plain, kept.
+// Consumed lookup scope with array/scalar and shared/distinct output 99/97/103/101.
 // @retail 0xe1b60
 bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 {
@@ -2169,21 +2178,19 @@ bool __stdcall function_e1b60(long arg_159e6d, point3f const *point, real value)
 	function_181bd0(arg_159e6d, &list);
 	count = havok_component_get(BIPED_GET(arg_159e6d)->havok_component_index)->rigid_bodies.size;
 	memset(visited, 0, sizeof(visited));
+	bool result = false;
 	if (PIN(count, 1, 32) == count && list.count > 0)
 	{
 		long root = list.lists[0];
 
 		if (PIN(root, 0, count - 1) == root)
 		{
-			bool result;
-			bool started;
-
-			started = function_e1c40(arg_159e6d, point, value, root, NONE, NONE, 0);
+			bool placement_result = function_e1c40(arg_159e6d, point, value, root, NONE, NONE, 0);
 			visited[root >> 5] |= 1 << (root & 0x1f);
-			return function_e23e0(arg_159e6d, point, value, &result, visited, root, started);
+			result = function_e23e0(arg_159e6d, point, value, &placement_result, visited, root, placement_result);
 		}
 	}
-	return false;
+	return result;
 }
 
 void function_b8840(long unit_index);
