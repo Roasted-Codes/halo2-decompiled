@@ -83,6 +83,11 @@ bool function_25d9b0(long prop_index);
 // with the for-form iterator loop 172; priority test inverted around the goto 131;
 // invitation test named 131. Retail places the no-invitation branch last, jumping
 // into the evaluation that follows the loop. BLOCKED-BY 0x26f060.
+// State query after view/velocity/at consumer, or its field snapshot, with
+// mutable/readonly actor 170/152/152/164 reduced in each case. Post-velocity
+// plain 124 at 555 bytes is a seven-point gain and is restored; existing
+// length/self-dot helpers with the two late queries all tie 152 reduced.
+// Initial actor/prop/node registers and fallback placement still differ.
 // @retail 0x1b7e40
 short __stdcall function_1b7e40(long actor_index)
 {
@@ -164,6 +169,8 @@ evaluate:
 // Round 162: separate view-getter noinline with immutable default status and direct proximity return,
 // combined with native payload, unsigned-word status and complete double speed consumer: eight forms
 // all 102 at 231/264 bytes. Entire body, payload and getter declaration restored.
+// Complete final rejection with native payload/self-dot 87/87; staged final failures 90/90;
+// whole-slot forms 87/90/87/90, all 277 bytes. Original 264-byte body and getter restored.
 // @retail 0x1b81c0
 short __stdcall function_1b81c0(long actor_index, s_slot *slot, bool active)
 {

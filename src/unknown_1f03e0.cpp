@@ -346,6 +346,9 @@ extern real g_47f05c;
 // 0xd4 but leaves the best alignment in XMM6; original body retained at 192.
 // Round 269: Height/validity/alignment rejection-guard subsets 1-7 all 192;
 // all three with fallback validity first 215. Original nested scan, snapshots and full body restored.
+// Round 274: Shared branch-distance home with separate/common clamp joins, crossed with
+// uniform height/body-byte observations 192/288/205/283/208/294/220/289. Original
+// branch-owned distances, snapshots and full body restored; frame and carriers remain.
 // @retail 0x1f1ee0
 bool function_1f1ee0(s_shape_carrier_contact const *contact, s_shape_state *state,
     vector3f *velocity, matrix3x3 *rotation)
@@ -504,6 +507,9 @@ PRIVATE inline void contact_cross(vector3f const *a, vector3f const *b, vector3f
 // shape_add 238; lowest declared before selected 142; axis declared at case scope 144. 0x1f2250's call
 // sites load the stepping flag before the base point in our build too, so the loop's ECX/EBX request/count
 // swap is not 0x1f2e60's parameter order.
+// DL179: Complete parallel projection products, paired first sums, normalization squares,
+// products+squares, sums+squares, joint products, joint products+squares and that graph
+// with the input-preserving first cross 146 each (991/977); original direct-output body restored.
 // @retail 0x1f2a80
 void function_1f2a80(byte const *request, bool moving,
     vector3f const *desired, long const *indices, long count, vector3f *out, vector3f const *velocity)
@@ -1156,6 +1162,9 @@ PRIVATE inline void shape_rotate_vector(matrix3x3 const *matrix, vector3f const 
 // offset/position pointers 54; row i grouped (forward + left) + up 50 at 1043/1043; retail's
 // own row groupings (left + up, forward + left, forward + left) 59; one named output-velocity
 // pointer for both override blocks 265 (frame); a 600 s permuter run, none below 50.
+// Round 177: Independent matrix-axis pointer/reference boundaries, all eight forms 71;
+// shared in-place final override/support/both additions 83/88/83. Override loads recover
+// but coefficient allocation worsens; original helper, alias copy and body restored.
 // @retail 0x1f0450
 void __stdcall function_1f0450(s_shape_state *history, byte *out, s_shape_carrier_contact const *contact)
 {

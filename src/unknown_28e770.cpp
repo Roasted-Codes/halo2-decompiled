@@ -101,16 +101,16 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 	arg_2->k = arg_0->z - arg_1->z;
 }
 
-// score 136 (was 136): first alignment product, case-five clear join and contribution scheduling remain; staged alignment 136 plain, direct motion 235f, direct forward 253f, double-factor scaling 190f, signed-byte mode 504f.
-// score 138 (was 140): alignment/clear-join/contribution schedules remain; fast preview 144.
+// score 118 (was 118): first alignment product, case-five clear join and contribution scheduling remain; staged alignment 136 plain, direct motion 235f, direct forward 253f, double-factor scaling 190f, signed-byte mode 504f.
+// Earlier 138 (was 140): alignment/clear-join/contribution schedules remain; fast preview 144.
 // Read-only forward 144f; alignment snapshot 414f; named alignment 144f;
 // marker failure break 185f; in-place contribution 204f; scale result 149f;
 // aggregate sum 210f; shared retreat scale 144f.
-// score 118 (was 136): alignment product, facing dot, clear join and contribution schedules remain;
+// Earlier 118 (was 136): alignment product, facing dot, clear join and contribution schedules remain;
 // named target distance 119 plain / 122 fast; motion memcpy 142f;
 // point-getter result in case four/five/both 281/195/287f; failure-first arm 179f;
 // output reuse 192f; scale force-inline 142f; distance names / placement capture 122/122f.
-// score 121 (was 121): alignment/facing products, marker-clear join and contribution schedule remain.
+// Earlier 121 (was 121): alignment/facing products, marker-clear join and contribution schedule remain.
 // Fast: motion reference 125; forward reference 125; both vector references 125;
 // perception reference 125; limits reference 157; perception/motion references 125;
 // limits/motion references 157; object reference 125.
@@ -118,21 +118,28 @@ __forceinline void function_28e774(point3f const *arg_0, point3f const *arg_1, v
 // long marker count 206f; case-assigned short/long count 129/206f;
 // prior motion across scale 203f; elapsed fraction 129f; clamped elapsed 141f;
 // mode/all inputs assigned by arms 536/552f; unchanged preview 129f.
-// score 118 (was 118): alignment operands, marker clear join and contribution schedule remain.
+// Earlier 118 (was 118): alignment operands, marker clear join and contribution schedule remain.
 // In-place direction scale 124f; contribution-first adds 124f; both 124f;
 // separation/combined length results 124/124f; both 124f; drift distance 124f;
 // normalization results with in-place scale 124f; preview 124f, all 103 code differences.
-// score 118 (was 119): alignment/facing products, clear join and contribution schedule remain.
+// Earlier 118 (was 119): alignment/facing products, clear join and contribution schedule remain.
 // Genuine alignment i/j/k products 125/129/125f; ij/ik/jk products 129/125/125f;
 // all products and products with complete result 125/125f; preview 125f.
 // alignment operands, marker-clear join and contribution schedule remain;
 // byte busy result / elapsed consumer / factor accumulator / contribution-first sums / combined 124/124/124/124/124f;
 // marker comparison result 124f; terminal marker case / comparison 206/206f.
-// score 118 (was 118): at aligned 21 the 4-byte length comes from case five's two field_50 = NONE
+// Earlier 118 (was 118): at aligned 21 the 4-byte length comes from case five's two field_50 = NONE
 // stores (retail reloads esi ahead of one shared store) and case six's first contribution term.
 // dot3f for the alignment test (either order) 118; case-four sum order 118; failure-first
 // case-five arm 198; `x = x + c` contribution adds 118; contribution scaled into direction 118;
 // the dot test as two NONE-storing ifs 234.
+// Round 242: shared/native displacement with repeated observations 129/118;
+// with normalization reuse 186/183; fused contribution plus these four forms 150/139/214/211.
+// All native displacement forms restored; alignment, facing sum, clear join and contribution remain.
+// Round 244: shared add after scale 141, with native point publication 141;
+// direct scale-return/add pipeline 141, with point publication 141; reverse add inputs
+// 141/141; native point publication alone 118; planar vector/point constructors with
+// pipeline 143. All restored; marker-clear receiver join and contribution schedule remain.
 // @retail 0x28e770
 void __stdcall function_28e770(long arg_0, long arg_1)
 {

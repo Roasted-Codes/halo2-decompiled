@@ -76,7 +76,10 @@ void function_1ea770(byte code, long player_index, s_statborg *statistics, long 
 // reads as `if (g_510ca0) x = i != NONE ? value : NONE` gave retail's nested
 // shape (115 -> 107). Tried: the old maximum through a call to 0x196960 (167,
 // not inlined), the team maximum as one nested ternary (110).
-// score 107 (was 107): still BLOCKED-BY 0x196960/0x1968b0 (retail inlines both; their file is held) and retail re-reads g_510ca0 after each pointer store where ours keeps it in DL (whole-program aliasing). Combined `g_510ca0 && index != NONE` maximum 112; same for the team maximum 112; increment through the statistics address 111; counter pointer with the nested-ternary clamp 106 (its store then matches retail's); that clamping `consecutive` directly 106.
+// Earlier: still BLOCKED-BY 0x196960/0x1968b0 (retail inlines both; their file is held) and retail re-reads g_510ca0 after each pointer store where ours keeps it in DL (whole-program aliasing). Combined `g_510ca0 && index != NONE` maximum 112; same for the team maximum 112; increment through the statistics address 111; counter pointer with the nested-ternary clamp 106 (its store then matches retail's); that clamping `consecutive` directly 106.
+// Native descriptor value with update/ternary/exclusive/nested clamps 151/160/160/151;
+// const descriptor counterparts 151/160/160/151. Original scalar limits restored;
+// enable reloads, maximum/register roles and the held inline boundaries remain.
 // @retail 0x1ea5b0
 void function_1ea5b0(long player_index, s_statborg *statistics, long threshold, byte code)
 {
@@ -158,6 +161,8 @@ void function_1ea880(long first_player, long player_index, s_object_values *tabl
 // Round 262: native team/credited-player/victim/secondary-award call summaries,
 // inline and noinline 421/421/421/421/421/421/421/421. Every declaration and complete
 // body restored; frame 0x48 versus 0x50 and result/history/rounding homes remain.
+// Round 399: First-lookup entry defaults for damage code, selection/fallback slots, killer team and all
+// combinations, then credited player: 461/442/433/467/460/442/433/443. Original restored.
 // @retail 0x1e9fa0
 void __stdcall function_1e9fa0(void *engine_globals, long object_index, long reported_player, word reported_team, byte code)
 {

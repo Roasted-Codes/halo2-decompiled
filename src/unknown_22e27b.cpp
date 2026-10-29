@@ -208,6 +208,9 @@ static inline real interpolate_linear(real a, real b, real t)
 // frame/timing agree, direction/frame and lookahead/fraction carriers remain.
 // Existing point interpolation helper: eight point/vector/ratio/output parameter
 // orders all 96; original helper, calls and timing stream restored.
+// Per-iteration current-frame capture on the recovered timing graph, alone/with
+// direction/count/both 98; each with captured flags 214/655 (loses frame 0x10).
+// Original reads, native short results, timing stream and interpolation restored.
 // @retail 0x22e3cd
 void c_class_1a2c81::update(dword time)
 {

@@ -34,43 +34,46 @@ struct s_squad_iterator_1c7bb0
  long squad_index;
 };
 
-PRIVATE __forceinline bool function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
+PRIVATE __forceinline byte *function_1c7bb1(s_squad_iterator_1c7bb0 *arg_0)
 {
- arg_0->squad = NULL;
+ byte *result = NULL;
  if (g_4f55d0->active)
  {
-  arg_0->squad = data_iterator_next_calling(&arg_0->records);
+  byte *datum = data_iterator_next_calling(&arg_0->records);
+  if (datum)
+   result = datum;
   arg_0->squad_index = arg_0->records.datum_index & 0xffff;
  }
- return arg_0->squad != NULL;
+ arg_0->squad = result;
+ return result;
 }
-// score 164 (was 164): Frame 0x28 agrees; separate pool/iterator homes, early null and successor EBP remain.
+// score 2 (was 164): retail's frame, homes and both traversals. Left: after the squad's actor
+// walk retail reloads the pool global into EDI before the squad index into EBX; ours the other way.
+// Round 74: the walk sets its result only when the pool step finds a record (the matched
+// 0x1e47d0 walk's form: the not-found path keeps the NULL set before the active test) and
+// returns it to the caller; the second traversal looks the actor up through the loop index
+// before copying and advancing it; the flag as `& 0x80` (retail's jns) 164 -> 2. At 2: index
+// field at each use; index declared at the top / initialized first; walk result declared after
+// the iterator / in the loop; bsp copy after the iterator; iterator declared first; actor
+// iterator at function scope; actor pointer first; begin/test/cleanup through the field;
+// squad getter for the three stores; continue form; condition declaration; named test result;
+// `!= NULL`; index through an out parameter (13). Worse: iterator init swapped 4; index stored
+// before the result 181; index local 148; word index 182; for-loop actor walk 276; else arm
+// first 110; ternary result 181; no first member 12; result kept in the member 24.
+// Earlier forms, all on the previous walk (164 unless given):
 // Round 43: iterator-pool carrier 164; with field-pool cache 198; with state owner 193;
 // typed iterator/carrier 164; const carrier 164; carrier declared first 164; local result
 // with late/early member publication 164/164.
-// Earlier 164 (was 164): frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
-// Frame 0x28 agrees; separate pool/iterator homes, early null publication and saved successor EBP remain.
-// frame 0x28 agrees; separate pool/iterator residency, early null and successor EBP remain.
-// Frame 0x28 agrees; separate pool/iterator homes, early null publication and successor EBP remain.
-// Earlier: Frame 0x28 agrees; separate pool/iterator homes, null timing and successor residency remain.
-// frame 0x28 agrees; separate pool/iterator homes,
-// frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
-// Frame 0x28 agrees; separate pool/iterator storage, early null publication and successor EBP remain.
-// Earlier 164 (was 164): frame 0x28 agrees; pool/iterator separation, null timing and successor EBP remain.
-// null-result timing and actor-successor residency remain. Inactive early exit
+// Inactive early exit
 // 164; native flag mask 164; successful inner-update continue 164; pointer-result
 // for loop 275; early-exit/mask/continue combination 164.
 // Initialized iterator 164; direct iterator index 164; unsigned squad index
 // 164; wider inner actor-pointer scope 164; timestamp before active clear 165.
-// Frame 0x28 agrees; separate pool homes and iterator/actor lifetimes differ.
 // Native record iterator 222; long partition index 163; full actor view 164; outer actor workspace
 // 164; ineligible-first branch 171.
 // Cached pool 197; role names 164; cached active state 193; nested eligibility 164; inactive
 // continue 164; direct datum 164; unsigned successor 164.
-// traversal phase lifetimes do not recover separate pool
-// Earlier: traversal phase lifetimes do not recover separate pool
-// Earlier 164 (was 164): traversal phase lifetimes do not recover separate pool
-// storage or the actor successor register. Squad/actor/both phase scopes 164/164/164;
+// Squad/actor/both phase scopes 164/164/164;
 // squad/both scopes with actor for-loop 164/164; squad/both scopes with read-only
 // first acquisition 164/164; both scopes with read-only acquisition and for-loop 164.
 // Actor-next call alone 234; unsigned-word squad index 230; iterator index initialized first 164;
@@ -169,9 +172,8 @@ void function_1c7bb0()
   byte *datum;
   local_1.records.data = g_51e9d8;
   local_1.records.index = NONE;
-  while (function_1c7bb1(&local_1))
+  while ((datum = function_1c7bb1(&local_1)) != NULL)
   {
-   datum = local_1.squad;
    long local_2 = local_1.squad_index;
    if (function_204390(local_2))
    {
@@ -191,7 +193,7 @@ void function_1c7bb0()
    }
    else
     ((s_1c7bb0 *)g_51e9d8->data)[local_2 & 0xffff].field_7e = NONE;
-   if (((s_1c7bb0 *)datum)->field_2 < 0)
+   if (((s_1c7bb0 *)datum)->field_2 & 0x80)
    {
     ((s_1c7bb0 *)g_51e9d8->data)[local_2 & 0xffff].field_28 = 0;
     function_203cc0(local_2);
@@ -200,8 +202,8 @@ void function_1c7bb0()
   long local_4 = g_4f55d0->unknown14;
   while (local_4 != NONE)
   {
+   s_actor_view *local_6 = actor_get(local_4);
    long local_5 = local_4;
-   s_actor_view *local_6 = actor_get(local_5);
    local_4 = local_6->unknown020;
    if (function_1e13f0(local_5) && actor_update_bsp_locations(local_5))
    {

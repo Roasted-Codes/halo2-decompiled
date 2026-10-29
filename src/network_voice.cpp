@@ -2635,6 +2635,11 @@ long __stdcall function_53b00(long player, byte *output, long capacity)
 // Definite blocked path result 165; shared mode-two capacity 160; direct session query 188;
 // early allowed-member query 124 (exact-only); mode-two admission first 137;
 // preferred eligibility first 142; complete blocked-preservation arm 124; path result plus arm 165.
+// Round 71: shared availability scope with full-width deferred 167 (432 bytes);
+// full-width deferred with final preferred-bit recomputation 178 (417); entry preserve 124;
+// early allowed-member query with final recomputation 161 (428); entry preserve/selected 124;
+// selected-only recomputation 144; nonblocked deferred-only/both recomputation 146/146 (470).
+// Original body restored.
 // @retail 0x565c0
 void __stdcall function_565c0(s_voice_routing *routing, dword remaining, s_voice_route *output)
 {
@@ -3032,6 +3037,10 @@ struct s_voice_route_choice
 // Round 250: signed range admission, original/conditional headset 367/367;
 // with split nearest selection 433/433; complete mode observation 440/440,
 // with split nearest 512/512. All restored; entry saves and cursor bias remain.
+// Round 237: explicit pair/descriptor/both library clears 387/391/395; complete pair values
+// 379; complete descriptor values 373; pair clear with descriptor values 370; pair values
+// with descriptor clear 378; complete values for both 374. Original body restored;
+// both callers and both exact callee controls survive; entry/cursor homes remain.
 // Round 395: signed nearest-index validity 419; with choice receiver 412, branch radio 415, both 414;
 // three mixer pairs on those four graphs 428/402/422/421. Original validity tests and full body restored.
 // @retail 0x57eb0

@@ -339,6 +339,14 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 271: native first/second/both object-header getters and retained header outputs
 // 186/186/186/186/186/186; both native headers with long/exhaustive seated results
 // 195/186. Original lookups, requests, predicate and complete body restored.
+// Round 90 (plain): retail keeps the slot pointer in EBP from the prologue, so the prop-pool temp
+// takes EDI and the actor index is reloaded from its stack home; ours caches the index in EDI.
+// The boarding branch's false exit through the result byte 208; the vehicle request's result
+// stored only on failure 188; both 219 (fast); the slot pointer declared first 186; the vehicle
+// selection written in each request arm 202.
+// Round 273: movement flag/destination/section output declarations at entry, seven
+// subsets 186 each; all three with the query-result declaration at entry 186.
+// Original output declarations and complete body restored; actor/pool and request tails remain.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {

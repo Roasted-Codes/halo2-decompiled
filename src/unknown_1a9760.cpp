@@ -15,10 +15,13 @@ bool function_1f5110(long arg_0, point2f const *arg_1, real arg_2,
 // the rotated vector's XMM allocation differs - retail
 // keeps the two dot products in xmm1 and xmm0 where ours uses xmm5 and xmm3 -
 // and the second subtraction and the x87 sum are swapped.
-// score 104 (was 104): the negated component in its own local keeps 0.0 in xmm7 for the
+// Earlier: the negated component in its own local keeps 0.0 in xmm7 for the
 // > 0.0f test as retail does, but 177 (aligned 63 against 64; all six term orders of the
 // projection give the same code); that with the components written out 188; components
 // written out k first 193; the flag store before the copy 104; the copy after the loop 104.
+// Round 196: uniform original-direction reads 163; retained scalar inputs 197; double square 105;
+// live/scalar inputs with double square 164/197; normalized-vector setter on original/live/scalar inputs
+// 217/255/243. All restored; half/offset allocation and x87/SSE schedule remain.
 // @retail 0x1a9760
 void __stdcall function_1a9760(long arg_0, s_slot *arg_1)
 {
