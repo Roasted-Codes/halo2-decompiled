@@ -3459,6 +3459,9 @@ struct s_128ca0
 // Round 247: sequential inner/outer/both reference-input gain sums 269/215/269; both with shared
 // scale 242, before pitch 276, before pitch with scale 256, role names 269 and entry declaration
 // with scale 242. Reference-input sequences recover frame 0x494 but regress; original body restored.
+// Round 224: Live definition/permutation/playback, definition-permutation/definition-playback/
+// permutation-playback/all/all-pitch-parameters 307/364/681/385/709/864/878/878. Definition-only
+// recovers frame 0x494 but regresses; original receivers, gain homes and complete countdown arms restored.
 // @retail 0x128ca0
 void function_128ca0(short arg_0, long arg_1, s_looping_channel_spatialization const *arg_2)
 {

@@ -242,6 +242,9 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Round 72: weight byte * scale named, then * frame 207 (retail's multiply order); frame byte in a
 // long local for compare and conversion 257 (retail's 32-bit compare, 967 bytes); both 257;
 // reversed frame-count compare 207; weight from the entry frame local 309.
+// DH round 230: Post-getter countdown snapshot in byte/short/long/word domains 207/216/280/215;
+// the same complete if/else weight producers 207/216/280/215. Original observations and body restored;
+// frame 0x30/0x2c, destination/ordinal homes and weighted getter expansion remain.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)

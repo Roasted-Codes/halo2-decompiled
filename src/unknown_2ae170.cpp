@@ -664,6 +664,12 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // Round 247: full CRT clears at native declaration, first/second/first-second/third/first-third/
 // last-two/all 334/333/333/333/333/332/332 fast; all after member copy 336 (control 334,
 // full 336). No qualifying gain; all aggregate declarations and shared initializers restored.
+// Round 224: Complete native headers for first/second/first-second/third/first-third/last-two/all/
+// at-use all 316/334/335/323/321/324/325/338 fast, restored as shared-initializer expansion.
+// Existing initializer calls with first-use zero declarations in those seven subsets, then all after copy,
+// 316/332/318/333/332/333/336/336 fast; first-only 335 plain, first-second 329 plain. On first-second,
+// table after copy/first use/word/byte 317/330/347/341 fast; after-copy 329 plain. One/seven-point
+// gains rejected below margin; original zero phases, table, shared helpers and all API inputs restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
@@ -789,6 +795,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Round 247: native flag2 and primary pointer, original/native flag3 428/424; with shared
 // ordinary input 471/463; right from left 461/461, with shared input 494/494. Four-point
 // gain rejected; original field view, destinations and complete body restored.
+// Round 224: Coupled left short/right word-short-long-dword 450/450/451/451;
+// left long/right word-short-long-dword 451/451/452/452, all on the retained word route.
+// Original word/byte destinations, selector, gains and append boundaries restored; dispatcher exact.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

@@ -3900,6 +3900,9 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 173: actual external victim/attacker/state record references, all seven nonempty
 // combinations 470; all three with existing complete position setter 471. Original record
 // receivers, both events, shared award update and complete body restored.
+// Round 226: paired existing initializer/cause/effect/sender boundaries 602/609/592/588/567/583;
+// initializer/cause/effect 637, complete event lifecycle 659. Original body and all inline
+// boundaries restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {

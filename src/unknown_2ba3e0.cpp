@@ -325,7 +325,7 @@ void function_2b9a00(s_particle_2b96 const *particle, real distance, vector3f *r
     }
 }
 
-PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
+PRIVATE __forceinline vector3f *normalize_particle_velocity_2b(vector3f *v)
 {
     real squared = v->i * v->i + v->j * v->j + v->k * v->k;
     if (squared != 0.0f)
@@ -335,9 +335,11 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
         v->j *= inverse;
         v->k *= inverse;
     }
+    return v;
 }
 
 // score 67 (was 67): Frame 0xb4 and 1516-byte length agree. Back-edge parameter reloads and velocity
+// Frame 0xb4 agrees; 1517/1516 bytes. Back-edge parameter reloads and velocity
 // blend/normalization stores differ; shared scale return plus addition recovers the attraction's in-place products.
 // Earlier frame-matched body kept attraction j/k products in temporaries and deferred velocity stores.
 // Round 9 (lane 11): steering record replaced by plain locals 291 (frame 0xac); the distance estimate with
@@ -423,6 +425,13 @@ PRIVATE __forceinline void normalize_particle_velocity_2b(vector3f *v)
 // Round 166: shared scaled-add blend boundaries quarter/previous/native-previous/composed
 // 124/117/124/115; each with both final returned-output scales
 // 124/125/124/122. Original blend stages and stores restored.
+// Round 228: Native velocity-normalizer output consumed by both final scales, pointer/reference
+// inputs with existing/shared scales 67/67/47/47; corresponding shared final squared producers
+// 116 each. Keep pointer output into shared scale, plain 47 (1517/1516 bytes); final-store and
+// back-edge reload differences remain. Original magnitude expression and pointer input retained.
+// DH round 230: On the retained normalizer-output graph, shared final addition/reversed inputs 115/119;
+// native normalizer values alone/with those additions 398/386/386; explicit source-output normalization
+// with shared scale alone/with those additions 138/177/183. All restored; final stores, lower tail and reload order remain.
 // @retail 0x2b9b10
 void function_2b9b10(s_particle_properties_2ba const *definition, void const *origin, long first, real scale, void *system)
 {
@@ -505,13 +514,11 @@ void function_2b9b10(s_particle_properties_2ba const *definition, void const *or
         squared = particle->velocity.k * particle->velocity.k + particle->velocity.j * particle->velocity.j + particle->velocity.i * particle->velocity.i;
         if (squared > maximum_speed * maximum_speed)
         {
-            normalize_particle_velocity_2b(&particle->velocity);
-            scale_particle_vector_2b(maximum_speed, &particle->velocity);
+            vector3f_scale(normalize_particle_velocity_2b(&particle->velocity), maximum_speed, &particle->velocity);
         }
         else if (minimum_speed * minimum_speed > squared)
         {
-            normalize_particle_velocity_2b(&particle->velocity);
-            scale_particle_vector_2b(minimum_speed, &particle->velocity);
+            vector3f_scale(normalize_particle_velocity_2b(&particle->velocity), minimum_speed, &particle->velocity);
         }
     }
 }

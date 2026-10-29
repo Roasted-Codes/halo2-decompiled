@@ -96,6 +96,10 @@
 // Round 385: Current 0x58-frame basis/wave-vector/wave-scalar homes, all seven subsets, and all with
 // the reciprocal home 581 each. Original names and complete body restored; frame 0x58/0x60,
 // shape/basis homes and thirteen excess bytes remain.
+// Round 227: Complete projected add-scaled values in existing/separate cross outputs 721/721;
+// with shared final scales 797/797; second cross at its consumer 699/699,
+// with shared final scales 825/825. Original projection graph restored;
+// frame 0x58/0x60 and shape/basis/wave homes remain.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -464,6 +468,10 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Round 385: Final vertex extent/endpoint flags/both 618/622/626; native opacity alone/with
 // extent/flags/both 624/625/630/628; consistent next handle 634. All restored; frame/carrier, endpoint
 // placement and color/vector homes remain.
+// Round 227: Geometry point producers: camera plus scaled-add/minus setter/both
+// 615/615/615; planar setters alone/with plus/with minus/with both
+// 615/615/615/615; all with paired displacement values 630.
+// Original point producers restored; definition/output carriers and color/vector homes remain.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

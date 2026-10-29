@@ -467,6 +467,15 @@ real function_30bf0(vector3f *vector);
 // Round 166: existing complete vector assignment for delta/motion/both/projected
 // 164/154/166/152; projected with delta/motion/both, then all plus plane normal
 // 164/154/165/293. Original component producers restored.
+// Round 224: Live actor/handle/occupant and actor-handle/actor-occupant/handle-occupant/all/all-forward
+// 311/146/218/324/328/218/322/363; live-handle count/index short-word/short-long/long-word/long-long
+// 229/185/232/185. Six-point 146 rejected below margin; original receivers and signed traversal restored.
+// Round 228: Immutable range/distance/scaled-range producers, all seven combinations,
+// and all three with the seat workspace at entry 152 each. Original mutable declarations
+// and seat lifetime restored; result/range homes and inverse SIMD groups remain.
+// DH round 230: Live handles with amount/plane/both/vectors/all projection declarations at entry
+// 146 each; fallback thresholds before facing 238; direct facing outputs 245; conditional final result 228.
+// Six-point forms rejected; original body restored. Result/range/projection homes and SIMD groups remain.
 // @retail 0x263810
 short function_263810(point3f const *origin, long actor_index, point3f const *point, point3f const *endpoint, char posture, short mode, bool use_facing, bool *out_of_range)
 {
@@ -1642,6 +1651,7 @@ real function_2683f0(long actor_index, long node_index, short type)
 }
 
 // score 564 (was 564): the prop walk now uses the file's prop iterator (retail's unrotated walk with
+// the prop walk now uses the file's prop iterator (retail's unrotated walk with
 // the cursor at 0x3c and the current index at 0x38) and reads the actor index from its slot; the
 // frame is 0x84 against 0x80 since the visible flag became a stack byte, and the result/level slots,
 // the forward transform (retail if/else straight from the unit) and the scoring block differ.
@@ -1711,10 +1721,17 @@ real function_2683f0(long actor_index, long node_index, short type)
 // wide level 647, live iterator index 560, reversed+live 559, reversed+wide 646,
 // wide+live 647, all 646, all with early constants 655. Early constants alone/reversed
 // 568/568. Best five-point gain is below the gate; original body and parameter access restored.
+// Round 228: Independent first-search table ordinal, NONE/bounded induction, long/short
+// result and conditional/guarded pointer selection 552/549/552/548/536/538/555/551.
+// Guarded long ordinal with ordinary actor input also 536, plain confirmed at retail
+// 2880 bytes; retained without the parameter-address alias. First frame remains 0x84/0x80,
+// selection/iterator homes, forward transform and scoring allocation still differ.
+// DH round 230: On the independent-ordinal graph, long established/visible/retain/pair-established-visible/
+// pair-established-retain/pair-visible-retain/all predicates 577/579/550/583/567/579/603;
+// all with reversed selection declarations 604. Restored; frame 0x84/0x80 and native result homes remain.
 // @retail 0x266640
 void function_266640(long actor_index)
 {
-	long const *actor_reference = &actor_index;
 	s_actor_view *actor = actor_get(actor_index);
 	long best_node = NONE, strongest_node = NONE;
 	byte *data = (byte *)actor;
@@ -1750,7 +1767,7 @@ void function_266640(long actor_index)
 				if (prop_get(node->prop_index)->unknown23)
 				{
 					function_2672e0(view, (s_prop_node_view *)node);
-					function_267700(*actor_reference, node, prop, view);
+					function_267700(actor_index, node, prop, view);
 					if (node->unknown27 >= 1) ++*(char *)(data + 0x325);
 					++*(char *)(data + 0x324);
 				}
@@ -1780,10 +1797,10 @@ void function_266640(long actor_index)
 	}
 	*(short *)(data + 0x328) = best_level;
 	*(long *)(data + 0x32c) = best_node;
-	if (strongest_node != *(long *)(data + 0x338)) function_267770(strongest_node, *actor_reference);
-	function_266540(*actor_reference);
+	if (strongest_node != *(long *)(data + 0x338)) function_267770(strongest_node, actor_index);
+	function_266540(actor_index);
 	*(bool *)(data + 0x340) = false;
-	function_2662f0(*actor_reference);
+	function_2662f0(actor_index);
 	if (*(bool *)(data + 0x30c) && *(short *)(data + 0x310) >= 0 &&
 		*(short *)(data + 0x310) < 2 && actor->unknown086 < 8)
 	{
@@ -1802,10 +1819,10 @@ void function_266640(long actor_index)
 			if (elapsed == first)
 			{
 				if (player->player_index != NONE)
-					function_1fb7e0(0xa8, *actor_reference, NULL, *(long *)(g_4e8c24->data + (g_4f55cc[*(short *)(data + 0x310)].player_index & 0xffff) * 0x21c + 0x2c), NONE);
+					function_1fb7e0(0xa8, actor_index, NULL, *(long *)(g_4e8c24->data + (g_4f55cc[*(short *)(data + 0x310)].player_index & 0xffff) * 0x21c + 0x2c), NONE);
 			}
 			else if (elapsed == second && player->player_index != NONE)
-				function_1fb7e0(0xa9, *actor_reference, NULL, *(long *)(g_4e8c24->data + (g_4f55cc[*(short *)(data + 0x310)].player_index & 0xffff) * 0x21c + 0x2c), NONE);
+				function_1fb7e0(0xa9, actor_index, NULL, *(long *)(g_4e8c24->data + (g_4f55cc[*(short *)(data + 0x310)].player_index & 0xffff) * 0x21c + 0x2c), NONE);
 		}
 		else *(short *)(data + 0x30e) = 0;
 	}
@@ -1833,9 +1850,11 @@ void function_266640(long actor_index)
 	players.datum_index = NONE;
 	while (data_datum_iterator_next(&players))
 	{
+		long player_table_index = NONE;
+		for (long p = 0; p < 2; ++p)
+			if (g_4f55cc[p].player_index == players.datum_index) { player_table_index = p; break; }
 		s_ai_player *player = NULL;
-		for (long p = 0; p < 2; p++)
-			if (g_4f55cc[p].player_index == players.datum_index) { player = &g_4f55cc[p]; break; }
+		if (player_table_index != NONE) player = &g_4f55cc[player_table_index];
 		short player_slot = NONE;
 		for (long i = 0; i < 2; i++)
 			if (g_4f55cc[i].player_index == players.datum_index) { player_slot = (short)i; break; }
@@ -1869,7 +1888,7 @@ void function_266640(long actor_index)
 				bool retain = true;
 				if (!(distance > 0.0f)) continue;
 				bool visible = true;
-				long reference = function_25d810(unit_index, *actor_reference, false);
+				long reference = function_25d810(unit_index, actor_index, false);
 				vector3f velocity = unit->velocity;
 				vector3f relative;
 				relative.i = unit->velocity.i - vehicle->velocity.i;

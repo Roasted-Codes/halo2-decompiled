@@ -236,6 +236,10 @@ void function_14bac0()
 // Existing in-place vector sum with shared displacement/live ancestry headers/both 230 each;
 // sum alone 230; all four with the native recipient call 259 each. Original geometry,
 // both iterators and includes restored; frame 0x44/0x3c and readiness homes remain.
+// Round 227: Existing final reset record-inline/datum-inline/called/step producers
+// 268/268/306/290; with native recipient iterator
+// 270/270/328/296. Original final scan and both request traversals restored;
+// frame 0x44/0x3c, point/recipient sharing and readiness homes remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

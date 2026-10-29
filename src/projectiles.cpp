@@ -977,6 +977,9 @@ real function_30bf0(vector3f *v);
 // Round 173: existing native gravity field 244; whole origin/target/both input points
 // 298/299/327; those with complete shared delta 298/299/327; both with entry velocity
 // 327. Original inputs, gravity observation, float trees and pointer contracts restored.
+// Round 226: separate displacement/gravity admission results and complete horizontal products,
+// seven subsets 282/283/244/298/282/283/298; combined admission on the full graph 298.
+// Original body and pointer contract restored; frame 0x28/0x30 and rounded-root scheduling remain.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1177,6 +1180,9 @@ extern vector3f *g_4687ac;
 // same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
 // Round 173: native position/ignore/radius fields with external object/tag pointer or reference
 // receivers, mutable or read-only, all eight combinations 163. Original layout and body restored.
+// Round 226: positive/negative endpoint names, reversed declarations and full displacement roles 163/163/163;
+// with bounded direct ray 165, live radius 181, both 173; actual call results 172, all together 179.
+// Original body restored; frame 0x48/0x34 and tag/query ownership remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1461,6 +1467,9 @@ PRIVATE inline long projectile_object_root(long object_index)
 // root expansion 332 each; consistently cached tag on those four graphs 360 each.
 // Four earlier slot-observation explorations score 484 and are excluded for overlap risk.
 // Original input accesses, receiver graph, tag observations and root declaration restored.
+// Round 226: native object-header/tag-instance entry observations and shared speed publication,
+// seven subsets 484/383/383/358/447/411/339; full graph with native tag reference 339.
+// Original body restored; slot/input allocation and speed-update expansion remain.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
