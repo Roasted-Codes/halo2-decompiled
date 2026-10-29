@@ -197,19 +197,10 @@ long function_1bc5d0(long actor_index, long ignore_index)
 
 /* whether the clump's vehicle (+0x26c) still has seats free that the actor
    cannot take while none of those it wants is taken */
-// score 2 (was 2): the counter is stored before the seat array is addressed
-// here, retail
-// addresses the array first and stores the counter after it.
-// This round: seat-list helper with union/direct count 11/11; separate
-// remaining post/pre-decrement 10/10; count-output snapshot/reread 2/2;
-// split/guard count assignment 2/2.
-// Complete seat snapshot with bool/byte/short/long wanted 45/45/78/80;
-// two-use object/seat inputs with those widths 9/9/66/68.
-// Counter-store and cursor-address scheduling remain.
 // @retail 0x1bc6d0
 short __stdcall function_1bc6d0(long actor_index)
 {
-	long result = 0;
+	short result = 0;
 	s_actor_view *actor = actor_get(actor_index);
 
 	if (actor->unknown07c == NONE)
@@ -218,44 +209,38 @@ short __stdcall function_1bc6d0(long actor_index)
 	if (element_502420_get(actor->unknown07c)->member_count > 1)
 	{
 		s_object_seat seats[0x40];
-		struct s_1bc6d1 { union { short field_0; long field_c; }; long field_4; long field_8; } local_1;
-		local_1.field_8 = 0;
-		local_1.field_4 = 0;
-		local_1.field_c = 0;
-
-		function_c8a40(actor->unknown26c, seats, &local_1.field_0, 0x40);
-		s_object_seat *seat = seats;
-		short count = local_1.field_0;
-		if (count > 0)
+		short occupied = 0;
+		short refused = 0;
+		short seat_count;
 		{
-			local_1.field_c = (word)count;
-			do
-			{
+			short seats_listed = 0;
 
-				s_unit_seat_definition *local_0 = seat->definition;
-				if (!TEST_FIELD_BIT(local_0->flags.bit11))
-				{
-					bool wanted = TEST_FIELD_BIT(local_0->flags.bit3);
-
-					if (function_c8f60(seat->object_index, seat->seat_index) != NONE)
-					{
-						if (wanted)
-							local_1.field_8++;
-					}
-					else if (!function_1b8d80(actor_index, seat->object_index, seat->seat_index, false) && wanted)
-					{
-						local_1.field_4++;
-					}
-				}
-				seat++;
-				local_1.field_c--;
-			}
-			while (local_1.field_c != 0);
-			if ((short)local_1.field_8 == 0 && (short)local_1.field_4 > 0)
-				result = 3;
+			function_c8a40(actor->unknown26c, seats, &seats_listed, 0x40);
+			seat_count = seats_listed;
 		}
+		for (short i = 0; i < seat_count; i++)
+		{
+			s_unit_seat_definition *definition = seats[i].definition;
+
+			if (!TEST_FIELD_BIT(definition->flags.bit11))
+			{
+				bool wanted = TEST_FIELD_BIT(definition->flags.bit3);
+
+				if (function_c8f60(seats[i].object_index, seats[i].seat_index) != NONE)
+				{
+					if (wanted)
+						occupied++;
+				}
+				else if (!function_1b8d80(actor_index, seats[i].object_index, seats[i].seat_index, false) && wanted)
+				{
+					refused++;
+				}
+			}
+		}
+		if (occupied == 0 && refused > 0)
+			result = 3;
 	}
-	return (short)result;
+	return result;
 }
 // @retail 0x1bc810
 bool __stdcall function_1bc810(long actor_index, s_slot *slot)
@@ -344,11 +329,16 @@ real function_1f8940(long actor_index);
 real function_1e3920(long actor_index);
 
 // score 46 (was 46): aligned 0x764 frame agrees; actor-index and search-result carriers differ after scratch allocation.
+// Retail reloads the actor index into EBX for the search and keeps the result in EAX until the success
+// branch (then ESI); ours reloads the index into EDX and copies the result to EBX at once.
 // Earlier result-first 53; output/reference and failure-cleanup forms did not close the carrier gap.
 // Per-use actor receiver with nested failure-first and output-home names 117/117; early admission 140/140;
 // success-first 116/116; success-first/early admission 138/138. All forms grow to 368 or 372 bytes.
 // Typed request reference fields 46; complete request Boolean 89; named movement kind 46;
 // typed fields/kind 46; Boolean with fields/kind/both 89/89/89; aggregate zero with fields/Boolean 99.
+// Round 110: selection compared inside the else-if 46; reference declared before the scratch call 46;
+// success branch first 46; flag store before the result 46; out locals swapped 46; the reference
+// compared as a long value 46; the search part as an inline helper 223 (its callee inlined).
 // @retail 0x1bcab0
 bool __stdcall function_1bcab0(long actor_index, s_slot *slot)
 {
