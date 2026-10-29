@@ -1423,8 +1423,9 @@ bool function_21c190(s_type_5ef569 *sound, s_type_06b94f *track, long sound_inde
 }
 
 long function_125f70(long definition_index, s_looping_detail_request *request, long *reason);
+// score 457 (was 501): frame 0x124 versus 0x128; definition, index and ring homes still differ.
 
-// score 501 (was 501): frame 0x128 now matches with the stop helper out of line;
+// Earlier: frame 0x128 matched with the stop helper out of line;
 // index homes, definition register and ring traversal still differ.
 // Separate noinline declaration 501; wide selection full 502 (reduced 315);
 // reduced control 429; indexed tracks 495; loop pool 427; ring pool 429; all pools 427;
@@ -1436,14 +1437,18 @@ long function_125f70(long definition_index, s_looping_detail_request *request, l
 // Round 185: Outer/track index, range arrays/mask and ring/seed/count role-name groups, seven
 // subsets and alternate complete lexical order: reduced 461 each. Original names, executable body,
 // existing call boundaries and all field observations restored.
+// J185: direct range bounds full 469; with indexed tracks and consistent pools full 457 kept.
+// Reduced control 429; clamp/real table/both 429/451/451; bounds with clamp 384, with real table/both 494/494;
+// native outer iterator 514. On bounds: indexed/selection/both 373/476/469; pools/indexed+pool/selection+pool/all 369/358/474/460.
+// On 457, activity Boolean/previous byte/range-word subsets 476/481/398/494/527/492/527; long previous with both 536.
+// Width and producer tails restored; original calls, selected type and arithmetic grouping retained.
 // @retail 0x21b0e0
 void function_21b0e0(bool update)
 {
-	s_record_pool *data = LOOPING_SOUNDS;
-	long index = next_sound_datum(data, NONE);
+	long index = next_sound_datum(LOOPING_SOUNDS, NONE);
 	while (index != NONE)
 	{
-		s_type_5ef569 *sound = (s_type_5ef569 *)data->data + (index & 0xffff);
+		s_type_5ef569 *sound = (s_type_5ef569 *)LOOPING_SOUNDS->data + (index & 0xffff);
 		if (update && sound->update_phase != *((byte *)g_4e6380 + 0x7f) &&
 			(!(sound->flags & 2) || sound->playing_sound_count == 0))
 		{
@@ -1452,9 +1457,9 @@ void function_21b0e0(bool update)
 		else
 		{
 			looping_sound_definition *definition = (looping_sound_definition *)g_4e3b44[sound->definition_index & 0xffff].bytes;
-			s_type_06b94f *track = (s_type_06b94f *)sound->track_storage;
-			for (long track_index = 0; track_index < definition->track_count; ++track_index, ++track)
+			for (long track_index = 0; track_index < definition->track_count; ++track_index)
 			{
+				s_type_06b94f *track = (s_type_06b94f *)sound->track_storage + track_index;
 				looping_sound_track_definition *track_definition = &definition->tracks[track_index];
 				track->completed_count = 0;
 				if (sound->state == 2)
@@ -1494,16 +1499,14 @@ void function_21b0e0(bool update)
 						dword active_mask = 0;
 						s_track_sound_iterator iterator;
 						long current;
-						s_record_pool *playing_sounds = g_4e637c;
 						track_sound_iterator_new(&iterator, track->sound_index);
 						while ((current = track_sound_iterator_next(&iterator)) != NONE)
 						{
-							s_looping_track_sound *entry = track_sound_get(playing_sounds, current);
+							s_looping_track_sound *entry = track_sound_get(g_4e637c, current);
 							if (entry->definition_index == definition_index && entry->state == 2)
 								sounds[entry->pitch_range_index] = current;
 						}
-						long pitch_range_count = playback->pitch_range_count;
-						for (long i = 0; i < pitch_range_count; ++i)
+						for (long i = 0; i < playback->pitch_range_count; ++i)
 						{
 							s_permutation_set *set = &g_51ebd4->sets[playback->pitch_range_base + i];
 							s_looping_pitch_bounds *bounds = &((s_looping_pitch_tables *)g_51ebd4)->bounds[*(short *)((byte *)set + 2)];
@@ -1513,8 +1516,7 @@ void function_21b0e0(bool update)
 							if (clamped == pitch)
 								active_mask |= 1 << i;
 						}
-						pitch_range_count = playback->pitch_range_count;
-						for (long i = 0; i < pitch_range_count; ++i)
+						for (long i = 0; i < playback->pitch_range_count; ++i)
 						{
 							dword active = active_mask & (1 << i);
 							if (!active && sounds[i] != NONE)
@@ -1581,7 +1583,6 @@ void function_21b0e0(bool update)
 		}
 		long start = index == NONE ? 0 : (index & 0xffff) + 1;
 		index = data_datum_index(LOOPING_SOUNDS, data_next_absolute_index_inlined(LOOPING_SOUNDS, start));
-		data = LOOPING_SOUNDS;
 	}
 }
 
@@ -1754,8 +1755,9 @@ void function_12a1b0(short voice_index, s_looping_track_sound *sound, s_looping_
 void function_21f8a0(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects);
 void __stdcall function_21f720(s_looping_impulse_parameters const *parameters);
 void function_21fa80(long channel_index, s_looping_channel_properties const *properties, s_looping_effect_playback const *effects, bool force);
+// score 414 (was 447): frame 0x4b4 versus 0x4bc; initial scalar homes and class-query expansion remain.
 
-// score 447 (was 532): frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
+// Earlier: frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
 // frame 0x4b4 versus 0x4bc, entry snapshots and the class lookup expansion still differ.
 // Full-width permutation selection keeps its values; both index widths 529 (three-point tail dropped),
 // chunk width alone 560, state width 550, frame names/property declaration 550; existing next-chunk
@@ -1771,6 +1773,10 @@ void function_21fa80(long channel_index, s_looping_channel_properties const *pro
 // Round 185: Primary-track truth byte/signed-byte/short/long 532/532/540/544; with complete native
 // modifier copy 597/597/609/611. Original Boolean predicate, modifier receiver, scalar observations,
 // helpers and complete body restored.
+// J185: native long old synchronization count 414 fast/plain kept; branch permutation/seed/both 447/447/447;
+// each with long count 414, all with short count 467. On 414, short selection/wide chunk/both 481/457/490;
+// direct controller observations alone/with selection/with chunk/with both 663/680/663/691.
+// The existing count snapshot remains before decrement; all extra producer, receiver and width forms restored.
 // @retail 0x21c400
 void function_21c400(short voice_index, real gain, s_looping_channel_spatialization const *spatialization)
 {
@@ -1820,7 +1826,7 @@ void function_21c400(short voice_index, real gain, s_looping_channel_spatializat
 		sound_voice_queue_chunk(voice_index, (s_sound_permutation const *)permutation, playing->current_chunk_index);
 		if (definition->flags & 0x20)
 		{
-			char synch_count = NONE;
+			long synch_count = NONE;
 			if (controller->definition_index != NONE)
 			{
 				synch_count = controller->synch_count;
@@ -1936,8 +1942,9 @@ real function_192d70(real minimum, real maximum, real distance);
 point3f *function_142700(transform4x3f const *matrix, point3f const *point, point3f *out);
 real function_30bf0(vector3f *vector);
 void function_192ce0(point3f const *direction, real *gains, bool linear);
+// score 723 (was 748): frame 0x3c agrees; definition/identifier, result and alternate homes still differ.
 
-// score 748 (was 759): frame 0x3c and retail length recovered by the availability guard join;
+// Earlier: frame 0x3c and retail length recovered by the availability guard join;
 // definition/identifier carriers and flag/result lifetimes still differ.
 // The fixed four-entry energy traversal is rolled; both gain loops rolled 795, listener loop alone 798,
 // entry-result region 788, full result/single exit 792; direct impulse fields/shared setter/field setter
@@ -1947,10 +1954,13 @@ void function_192ce0(point3f const *direction, real *gains, bool linear);
 // join with both cursors 781. On the availability join: creation arms 773, derived key
 // 763, playback cursor 771, creation/key 772. Availability-only join kept at plain 748;
 // the five-point playback-only gain is below the retention gate.
-// frame 0x38 versus 0x3c, definition/identifier carriers, later flag and result lifetimes differ.
+// Earlier: frame 0x38 versus 0x3c, definition/identifier carriers, later flag and result lifetimes differed.
 // Round 398: full-width result/combine/created storage, seven subsets
 // 776/775/775/772/775/774/792; all three as bytes 777. Complete original result
 // producers, widths, observations, loop bodies and exits restored.
+// J185: per-track signed byte/short/long/dword 748/723/763/763; corresponding outer+track widths 748/756/773/773.
+// Signed short per-track truth kept at full 723. On it, word result/combine/created subsets 773/768/737/769/738/728/770;
+// complete word truth carriers 778. Original result/combine/created/outer widths, all producers, calls and loops restored.
 // @retail 0x21a250
 bool function_21a250(long definition_index, dword sound_flags, long identifier, long controller_definition_index,
 	s_type_99c531 *source, long state, dword flags, real fade_duration)
@@ -2041,7 +2051,7 @@ bool function_21a250(long definition_index, dword sound_flags, long identifier, 
 			dword *seed = &g_4e7408->seed;
 			if (definition->flags & 0x30)
 				seed = &track->field_8_4;
-			bool track_alternate = alternate;
+			short track_alternate = alternate;
 			if (track_definition->alternate_start_sound_index == NONE && track_definition->alternate_loop_sound_index == NONE &&
 				track_definition->alternate_end_sound_index == NONE && track_definition->alternate_transition_sound_index == NONE &&
 				!(track_definition->flags & 0x14))
