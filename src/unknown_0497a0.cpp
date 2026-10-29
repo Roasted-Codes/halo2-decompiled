@@ -96,6 +96,16 @@
 // Round 385: Current 0x58-frame basis/wave-vector/wave-scalar homes, all seven subsets, and all with
 // the reciprocal home 581 each. Original names and complete body restored; frame 0x58/0x60,
 // shape/basis homes and thirteen excess bytes remain.
+// Round 227: Complete projected add-scaled values in existing/separate cross outputs 721/721;
+// with shared final scales 797/797; second cross at its consumer 699/699,
+// with shared final scales 825/825. Original projection graph restored;
+// frame 0x58/0x60 and shape/basis/wave homes remain.
+// Round 177: Existing vector setters for source-zero/source-other/both/depth/zero+depth/
+// other+depth/all 580/700/700/702/700/700/700; all plus native point setters 740.
+// One-point gain dropped; original body restored; frame 0x58 versus 0x60 remains.
+// Round 180: Separate second displacement, entry projection cross outputs and entry
+// uninitialized primary shape, masks 1-7, then all with entry special cross output:
+// 656/581/656/581/656/581/656/656. Original executable body restored.
 // @retail 0x497a0
 void function_0497a0(
 	s_view_source *source,
@@ -441,8 +451,8 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // position copied from first 629; byte state flags 615; true result and one exit 647.
 // Paired displacement loop 615; side scaling loop 615; normal scaling loops 615; RGB tint loop 615; planar geometry cases first 615.
 // Width-path result 626; scale override 622; unsigned point handle 615; final endpoint base 634; two-use packed pixel 615.
-// Earlier score 615 (was 615): round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
-// Earlier score 615 (was 615): round 108: definition/output carriers, endpoint placement and color/vector homes remain.
+// Earlier form: round 106: Frame 0xac agrees; definition/vertex carriers, endpoint placement and color/vector homes remain. Indexed vertex output 697; clamp branches 622; color pointer walks 615; geometry case four first 626; scales before coordinates 615.
+// Earlier form: round 108: definition/output carriers, endpoint placement and color/vector homes remain.
 // Persistent workspaces 620; fused color-component loop 643; shared geometry neighbor 620;
 // half-width before tint 620; valid-state-first arms 616.
 // Current position field pointer with read-only point/state/source contracts,
@@ -464,6 +474,16 @@ PRIVATE __forceinline dword ribbon_pixel(color4f const *color)
 // Round 385: Final vertex extent/endpoint flags/both 618/622/626; native opacity alone/with
 // extent/flags/both 624/625/630/628; consistent next handle 634. All restored; frame/carrier, endpoint
 // placement and color/vector homes remain.
+// Round 227: Geometry point producers: camera plus scaled-add/minus setter/both
+// 615/615/615; planar setters alone/with plus/with minus/with both
+// 615/615/615/615; all with paired displacement values 630.
+// Original point producers restored; definition/output carriers and color/vector homes remain.
+// Round 177: Existing x87 conversion with C++ integer expression/accumulator/parallel terms/
+// unsigned channels/channel declaration order/late packed result/combined forms 624 each;
+// existing complete packer call 728. All restored; definition/output carriers and endpoint layout remain.
+// Round 180: First/transition/both short channel indices, first/transition/both word indices,
+// both byte and both dword indices: 638/657/739/638/657/739/739/615. Original executable body
+// restored.
 // @retail 0x42cf0
 bool __stdcall function_42cf0(s_ribbon_vertex *vertices, long unknown, s_ribbon_input *input)
 {

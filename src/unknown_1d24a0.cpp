@@ -185,6 +185,9 @@ PRIVATE __forceinline real function_1d24a7(point3f const *arg_0, point3f const *
 // Round 161: Native external option dword/word/byte units 1007/965/1006; read-only selected record
 // with those units 1007/965/1006; native twelve-byte descriptor 920; descriptor plus dword options
 // 1007. All declarations, flag observations and original body restored.
+// Round 176: Library source captures in scale/add-subtract/both/planar/scale-planar/
+// add-subtract-planar/all 1310/1130/1552/1072/1500/1341/1762; all with projected output copy 1796.
+// Original helpers, short scale loop, response sharing and coefficient pair restored.
 // Round 33: Ordinary inline scale/add/subtract subsets, then all with planar producer: 920/920/920/920/920/920/920/920. Original forced producers, body and response sharing restored.
 // Round 388: Shared complete linear/angular change accumulator 1007; with intermediate
 // change pairs 37-50/37-58/50-58 or all linear changes 1003/1008/1008/1027;

@@ -1498,6 +1498,16 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 34 (fast control 234, full 232): independent primary/idle pointer or reference
 // receivers, all four combinations 234 each; those four with first-weapon fields
 // observed directly 578 each. Original shared channel lifetime and body restored.
+// Round 389 (fast control 234, full 232): late magnitude double 428; reused native idle tick
+// 290; both 427; both named animation-period summands 234. Native double period/duration
+// alone, with magnitude, with idle tick and with both 390/415/397/414 (exact-only).
+// Original scalar types, arithmetic and calls restored; frame 0x28 and look homes remain.
+// DL167: Plain look-history difference traversal long/short/dword/word 599/600/599/600;
+// complete per-axis difference/default/history publication 501 each. Existing mode-helper inline
+// and inline with separate noinline declaration 234 each (fast control 234). All restored.
+// Round 249: native user active-bit stores with original/dispatch/final/both weapon-bit
+// access 234 each; complete native user observations with those four forms 470 each.
+// Original records, flag snapshot, stores and every smoothing input restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
@@ -1907,6 +1917,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // Round 161: Coordinated definition/header inline query/setter/sampler/query-setter/query-
 // sampler/setter-sampler/all-three/aiming sampler: 411 each (unchanged reduced control 411; full
 // 410). Every specification restored.
+// Round 258: Complete final offset aggregate/const/assignment/library snapshots, each with
+// scalar/shared adjustment subtraction, 571/575/571/575/571/575/571/575 against reduced 411.
+// Original field observations, helpers and body restored; full score remains 410.
 // Round 386: real/double ammunition-frame storage 439/462; named last-frame
 // conditional with long/real/double result 411/417/438; complete result arms
 // 411/423/442 (fast control 411, full 410). Original integer frame and body restored.
@@ -1914,6 +1927,9 @@ static __forceinline void first_person_channel_sample_sway_16760c(c_animation_ch
 // 411/411; count-output-before-value 413; weight-before-value 410; value-first 411;
 // value-weight-before-channel 411; count-first 410; frames-before-value 415
 // (fast control 411; full 410). Original helper contract and all calls restored.
+// Round 249: direct aiming-completion result bool/byte/short/long 441/441/471/470;
+// complete complementary result 441/441/470/469. Original default and success
+// assignment, every sample, native frame and all helper inputs restored.
 // @retail 0x16760c
 void __stdcall function_16760c(long user_index, long field_x11c898)
 {
