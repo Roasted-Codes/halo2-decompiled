@@ -1098,6 +1098,9 @@ struct s_game_engine_globals_connections_view
 // time terminator before name parsing, all seven subsets 175/232/228/231/262/173/176;
 // complete form with direct connection input 176. Calibrated widget/query roots;
 // original private initialization phases, all copies and executable body restored.
+// Round 237: Actual time/score/both byte flag fields, width declaration-at-calculation alone and
+// with each field combination, then all with immutable widths: eight calibrated scores 170.
+// Original field domains and declaration lifetimes restored.
 // @retail 0x1603f0
 void game_engine_player_row_build(short const *position, real alpha, long player_index, word const *name, long place,
 	long score, long seconds, bool hide_connection, bool show_icon, bool hide_place, color3f const *color, bool dim,

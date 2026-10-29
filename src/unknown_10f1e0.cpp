@@ -1651,6 +1651,8 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 }
 
 // score 790 (was 805): frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
+// frame 0xcc versus 0xd4 and first angle/overlay inline allocation remain.
+// frame 0xcc versus 0xd4 and first angle expansion remain. At entry retail also
 // frame 0xcc versus 0xd4 and first angle expansion remain.
 // computes the graph of the definition's +0x38 tag (+4) into a frame slot that is overwritten before any
 // read (about 30 bytes ours lacks); retail keeps `active` in a stack byte cleared by a conditional store,
@@ -1697,6 +1699,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // 805 each (all compile to (x + 1) * 0.5; retail multiplies first); overlay loop as a for 875 (3338
 // bytes: the first 0x11df30 is then inlined as in retail, 0x1cb490 still inlined in the loop);
 // `++i < 3` / short index 805/805; `active` declared at the top of the aiming block 805.
+// Round 237: Native real bound fields/array-reference/screen-reference 805/805/805; screen
+// value/native copy/typed copy/const copy 1003 each; native remote box fields 805. Original
+// fields, helper inputs and outputs restored.
 // Complementary activity across both aim stages, bool/byte/signed-byte/short at the
 // original declaration 850/850/850/824; constant entry initialization 850/850/850/836.
 // Original activity, input snapshots, helper boundaries and all smoothing values restored.

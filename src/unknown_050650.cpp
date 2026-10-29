@@ -874,7 +874,8 @@ real g_55e5bc = 0.17453292f;
 real g_55e5c8 = 0.17453292f;
 real g_55e5cc = 0.08726646f;
 
-// score 54 (was 54): the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
+// score 54 (was 54): frame 0x38 and entry homes agree; scaled-pitch schedule, later yaw homes and helper transport differ.
+// the 0x38 frame and initial bound homes agree; scaled-pitch scheduling and call registers differ.
 // Tried: shared pitch bound 204; upper if/else 205; both if/else 205; shared bound plus if/else 204;
 // both scaled angles named before the bound stores 55 (kept); upper limit first 205; both limits first 197;
 // limit-first clamps with dot3f 201; shared bound before/between the scaled angles 57/57; lower yaw store first 55;
@@ -887,6 +888,9 @@ real g_55e5cc = 0.08726646f;
 // projections 173/159/170; shared dot 62; projections plus dot/upper-first 170/168.
 // Shared dot with upper-first/later pitch 60/58; reverse dot alone/upper-first/later
 // pitch 58/56/54 (kept). Addition grouping and all marked call arguments are unchanged.
+// Round 236: scale-first products / scaled-angle names / branch-defined scale / products+branch /
+// products+names / names+branch / native copies / copies+branch 54/54/253/253/54/253/54/253; all
+// restored.
 // Round 162: final-local pitch clamps 207; paired raw angle carriers 56, with clamps 207;
 // existing paired-angle view 54, with clamps 207; byte result 51 (three-point gain, restored);
 // branch-produced result 249, with clamps 253. Scaled pitch and sampler registers still differ.

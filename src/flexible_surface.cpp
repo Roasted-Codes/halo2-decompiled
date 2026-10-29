@@ -435,6 +435,9 @@ static inline dword surface_random()
 // Round 381: RNG before time 199; oscillation before RNG 203; axis before/between trigs 168/168;
 // RNG-first/axis-between 199; oscillation-first/axis-first 203; rotation-scoped angle 201,
 // with shared final scale 201. Late angle reaches frame 0x20 but loses wind register; all restored.
+// Round 238: live direction inputs 209; complete output 199, with live inputs 188;
+// all three cosine products 188, with live inputs 183; sine/cosine role names 168/168;
+// separate trigonometric declarations with live inputs 209. Original snapshots and output order restored.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -578,6 +581,9 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // normal/binormal and tangent/uv 514; normal/uv and tangent/binormal 504;
 // triple normal/tangent/binormal 481, normal/tangent/uv 495, normal/binormal/uv 495;
 // all four 491; triple tangent/binormal/uv 487. All original scans restored.
+// Round 238: application inline/force-inline 485/485; format inline/force-inline 526/526;
+// both helpers inline or force-inline, all four combinations 528. Application-inline forms also
+// lose the 0x22a664 reduced control; all original helper declarations and calls restored.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {

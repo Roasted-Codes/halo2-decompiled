@@ -452,6 +452,8 @@ struct s_1f8a70_actor
 // with entry default 402/410/448/444; without the default and with literal failed
 // return 410/411/426/411. Default-free forms hoist only the pool pointer load
 // (first +5); data staging and result/route homes remain. All original code restored.
+// Round 239: direct three-route decision chains 210/201/120/102/021/012
+// 417/416/420/398/420/416; 210 with long route/returned unit output 423/414. All restored.
 // @retail 0x1f8a70
 bool __stdcall function_1f8a70(long actor_index, long unknown)
 {
