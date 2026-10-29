@@ -272,7 +272,7 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 	return true;
 }
 
-// score 15 (was 63): the unknown22a byte is tested in CL (retail AL), the seat
+// score 15 (was 15): the unknown22a byte is tested in CL (retail AL), the seat
 // count and the seat table swap ECX and EDX, and retail loads the unit for the
 // seat request before its stores. Unit read in each arm 75; flag local 17; seat
 // pointer local 11 (fixes the seat registers, flips the dot product's x term),
@@ -284,6 +284,9 @@ bool __stdcall function_1c10f0(long actor_index, s_slot *slot)
 // Round 162: native payload 115, with found-seat result 115; whole-slot found-seat result 65;
 // unsigned-word status with payload/whole-slot 115/65; long found-seat result 114/100;
 // payload/search with direct unit observations 91. Original body and data types restored.
+// Round 173: complete request-unit capture 113; shared native seat type 15; both 113;
+// chained false request flags 15, with capture/shared seat/both 112/15/112; all three
+// with readonly tag 112. Original restored; branch-byte and seat/request registers remain.
 // @retail 0x1c1160
 short __stdcall function_1c1160(long actor_index, s_slot *slot, bool active)
 {
