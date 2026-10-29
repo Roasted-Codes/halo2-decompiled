@@ -395,6 +395,9 @@ PRIVATE inline __int64 bink_read_tsc(void)
 // Round 217: initialized texture size/data/both at native phase 246/246/249;
 // the same private output defaults at entry 284/284/295; both outputs in reverse
 // declaration order at native/entry phase 249/295. Original body restored.
+// Round 269: Successful allocation/movie/texture phase nesting, seven subsets,
+// and all with post-protection acceptance nested: 245 each at 1104 bytes.
+// Original early cleanup returns, helpers and full body restored; frame stays 0x3c.
 // @retail 0x156090
 void function_156090(char const *name, dword flags)
 {

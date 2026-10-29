@@ -224,6 +224,9 @@ void function_8dd70(void);
 // trim/interface providers, byte/bool, char/bool, bool/byte, bool/char,
 // byte/byte, char/char, byte/char and char/byte: 221 each.
 // Every declaration and both provider return contracts restored.
+// Round 269: Native session-admission chain split at all seven call-boundary
+// subsets, then all with separate manager/interface gates: 221 each. Original
+// complete chain, short readiness, observations and entire body restored.
 // @retail 0x8d9f0
 void function_8d9f0(void)
 {
