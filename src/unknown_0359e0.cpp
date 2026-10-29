@@ -73,10 +73,8 @@ PRIVATE inline long swizzle_log2(dword value)
 // @retail 0x358d0
 void function_358d0(short width, short x, short y, short height, dword *out)
 {
-	/* retail takes the second coordinate in dx and the third in cx, so the
-	   second parameter feeds the first output and the third the second */
-	long x_value = x;
 	long y_value = y;
+	long x_value = x;
 	short width_bits = (short)swizzle_log2(width);
 	short height_bits = (short)swizzle_log2(height);
 	short common_bits = width_bits > height_bits ? height_bits : width_bits;
