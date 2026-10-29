@@ -867,6 +867,12 @@ real function_296600(long actor_index, long prop_ref_index);
 // actor_snapshot/retained_actor/actor_saved/saved_owner identities, each with
 // original/actor_squad receiver identity, 372 each. All restored; full frame 0x20
 // agrees, actor ESI/EBX and saved/squad/flag homes remain.
+// DL167 (fast control 356, full 331): repeated flag25/flag23/parent observations,
+// entry masks 1..7 348/349/367/353/354/369/359; all byte 367. First-mode flag25,
+// flag25+parent, flag23, both flags and byte flag25 350/355/351/337/357;
+// both flags+parent 333; byte pair/+parent 358/359. Shared mode 371/366/368;
+// shared object getters ordinary/ancestry/all 333 each. Full flag25/pair/pair+parent
+// 354/350/351 versus 331; all restored. Actor ESI/EBX and saved/squad homes remain.
 // @retail 0x264b50
 void __stdcall function_264b50(long actor_index, long prop_ref_index, s_2641c0 *sample, s_2640c0 *motion)
 {

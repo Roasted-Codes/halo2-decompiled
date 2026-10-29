@@ -1088,6 +1088,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 30: Squad parameter reference 320; unit re-observation 340; separate early failure 338;
 // uninitialized/late-scoped actor result 338 each; settings lookup noinline 320; unit re-observation
 // with a second guard or separate phases 340 each; cleanup indices first 320. Opening body restored.
+// DL167: Native unsigned character/squad/returned handle interfaces, seven nonempty
+// subsets, and all with the unsigned actor result: 320 each. Every declaration, original
+// handle domain and complete body restored; frame 0x118 and sentinel EDI/ESI remain.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {

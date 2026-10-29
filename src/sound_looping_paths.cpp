@@ -192,6 +192,9 @@ __forceinline long loop_path_start(s_record_pool *pool, long tag, real gain)
 // boundaries, all seven subsets and producer-count ending after snapshot: 886 each.
 // Round 224: shared inline iterator first/second/both 968/1007/1103; shared calling iterator
 // first/second/both 905/915/899; real iterator-step first/second 953/919. Original scans restored.
+// DL167: Existing-record lookup from completed long/dword/short/word search ordinal
+// 892/892/893/893; each with a repeated target-tag snapshot 893/893/906/906. All
+// original scans, result publication, fields and helpers restored (fast/full control 886).
 // @retail 0x18ae80
 void __stdcall function_18ae80(s_portal_path_bsp *bsp_data, long listener, point3f const *point,
 	long cluster, long override_tag, real elapsed)

@@ -1498,6 +1498,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 34 (fast control 234, full 232): independent primary/idle pointer or reference
 // receivers, all four combinations 234 each; those four with first-weapon fields
 // observed directly 578 each. Original shared channel lifetime and body restored.
+// DL167: Plain look-history difference traversal long/short/dword/word 599/600/599/600;
+// complete per-axis difference/default/history publication 501 each. Existing mode-helper inline
+// and inline with separate noinline declaration 234 each (fast control 234). All restored.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
