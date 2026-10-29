@@ -1133,6 +1133,8 @@ c_type_709360 s_graph_tag::animation_find(long mode, long weapon_class, long wea
 // (fast control 828). Small gains rejected; original initialization and body restored.
 // Round 392: Actual iterator output receivers in mode/class/type input slots, all three pairs and all,
 // then all with native iterator initialization: 982/1026/982/1023/1001/1023/1001/1024. Original parameter and output lifetimes restored.
+// Round 394: Native resolved-name output record, member/aggregate construction, guarded/entry
+// declaration and direct/record set key: 837/984/837/964/993/993/993/999. Grouped forms require a match; all restored.
 // @retail 0x1db170
 c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
@@ -1232,6 +1234,8 @@ c_type_709360 s_graph_tag::animation_get(long mode, long weapon_class, long weap
 // and original/early iterator/output-default lifetimes 1011/1009/1016/1016/1011/1011/1016/1016. All restored.
 // Round 392: Actual iterator output receivers in mode/class/type input slots, all three pairs and all,
 // then all with native iterator initialization: 982/1026/982/1023/1001/1023/1001/1024. Original parameter and output lifetimes restored.
+// Round 394: Native resolved-name output record, member/aggregate construction, guarded/entry
+// declaration and direct/record set key: 837/984/837/964/993/993/993/999. Grouped forms require a match; all restored.
 // @retail 0x1dbc80
 c_type_709360 s_graph_tag::overlay_get(long mode, long weapon_class, long weapon_type, long set, long *found_mode,
 	long *found_weapon_class, long *found_weapon_type)
