@@ -377,6 +377,9 @@ PRIVATE inline void carrier_body_angular_velocity_get(s_carrier_body const *body
 // 111); that plus the center through carrier_vector_from_havok 151 (object index
 // in eax as retail, entry index on the stack); with the entry pointer computed
 // first 153; the pointers together with the entry first 112.
+// Round 279: physics-array/count/both/index-list/array-list/count-list/all metadata
+// snapshots 247/135/247/169/247/171/247; all with existing center conversion 239.
+// Original search and center copy restored; entry registers and projection order remain.
 // @retail 0x109660
 void function_109660(long object_index, long entry_index)
 {

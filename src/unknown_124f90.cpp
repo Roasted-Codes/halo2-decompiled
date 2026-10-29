@@ -2658,7 +2658,7 @@ static inline short sound_voice_find_available_channel(char type)
 }
 
 /* assigns a free channel and, when needed, a shared driver voice */
-// score 96 (was 113): playback/channel roles recovered; frame 12 versus 8, status test and failure
+// score 96 (was 96): playback/channel roles recovered; frame 12 versus 8, status test and failure
 // placement remain.
 // Validity result 135; assigned result
 // 135; playback handle 113; const playback 113; long buffer index 117; entry status 113;
@@ -2674,6 +2674,9 @@ static inline short sound_voice_find_available_channel(char type)
 // 138; byte result with rereads 96.
 // Rereads with valid guard 141, plus long/success exit 131. Isolated byte/char/short/word result
 // 96/96/125/125; byte only kept, 437/430 bytes.
+// Round 279: byte result from completed paths with short/long channel and buffer
+// 148/154/144/150; driver result at channel selection with long buffer 130, completed-path too 148;
+// completed byte result with complemented status, short/promoted outputs 151/160. Original byte-result body restored.
 // @retail 0x1295e0
 bool __stdcall function_1295e0(short voice_index)
 {
@@ -3065,6 +3068,9 @@ long function_2193d0(s_animation_state *state, s_animation_ref *ref);
 // Loop-end search seed/explicit cases 86/86; first search result/both boundaries 86/86; existing tail
 // search/seed plus search 86/86; first/both salt producers 183/203. Original body restored; playback/clock and
 // native mode scheduling remain.
+// Round 279: flag admission separated from class-mode production, short/long mode,
+// switch/direct guard and repeated/shared class index: eight forms 153 each.
+// Original conditional mode and loop restored; playback/clock schedule still differs.
 // @retail 0x1282d0
 void function_1282d0(void)
 {
