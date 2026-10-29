@@ -310,6 +310,9 @@ void function_117510(long index)
 // byte 201/201, word 189/189, long 195/195; with uniform live endpoint fields
 // bool/byte/word/long 212/212/200/206. All restored; 0x1c frame, entry/link homes
 // and correction/pin-word scheduling remain.
+// Round 264: live record/definition/both/link/record-link/definition-link/all receivers
+// 309/232/379/147/309/254/377; definition acquired before record 149. All restored;
+// frame 0x1c, entry pool/record carriers and correction/pin scheduling remain.
 // @retail 0x117790
 void __stdcall function_117790(long index)
 {
@@ -434,7 +437,7 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 160 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// score 160 (was 160): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
 // Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
 // Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
@@ -452,6 +455,9 @@ static inline dword surface_random()
 // Round 32: shared initial RNG 160; shared table-index draws 160; both 160;
 // complete axis/direction CRT captures 168, with initial/table/both 160/160/160;
 // all with alternate shared RNG contract 160. Initial shared RNG retained, plain 160; frame 0x28 remains.
+// Round 264: all six lexical orders of the three rotation objects on the shared
+// cross/RNG graph 160 each; vector declarations at entry/after angle 160/160.
+// Original names and scopes restored; frame 0x28 and time/rotation staging remain.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -605,6 +611,9 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // 473/475; with uniform descriptor-base observations 498/482; native exit-owned
 // results 510/510, with descriptor observations 533/533. All original searches
 // and APIs restored; 0x44/0x2c frame and outer vertex API expansion remain.
+// Round 264: existing 4f/2f API ordinary-inline-noinline declaration pairs, all
+// eight non-original combinations 473 each. Original declarations and body restored;
+// frame 0x44/0x2c and selective outer vertex API expansion remain.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {
