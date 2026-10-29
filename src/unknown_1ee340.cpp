@@ -247,6 +247,11 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // Round 87: direction from the value setter 192 (same code); `long count = vertex_count;` for the loop
 // and the call 193 (retail's `push edx` and esi tail-loop temp, but a third exit block), declared
 // before the polygon 193; fraction as if/else 259; edges and cross in an inline triangle helper 192.
+// Round 72 (lane 8): retail passes the vertex count to 0x23a220 from the register its copy loop
+// loaded (`push edx`); ours reloads the word. `long count = vertex_count;` before the polygon 193
+// (push edx, a third exit), declared before the axis or at the bounded test 199/199 (1001 B, this
+// then in EDI); count local with copied start/end points 197 (1020 B); copied start/end points
+// alone 196.
 // @retail 0x1edf50
 void c_vertex_shape::ray_test(bool *hit, const s_shape_ray *ray, s_shape_ray_result *result)
 {
