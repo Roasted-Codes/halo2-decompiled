@@ -2456,6 +2456,8 @@ dword __cdecl function_131fc0(real alpha);
 // Round 253: bounded native pixel short/long/word/dword producers 427/410/427/448;
 // native pixel lifetime across bitmap guard 438/439/438/433. Original float dimensions,
 // full-stack marker, state calls and complete body restored.
+// Round 261: actual four-corner vertex table, byte/word/long/dword with long ordinal
+// 337/337/353/353; with short ordinal 339/339/343/343. Original unrolled draws restored.
 // @retail 0x2a8d0 standard
 void __stdcall function_2a8d0(long tag, long bitmap_index, real const *source,
     real const *destination, long arg_af5a49, color3f const *color,
@@ -3186,6 +3188,8 @@ PRIVATE __forceinline void set_filter_blending(bool additive)
 // Round 282: complete encoded output words, ternary/descending/result/ascending forms,
 // each with original/complete first-output word [1128,1131,1128,1131,1121,1121,1129,1130].
 // Original output helpers and complete body restored; capability/save roles remain.
+// Round 261: shared quantizer byte/word/dword results 985/1007/853; quantizer/output/both
+// formal orders 853 each; byte/word results with both orders 985/1007. Original helpers restored.
 // @retail 0x3a5c0
 bool __stdcall function_3a5c0(byte const *configuration, real low, real high, long mode,
     bool center, bool shift, bool clip, bool skip_state, real *depth_out)

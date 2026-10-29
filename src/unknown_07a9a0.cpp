@@ -1110,6 +1110,8 @@ static inline long ratings_allowed_imbalance(s_surface_description *variant)
 // Round 220: Native dword histogram with forced capacity/teams/both/imbalance/
 // capacity-imbalance/teams-imbalance/all switch selectors/all seven selectors
 // 863/844/863/844/863/844/863/863. Frame 0xb4 recovered; original table and selectors restored.
+// Round 261: explicit initial histogram memset with word/short/long/dword cells
+// 820/820/844/844; each with byte balance argument 871/871/870/870. Original clear and cells restored.
 // @retail 0x7e210
 bool function_7e210(c_class_58d20 *session, s_matchmaking_ratings *out)
 {

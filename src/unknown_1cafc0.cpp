@@ -584,6 +584,8 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // and rolled request expansions regress; original helper and status restored.
 // Round 170: Primary/alternate/both native resolved-input records, mutable then const, both library and
 // both aggregate copies 603/508/644/603/508/644/644/619. Original queries and input observations restored.
+// Round 261: grouping/leaf/both native graph-reference contracts 399 each; read-only
+// lookup entry alone/with each/both contracts 399 each; all with urgent while 399. All restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
