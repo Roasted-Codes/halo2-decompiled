@@ -1914,7 +1914,7 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 	return result;
 }
 
-// score 130 (was 130): Frame 0x40 versus 0x44, early color spill, cursor/query homes and zone-base scheduling remain.
+// score 128 (was 130): Frame 0x40 versus 0x44, early color spill, cursor/query homes and zone-base scheduling remain.
 // Earlier forms: frame 0x44 agrees; settings/color/query registers, cursor home and zone-base scheduling remain.
 // tried native slot scalar 159 (a one-use copy of the field; not kept without a match); cursor/request/transform names and late settings receiver 166 (fast control 166);
 // shared zone predicate 286; zone cases first 166; float consistency 166; immutable loop selectors 169 (fast).
@@ -1946,6 +1946,10 @@ static inline bool effect_location_in_zone_178c80(s_location const *location, po
 // Original zone producer and complete body restored; color/query frame remains 0x40 versus 0x44.
 // Round 198: register-only scale formal in five source positions 130 each; read-only descriptor/original scale/scale last/scale middle 130/130/130. All definitions, declarations and both calls restored.
 // Round 204: complete zone distance/products 133/133; forced zone expansion 130; signed-byte/native-long result 152/168; forced distance/products 133/133; long result plus distance 168. Whole original helper and body restored.
+// Round 151 (0x175a80 now takes retail's registers): inline color helper shared with 0x177040, colors as
+// its arguments 178 (frame 0x44 and early color loads, but the system keeps EDI, color B EBX, tinted spilled);
+// multiplied() as the call's argument 135; helper with colors first 185; inline member color update 185;
+// a loop-only definition copy 128; a cluster-array base local 128.
 // @retail 0x178c80
 void function_178c80(real scale, s_effect_datum *effect, s_particle_system_datum *particle_system, s_effect_particle_system_definition *definition, real unknown, bool field_b4)
 {
@@ -2575,7 +2579,13 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 	}
 }
 
-// score 38 (was 38): Frame 0x100 and length agree; incoming effect/up carrier, decal convention and light/sound setup remain.
+// score 30 (was 30): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
+// Frame 0x100 and extent agree; protected decal transfer, light argument scheduling and sound scratch carriers remain.
+// Earlier 30 (was 38): Frame 0x100, length and prologue agree; the decal call's register arguments (BLOCKED-BY
+// 0x17e670), the attached light call's register arguments (computed before its pushes, retail after) and the sound
+// arms' scratch registers remain. Round 85: `effect` declared before `up` gives retail's EAX up (38 -> 30, kept);
+// then velocity before location in the detached sound arm 47; light/sound node index in the argument list 30/30;
+// one inline node-index helper for three arms 415; sound record at the case scope 30.
 // Earlier measurements and forms:
 // Frame 0x100 and length agree; incoming up/effect carriers, projection call, light scheduling and sound publication remain.
 // frame 0x100 and length agree. Retail passes up in EAX (moved to EDI) and effect
@@ -2642,8 +2652,11 @@ void function_177f60(s_effect_datum *effect, dword a_scales, dword b_scales, dwo
 // native up CRT copy 38; uniform placement CRT copies 38. Owned up restores the incoming
 // EAX up pointer but adds entry copies; every executable form restored.
 // Round 204: native placement up/forward/both/all transfers 119/221/237/250; placement plus damage vectors/all damage/all sound/velocity 374/416/427/427; definition after caller 38. Original executable source restored.
+// Round 379: Sound point/velocity/both setters 60/57/72; location before point/compressor 36/34; location and velocity before point 36; early location with velocity/point setter 61/61. Original body restored.
+// DH round 218: sound point/tail/all CRT copies 30/30/30; sound case tag/native or point CRT 69/69;
+// writable/const sound aggregates 47/47; aggregate plus sound tag 70. Opening body restored.
 // @retail 0x17a8a0
-void function_17a8a0(s_effect_location_datum *location, bool detached, vector3f const *up, s_effect_datum *effect, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
+void function_17a8a0(s_effect_location_datum *location, bool detached, s_effect_datum *effect, vector3f const *up, s_effect_part *part, point3f const *point, vector3f const *forward, real scale)
 {
 	switch (part->base_group_tag)
 	{
@@ -2855,6 +2868,12 @@ static inline vector3f *effect_matrix_transform_normal_17a380(transform4x3f cons
 // All executable forms restored; sources and comparisons saved.
 // Round 198: shared native flag word/dword/byte/signed byte 147/147/152/152; shared-word masks 153; entry/part/location flag receiver 147/147/147. One-count forms rejected; complete body and real flag declaration restored.
 // Round 204: existing unscaled specialization 329; void normal output 148; both 329; native fallback/default/both transfers 193/283/218; range plus both/plus void 361/361. Original body, helper and all call tuples restored.
+// Round 85 (after 0x17a8a0 took up in EAX): retail's three dead byte stores to [esp+0x13] are `reversed` and two bool
+// flag locals (the flag0/flag1 tests); its radius is a range function inlined in x87 (bounds loaded upper first,
+// fraction finished before the span; our compiler folds the span into the fraction's product); the radius slot
+// follows reference weight (no declaration position or form moved it in a /FAs probe). Bool detached 156; an inline
+// one-expression range helper 130 (a one-caller helper); the existing 0x259d0 353; bool flag locals 83 (one-use);
+// both 132.
 // @retail 0x17a380
 void __stdcall function_17a380(s_effect_datum *effect)
 {
@@ -2925,7 +2944,7 @@ void __stdcall function_17a380(s_effect_datum *effect)
 				if (part->b_scales & 0x20)
 					scale = effect->scale_b * scale;
 				if (!TEST_FIELD_BIT(effect->flag10) || part->base_group_tag != 'obje')
-					function_17a8a0(location, detached, &up, effect, part, &point, &forward, scale);
+					function_17a8a0(location, detached, effect, &up, part, &point, &forward, scale);
 			}
 		}
 	}

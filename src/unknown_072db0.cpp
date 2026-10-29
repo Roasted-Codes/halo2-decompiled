@@ -1595,7 +1595,7 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
     return local_0;
 }
 #pragma optimize("", on)
-// score 737 (was 737): Frame 0xc0 agrees; first user/identity homes and protected request-builder inputs remain.
+// score 737 (was 737): Frame 0xc0 agrees; initial user/identity homes, logon dispatch and request/completion allocation remain.
 // Frame 0xc0 agrees; user/identity homes, completion cursors and request-builder argument registers remain.
 // Earlier: frame 0xc0 agrees; user/identity and request homes remain.
 // Frame 0xc0 agrees; user cursor, identity word and request homes remain.
@@ -1643,6 +1643,12 @@ static __forceinline s_player_slot_flags *function_74aa1(s_player_slot_flags *ar
 // admission byte with immutable identity, byte admission/team/both results 737 each.
 // Round 219: Initial user/value/slot uninitialized declarations at function scope, masks 1-7 and
 // all with role names: 737/737/737/737/737/737/737/737. Original body restored.
+// Round 107: retail tests each task poll as `if (state < 0 || state > 1) { if (state == 2) ... else ... }`
+// (jl to the failure arm, jle out, jne to failure); that shape for the write task / read task / both
+// 738/737/738 (retail's block order there, aligned count 359 -> 353, positional unchanged); retail's
+// cmovne in the slot helper implies /arch:SSE (file is /O2 /Gr); identity read through a named xuid
+// pointer also used by the later copy 737 (identical); identity copied with memcpy 737 (identical).
+// Round 29: Clock/availability inline-inline, inline-forced, inline-outlined, forced-forced, forced-outlined, outlined-inline, outlined-forced, outlined-outlined: 737/737/810/737/810/949/949/980. Original forced clock and inline availability restored.
 // @retail 0x74aa0
 void function_074aa0(void)
 {

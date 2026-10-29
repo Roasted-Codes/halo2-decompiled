@@ -696,6 +696,19 @@ static inline void rigid_body_angular_velocity_get(s_havok_component *component,
 	}
 }
 
+/* both velocities of one rigid body (the zero vector for a fixed one) */
+static __forceinline void rigid_body_velocities_get(hkRigidBody *rigid_body, vector3f *linear_velocity, vector3f *angular_velocity)
+{
+	if (!rigid_body->m_fixed)
+		vector3d_from_havok(linear_velocity, &rigid_body->m_motion->m_linear_velocity);
+	else
+		*linear_velocity = *g_4687a4;
+	if (!rigid_body->m_fixed)
+		vector3d_from_havok(angular_velocity, &rigid_body->m_motion->m_angular_velocity);
+	else
+		*angular_velocity = *g_4687a4;
+}
+
 // @retail 0x1d09d0
 void havok_component_rigid_body_linear_velocity_get(s_havok_component *component, long rigid_body_index, vector3f *velocity)
 {
@@ -1046,16 +1059,7 @@ void havok_component_rigid_body_state_update(long rigid_body_index, s_havok_comp
 	vector3f angular_velocity;
 
 	havok_component_rigid_body_position_get(rigid_body_index, component, &position);
-	hkRigidBody *local_0 = havok_component_rigid_body_get(rigid_body_index, component);
-	bool local_1 = local_0->m_fixed;
-	if (!local_1)
-		vector3d_from_havok(&linear_velocity, &local_0->m_motion->m_linear_velocity);
-	else
-		linear_velocity = *g_4687a4;
-	if (!local_0->m_fixed)
-		vector3d_from_havok(&angular_velocity, &local_0->m_motion->m_angular_velocity);
-	else
-		angular_velocity = *g_4687a4;
+	rigid_body_velocities_get(havok_component_rigid_body_get(rigid_body_index, component), &linear_velocity, &angular_velocity);
 	rigid_body->position = position;
 	rigid_body->linear_velocity = linear_velocity;
 	rigid_body->angular_velocity = angular_velocity;
@@ -2666,9 +2670,10 @@ void function_1d83e0(long body_index, s_havok_component *component, long node_a,
 
 void function_bba20(long object_index);
 void function_f7ed0(long vehicle_index, vector3f *impulse);
-// score 114 (was 114): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
-// retail stages them (the reduced image stages them as retail), and the getters keep the fixed byte
-// and zero-vector pointer in other registers.
+// score 50 (was 114): Frame 0x30 and length agree; the full image pushes ebx/ebp/esi at entry where
+// retail stages them (the reduced image stages them as retail and leaves 7: the five rigid-body reads
+// address [offset + data] where retail has [data + offset], and the 0x1d1010 call copies the component
+// to ESI before the index to ECX).
 // Earlier: Frame 0x30 agrees; admission save staging and paired fixed/zero velocity homes remain.
 // staggered register saves and paired velocity homes differ;
 // marked linear/angular/both getters 200/197/274; earlier angular norm 146; keyframe query 167 (fast base 135).
@@ -2724,9 +2729,20 @@ void function_f7ed0(long vehicle_index, vector3f *impulse);
 // change's k component first 99. No function of the linked file is on this function's direct call chain
 // in our image, and its frame-aligning callees align themselves, so the entry staging is not a callee's
 // stack-alignment request.
+// Round 150 (reduced scores marked f): both velocities through one helper on one body pointer, the
+// matched 0x1cefb0's own sequence (retail's single body read, the flag in DL and the zero-vector
+// reload on the fixed path) with the first bit-2 test as TEST_FIELD_BIT 50 (7f; kept, 0x1cefb0 uses
+// the helper and still matches; the flag as a local at both tests 158f and loses 0x1cefb0); the entry tests as two early returns 50; loop index
+// declared at block top as 0x1d1c10 7f; preincrement 7f; count local 160f; const component 7f;
+// direct data[i] reads at the first site/all sites 7f/10f; a body pointer after the state update 7f.
+// Retail's call graph from here holds 25 functions and no cycle.
 // Round 195: Native final vector outputs linear/angular/both [241, 244, 314]; paired result before
 // receiver 314; native component-set output linear/angular/both [241, 230, 205]; paired early component
 // result 205. Original private getters restored; staged saves and fixed/zero homes remain.
+// Round 29 (controlled full-image scores; reduced body 7): existing vector constructor 50;
+// two-use change pointer 50; reversed velocity declarations 50; guarded do-while 53;
+// reversed loop comparison 52; preincrement 50; outer-block index 50; per-iteration body index 50.
+// Original body restored; entry saves, five address forms and the final argument moves remain.
 // @retail 0x1ced00
 void function_1ced00(s_havok_component *component)
 {
@@ -2737,7 +2753,7 @@ void function_1ced00(s_havok_component *component)
         change.j = 0.0f;
         change.k = 0.0f - g_510c54->rate * g_51e9c4->unknown0;
         function_bba20(component->object_index);
-        if ((component->unknown04 & 4) == 0 &&
+        if (!TEST_FIELD_BIT(component->flag2) &&
             ((1 << ((s_component_transform_header *)g_4e0300->data)[component->object_index & 0xffff].type) & 2))
             function_f7ed0(component->object_index, &change);
         for (long i = 0; i < component->rigid_bodies.size; i++)
@@ -2745,8 +2761,7 @@ void function_1ced00(s_havok_component *component)
             if (havok_component_rigid_body_get(i, component)->m_motion->kind_code() != 6)
             {
                 vector3f linear, angular;
-                rigid_body_linear_velocity_get(component, i, &linear);
-                rigid_body_angular_velocity_get(component, i, &angular);
+                rigid_body_velocities_get(havok_component_rigid_body_get(i, component), &linear, &angular);
                 real speed_squared = linear.k * linear.k;
                 speed_squared += linear.j * linear.j;
                 speed_squared += linear.i * linear.i;
@@ -2839,6 +2854,8 @@ PRIVATE inline void component_matrix_frame(transform4x3f const *matrix, hkTransf
 // snapshot/bound pairs and all 369/369/419; index through if/else 313; a body-link table local 209;
 // the child search as a while with the compound test 206 (same code); the second index assigned in
 // plain statements (no embedded assignment, same code, kept) 206; the child counter declared first 208.
+// First link before count first/second/both 205/224/275; loop link locals first/second 206/206;
+// converter position declared first 206; translation read before rotations 254; converter force-inline 206 (plain).
 // @retail 0x1d7ef0
 void function_1d7ef0(hkTransform *frame_a, s_havok_component *component,
     s_component_frame_owner *owner, s_component_frame_map const *mapping, hkTransform *frame_b,

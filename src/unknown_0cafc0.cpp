@@ -160,7 +160,13 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 55 (was 55): frame 0xa4 and entry allocation agree; height-load order, dot-input carriers,
+// score 31 (was 55): frame 0xa4, entry, collision block and marker-branch layout agree; the two
+// height loads are swapped, the seated object goes to EDX (retail EBP, so the marker temporaries
+// rotate one register off), and the parent branch loads the tag table before the object table
+// (ours EAX for the object table is a byte shorter, which also keeps a later je short: 5 bytes).
+// Earlier allocation/collision forms follow.
+// frame 0xa4 and entry agree; height loads, dot input carriers and marker/parent tails differ.
+// frame 0xa4 and entry allocation agree; height-load order, dot-input carriers,
 // selected-seat/marker tails and parent-table scheduling differ. Earlier allocation/collision forms follow.
 // Frame 0xa4 agrees; object-data/tag-table allocation
 // and collision-point scheduling differ.
@@ -202,11 +208,17 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Paired height terms 55 (plain, kept); collision production first 61; native marker copies 125;
 // twice-used seated object 146; first three boundaries 116; all four 154. Retain object-table,
 // existing backward-vector assignment, sentinel before forward, collision-first and paired height terms.
+// Round 373: Offset-first contact/origin/both dot inputs 55/55/55;
+// each with paired contact/origin role names 55/55/55; symmetric dots with
+// a common exit, without/with paired names 55/55. Original graph restored.
 // Paired raw height inputs 55; resolved marker seat short/long 55/100; conditional short/long 55/100;
 // marker handle 55; handle with short/long/conditional-short seat 55/100/55. All restored.
 // Default-first crouch 59; named standing complement 55; both 59; complete paired
 // distance results 55; with crouch/complement/both 59/55/59; entry distance declarations
 // 55. Unmatched distance captures restored; original height and collision graph retained.
+// Round 70: position copy in each marker arm 40 (kept); to-collision vector first 31 (kept);
+// parent branch without its index local 46; parent through a table local / header pointer 31/31;
+// seated lookups through the object macro 31; crouching term named first 31.
 // @retail 0xcafc0
 void function_cafc0(long unit_index, point3f *position)
 {
@@ -262,8 +274,8 @@ void function_cafc0(long unit_index, point3f *position)
 				vector3f to_origin;
 				vector3f to_collision;
 
-				vector3d_from_points3d(&point, &origin, &to_origin);
 				vector3d_from_points3d(&point, &collision.point, &to_collision);
+				vector3d_from_points3d(&point, &origin, &to_origin);
 				if (dot3f(&to_collision, &offset) < dot3f(&to_origin, &offset) + 0.05f)
 				{
 					position->x = collision.point.x - offset.i * 0.05f;
@@ -283,12 +295,13 @@ void function_cafc0(long unit_index, point3f *position)
 		{
 			function_b8d30(unit_index, definition->seats[objects[unit->unknown24c & 0xffff].object->seat_index].marker_name,
 				&marker, 1, false);
+			*position = marker.matrix.position;
 		}
 		else
 		{
 			function_b8d30(unit_index, 0x4000095, &marker, 1, false);
+			*position = marker.matrix.position;
 		}
-		*position = marker.matrix.position;
 	}
 	else
 	{

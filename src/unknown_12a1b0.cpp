@@ -347,6 +347,9 @@ void function_11bed0(s_location *location, point3f const *point);
 // the called advance 98. BLOCKED-BY 0x1d48f0: with 0x11bed0 out of line, a caller that declares
 // a 16-byte-aligned local itself (0x1d48f0's Havok locals) moves 0x14a280's bsp to the stack; an
 // aligned local that comes from an inlined helper does not, and no other caller does.
+// Native iterator source/spatial receivers 93/99; location-result workspace alone,
+// with source or spatial receiver 118 each; eligibility continue with source, spatial
+// or location workspace 93/99/118. Restored.
 // @retail 0x21a100
 void looping_sound_update_locations(void)
 {
@@ -957,6 +960,7 @@ short function_219110(s_set_ref *ref, short offset, dword *used_mask, short prev
 void sound_playback_set_chunk(long sound_index, long definition_index, char pitch_range_index, char permutation_index, short chunk_index);
 long __stdcall function_125e60(s_looping_track_sound *sound);
 
+// score 77 (was 132): a mask test read as a field bit (TEST_FIELD_BIT) gives retail's load-and-shift; the rest still differs.
 // @retail 0x21b940
 long function_21b940(long looping_sound_index, long definition_index, long pitch_range_index, short track_index, short state, dword *seed)
 {
@@ -1001,7 +1005,7 @@ long function_21b940(long looping_sound_index, long definition_index, long pitch
 				playing->loop.permutations = track->permutations;
 				playing->loop.next_sound_index = result;
 				playing->loop.previous_sound_index = result;
-				if (playing->state == 2 && (playback->flags & 0x2000))
+				if (playing->state == 2 && TEST_FIELD_BIT((playback->flags >> 13) & 1))
 					playing->loop.flags |= 1;
 				if (definition->flags & 0x20)
 				{
@@ -1094,7 +1098,8 @@ struct s_looping_promotion_table
 	s_looping_promotion *entries;
 };
 
-// score 52 (was 52): frame and loop head now retail's; the body's element and definition registers differ;
+// score 52 (was 52): iterator frame agrees; class load, curve widening and element/definition carriers still differ.
+// Prior: frame and loop head now retail's; the body's element and definition registers differ;
 // short curve 76; long curve 80; count renamed 72; table snapshot 72; pool snapshot 76;
 // count first 74; plain for 74; flag mask 72; shared lookup 72; short curve and lookup 76;
 // bool-curve iterator 65; short-curve iterator 68; iterator with shared lookup 65;
@@ -1105,6 +1110,15 @@ struct s_looping_promotion_table
 // shared class lookup/one-use short class index 30 (unmatched, restored).
 // Native definition getter 52; both native getters 52; both/short curve 56; composed getters 52.
 // Element/definition registers, class-load position and curve widening remain.
+// Word flag bitfield with byte-cast class: bool curve/direct or shared lookup 52/52, short curve 49/49;
+// with signed class member, bool curve 52/52 and short curve 49/49. Three-point gain at 286 bytes restored.
+// Native iterator index plus early one-use short class input, bool curve
+// with bitfield/word publication 30/30; short curve 42/42; force-inline
+// getter combinations 30/30/42/42. Class snapshot unmatched, restored.
+// Element/class carriers and pre-provider widening still differ.
+// Curve produced by short tests 70; with native word publication 70; bool tests/word 52;
+// short default/word 56; original bool/word 52; short conditional/word 56;
+// native definition with short tests/default and word publication 70/56. Restored.
 // @retail 0x21bd00
 void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 {
@@ -1132,7 +1146,7 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 	}
 }
 
-// score 25 (was 35): the state load is folded before the element pointer is formed and the
+// score 25 (was 25): the state load is folded before the element pointer is formed and the
 // final looping store is scheduled early;
 // pool at each use 66; count declared first 66; count renamed 66; state guard 66;
 // plain for 66; iterator record 66; count-first iterator record 66; flag mask 66;
@@ -1145,6 +1159,11 @@ void __stdcall looping_sound_fade_out(real duration, long first_sound_index)
 // canonical iterator continue 35; curve after endpoints 35; computed endpoint first 35;
 // native word flag store 35; native word flag test/store 25, plain confirmed at 207/210 bytes.
 // Element/state fold and early flag store remain.
+// Native iterator-index receiver: word mask/shifted bool/bitfield/zero-first
+// 25/35/35/30; the same with force-inline getter 25/35/35/30.
+// Element formation and final flag-store schedule remain.
+// Native word flag snapshot inside/before state with mask and first/last publication 75 each;
+// boolean extraction under each lifetime/publication 82 each. Restored.
 // @retail 0x21be20
 void looping_sound_fade_in(long first_sound_index, short curve, real duration)
 {

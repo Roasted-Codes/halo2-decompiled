@@ -146,6 +146,9 @@ const dword g_455978[81] = {
 // 374/374/374; all inputs plus query pose 422. All restored.
 // Shared setters for all three native basis rows, with early/late scale publication, entry/local
 // input-output matrix declarations and native/library point publication: all eight 306. All restored.
+// Round 161: Transform opaque/reference ownership, then optional opaque with
+// derived/opaque/reference transform, then optional reference with derived/opaque/reference transform:
+// 306/306/306/306/306/306/306/306. Original persistent pointer types and all casts restored.
 // Round 206: Optional bounds/exclusion initialization after control-word setup [315, 315, 315];
 // after SSE setup [315, 315, 315]; early presence construction alone/with late optional state [467, 458]. All restored.
 // Round 228: optional-state/descriptor/receiver storage identity subsets 306 each;
@@ -153,6 +156,13 @@ const dword g_455978[81] = {
 // Round 232: shared affine candidate alone/radius/blend/both 306 each;
 // with planar normalization on the same four graphs 307/307/307/304.
 // Two-point gain rejected; original producers and all helper contracts restored.
+// Round 214: Endpoint home alone/with sample/with radial/with both direction names 306 each;
+// immutable named count alone/with endpoint/with all three/with full ray-query name 306 each.
+// All restored; optional-state, sample/ray homes and selective helper expansion remain.
+// Round 163: shared endpoint sum into point/native copy/float-set copy/vector
+// 306/341/314/306; each with shared optional-ray difference 306/341/314/306.
+// Native copies lengthen the body; optional-state homes and selective
+// location/range expansion remain. All endpoint producers and helpers restored.
 // @retail 0x1d48f0
 bool function_1d48f0(point3f *arg_11, s_havok_component *arg_0, long arg_1, long arg_2, point3f const *arg_3,
  vector3f const *arg_4, s_location *arg_5, real arg_6, real arg_7, bool arg_8,

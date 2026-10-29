@@ -573,7 +573,7 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 	settings->mixbins.dwMixBinCount++;
 }
 
-// score 393 (was 393): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
+// score 336 (was 336): frame 0x130 versus 0x94; our LTCG CSEs and hoists the identical 0x12aff0(-64, 0, -64)
 // conversions (6 calls versus retail's 15; BLOCKED-BY 0x12aff0: retail's callers treat it as opaque).
 // Round 75: SetMixBins (retail calls 0x37c5e4) for SetMixBinVolumes 449 (kept); the existing 0x2216f0 with a
 // NULL list for the three submissions 393 (kept); explicit sends, one object 613, three objects 544; set-2 rear
@@ -650,13 +650,23 @@ __forceinline void sound_stream_append_mixbin(s_mixbin_settings *settings, long 
 // both copied-level field references 378, with original buffers 398; native settings-copy producer
 // 384, with original buffers 426; native buffer-record snapshot 390 (fast control 378).
 // Original settings observations 396 plain, worse than full 393; all restored. Frame 0x130 remains.
+// Round 244: early native header initialization before the member copy, first/second/both/third/
+// first-third/last-two/all 381/378/375/371/368/374/374 fast; all before settings copy 374
+// (control 378/967). First-third 399/952 plain versus 393/951; original phases restored.
+// Round 235: Complete native descriptor initialization subsets and at-use clear [359, 348, 349, 349, 351,
+// 333, 334, 338] fast; uniform all-three 336 plain kept (393 before). On that producer, pairwise/all
+// descriptor scopes and one reused descriptor [370, 351, 381, 416, 426] fast; restored. Frame 0x130 and
+// repeated-conversion reuse remain.
+// Round 379: called shared append on first/second/third/first-second/first-third/last-two/all
+// descriptors 468/469/413/609/548/541/679 fast; uniform existing raw inline append 335
+// (control 334, full 336). All original calls and executable body restored.
 // @retail 0x2aeb20
 void c_sound_effects::initialize(s_sound_effect_settings *settings, s_sound_effect_buffers *buffers, bool rear)
 {
 	long const muted_mixbins[4] = {6, 8, 7, 9};
-	s_mixbin_settings mixbins;
-	s_mixbin_settings second;
-	s_mixbin_settings third;
+	s_mixbin_settings mixbins = {0};
+	s_mixbin_settings second = {0};
+	s_mixbin_settings third = {0};
 
 	m_buffers = buffers;
 	m_settings = *settings;
@@ -699,7 +709,10 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 	return effects->m_settings.level2c;
 }
 
-// score 438 (was 438): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// score 428 (was 438): frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// Frame 0xc agrees; selected-primary storage, destination construction and integer-bit/SSE staging differ.
+// Earlier: frame 0xc agrees; retail copies the input level into a dead argument slot through a
+// frame 0xc agrees; retail copies the input level into a dead argument slot through a
 // general register before each SSE add (x87 or direct operands here) and pushes each sum from its slot.
 // Round 75: inline two-operand sum helper 453 (identical code); level in a union with a dword 453;
 // level by value 454; else-branch level local with gains read at use 491 (dispatcher lost); level
@@ -754,6 +767,9 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // Round 365: actual selected primary-field pointer with native destinations, special input
 // snapshot and native routing domains: 453/461/441/455/447/461/438/454. The 438 plain
 // form loses the dispatcher; input snapshots change the entry roles. All restored.
+// Round 274: primary scalar on retained asymmetric destinations with original/long right and bool/word
+// routing carriers 446/449/437/451; same forms with the secondary setting observed at its send
+// 455/462/450/452. The 437 gain is below margin; 449/451 lose the dispatcher. All restored.
 // Round 241: Paired selected-setting decision, rear/front first, with independent destinations, live
 // routing field, and paired true/false-first destinations: 449/449/449/449/473/473/473/473. All
 // selected-field observations and original body restored.
@@ -761,12 +777,16 @@ inline real sound_effects_send_level(c_sound_effects *effects, s_sound_send_para
 // front/rear/front+rear/tail/front+tail/rear+tail/all loops 466/474/475/497/490/492/507;
 // all plus the repeated buffer send loop 523. Every loop uses a real channel/gain
 // index. All restored; frame 0xc, selected-level and SSE staging differences remain.
+// Round 164: ordinary append inline 438; right long original/ordinary inline 457/457,
+// right word 456/456, signed byte 438/438; word route with ordinary inline 428,
+// word route alone 428 plain (kept); long/dword/byte route 438 each. Only the native
+// 0-or-1 route word remains; original append declaration and all gain trees retained.
 // @retail 0x2aefe0
 void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {
 	if ((bool)((parameters->flags >> 2) & 1))
 	{
-		bool alternate = TEST_FLAG(parameters->flags, 3) != 0;
+		word alternate = TEST_FLAG(parameters->flags, 3) != 0;
 		word left = alternate ? 0 : 6;
 		byte right = alternate ? 1 : 7;
 		real level2 = rear ? m_settings.level20 : m_settings.level28;
@@ -917,6 +937,9 @@ void c_sound_effects::add_effect_sends_direct(s_sound_send_parameters *parameter
 // regress; original word route, scalar observations and three local qualifications restored.
 // Round 365: joint native destination branch with all eight spilled-width subsets
 // 262/263/263/264/263/264/264/265. All restored; frame/input-level and tail sum remain.
+// Round 235: Existing qualified class raw-send path, seven front/rear/tail subsets and all-path if-else tail
+// [224, 224, 247, 224, 247, 247, 248, 254] fast. Dispatcher preserved in every trial; all original helper
+// calls, sums, fields and three local qualifications restored.
 // @retail 0x2af450
 void c_sound_effects::add_effect_sends_split(s_sound_send_parameters *parameters, bool rear, long mode, s_mixbin_settings *mixbins)
 {

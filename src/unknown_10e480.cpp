@@ -218,12 +218,22 @@ void c_animation_channel_data_get(c_animation_channel const *channel, s_animatio
 // Round 364: independent data outputs at entry, base/weighted/countdown and
 // pairs/all 295/304/304/294/283/304/290; all with long sample frame 312.
 // Original separate construction points restored; frame and getter expansion remain.
+// Native frame-array references, mutable/const with extent bounds, 250 each at 940 bytes; with
+// twice-used full-width frames 222 each at 964 bytes. Frame 0x2c recovered, original loop and
+// observations restored.
 // Round 241: Sample occupancy dword/word at weighted scope 301/299; before getter 301/299; with a
 // twice-used full-width frame 273/274; at positive entry 331/329. All masks and original body restored.
 // Round 207: distinct weighted channel with native copy/default-assignment/member copy
 // 308/308/380; each with twice-used long sample frame 332/332/375;
 // copy/member copy with native sample-result enum 316/390. All exact-match-only
 // storage forms restored; frame 0x30, getter expansion and ordinal spill remain.
+// Round 222: Native datum accessor/direct object/both 207/207/207; record at each use, with accessor 411/411; direct object and record, with accessor 674/674; all with promoted sample frame 648. All restored; frame 0x30 versus 0x2c, weighted getter and ordinal spill remain.
+// Round 212: complete native weight-array identity, mutable/const, with original/complete
+// frame-array identity and literal/native bounds [250, 250, 287, 287, 250, 250, 287, 287].
+// Original array observations restored; getter, destination and frame remain.
+// Round 246: signed-char frame/weight/both fields 207/207/207; each with a twice-used long
+// frame 257/257/257; both with short frame/immutable frame-count snapshot 258/254. Original
+// field identities, observations and body restored.
 // @retail 0x10e530
 void function_10e530(long object_index, s_animation_state *state, long unused, dword const *node_mask,
 	long node_count, real_quaternion_transform *transforms, byte *dest)
