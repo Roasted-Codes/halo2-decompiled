@@ -120,22 +120,25 @@ long __stdcall function_1bead0(long actor_index, s_slot *slot)
 /* invites the actor's clump members near enough, the nearest first */
 static __forceinline long real_to_long(real value);
 
-// score 88 (was 88): retail loads the pool pointer first and keeps the record
-// count in ECX,
-// ours reads a different global before the pool.
-// Round 371: typed slot payload and short counters 88; payload/single exit 88;
-// payload/entry counters 111, with single exit 111. Opening body restored.
-// score 88 (was 88; the 16-bit sum below gives 83, under the keep bar): retail adds the participant count and the accepted count
-// in 16 bits, and it builds the joint pointer in the entry block, so the
-// element pool data dies in ECX and only three registers are pushed; ours
-// sinks that pointer past the loop head, keeps the data in EBP and pushes
-// four. Retail also zeroes the accepted counter at the top of the frame and
-// has two separate returns where ours shares one epilogue.
+// score 24 (was 88): retail keeps the count test's g_46fbe4 return as its own
+// tail after it and puts the shared g_46fbe8 return last, where ours jumps back
+// to the countdown's g_46fbe4 return and falls into g_46fbe8 (445 bytes against
+// 457). Round 371: typed slot payload and short counters 88; payload/single
+// exit 88; payload/entry counters 111, with single exit 111. Round 86: early
+// return for the missing prop 109 (EBP saved late, its exit laid out inline);
+// prop index through the getter 138, nested again 133, with a return at each
+// level 96; accepted counter declared before the actor 75 (entry exact); the
+// countdown and count tests returning g_46fbe4 with one g_46fbe8 return after
+// them 37; the 16-bit participant sum 24 (kept); returned ternaries 91 (cmov);
+// ready flag 98 (setg); count test as >= with both returns 24; final return
+// only 81; the two branches swapped 102; short counters 24 (same code, kept as
+// they need no casts).
 // @retail 0x1beb70
 short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 {
 	s_slot_36 *state = (s_slot_36 *)slot;
 	s_joint_36 *joint = (s_joint_36 *)element_502424_get(state->element_index);
+	short accepted = 0;
 	s_actor_view *actor = actor_get(actor_index);
 
 	if (actor->prop_index != NONE)
@@ -147,13 +150,12 @@ short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 		{
 			if (state->unknown1c > 0)
 			{
-				if (--state->unknown1c > 0)
-					return g_46fbe8;
+				if (--state->unknown1c <= 0)
+					return g_46fbe4;
 			}
 			else
 			{
-				long accepted = 0;
-				long declined = 0;
+				short declined = 0;
 				short i;
 
 				for (i = 0; i < 10; i++)
@@ -176,7 +178,7 @@ short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 					}
 				}
 
-				if ((short)accepted == 0)
+				if (accepted == 0)
 				{
 					short result = g_46fbe8;
 					real seconds = g_510c54->field_2_3 * 1.5f;
@@ -184,14 +186,19 @@ short __stdcall function_1beb70(long actor_index, s_slot *slot, bool active)
 
 					ticks = real_to_long(seconds);
 					state->unknown1c = (short)ticks;
-					if ((short)declined > 1)
+					if (declined > 1)
 						function_1fb7e0(0x86, actor_index, NULL, NONE, NONE);
 					return result;
 				}
-				if (joint->participant_count + (short)accepted >= 2)
-					return g_46fbe8;
+
+				short participants = joint->participant_count + accepted;
+
+				if (participants < 2)
+					return g_46fbe4;
 			}
+			return g_46fbe8;
 		}
+		return g_46fbe4;
 	}
 	return g_46fbe4;
 }

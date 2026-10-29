@@ -2573,7 +2573,7 @@ short function_290cd0(short arg_0, long arg_1, long arg_2, short *arg_3, short *
 bool function_290e20(short arg_0, long arg_1, long arg_2);
 bool function_1fb8a0(long arg_0, short arg_1);
 
-// score 50 (was 109): frame 0x1c, the trigger flag, the task pointer test and the actor walk agree. Left: the
+// score 50 (was 50): frame 0x1c, the trigger flag, the task pointer test and the actor walk agree. Left: the
 // squad index for the first 0x1fb8a0 call (retail `mov eax, ebp`, ours reloads its home, 2 bytes longer),
 // which shifts the later jump targets and drops the actor loop's alignment nop.
 // Earlier: task zeroing/retest, predicate load and iterator head remained.
@@ -2599,6 +2599,8 @@ bool function_1fb8a0(long arg_0, short arg_1);
 // 52 (kept); parameters read directly 52 (kept); the trigger flag as `(... & 1) != 0` 50 (kept); casts dropped
 // on the delay value 50; delay value declared last 50; pending word at each use 50; structured exits for the
 // three gotos 50 (kept); ticks output declared first 50; permuter 600 s, best only by a char delay value.
+// Round 221: Complete logical index snapshot long/int/dword/const long 50 each;
+// all four with a separate optional follow-up result join 50 each. Original body restored.
 // @retail 0x202be0
 void function_202be0(long arg_0, long arg_1)
 {

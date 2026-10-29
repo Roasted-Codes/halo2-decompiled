@@ -13,7 +13,11 @@ long replication_table_find_in_chains(s_handle_peers *peers, long *handles, long
 void replication_table_release(s_handle_peers *peers, long handle);
 void replication_table_release_chain(s_handle_peers *peers, long count, long const *handles);
 
-// score 199 (was 199): Frame 0x48 agrees; the blocked flags now sit in the dead output slot and each
+// score 170 (was 199): the peers table is now read through a local, so `this` stays in EBP, the
+// index is read inside the enabled test, the cursor is declared under the index test, advanced
+// before the stores and the size is one expression, so retail's prologue and output block match.
+// Left: our cursor, entry pointer and item-priority slots sit 4 bytes below retail's and our
+// chain loop keeps its counter in a stack slot instead of ESI.
 // chain loop has one count test. Left: receiver EDI/EBP (ours keeps the index in ebx, retail spills it
 // and reloads it each iteration), so every callee-saved register rotates.
 // Lane 8 r64 (199 = output cursor local, no `<= 0` guards before the chain loops, `priority = 0.0f`
@@ -107,76 +111,50 @@ void replication_table_release_chain(s_handle_peers *peers, long count, long con
 // 249 (782 bytes); type set only on the unblocked exit 228; the local in the loops too 216; a 600 s
 // permuter run 158 only through a volatile read; an entry pointer for the reads 195. Without the local: the sibling output order 234,
 // with the cursor inside the flag test 232; count renamed result 199 (identical).
+// Round 250: two-use pending handle 199; pending array cursor 258; both 258;
+// active array cursor 207; handle/active 207; both cursors 213; handle/both 213;
+// all with cursors before chain queries 214. Original traversal restored.
 // @retail 0x98150
 long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 {
 	long count = 0;
-	s_entry_450c94 *out = (s_entry_450c94 *)output;
 	if (unknown09)
 	{
-		for (long index = unknown5024; index != NONE && count < max_count; index = entries[index].unknown0a)
+		long index = unknown5024;
+		if (index != NONE)
 		{
-			if (entries[index].state)
+			s_entry_450c94 *cursor = (s_entry_450c94 *)output;
+			for (; index != NONE && count < max_count; index = entries[index].unknown0a)
 			{
-				long handle = entries[index].handle;
-				s_handle_peer *peer = &table->peers[handle & 0x3ff];
-				long type;
-				long handles_count;
-				real priority;
-				long size;
-				if (entries[index].state == 1)
+				if (entries[index].state)
 				{
-					if (peer->flags & 8)
-					{
-						long handles[4];
-						bool blocked = false;
-						type = 3;
-						handles_count = replication_table_get_chain(table, handle, handles);
-						priority = 0.0f;
-						size = 0;
-						for (long i = 0; i < handles_count; i++)
-						{
-							real item_priority;
-							long item_size;
-							table->owner->v3(handles[i], entries[handles[i] & 0x3ff].unknown04, a1, &item_priority, &item_size);
-							if (item_priority > 0.0f)
-								priority = priority > item_priority ? priority : item_priority;
-							else
-								blocked = true;
-							size += item_size;
-						}
-						if (blocked)
-							priority = 0.0f;
-					}
-					else
-					{
-						if (peer->flags & 0x10)
-							continue;
-						type = 1;
-						handles_count = 1;
-						table->owner->v3(handle, entries[index].unknown04, a1, &priority, &size);
-					}
-				}
-				else if (entries[index].state == 3)
-				{
-					if (peer->mask & (1 << shift))
+					long handle = entries[index].handle;
+					s_handle_peers *peers = table;
+					s_handle_peer *peer = &peers->peers[handle & 0x3ff];
+					long type;
+					long handles_count;
+					real priority;
+					long size;
+					if (entries[index].state == 1)
 					{
 						if (peer->flags & 8)
 						{
 							long handles[4];
 							bool blocked = false;
-							type = 4;
+							type = 3;
 							handles_count = replication_table_get_chain(table, handle, handles);
 							priority = 0.0f;
 							size = 0;
 							for (long i = 0; i < handles_count; i++)
 							{
 								real item_priority;
-								table->owner->v9(handles[i], a1, &item_priority);
+								long item_size;
+								table->owner->v3(handles[i], entries[handles[i] & 0x3ff].unknown04, a1, &item_priority, &item_size);
 								if (item_priority > 0.0f)
 									priority = priority > item_priority ? priority : item_priority;
 								else
 									blocked = true;
+								size += item_size;
 							}
 							if (blocked)
 								priority = 0.0f;
@@ -185,35 +163,68 @@ long c_handle_table_450cd0::v1(long a1, long max_count, void *output)
 						{
 							if (peer->flags & 0x10)
 								continue;
-							type = 2;
+							type = 1;
 							handles_count = 1;
-							table->owner->v9(handle, a1, &priority);
-							size = 0;
+							peers->owner->v3(handle, entries[index].unknown04, a1, &priority, &size);
+						}
+					}
+					else if (entries[index].state == 3)
+					{
+						if (peer->mask & (1 << shift))
+						{
+							if (peer->flags & 8)
+							{
+								long handles[4];
+								bool blocked = false;
+								type = 4;
+								handles_count = replication_table_get_chain(table, handle, handles);
+								priority = 0.0f;
+								size = 0;
+								for (long i = 0; i < handles_count; i++)
+								{
+									real item_priority;
+									table->owner->v9(handles[i], a1, &item_priority);
+									if (item_priority > 0.0f)
+										priority = priority > item_priority ? priority : item_priority;
+									else
+										blocked = true;
+								}
+								if (blocked)
+									priority = 0.0f;
+							}
+							else
+							{
+								if (peer->flags & 0x10)
+									continue;
+								type = 2;
+								handles_count = 1;
+								peers->owner->v9(handle, a1, &priority);
+								size = 0;
+							}
+						}
+						else
+						{
+							if (!entries[index].unknown04)
+								continue;
+							type = 5;
+							handles_count = 1;
+							peers->owner->v8(handle, entries[index].unknown04, entries[index].unknown0c, a1, &priority,
+								&size);
 						}
 					}
 					else
+						continue;
+					if (priority > 0.0f)
 					{
-						if (!entries[index].unknown04)
-							continue;
-						type = 5;
-						handles_count = 1;
-						table->owner->v8(handle, entries[index].unknown04, entries[index].unknown0c, a1, &priority,
-							&size);
+						s_entry_450c94 *out = cursor;
+						count++;
+						cursor++;
+						out->unknown00 = *(long *)unknown04;
+						out->index = index;
+						out->unknown04 = priority;
+						out->unknown0c = type;
+						out->size = size + 14 * handles_count + 3 + (handles_count > 1 ? 2 : 0);
 					}
-				}
-				else
-					continue;
-				if (priority > 0.0f)
-				{
-					out->unknown00 = *(long *)unknown04;
-					out->index = index;
-					out->unknown04 = priority;
-					out->unknown0c = type;
-					out->size = size + 14 * handles_count + 3;
-					if (handles_count > 1)
-						out->size += 2;
-					out++;
-					count++;
 				}
 			}
 		}

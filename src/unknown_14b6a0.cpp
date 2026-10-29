@@ -118,7 +118,6 @@ void function_14bac0()
 	s_record_pool_iterator *iterator_reference = &iterator;
 	players_pending_creation_process(iterator_reference);
 }
-
 // score 230 (was 230): Frame 0x44 versus 0x3c; centre/second-iterator slot sharing, readiness homes and the second scan's call remain.
 // Round 9 (lane 11, fast): second loop through data_datum_iterator_next as retail calls it 257 (frame 0x44:
 // center 0x10, destination 0x1c, alternate 0x28, second iterator 0x34; retail packs the iterator over the
@@ -210,6 +209,9 @@ void function_14bac0()
 // Second scan through 0x6b380 on its own iterator 257/259 (frame 0x48, no slot sharing); the centre
 // probing in a bare block 257 (no sharing); second iterator scoped to its block 230 (identical);
 // separate point declarations in five orders 233 each (layout unchanged).
+// Round 377: one native iterator on the first-pass/probe graph, original/request/marker
+// carrier combinations 334/333/333/334/333/333/332/333. All give frame 0x50 and 1084 bytes;
+// original iterators, signed carriers, probes and readiness restored.
 // Round 245: shared point setter at translation 230; overlap-safe marker inputs 230;
 // both 230; overlap-safe accepted points 241, with translation/marker inputs/both 241/244/244;
 // complete publication graph with native recipient iterator 262. Original source restored.
@@ -220,6 +222,13 @@ void function_14bac0()
 // Round 171: unsigned player/unit/root datum-handle carriers in all seven subsets 230 each;
 // all three with the native result-tested recipient iterator 259. Original signed handles and
 // traversals restored; point/recipient sharing, readiness and frame 0x44/0x3c remain.
+// Round 238: full signed request/target marker/both carriers 267/240/275;
+// alternate marker 230, with request/target/both 267/242/276;
+// all three with the native recipient iterator 276. Original short carriers and traversals restored.
+// Round 216: first iterator complete defaults/aggregate/CRT clear 230 each; scoped recipient
+// aggregate/CRT clear 230 each; both aggregates 230; first aggregate/native recipient aggregate
+// 250; both cleared/native recipient 279. Original initialization and iterators restored; frame
+// 0x44/0x3c, readiness homes and recipient overlap remain.
 // @retail 0x14b6a0
 void function_14b6a0()
 {

@@ -519,6 +519,7 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 }
 
 // score 564 (was 564): frame 0x21dc and 3647-byte length agree; first +0x41 is the definition-pointer spill.
+// frame 0x21dc and retail length agree; definition spill +0xac versus +0x94, count/plane homes and rotation spills remain.
 // Plane/count homes, initial face-call scheduling and rotation spills remain.
 // Earlier aligned frame 0x21e4 versus 0x21dc, count/plane/axis homes and rotation scheduling remain.
 // The axis uses vector3d_from_points3d with length summed in retail's i, k, j order (written j, k, i), which stores all three components before the sum as retail
@@ -606,6 +607,16 @@ PRIVATE __forceinline void decal_rotate_vector_17fd20(vector3f const *forward, v
 // Round 172: shared grouping/selected plane with short/word/long/dword outstanding total,
 // original first-use lifetime 843/843/840/840; group-entry lifetime 843/843/840/840.
 // Original separate planes and total restored; definition/count/plane homes and rotation spills remain.
+// Round 166: On the exact-frame square/cosine-pair graph, tag/array-count/plane-endpoint lexical
+// roles in all seven subsets 564 each; the uninitialized tag declaration before both scratch
+// arrays 564. Original names, declarations and whole body restored; first tag/count/plane homes
+// still differ.
+// Round 253: native long initial/admission/selection/initial-admission/initial-selection/
+// admission-selection/all/all with emission induction 730/767/710/765/707/781/779/756.
+// Original signed short induction web, addressed counts and complete body restored.
+// Round 236: complete square lifetimes before angle/before sine/between sine-cosine, reversed
+// cosine-pair/square orders, early-square pair combinations and six-part names
+// 617/607/564/611/564/611/583/564; all restored.
 // @retail 0x17fd20
 void function_17fd20(s_decal_mesh_view const *mesh, long tag_index,
 	s_decal_output_17dd80 *output, s_decal_projection_17fd20 *projection, s_decal_placement const *placement)
