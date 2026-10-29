@@ -3415,6 +3415,10 @@ void __stdcall function_b8890(long unit_index);
 
 /* returns a unit to its state and action animations from a pose: a biped
    keeps where the pose left it */
+// score 126 (was 126): frame 0x118 versus 0xe4; header/type and facing-copy scheduling differ.
+// Inverse scope, late object matrices, both and late orientation 126 each; full facing copy 127;
+// one inverse workspace 127 (frame 0xe4); scoped role names 126; facing memcpy 127;
+// one matrix workspace 127 (frame 0xe4), plus facing copy 128; role names alone/with copy 127/128.
 // @retail 0xec0d0
 void __stdcall function_ec0d0(long unit_index, long state_name, long action_name)
 {
@@ -3509,16 +3513,20 @@ void __stdcall function_ec330(long unit_index, long type)
 bool __stdcall function_ec380(long unit_index, s_unit_request *request)
 {
 	s_unit_actions *actions = UNIT_ACTIONS_GET(UNIT_ACTION_UNIT_GET(unit_index));
-	short mode = *(short *)((byte *)request + 4);
-	long name;
+	long mode = *(short *)((byte *)request + 4);
+	long name = NONE;
 
-	if (mode < 0)
-		return false;
-	if (mode <= 1)
-		name = 0xa00022d;
-	else if (mode == 2)
-		name = 0xb00022e;
-	else
+	if (mode >= 0)
+	{
+		if (mode > 1)
+		{
+			if (mode == 2)
+				name = 0xb00022e;
+		}
+		else
+			name = 0xa00022d;
+	}
+	if (name == NONE)
 		return false;
 
 	c_animation_channel *channel = NULL;
@@ -3537,14 +3545,14 @@ bool __stdcall function_ec380(long unit_index, s_unit_request *request)
 			actions->point_ticks = (short)unit_action_round_long((real)g_510c54->field_2_3 * event_time);
 		else
 			actions->point_ticks = (short)unit_action_round_long((real)g_510c54->field_2_3 * 0.8f);
-		actions->active[1] |= 0x200;
+		bit_vector_set(actions->active, 41, true);
 		return true;
 	}
 	function_edff0(unit_index);
 	actions->point_mode = *((byte *)request + 4);
 	actions->point_target = *(long *)((byte *)request + 8);
 	actions->point_ticks = 2;
-	actions->active[1] |= 0x200;
+	bit_vector_set(actions->active, 41, true);
 	return true;
 }
 

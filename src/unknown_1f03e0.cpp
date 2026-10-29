@@ -327,6 +327,9 @@ extern real g_47f05c;
 // Round 224 continuation: Complete center setter/full-width stepping/both/full-width validity/center-validity/stepping-validity/all
 // 192/195/195/192/192/195/195; center with word stepping/validity 197. Original center, result widths
 // and full body restored; frame 0xd0 and shape/count/alignment homes remain.
+// Round 170: late false result 204; count/selection guard exits 223/234; admission-produced
+// success 212; with late false/count guard/selection guard/byte success 211/222/243/250.
+// Original result lifetime and full body restored; frame and shape/count homes remain.
 // Round 31: function-scope index 221, guarded do 232; dot3f 192; point setter 267;
 // vector3f_assign and shared scan/selected entry 190 each (below gate); shared entry with
 // height reads 205; height before best_dot 192; function-scope index with height reads 204,
@@ -679,6 +682,9 @@ PRIVATE __forceinline byte function_1f1462(dword arg_0)
 // Round 158: Whole-dot multiplication operands commuted at initial, rotation and limit sites independently,
 // in pairs, all three, then with every rotation product. Scores [182, 183, 182, 183, 182, 183, 183, 183].
 // Original executable body restored.
+// Round 170: complete three-row axial/retained/swept product groups in three schedules
+// 180/180/180; row schedule 181; coordinate schedule 180; complete initial products 180;
+// cosine complement 183; both 182. Two-point gains rejected; original full body restored.
 // @retail 0x1f1460
 void function_1f1460(byte const *state, s_shape_state const *ground, vector3f *up_result, vector3f *forward_result)
 {
@@ -1269,6 +1275,10 @@ PRIVATE inline real contact_normalize(vector3f *vector)
 // Round 28: Existing query/support-output ordinary/inline/noinline declaration pairs:
 // inline query with each support contract 434; the other five pairs 421.
 // Original declarations, qualified count, candidate cursor and response order restored.
+// Round 170: count initialized between surface/object publications 420; separate array store
+// and increment 421; both 420; one-based pass alone/with initialization/with split producer/all
+// 421/420/421/420; count initialized at the relative/desired boundary 520. One-point gains
+// rejected; original full body restored, with persistent zero and count/component homes unresolved.
 // @retail 0x1f2250
 bool function_1f2250(vector3f const *velocity, byte const *request, vector3f const *input,
     bool moving, vector3f *out, long *surface, real *speed, long *object_index)
