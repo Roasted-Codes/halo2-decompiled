@@ -923,6 +923,9 @@ PRIVATE __forceinline bool path_node_open_2c(s_pathfinding_data const *data, lon
 // Round 234: native current edge/node/portal-surface records and combinations
 // 395/437/429/392/478/411/486; native portal query edges 392. Original receivers restored.
 // Round 197: Cached selected/portal/both node words 442/385/442; selected/portal/both with Boolean ring direction 414/399/414; both words with word first-openness 410, plus Boolean ring 396. All restored; frame 0x28 remains.
+// Round 255: complete geometric truth carriers byte/short/word/long 385/398/397/401;
+// the same four with native byte side 385/398/397/401. Original Boolean results
+// and side parameter restored; frame 0x28 and zero/radius schedule remain.
 // @retail 0x2c3030
 bool function_2c3030(s_pathfinding_data const *data, point2f const *origin, real radius,
     long edge_index, bool side, point2f *result)
@@ -1300,6 +1303,9 @@ bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
 // Retail's EBX is a zero register from entry to the loop (data tests, index/count/flag stores).
 // Round 234: entry-snapshot/displacement/conversion scope endings and combinations
 // 442/444/442/444/442/444/442; tangent consumption scope 444. Two-point gains rejected; original body restored.
+// Round 255: entry ordinal/count/fallback zero lifetimes 444, 444, 444;
+// ordinal-count/ordinal-fallback/count-fallback/all 444, 471, 471, 472;
+// all with byte fallback 472. Original lifetimes restored; frame remains 0x11c.
 // @retail 0x2c2060
 void __stdcall function_2c2060(s_type_f17a25 *query, short count, s_path_step_view const *points,
     short *result_count, s_path_step_view *result, bool *complete)

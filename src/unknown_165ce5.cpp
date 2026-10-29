@@ -1480,6 +1480,9 @@ static __forceinline real function_x82e52f(dword *seed, char const *file, long l
 // Round 251 (fast control 234): loop-scoped orientation byte-offset/ordinal/base/cursor
 // 410/234/409/254; the four at entry 561/234/576/558. Ordinal forms keep frame
 // 0x28; the other forms grow it to 0x30. Original buffer lifetime and body restored.
+// Round 255 (fast control 234): native actual aiming/look/view state fields, their
+// three pairs/all, and complete native point pairs 234 each. Original byte-buffer
+// declaration and every original expression restored; frame remains 0x28.
 // @retail 0x166d75
 void __stdcall function_166d75(long user_index)
 {
