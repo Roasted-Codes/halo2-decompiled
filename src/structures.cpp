@@ -341,6 +341,9 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 228 on the branch-owned geometry join: filled-output pointer success with native
 // section/output references and index-first order, all eight contracts 172 each. Original
 // Boolean fetch, defined failures and caller roles restored; BSP/section residence remains.
+// Round 400: Existing vertex getter as a section member with bool/byte/word/long results
+// 172/172/172/172; as a vertex-block member
+// 172/172/172/172. Every defined failure and suppressed later fetch restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

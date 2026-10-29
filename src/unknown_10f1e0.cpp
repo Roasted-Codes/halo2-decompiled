@@ -1748,6 +1748,9 @@ PRIVATE __forceinline void project_112070(vector3f const *v, vector3f const *for
 // screen inputs 1027/1027/1123; aggregate construction 1027/1027/1123;
 // ordinary inline field/aggregate returns 1010/1010. Frame 0xcc remains;
 // original bounds helper, direction snapshot and all consumers restored.
+// Round 400: Actual bounds outputs as four-real reference/pointer, native interval pair and
+// separate yaw/pitch intervals 790/790/790/790; each output-first
+// 790/790/790/790. Original output contract and every arithmetic tree restored.
 // @retail 0x112070
 void __stdcall function_112070(long unit_index, dword const *node_mask, long node_count,
 	real_quaternion_transform *transforms)

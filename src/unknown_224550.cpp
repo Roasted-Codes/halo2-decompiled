@@ -181,6 +181,12 @@ PRIVATE __forceinline dword function_224551(s_draw_sprite_seed const *arg_0,
 // Round 181: Existing tint producer packed-dword output by pointer/reference, first/last,
 // with cache receiver or fixed-size input array, eight forms 391 each. Original complete producer
 // and callback restored; tint/second-UV overlap and cache/interval homes remain.
+// Round 400: Short/word/byte/signed-byte clamp ordinals in the plain for loop
+// 502/502/502/502; the same four with a plain four-pass do loop
+// 502/502/502/502. These recover entry cache EBX but leave frame 0x50.
+// On that graph, caller tint reference/pointer, caller packing and native value return
+// 472/472/472/509; the same with entry tint declarations
+// 472/472/472/509. Original tint producer and ordinal restored.
 // @retail 0x224550
 void __stdcall function_224550(s_draw_sprite_seed const *seed,s_draw_value_cache *values,
 	point3f *position,point3f *direction,real scale,color4f const *color,s_draw_sprite_context *context)

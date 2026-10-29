@@ -141,7 +141,7 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 
 #pragma inline_depth(1)
 #include "vector_products.h"
-// score 1364 (was 1405): frame 0x5d0 versus 0x58c, component/velocity homes and indexed contact induction remain.
+// score 1364 (was 1364): frame 0x5d0 versus 0x58c, component/velocity homes and indexed contact induction remain.
 // Frame 0x5d0 versus 0x58c; component/velocity homes, contact induction and scheduling remain.
 // Earlier 1585 (was 1596): Frame 0x590 versus 0x58c; component/velocity homes and contact induction remain.
 // Earlier 1600 from 1600: frame 0x580 versus 0x58c; velocity homes and contact induction differ;
@@ -224,6 +224,10 @@ PRIVATE __forceinline void function_206096(vector3f const *arg_0, real arg_1, ve
 // +0x88 named once 1451 (read once, as retail); operands of the steering product swapped 1403
 // (same code); retail's cross operand form written out 1439 (diagnostic); ray record at function
 // scope 1403 (frame 0x5cc). All restored.
+// Round 400: Joint coefficient branches 1364; word impact count 1386; word list probes 1369;
+// coefficient/count, coefficient/probes, count/probes, all word and all byte
+// 1378/1364/1399/1394/1410. The byte form has frame 0x5c8; the others 0x5d0.
+// Joint coefficients reach 6238 bytes without lowering the score.
 // @retail 0x206090
 bool __stdcall function_206090(s_vehicle_physics_state *arg_0, vector3f *arg_1, vector3f *arg_2)
 {
