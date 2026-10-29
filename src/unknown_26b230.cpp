@@ -587,6 +587,7 @@ PRIVATE __forceinline bool next_clump_in_pool(s_clump_pool_iterator *iterator)
 // Initial getter 3; complete side result/comparison 15; per-use prop receiver 113;
 // getter/complete side 15; getter/per-use receiver 113; complete side/per-use receiver 114;
 // all three 114; typed initial pool array 3, on the recovered native calling walk.
+// Round 247: early prop receiver 26; Boolean side 100; both 103; early receiver/promoted team 93; Boolean side/promoted team 102; all three 106; early receiver/entry walk 26; receiver/Boolean side/native handle 90. Initial extension and push schedule remain.
 // @retail 0x26b900
 long function_26b900(long prop_index, long actor_index, long clump_index)
 {
@@ -1771,6 +1772,7 @@ long function_26a740(long object_index, s_clump_activity_view *clump)
 // Round 69: existing inline datum lookup in the collected pass 288 (generation then cached as retail, but the
 // object query inlines there); short/long index loops 161/160; child next into the walking index 165;
 // child next with an else arm 167.
+// Round 247: generation comparison reversed / child for-header update / both 128/128/128; validation and cursor at latch, alone or with either/both 166/166/166/166; complete form with nullable child result 172. Generation/pool and child/countdown homes remain.
 // @retail 0x269580
 void function_269580(long destination_index, long source_index)
 {
@@ -1882,7 +1884,7 @@ long function_26ace0(long object_index, long actor_index, short type)
 
 void function_269250(long clump_index, long actor_index);
 
-// score 87 (was 126): retail hoists the walk's pool load into ebx and keeps the selection
+// score 87 (was 87): retail hoists the walk's pool load into ebx and keeps the selection
 // only on the stack (stored from esi, best stored in a tail shared with the initialisation);
 // ours keeps the pool in memory and the selection in edi.
 // Earlier: retained frame pointer 187; depth zero 304; selected-result reuse 134; team snapshot 133;
@@ -1896,6 +1898,7 @@ void function_269250(long clump_index, long actor_index);
 // Common score path: zero default with branch/selection-first 92/92, ternary 125/125;
 // best default with branch/selection-first 89/89 fast, ternary 128/128. Retained
 // branch score initialized from best, 87 plain; pool/selection and x87/SSE homes remain.
+// Round 247: common-graph scalar homes 89; wide best/names 175/175; wide candidate/names 146/146; both wide/names 169/169; homes with existing center setter 111. Pool and scalar/x87 allocation remain.
 // @retail 0x2689d0
 void function_2689d0(void)
 {
