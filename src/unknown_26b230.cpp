@@ -171,6 +171,11 @@ void function_268840()
 // delete block and 0x2691b0) where ours keeps NONE in a callee-saved register; current/successor homes,
 // the keep flag and the delete block (0x1e2990 inlined in retail: BLOCKED-BY 0x1e2990, noinline in
 // its own file) differ.
+// Frame 0x50 agrees; player-pool/NONE and current/successor homes remain.
+// frame 0x50 agrees; player-pool, current/successor and child-exit homes remain.
+// Earlier: frame 0x50 agrees; player-pool/NONE registers, current/successor homes and protected child inputs remain.
+// Frame 0x50 agrees; player-pool/NONE allocation and current/successor homes remain.
+// Earlier: Frame 0x50 agrees; player-pool/NONE and successor/current homes remain.
 // Distinct optional-object result 248; signed-byte keep 247; unsigned player ordinal 246; named
 // full distance 246; actor-query point scope 246.
 // Earlier (frame 0x48 then): iterator result/exhaustion and
@@ -227,6 +232,12 @@ void function_268840()
 // as a bool inside the actor branch feeding a remove flag 235 (gives retail's keep byte at +0x13 and
 // its `sete` test, but an extra spill slot makes the frame 0x54); plus the player pool read from
 // the global at each use 235.
+// Round 390: retained actor address, with Boolean retention/positive keep arm/optional
+// handle publication masks 0-7: 290/302/293/296/290/302/293/296. All lose frame 0x50;
+// original late lookup, complete body and matched child interfaces restored.
+// Round 178: On the deletion-owned graph, pool after setup 278; plus Boolean retention 286;
+// plus complete expiry 284; both 302; with long child-step result 276/277/282/288.
+// Original pool observations, retention, expiry and child-step widths restored.
 // @retail 0x268c90
 void function_268c90()
 {
@@ -2242,6 +2253,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // Round 383: shared existing location reset ordinary/inline/forced/outlined 283/283/283/346;
 // with consistently retained clump heads 391/391/391/411. Original helper linkage, both original
 // helper callers, root observations and complete executable body restored.
+// Round 386: real actor/prop/node traversal workspace reuse for each pair/all,
+// then the same four with the actual uninitialized query workspace at entry
+// 283/283/283/283/283/283/283/283; original independent workspaces and body restored.
 // Round 244: Five alternate location-reset field orders 283 each; reset-word-first with either sentinel
 // chain 283/283; reset between sentinels with invalid-cluster-first merge 283. Early reset SI and
 // visibility/selection homes remain; original field publications restored.
@@ -2251,6 +2265,9 @@ void *actor_get_character_situation_entry(long actor_index);
 // 372 (aligned 202 -> 161, 1308 bytes); that reassignment alone on the original loops 388 (frame 0x6a0);
 // on the 372 form with the structure global read at every use 368. Retail's extra pressure is the
 // hoisted reset word/NONE pair; ours never hoists them.
+// Round 391: Loop-local produced object pointers in plain for initializers/steps,
+// cluster/marking/prop in seven subsets 397/389/439/401/478/458/573;
+// all three with the object query 653. All step returns tested; original body restored.
 // @retail 0x269870
 void function_269870(long clump_index)
 {

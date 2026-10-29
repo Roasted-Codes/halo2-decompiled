@@ -162,6 +162,8 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // Round 381: marked-function requested/movement/acceleration vector references, all seven
 // nonempty subsets, 383 each; all vectors plus native scalar-output references 383.
 // Every original signature, operation and disabled declaration/call restored.
+// Round 153 (fast): vector argument through its address (diagnostic) 368, with an if-statement magnitude test 449;
+// vector locals renamed into retail's slot order 383; output declared first 383; position declared first 383.
 // Round 222: Selective ordinary-inline magnitude/planar/clamp boundaries, all seven
 // subsets 383 each; all four private math helpers ordinary inline 383. Original
 // forced boundaries, helper bodies and every call restored; frame/input homes remain.
@@ -169,6 +171,12 @@ PRIVATE __forceinline void function_29ab94(vector3f const *arg_0, real arg_1, ve
 // all seven nonempty family subsets 383 each; complete graph with alternate role
 // identities 383. Original names/helpers/body restored; frame 0x5c/0x64, actor/input
 // delivery and native magnitude homes remain.
+// Round 233: Distinct squared-speed/half-limit, later floor/heading and query-output
+// identities in seven subsets, then alternate complete roles: 383/383/383/383/383/383/383/383.
+// Original names, scopes, helper bodies and complete executable body restored.
+// Round 182: input-updated clamp result in all six formal orders 438 each;
+// lower-failure nesting with forward/reverse orders 438/438 (1814 bytes).
+// Original repeated helper, all four uses and movement body restored.
 // @retail 0x29ab90
 void __stdcall function_29ab90(long arg_0, long arg_1, vector3f *arg_2,
 	vector3f *arg_3, short *arg_4, vector3f *arg_5, bool *arg_6, bool *arg_7, short arg_8)

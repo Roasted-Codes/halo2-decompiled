@@ -244,6 +244,10 @@ bool function_23a220(const point2f *point, short count, const point2f *points, r
 // 260/251/216/214; with shared ray-start input 260/247/217/215.
 // Paired endpoints recover frame 0x90 but retain entry/edge scheduling differences;
 // every one-use endpoint capture and original ray input restored.
+// Round 72: origin as a pointer to the first vertex 275 (the vertex loads fold into memory operands,
+// none shared); start copy first with the direction from the copy 230 (retail's shared start
+// loads); both 276; that with the first edge before the second 232; count argument without the
+// short cast 192 (same code: a separate word load where retail pushes the loop-bound EDX).
 // Round 87: direction from the value setter 192 (same code); `long count = vertex_count;` for the loop
 // and the call 193 (retail's `push edx` and esi tail-loop temp, but a third exit block), declared
 // before the polygon 193; fraction as if/else 259; edges and cross in an inline triangle helper 192.

@@ -308,7 +308,8 @@ static inline bool teams_enabled_19e1c0()
 }
 
 /* writes the text of one token for the event, returning its length */
-// score 433 (was 433): frame 0x208 versus 0x204, result/capacity registers and separate copy tails differ.
+// score 390 (was 390): the switch-side-time branch now returns the remaining length directly,
+// the team branches keep the event's team in a local; frame 0x208 versus 0x204 and the copy tails differ.
 // Depth one with plain result 709; depth one with original result 443; unsigned mode 443;
 // opponent eligibility continue 443; opponent text initialized after scan 459; all restored.
 // Plain result with global optimisation off 1225; size mode 863; comparison-fed
@@ -351,6 +352,14 @@ static inline bool teams_enabled_19e1c0()
 // Round 66: ordinary result with element-address name buffers, a shared name pointer,
 // result-derived first terminator, a first-case pointer, a first-case exit, their combination,
 // an independent first-case length and destination element addresses 701 each; all restored.
+// This round: the team's local as short/long/int 421/403 (the long stays); the team loops as
+// `!=`, `<=`, a while, the body in the if and a single score compare 421/403/390/390/390; the
+// result local plain, without its initialiser, and with the text buffer first 701/665/433; the
+// volatile result without its initialiser 449; every form restored.
+// Round 393: Length/copy/comparison/format noinline declarations with inherited result 390/390/390/390;
+// ordinary result 691/691/691/691. All declarations and original case bodies restored.
+// Round 395: consumed name capacity with result after/before copy, result-fed capacity, and direct capacity exits
+// 618/649/519/621; ordinary result with those four capacity lifetimes 692/692/692/692. All restored.
 // @retail 0x19e1c0
 long function_19e1c0(s_event *event, long token_length, word const *token, word *destination, long remaining)
 {
@@ -377,10 +386,11 @@ long function_19e1c0(s_event *event, long token_length, word const *token, word 
 	}
 	else if (!wcsncmp(L"#cause_team", token, token_length) && event)
 	{
-		if (event->type == 0 && (event->subtype == 0x2d || event->subtype == 0x17) || event->cause_team != NONE)
+		long cause_team = event->cause_team;
+		if (event->type == 0 && (event->subtype == 0x2d || event->subtype == 0x17) || cause_team != NONE)
 		{
 			text[0] = 0;
-			function_19eae0(event->cause_team, text);
+			function_19eae0(cause_team, text);
 			result = wcslen(text);
 			if (result > remaining)
 				result = remaining;
@@ -389,10 +399,11 @@ long function_19e1c0(s_event *event, long token_length, word const *token, word 
 	}
 	else if (!wcsncmp(L"#effect_team", token, token_length) && event)
 	{
-		if (event->type == 0 && (event->subtype == 0x2d || event->subtype == 0x17) || event->effect_team != NONE)
+		long effect_team = event->effect_team;
+		if (event->type == 0 && (event->subtype == 0x2d || event->subtype == 0x17) || effect_team != NONE)
 		{
 			text[0] = 0;
-			function_19eae0(event->effect_team, text);
+			function_19eae0(effect_team, text);
 			result = wcslen(text);
 			if (result > remaining)
 				result = remaining;
@@ -494,7 +505,7 @@ long function_19e1c0(s_event *event, long token_length, word const *token, word 
 	{
 		result = unicode_string_vsnprintf(destination, remaining, L"%d", (short)g_4e9ae8->we0);
 		if (result < 0)
-			result = remaining;
+			return remaining;
 	}
 	else
 	{
