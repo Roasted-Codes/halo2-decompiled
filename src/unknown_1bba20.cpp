@@ -154,9 +154,16 @@ real function_204950(long actor_index, long squad_index, short mode);
 void function_26def0(long actor_index, long owner_index);
 __declspec(noinline) bool function_f5dc0(long object_index);
 
-// score 49 (was 49): the first squad test still reuses its full-width load;
-// the second call reloads the actor where retail uses its saved pointer, and
-// the distance-call argument order differs. Split entry branch 67; first fresh
+// score 49 (was 49): BLOCKED-BY 0x1e3400: retail loads the squad for both
+// 0x1e3400 calls as a 16-bit value (`xor eax, eax; mov ax, [esi + 0x28]` and
+// `xor ecx, ecx; mov cx, ax`, pushed unextended, as in 0x1bb570), so 0x1e3400's
+// squad parameter is a short; ours (long) zero-extends with movzx. One-file
+// harness with that parameter as short and the second call through the saved
+// actor (no second actor lookup): 1 difference, the 0x204950 call's EAX/ECX
+// setup order (0x204950's first two parameters swapped 5; squad local at
+// function scope 1; named squad distance 1). Earlier: the first squad test
+// still reuses its full-width load; the second call reloads the actor where
+// retail uses its saved pointer, and the distance-call argument order differs. Split entry branch 67; first fresh
 // actor 90; second fresh actor 49 (kept); both fresh actors 81; first field
 // pointer 49; second field pointer 67; typed vehicle 67; no final refresh 123.
 // Native tag field 49; squad-first admission 74; squad before entry flag 77;
