@@ -967,6 +967,8 @@ PRIVATE inline void channel_loop_clear(c_animation_channel *channel)
 // Round 185: Prior-name record initialization/assignment/library copies, eager/logical joins,
 // 271/257 in each pair; overlap-safe copy 265/272. Eager copies recover identifier homes but regress
 // overall. Original names, identifier scopes, queries, publication and complete body restored.
+// Round 268: Phase-preservation predicate once at phase/entry, bool/byte/short/long:
+// 321/321/316/334/345/345/332/349. Original body restored.
 // @retail 0x1cd070
 bool s_animation_state::animation_set(long mode, long weapon_class, long weapon_type, long set, long state_flags, long channel_flags)
 {
