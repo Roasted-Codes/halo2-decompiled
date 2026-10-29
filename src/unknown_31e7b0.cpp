@@ -60,9 +60,9 @@ static __forceinline void store_body_axis(__m128 &result, __m128 const &axis, so
 }
 
 // A single angular error row and its four-byte operation.
-// score 70 (was 88): explicitly reload the first axis after storing the second.
-// Pointer registers and SIMD temporary allocation still differ; moving the
-// reload before the store or using output-reference transforms scored worse.
+// score 0 (was 70): write the first axis through the output-reference helper
+// and let the diagonal helper reload both stored axes. An explicit first-axis
+// reload changes SIMD temporaries and pointer allocation in this builder.
 // @retail 0x31e7b0
 void __cdecl build_angular_error_31e7b0(solver_angular_error_31e7b0 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -70,7 +70,7 @@ void __cdecl build_angular_error_31e7b0(solver_angular_error_31e7b0 const *input
 	solver_body_31e7b0 const *body_a = pair->a;
 	solver_body_31e7b0 const *body_b = pair->b;
 	solver_angular_row_31e7b0 *row = (solver_angular_row_31e7b0 *)output->terms;
-	row->a = body_axis(input->axis, body_a);
+	store_body_axis(row->a, input->axis, body_a);
 	if (body_b->axes_already_local)
 	{
 		row->b = _mm_xor_ps(input->axis, *(__m128 const *)solver_sign_bits);
@@ -78,10 +78,10 @@ void __cdecl build_angular_error_31e7b0(solver_angular_error_31e7b0 const *input
 	else
 	{
 		__m128 negative_axis = _mm_xor_ps(input->axis, *(__m128 const *)solver_sign_bits);
-		row->b = rotated_axis(negative_axis, body_b);
+		__m128 result_b = rotated_axis(negative_axis, body_b);
+		row->b = result_b;
 	}
-	__m128 result_a = _mm_load_ps((float const *)&row->a);
-	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
+	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
 	float error = -(input->error_b.m128_f32[2] * input->error_a.m128_f32[2]
 		+ input->error_b.m128_f32[1] * input->error_a.m128_f32[1]
 		+ input->error_b.m128_f32[0] * input->error_a.m128_f32[0]) * pair->error_scale;
@@ -93,18 +93,19 @@ void __cdecl build_angular_error_31e7b0(solver_angular_error_31e7b0 const *input
 }
 
 // One row per supplied axis, with a scalar operation value for each row.
-// score 15 (was 140): reload bodies inside the countdown loop, store the first
-// axis by reference, and compute velocity before the opcode. Pointer-based
-// value iteration did not improve the remaining register/scheduling differences.
+// score 0 (was 15): retain the input pointer on the stack through a reference,
+// and initialize the output cursors before the values cursor. This reproduces
+// the initial cursor spill and the scalar multiply/store scheduling.
 // @retail 0x31e900
 void __cdecl build_angular_array_31e900(solver_angular_array_31e900 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
 {
-	__m128 const *axis = input->axes;
-	solver_axis_values_31e900 const *value = input->values;
+	solver_angular_array_31e900 const * const &input_ref = input;
+	__m128 const *axis = input_ref->axes;
 	solver_angular_row_31e7b0 *row = (solver_angular_row_31e7b0 *)output->terms;
 	solver_scalar_op_31e7b0 *op = (solver_scalar_op_31e7b0 *)output->operations;
-	for (long count = input->count; --count >= 0; ++op, ++axis, ++row, ++value)
+	solver_axis_values_31e900 const *value = input_ref->values;
+	for (long count = input_ref->count; --count >= 0; ++op, ++axis, ++row, ++value)
 	{
 		solver_body_31e7b0 const *body_a = pair->a;
 		solver_body_31e7b0 const *body_b = pair->b;
@@ -119,7 +120,7 @@ void __cdecl build_angular_array_31e900(solver_angular_array_31e900 const *input
 			row->b = rotated_axis(negative_axis, body_b);
 		}
 		row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
-		float velocity = pair->velocity_scale * input->velocity;
+		float velocity = pair->velocity_scale * input_ref->velocity;
 		op->opcode = 0x40809;
 		op->value = velocity;
 		row->b.m128_f32[3] = value->error * pair->error_scale;
@@ -129,9 +130,9 @@ void __cdecl build_angular_array_31e900(solver_angular_array_31e900 const *input
 }
 
 // An angular row with lower/upper impulse bounds and half inverse mass.
-// score 108 (was 109): explicitly reload the first axis after storing the second.
-// Axis negation and register scheduling still differ; moving the reload before
-// the store or using output-reference transforms scored worse.
+// score 0 (was 108): use the output-reference first-axis transform, initialize
+// body B after the output cursors, and compute both bounds before storing them.
+// This retains retail's pointer allocation and x87 calculation/store order.
 // @retail 0x31f000
 void __cdecl build_angular_range_31f000(solver_angular_range_31f000 const *input,
 	solver_pair_31e7b0 const *pair, solver_output_31e7b0 *output)
@@ -139,8 +140,8 @@ void __cdecl build_angular_range_31f000(solver_angular_range_31f000 const *input
 	solver_body_31e7b0 const *body_a = pair->a;
 	solver_angular_row_31e7b0 *row = (solver_angular_row_31e7b0 *)output->terms;
 	solver_range_op_31e7b0 *op = (solver_range_op_31e7b0 *)output->operations;
-	row->a = body_axis(input->axis, body_a);
 	solver_body_31e7b0 const *body_b = pair->b;
+	store_body_axis(row->a, input->axis, body_a);
 	if (body_b->axes_already_local)
 	{
 		row->b = _mm_xor_ps(input->axis, *(__m128 const *)solver_sign_bits);
@@ -148,14 +149,16 @@ void __cdecl build_angular_range_31f000(solver_angular_range_31f000 const *input
 	else
 	{
 		__m128 negative_axis = _mm_xor_ps(input->axis, *(__m128 const *)solver_sign_bits);
-		row->b = rotated_axis(negative_axis, body_b);
+		__m128 result_b = rotated_axis(negative_axis, body_b);
+		row->b = result_b;
 	}
-	__m128 result_a = _mm_load_ps((float const *)&row->a);
-	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(result_a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
+	row->a.m128_f32[3] = 1.0f / (sum_three(angular_diagonal_terms(row->a, row->b, body_a, body_b)) + 1.1920928955078125e-7f);
 	float scale = -pair->error_scale;
-	op->minimum = scale * input->minimum;
-	op->maximum = scale * input->maximum;
+	float minimum = scale * input->minimum;
+	float maximum = scale * input->maximum;
 	op->opcode = 0x4100a;
+	op->minimum = minimum;
+	op->maximum = maximum;
 	op->softness = 0.5f;
 	output->operations = (unsigned long *)(op + 1);
 	output->terms = (__m128 *)(row + 1);
