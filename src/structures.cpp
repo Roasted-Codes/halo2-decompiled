@@ -344,6 +344,8 @@ static inline bool structure_section_get_vertex(s_structure_section const *secti
 // Round 185: Direct collision-point transform input with aggregate/library/overlap-safe/shared-
 // setter copies at entry 199/199/205/243; case-owned copies 251/251/257/296. Original in-place
 // transform, point capture, defined vertex failures, complete body and include set restored.
+// Round 187: Native byte-data/offset versus point-table fetch inputs, long/word count and
+// early/result-first eligibility, all eight 235. Original fetch contract and body restored.
 // @retail 0x14ac60
 bool structure_get_lightmap_triangle(s_structure_collision_result const *collision, s_structure_lightmap_triangle *triangle)
 {

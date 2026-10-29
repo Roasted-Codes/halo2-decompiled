@@ -4130,7 +4130,7 @@ struct s_score_zone_view
     short count;
 };
 void function_15fe20(long team_index, color3f *color);
-// score 88 (was 119): frame 0x48c, four bytes long; two team-color copies (retail loads all three words, then
+// score 88 (was 88): frame 0x48c, four bytes long; two team-color copies (retail loads all three words, then
 // stores through ESI/EDI), the -1 register reused for the unit/slot NONE tests, a byte shift count
 // and scratch-register renames remain.
 // Earlier: frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
@@ -4194,6 +4194,8 @@ void function_15fe20(long team_index, color3f *color);
 // Round 177: Existing team-color helper rival/own/both 119/119/119; complete unit-index/
 // absolute-index/team observations 119/119/724, unit plus absolute 119, all three 726.
 // Original observation points and body restored; native transfers and final NONE residency remain.
+// Round 187: Native color consumer scope masks 1-7 on the direct weapon initializer graph
+// 88/88/88/88/88/88/88; sequential team workspace 252.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
