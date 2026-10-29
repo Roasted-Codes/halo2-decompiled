@@ -233,7 +233,7 @@ bool function_1e4310(long actor_index);
 void function_26b770(long clump_index);
 long function_113da0(long unit_index);
 bool function_e4020(long arg_159e6d);
-real function_1e9720(long kind, short team);
+real function_1e9720(short kind, short team);
 bool function_1fdbf0(long actor_index, short type);
 bool function_1fdce0(long arg_0, short arg_1);
 bool function_200110(long arg_0, long arg_1, point3f *arg_2, s_type_c3b527 *arg_3);
