@@ -486,6 +486,9 @@ PRIVATE inline real plane_error_163db0(s_plane const *plane, point3f const *poin
 // Round 218: CRT output-address rectangle products/all, memcpy 415/417,
 // memmove 721/592; each with copied-bounds output consumed 415/417/721/592. All restored.
 // Copy output identity does not recover camera EBP/corners EBX or the first store schedule.
+// Round 254: diagnostic parallel products/accumulator/both/absolute-result/products-result/
+// accumulator-result/all/projected-point part 400/404/400/400/404/400/404/400. Four-point
+// reductions rejected; original diagnostic helper and complete body restored.
 // @retail 0x163db0
 bool function_163db0(s_camera_163db0 const *camera, box2f const *rectangle, long identifier, s_frustum_1648d0 *result)
 {

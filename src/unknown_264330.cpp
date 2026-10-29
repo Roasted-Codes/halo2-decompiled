@@ -483,6 +483,9 @@ void __stdcall function_264b50(long actor_index, long node_index, s_2641c0 *samp
 // Two-point forms and added phase flags rejected without a match; all restored.
 // Round 226: Consumption scopes for update, tracking and each real view, all seven subsets
 // 420 each; all scopes with run-wide constant initialization before actor lookup 420. All restored.
+// Round 254: complete per-use actor/node/both getters 465/668/705; each on native
+// for traversal 460/664/705; paired getters with long sample/update 720/711.
+// First six recover frame 0xa0 but grow code and retain stacked actor input; all restored.
 // @retail 0x262ba0
 void function_262ba0(long actor_index)
 {

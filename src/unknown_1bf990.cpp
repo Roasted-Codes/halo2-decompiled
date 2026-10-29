@@ -320,6 +320,8 @@ bool function_1f45c0(long arg_0, s_type_c3b527 const *arg_1, long arg_2, bool ar
 // Round 252: uniform per-use actor/pawn/target getters, all seven subsets,
 // 215/211/268/211/241/211/245; actor and pawn-identity reads at every use 234.
 // All receiver models regress; original snapshots, body and frame restored.
+// Round 254: both planar squared parts, squared sum and real magnitude homes, all seven
+// subsets 186 each; already-real magnitude promoted for comparison 186. All restored.
 // @retail 0x1bff80
 bool __stdcall function_1bff80(long arg_0, s_slot *arg_1)
 {

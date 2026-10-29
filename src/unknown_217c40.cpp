@@ -133,6 +133,8 @@ PRIVATE __forceinline void function_217c42(real *arg_0, real *arg_1, real arg_2,
 // simultaneous snap work remain.
 // Round 370: double threshold, rounded absolute-angle carrier and rounded-angle formal
 // domains, then all with short quadrant 501/508/508/501/501/508/508/508; helpers and body restored.
+// Round 254: native short copy/first-inverse/both/second-inverse/copy-second/both-inverse/all
+// mapping induction 625/538/626/535/646/544/648; all byte 648. Original long loops restored.
 // @retail 0x217c40 standard
 void function_217c40(void)
 {

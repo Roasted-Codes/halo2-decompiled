@@ -188,6 +188,9 @@ bool function_26c380(point3f const *origin, s_pathfinding_data const *pathfindin
 // 421/418/421/418/421/418/421; all endings with Boolean success 583. Original body restored.
 // Round 226: Complete endpoint/distance, progress-distance and sector-history names,
 // all seven subsets and the complete Boolean-role group 418 each. All names and body restored.
+// Round 254: magnitude accumulator/squared-sum/real-result/accumulator-result
+// 428/418/423/425; each with all three product parts 426/417/417/428. One-point
+// reductions rejected; original helper, normal storage and body restored.
 // @retail 0x26c590
 bool function_26c590(s_pathfinding_data const *pathfinding, point3f const *origin, long sector_index,
 	long target_sector_index, vector3f const *direction, real distance, s_path_location const *location,
