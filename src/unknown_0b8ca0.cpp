@@ -684,6 +684,9 @@ static __forceinline long object_query_next_ab(s_record_pool *data, long index)
 // scores this body 247; there a bool result 276, short result 235 (plain 239, no self-alignment),
 // marker/position/offset declared at function scope 247 each. Retail also keeps the player-index
 // NONE test at the loop latch and widens the zoom argument to 32 bits. Original body restored.
+// Round 176: Comparison-produced near/facing/both long results 236/235/237; Boolean results 287/283/277;
+// one per-player success exit with comparison-produced long/Boolean result 237/277. Direct original
+// radius observations throughout; original result, inherited radius storage and all body statements restored.
 // @retail 0xbba80
 bool function_bba80(long object_index)
 {
