@@ -116,6 +116,9 @@ void function_117080(long);
 // scalar clear 76, unsigned slot 76. All restored; record-address and search homes remain.
 // Coupled pool/datum/absolute-slot identities, seven subsets and entry-slot lifetime
 // on the complete role-name graph: 50/50/50/50/50/50/50/50. Original body restored.
+// Round 71: pool global read at each use 54 (retail's reload after the `lea`; aligned 16 against 18), with a
+// record local/surface_record/no slot/no slot plus surface_record 54/54/54/54; the record address stays
+// folded (`[eax + ecx + 0xc]`, retail `add eax, edx`) in every form whose store precedes the first call.
 // @retail 0x1168a0
 void __stdcall function_1168a0(real elapsed)
 {
@@ -314,6 +317,9 @@ void function_117510(long index)
 // byte 201/201, word 189/189, long 195/195; with uniform live endpoint fields
 // bool/byte/word/long 212/212/200/206. All restored; 0x1c frame, entry/link homes
 // and correction/pin-word scheduling remain.
+// Round 264: live record/definition/both/link/record-link/definition-link/all receivers
+// 309/232/379/147/309/254/377; definition acquired before record 149. All restored;
+// frame 0x1c, entry pool/record carriers and correction/pin scheduling remain.
 // @retail 0x117790
 void __stdcall function_117790(long index)
 {
@@ -379,6 +385,12 @@ void __stdcall function_117790(long index)
 // Round 221: Origin pointer observed at use 148; definition at every use 168; both 171;
 // record at every use 270; with origin/definition/both 252/321/303; all plus shared correction
 // difference helper 303. Original captures restored; pool-base and copy carriers remain.
+// Round 71: the squared distance as i*i + j*j + k*k (or length_sq3f) gives retail's z, y, x schedule
+// (aligned 39 -> 25) but scores 83: the data base stays in EBP (retail EBX), so the `add esi` comes one
+// load early, the code before the first loop is a byte short and a jump over the loop pad appears. On that
+// form: attachment fields read in full 106 (retail's walk from the vertex field and the second vertex
+// read, but the pin OR splits into load/or/store, 522 bytes), with bit_vector_set 106; definition read
+// after the origin copy 73 (aligned 48).
 // @retail 0x117a80
 void function_117a80(long index)
 {
@@ -438,7 +450,7 @@ static inline dword surface_random()
 	return g_4e7408->seed >> 16;
 }
 
-// score 160 (was 168): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
+// score 160 (was 160): frame 0x28 against 0x20 and random/time/oscillation staging remain; shared cross product reaches retail length.
 // Earlier frame 0x24 against 0x20 and the random-seed/oscillation schedule. Reading the frame
 // count again after the 0x117c80 call (as retail does) gives retail's convention: wind in EBX, definition in EDI.
 // Complete output staging 201; old before axis 199, before trigonometry 199; vector names 195;
@@ -456,6 +468,9 @@ static inline dword surface_random()
 // Round 32: shared initial RNG 160; shared table-index draws 160; both 160;
 // complete axis/direction CRT captures 168, with initial/table/both 160/160/160;
 // all with alternate shared RNG contract 160. Initial shared RNG retained, plain 160; frame 0x28 remains.
+// Round 264: all six lexical orders of the three rotation objects on the shared
+// cross/RNG graph 160 each; vector declarations at entry/after angle 160/160.
+// Original names and scopes restored; frame 0x28 and time/rotation staging remain.
 // @retail 0x117dd0
 void function_117dd0(long index, vector3f *wind)
 {
@@ -509,6 +524,12 @@ void function_117dd0(long index, vector3f *wind)
 // point-history transfers alone/projection/cursor/all 212/213/207/199; in-place projection 153.
 // On projected normal, early weights/acceleration first/force first/both/all 102/113/103/113/110;
 // weight point setters 104, with all 112. Normal.k cursor recovered at 103/102; sub-eight gains restored.
+// Round 71: the else loop through a vertex pointer (`vertex->previous = vertex->position`) gives retail's
+// else loop and its pad exactly and retail's 744 bytes (aligned 85 -> 66) but scores 116 (the main loop's
+// shifts); with acceleration and force as first addends 113 (aligned 59); with the tangent through
+// vector3f_add_scaled(..., -dot, ...) 196 (normal.k cursor, 712 bytes), plus dot3f 195; with the projection
+// through scale_vector_by_double 150 (normal.k cursor, frame changes). Retail loads acceleration.i/j into
+// a register before adding (ours folds the memory operand).
 // @retail 0x118140
 void function_118140(long index)
 {
@@ -611,6 +632,9 @@ static inline byte *surface_pointer(byte *base, long offset) { return *(byte **)
 // 473/475; with uniform descriptor-base observations 498/482; native exit-owned
 // results 510/510, with descriptor observations 533/533. All original searches
 // and APIs restored; 0x44/0x2c frame and outer vertex API expansion remain.
+// Round 264: existing 4f/2f API ordinary-inline-noinline declaration pairs, all
+// eight non-original combinations 473 each. Original declarations and body restored;
+// frame 0x44/0x2c and selective outer vertex API expansion remain.
 // @retail 0x116b00
 void __stdcall function_116b00(long tag_index, long unused, long group, long variant, long pass, long index, void *context)
 {

@@ -1088,6 +1088,9 @@ void function_1e04a0(long primary_tag, long character_index, long unit_index, lo
 // Round 30: Squad parameter reference 320; unit re-observation 340; separate early failure 338;
 // uninitialized/late-scoped actor result 338 each; settings lookup noinline 320; unit re-observation
 // with a second guard or separate phases 340 each; cleanup indices first 320. Opening body restored.
+// DL167: Native unsigned character/squad/returned handle interfaces, seven nonempty
+// subsets, and all with the unsigned actor result: 320 each. Every declaration, original
+// handle domain and complete body restored; frame 0x118 and sentinel EDI/ESI remain.
 // @retail 0x1e0850
 long __stdcall function_1e0850(long character_index, long squad_index, s_203780 const *placement, bool substitute)
 {
@@ -1690,7 +1693,12 @@ PRIVATE inline long equipment_secondary_weapon_r21(long unit_index)
 // query 340/340/340/333; shared seed-field receiver at those same acquisition
 // points 340/340/340/333. Every draw retained; all original receivers restored.
 // Round 29: Current/secondary result and actual weapon-pair dword domains in all seven combinations, then the real word ordinal: 263 each. Original result/pair types, ordinal and all code restored.
+// Round 164: nonredundant actor/unit gates, draw-first ordered admission, their seven
+// combinations and all with readonly actor 263 each; all original observations restored.
 // Ammunition span named at its arithmetic producer, with options/probability/delay result-production combinations 263/310/282/315/263/310/282/315; original expressions and result producers restored.
+// Round 249: plain native two-slot shared-query traversal, long/short/word/byte
+// ordinal 275/324/324/324; existing unit receiver with those domains 275/324/324/324.
+// Original private queries, native object declaration and complete body restored.
 // @retail 0x1e2a90
 void function_1e2a90(long actor_index)
 {

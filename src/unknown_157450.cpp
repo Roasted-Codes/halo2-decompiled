@@ -3894,9 +3894,15 @@ static __forceinline long nonnegative_15ce70(long value)
 // Round 218: Exhaustive award result, entry declaration with before/after subtype leaves and
 // ordinary/excluded category first 579/591/584/602; selection declaration counterparts 579/591/584/602.
 // All restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
+// Round 385: Team/observer/both/whole-function engine receivers 470/557/557/617; with explicit team
+// result 550/509/509/617. All restored; frame 0xe4/0xe0 and attacker/category/NONE/decision homes
+// remain.
 // Round 173: actual external victim/attacker/state record references, all seven nonempty
 // combinations 470; all three with existing complete position setter 471. Original record
 // receivers, both events, shared award update and complete body restored.
+// Round 226: paired existing initializer/cause/effect/sender boundaries 602/609/592/588/567/583;
+// initializer/cause/effect 637, complete event lifecycle 659. Original body and all inline
+// boundaries restored; frame 0xe4/0xe0 and attacker/category/NONE/event homes remain.
 // @retail 0x15ce70
 void function_15ce70(long attacker_index, long victim_index, bool betrayal, byte damage)
 {
@@ -4124,7 +4130,7 @@ struct s_score_zone_view
     short count;
 };
 void function_15fe20(long team_index, color3f *color);
-// score 119 (was 440): retail length; two team-color copies (retail loads all three words, then
+// score 88 (was 119): frame 0x48c, four bytes long; two team-color copies (retail loads all three words, then
 // stores through ESI/EDI), the -1 register reused for the unit/slot NONE tests, a byte shift count
 // and scratch-register renames remain.
 // Earlier: frame 0x48c and early scalar homes agree; text/color/zone allocation and charge spills differ.
@@ -4181,6 +4187,13 @@ void function_15fe20(long team_index, color3f *color);
 // Round 209: Returned-color memcpy rival/own/both/zones/all 440 each; overlap-safe rival/own/both copies
 // 548/418/427. Own copy plain 418 but introduces a library call absent from the native retail transfer;
 // discarded as the wrong copy boundary. Frame, palette/zone homes and charge spills remain.
+// Round 248: team rival/own/both output role names and rival-color consumption scope 119 each;
+// exhaustive weapon selection, either arm order, with/without the repeated unit-index capture 88;
+// producer declaration and direct slot-selection initializer 88. Keep only direct selection (plain 88,
+// 2692/2688 bytes). Frame and initial color-copy gap remain; final NONE allocation improves.
+// Round 177: Existing team-color helper rival/own/both 119/119/119; complete unit-index/
+// absolute-index/team observations 119/119/724, unit plus absolute 119, all three 726.
+// Original observation points and body restored; native transfers and final NONE residency remain.
 // @retail 0x15f3a0
 bool function_15f3a0(long local_index, s_player_score_display *display)
 {
@@ -4382,12 +4395,11 @@ bool function_15f3a0(long local_index, s_player_score_display *display)
             else display->zone_count = 0;
         }
         else result = false;
-        long weapon = NONE;
         if (player->unit_index != NONE)
         {
             byte *unit = ((byte **)(g_4e0300->data + (player->unit_index & 0xffff) * 12))[2];
             short slot = *(char *)(unit + 0x212);
-            if (slot != NONE) weapon = ((long *)(unit + 0x218))[slot];
+            long weapon = slot != NONE ? ((long *)(unit + 0x218))[slot] : NONE;
             if (function_162b10(weapon))
             {
                 real charge = function_242140(weapon);

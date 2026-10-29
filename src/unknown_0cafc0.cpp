@@ -160,7 +160,7 @@ point3f *function_b9ef0(long object_index, point3f *result)
 	return result;
 }
 
-// score 31 (was 55): frame 0xa4, entry, collision block and marker-branch layout agree; the two
+// score 31 (was 31): frame 0xa4, entry, collision block and marker-branch layout agree; the two
 // height loads are swapped, the seated object goes to EDX (retail EBP, so the marker temporaries
 // rotate one register off), and the parent branch loads the tag table before the object table
 // (ours EAX for the object table is a byte shorter, which also keeps a later je short: 5 bytes).
@@ -219,6 +219,9 @@ point3f *function_b9ef0(long object_index, point3f *result)
 // Round 70: position copy in each marker arm 40 (kept); to-collision vector first 31 (kept);
 // parent branch without its index local 46; parent through a table local / header pointer 31/31;
 // seated lookups through the object macro 31; crouching term named first 31.
+// Round 165: parent-first admission with original/absent-seat/camera/both exits
+// 299/299/299/299; one root admission with the same four parent-exit combinations
+// 306/306/306/306. Both partitions lose the 0xa4 frame; original body restored.
 // Round 68: direct height sum 46; separate same-parent table base 31; parent definition
 // through the existing/new local 31/31; reversed crouching product/sum 31/31;
 // fresh post-call parent table base 31; separate same-parent and parent bases 31.

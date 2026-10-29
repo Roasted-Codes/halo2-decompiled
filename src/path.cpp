@@ -10,9 +10,8 @@
 
 real function_30bf0(vector3f *v);
 
-bool function_26c4e0(s_type_c3b527 const *start, s_type_c3b527 const *end,
-	s_path_trace_result *result, s_pathfinding_data *pathfinding,
-	long start_node_index, long end_node_index, long flags);
+bool function_26c4e0(s_pathfinding_data *pathfinding, s_type_c3b527 const *start, long start_node_index,
+	s_type_c3b527 const *end, long end_node_index, long flags, s_path_trace_result *result);
 
 /* Local views of fields not yet named in path.h. */
 struct s_path_input_view
@@ -231,7 +230,7 @@ void function_2705c0(s_path_source *source, point3f const *point,
 	input->unknown44 = unknown;
 }
 
-// score 28 (was 28): retail takes the location in edx and the node in ebx and has one exit (`xor al, al` at entry, `mov al, 1`); the one-exit
+// score 28 (was 28): BLOCKED-BY 0x26c590. Retail takes the location in edx and the node in ebx and has one exit (`xor al, al` at entry, `mov al, 1`); the one-exit
 // form (`bool result = false;` ... `result = true; break;` ... `return result;`) matches, but unmatched 0x26c590 then takes its origin in
 // ecx and its eight matched callers (0x1ab770, 0x1bd400, 0x1f5110, 0x26c4e0, 0x26cbe0, 0x26ccb0, 0x26d290, 0x2c39f0) stop matching
 // (BLOCKED-BY 0x26c590). Tried in 0x26c590 with that form: `bool success` 553, line_normal as one dword copy 445, point1/distance1 at
@@ -244,6 +243,10 @@ void function_2705c0(s_path_source *source, point3f const *point,
 // Inline with original exits 28; inline plus single result MATCH fast, but seven matched reduced-image callers lose
 // their match (the eighth already differs in that image); shared byte/short result 40/45; native index with original/
 // shared exits 32/37; nested tests 28; active-bit-first tests 28 (same caller losses). All restored.
+// Round 70: a one-file LTCG harness of 0x26c590 + this file reproduces the move (origin in ecx, ret 0x14). Retail keeps
+// NONE in edx from entry to the loop test, so the axis pointer takes edi and origin stays on the stack. In 0x26c590 with
+// the one-exit form: next index at function scope 430, it set to NONE there 419, bool success cleared at the count exit
+// 544, first at function scope 419, nested location/flag tests 419; origin stays in ecx in all, the callers still lost.
 // @retail 0x270600
 PRIVATE bool function_270600(s_path_location const *location, long node_index)
 {
@@ -259,22 +262,6 @@ PRIVATE bool function_270600(s_path_location const *location, long node_index)
 	return false;
 }
 
-// score 31 (was 31): at the call to 0x26c4e0 retail computes the end point (`lea ecx, [eax+0x18]`) right after pushing the parent's node
-// index and loads the next two arguments through eax; ours loads them through ecx and computes the end point last, and from there on our
-// eax/ecx/edx choices are one step off retail's. Tried: a named parent point for the compare and the call 65; the two break tests as one
-// `||` condition 31; trace at function scope 31; no parent local 85; the output arms swapped 34; the permuter (86 tries) found nothing below 31;
-// the loop as `for (; node->parent != NONE; node = ...)` 31; a pathfinding local before the call 34; parent declared after the
-// output-index test 44; the end point as `&lookup->nodes[node->parent].entry_point` 44; an early `return false` in place of the result 93;
-// the end point named for the call only 31; the call's result in a named bool 31; `parent` as a const pointer 31; a trailing `continue` 31.
-// Round 268: both library record copies 31; lookup-test result 87; true-first result 105;
-// long result 57; library copies with those three result forms 87/105/57;
-// cached parent advance 95. The 0x24 frame agrees; endpoint argument scheduling remains.
-// Round 270: readonly native receivers 31; promoted lookup index 89; parent-handle
-// traversal 31, readonly 31; complete endpoint 110, with parent handle 110; complete
-// start input 134; word success result 65. All restored; frame 0x24 and call scheduling remain.
-// Round 272: active-node index 101; shared root result/record selection 120; parent reference 31;
-// index plus root result 125; exact-only parent-node/start-space/both captures 31/31/31;
-// byte success result 51. All restored; endpoint scheduling at +0x61 remains.
 // @retail 0x270640
 PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 	long node_index, bool *arg_c793c4, s_type_c3b527 *out)
@@ -293,8 +280,8 @@ PRIVATE bool function_270640(s_type_f17a25 *state, s_type_c3b527 const *point,
 				break;
 			}
 			s_path_trace_result trace;
-			if (function_26c4e0(point, &parent->entry_point, &trace,
-				(s_pathfinding_data *)state->pathfinding, node_index, parent->node_index, 0))
+			if (function_26c4e0((s_pathfinding_data *)state->pathfinding, point, node_index,
+				&parent->entry_point, parent->node_index, 0, &trace))
 			{
 				break;
 			}
@@ -413,7 +400,7 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 	return result;
 }
 
-// score 363 (was 372): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
+// score 349 (was 363): Frame 0xe4 agrees; maximum/node acquisition order, clearing, flags and vector scheduling differ.
 // Earlier: the 0xe4 frame and state register now agree; initial load order, clearing, flag width and vector scheduling differ.
 // Tried: pathfinding field at each use 459; bounded short initialization count 406; both 451; edge memset 408;
 // all three 434; field reads plus memset 436; all three plus point-difference helpers 443; traversal state first 396;
@@ -425,6 +412,13 @@ bool function_270750(byte *buffer, long unknown, s_actor_point_target const *tar
 // Round 274: full-width initialization/link/path/scan carriers 400/363/378/414; initialization+link 401;
 // link+path 441 (parent 282); path+scan 422; all four 407; previous-node presence 409, with initialization 433.
 // Only the actual bounded full-width link count is retained: 363 plain, 1390/1388 bytes; parent stays 155.
+// Round 248: real signed flag byte 370; signed/unsigned native flag-seven fields 363/363;
+// signed flag field with link/complete entry initializers 360 (three-point gain restored), all
+// constant traversal initializers 384, guarded edge memset 393, native capped word 372, all 412.
+// Complete body and edge declarations restored; initial acquisition, clearing and vector homes remain.
+// Round 250: actual advancing initialization receiver, short/long ordinal 349/401;
+// safely capped word 374/374; separate edge memset 384/353, with word 384/386.
+// Keep only the receiver with the original short ordinal: 349 plain, 1395/1388 bytes.
 // @retail 0x270d90
 PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	s_path_result_view const *result, short node_index, short maximum_steps,
@@ -437,12 +431,14 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	long initialize_count = lookup->nodes[node_index].depth + 1;
 	if (initialize_count > maximum_steps)
 		initialize_count = maximum_steps;
+	s_path_step_view *initialize_step = steps;
 	for (short i = 0; i < initialize_count; i++)
 	{
 		edge_indices[i] = NONE;
-		steps[i].type = NONE;
-		steps[i].link_index = NONE;
-		steps[i].unknown02 = 0;
+		initialize_step->type = NONE;
+		initialize_step->link_index = NONE;
+		initialize_step->unknown02 = 0;
+		initialize_step++;
 	}
 	short previous_index = NONE;
 	s_path_node_key_view *previous = NULL;
@@ -563,7 +559,7 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	return count;
 }
 
-// score 155 (was 168): Frame 0x5ac and entry agree; avoidance materialization, retry-mask reload and distance-return tail differ.
+// score 98 (was 98): Frame 0x5ac and distance-return tails agree; avoidance materialization and retry-word residency differ.
 // Earlier: frame 0x5ac, actor lookup and direct avoidance-byte copy agree; retry-mask reload and tail layout differ.
 // Tried: one result exit 308; stage array names 356; both 308; reversed arrays 356; named destination fields 360;
 // direct reconstruction count 357; full avoidance if/else 354; success first 362; shared rounding helper 363; helper plus one exit 314.
@@ -575,6 +571,11 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 // Round 274: output defaults before avoidance 165; complete short-circuit avoidance 159; full-width
 // lookup 339, success 216; defaults/avoidance 155 (plain, kept), defaults/lookup 339,
 // defaults/success 216; complete avoidance with both wide result carriers 326.
+// Complete-result return 98; separate avoidance update 165; both 137; failed-finalization first 202;
+// failure-first/avoidance 165, failure-first/return 202, all 165; nested avoidance/return 137.
+// Round 250: signed retry-word ownership before/after output defaults, short/long
+// 103/207/103/207; with separate final retry publication 103/207/103/207.
+// All restored; avoidance materialization and retry-word residency remain.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {
@@ -674,6 +675,7 @@ bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view 
 						result->destination_node_index = input->start_node_index;
 					}
 					result->destination_distance = function_210970(&result->destination, &destination->destination);
+					return result->valid;
 				}
 			}
 			else if (++result->location.flags > 32)

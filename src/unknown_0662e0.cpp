@@ -592,6 +592,14 @@ __forceinline void network_configuration_levels_initialize(s_network_configurati
 // matrix rows 490, with first-table/levels/both 493/490/505; all with descending
 // columns 470. Constant forwarding and native ascending induction remain; original
 // indexed walks, existing level producer, tables and body restored.
+// This round: the first table's pointer walk (retail keeps the element address in esi and the
+// index in ebp, with value40 at [esi-0x44]) is not reachable from the source - a pointer over
+// value84 beside the index 421, two pointers 457, the index taken from the pointer 477/441, the
+// element address compared with the array's own addresses 476, the pointer compared with the
+// array's own addresses 468, a pointer with an offset 363 and a loop-local index 363; MSVC
+// either folds the index into the pointer or normalises the pointer back into an index.
+// This round: loop bounds as `i < 17` - the levels helper 424, the first table 363, both 478,
+// helper and table together 454; every spelling regresses, the original bounds stay.
 // @retail 0x66330
 void network_configuration_set_defaults()
 {

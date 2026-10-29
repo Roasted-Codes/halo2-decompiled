@@ -2848,6 +2848,7 @@ PRIVATE __forceinline real weapon_activity_value(long weapon_index, s_weapon *we
 // Round 32: native predicate-to-real producers for complete inventory/heat, progress,
 // property-bit, inventory/progress, inventory/bits, progress/bits, all families
 // 410/412/419/426/426/431/442; all with native final activity publication 441. All restored.
+// Round 168: Matched inventory/admission/progress query inline subsets 1/2/3/4/5/6/7 score 455/453/451/434/451/453/451; all with separate noinline declarations 451. Original six declaring files restored.
 // @retail 0xff5f0
 bool __stdcall function_ff5f0(long weapon_index, long name, real *value, bool *active)
 {
@@ -3315,6 +3316,7 @@ PRIVATE __forceinline long unit_player_index_102fb0(long unit_index)
 // Round 32: shared RNG for selection/count/both 637/637/637; complete effect-count
 // capture alone/selection/count/both/const both 621 each (fast control 637). Capture
 // plain 621 at 2533/2533 bytes versus baseline 565 at 2526/2533; rejected. Original body restored.
+// Round 168: Failure-threshold/result/recoil subsets 579/567/596/638/605/593/627/627 fast (control 637); ordinary t01/t02/t03/t05/t06/t07 635/573/626/636/600/627. Original 565 restored; preview-only frame recovery rejected.
 // @retail 0x102fb0
 void __stdcall function_102fb0(long weapon_index, short barrel_index)
 {
@@ -3619,6 +3621,14 @@ PRIVATE __forceinline long weapon_visible_model_owner(long weapon_index)
 // scopes, seven subsets 1420 each; complete branch ownership with native event
 // role names 1420. All original output scopes and names restored; frame 0x3c
 // versus 0x38 and initial pool/offset/dual homes remain.
+// Round 387: Frame 0x3c versus 0x38 and pool/dual homes remain. Shared magazine-trigger/trigger-
+// barrel/magazine-barrel/all short ordinals 1420/1416/1416/1420; all at entry or with transient
+// float names 1420 each; independent ordinal names with/without transient names 1420 each. The two
+// 1416 forms reach 5684 bytes but are below the gain gate. Each paired graph with bool/byte/word
+// activity 1469/1465/1426. Original body restored.
+// Round 389: native reset pointer/reference, with original/readiness-first request formals,
+// 1420 each; native working request index on those four graphs 1704 each. Original repeated
+// helper contracts and all call arguments restored; frame and pool/dual homes remain.
 // @retail 0xfdfb0
 bool __stdcall function_fdfb0(long weapon_index)
 {

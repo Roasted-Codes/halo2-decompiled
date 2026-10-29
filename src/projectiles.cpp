@@ -977,6 +977,9 @@ real function_30bf0(vector3f *v);
 // Round 173: existing native gravity field 244; whole origin/target/both input points
 // 298/299/327; those with complete shared delta 298/299/327; both with entry velocity
 // 327. Original inputs, gravity observation, float trees and pointer contracts restored.
+// Round 226: separate displacement/gravity admission results and complete horizontal products,
+// seven subsets 282/283/244/298/282/283/298; combined admission on the full graph 298.
+// Original body and pointer contract restored; frame 0x28/0x30 and rounded-root scheduling remain.
 // @retail 0xfa1a0
 bool function_fa1a0(real speed, real gravity_scale, point3f const *origin, point3f const *target,
 	real *minimum_speed, real const *time_scale, real const *forced_speed, bool high_arc, vector3f *direction,
@@ -1177,6 +1180,9 @@ extern vector3f *g_4687ac;
 // same graphs 180/177/181/178. Original body/include set restored; frame/tag/query homes remain.
 // Round 173: native position/ignore/radius fields with external object/tag pointer or reference
 // receivers, mutable or read-only, all eight combinations 163. Original layout and body restored.
+// Round 226: positive/negative endpoint names, reversed declarations and full displacement roles 163/163/163;
+// with bounded direct ray 165, live radius 181, both 173; actual call results 172, all together 179.
+// Original body restored; frame 0x48/0x34 and tag/query ownership remain.
 // @retail 0xfc030
 bool function_fc030(long projectile_index, point3f const *point, s_collision_result_1697c0 *collision)
 {
@@ -1461,6 +1467,9 @@ PRIVATE inline long projectile_object_root(long object_index)
 // root expansion 332 each; consistently cached tag on those four graphs 360 each.
 // Four earlier slot-observation explorations score 484 and are excluded for overlap risk.
 // Original input accesses, receiver graph, tag observations and root declaration restored.
+// Round 226: native object-header/tag-instance entry observations and shared speed publication,
+// seven subsets 484/383/383/358/447/411/339; full graph with native tag reference 339.
+// Original body restored; slot/input allocation and speed-update expansion remain.
 // @retail 0xf8200
 bool __stdcall function_f8200(long projectile_index, byte const *data, long unused)
 {
@@ -1602,7 +1611,7 @@ real function_17c900(short function_type, real input);
 
 /* where a guided projectile aims: its target's point, led by the target's
    velocity, then wobbled around the line to it or wandering */
-// score 348 (was 382): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
+// score 348 (was 348): Frame 0x30 recovered; index EAX/output-stack contract and normalization/rotation scheduling remain, four bytes long.
 // Earlier 382 (was 382): Frame 0x2c versus 0x30 and index EAX versus stacked index remain.
 // Consistent parameter reorder 382; common exit 382; lead field at every use 376 (six-point gain dropped);
 // shared target pointer 382; point/direction role names 382; shared cross 382; shared point differences 383;
@@ -1613,6 +1622,10 @@ real function_17c900(short function_type, real input);
 // readonly center with separate result, with/without setters 393/393. Reuse the existing target
 // point and publish once, scalar/shared setter 365/365; with early index-only salt 348/348.
 // Shared setter plus early salt kept, plain 348; all game-call arguments unchanged.
+// Round 248: real center field with pointer/direct uses 348/348; native signed-word salt
+// with either receiver 360/360; both existing point-difference producers 368/368, with
+// native salt 367/367. Declared lead field read at each use 369, with native salt 372.
+// All bodies and real-field trials restored; frame agrees, stacked index/output EBX still differ.
 // @retail 0xf87f0
 void function_f87f0(long projectile_index, point3f *aim_point)
 {
@@ -2447,6 +2460,10 @@ PRIVATE __forceinline void projectile_impact_effect_parameters(s_effect_paramete
 // DH round 218: existing sound producer 1272; with complete position aggregate, readonly aggregate,
 // sound record name, aggregate/name, both sound/effect array names, aggregate/array names and
 // caller inline declaration all 1272. Every form 4728/4828 bytes, frame unchanged; all restored.
+// Round 248: effect-result case orders 1162/1161/1162/1161; terminal action orders 1174/1162;
+// paired dispatch/action orders 1174/1161. Native tag-array, direction-workspace, both,
+// damage-record, array/record and all paired role names 1162 each. All restored; frame,
+// velocity contract, native request homes and setter expansion still differ.
 // @retail 0xfaa60
 void function_faa60(vector3f *velocity, long projectile_index, s_collision_result_1697c0 const *collision,
 	point3f *end_point, vector3f *displacement, short collision_count)
