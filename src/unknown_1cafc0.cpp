@@ -592,6 +592,8 @@ PRIVATE __forceinline void graph_weapon_types_request(s_graph_tag *graph, long m
 // status and identifier roles 399. All sixteen preserve frame eight and both 0x40 LEAs; restored.
 // Round 261: grouping/leaf/both native graph-reference contracts 399 each; read-only
 // lookup entry alone/with each/both contracts 399 each; all with urgent while 399. All restored.
+// Round 280: Urgent-helper entries/index/resource role-name subsets all 399; all with outer source/graph-
+// ordinal names 399. Original helper locals, native queries and request graph restored.
 // @retail 0x1cc3f0
 bool s_animation_state::animation_lookup(s_animation_names *names, s_animation_names *found, long mode, long weapon_class,
 	long weapon_type, long set, long lookup_flags, c_type_709360 *result)
