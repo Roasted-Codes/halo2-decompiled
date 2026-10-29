@@ -92,7 +92,7 @@ inline long *begin_longs_372180(array_2d91d0 const &array) { return (long *)arra
 inline long *end_longs_372180(array_2d91d0 const &array) { return (long *)array.data + array.size; }
 
 // @retail 0x372180
-void grouping_3720a0::compress()
+void grouping_3720a0::compress_paths()
 {
 	long *current = begin_longs_372180(*parents);
 	long *end = end_longs_372180(*parents);
@@ -129,7 +129,7 @@ void grouping_3720a0::function_372200(array_2d91d0 const *pairs, long count)
 		else
 			*result = join(second, first);
 	}
-	compress();
+	compress_paths();
 	group_count = 0;
 }
 

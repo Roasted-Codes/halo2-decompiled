@@ -50,7 +50,7 @@ public:
 	__declspec(noinline) ~grouping_3720a0();
 
 	long join(long first, long second);
-	void compress();
+	void compress_paths();
 
 	// starts `count` bodies each in its own group, then joins the two
 	// bodies of each pair
