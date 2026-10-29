@@ -345,6 +345,8 @@ real function_1e3920(long actor_index);
 // Earlier result-first 53; output/reference and failure-cleanup forms did not close the carrier gap.
 // Per-use actor receiver with nested failure-first and output-home names 117/117; early admission 140/140;
 // success-first 116/116; success-first/early admission 138/138. All forms grow to 368 or 372 bytes.
+// Typed request reference fields 46; complete request Boolean 89; named movement kind 46;
+// typed fields/kind 46; Boolean with fields/kind/both 89/89/89; aggregate zero with fields/Boolean 99.
 // @retail 0x1bcab0
 bool __stdcall function_1bcab0(long actor_index, s_slot *slot)
 {

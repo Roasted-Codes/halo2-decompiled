@@ -563,7 +563,7 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 	return count;
 }
 
-// score 155 (was 168): Frame 0x5ac and entry agree; avoidance materialization, retry-mask reload and distance-return tail differ.
+// score 98 (was 155): Frame 0x5ac and distance-return tails agree; avoidance materialization and retry-word residency differ.
 // Earlier: frame 0x5ac, actor lookup and direct avoidance-byte copy agree; retry-mask reload and tail layout differ.
 // Tried: one result exit 308; stage array names 356; both 308; reversed arrays 356; named destination fields 360;
 // direct reconstruction count 357; full avoidance if/else 354; success first 362; shared rounding helper 363; helper plus one exit 314.
@@ -575,6 +575,8 @@ PRIVATE short function_270d90(long actor_index, s_type_f17a25 *state,
 // Round 274: output defaults before avoidance 165; complete short-circuit avoidance 159; full-width
 // lookup 339, success 216; defaults/avoidance 155 (plain, kept), defaults/lookup 339,
 // defaults/success 216; complete avoidance with both wide result carriers 326.
+// Complete-result return 98; separate avoidance update 165; both 137; failed-finalization first 202;
+// failure-first/avoidance 165, failure-first/return 202, all 165; nested avoidance/return 137.
 // @retail 0x270930
 bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view *result)
 {
@@ -674,6 +676,7 @@ bool function_270930(long actor_index, s_type_f17a25 *state, s_path_result_view 
 						result->destination_node_index = input->start_node_index;
 					}
 					result->destination_distance = function_210970(&result->destination, &destination->destination);
+					return result->valid;
 				}
 			}
 			else if (++result->location.flags > 32)
